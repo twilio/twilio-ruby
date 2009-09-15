@@ -33,5 +33,5 @@ example-utils.rb -- example usage of utilities
 The Twilio Ruby Helper Library is distributed under the MIT License
 
 ### THANKS
-Jay Philips (@adhearsion) for some great advice
-Michael Ansel (@michaelansel) for a great starting point <http://github.com/michaelansel/twilio-rails/tree/master>
+ * Jay Philips (@adhearsion) for some great advice
+ * Michael Ansel (@michaelansel) for a great starting point <http://github.com/michaelansel/twilio-rails/tree/master>
