@@ -15,6 +15,13 @@ addition, you will need to choose a 'Caller' and 'Called' before making
 outgoing calls. See http://www.twilio.com/docs for more information.
 
 ### GEM
+To install the Twilio GEM, follow these steps. Note: RubyGems 1.2.0 or greater required
+
+    $ gem sources -a http://gems.github.com (you only have to do this once)
+    $ sudo gem install twilio-twilio-ruby
+    
+More info at <http://gems.github.com/>
+
 
 ### FILES
 lib/twilio.rb -- include this library in your code
