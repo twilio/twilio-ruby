@@ -213,7 +213,6 @@ module Twilio
       opts[:builder]  ||= Builder::XmlMarkup.new(:indent => opts[:indent])
       b = opts[:builder]
       attrs = {}
-      #attributes.each {|a| puts send(a) } unless attributes.nil?
       attributes.each {|a| attrs[a] = send(a) unless send(a).nil? } unless attributes.nil?
 
       if @children and @body.nil?
@@ -246,7 +245,7 @@ module Twilio
     
     # Verb Convenience Methods
     def addSay(string_to_say = nil, opts = {})
-      append(Twilio::Say.new(string_to_say, opts))
+      append Twilio::Say.new(string_to_say, opts)
     end
 
     def addPlay(file_to_play = nil, opts = {})
@@ -280,6 +279,10 @@ module Twilio
     def addNumber(number, opts = {})
       append Twilio::Number.new(number, opts)
     end
+    
+    def addConference(room, opts = {})
+      append Twilio::Conference.new(room, opts)
+    end
 
   end
 
@@ -312,7 +315,7 @@ module Twilio
     extend Twilio::Verb::ClassMethods
     include Twilio::Verb
     attributes :action, :method, :timeout, :hangupOnStar, :timeLimit, :callerId
-    allowed_verbs :number
+    allowed_verbs :number, :conference
   end
 
   class Redirect
@@ -336,6 +339,12 @@ module Twilio
     extend Twilio::Verb::ClassMethods
     include Twilio::Verb
     attributes :sendDigits, :url
+  end
+  
+  class Conference
+    extend Twilio::Verb::ClassMethods
+    include Twilio::Verb
+    attributes :muted, :beep, :startConferenceOnEnter, :endConferenceOnExit, :waitUrl, :waitMethod
   end
 
   class Response

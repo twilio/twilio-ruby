@@ -3,7 +3,7 @@ require "lib/twilio.rb"
 # ===========================================================================
 # 1. Say, Dial, and Play
 @r = Twilio::Response.new
-@r.append(Twilio::Say.new "Hello World", :voice => "man", :loop => "10")
+@r.append(Twilio::Say.new("Hello World", :voice => "man", :loop => "10"))
 @r.append(Twilio::Dial.new("4155551212", :timeLimit => "45"))
 @r.append(Twilio::Play.new("http://www.mp3.com"))
 puts @r.respond
@@ -46,10 +46,25 @@ puts @r.respond
 #</Response>
 
 # ===========================================================================
+# 3. Create a Conference Call
+@r = Twilio::Response.new
+@d = Twilio::Dial.new
+@d.append(Twilio::Conference.new("MyRoom", :startConferenceOnEnter => "true"))
+@r.append(@d);
+puts @r.respond
+
+#<Response>
+#  <Say>Press 1</Say>
+#  <Say>Press 1</Say>
+#</Response>
+
+# ===========================================================================
 # 4. Set any attribute / value pair
   
 @r = Twilio::Response.new
-@r.append(Twilio::Redirect.new(:__crazy => "delicious"))
+@rd = Twilio::Redirect.new
+@rd.set(:crazy => "delicious")
+@r.append(@rd)
 puts @r.respond
 
 
@@ -61,7 +76,8 @@ puts @r.respond
 # 5. Convenience methods
 @r = Twilio::Response.new
 @r.addSay "Hello World", :voice => "man", :language => "fr", :loop => "10"
-@r.addDial "4155551212", :timeLimit => "45"
+@d = @r.addDial :timeLimit => "45"
+@d.addConference("MyRoom")
 @r.addPlay "http://www.mp3.com"
 puts @r.respond
 

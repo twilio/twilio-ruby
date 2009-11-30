@@ -295,6 +295,22 @@ describe Twilio::Dial do
     @r.respond.should == '<Response><Dial><Number>1231231234</Number></Dial></Response>'
   end
   
+  
+  it "add a conference to a dial" do
+    @r = Twilio::Response.new
+    @d = @r.append(Twilio::Dial.new())
+    @d.append(Twilio::Conference.new("MyRoom"))
+    @r.respond.should == '<Response><Dial><Conference>MyRoom</Conference></Dial></Response>'
+  end
+  
+  
+  it "convenience: add a conference to a dial" do
+    @r = Twilio::Response.new
+    @d = @r.addDial
+    @d.addConference "MyRoom"
+    @r.respond.should == '<Response><Dial><Conference>MyRoom</Conference></Dial></Response>'
+  end
+  
   it "add attribute" do
     @r = Twilio::Dial.new
     @r.set :crazy => 'delicious'
