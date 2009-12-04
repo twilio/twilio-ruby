@@ -3,9 +3,9 @@ require 'rake/gempackagetask'
 
 spec = Gem::Specification.new do |s| 
   s.name = "twilio"
-  s.version = "2.0.0"
-  s.author = "Kyle Conroy"
-  s.email = "kjconroy@twilio.com"
+  s.version = "2.0.1"
+  s.author = "Twilio"
+  s.email = "help@twilio.com"
   s.homepage = "http://www.twilio.com/docs"
   s.description = "A Ruby gem for communicating with the Twilio API and generating TwiML"
   s.platform = Gem::Platform::RUBY
