@@ -355,9 +355,7 @@ module Twilio
   
   # Twilio Utility function and Request Validation class
   class Utils
-    include OpenSSL
-    include Digest
-  
+
     #initialize a twilio utils abject
     #
     #@param [String, String] Your Twilio Acount SID/ID and Auth Token
