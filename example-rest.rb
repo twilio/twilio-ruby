@@ -13,7 +13,7 @@ ACCOUNT_TOKEN = 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY'
 CALLER_ID = 'NNNNNNNNNN';
 
 # Create a Twilio REST account object using your Twilio account ID and token
-account = TwilioRest::Account.new(ACCOUNT_SID, ACCOUNT_TOKEN)
+account = Twilio::RestAccount.new(ACCOUNT_SID, ACCOUNT_TOKEN)
 
 # ===========================================================================
 # 1. Initiate a new outbound call to 415-555-1212
