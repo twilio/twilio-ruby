@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require "lib/twilio.rb"
+require 'twiliolib'
 
 # new Utils Object
 utils = Twilio::Utils.new(

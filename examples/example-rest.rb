@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require "lib/twilio.rb"
+require 'twiliolib'
 
 # Twilio REST API version
 API_VERSION = '2008-08-01'

@@ -1,4 +1,4 @@
-require "lib/twilio.rb"
+require 'twiliolib'
 
 # ===========================================================================
 # 1. Say, Dial, and Play

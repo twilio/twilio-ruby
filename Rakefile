@@ -2,14 +2,14 @@ require 'rubygems'
 require 'rake/gempackagetask'
 
 spec = Gem::Specification.new do |s| 
-  s.name = "twilio"
+  s.name = "twiliolib"
   s.version = "2.0.2"
   s.author = "Twilio"
   s.email = "help@twilio.com"
   s.homepage = "http://www.twilio.com/docs"
   s.description = "A Ruby gem for communicating with the Twilio API and generating TwiML"
   s.platform = Gem::Platform::RUBY
-  s.summary = "Some description"
+  s.summary = "A Ruby gem for communicating with the Twilio API and generating TwiML"
   s.files = FileList["{lib}/*"].to_a
   s.require_path = "lib"
   s.test_files = FileList["{test}/response_spec.rb"].to_a

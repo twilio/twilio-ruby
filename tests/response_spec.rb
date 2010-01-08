@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../lib/twilio.rb'
+require 'twiliolib'
 
 module AccountExampleHelperMethods
 
