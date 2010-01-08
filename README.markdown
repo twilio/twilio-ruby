@@ -1,39 +1,36 @@
 ## Ruby Twilio Helper Library
 
-### DESCRIPTION
+### Description
 The Twilio REST SDK simplifies the process of makes calls to the Twilio REST.
 The Twilio REST API lets to you initiate outgoing calls, list previous call,
 and much more.  See http://www.twilio.com/docs for more information.
 
-### GEM
-To install the Twilio GEM, follow these steps. Note: RubyGems 1.2.0 or greater required
+### Gemcutter 
 
-    $ gem sources -a http://gems.github.com (you only have to do this once)
-    $ sudo gem install twilio-twilio-ruby
+    $ sudo gem install twiliolib -s http://gemcutter.org
+
+### Manual Installation
+To use the rake command to build the gem and
+
+    $ sudo gem install /path/to/twiliolib/gem
     
-More info at <http://gems.github.com/>
+to finish the installation
 
-### NON-GEM
-To use the twilio.rb library with Rails just copy the twilio.rb file
-into the lib directory of your Rails application. Then just require
-"twiliorest.rb" in the controller or code file you wish to use the Twilio REST
-API from. 
-
-### USAGE
-As shown in example.rb, you will need to specify the ACCOUNT_ID and
+### Usage
+As shown in examples, you will need to specify the ACCOUNT_ID and
 ACCOUNT_TOKEN given to you by Twilio before you can make REST requests. In
 addition, you will need to choose a 'Caller' and 'Called' before making
 outgoing calls. See http://www.twilio.com/docs for more information.
 
-### FILES
+### Files
  * **lib/twilio.rb**: include this library in your code
- * **example-rest.rb**: example usage of REST
- * **example-twiml.rb**: example usage of the TwiML generator
- * **example-utils.rb**: example usage of utilities
+ * **examples/example-rest.rb**: example usage of REST
+ * **examples/example-twiml.rb**: example usage of the TwiML generator
+ * **examples/example-utils.rb**: example usage of utilities
 
-### LICENSE
+### License
 The Twilio Ruby Helper Library is distributed under the MIT License
 
-### THANKS
+### Thanks
  * Jay Philips (@adhearsion) for some great advice
  * Michael Ansel (@michaelansel) for a great starting point <http://github.com/michaelansel/twilio-rails/tree/master>
