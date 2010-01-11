@@ -1,4 +1,4 @@
-require 'twiliolib'
+require '../lib/twiliolib.rb'
 
 module AccountExampleHelperMethods
 
@@ -13,6 +13,8 @@ module AccountExampleHelperMethods
     lambda {verb.append(Twilio::Hangup)}.should raise_error(ArgumentError)
     lambda {verb.append(Twilio::Pause)}.should raise_error(ArgumentError)
     lambda {verb.append(Twilio::Number)}.should raise_error(ArgumentError)     
+    lambda {verb.append(Twilio::Sms)}.should raise_error(ArgumentError)     
+    lambda {verb.append(Twilio::Conference)}.should raise_error(ArgumentError)     
     
   end
   
@@ -233,6 +235,35 @@ describe Twilio::Hangup do
     @r = Twilio::Hangup.new
     @r.set :crazy => 'delicious'
     @r.respond.should == '<Hangup crazy="delicious"></Hangup>'
+  end
+
+end
+
+describe Twilio::Sms do
+  include AccountExampleHelperMethods
+  
+  it "should send a sms message" do
+    @r = Twilio::Response.new
+    @r.append(Twilio::Sms.new("Hello, World"))
+    @r.respond.should == '<Response><Sms>Hello, World</Sms></Response>'
+  end
+ 
+  it "convenience: should send a sms message" do 
+    @r = Twilio::Response.new
+    @r.addSms "Hello, World"
+    @r.respond.should == '<Response><Sms>Hello, World</Sms></Response>'
+  end 
+
+  it "should raises exceptions for wrong appending" do
+    @r = Twilio::Response.new
+    @s = @r.append(Twilio::Sms.new("Hello World"))
+    bad_append @s
+  end
+  
+  it "add attribute" do
+    @r = Twilio::Sms.new
+    @r.set :foo => 'bar'
+    @r.respond.should == '<Sms foo="bar"></Sms>'
   end
 
 end

@@ -283,6 +283,10 @@ module Twilio
     def addConference(room, opts = {})
       append Twilio::Conference.new(room, opts)
     end
+    
+    def addSms(msg, opts = {})
+      append Twilio::Sms.new(msg, opts)
+    end
 
   end
 
@@ -346,11 +350,17 @@ module Twilio
     include Twilio::Verb
     attributes :muted, :beep, :startConferenceOnEnter, :endConferenceOnExit, :waitUrl, :waitMethod
   end
+  
+  class Sms
+    extend Twilio::Verb::ClassMethods
+    include Twilio::Verb
+    attributes :to, :from, :statusCallback, :action, :method
+  end
 
   class Response
     extend Twilio::Verb::ClassMethods
     include Twilio::Verb
-    allowed_verbs :say, :play, :gather, :record, :dial, :redirect, :pause, :hangup
+    allowed_verbs :say, :play, :gather, :record, :dial, :redirect, :pause, :hangup, :sms
   end
   
   # Twilio Utility function and Request Validation class
