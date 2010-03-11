@@ -260,6 +260,14 @@ describe Twilio::Sms do
     bad_append @s
   end
   
+  it "should send sms to to and from from with status callback" do
+    @r = Twilio::Response.new
+    @r.append(Twilio::Sms.new("Hello, World", :to => 1231231234, 
+      :from => 3453453456, :statusCallback => "example.com?id=34&action=hey"))
+    @r.respond.should == '<Response><Sms from="3453453456" statusCallback="example.com?id=34&amp;action=hey" to="1231231234">Hello, World</Sms></Response>'
+  end
+  
+  
   it "add attribute" do
     @r = Twilio::Sms.new
     @r.set :foo => 'bar'

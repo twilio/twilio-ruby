@@ -7,7 +7,7 @@ and much more.  See http://www.twilio.com/docs for more information.
 
 ### Gemcutter 
 
-    $ sudo gem install twiliolib -s http://gemcutter.org
+    $ sudo gem install twiliolib
 
 ### Manual Installation
 To use the rake command to build the gem and
