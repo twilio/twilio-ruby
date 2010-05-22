@@ -1,3 +1,10 @@
-Changelog for Twilio Ruby Gem
-=================================================
-0.1.2 - Renamed gem
+# Changelog for Twilio Ruby Gem
+
+## 2.0.5
+
+* Fixed bug which caused validateRequest to fail
+
+## 0.1.2 
+
+* Renamed gem
+

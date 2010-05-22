@@ -382,7 +382,7 @@ module Twilio
         data = data + pkey[0]+pkey[1]
       end
       digest = OpenSSL::Digest::Digest.new('sha1')
-      expected = Base64.encode64(OpenSSL::HMAC.digest(digest, @id, data)).strip
+      expected = Base64.encode64(OpenSSL::HMAC.digest(digest, @token, data)).strip
       return expected == signature
     end
   end

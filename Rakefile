@@ -3,7 +3,7 @@ require 'rake/gempackagetask'
 
 spec = Gem::Specification.new do |s| 
   s.name = "twiliolib"
-  s.version = "2.0.4"
+  s.version = "2.0.5"
   s.author = "Twilio"
   s.email = "help@twilio.com"
   s.homepage = "http://www.twilio.com/docs"
