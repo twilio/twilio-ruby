@@ -19,8 +19,8 @@ account = Twilio::RestAccount.new(ACCOUNT_SID, ACCOUNT_TOKEN)
 # 1. Initiate a new outbound call to 415-555-1212
 #    uses a HTTP POST
 d = {
-    'Caller' => CALLER_ID,
-    'Called' => '415-555-1212',
+    'From' => CALLER_ID,
+    'To' => '415-555-1212',
     'Url' => 'http://demo.twilio.com/welcome',
 }
 resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Calls",
