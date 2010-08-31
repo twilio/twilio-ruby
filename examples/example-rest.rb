@@ -3,7 +3,7 @@
 require 'twiliolib'
 
 # Twilio REST API version
-API_VERSION = '2008-08-01'
+API_VERSION = '2010-04-01'
 
 # Twilio AccountSid and AuthToken
 ACCOUNT_SID = 'ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
