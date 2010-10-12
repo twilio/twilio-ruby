@@ -312,7 +312,7 @@ module Twilio
   class Record
     extend Twilio::Verb::ClassMethods
     include Twilio::Verb
-    attributes :action, :method, :timeout, :finishOnKey, :maxLength, :transcribe, :transcribeCallback
+    attributes :action, :method, :timeout, :finishOnKey, :maxLength, :transcribe, :transcribeCallback, :playBeep
   end
 
   class Dial
