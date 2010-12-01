@@ -264,7 +264,7 @@ describe Twilio::Sms do
     @r = Twilio::Response.new
     @r.append(Twilio::Sms.new("Hello, World", :to => 1231231234, 
       :from => 3453453456, :statusCallback => "example.com?id=34&action=hey"))
-    @r.respond.should == '<Response><Sms from="3453453456" statusCallback="example.com?id=34&amp;action=hey" to="1231231234">Hello, World</Sms></Response>'
+    @r.respond.should == '<Response><Sms to="1231231234" from="3453453456" statusCallback="example.com?id=34&amp;action=hey">Hello, World</Sms></Response>'
   end
   
   
