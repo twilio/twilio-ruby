@@ -176,7 +176,7 @@ module Twilio
       #@return [Object] Twilio Verb object
       #
       #@raises [ArgumentError] Invalid Argument
-    def initialize(body = nil, params = {})
+    def initialize(body = nil, params = {}, &block)
       @children = []
       if body.class == String
         @body = body
@@ -190,6 +190,10 @@ module Twilio
         else
           raise ArgumentError, "Attribute Not Supported"
         end
+      end
+
+      if block_given?
+        instance_eval(&block)
       end
     end
 
@@ -247,46 +251,57 @@ module Twilio
     def addSay(string_to_say = nil, opts = {})
       append Twilio::Say.new(string_to_say, opts)
     end
+    alias_method :say, :addSay
 
     def addPlay(file_to_play = nil, opts = {})
       append Twilio::Play.new(file_to_play, opts)
     end
+    alias_method :play, :addPlay
 
     def addGather(opts = {})
       append Twilio::Gather.new(opts)
     end
+    alias_method :gather, :addGather
 
     def addRecord(opts = {})
       append Twilio::Record.new(opts)
     end
+    alias_method :record, :addRecord
 
     def addDial(number = nil, opts = {})
       append Twilio::Dial.new(number, opts)
     end
+    alias_method :dial, :addDial
 
     def addRedirect(url = nil, opts = {})
       append Twilio::Redirect.new(url, opts)
     end
+    alias_method :redirect, :addRedirect
 
     def addPause(opts = {})
       append Twilio::Pause.new(opts)
     end
+    alias_method :pause, :addPause
 
     def addHangup
       append Twilio::Hangup.new 
     end
+    alias_method :hangup, :addHangup
 
     def addNumber(number, opts = {})
       append Twilio::Number.new(number, opts)
     end
+    alias_method :number, :addNumber
     
     def addConference(room, opts = {})
       append Twilio::Conference.new(room, opts)
     end
+    alias_method :conference, :addConference
     
     def addSms(msg, opts = {})
       append Twilio::Sms.new(msg, opts)
     end
+    alias_method :sms, :addSms
 
   end
 
@@ -361,8 +376,12 @@ module Twilio
     extend Twilio::Verb::ClassMethods
     include Twilio::Verb
     allowed_verbs :say, :play, :gather, :record, :dial, :redirect, :pause, :hangup, :sms
+
+    def self.build(&block)
+      Response.new(&block)
+    end
   end
-  
+
   # Twilio Utility function and Request Validation class
   class Utils
 

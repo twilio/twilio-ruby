@@ -31,7 +31,7 @@ describe Twilio::Response do
     @r = Twilio::Response.new
     @r.respond.should == '<Response></Response>'
   end
-  
+
   it "add attribute" do
     @r = Twilio::Response.new
     @r.set :crazy => 'delicious'
@@ -41,7 +41,24 @@ describe Twilio::Response do
   it "bad attribute" do
     bad_attr(Twilio::Response)
   end
+
+  it "should say something with more parameters" do
+    Twilio::Response.build do
+      say "whatever", :voice => 'woman'
+    end.respond.should == '<Response><Say voice="woman">whatever</Say></Response>'
+  end
+
+  it "should say something" do
+    Twilio::Response.build do
+      say "whatever"
+    end.respond.should == '<Response><Say>whatever</Say></Response>'
+  end
   
+  it "should redirect to a url via POST" do 
+    Twilio::Response.build do
+      redirect "example.com", :method => "POST"
+    end.respond.should == '<Response><Redirect method="POST">example.com</Redirect></Response>'
+  end
 end
 
 describe Twilio::Say do
@@ -52,7 +69,8 @@ describe Twilio::Say do
     @r.append(Twilio::Say.new("Hello Monkey"))
     @r.respond.should == '<Response><Say>Hello Monkey</Say></Response>'
   end
-  
+
+
   it "should say hello monkey and loop 3 times" do
     @r = Twilio::Response.new
     @r.append(Twilio::Say.new("Hello Monkey", :loop => 3))
@@ -64,7 +82,7 @@ describe Twilio::Say do
     @r.append(Twilio::Say.new("Hello Monkey", :voice => 'woman'))
     @r.respond.should == '<Response><Say voice="woman">Hello Monkey</Say></Response>'
   end
-  
+
   it "should say have a woman say hello monkey and loop 3 times and be in french" do
     @r = Twilio::Response.new
     @r.append(Twilio::Say.new("Hello Monkey", :language => 'fr'))
@@ -88,7 +106,6 @@ describe Twilio::Say do
     @r.set :crazy => 'delicious'
     @r.respond.should == '<Say crazy="delicious"></Say>'
   end
-
 end
 
 describe Twilio::Play do
