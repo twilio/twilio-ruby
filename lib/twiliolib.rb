@@ -113,7 +113,12 @@ module Twilio
       end
       uri = URI.parse(url)
       
-      http = Net::HTTP.new(uri.host, uri.port)
+      if ENV['http_proxy']
+        proxy = URI.parse(ENV['http_proxy'])
+        http = Net::HTTP.new(uri.host, uri.port, proxy.host, proxy.port, proxy.user, proxy.password)
+      else
+        http = Net::HTTP.new(uri.host, uri.port)
+      end
       http.use_ssl = true
       
       if method && method == 'GET'
