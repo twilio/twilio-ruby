@@ -61,3 +61,14 @@ resp = account.request( \
     "/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/Recordings/\
 RE7b22d733d3e730d234e94242b9697cae", 'DELETE')
 puts "code: %s" % [resp.code]
+
+# ===========================================================================
+# 6. Send an SMS Message
+#    uses a HTTP POST, and a new variable t for the information (because it needs "Body")
+t = {
+    'From' => CALLER_ID,
+    'To'   => NNNNNNNNNN # insert your sandbox number here
+    'Body' => "Hello, world. This is a text from Twilio using Ruby!"
+}
+resp = account.request("/#{API_VERSION}/Accounts/#{Account_SID}/SMS/Messages",
+      "POST", t)
