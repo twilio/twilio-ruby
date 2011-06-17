@@ -63,11 +63,11 @@ RE7b22d733d3e730d234e94242b9697cae", 'DELETE')
 puts "code: %s" % [resp.code]
 
 # ===========================================================================
-# 6. Send an SMS Message
+# 6. Send an SMS Message to 415-555-1212
 #    uses a HTTP POST, and a new variable t for the information (because it needs "Body")
 t = {
     'From' => CALLER_ID,
-    'To'   => NNNNNNNNNN # insert your sandbox number here
+    'To'   => '415-555-1212',
     'Body' => "Hello, world. This is a text from Twilio using Ruby!"
 }
 resp = account.request("/#{API_VERSION}/Accounts/#{Account_SID}/SMS/Messages",
