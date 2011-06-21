@@ -70,5 +70,5 @@ t = {
     'To'   => '415-555-1212',
     'Body' => "Hello, world. This is a text from Twilio using Ruby!"
 }
-resp = account.request("/#{API_VERSION}/Accounts/#{Account_SID}/SMS/Messages",
+resp = account.request("/#{API_VERSION}/Accounts/#{ACCOUNT_SID}/SMS/Messages",
       "POST", t)
