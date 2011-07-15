@@ -24,7 +24,7 @@ module Twilio
           uri += "?#{url_encode(params)}" if !params.empty? && method == :get
           headers = {
             'Accept' => 'application/json',
-            'User-Agent' => 'twilio-ruby/1.0.0'
+            'User-Agent' => 'twilio-ruby/3.0.0'
           }
           request = method_class.new uri, headers
           request.basic_auth @account_sid, @auth_token
