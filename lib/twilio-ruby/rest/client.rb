@@ -6,15 +6,14 @@ module Twilio
       include Twilio::REST::Utils
 
       attr_reader :account_sid, :account, :accounts
-    
+
       def initialize(account_sid, auth_token, domain = 'api.twilio.com',
                      proxy_host = nil, proxy_port = nil)
-        @account_sid = account_sid
-        @auth_token = auth_token
+        @account_sid, @auth_token = account_sid, auth_token
         set_up_connection_to domain, proxy_host, proxy_port
         set_up_subresources
       end
-    
+
       # Define some helper methods for sending HTTP requests
       [:get, :put, :post, :delete].each do |method|
         method_class = Net::HTTP.const_get method.to_s.capitalize
@@ -65,9 +64,9 @@ module Twilio
         req.basic_auth @account_sid, @auth_token
         @connection.request req
       end
-    
+
       private
-    
+
       def set_up_connection_to(domain, proxy_host = nil, proxy_port = nil)
         connection_class = Net::HTTP::Proxy proxy_host, proxy_port
         @connection = connection_class.new domain, 443
@@ -77,7 +76,7 @@ module Twilio
         # But cert validation is usually a nightmare, so we skip it for now.
         @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
-    
+
       def set_up_subresources
         accounts_uri = '/2010-04-01/Accounts'
         account_uri = "#{accounts_uri}/#{@account_sid}"
@@ -86,7 +85,7 @@ module Twilio
         # Set up the accounts subresource.
         @accounts = Twilio::REST::Accounts.new accounts_uri, self
       end
-    
+
     end
   end
 end
