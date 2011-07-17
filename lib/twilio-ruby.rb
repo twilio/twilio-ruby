@@ -3,7 +3,7 @@ TWILIO_RUBY_ROOT = File.expand_path(File.dirname(__FILE__))
 require 'net/http'
 require 'net/https'
 require 'builder'
-require 'crack'
+require 'json'
 require 'cgi'
 require 'openssl'
 require 'base64'

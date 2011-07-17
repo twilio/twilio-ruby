@@ -23,13 +23,13 @@ module Twilio
           uri += "?#{url_encode(params)}" if !params.empty? && method == :get
           headers = {
             'Accept' => 'application/json',
-            'User-Agent' => 'twilio-ruby/3.0.0'
+            'User-Agent' => 'twilio-ruby/3.1.0'
           }
           request = method_class.new uri, headers
           request.basic_auth @account_sid, @auth_token
           request.form_data = params if [:post, :put].include? method
           http_response = @connection.request request
-          object = Crack::JSON.parse http_response.body if http_response.body
+          object = JSON.parse http_response.body if http_response.body
           if http_response.kind_of? Net::HTTPClientError
             raise Twilio::REST::RequestError, object['message']
           elsif http_response.kind_of? Net::HTTPServerError
