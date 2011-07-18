@@ -18,9 +18,9 @@ module Twilio
       [:get, :put, :post, :delete].each do |method|
         method_class = Net::HTTP.const_get method.to_s.capitalize
         define_method method do |uri, *args|
-          uri += '.json'
+          uri << '.json'
           params = twilify(args[0]); params = {} if params.empty?
-          uri += "?#{url_encode(params)}" if !params.empty? && method == :get
+          uri << "?#{url_encode(params)}" if !params.empty? && method == :get
           headers = {
             'Accept' => 'application/json',
             'User-Agent' => 'twilio-ruby/3.1.0'
@@ -47,7 +47,7 @@ module Twilio
 
         case method
         when 'GET'
-          uri += "?#{url_encode(params)}" if params
+          uri << "?#{url_encode(params)}" if params
           req = Net::HTTP::Get.new uri
         when 'DELETE'
           req = Net::HTTP::Delete.new uri
