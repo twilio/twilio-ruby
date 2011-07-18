@@ -47,7 +47,7 @@ module Twilio
 
         case method
         when 'GET'
-          uri += "?#{url_encode(params)}" if params
+          uri << "?#{url_encode(params)}" if params
           req = Net::HTTP::Get.new uri
         when 'DELETE'
           req = Net::HTTP::Delete.new uri
