@@ -15,6 +15,13 @@ module Twilio
         self
       end
 
+      def refresh
+        raise "Can't refresh a resource without a REST Client" unless @client
+        @updated = false
+        response = @client.get @uri
+        set_up_properties_from response
+      end
+
       def delete
         raise "Can't delete a resource without a REST Client" unless @client
         @client.delete @uri
