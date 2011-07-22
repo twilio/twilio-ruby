@@ -5,15 +5,17 @@ To install:
 Via rubygems.org:
 
 ```
-$ sudo gem install twilio-ruby
+$ gem install twilio-ruby
 ```
 
-To build and install yourself from the latest source:
+To build and install the development branch yourself from the latest source:
 
 ```
-$ git clone git@github.com:andrewmbenton/twilio-ruby.git
-$ cd twilio-ruby; rake gem
-$ sudo gem install pkg/twilio-ruby-{version}
+$ git clone git@github.com:twilio/twilio-ruby.git
+$ cd twilio-ruby
+$ git checkout develop
+$ rake gem
+$ gem install pkg/twilio-ruby-{version}
 ```
 
 ## Some Code To Get You Started
@@ -21,7 +23,7 @@ $ sudo gem install pkg/twilio-ruby-{version}
 ### Setup Work
 
 ``` ruby
-require 'rubygems'
+require 'rubygems' # not necessary with ruby 1.9.2 but included for completeness
 require 'twilio-ruby'
 
 # put your own credentials here
