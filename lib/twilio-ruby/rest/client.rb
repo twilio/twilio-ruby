@@ -14,7 +14,8 @@ module Twilio
 
       def initialize(account_sid, auth_token, domain = 'api.twilio.com',
                      proxy_host = nil, proxy_port = nil)
-        @account_sid, @auth_token = account_sid, auth_token
+        @account_sid = account_sid
+        @auth_token = auth_token
         set_up_connection_to domain, proxy_host, proxy_port
         set_up_subresources
       end
