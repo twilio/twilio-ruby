@@ -5,6 +5,11 @@ module Twilio
       include Twilio::Util
       include Twilio::REST::Utils
 
+      HTTP_HEADERS = {
+        'Accept' => 'application/json',
+        'User-Agent' => 'twilio-ruby/3.1.1',
+      }
+
       attr_reader :account_sid, :account, :accounts
 
       def initialize(account_sid, auth_token, domain = 'api.twilio.com',
@@ -18,24 +23,13 @@ module Twilio
       [:get, :put, :post, :delete].each do |method|
         method_class = Net::HTTP.const_get method.to_s.capitalize
         define_method method do |uri, *args|
-          uri << '.json'
-          params = twilify(args[0]); params = {} if params.empty?
-          uri << "?#{url_encode(params)}" if !params.empty? && method == :get
-          headers = {
-            'Accept' => 'application/json',
-            'User-Agent' => 'twilio-ruby/3.1.1'
-          }
-          request = method_class.new uri, headers
+          params = twilify args[0]; params = {} if params.empty?
+          uri += '.json' # create a local copy of the uri to manipulate
+          uri << "?#{url_encode(params)}" if method == :get && !params.empty?
+          request = method_class.new uri, HTTP_HEADERS
           request.basic_auth @account_sid, @auth_token
           request.form_data = params if [:post, :put].include? method
-          http_response = @connection.request request
-          object = JSON.parse http_response.body if http_response.body
-          if http_response.kind_of? Net::HTTPClientError
-            raise Twilio::REST::RequestError, object['message']
-          elsif http_response.kind_of? Net::HTTPServerError
-            raise Twilio::REST::ServerError, object['message']
-          end
-          object
+          connect_and_send request
         end
       end
 
@@ -84,6 +78,17 @@ module Twilio
         @account = Twilio::REST::Account.new account_uri, self
         # Set up the accounts subresource.
         @accounts = Twilio::REST::Accounts.new accounts_uri, self
+      end
+
+      def connect_and_send(request)
+        response = @connection.request request
+        object = JSON.parse response.body if response.body
+        if response.kind_of? Net::HTTPClientError
+          raise Twilio::REST::RequestError, object['message']
+        elsif response.kind_of? Net::HTTPServerError
+          raise Twilio::REST::ServerError, object['message']
+        end
+        object
       end
 
     end
