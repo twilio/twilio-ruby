@@ -1,6 +1,4 @@
-## Get Started
-
-To install:
+## Install
 
 Via rubygems.org:
 
