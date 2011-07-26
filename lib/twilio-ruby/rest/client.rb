@@ -7,7 +7,7 @@ module Twilio
 
       HTTP_HEADERS = {
         'Accept' => 'application/json',
-        'User-Agent' => 'twilio-ruby/3.1.1',
+        'User-Agent' => 'twilio-ruby/3.2.0',
       }
 
       attr_reader :account_sid, :account, :accounts
