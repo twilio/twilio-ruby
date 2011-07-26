@@ -7,6 +7,7 @@ require 'json'
 require 'cgi'
 require 'openssl'
 require 'base64'
+require 'jwt'
 
 
 require "#{TWILIO_RUBY_ROOT}/twilio-ruby/util"
