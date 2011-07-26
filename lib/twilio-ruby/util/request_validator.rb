@@ -12,7 +12,7 @@ module Twilio
       end
 
       def build_signature_for(url, params)
-        data = url + params.sort.to_s
+        data = url + params.sort.join
         digest = OpenSSL::Digest::Digest.new('sha1')
         Base64.encode64(OpenSSL::HMAC.digest(digest, @auth_token, data)).strip
       end
