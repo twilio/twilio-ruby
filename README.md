@@ -147,3 +147,5 @@ auth_token = '62ea81de3a5b414154eb263595357c69'
 There are more detailed examples in the included [examples.rb](twilio-ruby/blob/master/examples.rb).
 
 Full [API documentation](twilio-ruby/wiki/Documentation), as well as an [upgrade guide](twilio-ruby/wiki/UpgradeGuide) for users of the old twiliolib gem, is available in the [twilio-ruby github wiki](twilio-ruby/wiki).
+
+[1]:http://builder.rubyforge.org/
