@@ -83,7 +83,7 @@ module Twilio
 
       def connect_and_send(request)
         response = @connection.request request
-        object = JSON.parse response.body if response.body
+        object = MultiJson.decode(response.body) if response.body
         if response.kind_of? Net::HTTPClientError
           raise Twilio::REST::RequestError, object['message']
         elsif response.kind_of? Net::HTTPServerError
