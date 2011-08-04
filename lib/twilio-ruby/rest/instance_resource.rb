@@ -8,6 +8,10 @@ module Twilio
         set_up_properties_from params
       end
 
+      def inspect
+        "<#{self.class} @uri=#{@uri}>"
+      end
+
       def update(params = {})
         raise "Can't update a resource without a REST Client" unless @client
         response = @client.post @uri, params

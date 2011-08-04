@@ -8,6 +8,10 @@ module Twilio
         @instance_class = Twilio::REST.const_get @resource_name.chop
         @uri, @client = uri, client
       end
+
+      def inspect
+        "<#{self.class} @uri=#{@uri}>"
+      end
     
       # Grab a list of this kind of resource and return it as an array. The
       # array includes a special property called +total+ which will return the
