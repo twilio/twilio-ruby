@@ -14,10 +14,13 @@ module Twilio
 
       def initialize(account_sid, auth_token, domain = 'api.twilio.com',
                      proxy_host = nil, proxy_port = nil)
-        @account_sid = account_sid
-        @auth_token = auth_token
+        @account_sid, @auth_token = account_sid, auth_token
         set_up_connection_to domain, proxy_host, proxy_port
         set_up_subresources
+      end
+
+      def inspect
+        "<Twilio::REST::Client @account_sid=#{@account_sid}>"
       end
 
       # Define some helper methods for sending HTTP requests
