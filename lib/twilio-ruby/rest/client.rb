@@ -43,7 +43,7 @@ module Twilio
 
         uri = "/#{uri}" unless uri.start_with? '/'
 
-        case method
+        case method.upcase
         when 'GET'
           uri << "?#{url_encode(params)}" if params
           req = Net::HTTP::Get.new uri
