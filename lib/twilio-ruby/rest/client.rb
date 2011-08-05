@@ -55,8 +55,20 @@ module Twilio
 
       # Instantiate a new HTTP client to talk to Twilio. The parameters
       # +account_sid+ and +auth_token+ are required and used to generate the
-      # HTTP basic auth header in each request.
-      def initialize(account_sid, auth_token, domain = 'api.twilio.com',
+      # HTTP basic auth header in each request. The +options+ parameter is a
+      # hash of configuration options. the following keys are supported:
+      #
+      # === :domain => String
+      #
+      # The domain to which you'd like the client to make requests. Useful for
+      # testing. Defaults to 'api.twilio.com'.
+      #
+      # === :scheme => 'http'|'https'
+      #
+      # The HTTP scheme to use. Defaults to 'https' and should be left that way
+      # except in testing environments
+      def initialize(account_sid, auth_token, options = {})
+domain = 'api.twilio.com',
                      proxy_host = nil, proxy_port = nil)
         @account_sid, @auth_token = account_sid, auth_token
         set_up_connection_to domain, proxy_host, proxy_port
