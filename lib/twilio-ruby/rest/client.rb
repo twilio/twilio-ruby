@@ -36,10 +36,10 @@ module Twilio
     # the list of accounts belonging to the master account referenced by
     # the +account_sid+ used to instantiate the client.
     #
-    # This class inherits
-    # from Twilio::REST::ListResource, so you can use methods like ListResource#list to
-    # return a (possibly filtered) list of accounts and #create to create a new
-    # account. Use #get to grab a particular account once you know its sid.
+    # This class inherits from Twilio::REST::ListResource, so you can use
+    # methods like ListResource#list to return a (possibly filtered) list of
+    # accounts and ListResource#create to create a #:new: account. Use
+    # ListResource#get to grab a particular account once you know its sid.
     class Client
 
       include Twilio::Util
