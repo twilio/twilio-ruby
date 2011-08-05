@@ -7,9 +7,36 @@ module Twilio
     #
     # Instantiate a client like so:
     #
-    #   @client = Twilio::REST::Client.new @account_sid, @auth_token
+    #   @client = Twilio::REST::Client.new account_sid, auth_token
     #
-    # 
+    # There are a few options you can use to configure the way your client will
+    # communicate with Twilio. See #new for a list and descriptions.
+    #
+    # Once you have a client object you can use it to do fun things. Every
+    # client object exposes two wrapper objects which you can use as entry
+    # points into Twilio: +account+ and +accounts+.
+    #
+    # === @client.account
+    #
+    # Most of the time you'll want to start with the +account+ property. This
+    # object is an instance of Twilio::REST::Account that wraps the account
+    # referenced by the +account_sid+ you used when instantiating the client.
+    #
+    # The +@client.account+ object itself exposes objects wrapping all of the
+    # account-level Twilio resources as properties. So +@client.account.calls+
+    # represents an account's call list.
+    #
+    # === @client.accounts
+    #
+    # If you are doing anything related to subaccounts you'll want to start
+    # here. This object is an instance of Twilio::REST::Accounts that wraps
+    # the list of accounts belonging to the master account referenced by
+    # the +account_sid+ used to instantiate the client.
+    #
+    # This class inherits
+    # from Twilio::REST::ListResource, so you can use methods like #list to
+    # return a (possibly filtered) list of accounts and #create to create a new
+    # account. Use #get to grab a particular account once you know its sid.
     class Client
 
       include Twilio::Util
