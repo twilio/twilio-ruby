@@ -22,8 +22,11 @@ module Twilio
     # object is an instance of Twilio::REST::Account that wraps the account
     # referenced by the +account_sid+ you used when instantiating the client.
     #
-    # The +@client.account+ object itself exposes objects wrapping all of the
-    # account-level Twilio resources as properties. So +@client.account.calls+
+    # An instance of Twilio::REST::Account exposes objects wrapping all of the
+    # account-level Twilio resources as properties. So
+    #
+    #   @client.account.calls
+    #
     # represents an account's call list.
     #
     # === @client.accounts
@@ -34,7 +37,7 @@ module Twilio
     # the +account_sid+ used to instantiate the client.
     #
     # This class inherits
-    # from Twilio::REST::ListResource, so you can use methods like #list to
+    # from Twilio::REST::ListResource, so you can use methods like ListResource#list to
     # return a (possibly filtered) list of accounts and #create to create a new
     # account. Use #get to grab a particular account once you know its sid.
     class Client
