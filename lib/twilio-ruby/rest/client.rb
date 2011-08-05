@@ -1,5 +1,15 @@
 module Twilio
   module REST
+    # The Twilio::REST::Client class caches authentication parameters and
+    # exposes methods to make HTTP requests to Twilio's REST API. However, you
+    # should never really need to call these methods yourself since you can
+    # work with the more pleasant wrapper objects like Twilio::REST::Call.
+    #
+    # Instantiate a client like so:
+    #
+    #   @client = Twilio::REST::Client.new @account_sid, @auth_token
+    #
+    # 
     class Client
 
       include Twilio::Util
@@ -7,11 +17,15 @@ module Twilio
 
       HTTP_HEADERS = {
         'Accept' => 'application/json',
-        'User-Agent' => 'twilio-ruby/3.2.0',
+        'User-Agent' => 'twilio-ruby/3.2.1',
       }
 
-      attr_reader :account_sid, :account, :accounts
+      attr_reader :account_sid, :account, :accounts, :last_request,
+        :last_response
 
+      # Instantiate a new HTTP client to talk to Twilio. The parameters
+      # +account_sid+ and +auth_token+ are required and used to generate the
+      # HTTP basic auth header in each request.
       def initialize(account_sid, auth_token, domain = 'api.twilio.com',
                      proxy_host = nil, proxy_port = nil)
         @account_sid, @auth_token = account_sid, auth_token
@@ -19,11 +33,12 @@ module Twilio
         set_up_subresources
       end
 
-      def inspect
+      def inspect #:nodoc:
         "<Twilio::REST::Client @account_sid=#{@account_sid}>"
       end
 
-      # Define some helper methods for sending HTTP requests
+      # Define #get, #put, #post and #delete helper methods for sending HTTP
+      # requests to Twilio.
       [:get, :put, :post, :delete].each do |method|
         method_class = Net::HTTP.const_get method.to_s.capitalize
         define_method method do |uri, *args|
@@ -37,7 +52,13 @@ module Twilio
         end
       end
 
-      # Mimic the old (deprecated) interface
+      # Mimic the old (deprecated) interface. Make an HTTP request to Twilio
+      # using the given +method+ and +uri+. If the +method+ is 'GET' then
+      # +params+ are appended to the +uri+ as urlencoded query parameters. If
+      # the +method+ is 'POST' or 'PUT' then +params+ are passed as an
+      # application/x-www-form-urlencoded string in the request body.
+      #
+      # Returns the raw Net::HTTP::Response object.
       def request(uri, method = 'POST', params = {})
         raise ArgumentError, 'Invalid path parameter' if uri.empty?
 
@@ -60,7 +81,8 @@ module Twilio
         end
 
         req.basic_auth @account_sid, @auth_token
-        @connection.request req
+        @last_request = req
+        @last_response = @connection.request req
       end
 
       private
@@ -85,7 +107,9 @@ module Twilio
       end
 
       def connect_and_send(request)
+        @last_request = request
         response = @connection.request request
+        @last_response = response
         object = JSON.parse response.body if response.body
         if response.kind_of? Net::HTTPClientError
           raise Twilio::REST::RequestError, object['message']
