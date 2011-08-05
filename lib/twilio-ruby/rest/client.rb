@@ -38,7 +38,7 @@ module Twilio
     #
     # This class inherits from Twilio::REST::ListResource, so you can use
     # methods like ListResource#list to return a (possibly filtered) list of
-    # accounts and ListResource#create to create a #:new: account. Use
+    # accounts and ListResource#create to create a new account. Use
     # ListResource#get to grab a particular account once you know its sid.
     class Client
 
