@@ -1,5 +1,7 @@
 module Twilio
   module REST
+    class Accounts < ListResource; end
+
     class Account < InstanceResource
       def initialize(uri, client, params={})
         super uri, client, params
