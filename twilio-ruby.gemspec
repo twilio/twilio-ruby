@@ -1,6 +1,8 @@
+require 'lib/twilio-ruby/version'
+
 Gem::Specification.new do |s|
   s.name = 'twilio-ruby'
-  s.version = '3.2.1'
+  s.version = Twilio::VERSION
   s.author = 'Andrew Benton'
   s.email = 'andrew@twilio.com'
 

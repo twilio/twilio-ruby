@@ -17,9 +17,9 @@ module Twilio
     # client object exposes two wrapper objects which you can use as entry
     # points into Twilio: +account+ and +accounts+.
     #
-    # === @client.account
+    # ==== @client.account
     #
-    # Most of the time you'll want to start with the +account+ property. This
+    # Most of the time you'll want to start with the +account+ attribute. This
     # object is an instance of Twilio::REST::Account that wraps the account
     # referenced by the +account_sid+ you used when instantiating the client.
     #
@@ -30,7 +30,7 @@ module Twilio
     #
     # represents an account's call list.
     #
-    # === @client.accounts
+    # ==== @client.accounts
     #
     # If you are doing anything related to subaccounts you'll want to start
     # here. This object is an instance of Twilio::REST::Accounts that wraps
@@ -42,13 +42,12 @@ module Twilio
     # accounts and ListResource#create to create a new account. Use
     # ListResource#get to grab a particular account once you know its sid.
     class Client
-
       include Twilio::Util
       include Twilio::REST::Utils
 
       HTTP_HEADERS = {
         'Accept' => 'application/json',
-        'User-Agent' => 'twilio-ruby/3.2.1',
+        'User-Agent' => "twilio-ruby/#{Twilio::VERSION}",
       }
 
       attr_reader :account_sid, :account, :accounts, :last_request,
@@ -58,44 +57,45 @@ module Twilio
       # Instantiate a new HTTP client to talk to Twilio. The parameters
       # +account_sid+ and +auth_token+ are required and used to generate the
       # HTTP basic auth header in each request. The +options+ parameter is a
-      # hash of configuration options. the following keys are supported:
+      # hash of connection configuration options. the following keys are
+      # supported:
       #
-      # ==== :domain => 'api.twilio.com'
+      # === <tt>:domain => 'api.twilio.com'</tt>
       #
       # The domain to which you'd like the client to make HTTP requests. Useful
       # for testing. Defaults to 'api.twilio.com'.
       #
-      # ==== :port => 443
+      # === <tt>:port => 443</tt>
       #
       # The port on which to connect to the above domain. Defaults to 443 and
       # should be left that way except in testing environments.
       #
-      # ==== :use_ssl => true
+      # === <tt>:use_ssl => true</tt>
       #
       # Declare whether ssl should be used for connections to the above domain.
       # Defaults to true and should be left alone except when testing.
       #
-      # ==== :ssl_verify_peer => true
+      # === <tt>:ssl_verify_peer => true</tt>
       #
       # Declare whether to verify the host's ssl cert when setting up the
       # connection to the above domain. Defaults to true, but can be turned off
       # to avoid insecure connection warnings in environments without the proper
       # cert validation chain.
       #
-      # ==== :proxy_addr => 'proxy.host.domain'
+      # === <tt>:proxy_addr => 'proxy.host.domain'</tt>
       #
       # The domain of a proxy through which you'd like the client to make HTTP
       # requests. Defaults to nil.
       #
-      # ==== :proxy_port => 3128
+      # === <tt>:proxy_port => 3128</tt>
       #
       # The port on which to connect to the above proxy. Defaults to nil.
       #
-      # ==== :proxy_user => 'username'
+      # === <tt>:proxy_user => 'username'</tt>
       #
       # The user name to use for authentication with the proxy. Defaults to nil.
       #
-      # ==== :proxy_pass => 'password'
+      # === <tt>:proxy_pass => 'password'</tt>
       #
       # The password to use for authentication with the proxy. Defaults to nil.
       def initialize(account_sid, auth_token, options = {})
@@ -104,12 +104,15 @@ module Twilio
         set_up_subresources
       end
 
-      def inspect #:nodoc:
+      def inspect # :nodoc:
         "<Twilio::REST::Client @account_sid=#{@account_sid}>"
       end
 
+      ##
       # Define #get, #put, #post and #delete helper methods for sending HTTP
-      # requests to Twilio.
+      # requests to Twilio. You shouldn't need to use these methods directly,
+      # but they can be useful for debugging. Each method returns a hash
+      # obtained from parsing the JSON object in the response body.
       [:get, :put, :post, :delete].each do |method|
         method_class = Net::HTTP.const_get method.to_s.capitalize
         define_method method do |uri, *args|
@@ -124,10 +127,11 @@ module Twilio
       end
 
       # Mimic the old (deprecated) interface. Make an HTTP request to Twilio
-      # using the given +method+ and +uri+. If the +method+ is 'GET' then
-      # +params+ are appended to the +uri+ as urlencoded query parameters. If
-      # the +method+ is 'POST' or 'PUT' then +params+ are passed as an
-      # application/x-www-form-urlencoded string in the request body.
+      # using the given +method+ and +uri+. If the +method+ is <tt>'GET'</tt>
+      # then +params+ are appended to the +uri+ as urlencoded query parameters.
+      # If the +method+ is <tt>'POST'</tt> or <tt>'PUT'</tt> then +params+ are
+      # passed as an application/x-www-form-urlencoded string in the request
+      # body.
       #
       # Returns the raw Net::HTTP::Response object.
       def request(uri, method = 'POST', params = {})
@@ -158,7 +162,10 @@ module Twilio
 
       private
 
-      def set_up_connection_from(options = {})
+      ##
+      # Set up and cache a Net::HTTP object to use when making requests. This is
+      # a private method documented for completeness.
+      def set_up_connection_from(options = {}) # :doc:
         config = {:domain => 'api.twilio.com', :port => 443, :use_ssl => true,
           :ssl_verify_peer => true}.merge! options
         connection_class = Net::HTTP::Proxy config[:proxy_addr],
@@ -179,7 +186,13 @@ module Twilio
         @accounts = Twilio::REST::Accounts.new accounts_uri, self
       end
 
-      def connect_and_send(request)
+      ##
+      # Send an HTTP request using the cached <tt>@connection</tt> object and
+      # return the JSON response body parsed into a hash. Also save the raw
+      # Net::HTTP::Request and Net::HTTP::Response objects as
+      # <tt>@last_request</tt> and <tt>@last_response</tt> to allow for
+      # inspection later.
+      def connect_and_send(request) # :doc:
         @last_request = request
         response = @connection.request request
         @last_response = response
@@ -191,7 +204,6 @@ module Twilio
         end
         object
       end
-
     end
   end
 end
