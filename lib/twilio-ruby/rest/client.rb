@@ -58,20 +58,47 @@ module Twilio
       # HTTP basic auth header in each request. The +options+ parameter is a
       # hash of configuration options. the following keys are supported:
       #
-      # === :domain => String
+      # ==== :domain => 'api.twilio.com'|'some.other.domain'
       #
-      # The domain to which you'd like the client to make requests. Useful for
-      # testing. Defaults to 'api.twilio.com'.
+      # The domain to which you'd like the client to make HTTP requests. Useful
+      # for testing. Defaults to 'api.twilio.com'.
       #
-      # === :scheme => 'http'|'https'
+      # ==== :port => 443
       #
-      # The HTTP scheme to use. Defaults to 'https' and should be left that way
-      # except in testing environments
+      # The port on which to connect to the above domain. Defaults to 443 and
+      # should be left that way except in testing environments.
+      #
+      # ==== :use_ssl => true
+      #
+      # Declare whether ssl should be used for connections to the above domain.
+      # Defaults to true and should be left alone except when testing.
+      #
+      # ==== :ssl_verify_peer => true
+      #
+      # Declare whether to verify the host's ssl cert when setting up the
+      # connection to the above domain. Defaults to true, but can be turned off
+      # to avoid insecure connection warnings in environments without the proper
+      # cert validation chain.
+      #
+      # ==== :proxy_addr => 'proxy.host.domain'
+      #
+      # The domain of a proxy through which you'd like the client to make HTTP
+      # requests. Defaults to nil.
+      #
+      # ==== :proxy_port => 3128
+      #
+      # The port on which to connect to the above proxy. Defaults to nil.
+      #
+      # ==== :proxy_user => 'username'
+      #
+      # The user name to use for authentication with the proxy. Defaults to nil.
+      #
+      # ==== :proxy_pass => 'password'
+      #
+      # The password to use for authentication with the proxy. Defaults to nil.
       def initialize(account_sid, auth_token, options = {})
-domain = 'api.twilio.com',
-                     proxy_host = nil, proxy_port = nil)
         @account_sid, @auth_token = account_sid, auth_token
-        set_up_connection_to domain, proxy_host, proxy_port
+        set_up_connection_with options
         set_up_subresources
       end
 
@@ -129,14 +156,20 @@ domain = 'api.twilio.com',
 
       private
 
-      def set_up_connection_to(domain, proxy_host = nil, proxy_port = nil)
-        connection_class = Net::HTTP::Proxy proxy_host, proxy_port
-        @connection = connection_class.new domain, 443
-        @connection.use_ssl = true
-        # Don't check the server cert. Ideally this is configurable in case an
-        # app wants to verify that it's actually talking to the real Twilio.
-        # But cert validation is usually a nightmare, so we skip it for now.
-        @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      def set_up_connection_with(options = {})
+        config = {
+          :domain => 'api.twilio.com',
+          :port => 443,
+          :use_ssl => true,
+          :ssl_verify_peer => true,
+        }.merge! options
+        connection_class = Net::HTTP::Proxy config[:proxy_addr],
+          config[:proxy_port], config[:proxy_user], config[:proxy_pass]
+        @connection = connection_class.new config[:domain], config[:port]
+        @connection.use_ssl = config[:use_ssl]
+        unless config[:ssl_verify_peer]
+          @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        end
       end
 
       def set_up_subresources
