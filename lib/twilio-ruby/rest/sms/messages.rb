@@ -7,5 +7,7 @@ module Twilio
         @resource_name = 'sms_messages'
       end
     end
+
+    class Message < InstanceResource; end
   end
 end
