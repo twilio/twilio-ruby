@@ -5,5 +5,7 @@ module Twilio
         create :phone_number => phone_number
       end
     end
+
+    class IncomingPhoneNumber < InstanceResource; end
   end
 end
