@@ -7,5 +7,7 @@ module Twilio
         @uri, @client = uri, client
       end
     end
+
+    class AvailablePhoneNumber < InstanceResource; end
   end
 end
