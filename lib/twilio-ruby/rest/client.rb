@@ -1,5 +1,6 @@
 module Twilio
   module REST
+    ##
     # The Twilio::REST::Client class caches authentication parameters and
     # exposes methods to make HTTP requests to Twilio's REST API. However, you
     # should never really need to call these methods yourself since you can
@@ -53,12 +54,13 @@ module Twilio
       attr_reader :account_sid, :account, :accounts, :last_request,
         :last_response
 
+      ##
       # Instantiate a new HTTP client to talk to Twilio. The parameters
       # +account_sid+ and +auth_token+ are required and used to generate the
       # HTTP basic auth header in each request. The +options+ parameter is a
       # hash of configuration options. the following keys are supported:
       #
-      # ==== :domain => 'api.twilio.com'|'some.other.domain'
+      # ==== :domain => 'api.twilio.com'
       #
       # The domain to which you'd like the client to make HTTP requests. Useful
       # for testing. Defaults to 'api.twilio.com'.
@@ -98,7 +100,7 @@ module Twilio
       # The password to use for authentication with the proxy. Defaults to nil.
       def initialize(account_sid, auth_token, options = {})
         @account_sid, @auth_token = account_sid, auth_token
-        set_up_connection_with options
+        set_up_connection_from options
         set_up_subresources
       end
 
@@ -156,13 +158,9 @@ module Twilio
 
       private
 
-      def set_up_connection_with(options = {})
-        config = {
-          :domain => 'api.twilio.com',
-          :port => 443,
-          :use_ssl => true,
-          :ssl_verify_peer => true,
-        }.merge! options
+      def set_up_connection_from(options = {})
+        config = {:domain => 'api.twilio.com', :port => 443, :use_ssl => true,
+          :ssl_verify_peer => true}.merge! options
         connection_class = Net::HTTP::Proxy config[:proxy_addr],
           config[:proxy_port], config[:proxy_user], config[:proxy_pass]
         @connection = connection_class.new config[:domain], config[:port]
