@@ -9,14 +9,11 @@ module Twilio
         @uri, @client = uri, client
       end
 
-      def sid_key # :nodoc:
-        'sid'
-      end
-
       def inspect # :nodoc:
         "<#{self.class} @uri=#{@uri}>"
       end
-    
+
+      ##
       # Grab a list of this kind of resource and return it as an array. The
       # array includes a special attribute named +total+ which will return the
       # total number of items in the list on Twilio's server.
@@ -25,7 +22,8 @@ module Twilio
         response = @client.get @uri, params
         resources = response[detwilify(@resource_name)]
         resource_list = resources.map do |resource|
-          @instance_class.new "#{@uri}/#{resource[sid_key]}", @client, resource
+          @instance_class.new "#{@uri}/#{resource[instance_sid_key]}", @client,
+            resource
         end
         # set the +total+ property on the array
         resource_list.instance_eval {
@@ -37,6 +35,7 @@ module Twilio
         resource_list
       end
 
+      ##
       # Ask Twilio for the total number of items in the list and cache it.
       def total!
         raise "Can't get a resource total without a REST Client" unless @client
@@ -44,21 +43,33 @@ module Twilio
         @total = response['total']
       end
 
+      ##
       # Return the cached total number of items in the list, or fetch and cache.
       def total
         @total ||= total!
       end
 
+      ##
       # Return an empty instance resource object with the proper URI.
       def get(sid)
         @instance_class.new "#{@uri}/#{sid}", @client
       end
-    
+
+      ##
       # Return a newly created resource.
       def create(params = {})
         raise "Can't create a resource without a REST Client" unless @client
         response = @client.post @uri, params
         @instance_class.new "#{@uri}/#{response['sid']}", @client, response
+      end
+
+      private
+
+      ##
+      # Return the JSON key containing the sid of each instance. Overridden for
+      # conference participants and perhaps other resources.
+      def instance_sid_key
+        'sid'
       end
     end
   end

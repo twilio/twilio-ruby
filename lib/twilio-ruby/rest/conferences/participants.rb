@@ -1,7 +1,8 @@
 module Twilio
   module REST
     class Participants < ListResource
-      def sid_key # :nodoc:
+      private
+      def instance_sid_key
         'call_sid'
       end
     end
