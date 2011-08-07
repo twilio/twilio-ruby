@@ -134,7 +134,7 @@ module Twilio
       # body.
       #
       # Returns the raw Net::HTTP::Response object.
-      def request(uri, method = 'POST', params = {})
+      def request(uri, method = 'POST', params = {}) # :nodoc:
         raise ArgumentError, 'Invalid path parameter' if uri.empty?
 
         uri = "/#{uri}" unless uri.start_with? '/'
@@ -177,7 +177,9 @@ module Twilio
         end
       end
 
-      def set_up_subresources
+      ##
+      # Set up +account+ and +accounts+ attributes.
+      def set_up_subresources # :doc:
         accounts_uri = '/2010-04-01/Accounts'
         account_uri = "#{accounts_uri}/#{@account_sid}"
         # Set up a special handle to grab the account.
