@@ -1,6 +1,10 @@
 module Twilio
   module REST
-    class Participants < ListResource; end
+    class Participants < ListResource
+      def sid_key # :nodoc:
+        'call_sid'
+      end
+    end
 
     class Participant < InstanceResource
       def mute

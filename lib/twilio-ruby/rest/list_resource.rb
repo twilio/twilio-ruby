@@ -9,19 +9,23 @@ module Twilio
         @uri, @client = uri, client
       end
 
-      def inspect
+      def sid_key # :nodoc:
+        'sid'
+      end
+
+      def inspect # :nodoc:
         "<#{self.class} @uri=#{@uri}>"
       end
     
       # Grab a list of this kind of resource and return it as an array. The
-      # array includes a special property called +total+ which will return the
+      # array includes a special attribute named +total+ which will return the
       # total number of items in the list on Twilio's server.
       def list(params = {})
         raise "Can't get a resource list without a REST Client" unless @client
         response = @client.get @uri, params
         resources = response[detwilify(@resource_name)]
         resource_list = resources.map do |resource|
-          @instance_class.new "#{@uri}/#{resource['sid']}", @client, resource
+          @instance_class.new "#{@uri}/#{resource[sid_key]}", @client, resource
         end
         # set the +total+ property on the array
         resource_list.instance_eval {
