@@ -60,7 +60,7 @@ module Twilio
       # hash of connection configuration options. the following keys are
       # supported:
       #
-      # === <tt>:domain => 'api.twilio.com'</tt>
+      # === <tt>:host => 'api.twilio.com'</tt>
       #
       # The domain to which you'd like the client to make HTTP requests. Useful
       # for testing. Defaults to 'api.twilio.com'.
@@ -126,6 +126,7 @@ module Twilio
         end
       end
 
+      ##
       # Mimic the old (deprecated) interface. Make an HTTP request to Twilio
       # using the given +method+ and +uri+. If the +method+ is <tt>'GET'</tt>
       # then +params+ are appended to the +uri+ as urlencoded query parameters.
@@ -166,11 +167,11 @@ module Twilio
       # Set up and cache a Net::HTTP object to use when making requests. This is
       # a private method documented for completeness.
       def set_up_connection_from(options = {}) # :doc:
-        config = {:domain => 'api.twilio.com', :port => 443, :use_ssl => true,
+        config = {:host => 'api.twilio.com', :port => 443, :use_ssl => true,
           :ssl_verify_peer => true}.merge! options
         connection_class = Net::HTTP::Proxy config[:proxy_addr],
           config[:proxy_port], config[:proxy_user], config[:proxy_pass]
-        @connection = connection_class.new config[:domain], config[:port]
+        @connection = connection_class.new config[:host], config[:port]
         @connection.use_ssl = config[:use_ssl]
         unless config[:ssl_verify_peer]
           @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -182,9 +183,7 @@ module Twilio
       def set_up_subresources # :doc:
         accounts_uri = '/2010-04-01/Accounts'
         account_uri = "#{accounts_uri}/#{@account_sid}"
-        # Set up a special handle to grab the account.
         @account = Twilio::REST::Account.new account_uri, self
-        # Set up the accounts subresource.
         @accounts = Twilio::REST::Accounts.new accounts_uri, self
       end
 
