@@ -22,14 +22,14 @@ describe Twilio::REST::Client do
   end
   
   it 'should set up the proper http ssl connection when a different domain is given' do
-    twilio = Twilio::REST::Client.new('someSid', 'someToken', 'api.faketwilio.com')
+    twilio = Twilio::REST::Client.new('someSid', 'someToken', :host => 'api.faketwilio.com')
     twilio.instance_variable_get('@connection').address.should == 'api.faketwilio.com'
     twilio.instance_variable_get('@connection').port.should == 443
     twilio.instance_variable_get('@connection').use_ssl?.should == true
   end
 
   it 'should set up the proper http ssl connection when a proxy_host is given' do
-    twilio = Twilio::REST::Client.new('someSid', 'someToken', 'api.faketwilio.com', 'localhost')
+    twilio = Twilio::REST::Client.new('someSid', 'someToken', :host => 'api.faketwilio.com', :proxy_addr => 'localhost')
     twilio.instance_variable_get('@connection').proxy?.should == true
     twilio.instance_variable_get('@connection').proxy_address.should == 'localhost'
     twilio.instance_variable_get('@connection').proxy_port.should == 80
@@ -39,7 +39,7 @@ describe Twilio::REST::Client do
   end
 
   it 'should set up the proper http ssl connection when a proxy_host and proxy_port are given' do
-    twilio = Twilio::REST::Client.new('someSid', 'someToken', 'api.faketwilio.com', 'localhost', 13128)
+    twilio = Twilio::REST::Client.new('someSid', 'someToken', :host => 'api.faketwilio.com', :proxy_addr => 'localhost', :proxy_port => 13128)
     twilio.instance_variable_get('@connection').proxy?.should == true
     twilio.instance_variable_get('@connection').proxy_address.should == 'localhost'
     twilio.instance_variable_get('@connection').proxy_port.should == 13128
