@@ -99,7 +99,7 @@ module Twilio
       #
       # The password to use for authentication with the proxy. Defaults to nil.
       def initialize(account_sid, auth_token, options = {})
-        @account_sid, @auth_token = account_sid, auth_token
+        @account_sid, @auth_token = account_sid.strip, auth_token.strip
         set_up_connection_from options
         set_up_subresources
       end
