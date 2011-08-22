@@ -36,28 +36,20 @@ module Twilio
           eigenclass = class << self; self; end
           eigenclass.send :define_method, :total, &lambda {response['total']}
         }
-        # update the list's internal total if we just fetched the whole list
-        @total = response['total'] if params.empty?
         resource_list
       end
 
       ##
-      # Ask Twilio for the total number of items in the list and cache it.
+      # Ask Twilio for the total number of items in the list.
       # Calling this method makes an HTTP GET request to <tt>@uri</tt> with a
       # page size parameter of 1 to minimize data over the wire while still
-      # obtaining the total. Don't use this or #total if you are planning to
+      # obtaining the total. Don't use this if you are planning to
       # call #list anyway, since the array returned from #list will have a
       # +total+ attribute as well.
-      def total!
+      def total
         raise "Can't get a resource total without a REST Client" unless @client
         response = @client.get @uri, :page_size => 1
         @total = response['total']
-      end
-
-      ##
-      # Return the cached total number of items in the list, or fetch and cache.
-      def total
-        @total ||= total!
       end
 
       ##
