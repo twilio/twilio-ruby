@@ -3,7 +3,7 @@ module Twilio
     class Local < ListResource
       def initialize(uri, client)
         @resource_name = 'available_phone_numbers'
-        @instance_class = Twilio::REST.const_get 'AvailablePhoneNumber'
+        @instance_class = Twilio::REST::AvailablePhoneNumber
         @uri, @client = uri, client
       end
     end
