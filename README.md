@@ -16,7 +16,7 @@ $ rake gem
 $ gem install pkg/twilio-ruby-{version}
 ```
 
-## Get Started With Client Capability Tokens
+## Get Started with Client Capability Tokens
 
 If you just need to generate a Capability Token for use with Twilio Client, you
 can do this:
@@ -139,7 +139,7 @@ auth_token = '62ea81de3a5b414154eb263595357c69'
 
 # buy the first one
 @number = @numbers[0].phone_number
-@account.incoming_phone_numbers.create(:phone_number => @number)
+@client.account.incoming_phone_numbers.create(:phone_number => @number)
 ```
 
 ## More Information
