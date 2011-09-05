@@ -10,18 +10,20 @@ module Twilio
         @connection = @client.instance_variable_get :@connection
       end
 
+      ##
+      # Return the wav URL for this recording.
       def wav
-        scheme = @connection.use_ssl ? 'https' : 'http'
-        "#{scheme}://#{@connection.address}#{@uri}.wav"
+        "https://#{@connection.address}#{@uri}.wav"
       end
 
       def wav!(&block)
         @connection.request_get @uri, &block
       end
 
+      ##
+      # Return the mp3 URL for this recording.
       def mp3
-        scheme = @connection.use_ssl ? 'https' : 'http'
-        "#{scheme}://#{@connection.address}#{@uri}.mp3"
+        "https://#{@connection.address}#{@uri}.mp3"
       end
 
       def mp3!(&block)
