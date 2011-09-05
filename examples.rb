@@ -7,7 +7,13 @@
 
 ################ ACCOUNTS ################
 
-# grab an account instance resource (no http request)
+# shortcut to grab your account object (account_sid is inferred from the client's auth credentials)
+@account = @client.account 
+
+# list your (sub)accounts
+@client.accounts.list
+
+# grab an account instance resource if you know the sid (no http request)
 @account = @client.accounts.get(@account_sid)
 # http round trip happens here
 puts @account.friendly_name
@@ -15,18 +21,15 @@ puts @account.friendly_name
 # update an account's friendly name (only one http request, for the POST)
 @client.accounts.get(@account_sid).update(:friendly_name => 'A Fabulous Friendly Name')
 
-# shortcut to grab your account object (account_sid is inferred from the client's auth credentials)
-@account = @client.account 
-
 ################ CALLS ################
 
-# print a list of calls (all parameters optional, single http req)
+# print a list of calls (all parameters optional, single http request)
 @account.calls.list({:page => 0, :page_size => 1000, :start_time => '2010-09-01'}).each do |call|
   puts call.sid
 end
 
-# get a particular call and list its recordings (one http req, for each())
-@account.calls.get('CAXXXXXXX').recordings.list.each do {|r| puts r.sid}
+# get a particular call and list its recording urls (one http request for #list)
+@account.calls.get('CAXXXXXXX').recordings.list.each do {|r| puts r.wav}
 
 # make a new outgoing call (this is the same type of object we get
 # from calls.get, except this has attributes since we made an http request)
@@ -61,7 +64,7 @@ puts @account.sms.messages.get('SMXXXXXXXX').body
 
 ################ PHONE NUMBERS ################
 
-# get a list of supported country codes (api currently doesn't support this)
+# get a list of supported country codes
 @account.available_phone_numbers.list
 
 # print some available numbers (only one http request)
