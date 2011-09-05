@@ -4,7 +4,7 @@ module Twilio
       def initialize(uri, client)
         super
         # hard-code the json key since 'messages' doesn't exist in the response
-        @resource_name = 'sms_messages'
+        @list_key = 'sms_messages'
       end
     end
 

@@ -1,9 +1,10 @@
 module Twilio
   module REST
     class Participants < ListResource
-      private
-      def instance_sid_key
-        'call_sid'
+      def initialize(uri, client)
+        super
+        # hard-code the json key since participants don't have sids
+        @instance_id_key = 'call_sid'
       end
     end
 

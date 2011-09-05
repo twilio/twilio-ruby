@@ -2,9 +2,9 @@ module Twilio
   module REST
     class AvailablePhoneNumbers < ListResource
       def initialize(uri, client)
-        @resource_name = 'countries'
-        @instance_class = Twilio::REST.const_get 'Country'
         @uri, @client = uri, client
+        @instance_class = Twilio::REST::Country
+        @list_key, @instance_id_key = 'countries', 'country_code'
       end
     end
 

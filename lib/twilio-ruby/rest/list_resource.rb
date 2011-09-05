@@ -4,9 +4,10 @@ module Twilio
       include Utils
 
       def initialize(uri, client)
-        @resource_name = self.class.name.split('::')[-1]
-        @instance_class = Twilio::REST.const_get @resource_name.chop
         @uri, @client = uri, client
+        resource_name = self.class.name.split('::')[-1]
+        @instance_class = Twilio::REST.const_get resource_name.chop
+        @list_key, @instance_id_key = detwilify(resource_name), 'sid'
       end
 
       def inspect # :nodoc:
@@ -26,9 +27,9 @@ module Twilio
       def list(params = {})
         raise "Can't get a resource list without a REST Client" unless @client
         response = @client.get @uri, params
-        resources = response[detwilify(@resource_name)]
+        resources = response[@list_key]
         resource_list = resources.map do |resource|
-          @instance_class.new "#{@uri}/#{resource[instance_sid_key]}", @client,
+          @instance_class.new "#{@uri}/#{resource[@instance_id_key]}", @client,
             resource
         end
         # set the +total+ property on the array
@@ -71,17 +72,8 @@ module Twilio
       def create(params={})
         raise "Can't create a resource without a REST Client" unless @client
         response = @client.post @uri, params
-        @instance_class.new "#{@uri}/#{response[instance_sid_key]}", @client,
+        @instance_class.new "#{@uri}/#{response[@instance_id_key]}", @client,
           response
-      end
-
-      private
-
-      ##
-      # Return the JSON key containing the sid of each instance. This method is
-      # overridden for conference participants and perhaps other resources.
-      def instance_sid_key
-        'sid'
       end
     end
   end
