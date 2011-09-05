@@ -22,7 +22,7 @@ module Twilio
       # of resources you can request is 1000.
       #
       # The optional +params+ hash allows you to filter the list returned. The
-      # filters for each list resource type are defined by Twilio
+      # filters for each list resource type are defined by Twilio.
       def list(params = {})
         raise "Can't get a resource list without a REST Client" unless @client
         response = @client.get @uri, params
@@ -68,7 +68,7 @@ module Twilio
       # the Twilio REST API documentation related to the kind of resource you
       # are attempting to create for details. Calling this method makes an HTTP
       # POST request to <tt>@uri</tt> with the given params
-      def create(params = {})
+      def create(params={})
         raise "Can't create a resource without a REST Client" unless @client
         response = @client.post @uri, params
         @instance_class.new "#{@uri}/#{response[instance_sid_key]}", @client,
@@ -78,8 +78,8 @@ module Twilio
       private
 
       ##
-      # Return the JSON key containing the sid of each instance. Overridden for
-      # conference participants and perhaps other resources.
+      # Return the JSON key containing the sid of each instance. This method is
+      # overridden for conference participants and perhaps other resources.
       def instance_sid_key
         'sid'
       end
