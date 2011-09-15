@@ -82,6 +82,10 @@ module Twilio
       # to avoid insecure connection warnings in environments without the proper
       # cert validation chain.
       #
+      # === <tt>:ca_file => 'path_to_ca_file'</tt>
+      #
+      # Specify the path to the certificate authority file.
+      #
       # === <tt>:proxy_addr => 'proxy.host.domain'</tt>
       #
       # The domain of a proxy through which you'd like the client to make HTTP
@@ -173,6 +177,7 @@ module Twilio
           config[:proxy_port], config[:proxy_user], config[:proxy_pass]
         @connection = connection_class.new config[:host], config[:port]
         @connection.use_ssl = config[:use_ssl]
+        @connection.ca_file ||= config[:ca_file]
         unless config[:ssl_verify_peer]
           @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
         end
