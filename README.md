@@ -16,7 +16,7 @@ $ rake gem
 $ gem install pkg/twilio-ruby-{version}
 ```
 
-## Get Started with Client Capability Tokens
+## Getting Started With Client Capability Tokens
 
 If you just need to generate a Capability Token for use with Twilio Client, you
 can do this:
@@ -45,7 +45,7 @@ capability.allow_client_incoming 'andrew'
 There is a slightly more detailed document in the
 [Capability](twilio-ruby/wiki/Capability) section of the wiki.
 
-## Getting Started with TwiML
+## Getting Started With TwiML
 
 TwiML support is based on the [builder][1] library. You can construct a TwiML
 response like this:
@@ -78,7 +78,7 @@ This will print the following (except for the whitespace):
 </Response>
 ```
 
-## Getting Started with REST
+## Getting Started With REST
 
 ### Setup Work
 
