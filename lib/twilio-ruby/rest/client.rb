@@ -82,6 +82,14 @@ module Twilio
       # to avoid insecure connection warnings in environments without the proper
       # cert validation chain.
       #
+      # === <tt>:timeout => 30</tt>
+      #
+      # Set the time in seconds to wait before timing out the HTTP request.
+      # Defaults to 30 seconds. If you aren't fetching giant pages of call or
+      # SMS logs you can safely decrease this to something like 3 seconds or
+      # lower. In paricular if you are sending SMS you can set this to 1 second
+      # or less and swallow the exception if you don't care about the response.
+      #
       # === <tt>:proxy_addr => 'proxy.host.domain'</tt>
       #
       # The domain of a proxy through which you'd like the client to make HTTP
@@ -168,7 +176,7 @@ module Twilio
       # a private method documented for completeness.
       def set_up_connection_from(options = {}) # :doc:
         config = {:host => 'api.twilio.com', :port => 443, :use_ssl => true,
-          :ssl_verify_peer => true}.merge! options
+          :ssl_verify_peer => true, :timeout => 30}.merge! options
         connection_class = Net::HTTP::Proxy config[:proxy_addr],
           config[:proxy_port], config[:proxy_user], config[:proxy_pass]
         @connection = connection_class.new config[:host], config[:port]
@@ -176,6 +184,8 @@ module Twilio
         unless config[:ssl_verify_peer]
           @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
         end
+        @connection.open_timeout = options[:timeout]
+        @connection.read_timeout = options[:timeout]
       end
 
       ##
