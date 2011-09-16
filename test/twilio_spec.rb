@@ -28,6 +28,15 @@ describe Twilio::REST::Client do
     twilio.instance_variable_get('@connection').use_ssl?.should == true
   end
 
+  it 'should adjust the open and read timeouts on the underlying Net::HTTP object when asked' do
+    timeout = rand(30)
+    twilio = Twilio::REST::Client.new('someSid', 'someToken', :timeout => timeout)
+    twilio.instance_variable_get('@connection').port.should == 443
+    twilio.instance_variable_get('@connection').use_ssl?.should == true
+    twilio.instance_variable_get('@connection').open_timeout.should == timeout
+    twilio.instance_variable_get('@connection').read_timeout.should == timeout
+  end
+
   it 'should set up the proper http ssl connection when a proxy_host is given' do
     twilio = Twilio::REST::Client.new('someSid', 'someToken', :host => 'api.faketwilio.com', :proxy_addr => 'localhost')
     twilio.instance_variable_get('@connection').proxy?.should == true
