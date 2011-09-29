@@ -42,13 +42,13 @@ capability.allow_client_incoming 'andrew'
 @token = capability.generate
 ```
 
-There is a slightly more detailed document in the
-[Capability](twilio-ruby/wiki/Capability) section of the wiki.
+There is a slightly more detailed document in the [Capability][capability]
+section of the wiki.
 
 ## Getting Started With TwiML
 
-TwiML support is based on the [builder][1] library. You can construct a TwiML
-response like this:
+TwiML support is based on the [builder][builder] library. You can construct a
+TwiML response like this:
 
 ``` ruby
 require 'rubygems' # not necessary with ruby 1.9 but included for completeness
@@ -144,8 +144,15 @@ auth_token = '62ea81de3a5b414154eb263595357c69'
 
 ## More Information
 
-There are more detailed examples in the included [examples.rb](twilio-ruby/blob/master/examples.rb).
+There are more detailed examples in the included [examples.rb][examples].
 
-Full [API documentation](twilio-ruby/wiki/Documentation), as well as an [upgrade guide](twilio-ruby/wiki/UpgradeGuide) for users of the old twiliolib gem, is available in the [twilio-ruby github wiki](twilio-ruby/wiki).
+Full [API documentation][documentation], as well as an [upgrade guide][upgrade]
+for users of the old twiliolib gem, is available in the
+[twilio-ruby github wiki][wiki].
 
-[1]:http://builder.rubyforge.org/
+[capability]:https://github.com/twilio/twilio-ruby/wiki/Capability
+[builder]:http://builder.rubyforge.org/
+[examples]:https://github.com/twilio/twilio-ruby/blob/master/examples.rb
+[documentation]:https://github.com/twilio/twilio-ruby/wiki/Documentation
+[upgrade]:https://github.com/twilio/twilio-ruby/wiki/UpgradeGuide
+[wiki]:https://github.com/twilio/twilio-ruby/wiki
