@@ -33,10 +33,10 @@ module Twilio
             resource
         end
         # set the +total+ property on the array
-        resource_list.instance_eval {
+        resource_list.instance_eval do
           eigenclass = class << self; self; end
           eigenclass.send :define_method, :total, &lambda {response['total']}
-        }
+        end
         resource_list
       end
 
@@ -49,8 +49,7 @@ module Twilio
       # +total+ attribute as well.
       def total
         raise "Can't get a resource total without a REST Client" unless @client
-        response = @client.get @uri, :page_size => 1
-        @total = response['total']
+        @client.get(@uri, :page_size => 1)['total']
       end
 
       ##

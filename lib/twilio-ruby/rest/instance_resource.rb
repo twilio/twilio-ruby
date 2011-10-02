@@ -38,8 +38,7 @@ module Twilio
       # instance resource, including the newly updated properties.
       def update(params = {})
         raise "Can't update a resource without a REST Client" unless @client
-        response = @client.post @uri, params
-        set_up_properties_from response
+        set_up_properties_from(@client.post(@uri, params))
         self
       end
 
@@ -49,8 +48,7 @@ module Twilio
       def refresh
         raise "Can't refresh a resource without a REST Client" unless @client
         @updated = false
-        response = @client.get @uri
-        set_up_properties_from response
+        set_up_properties_from(@client.get(@uri))
         self
       end
 
@@ -68,8 +66,7 @@ module Twilio
       # until an attempt is made to access an unknown attribute.
       def method_missing(method, *args)
         super if @updated
-        response = @client.get @uri
-        set_up_properties_from response
+        set_up_properties_from(@client.get(@uri))
         self.send method, *args
       end
 
