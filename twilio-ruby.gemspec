@@ -24,6 +24,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'fakeweb', '~> 1.3.0'
   s.add_development_dependency 'rack',    '~> 1.3.0'
 
-  s.extra_rdoc_files = ['README.md', 'README.rdoc', 'examples.rb', 'LICENSE']
+  s.extra_rdoc_files = ['README.md', 'examples.rb', 'LICENSE']
   s.rdoc_options = ['--line-numbers', '--inline-source', '--title', 'twilio-ruby', '--main', 'README.md']
 end
