@@ -82,6 +82,11 @@ module Twilio
       # to avoid insecure connection warnings in environments without the proper
       # cert validation chain.
       #
+      # === <tt>:ssl_ca_file => '/path/to/ca/file'</tt>
+      #
+      # Specify the path to the certificate authority bundle you'd like to use
+      # when verifying Twilio's SSL certificate.
+      #
       # === <tt>:timeout => 30</tt>
       #
       # Set the time in seconds to wait before timing out the HTTP request.
@@ -181,6 +186,7 @@ module Twilio
           config[:proxy_port], config[:proxy_user], config[:proxy_pass]
         @connection = connection_class.new config[:host], config[:port]
         @connection.use_ssl = config[:use_ssl]
+        @connection.ca_file = config[:ssl_ca_file]
         unless config[:ssl_verify_peer]
           @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
         end

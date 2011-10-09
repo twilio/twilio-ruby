@@ -21,6 +21,12 @@ describe Twilio::REST::Client do
     twilio.instance_variable_get('@connection').use_ssl?.should == true
   end
   
+  it 'should set up the requested ssl verification ca_file if provided' do
+    twilio = Twilio::REST::Client.new('someSid', 'someToken', :ssl_ca_file => '/path/to/ca/file')
+    connection = twilio.instance_variable_get('@connection')
+    connection.ca_file.should == '/path/to/ca/file'
+  end
+
   it 'should set up the proper http ssl connection when a different domain is given' do
     twilio = Twilio::REST::Client.new('someSid', 'someToken', :host => 'api.faketwilio.com')
     twilio.instance_variable_get('@connection').address.should == 'api.faketwilio.com'
