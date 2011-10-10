@@ -7,7 +7,7 @@ require 'openssl'
 require 'base64'
 require 'jwt'
 
-require 'twilio-ruby/version'
+require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
 require 'twilio-ruby/util'
 require 'twilio-ruby/util/request_validator'
 require 'twilio-ruby/util/capability'

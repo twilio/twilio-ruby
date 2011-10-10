@@ -16,9 +16,10 @@ describe Twilio::REST::Client do
   
   it 'should set up the proper default http ssl connection' do
     twilio = Twilio::REST::Client.new('someSid', 'someToken')
-    twilio.instance_variable_get('@connection').address.should == 'api.twilio.com'
-    twilio.instance_variable_get('@connection').port.should == 443
-    twilio.instance_variable_get('@connection').use_ssl?.should == true
+    connection = twilio.instance_variable_get('@connection')
+    connection.address.should == 'api.twilio.com'
+    connection.port.should == 443
+    connection.use_ssl?.should == true
   end
   
   it 'should set up the requested ssl verification ca_file if provided' do
@@ -29,38 +30,42 @@ describe Twilio::REST::Client do
 
   it 'should set up the proper http ssl connection when a different domain is given' do
     twilio = Twilio::REST::Client.new('someSid', 'someToken', :host => 'api.faketwilio.com')
-    twilio.instance_variable_get('@connection').address.should == 'api.faketwilio.com'
-    twilio.instance_variable_get('@connection').port.should == 443
-    twilio.instance_variable_get('@connection').use_ssl?.should == true
+    connection = twilio.instance_variable_get('@connection')
+    connection.address.should == 'api.faketwilio.com'
+    connection.port.should == 443
+    connection.use_ssl?.should == true
   end
 
   it 'should adjust the open and read timeouts on the underlying Net::HTTP object when asked' do
     timeout = rand(30)
     twilio = Twilio::REST::Client.new('someSid', 'someToken', :timeout => timeout)
-    twilio.instance_variable_get('@connection').port.should == 443
-    twilio.instance_variable_get('@connection').use_ssl?.should == true
-    twilio.instance_variable_get('@connection').open_timeout.should == timeout
-    twilio.instance_variable_get('@connection').read_timeout.should == timeout
+    connection = twilio.instance_variable_get('@connection')
+    connection.port.should == 443
+    connection.use_ssl?.should == true
+    connection.open_timeout.should == timeout
+    connection.read_timeout.should == timeout
   end
 
   it 'should set up the proper http ssl connection when a proxy_host is given' do
     twilio = Twilio::REST::Client.new('someSid', 'someToken', :host => 'api.faketwilio.com', :proxy_addr => 'localhost')
-    twilio.instance_variable_get('@connection').proxy?.should == true
-    twilio.instance_variable_get('@connection').proxy_address.should == 'localhost'
-    twilio.instance_variable_get('@connection').proxy_port.should == 80
-    twilio.instance_variable_get('@connection').address.should == 'api.faketwilio.com'
-    twilio.instance_variable_get('@connection').port.should == 443
-    twilio.instance_variable_get('@connection').use_ssl?.should == true
+    connection = twilio.instance_variable_get('@connection')
+    connection.proxy?.should == true
+    connection.proxy_address.should == 'localhost'
+    connection.proxy_port.should == 80
+    connection.address.should == 'api.faketwilio.com'
+    connection.port.should == 443
+    connection.use_ssl?.should == true
   end
 
   it 'should set up the proper http ssl connection when a proxy_host and proxy_port are given' do
     twilio = Twilio::REST::Client.new('someSid', 'someToken', :host => 'api.faketwilio.com', :proxy_addr => 'localhost', :proxy_port => 13128)
-    twilio.instance_variable_get('@connection').proxy?.should == true
-    twilio.instance_variable_get('@connection').proxy_address.should == 'localhost'
-    twilio.instance_variable_get('@connection').proxy_port.should == 13128
-    twilio.instance_variable_get('@connection').address.should == 'api.faketwilio.com'
-    twilio.instance_variable_get('@connection').port.should == 443
-    twilio.instance_variable_get('@connection').use_ssl?.should == true
+    connection = twilio.instance_variable_get('@connection')
+    connection.proxy?.should == true
+    connection.proxy_address.should == 'localhost'
+    connection.proxy_port.should == 13128
+    connection.address.should == 'api.faketwilio.com'
+    connection.port.should == 443
+    connection.use_ssl?.should == true
   end
 
   it 'should set up an accounts resources object' do
