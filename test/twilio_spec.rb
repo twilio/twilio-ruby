@@ -169,10 +169,10 @@ describe Twilio::REST::Call do
     call.recordings.instance_variable_get('@uri').should == 'someUri/Recordings'
   end
 
-  it 'should set up a recordings resources object' do
+  it 'should set up a notifications resources object' do
     call = Twilio::REST::Call.new('someUri', 'someClient')
-    call.respond_to?(:transcriptions).should == true
-    call.transcriptions.instance_variable_get('@uri').should == 'someUri/Transcriptions'
+    call.respond_to?(:notifications).should == true
+    call.notifications.instance_variable_get('@uri').should == 'someUri/Notifications'
   end
 end
 
