@@ -4,6 +4,7 @@ module Twilio
 
     class Recording < InstanceResource
       def initialize(uri, client, params={})
+        uri.sub! /\/Calls\/CA[^\/]+/, ''
         super uri, client, params
         resource :transcriptions
         # grab a reference to the client's connection object for streaming
