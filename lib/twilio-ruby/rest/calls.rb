@@ -9,7 +9,7 @@ module Twilio
     class Call < InstanceResource
       def initialize(uri, client, params={})
         super uri, client, params
-        resource :recordings, :transcriptions
+        resource :recordings, :notifications
       end
 
       def redirect_to(url)
