@@ -16,68 +16,6 @@ $ rake gem
 $ gem install pkg/twilio-ruby-{version}
 ```
 
-## Getting Started With Client Capability Tokens
-
-If you just need to generate a Capability Token for use with Twilio Client, you
-can do this:
-
-``` ruby
-require 'rubygems' # not necessary with ruby 1.9 but included for completeness
-require 'twilio-ruby'
-
-# put your own account credentials here:
-account_sid = 'AC043dcf9844e13758bc3a36a84c29761'
-auth_token = '62ea81de3a5b413254eb263595357c69'
-
-# set up
-capability = Twilio::Util::Capability.new account_sid, auth_token
-
-# allow outgoing calls to an application
-capability.allow_client_outgoing 'AP89a0180a1a4ddf1da954efca349b7a20'
-
-# allow incoming calls to 'andrew'
-capability.allow_client_incoming 'andrew'
-
-# generate the token string
-@token = capability.generate
-```
-
-There is a slightly more detailed document in the [Capability][capability]
-section of the wiki.
-
-## Getting Started With TwiML
-
-TwiML support is based on the [builder][builder] library. You can construct a
-TwiML response like this:
-
-``` ruby
-require 'rubygems' # not necessary with ruby 1.9 but included for completeness
-require 'twilio-ruby'
-
-# build up a response
-response = Twilio::TwiML::Response.new do |r|
-  r.Say 'hello there', :voice => 'woman'
-  r.Dial :callerId => '+14159992222' do |d|
-    d.Client 'jenny'
-  end
-end
-
-# print the result
-puts response.text
-```
-
-This will print the following (except for the whitespace):
-
-```
-<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-  <Say voice="woman">hello there</Say>
-  <Dial callerId="+14159992222">
-    <Client>jenny</Client>
-  </Dial>
-</Response>
-```
-
 ## Getting Started With REST
 
 ### Setup Work
@@ -140,6 +78,68 @@ auth_token = '62ea81de3a5b414154eb263595357c69'
 # buy the first one
 @number = @numbers[0].phone_number
 @client.account.incoming_phone_numbers.create(:phone_number => @number)
+```
+
+## Getting Started With Client Capability Tokens
+
+If you just need to generate a Capability Token for use with Twilio Client, you
+can do this:
+
+``` ruby
+require 'rubygems' # not necessary with ruby 1.9 but included for completeness
+require 'twilio-ruby'
+
+# put your own account credentials here:
+account_sid = 'AC043dcf9844e13758bc3a36a84c29761'
+auth_token = '62ea81de3a5b413254eb263595357c69'
+
+# set up
+capability = Twilio::Util::Capability.new account_sid, auth_token
+
+# allow outgoing calls to an application
+capability.allow_client_outgoing 'AP89a0180a1a4ddf1da954efca349b7a20'
+
+# allow incoming calls to 'andrew'
+capability.allow_client_incoming 'andrew'
+
+# generate the token string
+@token = capability.generate
+```
+
+There is a slightly more detailed document in the [Capability][capability]
+section of the wiki.
+
+## Getting Started With TwiML
+
+TwiML support is based on the [builder][builder] library. You can construct a
+TwiML response like this:
+
+``` ruby
+require 'rubygems' # not necessary with ruby 1.9 but included for completeness
+require 'twilio-ruby'
+
+# build up a response
+response = Twilio::TwiML::Response.new do |r|
+  r.Say 'hello there', :voice => 'woman'
+  r.Dial :callerId => '+14159992222' do |d|
+    d.Client 'jenny'
+  end
+end
+
+# print the result
+puts response.text
+```
+
+This will print the following (except for the whitespace):
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Say voice="woman">hello there</Say>
+  <Dial callerId="+14159992222">
+    <Client>jenny</Client>
+  </Dial>
+</Response>
 ```
 
 ## More Information
