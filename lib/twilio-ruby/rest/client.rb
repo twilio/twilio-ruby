@@ -79,13 +79,21 @@ module Twilio
       #
       # Declare whether to verify the host's ssl cert when setting up the
       # connection to the above domain. Defaults to true, but can be turned off
-      # to avoid insecure connection warnings in environments without the proper
-      # cert validation chain.
+      # to avoid ssl certificate verification failures in environments without
+      # the necessary ca certificates.
       #
       # === <tt>:ssl_ca_file => '/path/to/ca/file'</tt>
       #
       # Specify the path to the certificate authority bundle you'd like to use
-      # when verifying Twilio's SSL certificate.
+      # when verifying Twilio's SSL certificate. If not specified, two files are
+      # tried:
+      #
+      # Ubuntu
+      # /etc/ssl/certs/ca-certificates.crt
+      #
+      # OSX; requires curl-ca-bundle port; see here:
+      # http://martinottenwaelter.fr/2010/12/ruby19-and-the-ssl-error/
+      # /opt/local/share/curl/curl-ca-bundle.crt
       #
       # === <tt>:timeout => 30</tt>
       #
@@ -111,7 +119,7 @@ module Twilio
       # === <tt>:proxy_pass => 'password'</tt>
       #
       # The password to use for authentication with the proxy. Defaults to nil.
-      def initialize(account_sid, auth_token, options = {})
+      def initialize(account_sid, auth_token, options={})
         @account_sid, @auth_token = account_sid.strip, auth_token.strip
         set_up_connection_from options
         set_up_subresources
@@ -148,7 +156,7 @@ module Twilio
       # body.
       #
       # Returns the raw Net::HTTP::Response object.
-      def request(uri, method = 'POST', params = {}) # :nodoc:
+      def request(uri, method='POST', params={}) # :nodoc:
         raise ArgumentError, 'Invalid path parameter' if uri.empty?
 
         uri = "/#{uri}" unless uri.start_with? '/'
@@ -179,19 +187,34 @@ module Twilio
       ##
       # Set up and cache a Net::HTTP object to use when making requests. This is
       # a private method documented for completeness.
-      def set_up_connection_from(options = {}) # :doc:
+      def set_up_connection_from(options={}) # :doc:
         config = {:host => 'api.twilio.com', :port => 443, :use_ssl => true,
           :ssl_verify_peer => true, :timeout => 30}.merge! options
         connection_class = Net::HTTP::Proxy config[:proxy_addr],
           config[:proxy_port], config[:proxy_user], config[:proxy_pass]
         @connection = connection_class.new config[:host], config[:port]
-        @connection.use_ssl = config[:use_ssl]
-        @connection.ca_file = config[:ssl_ca_file]
-        unless config[:ssl_verify_peer]
-          @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        end
+        set_up_ssl_from config
         @connection.open_timeout = options[:timeout]
         @connection.read_timeout = options[:timeout]
+      end
+ 
+      ##
+      # Set up the ssl properties of the <tt>@connection</tt> Net::HTTP object.
+      # This is a private method documented for completeness.
+      def set_up_ssl_from(config) # :doc:
+        @connection.use_ssl = config[:use_ssl]
+        if config[:ssl_verify_peer]
+          @connection.verify_mode = OpenSSL::SSL::VERIFY_PEER
+          if config[:ssl_ca_file]
+            @connection.ca_file = config[:ssl_ca_file]
+          elsif File.exists? '/etc/ssl/certs/ca-certificates.crt'
+            @connection.ca_file = '/etc/ssl/certs/ca-certificates.crt'
+          elsif File.exists? '/opt/local/share/curl/curl-ca-bundle.crt'
+            @connection.ca_file = '/opt/local/share/curl/curl-ca-bundle.crt'
+          end
+        else
+          @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        end
       end
 
       ##
