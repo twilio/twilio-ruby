@@ -85,15 +85,9 @@ module Twilio
       # === <tt>:ssl_ca_file => '/path/to/ca/file'</tt>
       #
       # Specify the path to the certificate authority bundle you'd like to use
-      # when verifying Twilio's SSL certificate. If not specified, two files are
-      # tried:
-      #
-      # Ubuntu
-      # /etc/ssl/certs/ca-certificates.crt
-      #
-      # OSX; requires curl-ca-bundle port; see here:
-      # http://martinottenwaelter.fr/2010/12/ruby19-and-the-ssl-error/
-      # /opt/local/share/curl/curl-ca-bundle.crt
+      # to verify Twilio's SSL certificate on each request. If not specified, a
+      # certificate bundle extraced from Firefox is bundled with the gem and
+      # is used by default.
       #
       # === <tt>:timeout => 30</tt>
       #
