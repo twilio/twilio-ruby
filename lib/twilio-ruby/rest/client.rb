@@ -208,7 +208,8 @@ module Twilio
           if config[:ssl_ca_file]
             @connection.ca_file = config[:ssl_ca_file]
           else
-            @connection.ca_file = File.dirname(__FILE__) + '/cacert.pem'
+            conf_dir = File.dirname(__FILE__) + '/../../../conf'
+            @connection.ca_file = conf_dir + '/cacert.pem'
           end
         else
           @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
