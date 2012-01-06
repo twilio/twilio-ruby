@@ -86,8 +86,8 @@ module Twilio
       #
       # Specify the path to the certificate authority bundle you'd like to use
       # to verify Twilio's SSL certificate on each request. If not specified, a
-      # certificate bundle extraced from Firefox is bundled with the gem and
-      # is used by default.
+      # certificate bundle extraced from Firefox is packaged with the gem and
+      # used by default.
       #
       # === <tt>:timeout => 30</tt>
       #
