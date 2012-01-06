@@ -207,10 +207,8 @@ module Twilio
           @connection.verify_mode = OpenSSL::SSL::VERIFY_PEER
           if config[:ssl_ca_file]
             @connection.ca_file = config[:ssl_ca_file]
-          elsif File.exists? '/etc/ssl/certs/ca-certificates.crt'
-            @connection.ca_file = '/etc/ssl/certs/ca-certificates.crt'
-          elsif File.exists? '/opt/local/share/curl/curl-ca-bundle.crt'
-            @connection.ca_file = '/opt/local/share/curl/curl-ca-bundle.crt'
+          else
+            @connection.ca_file = '../../../conf/cacert.pem'
           end
         else
           @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
