@@ -50,6 +50,20 @@ module Twilio
         'User-Agent' => "twilio-ruby/#{Twilio::VERSION}",
       }
 
+      DEFAULTS = {
+        :host => 'api.twilio.com',
+        :port => 443,
+        :use_ssl => true,
+        :ssl_verify_peer => true,
+        :ssl_ca_file => File.dirname(__FILE__) + '/../../../conf/cacert.pem',
+        :timeout => 30,
+        :proxy_addr => nil,
+        :proxy_port => nil,
+        :proxy_user => nil,
+        :proxy_pass => nil,
+        :retry_limit => 1,
+      }
+
       attr_reader :account_sid, :account, :accounts, :last_request,
         :last_response
 
@@ -113,9 +127,15 @@ module Twilio
       # === <tt>:proxy_pass => 'password'</tt>
       #
       # The password to use for authentication with the proxy. Defaults to nil.
+      #
+      # === <tt>:retry_limit => 1</tt>
+      #
+      # The number of times to retry a request that has failed before throwing
+      # an exception. Defaults to one.
       def initialize(account_sid, auth_token, options={})
         @account_sid, @auth_token = account_sid.strip, auth_token.strip
-        set_up_connection_from options
+        @config = DEFAULTS.merge! options
+        set_up_connection
         set_up_subresources
       end
 
@@ -181,30 +201,23 @@ module Twilio
       ##
       # Set up and cache a Net::HTTP object to use when making requests. This is
       # a private method documented for completeness.
-      def set_up_connection_from(options={}) # :doc:
-        config = {:host => 'api.twilio.com', :port => 443, :use_ssl => true,
-          :ssl_verify_peer => true, :timeout => 30}.merge! options
-        connection_class = Net::HTTP::Proxy config[:proxy_addr],
-          config[:proxy_port], config[:proxy_user], config[:proxy_pass]
-        @connection = connection_class.new config[:host], config[:port]
-        set_up_ssl_from config
-        @connection.open_timeout = options[:timeout]
-        @connection.read_timeout = options[:timeout]
+      def set_up_connection # :doc:
+        connection_class = Net::HTTP::Proxy @config[:proxy_addr],
+          @config[:proxy_port], @config[:proxy_user], @config[:proxy_pass]
+        @connection = connection_class.new @config[:host], @config[:port]
+        set_up_ssl
+        @connection.open_timeout = @config[:timeout]
+        @connection.read_timeout = @config[:timeout]
       end
  
       ##
       # Set up the ssl properties of the <tt>@connection</tt> Net::HTTP object.
       # This is a private method documented for completeness.
-      def set_up_ssl_from(config) # :doc:
-        @connection.use_ssl = config[:use_ssl]
-        if config[:ssl_verify_peer]
+      def set_up_ssl # :doc:
+        @connection.use_ssl = @config[:use_ssl]
+        if @config[:ssl_verify_peer]
           @connection.verify_mode = OpenSSL::SSL::VERIFY_PEER
-          if config[:ssl_ca_file]
-            @connection.ca_file = config[:ssl_ca_file]
-          else
-            conf_dir = File.dirname(__FILE__) + '/../../../conf'
-            @connection.ca_file = conf_dir + '/cacert.pem'
-          end
+          @connection.ca_file = @config[:ssl_ca_file]
         else
           @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
         end
@@ -227,7 +240,22 @@ module Twilio
       # inspection later.
       def connect_and_send(request) # :doc:
         @last_request = request
-        response = @connection.request request
+        retries_remaining = @config[:retry_limit]
+        puts "entering request/retry loop"
+        while retries_remaining > 0
+          puts "starting loop iteration #{@config[:retry_limit] - retries_remaining + 1}\n"
+          begin
+            response = @connection.request request
+          rescue Exception bang
+            if retries_remaining > 0
+              puts "exception occurred. retries left: #{retries_remaining}\n"
+              retries_remaining--
+            else
+              puts "exception occurred. no retries left\n"
+              raise bang
+            end
+          end
+        end
         @last_response = response
         object = MultiJson.decode response.body if response.body
         if response.kind_of? Net::HTTPClientError
