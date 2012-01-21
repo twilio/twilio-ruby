@@ -241,27 +241,23 @@ module Twilio
       def connect_and_send(request) # :doc:
         @last_request = request
         retries_remaining = @config[:retry_limit]
-        puts "entering request/retry loop"
-        while retries_remaining > 0
-          puts "starting loop iteration #{@config[:retry_limit] - retries_remaining + 1}\n"
-          begin
-            response = @connection.request request
-          rescue Exception bang
-            if retries_remaining > 0
-              puts "exception occurred. retries left: #{retries_remaining}\n"
-              retries_remaining--
-            else
-              puts "exception occurred. no retries left\n"
-              raise bang
-            end
+        begin
+          response = @connection.request request
+          @last_response = response
+          object = MultiJson.decode response.body if response.body
+          if response.kind_of? Net::HTTPServerError
+            raise Twilio::REST::ServerError, object['message']
+          end
+        rescue Exception
+          if retries_remaining > 0
+            retries_remaining -= 1
+            retry
+          else
+            raise
           end
         end
-        @last_response = response
-        object = MultiJson.decode response.body if response.body
         if response.kind_of? Net::HTTPClientError
           raise Twilio::REST::RequestError, object['message']
-        elsif response.kind_of? Net::HTTPServerError
-          raise Twilio::REST::ServerError, object['message']
         end
         object
       end
