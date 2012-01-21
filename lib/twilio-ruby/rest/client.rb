@@ -191,6 +191,7 @@ module Twilio
           raise NotImplementedError, "HTTP #{method} not implemented"
         end
 
+        req['User-Agent'] = 'twilio-ruby/deprecated'
         req.basic_auth @account_sid, @auth_token
         @last_request = req
         @last_response = @connection.request req
