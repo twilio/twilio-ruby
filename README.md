@@ -25,8 +25,8 @@ require 'rubygems' # not necessary with ruby 1.9 but included for completeness
 require 'twilio-ruby'
 
 # put your own credentials here
-account_sid = 'AC043dcf9844e04758bc3a36a84c29761'
-auth_token = '62ea81de3a5b414154eb263595357c69'
+account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 
 # set up a client to talk to the Twilio REST API
 @client = Twilio::REST::Client.new account_sid, auth_token
