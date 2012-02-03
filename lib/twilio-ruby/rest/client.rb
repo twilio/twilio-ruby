@@ -161,42 +161,6 @@ module Twilio
         end
       end
 
-      ##
-      # Mimic the old (deprecated) interface. Make an HTTP request to Twilio
-      # using the given +method+ and +uri+. If the +method+ is <tt>'GET'</tt>
-      # then +params+ are appended to the +uri+ as urlencoded query parameters.
-      # If the +method+ is <tt>'POST'</tt> or <tt>'PUT'</tt> then +params+ are
-      # passed as an application/x-www-form-urlencoded string in the request
-      # body.
-      #
-      # Returns the raw Net::HTTP::Response object.
-      def request(uri, method='POST', params={}) # :nodoc:
-        raise ArgumentError, 'Invalid path parameter' if uri.empty?
-
-        uri = "/#{uri}" unless uri.start_with? '/'
-
-        case method.upcase
-        when 'GET'
-          uri << "?#{url_encode(params)}" if params
-          req = Net::HTTP::Get.new uri
-        when 'DELETE'
-          req = Net::HTTP::Delete.new uri
-        when 'PUT'
-          req = Net::HTTP::Put.new uri
-          req.form_data = params
-        when 'POST'
-          req = Net::HTTP::Post.new uri
-          req.form_data = params
-        else
-          raise NotImplementedError, "HTTP #{method} not implemented"
-        end
-
-        req['User-Agent'] = 'twilio-ruby/deprecated'
-        req.basic_auth @account_sid, @auth_token
-        @last_request = req
-        @last_response = @connection.request req
-      end
-
       private
 
       ##
