@@ -1,4 +1,4 @@
-require 'lib/twilio-ruby/version'
+require './lib/twilio-ruby/version'
 
 Gem::Specification.new do |s|
   s.name = 'twilio-ruby'
