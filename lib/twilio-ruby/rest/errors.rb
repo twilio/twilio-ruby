@@ -1,6 +1,8 @@
 module Twilio
   module REST
-    class RequestError < StandardError; end
     class ServerError < StandardError; end
+    class RequestError < StandardError; end
+    class InvalidNumber < RequestError; end
+    class InternationalSmsUnavailable < RequestError; end
   end
 end

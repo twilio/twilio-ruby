@@ -258,7 +258,11 @@ module Twilio
           end
         end
         if response.kind_of? Net::HTTPClientError
-          raise Twilio::REST::RequestError, object['message']
+          case object['code']
+            when 21401 then raise Twilio::REST::InvalidNumber, object['message']
+            when 21408 then raise Twilio::REST::InternationalSmsUnavailable, object['message']
+            else raise Twilio::REST::RequestError, object['message']
+            end
         end
         object
       end
