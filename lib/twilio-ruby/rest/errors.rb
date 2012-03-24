@@ -2,11 +2,12 @@ module Twilio
   module REST
     class ServerError < StandardError; end
 
-    class RequestError< StandardError
+    class RequestError < StandardError
       attr_reader :code
-      def initialize(msg, code=nil);
-        super(msg);
-        @code = code;
+
+      def initialize(message, code=nil);
+        super message
+        @code = code
       end
     end
   end

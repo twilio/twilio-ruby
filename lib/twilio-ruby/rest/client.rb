@@ -222,7 +222,7 @@ module Twilio
           end
         end
         if response.kind_of? Net::HTTPClientError
-          raise Twilio::REST::RequestError.exception(object['message'], object['code'])
+          raise Twilio::REST::RequestError.new object['message'], object['code']
         end
         object
       end
