@@ -205,7 +205,7 @@ module Twilio
       # inspection later.
       def connect_and_send(request) # :doc:
         @last_request = request
-        retries_remaining = @config[:retry_limit]
+        retries_left = @config[:retry_limit]
         begin
           response = @connection.request request
           @last_response = response
@@ -214,12 +214,7 @@ module Twilio
             raise Twilio::REST::ServerError, object['message']
           end
         rescue Exception
-          if retries_remaining > 0
-            retries_remaining -= 1
-            retry
-          else
-            raise
-          end
+          if retries_left > 0 then retries_left -= 1; retry else raise end
         end
         if response.kind_of? Net::HTTPClientError
           raise Twilio::REST::RequestError.new object['message'], object['code']
