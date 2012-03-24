@@ -32,10 +32,36 @@ module Twilio
           @instance_class.new "#{@uri}/#{resource[@instance_id_key]}", @client,
             resource
         end
-        # set the +total+ property on the array
+        # set the +total+, +next+, +previous+, +first+, and +last+ properties on
+        # the array
+        client = @client
         resource_list.instance_eval do
           eigenclass = class << self; self; end
           eigenclass.send :define_method, :total, &lambda {response['total']}
+          eigenclass.send :define_method, :next_page, &lambda {
+            if response['next_page_uri']
+              return client.get response['next_page_uri'], nil, true
+            end
+            []
+          }
+          eigenclass.send :define_method, :previous_page, &lambda {
+            if response['previous_page_uri']
+              client.get response['previous_page_uri'], nil, true
+            end
+            []
+          }
+          eigenclass.send :define_method, :first_page, &lambda {
+            if response['first_page_uri']
+              client.get response['first_page_uri'], nil, true
+            end
+            []
+          }
+          eigenclass.send :define_method, :last_page, &lambda {
+            if response['last_page_uri']
+              client.get response['last_page_uri'], nil, true
+            end
+            []
+          }
         end
         resource_list
       end

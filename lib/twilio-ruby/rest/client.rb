@@ -152,8 +152,10 @@ module Twilio
         method_class = Net::HTTP.const_get method.to_s.capitalize
         define_method method do |uri, *args|
           params = twilify args[0]; params = {} if params.empty?
-          uri = "#{uri}.json" # create a local copy of the uri to manipulate
-          uri << "?#{url_encode(params)}" if method == :get && !params.empty?
+          unless args[1]
+            uri = "#{uri}.json" # create a local copy of the uri to manipulate
+            uri << "?#{url_encode(params)}" if method == :get && !params.empty?
+          end
           request = method_class.new uri, HTTP_HEADERS
           request.basic_auth @account_sid, @auth_token
           request.form_data = params if [:post, :put].include? method
