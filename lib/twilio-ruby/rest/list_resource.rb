@@ -28,8 +28,9 @@ module Twilio
         raise "Can't get a resource list without a REST Client" unless @client
         response = @client.get @uri, params, full_uri
         resources = response[@list_key]
+        uri = full_uri ? @uri.split('.')[0] : @uri
         resource_list = resources.map do |resource|
-          @instance_class.new "#{@uri}/#{resource[@instance_id_key]}", @client,
+          @instance_class.new "#{uri}/#{resource[@instance_id_key]}", @client,
             resource
         end
         # set the +total+ and +next_page+ properties on the array
