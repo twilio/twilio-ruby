@@ -40,8 +40,9 @@ module Twilio
           eigenclass.send :define_method, :next_page, &lambda {
             if response['next_page_uri']
               list_class.new(response['next_page_uri'], client).list({}, true)
+            else
+              []
             end
-            []
           }
         end
         resource_list
