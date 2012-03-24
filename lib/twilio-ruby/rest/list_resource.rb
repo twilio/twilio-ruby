@@ -24,41 +24,22 @@ module Twilio
       #
       # The optional +params+ hash allows you to filter the list returned. The
       # filters for each list resource type are defined by Twilio.
-      def list(params = {})
+      def list(params={}, full_uri=false)
         raise "Can't get a resource list without a REST Client" unless @client
-        response = @client.get @uri, params
+        response = @client.get @uri, params, full_uri
         resources = response[@list_key]
         resource_list = resources.map do |resource|
           @instance_class.new "#{@uri}/#{resource[@instance_id_key]}", @client,
             resource
         end
-        # set the +total+, +next+, +previous+, +first+, and +last+ properties on
-        # the array
-        client = @client
+        # set the +total+ and +next_page+ properties on the array
+        client, list_class = @client, self.class
         resource_list.instance_eval do
           eigenclass = class << self; self; end
           eigenclass.send :define_method, :total, &lambda {response['total']}
           eigenclass.send :define_method, :next_page, &lambda {
             if response['next_page_uri']
-              return client.get response['next_page_uri'], nil, true
-            end
-            []
-          }
-          eigenclass.send :define_method, :previous_page, &lambda {
-            if response['previous_page_uri']
-              client.get response['previous_page_uri'], nil, true
-            end
-            []
-          }
-          eigenclass.send :define_method, :first_page, &lambda {
-            if response['first_page_uri']
-              client.get response['first_page_uri'], nil, true
-            end
-            []
-          }
-          eigenclass.send :define_method, :last_page, &lambda {
-            if response['last_page_uri']
-              client.get response['last_page_uri'], nil, true
+              list_class.new(response['next_page_uri'], client).list({}, true)
             end
             []
           }
