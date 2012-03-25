@@ -144,7 +144,8 @@ This will print the following (except for the whitespace):
 
 ## More Information
 
-There are more detailed examples in the included [examples.rb][examples].
+There are more detailed examples in the included [examples][examples]
+directory.
 
 Full [API documentation][documentation], as well as an [upgrade guide][upgrade]
 for users of the old twiliolib gem, is available in the
@@ -152,7 +153,7 @@ for users of the old twiliolib gem, is available in the
 
 [capability]:https://github.com/twilio/twilio-ruby/wiki/Capability
 [builder]:http://builder.rubyforge.org/
-[examples]:https://github.com/twilio/twilio-ruby/blob/master/examples.rb
+[examples]:https://github.com/twilio/twilio-ruby/blob/master/examples
 [documentation]:https://github.com/twilio/twilio-ruby/wiki/Documentation
 [upgrade]:https://github.com/twilio/twilio-ruby/wiki/UpgradeGuide
 [wiki]:https://github.com/twilio/twilio-ruby/wiki
