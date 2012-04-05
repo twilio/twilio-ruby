@@ -13,7 +13,7 @@ describe Twilio::REST::Client do
     twilio.account_sid.should == 'someSid'
     twilio.instance_variable_get('@auth_token').should == 'someToken'
   end
-  
+
   it 'should set up the proper default http ssl connection' do
     twilio = Twilio::REST::Client.new('someSid', 'someToken')
     connection = twilio.instance_variable_get('@connection')
@@ -21,7 +21,7 @@ describe Twilio::REST::Client do
     connection.port.should == 443
     connection.use_ssl?.should == true
   end
-  
+
   it 'should set up the requested ssl verification ca_file if provided' do
     twilio = Twilio::REST::Client.new('someSid', 'someToken', :ssl_ca_file => '/path/to/ca/file')
     connection = twilio.instance_variable_get('@connection')
@@ -189,6 +189,27 @@ describe Twilio::REST::Recording do
     call = Twilio::REST::Recording.new('someUri', 'someClient')
     call.respond_to?(:transcriptions).should == true
     call.transcriptions.instance_variable_get('@uri').should == 'someUri/Transcriptions'
+  end
+end
+
+describe Twilio::Util do
+  let(:client) { Twilio::REST::Client.new('someUri', 'someClient') }
+
+  context "#url_encode" do
+    it "should encode a parameters correctly" do
+      query = client.url_encode(:PageSize => 1000, :client => "someclient")
+      query.should == "PageSize=1000&client=someclient"
+    end
+
+    it "should encode a parameter with less than or equal to correctly" do
+      query = client.url_encode(:"DateSent<=" => "2012-04-05")
+      CGI.unescape(query).should == "DateSent<=2012-04-05"
+    end
+
+    it "should encode a parameter with greater than or equal to correctly" do
+      query = client.url_encode(:"DateSent>=" => "2012-04-05")
+      CGI.unescape(query).should == "DateSent>=2012-04-05"
+    end
   end
 end
 
