@@ -212,13 +212,13 @@ module Twilio
         begin
           response = @connection.request request
           @last_response = response
-          object = MultiJson.load response.body if response.body
           if response.kind_of? Net::HTTPServerError
-            raise Twilio::REST::ServerError, object['message']
+            raise Twilio::REST::ServerError
           end
         rescue Exception
           if retries_left > 0 then retries_left -= 1; retry else raise end
         end
+        object = MultiJson.load response.body if response.body
         if response.kind_of? Net::HTTPClientError
           raise Twilio::REST::RequestError.new object['message'], object['code']
         end
