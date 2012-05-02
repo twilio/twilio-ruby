@@ -47,6 +47,7 @@ module Twilio
 
       HTTP_HEADERS = {
         'Accept' => 'application/json',
+        'Accept-Charset' => 'utf-8',
         'User-Agent' => "twilio-ruby/#{Twilio::VERSION}",
       }
 
