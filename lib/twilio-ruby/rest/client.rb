@@ -218,7 +218,7 @@ module Twilio
         rescue Exception
           if retries_left > 0 then retries_left -= 1; retry else raise end
         end
-        object = MultiJson.load response.body if response.body
+        object = MultiJson.load response.body if response.body.present?
         if response.kind_of? Net::HTTPClientError
           raise Twilio::REST::RequestError.new object['message'], object['code']
         end
