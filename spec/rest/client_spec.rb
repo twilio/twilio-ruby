@@ -7,6 +7,14 @@ describe Twilio::REST::Client do
     Twilio::REST::IncomingPhoneNumber.new('/phone_number', twilio).delete
   end
 
+  it 'should not raise an error if the response body is nil' do
+    response = double(:response, body: nil)
+    connection = double(:connection, request: response)
+    twilio = Twilio::REST::Client.new('someSid', 'someToken')
+    twilio.instance_variable_set(:@connection, connection)
+    Twilio::REST::IncomingPhoneNumber.new('/phone_number', twilio).delete
+  end
+
   it 'should set up a new client instance with the given sid and token' do
     twilio = Twilio::REST::Client.new('someSid', 'someToken')
     twilio.account_sid.should == 'someSid'
