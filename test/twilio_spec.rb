@@ -3,9 +3,13 @@ require 'twilio-ruby'
 require 'fakeweb'
 require 'rack'
 
+FakeWeb.allow_net_connect = false
+
 describe Twilio::REST::Client do
-  before :all do
-    FakeWeb.register_uri(:any, %r/http:\/\/api.twilio.com\//, :body => '{"message": "You tried to reach Twilio"}')
+  it 'should not raise an error if the response body is empty' do
+    FakeWeb.register_uri(:any, %r/api\.twilio\.com/, :body => '')
+    twilio = Twilio::REST::Client.new('someSid', 'someToken')
+    Twilio::REST::IncomingPhoneNumber.new('/phone_number', twilio).delete
   end
 
   it 'should set up a new client instance with the given sid and token' do
