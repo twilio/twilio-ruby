@@ -8,9 +8,5 @@ Gem::PackageTask.new(spec) do |p|
   p.gem_spec = spec
 end
 
-RSpec::Core::RakeTask.new do |t|
-  t.pattern = 'test/*_spec.rb'
-  t.rspec_opts = ['-c']
-end
-
+RSpec::Core::RakeTask.new
 task :default => :spec
