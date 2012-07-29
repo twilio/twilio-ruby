@@ -194,10 +194,8 @@ module Twilio
       ##
       # Set up +account+ and +accounts+ attributes.
       def set_up_subresources # :doc:
-        accounts_uri = '/2010-04-01/Accounts'
-        account_uri = "#{accounts_uri}/#{@account_sid}"
-        @account = Twilio::REST::Account.new account_uri, self
-        @accounts = Twilio::REST::Accounts.new accounts_uri, self
+        @accounts = Twilio::REST::Accounts.new '/2010-04-01/Accounts', self
+        @account = @accounts.get @account_sid
       end
 
       ##
