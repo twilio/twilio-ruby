@@ -8,8 +8,8 @@ describe Twilio::REST::Client do
   end
 
   it 'should not raise an error if the response body is nil' do
-    response = double(:response, body: nil)
-    connection = double(:connection, request: response)
+    response = double(:response, :body => nil)
+    connection = double(:connection, :request => response)
     twilio = Twilio::REST::Client.new('someSid', 'someToken')
     twilio.instance_variable_set(:@connection, connection)
     Twilio::REST::IncomingPhoneNumber.new('/phone_number', twilio).delete
