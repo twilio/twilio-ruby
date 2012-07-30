@@ -45,6 +45,8 @@ module Twilio
       include Twilio::Util
       include Twilio::REST::Utils
 
+      API_VERSION = '2010-04-01'
+
       HTTP_HEADERS = {
         'Accept' => 'application/json',
         'Accept-Charset' => 'utf-8',
@@ -194,7 +196,7 @@ module Twilio
       ##
       # Set up +account+ and +accounts+ attributes.
       def set_up_subresources # :doc:
-        @accounts = Twilio::REST::Accounts.new '/2010-04-01/Accounts', self
+        @accounts = Twilio::REST::Accounts.new "/#{API_VERSION}/Accounts", self
         @account = @accounts.get @account_sid
       end
 
