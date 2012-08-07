@@ -94,6 +94,12 @@ puts @account.sms.messages.get('SMXXXXXXXX').body
 
 ################ QUEUES ###################
 
+# create a new queue
+@queue = @account.queues.create({
+  'FriendlyName' => 'MyQueue',
+  'MaxSize' => 50
+})
+
 # get a list of queues for this account
 @queues = @account.queues.list
 
