@@ -95,10 +95,7 @@ puts @account.sms.messages.get('SMXXXXXXXX').body
 ################ QUEUES ###################
 
 # create a new queue
-@queue = @account.queues.create({
-  'FriendlyName' => 'MyQueue',
-  'MaxSize' => 50
-})
+@queue = @account.queues.create(:friendly_name => 'MyQueue', :max_size => 50)
 
 # get a list of queues for this account
 @queues = @account.queues.list
@@ -109,7 +106,7 @@ puts @account.sms.messages.get('SMXXXXXXXX').body
 
 #list members
 @members.list.each do |m|
-  puts m
+  puts m.call_sid
 end
 
 # dequeue a particular user and run twiml at a specific url
