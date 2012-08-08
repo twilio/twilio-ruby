@@ -3,8 +3,8 @@ module Twilio
     class Members < ListResource
       def initialize(uri, client)
         super
-        # hard-code the json key since members don't have sids
-        @instance_id_key = 'call_sid'
+        # hard-code the json keys since members are special
+        @list_key, @instance_id_key = 'queue_members', 'call_sid'
       end
     end
 
