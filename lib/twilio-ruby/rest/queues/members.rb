@@ -9,8 +9,8 @@ module Twilio
     end
 
     class Member < InstanceResource
-      def dequeue(url)
-        update :url => url
+      def dequeue(url, method='POST')
+        update :url => url, :method => method
       end
     end
   end
