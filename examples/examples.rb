@@ -106,7 +106,7 @@ puts @account.sms.messages.get('SMXXXXXXXX').body
 
 #list members
 @members.list.each do |m|
-  puts m.call_sid
+  puts m.wait_time
 end
 
 # dequeue a particular user and run twiml at a specific url
