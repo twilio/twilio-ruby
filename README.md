@@ -50,7 +50,7 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 @call = @client.account.calls.create(
   :from => '+14159341234',
   :to => '+18004567890',
-  :url => 'http://myapp.com/call-handler'
+  :url => 'http://example.com/call-handler'
 )
 
 # hangup a ringing call, but don't touch it if it's connected
@@ -60,7 +60,7 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 @call = @client.account.calls.get('CA386025c9bf5d6052a1d1ea42b4d16662')
 
 # redirect an in-progress call
-@call.redirect_to('http://myapp.com/call-redirect')
+@call.redirect_to('http://example.com/call-redirect')
 
 # hangup a call, no matter whether it is ringing or connected
 @call.hangup
