@@ -91,3 +91,27 @@ puts @account.sms.messages.get('SMXXXXXXXX').body
 
 # and, since we're lazy loading, this would only incur one http request
 @account.conferences.get('CFbbe46ff1274e283f7e3ac1df0072ab39').participants.get('CA386025c9bf5d6052a1d1ea42b4d16662').update({:muted => 'true'})
+
+################ QUEUES ###################
+
+# create a new queue
+@queue = @account.queues.create({
+  'FriendlyName' => 'MyQueue',
+  'MaxSize' => 50
+})
+
+# get a list of queues for this account
+@queues = @account.queues.list
+
+# get a particular queue and its members
+@queue = @account.queues.get("QQb6765b0458714964970a73dcaf55efd1")
+@members = @queue.members
+
+#list members
+@members.list.each do |m|
+  puts m
+end
+
+# dequeue a particular user and run twiml at a specific url
+@member = @members.get('CA386025c9bf5d6052a1d1ea42b4d16662')
+@member.dequeue('http://myapp.com/deque')

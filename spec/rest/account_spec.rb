@@ -31,6 +31,12 @@ describe Twilio::REST::Account do
     account.conferences.instance_variable_get('@uri').should == 'someUri/Conferences'
   end
 
+  it 'should set up a queues resources object' do
+    account = Twilio::REST::Account.new('someUri', 'someClient')
+    account.respond_to?(:queues).should == true
+    account.queues.instance_variable_get('@uri').should == 'someUri/Queues'
+  end
+
   it 'should set up a sms resource object' do
     account = Twilio::REST::Account.new('someUri', 'someClient')
     account.respond_to?(:sms).should == true
