@@ -32,7 +32,7 @@ end
 @account.calls.get('CAXXXXXXX').recordings.list.each do {|r| puts r.wav}
 
 # make a new outgoing call. returns a call object just like calls.get
-@call = @account.calls.create({:from => '+14159341234', :to => '+18004567890', :url => 'http://myapp.com/call-handler'})
+@call = @account.calls.create({:from => '+14159341234', :to => '+18004567890', :url => 'http://example.com/call-handler'})
 
 # cancel the call if not already in progress
 @account.calls.get(@call.sid).update({:status => 'canceled'})
@@ -42,10 +42,10 @@ end
 @call.cancel
 
 # redirect and then terminate a call
-@account.calls.get('CA386025c9bf5d6052a1d1ea42b4d16662').update({:url => 'http://myapp.com/call-redirect'})
+@account.calls.get('CA386025c9bf5d6052a1d1ea42b4d16662').update({:url => 'http://example.com/call-redirect'})
 @account.calls.get('CA386025c9bf5d6052a1d1ea42b4d16662').update({:status => 'completed'})
 # or, use the aliases...
-@call.redirect_to('http://myapp.com/call-redirect')
+@call.redirect_to('http://example.com/call-redirect')
 @call.hangup
 
 ################ SMS MESSAGES ################
@@ -74,7 +74,7 @@ puts @account.sms.messages.get('SMXXXXXXXX').body
 @account.incoming_phone_numbers.create(:phone_number => @numbers[0].phone_number)
 
 # update an existing phone number's voice url
-@account.incoming_phone_numbers.get('PNdba508c5616a7f5e141789f44f022cc3').update({:voice_url => 'http://myapp.com/voice'})
+@account.incoming_phone_numbers.get('PNdba508c5616a7f5e141789f44f022cc3').update({:voice_url => 'http://example.com/voice'})
 
 ################ CONFERENCES  ################
 
