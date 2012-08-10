@@ -6,6 +6,18 @@ module Twilio
         # hard-code the json keys since members are special
         @list_key, @instance_id_key = 'queue_members', 'call_sid'
       end
+
+      def front
+        @instance_class.new "#{@uri}/Front", @client
+      end
+
+      def front!
+        front.refresh
+      end
+
+      def dequeue(url, method='POST')
+        front.dequeue url, method
+      end
     end
 
     class Member < InstanceResource
