@@ -142,6 +142,31 @@ This will print the following (except for the whitespace):
 </Response>
 ```
 
+More modular response building is also supported, as well as lowercase
+tag methods for more consistency with Ruby style:
+
+``` ruby
+class CallHandler
+  def initialize
+    @response = Twilio::TwiML::Response.new
+  end
+
+  def some_method
+    @response.say 'Hello!'
+  end
+
+  def other_method
+    @response.dial :callerId => '+14159992222' do |d|
+      d.client 'jenny'
+    end
+  end
+
+  def response_xml
+    @response.text
+  end
+end
+```
+
 ## More Information
 
 There are more detailed examples in the included [examples][examples]
