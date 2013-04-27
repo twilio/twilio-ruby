@@ -1,9 +1,5 @@
 require 'spec_helper'
 
-def collapse_xml(s)
-  s.strip.gsub(/\>\s+/, '>')
-end
-
 describe Twilio::TwiML::Response do
   let(:expected_xml) do
     %q`<?xml version="1.0" encoding="UTF-8"?>
@@ -18,7 +14,7 @@ describe Twilio::TwiML::Response do
 
   it 'returns correct response via block and capitalized syntax' do
     result = Twilio::TwiML::Response.new do |t|
-      t.Gather action: '/action.php', method: 'GET' do |g|
+      t.Gather :action => '/action.php', :method => 'GET' do |g|
         g.Say 'First'
       end
       t.Say 'Second'
@@ -28,7 +24,7 @@ describe Twilio::TwiML::Response do
 
   it 'returns correct response via block and lowercase syntax' do
     result = Twilio::TwiML::Response.new do |t|
-      t.gather action: '/action.php', method: 'GET' do |g|
+      t.gather :action => '/action.php', :method => 'GET' do |g|
         g.say 'First'
       end
       t.say 'Second'
@@ -38,7 +34,7 @@ describe Twilio::TwiML::Response do
 
   it 'returns correct response via non-block, lowercase syntax' do
     t = Twilio::TwiML::Response.new
-    t.gather action: '/action.php', method: 'GET' do |g|
+    t.gather :action => '/action.php', :method => 'GET' do |g|
       g.say 'First'
     end
     t.say 'Second'
