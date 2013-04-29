@@ -7,12 +7,12 @@ describe Twilio::REST::Call do
   end
 
   it 'sets up a recordings resources object' do
-    @call.respond_to?(:recordings).should == true
+    @call.should respond_to(:recordings)
     @call.recordings.instance_variable_get('@uri').should == 'someUri/Recordings'
   end
 
   it 'sets up a notifications resources object' do
-    @call.respond_to?(:notifications).should == true
+    @call.should respond_to(:notifications)
     @call.notifications.instance_variable_get('@uri').should == 'someUri/Notifications'
   end
 end

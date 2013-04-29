@@ -77,13 +77,13 @@ describe Twilio::REST::Client do
 
   it 'should set up an accounts resources object' do
     twilio = Twilio::REST::Client.new('someSid', 'someToken')
-    twilio.respond_to?(:accounts).should == true
+    twilio.should respond_to(:accounts)
     twilio.accounts.instance_variable_get('@uri').should == '/2010-04-01/Accounts'
   end
 
   it 'should set up an account object with the given sid' do
     twilio = Twilio::REST::Client.new('someSid', 'someToken')
-    twilio.respond_to?(:account).should == true
+    twilio.should respond_to(:account)
     twilio.account.instance_variable_get('@uri').should == '/2010-04-01/Accounts/someSid'
   end
 
