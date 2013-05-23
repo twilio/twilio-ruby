@@ -76,7 +76,7 @@ module Twilio
         eigenclass = class << self; self; end
         hash.each do |p,v|
           property = detwilify p
-          unless ['uri', 'client', 'updated'].include? property
+          unless ['client', 'updated'].include? property
             eigenclass.send :define_method, property.to_sym, &lambda {v}
           end
         end
