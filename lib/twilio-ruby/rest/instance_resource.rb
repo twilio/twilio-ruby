@@ -17,13 +17,13 @@ module Twilio
       # well be a mock object if you want to test the interface. The optional
       # +params+ hash will be converted into attributes on the instantiated
       # object.
-      def initialize(uri, client, params = {})
-        @uri, @client = uri, client
+      def initialize(path, client, params = {})
+        @path, @client = path, client
         set_up_properties_from params
       end
 
       def inspect # :nodoc:
-        "<#{self.class} @uri=#{@uri}>"
+        "<#{self.class} @uri=#{@path}>"
       end
 
       ##
@@ -38,7 +38,7 @@ module Twilio
       # instance resource, including the newly updated properties.
       def update(params = {})
         raise "Can't update a resource without a REST Client" unless @client
-        set_up_properties_from(@client.post(@uri, params))
+        set_up_properties_from(@client.post(@path, params))
         self
       end
 
@@ -48,7 +48,7 @@ module Twilio
       def refresh
         raise "Can't refresh a resource without a REST Client" unless @client
         @updated = false
-        set_up_properties_from(@client.get(@uri))
+        set_up_properties_from(@client.get(@path))
         self
       end
 
@@ -58,7 +58,7 @@ module Twilio
       # makes an HTTP DELETE request to <tt>@uri</tt>.
       def delete
         raise "Can't delete a resource without a REST Client" unless @client
-        @client.delete @uri
+        @client.delete @path
       end
 
       ##
@@ -66,7 +66,7 @@ module Twilio
       # until an attempt is made to access an unknown attribute.
       def method_missing(method, *args)
         super if @updated
-        set_up_properties_from(@client.get(@uri))
+        set_up_properties_from(@client.get(@path))
         self.send method, *args
       end
 
@@ -87,9 +87,9 @@ module Twilio
         resources.each do |r|
           resource = twilify r
           relative_uri = r == :sms ? 'SMS' : resource
-          uri = "#{@uri}/#{relative_uri}"
+          path = "#{@path}/#{relative_uri}"
           resource_class = Twilio::REST.const_get resource
-          instance_variable_set("@#{r}", resource_class.new(uri, @client))
+          instance_variable_set("@#{r}", resource_class.new(path, @client))
         end
         self.class.instance_eval {attr_reader *resources}
       end
