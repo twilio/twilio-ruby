@@ -23,7 +23,7 @@ module Twilio
       end
 
       def inspect # :nodoc:
-        "<#{self.class} @uri=#{@path}>"
+        "<#{self.class} @path=#{@path}>"
       end
 
       ##
