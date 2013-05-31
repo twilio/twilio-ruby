@@ -1,7 +1,7 @@
 module Twilio
   module REST
     class Usage < InstanceResource
-      def initialize(uri, client, params={})
+      def initialize(path, client, params={})
         super
         resource :records, :triggers
       end

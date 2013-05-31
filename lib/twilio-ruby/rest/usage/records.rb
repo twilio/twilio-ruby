@@ -5,7 +5,7 @@ module Twilio
       SUBRESOURCES = [:daily, :monthly, :yearly, :all_time, :today, :yesterday,
         :this_month, :last_month]
 
-      def initialize(uri, client)
+      def initialize(path, client)
         super
         @list_key = 'usage_records'
       end
