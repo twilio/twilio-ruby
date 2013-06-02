@@ -1,7 +1,7 @@
 module Twilio
   module REST
     class Triggers < ListResource
-      def initialize(uri, client)
+      def initialize(path, client)
         super
         @list_key = 'usage_triggers'
       end

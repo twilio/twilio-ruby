@@ -1,14 +1,14 @@
 module Twilio
   module REST
     class Members < ListResource
-      def initialize(uri, client)
+      def initialize(path, client)
         super
         # hard-code the json keys since members are special
         @list_key, @instance_id_key = 'queue_members', 'call_sid'
       end
 
       def front
-        @instance_class.new "#{@uri}/Front", @client
+        @instance_class.new "#{@path}/Front", @client
       end
 
       def front!

@@ -3,15 +3,15 @@ module Twilio
     class ListResource
       include Utils
 
-      def initialize(uri, client)
-        @uri, @client = uri, client
+      def initialize(path, client)
+        @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]
         @instance_class = Twilio::REST.const_get resource_name.chop
         @list_key, @instance_id_key = detwilify(resource_name), 'sid'
       end
 
       def inspect # :nodoc:
-        "<#{self.class} @uri=#{@uri}>"
+        "<#{self.class} @path=#{@path}>"
       end
 
       ##
@@ -26,11 +26,11 @@ module Twilio
       # filters for each list resource type are defined by Twilio.
       def list(params={}, full_uri=false)
         raise "Can't get a resource list without a REST Client" unless @client
-        response = @client.get @uri, params, full_uri
+        response = @client.get @path, params, full_uri
         resources = response[@list_key]
-        uri = full_uri ? @uri.split('.')[0] : @uri
+        path = full_uri ? @path.split('.')[0] : @path
         resource_list = resources.map do |resource|
-          @instance_class.new "#{uri}/#{resource[@instance_id_key]}", @client,
+          @instance_class.new "#{path}/#{resource[@instance_id_key]}", @client,
             resource
         end
         # set the +total+ and +next_page+ properties on the array
@@ -58,7 +58,7 @@ module Twilio
       # +total+ attribute as well.
       def total
         raise "Can't get a resource total without a REST Client" unless @client
-        @client.get(@uri, :page_size => 1)['total']
+        @client.get(@path, :page_size => 1)['total']
       end
 
       ##
@@ -68,7 +68,7 @@ module Twilio
       # attribute of the returned instance resource object, such as
       # its #date_created or #voice_url attributes.
       def get(sid)
-        @instance_class.new "#{@uri}/#{sid}", @client
+        @instance_class.new "#{@path}/#{sid}", @client
       end
       alias :find :get # for the ActiveRecord lovers
 
@@ -79,8 +79,8 @@ module Twilio
       # POST request to <tt>@uri</tt> with the given params
       def create(params={})
         raise "Can't create a resource without a REST Client" unless @client
-        response = @client.post @uri, params
-        @instance_class.new "#{@uri}/#{response[@instance_id_key]}", @client,
+        response = @client.post @path, params
+        @instance_class.new "#{@path}/#{response[@instance_id_key]}", @client,
           response
       end
     end
