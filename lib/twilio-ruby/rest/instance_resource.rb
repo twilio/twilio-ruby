@@ -10,7 +10,7 @@ module Twilio
       include Utils
 
       ##
-      # Instantiate a new instance resource object. You must pass the +uri+ of
+      # Instantiate a new instance resource object. You must pass the +path+ of
       # the instance (e.g. /2010-04-01/Accounts/AC123/Calls/CA456) as well as a
       # +client+ object that responds to #get #post and #delete. This client
       # is meant to be an instance of Twilio::REST::Client but could just as
@@ -28,7 +28,7 @@ module Twilio
 
       ##
       # Update the properties of this instance resource using the key/value
-      # pairs in +params+. This makes an HTTP POST request to <tt>@uri</tt>
+      # pairs in +params+. This makes an HTTP POST request to <tt>@path</tt>
       # to handle the update. For example, to update the +VoiceUrl+ of a Twilio
       # Application you could write:
       #
@@ -44,7 +44,7 @@ module Twilio
 
       ##
       # Refresh the attributes of this instance resource object by fetching it
-      # from Twilio. Calling this makes an HTTP GET request to <tt>@uri</tt>.
+      # from Twilio. Calling this makes an HTTP GET request to <tt>@path</tt>.
       def refresh
         raise "Can't refresh a resource without a REST Client" unless @client
         @updated = false
@@ -55,7 +55,7 @@ module Twilio
       ##
       # Delete an instance resource from Twilio. This operation isn't always
       # supported. For instance, you can't delete an SMS. Calling this method
-      # makes an HTTP DELETE request to <tt>@uri</tt>.
+      # makes an HTTP DELETE request to <tt>@path</tt>.
       def delete
         raise "Can't delete a resource without a REST Client" unless @client
         @client.delete @path
@@ -86,8 +86,8 @@ module Twilio
       def resource(*resources)
         resources.each do |r|
           resource = twilify r
-          relative_uri = r == :sms ? 'SMS' : resource
-          path = "#{@path}/#{relative_uri}"
+          relative_path = r == :sms ? 'SMS' : resource
+          path = "#{@path}/#{relative_path}"
           resource_class = Twilio::REST.const_get resource
           instance_variable_set("@#{r}", resource_class.new(path, @client))
         end

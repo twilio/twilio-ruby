@@ -24,11 +24,11 @@ module Twilio
       #
       # The optional +params+ hash allows you to filter the list returned. The
       # filters for each list resource type are defined by Twilio.
-      def list(params={}, full_uri=false)
+      def list(params={}, full_path=false)
         raise "Can't get a resource list without a REST Client" unless @client
-        response = @client.get @path, params, full_uri
+        response = @client.get @path, params, full_path
         resources = response[@list_key]
-        path = full_uri ? @path.split('.')[0] : @path
+        path = full_path ? @path.split('.')[0] : @path
         resource_list = resources.map do |resource|
           @instance_class.new "#{path}/#{resource[@instance_id_key]}", @client,
             resource
@@ -51,7 +51,7 @@ module Twilio
 
       ##
       # Ask Twilio for the total number of items in the list.
-      # Calling this method makes an HTTP GET request to <tt>@uri</tt> with a
+      # Calling this method makes an HTTP GET request to <tt>@path</tt> with a
       # page size parameter of 1 to minimize data over the wire while still
       # obtaining the total. Don't use this if you are planning to
       # call #list anyway, since the array returned from #list will have a
@@ -62,7 +62,7 @@ module Twilio
       end
 
       ##
-      # Return an empty instance resource object with the proper URI. Note that
+      # Return an empty instance resource object with the proper path. Note that
       # this will never raise a Twilio::REST::RequestError on 404 since no HTTP
       # request is made. The HTTP request is made when attempting to access an
       # attribute of the returned instance resource object, such as
@@ -76,7 +76,7 @@ module Twilio
       # Return a newly created resource. Some +params+ may be required. Consult
       # the Twilio REST API documentation related to the kind of resource you
       # are attempting to create for details. Calling this method makes an HTTP
-      # POST request to <tt>@uri</tt> with the given params
+      # POST request to <tt>@path</tt> with the given params
       def create(params={})
         raise "Can't create a resource without a REST Client" unless @client
         response = @client.post @path, params
