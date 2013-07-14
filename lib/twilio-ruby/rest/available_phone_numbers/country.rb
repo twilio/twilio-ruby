@@ -1,8 +1,8 @@
 module Twilio
   module REST
     class Country < InstanceResource
-      def initialize(uri, client, params={})
-        super uri, client, params
+      def initialize(path, client, params={})
+        super path, client, params
         resource :local, :toll_free
       end
     end

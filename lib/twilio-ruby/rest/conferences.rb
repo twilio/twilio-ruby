@@ -3,8 +3,8 @@ module Twilio
     class Conferences < ListResource; end
 
     class Conference < InstanceResource
-      def initialize(uri, client, params={})
-        super uri, client, params
+      def initialize(path, client, params={})
+        super path, client, params
         resource :participants
       end
     end

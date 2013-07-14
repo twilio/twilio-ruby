@@ -1,8 +1,8 @@
 module Twilio
   module REST
     class Sms < InstanceResource
-      def initialize(uri, client, params={})
-        super uri, client, params
+      def initialize(path, client, params={})
+        super path, client, params
         resource :messages, :short_codes
       end
     end

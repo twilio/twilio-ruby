@@ -3,8 +3,8 @@ module Twilio
     class Queues < ListResource; end
 
     class Queue < InstanceResource
-      def initialize(uri, client, params={})
-        super uri, client, params
+      def initialize(path, client, params={})
+        super path, client, params
         resource :members
       end
     end

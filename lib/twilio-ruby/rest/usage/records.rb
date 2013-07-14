@@ -5,14 +5,14 @@ module Twilio
       SUBRESOURCES = [:daily, :monthly, :yearly, :all_time, :today, :yesterday,
         :this_month, :last_month]
 
-      def initialize(uri, client)
+      def initialize(path, client)
         super
         @list_key = 'usage_records'
       end
 
       def method_missing(method, *args)
         super unless SUBRESOURCES.include? method
-        self.class.new "#{@uri}/#{twilify(method)}", @client
+        self.class.new "#{@path}/#{twilify(method)}", @client
       end
     end
 
