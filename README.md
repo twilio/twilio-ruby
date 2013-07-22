@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/twilio/twilio-ruby.png?branch=master)](https://travis-ci.org/twilio/twilio-ruby)
 [![Gem Version](https://badge.fury.io/rb/twilio-ruby.png)](http://badge.fury.io/rb/twilio-ruby)
 
+The current build is good to use. Travis CI is reporting a failed build because of a known conflict between ruby-head and Travis CI.
+
 ## Install
 
 Via rubygems.org:
