@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/twilio/twilio-ruby.png?branch=master)](https://travis-ci.org/twilio/twilio-ruby)
+[![Gem Version](https://badge.fury.io/rb/twilio-ruby.png)](http://badge.fury.io/rb/twilio-ruby)
+
 ## Install
 
 Via rubygems.org:
