@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency('multi_json', '>= 1.3.0')
   s.add_dependency('builder', '>= 2.1.2')
   s.add_dependency('jwt', '>= 0.1.2')
+  s.add_dependency('jruby-openssl') if RUBY_PLATFORM == 'java'
 
   s.add_development_dependency 'rake',    '~> 0.9.0'
   s.add_development_dependency 'rspec',   '~> 2.6.0'
