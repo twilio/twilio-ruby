@@ -69,6 +69,13 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 @call.hangup
 ```
 
+### List Calls after a certain time
+
+``` ruby
+# List calls made or received on or after May 13, 2013
+@client.account.calls.list("start_time>" => "2014-05-13") # Notice we omit the "=" in the "start_time>=" parameter because it is automatically added
+```
+
 ### Buy a Phone Number
 
 ``` ruby
