@@ -130,7 +130,7 @@ require 'twilio-ruby'
 
 # build up a response
 response = Twilio::TwiML::Response.new do |r|
-  r.Say 'hello there', :voice => 'woman'
+  r.Say 'hello there', :voice => 'alice'
   r.Dial :callerId => '+14159992222' do |d|
     d.Client 'jenny'
   end
@@ -145,7 +145,7 @@ This will print the following (except for the whitespace):
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Say voice="woman">hello there</Say>
+  <Say voice="alice">hello there</Say>
   <Dial callerId="+14159992222">
     <Client>jenny</Client>
   </Dial>
