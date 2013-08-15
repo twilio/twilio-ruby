@@ -1,11 +1,9 @@
 module Twilio
   module REST
-    class Messages < ListResource; end
-
-    class Message < InstanceResource
+    class Media < InstanceResource
       def initialize(path, client, params={})
         super
-        resource :media
+        resource :images
       end
     end
   end
