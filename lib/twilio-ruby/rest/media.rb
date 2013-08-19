@@ -6,6 +6,7 @@ module Twilio
         resource :images
       end
     end
+
     class MediaInstance < InstanceResource; end
   end
 end
