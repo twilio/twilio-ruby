@@ -3,10 +3,13 @@ module Twilio
     class ListResource
       include Utils
 
+
       def initialize(path, client)
+        custom_names = {"Media" => "MediaInstance"}
         @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]
-        @instance_class = Twilio::REST.const_get resource_name.chop
+        instance_name = custom_names.fetch(resource_name, resource_name.chop)
+        @instance_class = Twilio::REST.const_get instance_name
         @list_key, @instance_id_key = detwilify(resource_name), 'sid'
       end
 

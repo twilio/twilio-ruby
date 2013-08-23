@@ -1,9 +1,17 @@
 module Twilio
   module REST
     class Media < ListResource
-      def initialize(path, client, params={})
+
+      SUBRESOURCES = [:images]
+
+      def initialize(path, client)
         super
-        resource :images
+        @list_key = 'media'
+      end
+
+      def method_missing(method, *args)
+        super unless SUBRESOURCES.include? method
+        self.class.new "#{@path}/#{twilify(method)}", @client
       end
     end
 
