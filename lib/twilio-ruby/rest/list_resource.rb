@@ -5,7 +5,7 @@ module Twilio
 
 
       def initialize(path, client)
-        custom_names = {"Media" => "MediaInstance"}
+        custom_names = {"Media" => "MediaInstance", "Addresses" => "Address"}
         @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]
         instance_name = custom_names.fetch(resource_name, resource_name.chop)

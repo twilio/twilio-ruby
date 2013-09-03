@@ -84,9 +84,10 @@ module Twilio
       end
 
       def resource(*resources)
+        custom_resource_names = {:sms => 'SMS', :sip => 'SIP'}
         resources.each do |r|
           resource = twilify r
-          relative_path = r == :sms ? 'SMS' : resource
+          relative_path = custom_resource_names.fetch(r, resource)
           path = "#{@path}/#{relative_path}"
           resource_class = Twilio::REST.const_get resource
           instance_variable_set("@#{r}", resource_class.new(path, @client))
