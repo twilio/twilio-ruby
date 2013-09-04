@@ -4,7 +4,7 @@ module Twilio
     class IpAccessControlList < InstanceResource
       def initialize(path, client, params={})
         super
-        resource :addresses
+        resource :ip_addresses
       end
     end
   end
