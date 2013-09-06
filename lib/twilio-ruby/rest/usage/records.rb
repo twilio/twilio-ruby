@@ -11,7 +11,7 @@ module Twilio
       end
 
       def method_missing(method, *args)
-        super unless SUBRESOURCES.include? method
+        return super unless SUBRESOURCES.include? method
         self.class.new "#{@path}/#{twilify(method)}", @client
       end
     end
