@@ -1,0 +1,78 @@
+.. module:: twilio.rest.resources.sms_messages
+
+============
+SMS Messages
+============
+
+For more information, see the
+`Message REST Resource <http://www.twilio.com/docs/api/rest/message>`_
+documentation.
+
+
+Sending a Text Message
+----------------------
+
+Send a text message in only a few lines of code.
+
+.. code-block:: ruby
+
+    require 'twilio-ruby'
+
+    # To find these visit https://www.twilio.com/user/account
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
+
+    @client = Twilio::REST::Client.new account_sid, auth_token
+
+    @message = client.messages.create({:to => "+13216851234",
+                                       :from => "+15555555555",
+                                       :body => "Hello!"})
+
+If you want to send a message from a `short code
+<http://www.twilio.com/api/sms/short-codes>`_ on Twilio, just set :attr:`from`
+to your short code's number.
+
+
+Retrieving Sent Messages
+-------------------------
+
+.. code-block:: ruby
+
+    require 'twilio-ruby'
+
+    # To find these visit https://www.twilio.com/user/account
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
+
+    @client = Twilio::REST::Client.new account_sid, auth_token
+
+    @client.messages.each do |message|
+        puts message.body
+
+
+Filtering Your Messages
+-------------------------
+
+The :meth:`list` methods supports filtering on :attr:`to`, :attr:`from`,
+and :attr:`date_sent`.
+The following will only show messages to "+5466758723" on January 1st, 2011.
+
+.. code-block:: ruby
+
+    require 'twilio-ruby'
+
+    # To find these visit https://www.twilio.com/user/account
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
+
+    @client = Twilio::REST::Client.new account_sid, auth_token
+
+    @messages = client.messages.list({:to => "+5466758723",
+                                      :date_sent => date(2011,1,1)})
+
+    @messages.each do |message|
+        puts message.body
+    
+
+
+

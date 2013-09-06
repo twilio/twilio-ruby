@@ -1,0 +1,11 @@
+twilio-ruby changelog
+=====================
+
+Version 3.1.1
+-------------
+
+Released September 17, 2013
+
+- Add MMS support.
+- Add SIP-In support.
+- Add docs.
