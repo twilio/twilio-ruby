@@ -35,15 +35,15 @@ library.
 REST API
 ----------
 
-Query the Twilio REST API to create phone calls, send SMS messages and more!
+Query the Twilio REST API to create phone calls, send SMS/MMS messages and more!
 
 .. toctree::
     :maxdepth: 1
 
     usage/basics
+    usage/messages
     usage/phone-calls
     usage/phone-numbers
-    usage/messages
     usage/accounts
     usage/conferences
     usage/applications
@@ -52,6 +52,7 @@ Query the Twilio REST API to create phone calls, send SMS messages and more!
     usage/transcriptions
     usage/caller-ids
     usage/queues
+    usage/sip
 
 TwiML
 ---------
@@ -89,12 +90,6 @@ Changelog
 =========
 
 See the :doc:`/changelog` for version history.
-
-.. toctree::
-    :maxdepth: 2
-
-    changelog
-
 
 Support and Development
 ==========================

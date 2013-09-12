@@ -1,4 +1,5 @@
 .. module:: twilio.rest
+.. _phone-calls:
 
 =====================
 Phone Calls
@@ -24,7 +25,8 @@ outputs valid `TwiML <http://www.twilio.com/docs/api/twiml/>`_.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @call = @client.calls.create({:to => "9991231234", :from => "9991231234",
+    @call = @client.calls.create({:to => "9991231234",
+                                  :from => "9991231234",
                                   :url => "http://foo.com/call.xml"})
     puts @call.length
     puts @call.sid

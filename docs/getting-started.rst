@@ -26,7 +26,7 @@ Make a Call
 
 
 Send an SMS
-================
+===========
 
 .. code-block:: ruby
 
@@ -41,6 +41,25 @@ Send an SMS
     @message = client.messages.create({:to => "+12316851234",
                                        :from => "+15555555555",
                                        :body => "Hello there!"})
+
+
+Send an MMS
+===========
+
+.. code-block:: ruby
+
+    require 'twilio-ruby'
+
+    # To find these visit https://www.twilio.com/user/account
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
+
+    @client = Twilio::REST::Client.new account_sid, auth_token
+
+    @message = client.messages.create({:to => "+15558676309",
+                                       :from => "+15555555555",
+                                       :body => "Jenny I need you!",
+                                       :media_url => "http://twilio.com/heart.jpg"})
 
 
 Generating TwiML

@@ -53,7 +53,7 @@ To make an outgoing connection from a
 you'll need to choose a
 `Twilio Application <http://www.twilio.com/docs/api/rest/applications>`_
 to handle TwiML URLs. A Twilio Application is a collection of URLs responsible
-for outputting valid TwiML to control phone calls and SMS.
+for outputting valid TwiML to control phone calls and messages.
 
 .. code-block:: ruby
 
