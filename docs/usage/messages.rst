@@ -61,8 +61,10 @@ an array of urls.
     @message = client.messages.create({:to => "+15558676309",
                                        :from => "+15555555555",
                                        :body => "Jenny I need you!",
-                                       :media_url => ["http://twilio.com/heart.jpg",
-                                                     "http://twilio.com/rose.jpg"]})
+                                       :media_url => [
+                                            "http://twilio.com/heart.jpg",
+                                            "http://twilio.com/rose.jpg"
+                                        ]})
 
 
 Retrieving Sent Messages
