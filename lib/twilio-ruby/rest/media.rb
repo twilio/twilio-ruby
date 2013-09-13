@@ -4,7 +4,7 @@ module Twilio
 
       def initialize(path, client)
         super
-        @list_key = 'media'
+        @list_key = 'media_list'
       end
 
     end
