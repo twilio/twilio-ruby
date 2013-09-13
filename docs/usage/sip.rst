@@ -14,7 +14,7 @@ Creating a Sip Domain
 
 The :class:`Domains` resource allows you to create a new domain. To
 create a new domain, you'll need to choose a unique domain that lives
-under sip.twilio.com. For example, doug.sip.twilio.com.
+under sip.twilio.com.
 
 .. code-block:: ruby
 
@@ -27,9 +27,9 @@ under sip.twilio.com. For example, doug.sip.twilio.com.
     @client = Twilio::REST::Client.new account_sid, auth_token
 
     @domain = @client.sip.domains.create(
-        {:friendly_name => "Doug's Domain",
+        {:friendly_name => "The Office Domain",
          :voice_url => "http://example.com/voice",
-         :domain_name => "doug.sip.twilio.com",}
+         :domain_name => "dunder-mifflin-scranton.sip.twilio.com",}
     )
     puts @domain.sid
 
@@ -51,7 +51,7 @@ to individual ip addresses. To do this, you'll first need to create an
     @client = Twilio::REST::Client.new account_sid, auth_token
 
     @ip_acl = @client.sip.ip_access_control_lists.create(
-        {:friendly_name => "My IpAccessControlList",}
+        {:friendly_name => "The Office IpAccessControlList",}
     )
     puts @ip_acl.sid
 
@@ -73,7 +73,7 @@ Now it's time to add an :class:`IpAddress` to your new :class:`IpAccessControlLi
     @ip_address = @client.sip.ip_access_control_lists.get(
         "AL456",  # IpAccessControlList sid
     ).ip_addresses.create(
-        {:friendly_name => "Doug's Computer",
+        {:friendly_name => "Dwights's Computer",
          :ip_address => "192.168.1.42",}
     )
     puts @ip_address.sid
