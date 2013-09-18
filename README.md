@@ -5,18 +5,16 @@
 
 Via rubygems.org:
 
-```
-$ gem install twilio-ruby
+```bash
+gem install twilio-ruby
 ```
 
 To build and install the development branch yourself from the latest source:
 
-```
-$ git clone git@github.com:twilio/twilio-ruby.git
-$ cd twilio-ruby
-$ git checkout develop
-$ rake gem
-$ gem install pkg/twilio-ruby-{version}
+```bash
+git clone git@github.com:twilio/twilio-ruby.git
+cd twilio-ruby
+make install
 ```
 
 ## Getting Started With REST
@@ -38,7 +36,6 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 ### Send an SMS
 
 ``` ruby
-# send an sms
 @client.account.messages.create(
   :from => '+14159341234',
   :to => '+16105557069',
@@ -49,12 +46,11 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 ### Send an MMS
 
 ``` ruby
-# send an mms
 @client.account.messages.create(
   :from => '+14159341234',
   :to => '+16105557069',
-  :body => 'Hey there!'
-  :meda_url => 'http://example.com/smileyface.jpg'
+  :body => 'Hey there!',
+  :media_url => 'http://example.com/smileyface.jpg',
 )
 ```
 
@@ -65,7 +61,7 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 @call = @client.account.calls.create(
   :from => '+14159341234',
   :to => '+18004567890',
-  :url => 'http://example.com/call-handler'
+  :url => 'http://example.com/call-handler',
 )
 
 # hangup a ringing call, but don't touch it if it's connected
