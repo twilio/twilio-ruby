@@ -1,6 +1,12 @@
 [![Build Status](https://travis-ci.org/twilio/twilio-ruby.png?branch=master)](https://travis-ci.org/twilio/twilio-ruby)
 [![Gem Version](https://badge.fury.io/rb/twilio-ruby.png)](http://badge.fury.io/rb/twilio-ruby)
 
+# twilio-ruby
+
+A module for using the Twilio REST API and generating valid
+[TwiML](http://www.twilio.com/docs/api/twiml/ "TwiML - Twilio Markup Language").
+[Click here to read the full documentation.][documentation]
+
 ## Install
 
 Via rubygems.org:
@@ -172,6 +178,6 @@ for users of the old twiliolib gem, is available in the
 [capability]:https://github.com/twilio/twilio-ruby/wiki/Capability
 [builder]:http://builder.rubyforge.org/
 [examples]:https://github.com/twilio/twilio-ruby/blob/master/examples
-[documentation]:https://github.com/twilio/twilio-ruby/wiki/Documentation
+[documentation]:http://twilio-ruby.readthedocs.org/en/latest
 [upgrade]:https://github.com/twilio/twilio-ruby/wiki/UpgradeGuide
 [wiki]:https://github.com/twilio/twilio-ruby/wiki
