@@ -171,9 +171,7 @@ This will print the following (except for the whitespace):
 There are more detailed examples in the included [examples][examples]
 directory.
 
-Full [API documentation][documentation], as well as an [upgrade guide][upgrade]
-for users of the old twiliolib gem, is available in the
-[twilio-ruby github wiki][wiki].
+The [upgrade guide][upgrade] is available in the [twilio-ruby github wiki][wiki].
 
 [capability]:https://github.com/twilio/twilio-ruby/wiki/Capability
 [builder]:http://builder.rubyforge.org/
