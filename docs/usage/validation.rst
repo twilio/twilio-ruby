@@ -30,7 +30,7 @@ data as a dictionary and the url and X-Twilio-Signature as strings.
 The below example will print out a confirmation message if the request is
 actually from Twilio.
 
-.. code-block:: python
+.. code-block:: ruby
 
     require 'twilio-ruby'
 

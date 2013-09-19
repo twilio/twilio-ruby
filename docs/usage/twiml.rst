@@ -13,7 +13,7 @@ These methods return the verbs they create to ease creation of nested TwiML.
 To finish, call the :meth:`toxml` method on the :class:`Response`,
 which returns raw TwiML.
 
-.. code-block:: python
+.. code-block:: ruby
 
     require 'twilio-ruby'
 
@@ -30,7 +30,7 @@ The verb methods (outlined in the :doc:`complete reference </api/twiml>`)
 take the body (only text) of the verb as the first argument.
 All attributes are keyword arguments.
 
-.. code-block:: python
+.. code-block:: ruby
 
     require 'twilio-ruby'
 
@@ -45,10 +45,9 @@ All attributes are keyword arguments.
         <Play loop="3">https://api.twilio.com/cowbell.mp3</Play>
     <Response>
 
-Python 2.6+ added the :const:`with` statement for context management.
-Using :const:`with`, the module can *almost* emulate Ruby blocks.
+Any example of nesting nouns in verbs
 
-.. code-block:: python
+.. code-block:: ruby
 
     require 'twilio-ruby'
 

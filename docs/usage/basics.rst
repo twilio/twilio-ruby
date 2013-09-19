@@ -43,12 +43,12 @@ The :class:`Client` gives you access to various list resources.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @calls = client.calls.list()
+	@calls = @client.account.calls.list()
 
 :meth:`ListResource.list` accepts paging arguments.
 The following will return page 3 with page size of 25.
 
-.. code-block:: python
+.. code-block:: ruby
 
     require 'twilio-ruby'
 
@@ -57,7 +57,7 @@ The following will return page 3 with page size of 25.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @calls = client.calls.list(page=3, page_size=25)
+	@calls = @client.account.calls.list(:page=>3, :page_size=>25)
 
 
 Get an Individual Resource
@@ -76,6 +76,6 @@ Provide the :attr:`sid` of the resource you'd like to get.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @call = @client.calls.get("CA123")
+    @call = @client.account.calls.get("CA123")
     puts @call.to
 

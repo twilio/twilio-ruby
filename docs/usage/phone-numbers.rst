@@ -18,16 +18,16 @@ Finding numbers to buy couldn't be easier.
 We first search for a number in area code 530.
 Once we find one, we'll purchase it for our account.
 
-.. code-block:: python
+.. code-block:: ruby
 
-    from twilio.rest import TwilioRestClient
+    require 'twilio-ruby'
 
     # To find these visit https://www.twilio.com/user/account
-    ACCOUNT_SID = "ACXXXXXXXXXXXXXXXXX"
-    AUTH_TOKEN = "YYYYYYYYYYYYYYYYYY"
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-    numbers = client.phone_numbers.search(area_code=530)
+    @client = Twilio::REST::Client.new account_sid, auth_token
+    numbers = @client.account.available_phone_numbers.list(:area_code=>"530")
 
     if numbers:
         numbers[0].purchase()
@@ -41,9 +41,9 @@ Toll Free Numbers
 By default, :meth:`PhoneNumbers.search` looks for local phone numbers. Add a
 :data:`type` : ``tollfree`` parameter to search toll-free numbers instead.
 
-.. code-block:: python
+.. code-block:: ruby
 
-    numbers = client.phone_numbers.search(type="tollfree")
+	numbers = @client.account.available_phone_numbers.list(:type=>"tollfree")
 
 
 Numbers Containing Words
@@ -52,15 +52,15 @@ Numbers Containing Words
 Phone number search also supports looking for words inside phone numbers.
 The following example will find any phone number with "FOO" in it.
 
-.. code-block:: python
+.. code-block:: ruby
 
-    numbers = client.phone_numbers.search(contains="FOO")
+	numbers = @client.account.available_phone_numbers.list(:contains=>"FOO")
 
 You can use the ''*'' wildcard to match any character. The following example finds any phone number that matches the pattern ''D*D''.
 
-.. code-block:: python
+.. code-block:: ruby
 
-    numbers = client.phone_numbers.search(contains="D*D")
+	numbers = @client.account.available_phone_numbers.list(:contains=>"D*D")
 
 
 International Numbers
@@ -70,9 +70,9 @@ By default, the client library will look for US numbers. Set the
 :data:`country` keyword to a country code of your choice to search for
 international numbers.
 
-.. code-block:: python
+.. code-block:: ruby
 
-    numbers = client.phone_numbers.search(country="FR")
+	numbers = @client.account.available_phone_numbers.list(:country=>"FR")
 
 
 :meth:`PhoneNumbers.search` method has plenty of other options to augment your search :
@@ -93,7 +93,7 @@ Buying a Number
 
 If you've found a phone number you want, you can purchase the number.
 
-.. code-block:: python
+.. code-block:: ruby
 
     from twilio.rest import TwilioRestClient
 
@@ -116,7 +116,7 @@ on the phone number object, with any of the parameters
 listed in the `IncomingPhoneNumbers Resource documentation
 <http://www.twilio.com/docs/api/rest/incoming-phone-numbers>`_
 
-.. code-block:: python
+.. code-block:: ruby
 
     from twilio.rest import TwilioRestClient
 
@@ -136,7 +136,7 @@ Changing Applications
 
 An :class:`Application` encapsulates all necessary URLs for use with phone numbers. Update an application on a phone number using :meth:`update`.
 
-.. code-block:: python
+.. code-block:: ruby
 
     from twilio.rest import TwilioRestClient
 
