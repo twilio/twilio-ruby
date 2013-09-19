@@ -22,7 +22,7 @@ Listing Queues
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @queues = client.queues.list()
+    @queues = @client.account.queues.list()
     
     @queues.each do |queue|
         puts queue.sid
@@ -44,7 +44,7 @@ represents all current calls in the queue.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @queue = @client.queues.get("QU123")
+    @queue = @client.account.queues.get("QU123")
 
     @queue.members.list().each do |member|
         print member.call_sid
@@ -75,7 +75,7 @@ first call in the queue.
     queue_sid = "QUAAAAAAAAAAAAA"
     call_sid = "CAXXXXXXXXXXXXXX"
     
-    @members = @client.queues.get(queue_sid).members
+    @members = @client.account.queues.get(queue_sid).members
 
     # Get the first call in the queue
     puts members.front.date_enqueued
@@ -106,7 +106,7 @@ default values are 'Front' and 'GET'
 
     queue_sid = "QUAAAAAAAAAAAAA"
 
-    @members = @client.queues.get(queue_sid).members
+    @members = @client.account.queues.get(queue_sid).members
 
     # Dequeue the first call in the queue
     puts @members.dequeue('http://www.twilio.com/welcome/call')
