@@ -24,7 +24,7 @@ current :class:`Notification` resources.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @client.notifications.list().each do |notification|:
+    @client.account.notifications.list().each do |notification|:
         puts notification.more_info
 
 You can filter transcriptions by :attr:`log` and :attr:`message_date`.
@@ -42,7 +42,7 @@ The :attr:`log` value is 0 for `ERROR` and 1 for `WARNING`.
 
     ERROR = 0
 
-    @client.notifications.list(log=ERROR).each do |notification|:
+    @client.account.notifications.list(log=ERROR).each do |notification|:
         puts notification.error_code
 
 .. note:: Due to the potentially voluminous amount of data in a notification,

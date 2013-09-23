@@ -19,7 +19,7 @@ Make a Call
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @call = @client.calls.create({:to => "9991231234", :from => "9991231234",
+    @call = @client.account.calls.create({:to => "9991231234", :from => "9991231234",
         :url => "http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient"})
     puts @call.length
     puts @call.sid
@@ -38,7 +38,7 @@ Send an SMS
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @message = client.messages.create({:to => "+12316851234",
+    @message = @client.account.messages.create({:to => "+12316851234",
                                        :from => "+15555555555",
                                        :body => "Hello there!"})
 
@@ -56,7 +56,7 @@ Send an MMS
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @message = client.messages.create({:to => "+15558676309",
+    @message = @client.account.messages.create({:to => "+15558676309",
                                        :from => "+15555555555",
                                        :body => "Jenny I need you!",
                                        :media_url => "http://twilio.com/heart.jpg"})
