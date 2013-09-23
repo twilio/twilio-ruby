@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# twilio-python2 documentation build configuration file, created by
+# twilio-ruby documentation build configuration file, created by
 # sphinx-quickstart on Mon Dec 13 16:47:32 2010.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -47,7 +47,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'twilio-python'
+project = u'twilio-ruby'
 copyright = unicode(datetime.utcnow().year) + u', Twilio Inc'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -188,7 +188,7 @@ htmlhelp_basename = 'twilio-pythondoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'twilio-python.tex', u'twilio-python Documentation',
+  ('index', 'twilio-python.tex', u'twilio-ruby Documentation',
    u'Twilio Inc.', 'manual'),
 ]
 
@@ -221,7 +221,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'twilio-python', u'twilio-python Documentation',
+    ('index', 'twilio-ruby', u'twilio-ruby Documentation',
      [u'Twilio Inc.'], 1)
 ]
 
@@ -229,7 +229,7 @@ man_pages = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'twilio-python'
+epub_title = u'twilio-ruby'
 epub_author = u'kyle@twilio.com'
 epub_publisher = u'Twilio Inc.'
 epub_copyright = u'2010, Twilio Inc.'
