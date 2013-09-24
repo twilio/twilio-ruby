@@ -5,12 +5,12 @@ Accessing REST Resources
 =========================
 
 To access Twilio REST resources, you'll first need to instantiate a
-:class:`TwilioRestClient`.
+:class:`Twilio::REST::Client`.
 
 Authentication
 --------------------------
 
-The :class:`TwilioRestClient` needs your Twilio credentials. To get
+The :class:`Twilio::REST::Client` needs your Twilio credentials. To get
 your credentials, visit `your Twilio account portal
 <https://www.twilio.com/user/account>`_. If you don't have a Twilio account
 yet, go `here <https://www.twilio.com/try-twilio>`_ to get started.
