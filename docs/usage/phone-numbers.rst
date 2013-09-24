@@ -125,7 +125,7 @@ listed in the `IncomingPhoneNumbers Resource documentation
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @client.accounts.phone_numbers.list(api_version="2010-04-01").each do |number|
+    @client.account.phone_numbers.list(api_version="2010-04-01").each do |number|
         number.update({:voice_url => "http://twimlets.com/holdmusic?" + 
             "Bucket=com.twilio.music.ambient", 
             :status_callback => "http://example.com/callback"})
