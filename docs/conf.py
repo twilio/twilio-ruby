@@ -174,7 +174,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'twilio-pythondoc'
+htmlhelp_basename = 'twilio-rubydoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -188,7 +188,7 @@ htmlhelp_basename = 'twilio-pythondoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'twilio-python.tex', u'twilio-ruby Documentation',
+  ('index', 'twilio-ruby.tex', u'twilio-ruby Documentation',
    u'Twilio Inc.', 'manual'),
 ]
 
