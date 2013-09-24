@@ -95,14 +95,14 @@ If you've found a phone number you want, you can purchase the number.
 
 .. code-block:: ruby
 
-    from twilio.rest import TwilioRestClient
+    require 'twilio-ruby'
 
     # To find these visit https://www.twilio.com/user/account
-    ACCOUNT_SID = "ACXXXXXXXXXXXXXXXXX"
-    AUTH_TOKEN = "YYYYYYYYYYYYYYYYYY"
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-    number = client.phone_numbers.purchase(phone_number="+15305431234")
+    @client = Twilio::REST::Client.new account_sid, auth_token
+    @number = @client.account.phone_numbers.purchase({:phone_number => "+15305431234"})
 
 However, it's easier to purchase numbers after finding them using search (as
 shown in the first example).
@@ -118,17 +118,17 @@ listed in the `IncomingPhoneNumbers Resource documentation
 
 .. code-block:: ruby
 
-    from twilio.rest import TwilioRestClient
+    require 'twilio-ruby'
 
     # To find these visit https://www.twilio.com/user/account
-    ACCOUNT_SID = "ACXXXXXXXXXXXXXXXXX"
-    AUTH_TOKEN = "YYYYYYYYYYYYYYYYYY"
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-    for number in client.phone_numbers.list(api_version="2010-04-01"):
-        number.update(voice_url="http://twimlets.com/holdmusic?" + 
+    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client.accounts.phone_numbers.list(api_version="2010-04-01").each do |number|
+        number.update({:voice_url => "http://twimlets.com/holdmusic?" + 
             "Bucket=com.twilio.music.ambient", 
-            status_callback="http://example.com/callback")
+            :status_callback => "http://example.com/callback"})
 
 
 Changing Applications
@@ -138,16 +138,18 @@ An :class:`Application` encapsulates all necessary URLs for use with phone numbe
 
 .. code-block:: ruby
 
-    from twilio.rest import TwilioRestClient
-
-    phone_sid = "PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    require 'twilio-ruby'
 
     # To find these visit https://www.twilio.com/user/account
-    ACCOUNT_SID = "ACXXXXXXXXXXXXXXXXX"
-    AUTH_TOKEN = "YYYYYYYYYYYYYYYYYY"
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-    number = client.phone_numbers.update(phone_sid, sms_application_sid="AP123")
+    @client = Twilio::REST::Client.new account_sid, auth_token
+
+    phone_sid = "PNXXXXXXXXXXXXXXXXX"
+
+    @number = @client.account.phone_numbers.get(phone_sid)
+    @number.update(:sms_application_sid => "APXXXXXXXXXXXXXXXXXX")
 
 See :doc:`/usage/applications` for instructions on updating and maintaining Applications.
 
