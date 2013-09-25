@@ -41,6 +41,7 @@ Query the Twilio REST API to create phone calls, send SMS/MMS messages and more!
     :maxdepth: 1
 
     usage/basics
+    usage/errors
     usage/messages
     usage/phone-calls
     usage/phone-numbers
