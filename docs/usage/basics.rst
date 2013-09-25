@@ -79,3 +79,24 @@ Provide the :attr:`sid` of the resource you'd like to get.
     @call = @client.account.calls.get("CA123")
     puts @call.to
 
+
+Deleting a Resource
+-------------------------------
+
+Resources can only be deleted via their instance object. This means
+you must retrieve an individual object using :meth:`ListResource.get`
+and then call :meth:`delete` on it.
+
+.. code-block:: ruby
+
+    require 'twilio-ruby'
+
+    # To find these visit https://www.twilio.com/user/account
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
+
+    @client = Twilio::REST::Client.new account_sid, auth_token
+
+    @recording = @client.account.recordings.get("RC123")
+    @recording.delete()
+
