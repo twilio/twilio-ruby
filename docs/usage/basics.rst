@@ -84,7 +84,7 @@ Deleting a Resource
 -------------------------------
 
 Resources can only be deleted via their instance object. This means
-you must retrieve an individual object using :meth:`ListResource.get`
+you must instantiate an instance object using :meth:`ListResource.get`
 and then call :meth:`delete` on it.
 
 .. code-block:: ruby
