@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 3.11.1
+--------------
+
+Released September 24, 2013
+
+- Fix a bug causing request the new messages class to fail.
+
 Version 3.11.0
 -------------
 
