@@ -29,7 +29,9 @@ puts @account.friendly_name
 end
 
 # get a particular call and list its recording urls
-@account.calls.get('CAXXXXXXX').recordings.list.each do {|r| puts r.wav}
+@account.calls.get('CAXXXXXXX').recordings.list.each do |r|
+  puts r.wav
+end
 
 # make a new outgoing call. returns a call object just like calls.get
 @call = @account.calls.create({:from => '+14159341234', :to => '+18004567890', :url => 'http://example.com/call-handler'})
@@ -85,7 +87,9 @@ puts @account.messages.get('SMXXXXXXXX').body
 @participants = @account.conferences.get('CFbbe46ff1274e283f7e3ac1df0072ab39').participants
 
 # list participants
-@participants.list.each do {|p| puts p.sid}
+@participants.list.each do |p|
+  puts p.sid
+end
 
 # update a conference participant
 @participants.get('CA386025c9bf5d6052a1d1ea42b4d16662').update({:muted => 'true'})
