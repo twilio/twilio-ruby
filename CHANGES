@@ -1,6 +1,12 @@
 twilio-ruby changelog
 =====================
 
+Version 3.11.2
+
+Released October 15, 2013
+
+- Restore ability of `sms.messages` to make requests to /SMS/Messages.
+
 Version 3.11.1
 --------------
 
