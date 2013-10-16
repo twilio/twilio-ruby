@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 3.11.3
+
+Released October 15, 2013
+
+- Restore support for versions of Ruby other than 2.0.0, which the
+previous release removed.
+
 Version 3.11.2
 
 Released October 15, 2013
