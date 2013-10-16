@@ -89,7 +89,7 @@ module Twilio
           resource = twilify r
           relative_path = custom_resource_names.fetch(r, resource)
           path = "#{@path}/#{relative_path}"
-          enclosing_module = @submodule == nil ? (Twilio::REST) : (Twilio::REST.const_get @submodule)
+          enclosing_module = @submodule == nil ? (Twilio::REST) : (Twilio::REST.const_get(@submodule))
           resource_class = enclosing_module.const_get resource
           instance_variable_set("@#{r}", resource_class.new(path, @client))
         end

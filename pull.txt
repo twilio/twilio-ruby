@@ -1,0 +1,21 @@
+This pull moves the /SMS endpoints into their own `SMS` module. This allows both of the `Message` classes to coexist, since one is in its own namespace, so I was able to bring back the class living at `sms.messages`. This means `@client.account.sms.messages` will once again make requests to the `/SMS/Messages` endpoint. This change re-enables Test Credentials for the `sms.messages` class.
+
+This required a change to both `instance_resource.rb` and `list_resource.rb` because both were relying on the assumption that all classes live in the Twilio::REST module.
+
+To use the new submodule functionality, just set the `@submodule` variable to the name of the new submodule on the class declaring the subresources. Here is how it was done for `/SMS/Messages`.
+
+```ruby
+module Twilio
+  module REST
+    class Sms < InstanceResource
+      def initialize(path, client, params={})
+        super
+        @submodule = :SMS
+        resource :messages, :short_codes
+      end
+    end
+  end
+end
+```
+
+@labcoder @carlosdp @alexcchan

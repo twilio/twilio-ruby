@@ -12,7 +12,8 @@ module Twilio
 
         # The next line grabs the enclosing module. Necessary for resources
         # contained in their own submodule like /SMS/Messages
-        enclosing_module = Module.const_get self.class.to_s.split('::')[0...-1].join('::')
+        enclosing_module = Module.const_get(self.class.to_s.split('::')[0...-1].join('::'))
+        puts enclosing_module
 
         @instance_class = enclosing_module.const_get instance_name
         @list_key, @instance_id_key = detwilify(resource_name), 'sid'
