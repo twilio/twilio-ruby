@@ -9,7 +9,12 @@ module Twilio
         @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]
         instance_name = custom_names.fetch(resource_name, resource_name.chop)
-        @instance_class = Twilio::REST.const_get instance_name
+
+        # The next line grabs the enclosing module. Necessary for resources
+        # contained in their own submodule like /SMS/Messages
+        enclosing_module = Module.const_get self.class.to_s.split('::')[0...-1].join('::')
+
+        @instance_class = enclosing_module.const_get instance_name
         @list_key, @instance_id_key = detwilify(resource_name), 'sid'
       end
 
