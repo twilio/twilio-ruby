@@ -39,7 +39,7 @@ Local, Toll-Free, and Mobile Numbers
 ------------------------------------
 
 By default, :meth:`PhoneNumbers.search` looks for local phone numbers. You can
-search for different types of numbers by using a type subresources.
+search for different types of numbers by using a type subresource.
 
 Available subresources for AvailablePhoneNumbers are:
 - `local`
