@@ -35,16 +35,29 @@ Once we find one, we'll purchase it for our account.
         print "No numbers in 530 available"
 
 
-Toll Free Numbers
-^^^^^^^^^^^^^^^^^^^^^^^^
+Local, Toll-Free, and Mobile Numbers
+------------------------------------
 
-By default, :meth:`PhoneNumbers.search` looks for local phone numbers. Add a
-:data:`type` : ``tollfree`` parameter to search toll-free numbers instead.
+By default, :meth:`PhoneNumbers.search` looks for local phone numbers. You can
+search for different types of numbers by using a type subresources.
+
+Available subresources for AvailablePhoneNumbers are:
+- `local`
+- `toll_free`
+- `mobile`
+
+You can search for numbers for a given type.
 
 .. code-block:: ruby
 
-	numbers = @client.account.available_phone_numbers.list(:type=>"tollfree")
+    # local
+	numbers = @client.account.available_phone_numbers.local.list()
 
+    # toll free
+	numbers = @client.account.available_phone_numbers.toll_free.list()
+
+    # mobile
+	numbers = @client.account.available_phone_numbers.mobile.list()
 
 Numbers Containing Words
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
