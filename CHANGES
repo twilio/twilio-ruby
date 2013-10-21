@@ -1,6 +1,14 @@
 twilio-ruby changelog
 =====================
 
+Version 3.11.4
+
+Released October 21, 2013
+
+- Add support for listing IncomingPhoneNumbers by type.
+- Add support for searching for mobile enabled numbers for
+both IncomingPhoneNumbers and AvailablePhoneNumbers.
+
 Version 3.11.3
 
 Released October 15, 2013
