@@ -68,7 +68,7 @@ describe Twilio::Util::Capability do
     @capability.allow_client_outgoing 'myAppSid', app_params_hash
     app_params = @capability.instance_eval {url_encode(app_params_hash)}
     params_hash = {'appSid' => 'myAppSid', 'appParams' => app_params}
-    params = @capability.instance_eval {url_encode(params_hash)}
+    @capability.instance_eval {url_encode(params_hash)}
     token = @capability.generate
     decoded = JWT.decode token, 'myAuthToken'
     queries(decoded['scope']).should == [['outgoing', params_hash]]
@@ -102,7 +102,7 @@ describe Twilio::Util::Capability do
     @capability.allow_client_outgoing 'myAppSid', app_params_hash
     app_params = @capability.instance_eval {url_encode(app_params_hash)}
     params_hash = {'appSid' => 'myAppSid', 'appParams' => app_params, 'clientName' => 'andrew'}
-    params = @capability.instance_eval {url_encode(params_hash)}
+    @capability.instance_eval {url_encode(params_hash)}
     token = @capability.generate
     decoded = JWT.decode token, 'myAuthToken'
     scopes = queries(decoded['scope'])
@@ -122,7 +122,7 @@ describe Twilio::Util::Capability do
     @capability.allow_client_incoming 'andrew'
     app_params = @capability.instance_eval {url_encode(app_params_hash)}
     params_hash = {'appSid' => 'myAppSid', 'appParams' => app_params, 'clientName' => 'andrew'}
-    params = @capability.instance_eval {url_encode(params_hash)}
+    @capability.instance_eval {url_encode(params_hash)}
     token = @capability.generate
     decoded = JWT.decode token, 'myAuthToken'
     scopes = queries(decoded['scope'])
