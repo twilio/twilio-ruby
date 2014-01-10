@@ -1,5 +1,8 @@
 language: ruby
 script: "rake spec"
+before_install:
+  - gem update --system 2.1.11
+  - gem --version
 rvm:
   - 1.8.7
   - 1.9.2
