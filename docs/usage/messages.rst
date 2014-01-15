@@ -80,7 +80,7 @@ Retrieving Sent Messages
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @client.account.messages.each do |message|
+    @client.account.messages.list.each do |message|
         puts message.body
 
 
