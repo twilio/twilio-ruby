@@ -81,6 +81,9 @@ puts @account.messages.get('SMXXXXXXXX').body
 # update an existing phone number's voice url
 @account.incoming_phone_numbers.get('PNdba508c5616a7f5e141789f44f022cc3').update({:voice_url => 'http://example.com/voice'})
 
+# decommission an existing phone number
+numbers = @account.incoming_phone_numbers.list(:friendly_name => 'A Fabulous Friendly Name') 
+numbers[0].delete
 ################ CONFERENCES  ################
 
 # get a particular conference's participants object and stash it
