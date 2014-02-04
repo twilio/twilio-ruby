@@ -1,6 +1,14 @@
 twilio-ruby changelog
 =====================
 
+Version 3.11.5
+
+Released February 4
+
+- Add bangs for twilify to indicate it's a dangerous operation.
+- Remove reference to deprecated OpenSSL Digest parameter.
+- Encode dates properly before passing them to the Twilio API.
+
 Version 3.11.4
 
 Released October 21, 2013
