@@ -47,10 +47,13 @@ module Twilio
 
       API_VERSION = '2010-04-01'
 
+      # 1.8.7 doesn't have the RUBY_ENGINE constant.
+      engine = !defined?(RUBY_ENGINE) || RUBY_ENGINE == 'ruby'
+
       HTTP_HEADERS = {
         'Accept' => 'application/json',
         'Accept-Charset' => 'utf-8',
-        'User-Agent' => "twilio-ruby/#{Twilio::VERSION}",
+        'User-Agent' => "twilio-ruby/#{Twilio::VERSION} (#{engine}/#{RUBY_PLATFORM} #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL})",
       }
 
       DEFAULTS = {
