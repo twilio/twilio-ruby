@@ -1,6 +1,9 @@
-$LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
-require 'twilio-ruby'
-require 'fakeweb'
-require 'rack'
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
-FakeWeb.allow_net_connect = false
+require 'bundler'
+Bundler.setup
+
+Dir.glob(File.expand_path("../support/**/*.rb", __FILE__), &method(:require))
+
+require 'twilio-ruby'
+require 'rack'
