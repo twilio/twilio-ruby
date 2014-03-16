@@ -1,6 +1,5 @@
 install:
-	gem build twilio-ruby.gemspec
-	gem install twilio-ruby-*.gem
+	rake install
 
 test-install:
 	bundle install
