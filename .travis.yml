@@ -16,6 +16,7 @@ rvm:
   - rbx-2
   - ree
 matrix:
+  fast_finish: true
   allow_failures:
     - rvm: ruby-head
     - rvm: ruby
