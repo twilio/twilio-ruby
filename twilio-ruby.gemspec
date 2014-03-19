@@ -1,33 +1,33 @@
-require './lib/twilio-ruby/version'
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'twilio-ruby/version'
 
-Gem::Specification.new do |s|
-  s.name = 'twilio-ruby'
-  s.version = Twilio::VERSION
-  s.author = 'Andrew Benton'
-  s.email = 'andrew@twilio.com'
+Gem::Specification.new do |spec|
+  spec.name          = 'twilio-ruby'
+  spec.version       = Twilio::VERSION
+  spec.authors       = ['Andrew Benton']
+  spec.email         = ['andrew@twilio.com']
+  spec.summary       = 'A simple library for communicating with the Twilio REST API, building TwiML, and generating Twilio Client Capability Tokens'
+  spec.description   = 'A simple library for communicating with the Twilio REST API, building TwiML, and generating Twilio Client Capability Tokens'
+  spec.homepage      = 'http://github.com/twilio/twilio-ruby'
+  spec.license       = 'MIT'
 
-  s.description = 'A simple library for communicating with the Twilio REST API, building TwiML, and generating Twilio Client Capability Tokens'
-  s.summary = 'A simple library for communicating with the Twilio REST API, building TwiML, and generating Twilio Client Capability Tokens'
-  s.homepage = 'http://github.com/twilio/twilio-ruby'
-  s.license = 'MIT'
+  spec.files         = `git ls-files -z`.split("\x0")
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ['lib']
+  spec.required_ruby_version = '>= 1.8.7'
+  spec.extra_rdoc_files = ['README.md', 'LICENSE.md']
+  spec.rdoc_options = ['--line-numbers', '--inline-source', '--title', 'twilio-ruby', '--main', 'README.md']
 
-  s.platform = Gem::Platform::RUBY
-  s.require_paths = %w[lib]
-  s.files = `git ls-files`.split("\n")
-  s.test_files = Dir['spec/**/*.rb']
-
-  s.add_dependency('multi_json', '>= 1.3.0')
-  s.add_dependency('builder', '>= 2.1.2')
-  s.add_dependency('jwt', '>= 0.1.2')
-  s.add_dependency('jruby-openssl') if RUBY_PLATFORM == 'java'
+  spec.add_dependency('multi_json', '>= 1.3.0')
+  spec.add_dependency('builder', '>= 2.1.2')
+  spec.add_dependency('jwt', '>= 0.1.2')
+  spec.add_dependency('jruby-openssl') if RUBY_PLATFORM == 'java'
   # Workaround for RBX <= 2.2.1, should be fixed in next version
-  s.add_dependency('rubysl') if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
+  spec.add_dependency('rubysl') if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
 
-  s.add_development_dependency 'rake',    '~> 0.9.0'
-  s.add_development_dependency 'rspec',   '~> 2.6.0'
-  s.add_development_dependency 'fakeweb', '~> 1.3.0'
-  s.add_development_dependency 'rack',    '~> 1.3.0'
-
-  s.extra_rdoc_files = ['README.md', 'LICENSE']
-  s.rdoc_options = ['--line-numbers', '--inline-source', '--title', 'twilio-ruby', '--main', 'README.md']
+  spec.add_development_dependency 'bundler', '~> 1.5'
+  spec.add_development_dependency 'rake', '~> 10.0'
 end
