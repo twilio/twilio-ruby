@@ -1,12 +1,10 @@
-require 'rubygems'
-require 'rubygems/package_task'
+require 'bundler'
+Bundler.setup
+Bundler::GemHelper.install_tasks
+
 require 'rspec/core/rake_task'
+desc 'Run all specs'
+RSpec::Core::RakeTask.new(:spec)
 
-spec = eval(File.read('twilio-ruby.gemspec'))
-
-Gem::PackageTask.new(spec) do |p|
-  p.gem_spec = spec
-end
-
-RSpec::Core::RakeTask.new
 task :default => :spec
+task :test => :spec
