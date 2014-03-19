@@ -1,12 +1,11 @@
 install:
-	gem build twilio-ruby.gemspec
-	gem install twilio-ruby-*.gem
+	rake install
 
 test-install:
 	bundle install
 
 test:
-	bundle exec rake spec
+	rake spec
 
 authors:
 	echo "Authors\n=======\n\nA huge thanks to all of our contributors:\n\n" > AUTHORS.md
