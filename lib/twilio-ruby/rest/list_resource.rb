@@ -7,7 +7,8 @@
         custom_names = {
             'Media' => 'MediaInstance',
             'IpAddresses' => 'IpAddress',
-            'Feedback' => 'FeedbackInstance'
+            'Feedback' => 'FeedbackInstance',
+            'Summary' => 'SummaryInstance'
         }
         @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]
