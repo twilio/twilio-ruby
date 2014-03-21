@@ -1,6 +1,10 @@
 module Twilio
   module REST
     class Calls < ListResource
+      def initialize(path, client)
+        super
+      end
+
       def make(from, to, url)
         create :from => from, :to => to, :url => url
       end
@@ -9,7 +13,7 @@ module Twilio
     class Call < InstanceResource
       def initialize(path, client, params={})
         super path, client, params
-        resource :recordings, :notifications
+        resource :recordings, :notifications, :feedback
       end
 
       def redirect_to(url)

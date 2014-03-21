@@ -1,11 +1,14 @@
-module Twilio
+ module Twilio
   module REST
     class ListResource
       include Utils
 
-
       def initialize(path, client)
-        custom_names = {"Media" => "MediaInstance", "IpAddresses" => "IpAddress"}
+        custom_names = {
+            'Media' => 'MediaInstance',
+            'IpAddresses' => 'IpAddress',
+            'Feedback' => 'FeedbackInstance'
+        }
         @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]
         instance_name = custom_names.fetch(resource_name, resource_name.chop)
@@ -13,7 +16,7 @@ module Twilio
         # The next line grabs the enclosing module. Necessary for resources
         # contained in their own submodule like /SMS/Messages
         parent_module = self.class.to_s.split('::')[-2]
-        full_module_path = parent_module == "REST" ? (Twilio::REST) : (Twilio::REST.const_get parent_module)
+        full_module_path = parent_module == 'REST' ? (Twilio::REST) : (Twilio::REST.const_get parent_module)
 
         @instance_class = full_module_path.const_get instance_name
         @list_key, @instance_id_key = detwilify(resource_name), 'sid'
