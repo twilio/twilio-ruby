@@ -161,7 +161,7 @@ This will print the following (except for the whitespace):
 
 ## Supported Ruby Versions
 
-This library aims to support and is [tested against][travis] the following Ruby
+This library supports and is [tested against][travis] the following Ruby
 implementations:
 
 - Ruby 2.1.0
