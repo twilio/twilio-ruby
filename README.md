@@ -8,15 +8,20 @@ A module for using the Twilio REST API and generating valid [TwiML](http://www.t
 
 ## Installation
 
+To install using [Bundler][bundler] grab the latest stable version:
+
 ```ruby
 gem 'twilio-ruby', '~> 3.11'
 ```
 
-```ruby
-require 'twilio-ruby'
+To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
+
+```bash
+gem install twilio-ruby
 ```
 
 To build and install the development branch yourself from the latest source:
+
 ```bash
 git clone git@github.com:twilio/twilio-ruby.git
 cd twilio-ruby
@@ -189,6 +194,8 @@ directory. Also for thoose upgrading, the [upgrade guide][upgrade] is available 
 [documentation]: http://twilio-ruby.readthedocs.org/en/latest
 [upgrade]: https://github.com/twilio/twilio-ruby/wiki/UpgradeGuide
 [wiki]: https://github.com/twilio/twilio-ruby/wiki
+[bundler]: http://bundler.io
+[rubygems]: http://rubygems.org
 [gem]: https://rubygems.org/gems/twilio
 [travis]: http://travis-ci.org/twilio/twilio-ruby
 [codeclimate]: https://codeclimate.com/github/twilio/twilio-ruby
