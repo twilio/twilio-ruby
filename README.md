@@ -16,6 +16,13 @@ gem 'twilio-ruby', '~> 3.11'
 require 'twilio-ruby'
 ```
 
+To build and install the development branch yourself from the latest source:
+```bash
+git clone git@github.com:twilio/twilio-ruby.git
+cd twilio-ruby
+make install
+```
+
 ## Getting Started With REST
 
 ### Setup Work
