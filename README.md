@@ -1,3 +1,7 @@
+[![Gem Version](http://img.shields.io/gem/v/twilio-ruby.svg)][gem]
+[![Build Status](http://img.shields.io/travis/twilio/twilio-ruby.svg)][travis]
+[![Code Quality](http://img.shields.io/codeclimate/github/twilio/twilio-ruby.svg)][codeclimate]
+
 # twilio-ruby
 
 A module for using the Twilio REST API and generating valid [TwiML](http://www.twilio.com/docs/api/twiml/ "TwiML - Twilio Markup Language"). [Click here to read the full documentation.][documentation]
@@ -154,12 +158,6 @@ This will print the following (except for the whitespace):
   </Dial>
 </Response>
 ```
-
-## Build & Dependency Status
-
-[![Gem Version](http://img.shields.io/gem/v/twilio-ruby.svg)][gem]
-[![Build Status](http://img.shields.io/travis/twilio/twilio-ruby.svg)][travis]
-[![Code Quality](http://img.shields.io/codeclimate/github/twilio/twilio-ruby.svg)][codeclimate]
 
 ## Supported Ruby Versions
 
