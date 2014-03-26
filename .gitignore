@@ -4,5 +4,5 @@ pkg/*
 doc/*
 Gemfile.lock
 *.gem
-
+bin
 docs/_build

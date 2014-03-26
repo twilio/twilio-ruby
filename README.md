@@ -1,15 +1,20 @@
-[![Build Status](https://travis-ci.org/twilio/twilio-ruby.png?branch=master)](https://travis-ci.org/twilio/twilio-ruby)
-[![Gem Version](https://badge.fury.io/rb/twilio-ruby.png)](http://badge.fury.io/rb/twilio-ruby)
+[![Gem Version](http://img.shields.io/gem/v/twilio-ruby.svg)][gem]
+[![Build Status](http://img.shields.io/travis/twilio/twilio-ruby.svg)][travis]
+[![Code Quality](http://img.shields.io/codeclimate/github/twilio/twilio-ruby.svg)][codeclimate]
 
 # twilio-ruby
 
-A module for using the Twilio REST API and generating valid
-[TwiML](http://www.twilio.com/docs/api/twiml/ "TwiML - Twilio Markup Language").
-[Click here to read the full documentation.][documentation]
+A module for using the Twilio REST API and generating valid [TwiML](http://www.twilio.com/docs/api/twiml/ "TwiML - Twilio Markup Language"). [Click here to read the full documentation.][documentation]
 
-## Install
+## Installation
 
-Via rubygems.org:
+To install using [Bundler][bundler] grab the latest stable version:
+
+```ruby
+gem 'twilio-ruby', '~> 3.11'
+```
+
+To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
 
 ```bash
 gem install twilio-ruby
@@ -135,7 +140,7 @@ section of the wiki.
 
 ## Getting Started With TwiML
 
-TwiML support is based on the [builder][builder] library. You can construct a
+TwiML support is based on the [Builder][builder] library. You can construct a
 TwiML response like this:
 
 ``` ruby
@@ -156,7 +161,7 @@ puts response.text
 
 This will print the following (except for the whitespace):
 
-```
+``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Say voice="alice">hello there</Say>
@@ -166,16 +171,33 @@ This will print the following (except for the whitespace):
 </Response>
 ```
 
+## Supported Ruby Versions
+
+This library supports and is [tested against][travis] the following Ruby
+implementations:
+
+- Ruby 2.1.0
+- Ruby 2.0.0
+- Ruby 1.9.3
+- Ruby 1.8.7
+- [JRuby][jruby]
+- [Rubinius][rubinius]
+
 ## More Information
 
 There are more detailed examples in the included [examples][examples]
-directory.
+directory. Also for thoose upgrading, the [upgrade guide][upgrade] is available in the [twilio-ruby github wiki][wiki].
 
-The [upgrade guide][upgrade] is available in the [twilio-ruby github wiki][wiki].
-
-[capability]:https://github.com/twilio/twilio-ruby/wiki/Capability
-[builder]:http://builder.rubyforge.org/
-[examples]:https://github.com/twilio/twilio-ruby/blob/master/examples
-[documentation]:http://twilio-ruby.readthedocs.org/en/latest
-[upgrade]:https://github.com/twilio/twilio-ruby/wiki/UpgradeGuide
-[wiki]:https://github.com/twilio/twilio-ruby/wiki
+[capability]: https://github.com/twilio/twilio-ruby/wiki/Capability
+[builder]: http://builder.rubyforge.org/
+[examples]: https://github.com/twilio/twilio-ruby/blob/master/examples
+[documentation]: http://twilio-ruby.readthedocs.org/en/latest
+[upgrade]: https://github.com/twilio/twilio-ruby/wiki/UpgradeGuide
+[wiki]: https://github.com/twilio/twilio-ruby/wiki
+[bundler]: http://bundler.io
+[rubygems]: http://rubygems.org
+[gem]: https://rubygems.org/gems/twilio
+[travis]: http://travis-ci.org/twilio/twilio-ruby
+[codeclimate]: https://codeclimate.com/github/twilio/twilio-ruby
+[jruby]: http://www.jruby.org
+[rubinius]: http://rubini.us
