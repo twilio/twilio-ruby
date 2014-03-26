@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   # Workaround for RBX <= 2.2.1, should be fixed in next version
   s.add_dependency('rubysl') if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
 
-  s.add_development_dependency 'rake',    '~> 0.9.0'
+  s.add_development_dependency 'rake',    '~> 10.1.0'
   s.add_development_dependency 'rspec',   '~> 2.6.0'
   s.add_development_dependency 'fakeweb', '~> 1.3.0'
   s.add_development_dependency 'rack',    '~> 1.3.0'
