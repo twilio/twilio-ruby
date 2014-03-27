@@ -98,7 +98,11 @@
       end
 
       def resource(*resources)
-        custom_resource_names = {:sms => 'SMS', :sip => 'SIP'}
+        custom_resource_names = {
+          :sms => 'SMS',
+          :sip => 'SIP',
+          :summary => 'Feedback/Summary'
+        }
         resources.each do |r|
           resource = twilify r
           relative_path = custom_resource_names.fetch(r, resource)
