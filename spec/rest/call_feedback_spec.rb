@@ -10,14 +10,3 @@ describe Twilio::REST::Feedback do
     @call.feedback.instance_variable_get('@path').should == 'someUri/Feedback'
   end
 end
-
-describe Twilio::REST::Summary do
-  before do
-    @calls = Twilio::REST::Calls.new('someUri', 'someClient')
-  end
-
-  it 'sets up a feedback summary object' do
-      @calls.should respond_to(:summary)
-      @calls.summary.instance_variable_get('@path').should == 'someUri/Summary'
-  end
-end

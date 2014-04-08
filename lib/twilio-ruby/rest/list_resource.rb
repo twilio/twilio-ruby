@@ -7,8 +7,7 @@
         custom_names = {
             'Media' => 'MediaInstance',
             'IpAddresses' => 'IpAddress',
-            'Feedback' => 'FeedbackInstance',
-            'Summary' => 'SummaryInstance'
+            'Feedback' => 'FeedbackInstance'
         }
         @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]
@@ -100,8 +99,7 @@
       def resource(*resources)
         custom_resource_names = {
           :sms => 'SMS',
-          :sip => 'SIP',
-          :summary => 'Feedback/Summary'
+          :sip => 'SIP'
         }
         resources.each do |r|
           resource = twilify r
