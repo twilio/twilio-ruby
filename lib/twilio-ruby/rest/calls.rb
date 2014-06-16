@@ -1,6 +1,10 @@
 module Twilio
   module REST
     class Calls < ListResource
+      def initialize(path, client)
+        super
+      end
+
       def make(from, to, url)
         create :from => from, :to => to, :url => url
       end
