@@ -53,18 +53,18 @@ end
 ################ SMS MESSAGES ################
 
 # print a list of messages
-@account.messages.list({:date_sent => '2010-09-01'}).each do |message|
+@account.sms.messages.list({:date_sent => '2010-09-01'}).each do |message|
   puts message.body
 end
 
 # print a particular sms message
-puts @account.messages.get('SMXXXXXXXX').body
+puts @account.sms.messages.get('SMXXXXXXXX').body
 
 # send an sms
-@account.messages.create(:from => '+14159341234', :to => '+16105557069', :body => 'Hey there!')
+@account.sms.messages.create(:from => '+14159341234', :to => '+16105557069', :body => 'Hey there!')
 
 # send an mms
-@account.messages.create(:from => '+14159341234', :to => '+16105557069', :media_urls => 'http://example.com/media.png')
+@account.sms.messages.create(:from => '+14159341234', :to => '+16105557069', :media_urls => 'http://example.com/media.png')
 
 ################ PHONE NUMBERS ################
 

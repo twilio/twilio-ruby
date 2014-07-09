@@ -38,7 +38,7 @@ Send an SMS
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @message = @client.account.messages.create({:to => "+12316851234",
+    @message = @client.account.sms.messages.create({:to => "+12316851234",
                                        :from => "+15555555555",
                                        :body => "Hello there!"})
 
@@ -56,7 +56,7 @@ Send an MMS
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @message = @client.account.messages.create({:to => "+15558676309",
+    @message = @client.account.sms.messages.create({:to => "+15558676309",
                                        :from => "+15555555555",
                                        :body => "Jenny I need you!",
                                        :media_url => "http://twilio.com/heart.jpg"})
