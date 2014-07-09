@@ -47,7 +47,7 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 ### Send an SMS
 
 ``` ruby
-@client.account.messages.create(
+@client.account.sms.messages.create(
   :from => '+14159341234',
   :to => '+16105557069',
   :body => 'Hey there!'
@@ -57,7 +57,7 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 ### Send an MMS
 
 ``` ruby
-@client.account.messages.create(
+@client.account.sms.messages.create(
   :from => '+14159341234',
   :to => '+16105557069',
   :body => 'Hey there!',
