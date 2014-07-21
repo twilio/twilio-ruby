@@ -11,7 +11,7 @@ describe Twilio::Util::Capability do
 
   it 'should return a valid jwt when #generate is called' do
     token = @capability.generate
-    decoded = JWT.decode token, 'myAuthToken'
+    decoded, header = JWT.decode token, 'myAuthToken'
     decoded['scope'].should_not be_nil
     decoded['iss'].should_not be_nil
     decoded['exp'].should_not be_nil
@@ -19,14 +19,14 @@ describe Twilio::Util::Capability do
 
   it 'should properly set the iss key in the payload' do
     token = @capability.generate
-    decoded = JWT.decode token, 'myAuthToken'
+    decoded, header = JWT.decode token, 'myAuthToken'
     decoded['iss'].should == 'myAccountSid'
   end
 
   it 'should properly set the exp key based on the default hour ttl' do
     seconds = Time.now.to_i
     token = @capability.generate
-    decoded = JWT.decode token, 'myAuthToken'
+    decoded, header = JWT.decode token, 'myAuthToken'
     decoded['exp'].should == seconds + 3600
   end
 
@@ -34,14 +34,14 @@ describe Twilio::Util::Capability do
     ttl = rand 10000
     seconds = Time.now.to_i
     token = @capability.generate ttl
-    decoded = JWT.decode token, 'myAuthToken'
+    decoded, header = JWT.decode token, 'myAuthToken'
     decoded['exp'].should == seconds + ttl
   end
 
   it 'should generate a proper incoming client scope string' do
     @capability.allow_client_incoming 'andrew'
     token = @capability.generate
-    decoded = JWT.decode token, 'myAuthToken'
+    decoded, header = JWT.decode token, 'myAuthToken'
     queries(decoded['scope']).should == [['incoming', {'clientName' => 'andrew'}]]
   end
 
@@ -49,7 +49,7 @@ describe Twilio::Util::Capability do
     @capability.allow_client_incoming 'andrew'
     @capability.allow_client_incoming 'bridget'
     token = @capability.generate
-    decoded = JWT.decode token, 'myAuthToken'
+    decoded, header = JWT.decode token, 'myAuthToken'
     queries(decoded['scope']).should == [
       ['incoming', {'clientName' => 'andrew'}],
       ['incoming', {'clientName' => 'bridget'}]
@@ -59,7 +59,7 @@ describe Twilio::Util::Capability do
   it 'should generate a proper outgoing client scope string' do
     @capability.allow_client_outgoing 'myAppSid'
     token = @capability.generate
-    decoded = JWT.decode token, 'myAuthToken'
+    decoded, header = JWT.decode token, 'myAuthToken'
     queries(decoded['scope']).should == [['outgoing', {'appSid' => 'myAppSid'}]]
   end
 
@@ -70,7 +70,7 @@ describe Twilio::Util::Capability do
     params_hash = {'appSid' => 'myAppSid', 'appParams' => app_params}
     @capability.instance_eval {url_encode(params_hash)}
     token = @capability.generate
-    decoded = JWT.decode token, 'myAuthToken'
+    decoded, header = JWT.decode token, 'myAuthToken'
     queries(decoded['scope']).should == [['outgoing', params_hash]]
   end
 
@@ -79,7 +79,7 @@ describe Twilio::Util::Capability do
     @capability.allow_client_incoming 'andrew'
     @capability.allow_client_outgoing 'myAppSid'
     token = @capability.generate
-    decoded = JWT.decode token, 'myAuthToken'
+    decoded, header = JWT.decode token, 'myAuthToken'
     queries(decoded['scope']).should == [
       ['incoming', {'clientName' => 'andrew'}],
       ['outgoing', {'clientName' => 'andrew', 'appSid' => 'myAppSid'}]
@@ -91,7 +91,7 @@ describe Twilio::Util::Capability do
     @capability.allow_client_outgoing 'myAppSid'
     @capability.allow_client_incoming 'andrew'
     token = @capability.generate
-    decoded = JWT.decode token, 'myAuthToken'
+    decoded, header = JWT.decode token, 'myAuthToken'
     queries(decoded['scope']).should == [["incoming", {"clientName"=>"andrew"}], ["outgoing", {"clientName"=>"andrew", "appSid"=>"myAppSid"}]]
   end
 
@@ -104,7 +104,7 @@ describe Twilio::Util::Capability do
     params_hash = {'appSid' => 'myAppSid', 'appParams' => app_params, 'clientName' => 'andrew'}
     @capability.instance_eval {url_encode(params_hash)}
     token = @capability.generate
-    decoded = JWT.decode token, 'myAuthToken'
+    decoded, header = JWT.decode token, 'myAuthToken'
     scopes = queries(decoded['scope'])
     scopes.shift.should == ["incoming", {"clientName"=>"andrew"}]
     scope = scopes.shift
@@ -124,7 +124,7 @@ describe Twilio::Util::Capability do
     params_hash = {'appSid' => 'myAppSid', 'appParams' => app_params, 'clientName' => 'andrew'}
     @capability.instance_eval {url_encode(params_hash)}
     token = @capability.generate
-    decoded = JWT.decode token, 'myAuthToken'
+    decoded, header = JWT.decode token, 'myAuthToken'
     scopes = queries(decoded['scope'])
     scopes.shift.should == ["incoming", {"clientName"=>"andrew"}]
     scope = scopes.shift
