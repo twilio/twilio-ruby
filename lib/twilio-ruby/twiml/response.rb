@@ -3,6 +3,7 @@ module Twilio
     class Response
 
       attr_reader :text
+      alias_method :to_xml , :text
 
       def initialize(&block)
         xml = Builder::XmlMarkup.new
