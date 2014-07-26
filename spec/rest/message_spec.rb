@@ -6,7 +6,7 @@ describe Twilio::REST::Message do
   end
 
   it 'sets up a media resources object' do
-    @message.should respond_to(:media)
-    @message.media.instance_variable_get('@path').should == 'someUri/Media'
+    expect(@message).to respond_to(:media)
+    expect(@message.media.instance_variable_get('@path')).to eq('someUri/Media')
   end
 end

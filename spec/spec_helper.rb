@@ -1,6 +1,15 @@
-$LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+
+require 'bundler'
+Bundler.setup
+
+Dir.glob(File.expand_path("../support/**/*.rb", __FILE__), &method(:require))
+
 require 'twilio-ruby'
-require 'fakeweb'
 require 'rack'
 
-FakeWeb.allow_net_connect = false
+RSpec.configure do |config|
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
+end

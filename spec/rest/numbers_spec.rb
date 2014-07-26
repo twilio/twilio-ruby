@@ -7,18 +7,18 @@ describe Twilio::REST::Country do
   end
 
   it 'sets up a local resources object' do
-    @country.should respond_to(:local)
-    @country.local.instance_variable_get('@path').should == 'someUri/Local'
+    expect(@country).to respond_to(:local)
+    expect(@country.local.instance_variable_get('@path')).to eq('someUri/Local')
   end
 
   it 'sets up a toll_free resources object' do
-    @country.should respond_to(:toll_free)
-    @country.toll_free.instance_variable_get('@path').should == 'someUri/TollFree'
+    expect(@country).to respond_to(:toll_free)
+    expect(@country.toll_free.instance_variable_get('@path')).to eq('someUri/TollFree')
   end
 
   it 'sets up a mobile resources object' do
-    @country.should respond_to(:mobile)
-    @country.mobile.instance_variable_get('@path').should == 'someUri/Mobile'
+    expect(@country).to respond_to(:mobile)
+    expect(@country.mobile.instance_variable_get('@path')).to eq('someUri/Mobile')
   end
 
 end
@@ -30,17 +30,17 @@ describe Twilio::REST::NumberType do
   end
 
   it 'sets up a local resources object' do
-    @incoming_phone_numbers.should respond_to(:local)
-    @incoming_phone_numbers.local.instance_variable_get('@path').should == 'someUri/Local'
+    expect(@incoming_phone_numbers).to respond_to(:local)
+    expect(@incoming_phone_numbers.local.instance_variable_get('@path')).to eq('someUri/Local')
   end
 
   it 'sets up a toll_free resources object' do
-    @incoming_phone_numbers.should respond_to(:toll_free)
-    @incoming_phone_numbers.toll_free.instance_variable_get('@path').should == 'someUri/TollFree'
+    expect(@incoming_phone_numbers).to respond_to(:toll_free)
+    expect(@incoming_phone_numbers.toll_free.instance_variable_get('@path')).to eq('someUri/TollFree')
   end
 
   it 'sets up a mobile resources object' do
-    @incoming_phone_numbers.should respond_to(:mobile)
-    @incoming_phone_numbers.mobile.instance_variable_get('@path').should == 'someUri/Mobile'
+    expect(@incoming_phone_numbers).to respond_to(:mobile)
+    expect(@incoming_phone_numbers.mobile.instance_variable_get('@path')).to eq('someUri/Mobile')
   end
 end

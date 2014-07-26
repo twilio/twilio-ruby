@@ -34,7 +34,7 @@ describe Twilio::Util::RequestValidator do
       'ApplicationSid' => 'AP44efecad51364e80b133bb7c07eb8204'
     }
     signature = 'oVb2kXoVy8GEfwBDjR8bk/ZZ6eA='
-    validator.validate(url, params, signature).should == true
+    expect(validator.validate(url, params, signature)).to eq(true)
   end
 
   it 'should properly validate a Twilio SMS request' do
@@ -60,6 +60,6 @@ describe Twilio::Util::RequestValidator do
       'SmsSid' => 'SM2003cbd5e6a3701999aa3e5f20ff2787'
     }
     signature = 'mxeiv65lEe0b8L6LdVw2jgJi8yw='
-    validator.validate(url, params, signature).should == true
+    expect(validator.validate(url, params, signature)).to eq(true)
   end
 end

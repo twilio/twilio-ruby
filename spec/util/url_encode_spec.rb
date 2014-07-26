@@ -7,6 +7,6 @@ describe Twilio::Util do
     today = Time.now
     url = url_encode({'DateSent>' => today})
 
-    url.should == "DateSent%3E=#{today.strftime('%Y-%m-%d')}"
+    expect(url).to eq("DateSent%3E=#{today.strftime('%Y-%m-%d')}")
   end
 end
