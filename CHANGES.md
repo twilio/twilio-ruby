@@ -1,6 +1,14 @@
 twilio-ruby changelog
 =====================
 
+Version 3.11.6
+
+Released July 25, 2014
+
+- Add #to_xml to TwiML Responses.
+- Updated test / development dependencies.
+- Updated to RSpec 3 syntax.
+
 Version 3.11.5
 
 Released February 4
