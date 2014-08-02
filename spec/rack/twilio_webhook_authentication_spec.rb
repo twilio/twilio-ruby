@@ -39,11 +39,11 @@ describe Rack::TwilioWebhookAuthentication do
       expect(status).to be(200)
     end
 
-    it 'should short circuit a request to 400 if it does not validate' do
+    it 'should short circuit a request to 403 if it does not validate' do
       expect_any_instance_of(Twilio::Util::RequestValidator).to receive(:validate).and_return(false)
       request = Rack::MockRequest.env_for('/voice')
       status, headers, body = @middleware.call(request)
-      expect(status).to be(400)
+      expect(status).to be(403)
     end
   end
 
@@ -66,11 +66,11 @@ describe Rack::TwilioWebhookAuthentication do
       expect(status).to be(200)
     end
 
-    it 'should short circuit a request to 400 if it does not validate' do
+    it 'should short circuit a request to 403 if it does not validate' do
       expect_any_instance_of(Twilio::Util::RequestValidator).to receive(:validate).and_return(false)
       request = Rack::MockRequest.env_for('/sms')
       status, headers, body = @middleware.call(request)
-      expect(status).to be(400)
+      expect(status).to be(403)
     end
   end
 end
