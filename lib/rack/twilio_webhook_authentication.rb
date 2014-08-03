@@ -12,7 +12,9 @@ module Rack
   # use Rack::TwilioWebhookAuthentication, ENV['AUTH_TOKEN'], /\/messages/
   #
   # The above appends this middleware to the stack, using an auth token saved in
-  # the ENV and only against paths that match /\/messages/.
+  # the ENV and only against paths that match /\/messages/. If the request
+  # validates then it gets passed on to the action as normal. If the request
+  # doesn't validate then the middleware responds immediately with a 403 status.
 
   class TwilioWebhookAuthentication
     def initialize(app, auth_token, *paths)

@@ -93,5 +93,5 @@ a Sinatra application:
     end
 
 Now, any POST request to /messages in your application that doesn't validate as
-a Twilio request, will automatically respond with a 400 status code and your
+a Twilio request, will automatically respond with a 403 status code and your
 action will not be hit.
