@@ -53,7 +53,6 @@ actually from Twilio.
         puts "NOT VALID.  It might have been spoofed!"
     end
 
-
 Trailing Slashes
 ==================
 
@@ -69,3 +68,30 @@ https://mycompany.com/twilio and you may have built the hash using
 https://mycompany.com/twilio/. More information can be found in our
 documentation on validating requests.
 
+Rack Middleware
+===============
+
+If you are serving up your site using a Rack based framework, such as Sinatra or
+Rails, you can use the Rack middleware that is included in the gem to protect
+from spoofing attempts.
+
+To use the middleware, you need to set it up with your Twilio Auth Token and a
+set of paths to watch. For example, here is how you would use the middleware in
+a Sinatra application:
+
+.. code-block:: ruby
+
+    require 'sinatra'
+    require 'twilio-ruby'
+
+    auth_token = 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY'
+
+    use Rack::TwilioWebhookAuthentication, auth_token, /\/messages/
+
+    post '/messages' do
+      # response with TwiML
+    end
+
+Now, any POST request to /messages in your application that doesn't validate as
+a Twilio request, will automatically respond with a 403 status code and your
+action will not be hit.
