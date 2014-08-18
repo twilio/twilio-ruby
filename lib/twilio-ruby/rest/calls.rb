@@ -3,6 +3,7 @@ module Twilio
     class Calls < ListResource
       def initialize(path, client)
         super
+        resource :feedback_summary
       end
 
       def make(from, to, url)
