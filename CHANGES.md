@@ -1,6 +1,12 @@
 twilio-ruby changelog
 =====================
 
+Version 3.12.0
+- Add Rack middleware for Twilio request-signature validation
+- Upgrade dependencies and clean up project files
+- Documentation fixes
+- Add `text` alias for `to_xml` method on TwiML generator objects
+
 Version 3.11.6
 
 Released July 25, 2014
