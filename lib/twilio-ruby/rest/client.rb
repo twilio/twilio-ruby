@@ -179,6 +179,26 @@ module Twilio
         end
       end
 
+      ##
+      # Delegate account methods from the client. This saves having to call
+      # <tt>client.account</tt> every time for resources on the default
+      # account.
+      def method_missing(method_name, *args, &block)
+        if account.respond_to?(method_name)
+          account.send(method_name, *args, &block)
+        else
+          super
+        end
+      end
+
+      def respond_to?(method_name, include_private=false)
+        if account.respond_to?(method_name, include_private)
+          true
+        else
+          super
+        end
+      end
+
       private
 
       ##
@@ -211,21 +231,6 @@ module Twilio
       def set_up_subresources # :doc:
         @accounts = Twilio::REST::Accounts.new "/#{API_VERSION}/Accounts", self
         @account = @accounts.get @account_sid
-        set_up_account_delegate_methods
-      end
-
-      ##
-      # Delegate account methods from the client. This saves having to call
-      # <tt>client.account</tt> every time for resources on the default
-      # account.
-      def set_up_account_delegate_methods
-        account.public_methods(false).each do |meth|
-          (class << self; self; end).class_eval do
-            define_method meth do |*args|
-              account.send meth, *args
-            end
-          end
-        end
       end
 
       ##

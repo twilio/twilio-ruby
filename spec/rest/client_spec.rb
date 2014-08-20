@@ -87,13 +87,17 @@ describe Twilio::REST::Client do
     expect(twilio.account.instance_variable_get('@path')).to eq('/2010-04-01/Accounts/someSid')
   end
 
-  it 'should delegate account methods to the account object' do
-    client = Twilio::REST::Client.new('someSid', 'someToken')
-    account_double = double('account', messages: 'hello')
-    allow(client).to receive(:account) { account_double }
-
-    expect(client).to respond_to(:messages)
-    expect(client.messages).to eq('hello')
+  [
+      :sandbox, :available_phone_numbers, :incoming_phone_numbers,
+      :calls, :outgoing_caller_ids, :conferences, :sms, :recordings,
+      :transcriptions, :notifications, :applications, :connect_apps,
+      :authorized_connect_apps, :queues, :usage, :messages, :media, :sip
+  ].each do |method|
+    it "should delegate the client method #{method} to the account object" do
+      client = Twilio::REST::Client.new('someSid', 'someToken')
+      expect(client).to respond_to(method)
+      expect(client.send(method)).to eq(client.account.send(method))
+    end
   end
 
   it 'should convert all parameter names to Twilio-style names' do
