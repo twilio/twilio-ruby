@@ -28,6 +28,12 @@ module Twilio
     #
     #   @client.account.calls
     #
+    # For convenience, the resources of the default account are also available
+    # on the client object. So the following call is equivalent to the example
+    # above
+    #
+    #   @client.calls
+    #
     # represents an account's call list.
     #
     # ==== @client.accounts

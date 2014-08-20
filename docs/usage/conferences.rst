@@ -20,7 +20,7 @@ Listing Conferences
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @conferences = @client.account.conferences.list()
+    @conferences = @client.conferences.list()
 
     @conferences.each do |conference|
         puts conference.sid
@@ -43,8 +43,8 @@ will return a list of all in-progress conferences and print their friendly name.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @conferences = @client.account.conferences.list({:status => "in-progress"})
-    
+    @conferences = @client.conferences.list({:status => "in-progress"})
+
     @conference.each do |conference|
         puts conference.friendly_name
     end
@@ -64,7 +64,7 @@ Each :class:`Conference` has a :attr:`participants` instance which represents al
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @conference = @client.account.conferences.get("CF123")
+    @conference = @client.conferences.get("CF123")
 
     @conference.participants.list.each.do |paricipant|
         puts participant.sid
@@ -94,7 +94,7 @@ code kicks out the first participant and mutes the rest.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @participants = @client.account.conferences.get("CF123").participants.list()
+    @participants = @client.conferences.get("CF123").participants.list()
 
     if @participants.empty?
         return
