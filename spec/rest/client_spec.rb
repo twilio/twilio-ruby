@@ -20,7 +20,7 @@ describe Twilio::REST::Client do
     expect(twilio.account_sid).to eq('someSid')
     expect(twilio.instance_variable_get('@auth_token')).to eq('someToken')
   end
-  
+
   it 'should set up the proper default http ssl connection' do
     twilio = Twilio::REST::Client.new('someSid', 'someToken')
     connection = twilio.instance_variable_get('@connection')
@@ -28,7 +28,7 @@ describe Twilio::REST::Client do
     expect(connection.port).to eq(443)
     expect(connection.use_ssl?).to eq(true)
   end
-  
+
   it 'should set up the requested ssl verification ca_file if provided' do
     twilio = Twilio::REST::Client.new('someSid', 'someToken', :ssl_ca_file => '/path/to/ca/file')
     connection = twilio.instance_variable_get('@connection')
@@ -85,6 +85,15 @@ describe Twilio::REST::Client do
     twilio = Twilio::REST::Client.new('someSid', 'someToken')
     expect(twilio).to respond_to(:account)
     expect(twilio.account.instance_variable_get('@path')).to eq('/2010-04-01/Accounts/someSid')
+  end
+
+  it 'should delegate account methods to the account object' do
+    client = Twilio::REST::Client.new('someSid', 'someToken')
+    account_double = double('account', messages: 'hello')
+    allow(client).to receive(:account) { account_double }
+
+    expect(client).to respond_to(:messages)
+    expect(client.messages).to eq('hello')
   end
 
   it 'should convert all parameter names to Twilio-style names' do

@@ -48,8 +48,8 @@ module Twilio
       API_VERSION = '2010-04-01'
 
       # 1.8.7 doesn't have the RUBY_ENGINE constant.
-      if defined?(RUBY_ENGINE) 
-        engine = RUBY_ENGINE 
+      if defined?(RUBY_ENGINE)
+        engine = RUBY_ENGINE
       else
         engine = 'ruby'
       end
@@ -186,7 +186,7 @@ module Twilio
         @connection.open_timeout = @config[:timeout]
         @connection.read_timeout = @config[:timeout]
       end
- 
+
       ##
       # Set up the ssl properties of the <tt>@connection</tt> Net::HTTP object.
       # This is a private method documented for completeness.
@@ -205,6 +205,21 @@ module Twilio
       def set_up_subresources # :doc:
         @accounts = Twilio::REST::Accounts.new "/#{API_VERSION}/Accounts", self
         @account = @accounts.get @account_sid
+        set_up_account_delegate_methods
+      end
+
+      ##
+      # Delegate account methods from the client. This saves having to call
+      # <tt>client.account</tt> every time for resources on the default
+      # account.
+      def set_up_account_delegate_methods
+        account.public_methods(false).each do |meth|
+          (class << self; self; end).class_eval do
+            define_method meth do |*args|
+              account.send meth, *args
+            end
+          end
+        end
       end
 
       ##
