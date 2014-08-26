@@ -1,4 +1,4 @@
- module Twilio
+module Twilio
   module REST
     class ListResource
       include Utils
