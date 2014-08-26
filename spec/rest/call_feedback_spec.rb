@@ -6,7 +6,7 @@ describe Twilio::REST::Feedback do
   end
 
   it 'sets up a feedback resources object' do
-    @call.should respond_to(:feedback)
-    @call.feedback.instance_variable_get('@path').should == 'someUri/Feedback'
+    expect(@call).to respond_to(:feedback)
+    expect(@call.feedback.instance_variable_get('@path')).to eq('someUri/Feedback')
   end
 end
