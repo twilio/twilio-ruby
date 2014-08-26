@@ -2,8 +2,8 @@ module Twilio
   module REST
     class Records < ListResource
 
-      SUBRESOURCES = [:daily, :monthly, :yearly, :all_time, :today, :yesterday,
-        :this_month, :last_month]
+      SUBRESOURCES = [:daily, :monthly, :yearly, :all_time, :today,
+                      :yesterday, :this_month, :last_month]
 
       def initialize(path, client)
         super
