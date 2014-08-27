@@ -24,9 +24,11 @@ Send a text message in only a few lines of code.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @message = @client.account.messages.create({:to => "+13216851234",
-                                       :from => "+15555555555",
-                                       :body => "Hello!"})
+    @message = @client.account.messages.create(
+      to: "+13216851234",
+      from: "+15555555555",
+      body: "Hello!"
+    )
 
 If you want to send a message from a `short code
 <http://www.twilio.com/api/sms/short-codes>`_ on Twilio, just set :attr:`from`
@@ -48,23 +50,27 @@ To send a picture, set :attr:`media_url` to the url of the picture you wish to s
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @message = @client.account.messages.create({:to => "+15558676309",
-                                       :from => "+15555555555",
-                                       :body => "Jenny I need you!",
-                                       :media_url => "http://twilio.com/heart.jpg"})
+    @message = @client.account.messages.create(
+      to: "+15558676309",
+      from: "+15555555555",
+      body: "Jenny I need you!",
+      media_url: "http://twilio.com/heart.jpg"
+    )
 
 You can send multiple pictures in the same message by setting :attr:`media_url` to
 an array of urls.
 
 .. code-block:: ruby
 
-    @message = @client.account.messages.create({:to => "+15558676309",
-                                       :from => "+15555555555",
-                                       :body => "Jenny I need you!",
-                                       :media_url => [
-                                            "http://twilio.com/heart.jpg",
-                                            "http://twilio.com/rose.jpg"
-                                        ]})
+    @message = @client.account.messages.create(
+      to: "+15558676309",
+      from: "+15555555555",
+      body: "Jenny I need you!",
+      media_url: [
+        "http://twilio.com/heart.jpg",
+        "http://twilio.com/rose.jpg"
+      ]
+    )
 
 
 Retrieving Sent Messages
@@ -101,9 +107,12 @@ The following will only show messages to "+5466758723" on January 1st, 2011.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @messages = @client.account.messages.list({:to => "+5466758723", :date_sent => "2011-01-01"})
+    @messages = @client.account.messages.list(
+      to: "+5466758723",
+      date_sent: "2011-01-01"
+    )
 
     @messages.each do |message|
         puts message.body
-    
+
 

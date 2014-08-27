@@ -48,8 +48,8 @@ module Twilio
       API_VERSION = '2010-04-01'
 
       # 1.8.7 doesn't have the RUBY_ENGINE constant.
-      if defined?(RUBY_ENGINE) 
-        engine = RUBY_ENGINE 
+      if defined?(RUBY_ENGINE)
+        engine = RUBY_ENGINE
       else
         engine = 'ruby'
       end
@@ -57,21 +57,23 @@ module Twilio
       HTTP_HEADERS = {
         'Accept' => 'application/json',
         'Accept-Charset' => 'utf-8',
-        'User-Agent' => "twilio-ruby/#{Twilio::VERSION} (#{engine}/#{RUBY_PLATFORM} #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL})",
+        'User-Agent' => "twilio-ruby/#{Twilio::VERSION}" \
+                        " (#{engine}/#{RUBY_PLATFORM}" \
+                        " #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL})"
       }
 
       DEFAULTS = {
-        :host => 'api.twilio.com',
-        :port => 443,
-        :use_ssl => true,
-        :ssl_verify_peer => true,
-        :ssl_ca_file => File.dirname(__FILE__) + '/../../../conf/cacert.pem',
-        :timeout => 30,
-        :proxy_addr => nil,
-        :proxy_port => nil,
-        :proxy_user => nil,
-        :proxy_pass => nil,
-        :retry_limit => 1,
+        host: 'api.twilio.com',
+        port: 443,
+        use_ssl: true,
+        ssl_verify_peer: true,
+        ssl_ca_file: File.dirname(__FILE__) + '/../../../conf/cacert.pem',
+        timeout: 30,
+        proxy_addr: nil,
+        proxy_port: nil,
+        proxy_user: nil,
+        proxy_pass: nil,
+        retry_limit: 1
       }
 
       attr_reader :account_sid, :account, :accounts, :last_request,
@@ -84,36 +86,36 @@ module Twilio
       # hash of connection configuration options. the following keys are
       # supported:
       #
-      # === <tt>:host => 'api.twilio.com'</tt>
+      # === <tt>host: 'api.twilio.com'</tt>
       #
       # The domain to which you'd like the client to make HTTP requests. Useful
       # for testing. Defaults to 'api.twilio.com'.
       #
-      # === <tt>:port => 443</tt>
+      # === <tt>port: 443</tt>
       #
       # The port on which to connect to the above domain. Defaults to 443 and
       # should be left that way except in testing environments.
       #
-      # === <tt>:use_ssl => true</tt>
+      # === <tt>use_ssl: true</tt>
       #
       # Declare whether ssl should be used for connections to the above domain.
       # Defaults to true and should be left alone except when testing.
       #
-      # === <tt>:ssl_verify_peer => true</tt>
+      # === <tt>ssl_verify_peer: true</tt>
       #
       # Declare whether to verify the host's ssl cert when setting up the
       # connection to the above domain. Defaults to true, but can be turned off
       # to avoid ssl certificate verification failures in environments without
       # the necessary ca certificates.
       #
-      # === <tt>:ssl_ca_file => '/path/to/ca/file'</tt>
+      # === <tt>ssl_ca_file: '/path/to/ca/file'</tt>
       #
       # Specify the path to the certificate authority bundle you'd like to use
       # to verify Twilio's SSL certificate on each request. If not specified, a
       # certificate bundle extraced from Firefox is packaged with the gem and
       # used by default.
       #
-      # === <tt>:timeout => 30</tt>
+      # === <tt>timeout: 30</tt>
       #
       # Set the time in seconds to wait before timing out the HTTP request.
       # Defaults to 30 seconds. If you aren't fetching giant pages of call or
@@ -121,24 +123,24 @@ module Twilio
       # lower. In paricular if you are sending SMS you can set this to 1 second
       # or less and swallow the exception if you don't care about the response.
       #
-      # === <tt>:proxy_addr => 'proxy.host.domain'</tt>
+      # === <tt>proxy_addr: 'proxy.host.domain'</tt>
       #
       # The domain of a proxy through which you'd like the client to make HTTP
       # requests. Defaults to nil.
       #
-      # === <tt>:proxy_port => 3128</tt>
+      # === <tt>proxy_port: 3128</tt>
       #
       # The port on which to connect to the above proxy. Defaults to nil.
       #
-      # === <tt>:proxy_user => 'username'</tt>
+      # === <tt>proxy_user: 'username'</tt>
       #
       # The user name to use for authentication with the proxy. Defaults to nil.
       #
-      # === <tt>:proxy_pass => 'password'</tt>
+      # === <tt>proxy_pass: 'password'</tt>
       #
       # The password to use for authentication with the proxy. Defaults to nil.
       #
-      # === <tt>:retry_limit => 1</tt>
+      # === <tt>retry_limit: 1</tt>
       #
       # The number of times to retry a request that has failed before throwing
       # an exception. Defaults to one.
@@ -186,7 +188,7 @@ module Twilio
         @connection.open_timeout = @config[:timeout]
         @connection.read_timeout = @config[:timeout]
       end
- 
+
       ##
       # Set up the ssl properties of the <tt>@connection</tt> Net::HTTP object.
       # This is a private method documented for completeness.

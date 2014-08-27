@@ -45,7 +45,7 @@ You can filter applications by FriendlyName
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @client.account.applications.list({:friendly_name => 'FOO'})}.each do |app|
+    @client.account.applications.list(friendly_name: 'FOO').each do |app|
         puts app.sid
     end
 
@@ -66,7 +66,9 @@ accepts many other arguments for url configuration.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @application = @client.account.applications.create({:friendly_name => "My New App"})
+    @application = @client.account.applications.create(
+      friendly_name: "My New App"
+    )
 
 
 Updating an Application
@@ -86,7 +88,7 @@ Updating an Application
     app_sid = 'AP123' # the app you'd like to update
 
     @application = @client.account.applications.get(app_sid)
-    @application.update({:voice_url => url})
+    @application.update(voice_url: url)
 
 
 Deleting an Application

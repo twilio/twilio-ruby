@@ -27,9 +27,9 @@ under sip.twilio.com.
     @client = Twilio::REST::Client.new account_sid, auth_token
 
     @domain = @client.account.sip.domains.create(
-        {:friendly_name => "The Office Domain",
-         :voice_url => "http://example.com/voice",
-         :domain_name => "dunder-mifflin-scranton.sip.twilio.com",}
+      friendly_name: "The Office Domain",
+      voice_url: "http://example.com/voice"
+      domain_name: "dunder-mifflin-scranton.sip.twilio.com"
     )
     puts @domain.sid
 
@@ -38,7 +38,7 @@ Creating a new IpAccessControlList
 
 To control access to your new domain, you'll need to explicitly grant access
 to individual ip addresses. To do this, you'll first need to create an
-:class:`IpAccessControlList` to hold the ip addresses you wish to allow. 
+:class:`IpAccessControlList` to hold the ip addresses you wish to allow.
 
 .. code-block:: ruby
 
@@ -51,7 +51,7 @@ to individual ip addresses. To do this, you'll first need to create an
     @client = Twilio::REST::Client.new account_sid, auth_token
 
     @ip_acl = @client.account.sip.ip_access_control_lists.create(
-        {:friendly_name => "The Office IpAccessControlList",}
+      friendly_name: "The Office IpAccessControlList"
     )
     puts @ip_acl.sid
 
@@ -71,10 +71,10 @@ Now it's time to add an :class:`IpAddress` to your new :class:`IpAccessControlLi
     @client = Twilio::REST::Client.new account_sid, auth_token
 
     @ip_address = @client.account.sip.ip_access_control_lists.get(
-        "AL456",  # IpAccessControlList sid
+      "AL456",  # IpAccessControlList sid
     ).ip_addresses.create(
-        {:friendly_name => "Dwights's Computer",
-         :ip_address => "192.168.1.42",}
+      friendly_name: "Dwights's Computer",
+      ip_address: "192.168.1.42"
     )
     puts @ip_address.sid
 
@@ -97,7 +97,8 @@ associate them. To do this, create an :class:`IpAccessControlListMapping`.
     @ip_acl_mapping = @client.account.sip.domains.get(
         "SD456",  # SIP Domain sid
     ).ip_access_control_list_mappings.create(
-        {:ip_access_control_list_sid => "AL789"})
+      ip_access_control_list_sid: "AL789"
+    )
 
     puts @ip_acl_mapping.sid
 

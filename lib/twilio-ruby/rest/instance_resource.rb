@@ -32,7 +32,7 @@ module Twilio
       # to handle the update. For example, to update the +VoiceUrl+ of a Twilio
       # Application you could write:
       #
-      #   @app.update :voice_url => 'http://my.other.app.com/handle_voice'
+      #   @app.update voice_url: 'http://my.other.app.com/handle_voice'
       #
       # After returning, the object will contain the most recent state of the
       # instance resource, including the newly updated properties.
@@ -77,23 +77,27 @@ module Twilio
         hash.each do |p,v|
           property = detwilify p
           unless ['client', 'updated'].include? property
-            eigenclass.send :define_method, property.to_sym, &lambda {v}
+            eigenclass.send :define_method, property.to_sym, &lambda { v }
           end
         end
         @updated = !hash.keys.empty?
       end
 
       def resource(*resources)
-        custom_resource_names = {:sms => 'SMS', :sip => 'SIP'}
+        custom_resource_names = { sms: 'SMS', sip: 'SIP' }
         resources.each do |r|
           resource = twilify r
           relative_path = custom_resource_names.fetch(r, resource)
           path = "#{@path}/#{relative_path}"
-          enclosing_module = @submodule == nil ? (Twilio::REST) : (Twilio::REST.const_get(@submodule))
+          enclosing_module = if @submodule == nil
+            Twilio::REST
+          else
+            Twilio::REST.const_get(@submodule)
+          end
           resource_class = enclosing_module.const_get resource
           instance_variable_set("@#{r}", resource_class.new(path, @client))
         end
-        self.class.instance_eval {attr_reader *resources}
+        self.class.instance_eval { attr_reader *resources }
       end
 
     end

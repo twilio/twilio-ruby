@@ -115,7 +115,9 @@ If you've found a phone number you want, you can purchase the number.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @number = @client.account.phone_numbers.purchase({:phone_number => "+15305431234"})
+    @number = @client.account.phone_numbers.purchase(
+      phone_number: "+15305431234"
+    )
 
 However, it's easier to purchase numbers after finding them using search (as
 shown in the first example).
@@ -138,10 +140,13 @@ listed in the `IncomingPhoneNumbers Resource documentation
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @client.account.phone_numbers.list(api_version="2010-04-01").each do |number|
-        number.update({:voice_url => "http://twimlets.com/holdmusic?" + 
-            "Bucket=com.twilio.music.ambient", 
-            :status_callback => "http://example.com/callback"})
+    @client.account.phone_numbers.list.each do |number|
+      number.update(
+        voice_url: "http://twimlets.com/holdmusic?" \
+                   "Bucket=com.twilio.music.ambient",
+        status_callback: "http://example.com/callback"
+      )
+    end
 
 
 Changing Applications
@@ -162,7 +167,7 @@ An :class:`Application` encapsulates all necessary URLs for use with phone numbe
     phone_sid = "PNXXXXXXXXXXXXXXXXX"
 
     @number = @client.account.phone_numbers.get(phone_sid)
-    @number.update(:sms_application_sid => "APXXXXXXXXXXXXXXXXXX")
+    @number.update(sms_application_sid: "APXXXXXXXXXXXXXXXXXX")
 
 See :doc:`/usage/applications` for instructions on updating and maintaining Applications.
 

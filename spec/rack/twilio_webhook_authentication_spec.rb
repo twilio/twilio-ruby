@@ -22,7 +22,9 @@ describe Rack::TwilioWebhookAuthentication do
 
   describe 'calling against one path' do
     before do
-      @middleware = Rack::TwilioWebhookAuthentication.new(@app, 'ABC', /\/voice/)
+      @middleware = Rack::TwilioWebhookAuthentication.new(
+        @app, 'ABC', /\/voice/
+      )
     end
 
     it 'should not intercept when the path doesn\'t match' do
@@ -33,14 +35,18 @@ describe Rack::TwilioWebhookAuthentication do
     end
 
     it 'should allow a request through if it validates' do
-      expect_any_instance_of(Twilio::Util::RequestValidator).to receive(:validate).and_return(true)
+      expect_any_instance_of(Twilio::Util::RequestValidator).to(
+        receive(:validate).and_return(true)
+      )
       request = Rack::MockRequest.env_for('/voice')
       status, headers, body = @middleware.call(request)
       expect(status).to be(200)
     end
 
     it 'should short circuit a request to 403 if it does not validate' do
-      expect_any_instance_of(Twilio::Util::RequestValidator).to receive(:validate).and_return(false)
+      expect_any_instance_of(Twilio::Util::RequestValidator).to(
+        receive(:validate).and_return(false)
+      )
       request = Rack::MockRequest.env_for('/voice')
       status, headers, body = @middleware.call(request)
       expect(status).to be(403)
@@ -49,7 +55,9 @@ describe Rack::TwilioWebhookAuthentication do
 
   describe 'calling against many paths' do
     before do
-      @middleware = Rack::TwilioWebhookAuthentication.new(@app, 'ABC', /\/voice/, /\/sms/)
+      @middleware = Rack::TwilioWebhookAuthentication.new(
+        @app, 'ABC', /\/voice/, /\/sms/
+      )
     end
 
     it 'should not intercept when the path doesn\'t match' do
@@ -60,14 +68,18 @@ describe Rack::TwilioWebhookAuthentication do
     end
 
     it 'shold allow a request through if it validates' do
-      expect_any_instance_of(Twilio::Util::RequestValidator).to receive(:validate).and_return(true)
+      expect_any_instance_of(Twilio::Util::RequestValidator).to(
+        receive(:validate).and_return(true)
+      )
       request = Rack::MockRequest.env_for('/sms')
       status, headers, body = @middleware.call(request)
       expect(status).to be(200)
     end
 
     it 'should short circuit a request to 403 if it does not validate' do
-      expect_any_instance_of(Twilio::Util::RequestValidator).to receive(:validate).and_return(false)
+      expect_any_instance_of(Twilio::Util::RequestValidator).to(
+        receive(:validate).and_return(false)
+      )
       request = Rack::MockRequest.env_for('/sms')
       status, headers, body = @middleware.call(request)
       expect(status).to be(403)

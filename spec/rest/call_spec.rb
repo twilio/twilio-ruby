@@ -8,11 +8,15 @@ describe Twilio::REST::Call do
 
   it 'sets up a recordings resources object' do
     expect(@call).to respond_to(:recordings)
-    expect(@call.recordings.instance_variable_get('@path')).to eq('someUri/Recordings')
+    expect(@call.recordings.instance_variable_get('@path')).to eq(
+      'someUri/Recordings'
+    )
   end
 
   it 'sets up a notifications resources object' do
     expect(@call).to respond_to(:notifications)
-    expect(@call.notifications.instance_variable_get('@path')).to eq('someUri/Notifications')
+    expect(@call.notifications.instance_variable_get('@path')).to eq(
+      'someUri/Notifications'
+    )
   end
 end

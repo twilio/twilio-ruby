@@ -6,7 +6,9 @@ describe Twilio::Util::Capability do
   end
 
   def queries(q)
-    q.scan(/scope:client:(incoming|outgoing)\?(\S+)/).map{|(type, query)| [type, Rack::Utils.parse_query(query)]}
+    q.scan(/scope:client:(incoming|outgoing)\?(\S+)/).map do |(type, query)|
+      [type, Rack::Utils.parse_query(query)]
+    end
   end
 
   it 'should return a valid jwt when #generate is called' do
@@ -42,7 +44,9 @@ describe Twilio::Util::Capability do
     @capability.allow_client_incoming 'andrew'
     token = @capability.generate
     decoded, header = JWT.decode token, 'myAuthToken'
-    expect(queries(decoded['scope'])).to eq([['incoming', {'clientName' => 'andrew'}]])
+    expect(queries(decoded['scope'])).to eq(
+      [['incoming', {'clientName' => 'andrew'}]]
+    )
   end
 
   it 'should generate multiple proper incoming client scope strings' do
@@ -60,15 +64,17 @@ describe Twilio::Util::Capability do
     @capability.allow_client_outgoing 'myAppSid'
     token = @capability.generate
     decoded, header = JWT.decode token, 'myAuthToken'
-    expect(queries(decoded['scope'])).to eq([['outgoing', {'appSid' => 'myAppSid'}]])
+    expect(queries(decoded['scope'])).to eq(
+      [['outgoing', {'appSid' => 'myAppSid'}]]
+    )
   end
 
   it 'should generate a proper outgoing client scope string with parameters' do
-    app_params_hash = {'key' => 'a value', :foo => 'bar/baz'}
+    app_params_hash = {'key' => 'a value', foo: 'bar/baz'}
     @capability.allow_client_outgoing 'myAppSid', app_params_hash
-    app_params = @capability.instance_eval {url_encode(app_params_hash)}
+    app_params = @capability.instance_eval { url_encode(app_params_hash) }
     params_hash = {'appSid' => 'myAppSid', 'appParams' => app_params}
-    @capability.instance_eval {url_encode(params_hash)}
+    @capability.instance_eval { url_encode(params_hash) }
     token = @capability.generate
     decoded, header= JWT.decode token, 'myAuthToken'
     expect(queries(decoded['scope'])).to eq([['outgoing', params_hash]])
@@ -92,24 +98,35 @@ describe Twilio::Util::Capability do
     @capability.allow_client_incoming 'andrew'
     token = @capability.generate
     decoded, header = JWT.decode token, 'myAuthToken'
-    expect(queries(decoded['scope'])).to eq([["incoming", {"clientName"=>"andrew"}], ["outgoing", {"clientName"=>"andrew", "appSid"=>"myAppSid"}]])
+    expect(queries(decoded['scope'])).to eq(
+      [
+        ["incoming", { "clientName" => "andrew" }],
+        ["outgoing", { "clientName" => "andrew", "appSid" => "myAppSid" }]
+      ]
+    )
   end
 
   it 'should generate a proper outgoing client scope string with parameters ' +
        'and a client name when calling #allow_client_incoming first' do
     @capability.allow_client_incoming 'andrew'
-    app_params_hash = {'key' => 'a value', :foo => 'bar/baz'}
+    app_params_hash = {'key' => 'a value', foo: 'bar/baz'}
     @capability.allow_client_outgoing 'myAppSid', app_params_hash
-    app_params = @capability.instance_eval {url_encode(app_params_hash)}
-    params_hash = {'appSid' => 'myAppSid', 'appParams' => app_params, 'clientName' => 'andrew'}
-    @capability.instance_eval {url_encode(params_hash)}
+    app_params = @capability.instance_eval { url_encode(app_params_hash) }
+    params_hash = {
+      'appSid' => 'myAppSid',
+      'appParams' => app_params,
+      'clientName' => 'andrew'
+    }
+    @capability.instance_eval { url_encode(params_hash) }
     token = @capability.generate
     decoded, header = JWT.decode token, 'myAuthToken'
     scopes = queries(decoded['scope'])
-    expect(scopes.shift).to eq(["incoming", {"clientName"=>"andrew"}])
+    expect(scopes.shift).to eq(["incoming", { "clientName" => "andrew" }])
     scope = scopes.shift
     expect(scope.first).to eq('outgoing')
-    expect(Rack::Utils.parse_query(scope.last['appParams'])).to eq({'key' => 'a value', 'foo' => 'bar/baz'})
+    expect(Rack::Utils.parse_query(scope.last['appParams'])).to eq(
+      { 'key' => 'a value', 'foo' => 'bar/baz' }
+    )
     expect(scope.last["clientName"]).to eq("andrew")
     expect(scope.last["appSid"]).to eq("myAppSid")
     expect(scopes).to be_empty
@@ -117,19 +134,25 @@ describe Twilio::Util::Capability do
 
   it 'should generate a proper outgoing client scope string with parameters ' +
        'and a client name when calling #allow_client_incoming second' do
-    app_params_hash = {'key' => 'a value', :foo => 'bar/baz'}
+    app_params_hash = {'key' => 'a value', foo: 'bar/baz'}
     @capability.allow_client_outgoing 'myAppSid', app_params_hash
     @capability.allow_client_incoming 'andrew'
-    app_params = @capability.instance_eval {url_encode(app_params_hash)}
-    params_hash = {'appSid' => 'myAppSid', 'appParams' => app_params, 'clientName' => 'andrew'}
-    @capability.instance_eval {url_encode(params_hash)}
+    app_params = @capability.instance_eval { url_encode(app_params_hash) }
+    params_hash = {
+      'appSid' => 'myAppSid',
+      'appParams' => app_params,
+      'clientName' => 'andrew'
+    }
+    @capability.instance_eval { url_encode(params_hash) }
     token = @capability.generate
     decoded, header = JWT.decode token, 'myAuthToken'
     scopes = queries(decoded['scope'])
-    expect(scopes.shift).to eq(["incoming", {"clientName"=>"andrew"}])
+    expect(scopes.shift).to eq(["incoming", { "clientName" => "andrew" }])
     scope = scopes.shift
     expect(scope.first).to eq('outgoing')
-    expect(Rack::Utils.parse_query(scope.last['appParams'])).to eq({'key' => 'a value', 'foo' => 'bar/baz'})
+    expect(Rack::Utils.parse_query(scope.last['appParams'])).to eq(
+      { 'key' => 'a value', 'foo' => 'bar/baz' }
+    )
     expect(scope.last["clientName"]).to eq("andrew")
     expect(scope.last["appSid"]).to eq("myAppSid")
     expect(scopes).to be_empty

@@ -5,7 +5,10 @@ module Twilio
 
 
       def initialize(path, client)
-        custom_names = {"Media" => "MediaInstance", "IpAddresses" => "IpAddress"}
+        custom_names = {
+          "Media" => "MediaInstance",
+          "IpAddresses" => "IpAddress"
+        }
         @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]
         instance_name = custom_names.fetch(resource_name, resource_name.chop)
@@ -13,7 +16,11 @@ module Twilio
         # The next line grabs the enclosing module. Necessary for resources
         # contained in their own submodule like /SMS/Messages
         parent_module = self.class.to_s.split('::')[-2]
-        full_module_path = parent_module == "REST" ? (Twilio::REST) : (Twilio::REST.const_get parent_module)
+        full_module_path = if parent_module == "REST"
+          Twilio::REST
+        else
+          Twilio::REST.const_get parent_module
+        end
 
         @instance_class = full_module_path.const_get instance_name
         @list_key, @instance_id_key = detwilify(resource_name), 'sid'
@@ -46,7 +53,7 @@ module Twilio
         client, list_class = @client, self.class
         resource_list.instance_eval do
           eigenclass = class << self; self; end
-          eigenclass.send :define_method, :total, &lambda {response['total']}
+          eigenclass.send :define_method, :total, &lambda { response['total'] }
           eigenclass.send :define_method, :next_page, &lambda {
             if response['next_page_uri']
               list_class.new(response['next_page_uri'], client).list({}, true)
@@ -67,7 +74,7 @@ module Twilio
       # +total+ attribute as well.
       def total
         raise "Can't get a resource total without a REST Client" unless @client
-        @client.get(@path, :page_size => 1)['total']
+        @client.get(@path, page_size: 1)['total']
       end
 
       ##
@@ -94,16 +101,20 @@ module Twilio
       end
 
       def resource(*resources)
-        custom_resource_names = {:sms => 'SMS', :sip => 'SIP'}
+        custom_resource_names = { sms: 'SMS', sip: 'SIP' }
         resources.each do |r|
           resource = twilify r
           relative_path = custom_resource_names.fetch(r, resource)
           path = "#{@path}/#{relative_path}"
-          enclosing_module = @submodule == nil ? (Twilio::REST) : (Twilio::REST.const_get(@submodule))
+          enclosing_module = if @submodule == nil
+            Twilio::REST
+          else
+            Twilio::REST.const_get(@submodule)
+          end
           resource_class = enclosing_module.const_get resource
           instance_variable_set("@#{r}", resource_class.new(path, @client))
         end
-        self.class.instance_eval {attr_reader *resources}
+        self.class.instance_eval { attr_reader *resources }
       end
     end
   end

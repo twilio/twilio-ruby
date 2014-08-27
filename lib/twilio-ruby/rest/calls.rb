@@ -2,7 +2,7 @@ module Twilio
   module REST
     class Calls < ListResource
       def make(from, to, url)
-        create :from => from, :to => to, :url => url
+        create from: from, to: to, url: url
       end
     end
 
@@ -13,15 +13,15 @@ module Twilio
       end
 
       def redirect_to(url)
-        update :url => url
+        update url: url
       end
 
       def cancel
-        update :status => 'canceled'
+        update status: 'canceled'
       end
 
       def hangup
-        update :status => 'completed'
+        update status: 'completed'
       end
     end
   end
