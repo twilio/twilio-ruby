@@ -3,11 +3,11 @@ module Twilio
     class ListResource
       include Utils
 
-
       def initialize(path, client)
         custom_names = {
-          "Media" => "MediaInstance",
-          "IpAddresses" => "IpAddress"
+          'Media' => 'MediaInstance',
+          'IpAddresses' => 'IpAddress',
+          'Feedback' => 'FeedbackInstance'
         }
         @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]
@@ -101,7 +101,10 @@ module Twilio
       end
 
       def resource(*resources)
-        custom_resource_names = { sms: 'SMS', sip: 'SIP' }
+        custom_resource_names = {
+          sms: 'SMS',
+          sip: 'SIP'
+        }
         resources.each do |r|
           resource = twilify r
           relative_path = custom_resource_names.fetch(r, resource)
