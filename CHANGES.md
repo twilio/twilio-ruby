@@ -1,13 +1,20 @@
 twilio-ruby changelog
 =====================
 
+Version 3.12.1
+--------------
+- Add support for new call feedback endpoints
+
 Version 3.12.0
+--------------
+
 - Add Rack middleware for Twilio request-signature validation
 - Upgrade dependencies and clean up project files
 - Documentation fixes
 - Add `text` alias for `to_xml` method on TwiML generator objects
 
 Version 3.11.6
+--------------
 
 Released July 25, 2014
 
@@ -16,6 +23,7 @@ Released July 25, 2014
 - Updated to RSpec 3 syntax.
 
 Version 3.11.5
+--------------
 
 Released February 4
 
@@ -24,6 +32,7 @@ Released February 4
 - Encode dates properly before passing them to the Twilio API.
 
 Version 3.11.4
+--------------
 
 Released October 21, 2013
 
@@ -32,6 +41,7 @@ Released October 21, 2013
 both IncomingPhoneNumbers and AvailablePhoneNumbers.
 
 Version 3.11.3
+--------------
 
 Released October 15, 2013
 
