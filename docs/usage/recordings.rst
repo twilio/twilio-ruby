@@ -14,7 +14,7 @@ Audio Formats
 
 Each :class:`Recording` has a few special methods. To get the url
 for the wav format of this recording, use :meth:`Recording.wav`. For the
-mp3 format, use :meth:`Recording.mp3`. To make requests for either of 
+mp3 format, use :meth:`Recording.mp3`. To make requests for either of
 these formats use the same method with a '!' appended. These methods
 both take a block to be executed as soon as the response returns.
 
@@ -35,7 +35,7 @@ for each :class:`Recording`.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @client.account.recordings.list().each do |recording|
+    @client.recordings.list().each do |recording|
         puts recording.duration
 
 You can filter recordings by CallSid by passing the Sid as :attr:`call`.
@@ -52,7 +52,7 @@ The following will only show recordings made before January 1, 2011.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @client.account.recordings.list(before=date(2011,1,1)).each do |recording|:
+    @client.recordings.list(before=date(2011,1,1)).each do |recording|:
         puts recording.duration
 
 
@@ -70,7 +70,7 @@ The :class:`Recordings` resource allows you to delete unnecessary recordings.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @client.account.recordings.get("RC123").delete()
+    @client.recordings.get("RC123").delete()
 
 
 Accessing Related Transcptions
@@ -89,7 +89,7 @@ with this recording.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @recording = @client.account.recordings.get("RC123")
+    @recording = @client.recordings.get("RC123")
 
     @recording.transcriptions.list().each do |transcription|
         puts transcription.transcription_text

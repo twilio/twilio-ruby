@@ -28,6 +28,12 @@ module Twilio
     #
     #   @client.account.calls
     #
+    # For convenience, the resources of the default account are also available
+    # on the client object. So the following call is equivalent to the example
+    # above
+    #
+    #   @client.calls
+    #
     # represents an account's call list.
     #
     # ==== @client.accounts
@@ -48,8 +54,8 @@ module Twilio
       API_VERSION = '2010-04-01'
 
       # 1.8.7 doesn't have the RUBY_ENGINE constant.
-      if defined?(RUBY_ENGINE) 
-        engine = RUBY_ENGINE 
+      if defined?(RUBY_ENGINE)
+        engine = RUBY_ENGINE
       else
         engine = 'ruby'
       end
@@ -173,6 +179,26 @@ module Twilio
         end
       end
 
+      ##
+      # Delegate account methods from the client. This saves having to call
+      # <tt>client.account</tt> every time for resources on the default
+      # account.
+      def method_missing(method_name, *args, &block)
+        if account.respond_to?(method_name)
+          account.send(method_name, *args, &block)
+        else
+          super
+        end
+      end
+
+      def respond_to?(method_name, include_private=false)
+        if account.respond_to?(method_name, include_private)
+          true
+        else
+          super
+        end
+      end
+
       private
 
       ##
@@ -186,7 +212,7 @@ module Twilio
         @connection.open_timeout = @config[:timeout]
         @connection.read_timeout = @config[:timeout]
       end
- 
+
       ##
       # Set up the ssl properties of the <tt>@connection</tt> Net::HTTP object.
       # This is a private method documented for completeness.

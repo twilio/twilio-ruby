@@ -25,7 +25,7 @@ outputs valid `TwiML <http://www.twilio.com/docs/api/twiml/>`_.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @call = @client.account.calls.create({:to => "9991231234",
+    @call = @client.calls.create({:to => "9991231234",
                                   :from => "9991231234",
                                   :url => "http://foo.com/call.xml"})
     puts @call.length
@@ -48,7 +48,7 @@ you can use the client to retrieve that record.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     sid = "CA12341234"
-    @call = @client.account.calls.get(sid)
+    @call = @client.calls.get(sid)
 
 
 Accessing Specific Call Resources
@@ -69,7 +69,7 @@ just like the :class:`Calls` resource itself.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     sid = "CA12341234"
-    @call = @client.account.calls.get(sid)
+    @call = @client.calls.get(sid)
 
     puts @call.notifications.list()
     puts @call.recordings.list()
@@ -109,7 +109,7 @@ redirect them as necessary
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @calls = @client.account.calls.list({:status => "in-progress"})
+    @calls = @client.calls.list({:status => "in-progress"})
 
     @calls.each do |call|
         call.redirect_to("http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient")
@@ -127,7 +127,7 @@ Ending all live calls is also possible
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @calls = @client.account.calls.list({:status => "in-progress"})
+    @calls = @client.calls.list({:status => "in-progress"})
 
     @calls.each do |call|
         call.hangup()
@@ -148,7 +148,7 @@ resource to update the record without having to use :meth:`get` first.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     sid = "CA12341234"
-    @client.account.calls.get(sid).redirect_to("http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient")
+    @client.calls.get(sid).redirect_to("http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient")
 
 Hanging up the call also works.
 
@@ -162,5 +162,5 @@ Hanging up the call also works.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     sid = "CA12341234"
-    @client.account.calls.get(sid).hangup()
+    @client.calls.get(sid).hangup()
 
