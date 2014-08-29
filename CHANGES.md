@@ -1,12 +1,25 @@
 twilio-ruby changelog
 =====================
 
+Version 3.12.2
+--------------
+
+Released August 29, 2014
+
+- `client.account.{resource}` can now be accessed with `client.{resource}`
+- Many doc updates
+
 Version 3.12.1
 --------------
+
+Released August 26, 2014
+
 - Add support for new call feedback endpoints
 
 Version 3.12.0
 --------------
+
+Released August 18, 2014
 
 - Add Rack middleware for Twilio request-signature validation
 - Upgrade dependencies and clean up project files
@@ -25,7 +38,7 @@ Released July 25, 2014
 Version 3.11.5
 --------------
 
-Released February 4
+Released February 4, 2014
 
 - Add bangs for twilify to indicate it's a dangerous operation.
 - Remove reference to deprecated OpenSSL Digest parameter.
