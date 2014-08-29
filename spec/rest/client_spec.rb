@@ -110,6 +110,19 @@ describe Twilio::REST::Client do
     )
   end
 
+  [
+      :sandbox, :available_phone_numbers, :incoming_phone_numbers,
+      :calls, :outgoing_caller_ids, :conferences, :sms, :recordings,
+      :transcriptions, :notifications, :applications, :connect_apps,
+      :authorized_connect_apps, :queues, :usage, :messages, :media, :sip
+  ].each do |method|
+    it "should delegate the client method #{method} to the account object" do
+      client = Twilio::REST::Client.new('someSid', 'someToken')
+      expect(client).to respond_to(method)
+      expect(client.send(method)).to eq(client.account.send(method))
+    end
+  end
+
   it 'should convert all parameter names to Twilio-style names' do
     twilio = Twilio::REST::Client.new('someSid', 'someToken')
     untwilified = {

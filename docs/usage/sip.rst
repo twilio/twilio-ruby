@@ -26,7 +26,7 @@ under sip.twilio.com.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @domain = @client.account.sip.domains.create(
+    @domain = @client.sip.domains.create(
       friendly_name: "The Office Domain",
       voice_url: "http://example.com/voice"
       domain_name: "dunder-mifflin-scranton.sip.twilio.com"
@@ -50,7 +50,7 @@ to individual ip addresses. To do this, you'll first need to create an
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @ip_acl = @client.account.sip.ip_access_control_lists.create(
+    @ip_acl = @client.sip.ip_access_control_lists.create(
       friendly_name: "The Office IpAccessControlList"
     )
     puts @ip_acl.sid
@@ -70,7 +70,7 @@ Now it's time to add an :class:`IpAddress` to your new :class:`IpAccessControlLi
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @ip_address = @client.account.sip.ip_access_control_lists.get(
+    @ip_address = @client.sip.ip_access_control_lists.get(
       "AL456",  # IpAccessControlList sid
     ).ip_addresses.create(
       friendly_name: "Dwights's Computer",
@@ -94,7 +94,7 @@ associate them. To do this, create an :class:`IpAccessControlListMapping`.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @ip_acl_mapping = @client.account.sip.domains.get(
+    @ip_acl_mapping = @client.sip.domains.get(
         "SD456",  # SIP Domain sid
     ).ip_access_control_list_mappings.create(
       ip_access_control_list_sid: "AL789"

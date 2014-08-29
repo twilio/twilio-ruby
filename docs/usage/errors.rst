@@ -19,7 +19,7 @@ handled appropriately.
 
     begin
         @client = Twilio::REST::Client.new account_sid, auth_token
-        client.account.messages.create({
+        client.messages.create({
             from: '+1234567890',
             to: '+1234567890',
             body: 'Hello world'

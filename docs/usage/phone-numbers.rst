@@ -27,7 +27,7 @@ Once we find one, we'll purchase it for our account.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    numbers = @client.account.available_phone_numbers.list(:area_code=>"530")
+    numbers = @client.available_phone_numbers.list(:area_code=>"530")
 
     if numbers:
         numbers[0].purchase()
@@ -51,13 +51,13 @@ You can search for numbers for a given type.
 .. code-block:: ruby
 
     # local
-	numbers = @client.account.available_phone_numbers.local.list()
+	numbers = @client.available_phone_numbers.local.list()
 
     # toll free
-	numbers = @client.account.available_phone_numbers.toll_free.list()
+	numbers = @client.available_phone_numbers.toll_free.list()
 
     # mobile
-	numbers = @client.account.available_phone_numbers.mobile.list()
+	numbers = @client.available_phone_numbers.mobile.list()
 
 Numbers Containing Words
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -67,13 +67,13 @@ The following example will find any phone number with "FOO" in it.
 
 .. code-block:: ruby
 
-	numbers = @client.account.available_phone_numbers.list(:contains=>"FOO")
+	numbers = @client.available_phone_numbers.list(:contains=>"FOO")
 
 You can use the ''*'' wildcard to match any character. The following example finds any phone number that matches the pattern ''D*D''.
 
 .. code-block:: ruby
 
-	numbers = @client.account.available_phone_numbers.list(:contains=>"D*D")
+	numbers = @client.available_phone_numbers.list(:contains=>"D*D")
 
 
 International Numbers
@@ -85,7 +85,7 @@ international numbers.
 
 .. code-block:: ruby
 
-	numbers = @client.account.available_phone_numbers.list(:country=>"FR")
+	numbers = @client.available_phone_numbers.list(:country=>"FR")
 
 
 :meth:`PhoneNumbers.search` method has plenty of other options to augment your search :
@@ -115,7 +115,7 @@ If you've found a phone number you want, you can purchase the number.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @number = @client.account.phone_numbers.purchase(
+    @number = @client.available_phone_numbers.purchase(
       phone_number: "+15305431234"
     )
 
@@ -140,14 +140,13 @@ listed in the `IncomingPhoneNumbers Resource documentation
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @client.account.phone_numbers.list.each do |number|
+    @client.available_phone_numbers.list.each do |number|
       number.update(
         voice_url: "http://twimlets.com/holdmusic?" \
                    "Bucket=com.twilio.music.ambient",
         status_callback: "http://example.com/callback"
       )
     end
-
 
 Changing Applications
 ----------------------
@@ -166,7 +165,7 @@ An :class:`Application` encapsulates all necessary URLs for use with phone numbe
 
     phone_sid = "PNXXXXXXXXXXXXXXXXX"
 
-    @number = @client.account.phone_numbers.get(phone_sid)
+    @number = @client.available_phone_numbers.get(phone_sid)
     @number.update(sms_application_sid: "APXXXXXXXXXXXXXXXXXX")
 
 See :doc:`/usage/applications` for instructions on updating and maintaining Applications.
