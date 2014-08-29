@@ -27,7 +27,7 @@ Once we find one, we'll purchase it for our account.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    numbers = @client.available_phone_numbers.list(:area_code=>"530")
+    numbers = @client.available_phone_numbers.list(area_code: "530")
 
     if numbers:
         numbers[0].purchase()
@@ -67,13 +67,13 @@ The following example will find any phone number with "FOO" in it.
 
 .. code-block:: ruby
 
-	numbers = @client.available_phone_numbers.list(:contains=>"FOO")
+	numbers = @client.available_phone_numbers.list(contains: "FOO")
 
 You can use the ''*'' wildcard to match any character. The following example finds any phone number that matches the pattern ''D*D''.
 
 .. code-block:: ruby
 
-	numbers = @client.available_phone_numbers.list(:contains=>"D*D")
+	numbers = @client.available_phone_numbers.list(contains: "D*D")
 
 
 International Numbers
@@ -85,7 +85,7 @@ international numbers.
 
 .. code-block:: ruby
 
-	numbers = @client.available_phone_numbers.list(:country=>"FR")
+	numbers = @client.available_phone_numbers.list(country: "FR")
 
 
 :meth:`PhoneNumbers.search` method has plenty of other options to augment your search :

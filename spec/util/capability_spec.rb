@@ -45,7 +45,7 @@ describe Twilio::Util::Capability do
     token = @capability.generate
     decoded, header = JWT.decode token, 'myAuthToken'
     expect(queries(decoded['scope'])).to eq(
-      [['incoming', {'clientName' => 'andrew'}]]
+      [['incoming', { 'clientName' => 'andrew' }]]
     )
   end
 
@@ -55,8 +55,8 @@ describe Twilio::Util::Capability do
     token = @capability.generate
     decoded, header = JWT.decode token, 'myAuthToken'
     expect(queries(decoded['scope'])).to eq([
-      ['incoming', {'clientName' => 'andrew'}],
-      ['incoming', {'clientName' => 'bridget'}]
+      ['incoming', { 'clientName' => 'andrew' }],
+      ['incoming', { 'clientName' => 'bridget' }]
     ])
   end
 
@@ -65,15 +65,15 @@ describe Twilio::Util::Capability do
     token = @capability.generate
     decoded, header = JWT.decode token, 'myAuthToken'
     expect(queries(decoded['scope'])).to eq(
-      [['outgoing', {'appSid' => 'myAppSid'}]]
+      [['outgoing', { 'appSid' => 'myAppSid' }]]
     )
   end
 
   it 'should generate a proper outgoing client scope string with parameters' do
-    app_params_hash = {'key' => 'a value', foo: 'bar/baz'}
+    app_params_hash = { 'key' => 'a value', :foo => 'bar/baz' }
     @capability.allow_client_outgoing 'myAppSid', app_params_hash
     app_params = @capability.instance_eval { url_encode(app_params_hash) }
-    params_hash = {'appSid' => 'myAppSid', 'appParams' => app_params}
+    params_hash = { 'appSid' => 'myAppSid', 'appParams' => app_params }
     @capability.instance_eval { url_encode(params_hash) }
     token = @capability.generate
     decoded, header= JWT.decode token, 'myAuthToken'
@@ -87,8 +87,8 @@ describe Twilio::Util::Capability do
     token = @capability.generate
     decoded, header = JWT.decode token, 'myAuthToken'
     expect(queries(decoded['scope'])).to eq([
-      ['incoming', {'clientName' => 'andrew'}],
-      ['outgoing', {'clientName' => 'andrew', 'appSid' => 'myAppSid'}]
+      ['incoming', { 'clientName' => 'andrew' }],
+      ['outgoing', { 'clientName' => 'andrew', 'appSid' => 'myAppSid' }]
     ])
   end
 
@@ -109,7 +109,7 @@ describe Twilio::Util::Capability do
   it 'should generate a proper outgoing client scope string with parameters ' +
        'and a client name when calling #allow_client_incoming first' do
     @capability.allow_client_incoming 'andrew'
-    app_params_hash = {'key' => 'a value', foo: 'bar/baz'}
+    app_params_hash = { 'key' => 'a value', :foo => 'bar/baz' }
     @capability.allow_client_outgoing 'myAppSid', app_params_hash
     app_params = @capability.instance_eval { url_encode(app_params_hash) }
     params_hash = {
@@ -134,7 +134,7 @@ describe Twilio::Util::Capability do
 
   it 'should generate a proper outgoing client scope string with parameters ' +
        'and a client name when calling #allow_client_incoming second' do
-    app_params_hash = {'key' => 'a value', foo: 'bar/baz'}
+    app_params_hash = { 'key' => 'a value', :foo => 'bar/baz' }
     @capability.allow_client_outgoing 'myAppSid', app_params_hash
     @capability.allow_client_incoming 'andrew'
     app_params = @capability.instance_eval { url_encode(app_params_hash) }
