@@ -84,8 +84,22 @@ module Twilio
         :last_response
 
       ##
+      # Pre-configure the REST client with account SID and auth token so that
+      # you don't need to pass them to the initializer each time
+      def self.configure(&block)
+        yield configuration
+      end
+
+      ##
+      # Returns an existing or instantiates a new configuration object
+      def self.configuration
+        @configuration ||= Configuration.new
+      end
+
+      ##
       # Instantiate a new HTTP client to talk to Twilio. The parameters
-      # +account_sid+ and +auth_token+ are required and used to generate the
+      # +account_sid+ and +auth_token+ are required, unless you have configured
+      # them already using the block configure syntax, and used to generate the
       # HTTP basic auth header in each request. The +options+ parameter is a
       # hash of connection configuration options. the following keys are
       # supported:
@@ -148,9 +162,16 @@ module Twilio
       #
       # The number of times to retry a request that has failed before throwing
       # an exception. Defaults to one.
-      def initialize(account_sid, auth_token, options={})
-        @account_sid, @auth_token = account_sid.strip, auth_token.strip
+      def initialize(*args)
+        options = args.last.is_a?(Hash) ? args.pop : {}
         @config = DEFAULTS.merge! options
+
+        @account_sid = args[0] || self.class.configuration.account_sid
+        @auth_token = args[1] || self.class.configuration.auth_token
+        if @account_sid.nil? || @auth_token.nil?
+          raise ArgumentError, 'AccountSid and AuthToken are required'
+        end
+
         set_up_connection
         set_up_subresources
       end

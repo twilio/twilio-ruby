@@ -1,6 +1,43 @@
 require 'spec_helper'
 
 describe Twilio::REST::Client do
+  describe 'config at class level' do
+    after(:each) do
+      Twilio::REST::Client.instance_variable_set('@configuration', nil)
+    end
+
+    it 'should set the account sid and auth token with a config block' do
+      Twilio::REST::Client.configure do |config|
+        config.account_sid = 'someSid'
+        config.auth_token = 'someToken'
+      end
+
+      client = Twilio::REST::Client.new
+      expect(client.account_sid).to eq('someSid')
+      expect(client.instance_variable_get('@auth_token')).to eq('someToken')
+    end
+
+    it 'should allow options after setting up auth with config' do
+      Twilio::REST::Client.configure do |config|
+        config.account_sid = 'someSid'
+        config.auth_token = 'someToken'
+      end
+
+      client = Twilio::REST::Client.new :host => 'api.faketwilio.com'
+
+      connection = client.instance_variable_get('@connection')
+      expect(connection.address).to eq('api.faketwilio.com')
+    end
+
+    it 'should throw an argument error if the sid and token isn\'t set' do
+      expect { Twilio::REST::Client.new }.to raise_error(ArgumentError)
+    end
+
+    it 'should throw an argument error if only the account_sid is set' do
+      expect { Twilio::REST::Client.new 'someSid' }.to raise_error(ArgumentError)
+    end
+  end
+
   it 'should not raise an error if the response body is empty' do
     FakeWeb.register_uri(:any, %r/api\.twilio\.com/, :body => '')
     twilio = Twilio::REST::Client.new('someSid', 'someToken')
