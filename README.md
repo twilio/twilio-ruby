@@ -44,7 +44,7 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 @client = Twilio::REST::Client.new account_sid, auth_token
 
 # alternatively, you can preconfigure the client like so
-Twilio::REST::Client.configure do |config|
+Twilio.configure do |config|
   config.account_sid = account_sid
   config.auth_token = auth_token
 end

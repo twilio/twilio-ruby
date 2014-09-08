@@ -84,19 +84,6 @@ module Twilio
         :last_response
 
       ##
-      # Pre-configure the REST client with account SID and auth token so that
-      # you don't need to pass them to the initializer each time
-      def self.configure(&block)
-        yield configuration
-      end
-
-      ##
-      # Returns an existing or instantiates a new configuration object
-      def self.configuration
-        @configuration ||= Configuration.new
-      end
-
-      ##
       # Instantiate a new HTTP client to talk to Twilio. The parameters
       # +account_sid+ and +auth_token+ are required, unless you have configured
       # them already using the block configure syntax, and used to generate the
@@ -166,10 +153,10 @@ module Twilio
         options = args.last.is_a?(Hash) ? args.pop : {}
         @config = DEFAULTS.merge! options
 
-        @account_sid = args[0] || self.class.configuration.account_sid
-        @auth_token = args[1] || self.class.configuration.auth_token
+        @account_sid = args[0] || Twilio.configuration.account_sid
+        @auth_token = args[1] || Twilio.configuration.auth_token
         if @account_sid.nil? || @auth_token.nil?
-          raise ArgumentError, 'AccountSid and AuthToken are required'
+          raise ArgumentError, 'Account SID and auth token are required'
         end
 
         set_up_connection

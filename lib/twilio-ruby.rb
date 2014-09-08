@@ -9,12 +9,12 @@ require 'jwt'
 
 require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
 require 'twilio-ruby/util'
+require 'twilio-ruby/util/configuration'
 require 'twilio-ruby/util/request_validator'
 require 'twilio-ruby/util/capability'
 require 'twilio-ruby/twiml/response'
 require 'twilio-ruby/rest/errors'
 require 'twilio-ruby/rest/utils'
-require 'twilio-ruby/rest/configuration'
 require 'twilio-ruby/rest/list_resource'
 require 'twilio-ruby/rest/instance_resource'
 require 'twilio-ruby/rest/sandbox'
@@ -60,3 +60,18 @@ require 'twilio-ruby/rest/transcriptions'
 require 'twilio-ruby/rest/notifications'
 require 'twilio-ruby/rest/client'
 require 'rack/twilio_webhook_authentication'
+
+module Twilio
+  ##
+  # Pre-configure with account SID and auth token so that you don't need to
+  # pass them to various initializers each time.
+  def self.configure(&block)
+    yield configuration
+  end
+
+  ##
+  # Returns an existing or instantiates a new configuration object.
+  def self.configuration
+    @configuration ||= Util::Configuration.new
+  end
+end

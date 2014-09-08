@@ -3,11 +3,11 @@ require 'spec_helper'
 describe Twilio::REST::Client do
   describe 'config at class level' do
     after(:each) do
-      Twilio::REST::Client.instance_variable_set('@configuration', nil)
+      Twilio.instance_variable_set('@configuration', nil)
     end
 
     it 'should set the account sid and auth token with a config block' do
-      Twilio::REST::Client.configure do |config|
+      Twilio.configure do |config|
         config.account_sid = 'someSid'
         config.auth_token = 'someToken'
       end
@@ -17,8 +17,30 @@ describe Twilio::REST::Client do
       expect(client.instance_variable_get('@auth_token')).to eq('someToken')
     end
 
+    it 'should overwrite account sid and auth token if passed to initializer' do
+      Twilio.configure do |config|
+        config.account_sid = 'someSid'
+        config.auth_token = 'someToken'
+      end
+
+      client = Twilio::REST::Client.new 'otherSid', 'otherToken'
+      expect(client.account_sid).to eq('otherSid')
+      expect(client.instance_variable_get('@auth_token')).to eq('otherToken')
+    end
+
+    it 'should overwrite the account sid if only the sid is given' do
+      Twilio.configure do |config|
+        config.account_sid = 'someSid'
+        config.auth_token = 'someToken'
+      end
+
+      client = Twilio::REST::Client.new 'otherSid'
+      expect(client.account_sid).to eq('otherSid')
+      expect(client.instance_variable_get('@auth_token')).to eq('someToken')
+    end
+
     it 'should allow options after setting up auth with config' do
-      Twilio::REST::Client.configure do |config|
+      Twilio.configure do |config|
         config.account_sid = 'someSid'
         config.auth_token = 'someToken'
       end
