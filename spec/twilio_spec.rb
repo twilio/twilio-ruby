@@ -9,7 +9,7 @@ describe Twilio do
       config.auth_token = 'someToken'
     end
 
-    expect(Twilio.configuration.account_sid).to eq('someSid')
-    expect(Twilio.configuration.auth_token).to eq('someToken')
+    expect(Twilio.account_sid).to eq('someSid')
+    expect(Twilio.auth_token).to eq('someToken')
   end
 end

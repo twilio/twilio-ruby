@@ -153,8 +153,8 @@ module Twilio
         options = args.last.is_a?(Hash) ? args.pop : {}
         @config = DEFAULTS.merge! options
 
-        @account_sid = args[0] || Twilio.configuration.account_sid
-        @auth_token = args[1] || Twilio.configuration.auth_token
+        @account_sid = args[0] || Twilio.account_sid
+        @auth_token = args[1] || Twilio.auth_token
         if @account_sid.nil? || @auth_token.nil?
           raise ArgumentError, 'Account SID and auth token are required'
         end

@@ -5,6 +5,7 @@ require 'multi_json'
 require 'cgi'
 require 'openssl'
 require 'base64'
+require 'forwardable'
 require 'jwt'
 
 require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
@@ -62,6 +63,10 @@ require 'twilio-ruby/rest/client'
 require 'rack/twilio_webhook_authentication'
 
 module Twilio
+  extend SingleForwardable
+
+  def_delegators :configuration, :account_sid, :auth_token
+
   ##
   # Pre-configure with account SID and auth token so that you don't need to
   # pass them to various initializers each time.
@@ -74,4 +79,5 @@ module Twilio
   def self.configuration
     @configuration ||= Util::Configuration.new
   end
+  private_class_method :configuration
 end

@@ -5,8 +5,8 @@ module Twilio
       include Twilio::Util
 
       def initialize(account_sid = nil, auth_token = nil)
-        @account_sid = account_sid || Twilio.configuration.account_sid
-        @auth_token = auth_token || Twilio.configuration.auth_token
+        @account_sid = account_sid || Twilio.account_sid
+        @auth_token = auth_token || Twilio.auth_token
         if @account_sid.nil? || @auth_token.nil?
           raise ArgumentError, 'Account SID and auth token are required'
         end
