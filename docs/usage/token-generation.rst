@@ -17,11 +17,11 @@ security and authorization. The `Capability Token documentation
 <http://www.twilio.com/docs/tokens>`_ explains in depth the purpose and
 features of these tokens.
 
-:class:`TwilioCapability` is responsible for the creation of these capability
-tokens. You'll need your Twilio AccountSid and AuthToken.
+:class:`Twilio::Util::Capability` is responsible for the creation of these
+capability tokens. You'll need your Twilio AccountSid and AuthToken.
 
 .. code-block:: ruby
-    
+
     require 'twilio-ruby'
 
     # Find these values at twilio.com/user/account
@@ -29,6 +29,21 @@ tokens. You'll need your Twilio AccountSid and AuthToken.
     auth_token = "secret"
 
     @capability = Twilio::Util::Capability.new account_sid, auth_token
+
+You can also configure capability tokens using the top level configure method,
+like so:
+
+.. code-block:: ruby
+
+    require 'twilio-ruby'
+
+    Twilio.configure do |config|
+      config.account_sid = "ACXXXXXXXXXXXXXXXXX"
+      config.auth_token = "YYYYYYYYYYYYYYYYYY"
+    end
+
+    @capability = Twilio::Util::Capability.new
+
 
 
 Allow Incoming Connections

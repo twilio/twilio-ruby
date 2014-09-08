@@ -27,6 +27,19 @@ Once you have your credentials, you can create create a new :class:`Client` and 
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
+You can also configure the client using the top level configure method, like so:
+
+.. code-block:: ruby
+
+    require 'twilio-ruby'
+
+    Twilio.configure do |config|
+      config.account_sid = "ACXXXXXXXXXXXXXXXXX"
+      config.auth_token = "YYYYYYYYYYYYYYYYYY"
+    end
+
+    @client = Twilio::REST::Client.new
+
 
 Listing Resources
 -------------------
