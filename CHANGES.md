@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 3.12.3
+--------------
+
+Released September 23, 2014
+
+- Added block configure syntax
+
 Version 3.12.2
 --------------
 
