@@ -1,6 +1,18 @@
 twilio-ruby changelog
 =====================
 
+Version 3.13.0
+--------------
+
+Released September 23, 2014
+
+- Deprecates 1.8.7 support
+- Internal code style changes including:
+    - change symbol hash syntax to Ruby 1.9 style
+    - remove curly braces from hash arguments to methods
+    - add spaces around curly braces in blocks
+    - reduces all lines to less than 80 characters
+
 Version 3.12.3
 --------------
 
