@@ -8,7 +8,7 @@ describe Twilio::REST::InstanceResource do
   end
 
   it 'should set up object properties if passed' do
-    params = {'SomeKey' => 'someValue'}
+    params = { 'SomeKey' => 'someValue' }
     resource = Twilio::REST::InstanceResource.new('uri', 'client', params)
     expect(resource.some_key).to eq('someValue')
   end

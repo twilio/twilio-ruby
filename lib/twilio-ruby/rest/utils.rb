@@ -4,7 +4,10 @@ module Twilio
 
       def twilify(something)
         if something.is_a? Hash
-          Hash[*something.to_a.map! {|a| [twilify(a[0]).to_sym, a[1]]}.flatten(1)]
+          something = something.to_a
+          something = something.map { |a| [twilify(a[0]).to_sym, a[1]] }
+          something = something.flatten(1)
+          Hash[*something]
         else
           something.to_s.split('_').map! do |s|
             [s[0,1].capitalize, s[1..-1]].join
@@ -14,9 +17,14 @@ module Twilio
 
       def detwilify(something)
         if something.is_a? Hash
-          Hash[*something.to_a.map! {|pair| [detwilify(pair[0]).to_sym, pair[1]]}.flatten]
+          something = *something.to_a
+          something.map! { |pair| [detwilify(pair[0]).to_sym, pair[1]] }
+          something = something.flatten
+          Hash[something]
         else
-          something.to_s.gsub(/[A-Z][a-z]*/) {|s| "_#{s.downcase}"}.gsub(/^_/, '')
+          something = something.to_s
+          something = something.gsub(/[A-Z][a-z]*/) { |s| "_#{s.downcase}" }
+          something.gsub(/^_/, '')
         end
       end
 

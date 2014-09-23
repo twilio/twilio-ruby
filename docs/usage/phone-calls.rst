@@ -25,9 +25,11 @@ outputs valid `TwiML <http://www.twilio.com/docs/api/twiml/>`_.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @call = @client.calls.create({:to => "9991231234",
-                                  :from => "9991231234",
-                                  :url => "http://foo.com/call.xml"})
+    @call = @client.calls.create(
+      to: "9991231234",
+      from: "9991231234",
+      url: "http://foo.com/call.xml"
+    )
     puts @call.length
     puts @call.sid
 
@@ -89,9 +91,9 @@ However, what if you only have a `CallSid`, and not the actual
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     sid = "CA24234"
-    puts @client.notifications.list({:call => sid})
-    puts @client.recordings.list({:call => sid})
-    puts @client.transcriptions.list({:call => sid})
+    puts @client.notifications.list(call: sid)
+    puts @client.recordings.list(call: sid)
+    puts @client.transcriptions.list(call: sid)
 
 
 Modifying Live Calls
@@ -109,7 +111,7 @@ redirect them as necessary
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @calls = @client.calls.list({:status => "in-progress"})
+    @calls = @client.calls.list(status: "in-progress")
 
     @calls.each do |call|
         call.redirect_to("http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient")
@@ -127,7 +129,7 @@ Ending all live calls is also possible
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @calls = @client.calls.list({:status => "in-progress"})
+    @calls = @client.calls.list(status: "in-progress")
 
     @calls.each do |call|
         call.hangup()

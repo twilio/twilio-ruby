@@ -8,7 +8,7 @@ module Twilio
       end
 
       def buy(phone_number)
-        create :phone_number => phone_number
+        create phone_number: phone_number
       end
     end
 

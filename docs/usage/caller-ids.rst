@@ -19,7 +19,9 @@ Validating a phone number is quick and easy.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @response = @client.outgoing_caller_ids.create(:phone_number => "+44 9876543212")
+    @response = @client.outgoing_caller_ids.create(
+        phone_number: "+44 9876543212"
+    )
     puts @response.validation_code
 
 Twilio will call the provided number and wait for the validation code to be
@@ -40,6 +42,6 @@ Deleting a phone number is quick and easy.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @response = @client.outgoing_caller_ids.list(:phone_number => "+15555555555")
+    @response = @client.outgoing_caller_ids.list(phone_number: "+15555555555")
     @callerid = response[0]
     @callerid.delete()

@@ -34,9 +34,9 @@ Then you can convert user input to phone numbers like this:
     def convert_to_e164(raw_phone)
         Phony.format(
             raw_phone,
-            :format => :international,
-            :spaces => ''
+            format: :international,
+            spaces: ''
         ).gsub(/\s+/, "") # Phony won't remove all spaces
-    end 
+    end
 
     puts convert_to_e164('212 555 1234')   # prints +12125551234

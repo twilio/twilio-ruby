@@ -70,7 +70,7 @@ The following will return page 3 with page size of 25.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-	@calls = @client.calls.list(:page=>3, :page_size=>25)
+	@calls = @client.calls.list(page: 3, page_size: 25)
 
 
 Get an Individual Resource

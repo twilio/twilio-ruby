@@ -19,8 +19,11 @@ Make a Call
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @call = @client.calls.create({:to => "9991231234", :from => "9991231234",
-        :url => "http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient"})
+    @call = @client.calls.create(
+      to: "9991231234",
+      from: "9991231234",
+      url: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient"
+    )
     puts @call.length
     puts @call.sid
 
@@ -38,10 +41,11 @@ Send an SMS
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @message = @client.messages.create({:to => "+12316851234",
-                                       :from => "+15555555555",
-                                       :body => "Hello there!"})
-
+    @message = @client.messages.create(
+      to: "+12316851234",
+      from: "+15555555555",
+      body: "Hello there!"
+    )
 
 Send an MMS
 ===========
@@ -56,11 +60,12 @@ Send an MMS
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @message = @client.messages.create({:to => "+15558676309",
-                                       :from => "+15555555555",
-                                       :body => "Jenny I need you!",
-                                       :media_url => "http://twilio.com/heart.jpg"})
-
+    @message = @client.messages.create(
+      to: "+15558676309",
+      from: "+15555555555",
+      body: "Jenny I need you!",
+      media_url: "http://twilio.com/heart.jpg"
+    )
 
 Generating TwiML
 =================
@@ -72,7 +77,7 @@ to easily create such responses.
 .. code-block:: ruby
 
     Twilio::TwiML::Response do |r|
-        r.Play "https://api.twilio.com/cowbell.mp3", :loop => 5
+        r.Play "https://api.twilio.com/cowbell.mp3", loop: 5
     end.text
 
 .. code-block:: xml
