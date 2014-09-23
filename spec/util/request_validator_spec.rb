@@ -1,6 +1,34 @@
 require 'spec_helper'
 
 describe Twilio::Util::RequestValidator do
+  describe 'configuration' do
+    after(:each) do
+      Twilio.instance_variable_set('@configuration', nil)
+    end
+
+    it 'should set the auth token from a configuration block' do
+      Twilio.configure do |config|
+        config.auth_token = 'someToken'
+      end
+
+      validator = Twilio::Util::RequestValidator.new
+      expect(validator.instance_variable_get('@auth_token')).to eq('someToken')
+    end
+
+    it 'should overwrite the auth token if passed to initializer' do
+      Twilio.configure do |config|
+        config.auth_token = 'someToken'
+      end
+
+      validator = Twilio::Util::RequestValidator.new 'otherToken'
+      expect(validator.instance_variable_get('@auth_token')).to eq('otherToken')
+    end
+
+    it 'should throw an argument error if the auth token isn\'t set' do
+      expect { Twilio::Util::RequestValidator.new }.to raise_error(ArgumentError)
+    end
+  end
+
   it 'should properly validate a Twilio Voice request' do
     token = '2bd9e9638872de601313dc77410d3b23'
     validator = Twilio::Util::RequestValidator.new token

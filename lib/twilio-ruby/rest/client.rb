@@ -85,7 +85,8 @@ module Twilio
 
       ##
       # Instantiate a new HTTP client to talk to Twilio. The parameters
-      # +account_sid+ and +auth_token+ are required and used to generate the
+      # +account_sid+ and +auth_token+ are required, unless you have configured
+      # them already using the block configure syntax, and used to generate the
       # HTTP basic auth header in each request. The +options+ parameter is a
       # hash of connection configuration options. the following keys are
       # supported:
@@ -148,9 +149,16 @@ module Twilio
       #
       # The number of times to retry a request that has failed before throwing
       # an exception. Defaults to one.
-      def initialize(account_sid, auth_token, options={})
-        @account_sid, @auth_token = account_sid.strip, auth_token.strip
+      def initialize(*args)
+        options = args.last.is_a?(Hash) ? args.pop : {}
         @config = DEFAULTS.merge! options
+
+        @account_sid = args[0] || Twilio.account_sid
+        @auth_token = args[1] || Twilio.auth_token
+        if @account_sid.nil? || @auth_token.nil?
+          raise ArgumentError, 'Account SID and auth token are required'
+        end
+
         set_up_connection
         set_up_subresources
       end

@@ -2,8 +2,9 @@ module Twilio
   module Util
     class RequestValidator
 
-      def initialize(auth_token)
-        @auth_token = auth_token
+      def initialize(auth_token = nil)
+        @auth_token = auth_token || Twilio.auth_token
+        raise ArgumentError, 'Auth token is required' if @auth_token.nil?
       end
 
       def validate(url, params, signature)
