@@ -71,4 +71,12 @@ describe Twilio::REST::Account do
       'someUri/Notifications'
     )
   end
+
+  it 'sets up an addresses resources object' do
+    expect(@account).to respond_to(:addresses)
+    expect(@account.addresses.instance_variable_get('@path')).to eq(
+      'someUri/Addresses'
+    )
+  end
+
 end

@@ -59,6 +59,8 @@ require 'twilio-ruby/rest/usage/triggers'
 require 'twilio-ruby/rest/recordings'
 require 'twilio-ruby/rest/transcriptions'
 require 'twilio-ruby/rest/notifications'
+require 'twilio-ruby/rest/addresses'
+require 'twilio-ruby/rest/addresses/dependent_phone_numbers'
 require 'twilio-ruby/rest/client'
 require 'rack/twilio_webhook_authentication'
 
