@@ -188,7 +188,6 @@ implementations:
 - Ruby 2.1.0
 - Ruby 2.0.0
 - Ruby 1.9.3
-- Ruby 1.8.7
 - [JRuby][jruby]
 - [Rubinius][rubinius]
 
