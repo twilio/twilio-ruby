@@ -27,6 +27,19 @@ Once you have your credentials, you can create create a new :class:`Client` and 
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
+You can also configure the client using the top level configure method, like so:
+
+.. code-block:: ruby
+
+    require 'twilio-ruby'
+
+    Twilio.configure do |config|
+      config.account_sid = "ACXXXXXXXXXXXXXXXXX"
+      config.auth_token = "YYYYYYYYYYYYYYYYYY"
+    end
+
+    @client = Twilio::REST::Client.new
+
 
 Listing Resources
 -------------------
@@ -57,7 +70,7 @@ The following will return page 3 with page size of 25.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-	@calls = @client.calls.list(:page=>3, :page_size=>25)
+	@calls = @client.calls.list(page: 3, page_size: 25)
 
 
 Get an Individual Resource

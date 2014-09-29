@@ -35,7 +35,7 @@ All attributes are keyword arguments.
     require 'twilio-ruby'
 
     Twilio::TwiML::Response.new do |r|
-        r.Play "https://api.twilio.com/cowbell.mp3", :loop => 5
+        r.Play "https://api.twilio.com/cowbell.mp3", loop: 5
     end.text
 
 .. code-block:: xml
@@ -53,7 +53,7 @@ Any example of nesting nouns in verbs
 
     Twilio::TwiML::Response.new do |r|
         r.Say "hello"
-        r.Gather :finishOnKey => 4 do |g|
+        r.Gather finishOnKey: => 4 do |g|
             g.Say "world"
         end
     end.text

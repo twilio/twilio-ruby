@@ -5,9 +5,9 @@ module Twilio
 
       def initialize(path, client)
         custom_names = {
-            'Media' => 'MediaInstance',
-            'IpAddresses' => 'IpAddress',
-            'Feedback' => 'FeedbackInstance',
+          'Media' => 'MediaInstance',
+          'IpAddresses' => 'IpAddress',
+          'Feedback' => 'FeedbackInstance'
         }
         @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]
@@ -16,7 +16,11 @@ module Twilio
         # The next line grabs the enclosing module. Necessary for resources
         # contained in their own submodule like /SMS/Messages
         parent_module = self.class.to_s.split('::')[-2]
-        full_module_path = parent_module == 'REST' ? (Twilio::REST) : (Twilio::REST.const_get parent_module)
+        full_module_path = if parent_module == "REST"
+          Twilio::REST
+        else
+          Twilio::REST.const_get parent_module
+        end
 
         @instance_class = full_module_path.const_get instance_name
         @list_key, @instance_id_key = detwilify(resource_name), 'sid'
@@ -49,7 +53,7 @@ module Twilio
         client, list_class = @client, self.class
         resource_list.instance_eval do
           eigenclass = class << self; self; end
-          eigenclass.send :define_method, :total, &lambda {response['total']}
+          eigenclass.send :define_method, :total, &lambda { response['total'] }
           eigenclass.send :define_method, :next_page, &lambda {
             if response['next_page_uri']
               list_class.new(response['next_page_uri'], client).list({}, true)
@@ -70,7 +74,7 @@ module Twilio
       # +total+ attribute as well.
       def total
         raise "Can't get a resource total without a REST Client" unless @client
-        @client.get(@path, :page_size => 1)['total']
+        @client.get(@path, page_size: 1)['total']
       end
 
       ##

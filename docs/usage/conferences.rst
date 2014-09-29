@@ -43,7 +43,7 @@ will return a list of all in-progress conferences and print their friendly name.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @conferences = @client.conferences.list({:status => "in-progress"})
+    @conferences = @client.conferences.list(status: "in-progress")
 
     @conference.each do |conference|
         puts conference.friendly_name

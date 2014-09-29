@@ -42,15 +42,24 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 
 # set up a client to talk to the Twilio REST API
 @client = Twilio::REST::Client.new account_sid, auth_token
+
+# alternatively, you can preconfigure the client like so
+Twilio.configure do |config|
+  config.account_sid = account_sid
+  config.auth_token = auth_token
+end
+
+# and then you can create a new client without parameters
+@client = Twilio::REST::Client.new
 ```
 
 ### Send an SMS
 
 ``` ruby
 @client.messages.create(
-  :from => '+14159341234',
-  :to => '+16105557069',
-  :body => 'Hey there!'
+  from: '+14159341234',
+  to: '+16105557069',
+  body: 'Hey there!'
 )
 ```
 
@@ -58,10 +67,10 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 
 ``` ruby
 @client.messages.create(
-  :from => '+14159341234',
-  :to => '+16105557069',
-  :body => 'Hey there!',
-  :media_url => 'http://example.com/smileyface.jpg',
+  from: '+14159341234',
+  to: '+16105557069',
+  body: 'Hey there!',
+  media_url: 'http://example.com/smileyface.jpg'
 )
 ```
 
@@ -70,9 +79,9 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 ``` ruby
 # make a new outgoing call
 @call = @client.calls.create(
-  :from => '+14159341234',
-  :to => '+18004567890',
-  :url => 'http://example.com/call-handler',
+  from: '+14159341234',
+  to: '+18004567890',
+  url: 'http://example.com/call-handler'
 )
 
 # hangup a ringing call, but don't touch it if it's connected
@@ -100,13 +109,13 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 ``` ruby
 # print some available numbers
 @numbers = @client.available_phone_numbers.get('US').local.list(
-  :contains => 'AWESOME'
+  contains: 'AWESOME'
 )
 @numbers.each {|num| puts num.phone_number}
 
 # buy the first one
 @number = @numbers[0].phone_number
-@client.incoming_phone_numbers.create(:phone_number => @number)
+@client.incoming_phone_numbers.create(phone_number: @number)
 ```
 
 ## Getting Started With Client Capability Tokens
@@ -149,8 +158,8 @@ require 'twilio-ruby'
 
 # build up a response
 response = Twilio::TwiML::Response.new do |r|
-  r.Say 'hello there', :voice => 'alice'
-  r.Dial :callerId => '+14159992222' do |d|
+  r.Say 'hello there', voice: 'alice'
+  r.Dial callerId: '+14159992222' do |d|
     d.Client 'jenny'
   end
 end

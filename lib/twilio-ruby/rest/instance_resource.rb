@@ -32,7 +32,7 @@ module Twilio
       # to handle the update. For example, to update the +VoiceUrl+ of a Twilio
       # Application you could write:
       #
-      #   @app.update :voice_url => 'http://my.other.app.com/handle_voice'
+      #   @app.update voice_url: 'http://my.other.app.com/handle_voice'
       #
       # After returning, the object will contain the most recent state of the
       # instance resource, including the newly updated properties.
@@ -77,7 +77,7 @@ module Twilio
         hash.each do |p,v|
           property = detwilify p
           unless ['client', 'updated'].include? property
-            eigenclass.send :define_method, property.to_sym, &lambda {v}
+            eigenclass.send :define_method, property.to_sym, &lambda { v }
           end
         end
         @updated = !hash.keys.empty?

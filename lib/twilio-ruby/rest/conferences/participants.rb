@@ -10,11 +10,11 @@ module Twilio
 
     class Participant < InstanceResource
       def mute
-        update :muted => 'true'
+        update muted: 'true'
       end
 
       def unmute
-        update :muted => 'false'
+        update muted: 'false'
       end
 
       alias :kick :delete

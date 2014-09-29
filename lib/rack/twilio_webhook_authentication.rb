@@ -33,7 +33,11 @@ module Rack
       if validator.validate(original_url, params, signature)
         @app.call(env)
       else
-        [403, {'Content-Type' => 'text/plain'}, ["Twilio Request Validation Failed."]]
+        [
+          403,
+          {'Content-Type' => 'text/plain'},
+          ["Twilio Request Validation Failed."]
+        ]
       end
     end
   end
