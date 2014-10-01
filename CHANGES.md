@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 3.13.1
+--------------
+
+Released October 1, 2014
+
+- Bump required version to 1.9.3
+
 Version 3.13.0
 --------------
 
