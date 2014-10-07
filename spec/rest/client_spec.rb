@@ -181,19 +181,4 @@ describe Twilio::REST::Client do
       expect(client.send(method)).to eq(client.account.send(method))
     end
   end
-
-  it 'should convert all parameter names to Twilio-style names' do
-    twilio = Twilio::REST::Client.new('someSid', 'someToken')
-    untwilified = {
-      :sms_url => 'someUrl',
-      'voiceFallbackUrl' => 'anotherUrl',
-      'Status_callback' => 'yetAnotherUrl'
-    }
-    twilified = {
-      :SmsUrl => 'someUrl',
-      :VoiceFallbackUrl => 'anotherUrl',
-      :StatusCallback => 'yetAnotherUrl'
-    }
-    expect(twilio.twilify(untwilified)).to eq(twilified)
-  end
 end
