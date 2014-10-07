@@ -181,4 +181,36 @@ describe Twilio::REST::Client do
       expect(client.send(method)).to eq(client.account.send(method))
     end
   end
+
+  it 'should throw an argument error if the workspace_sid is not set' do
+    expect { Twilio::REST::WdsClient.new 'someSid', 'someToken' }.to raise_error(ArgumentError)
+  end
+
+  it 'should have its host set to wds.twilio.com' do
+    client = Twilio::REST::WdsClient.new('someSid', 'someToken', 'someSid')
+    connection = client.instance_variable_get('@connection')
+    expect(connection.address).to eq('wds.twilio.com')
+  end
+
+  it 'should set up a workspaces resource object' do
+    client = Twilio::REST::WdsClient.new('someSid', 'someToken', 'someSid')
+    expect(client).to respond_to(:workspaces)
+    expect(client.workspaces.instance_variable_get('@path')).to eq('/v1/Accounts/someSid/Workspaces')
+  end
+
+  it 'should set up a workspace resource object' do
+    client = Twilio::REST::WdsClient.new('someSid', 'someToken', 'someSid')
+    expect(client).to respond_to(:workspace)
+    expect(client.workspace.instance_variable_get('@path')).to eq('/v1/Accounts/someSid/Workspaces/someSid')
+  end
+
+  [
+      :activities, :tasks, :task_queues, :workers, :workflows
+  ].each do |method|
+    it "should delegate the client method #{method} to the workspace object" do
+      client = Twilio::REST::WdsClient.new('someSid', 'someToken', 'someSid')
+      expect(client).to respond_to(method)
+      expect(client.send(method)).to eq(client.workspace.send(method))
+    end
+  end
 end
