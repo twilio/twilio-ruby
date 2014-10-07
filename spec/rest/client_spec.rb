@@ -255,4 +255,5 @@ describe Twilio::REST::Client do
       expect(client.send(method)).to eq(client.workspace.send(method))
     end
   end
+
 end
