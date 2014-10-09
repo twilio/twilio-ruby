@@ -192,6 +192,48 @@ describe Twilio::REST::Client do
     expect(connection.address).to eq('wds.twilio.com')
   end
 
+  it 'should have task queue statistics resource' do
+    FakeWeb.register_uri(:get, %r/wds\.twilio\.com/, body: '{}')
+    client = Twilio::REST::WdsClient.new('someSid', 'someToken', 'someSid')
+    expect(client).to respond_to(:task_queue_statistics)
+    expect(client.task_queue_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Accounts/someSid/Workspaces/someSid/Statistics/TaskQueues/someSid')
+  end
+
+  it 'should have task queues statistics resource' do
+    FakeWeb.register_uri(:get, %r/wds\.twilio\.com/, body: '{"task_queues_statistics": [{"task_queue_sid": "WQ123"}]}')
+    client = Twilio::REST::WdsClient.new('someSid', 'someToken', 'someSid')
+    expect(client).to respond_to(:task_queues_statistics)
+    expect(client.task_queues_statistics[0].task_queue_sid).to eq('WQ123')
+  end
+
+  it 'should have worker statistics resource' do
+    FakeWeb.register_uri(:get, %r/wds\.twilio\.com/, body: '{}')
+    client = Twilio::REST::WdsClient.new('someSid', 'someToken', 'someSid')
+    expect(client).to respond_to(:worker_statistics)
+    expect(client.worker_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Accounts/someSid/Workspaces/someSid/Statistics/Workers/someSid')
+  end
+
+  it 'should have workers statistics resource' do
+    FakeWeb.register_uri(:get, %r/wds\.twilio\.com/, body: '{}')
+    client = Twilio::REST::WdsClient.new('someSid', 'someToken', 'someSid')
+    expect(client).to respond_to(:workers_statistics)
+    expect(client.workers_statistics.instance_variable_get('@path')).to eq('/v1/Accounts/someSid/Workspaces/someSid/Statistics/Workers')
+  end
+
+  it 'should have workflow statistics resource' do
+    FakeWeb.register_uri(:get, %r/wds\.twilio\.com/, body: '{}')
+    client = Twilio::REST::WdsClient.new('someSid', 'someToken', 'someSid')
+    expect(client).to respond_to(:workflow_statistics)
+    expect(client.workflow_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Accounts/someSid/Workspaces/someSid/Statistics/Workflows/someSid')
+  end
+
+  it 'should have workspace statistics resource' do
+    FakeWeb.register_uri(:get, %r/wds\.twilio\.com/, body: '{}')
+    client = Twilio::REST::WdsClient.new('someSid', 'someToken', 'someSid')
+    expect(client).to respond_to(:workspace_statistics)
+    expect(client.workspace_statistics.instance_variable_get('@path')).to eq('/v1/Accounts/someSid/Workspaces/someSid/Statistics')
+  end
+
   it 'should set up a workspaces resource object' do
     client = Twilio::REST::WdsClient.new('someSid', 'someToken', 'someSid')
     expect(client).to respond_to(:workspaces)
