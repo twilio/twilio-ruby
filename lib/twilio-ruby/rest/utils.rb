@@ -20,7 +20,7 @@ module Twilio
           something = *something.to_a
           something.map! { |pair| [detwilify(pair[0]).to_sym, pair[1]] }
           something = something.flatten
-          Hash[something]
+          Hash[*something]
         else
           something = something.to_s
           something = something.gsub(/[A-Z][a-z]*/) { |s| "_#{s.downcase}" }
