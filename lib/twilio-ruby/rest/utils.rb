@@ -3,29 +3,18 @@ module Twilio
     module Utils
 
       def twilify(something)
-        if something.is_a? Hash
-          something = something.to_a
-          something = something.map { |a| [twilify(a[0]).to_sym, a[1]] }
-          something = something.flatten(1)
-          Hash[*something]
-        else
-          something.to_s.split('_').map! do |s|
-            [s[0,1].capitalize, s[1..-1]].join
-          end.join
-        end
+        return key_map(something, :twilify) if something.is_a? Hash
+        string = something.to_s
+        string.split('_').map do |string_part|
+          string_part[0,1].capitalize + string_part[1..-1]
+        end.join
       end
 
       def detwilify(something)
-        if something.is_a? Hash
-          something = *something.to_a
-          something.map! { |pair| [detwilify(pair[0]).to_sym, pair[1]] }
-          something = something.flatten
-          Hash[something]
-        else
-          something = something.to_s
-          something = something.gsub(/[A-Z][a-z]*/) { |s| "_#{s.downcase}" }
-          something.gsub(/^_/, '')
-        end
+        return key_map(something, :detwilify) if something.is_a? Hash
+        string = something.to_s
+        string = string[0,1].downcase + string[1..-1]
+        string.gsub(/[A-Z][a-z]*/) { |s| "_#{s.downcase}" }
       end
 
       protected
@@ -45,6 +34,15 @@ module Twilio
           instance_variable_set("@#{r}", resource_class.new(path, @client))
         end
         self.class.instance_eval { attr_reader *resources }
+      end
+
+      private
+
+      def key_map(something, method)
+        something = something.to_a.flat_map do |pair|
+          [send(method, pair[0]).to_sym, pair[1]]
+        end
+        Hash[*something]
       end
     end
   end
