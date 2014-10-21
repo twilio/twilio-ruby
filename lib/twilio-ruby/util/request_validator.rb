@@ -9,7 +9,7 @@ module Twilio
 
       def validate(url, params, signature)
         expected = build_signature_for url, params
-        expected == signature
+        secure_compare(expected, signature)
       end
 
       def build_signature_for(url, params)
@@ -18,6 +18,20 @@ module Twilio
         Base64.encode64(OpenSSL::HMAC.digest(digest, @auth_token, data)).strip
       end
 
+      private
+
+      # Compares two strings in constant time to avoid timing attacks.
+      # Borrowed from ActiveSupport::MessageVerifier.
+      # https://github.com/rails/rails/blob/master/activesupport/lib/active_support/message_verifier.rb
+      def secure_compare(a, b)
+        return false unless a.bytesize == b.bytesize
+
+        l = a.unpack("C#{a.bytesize}")
+
+        res = 0
+        b.each_byte { |byte| res |= byte ^ l.shift }
+        res == 0
+      end
     end
   end
 end
