@@ -88,6 +88,25 @@ Retrieving Sent Messages
     @client.messages.list.each do |message|
         puts message.body
 
+Redacting or Deleting Messages
+------------------------------
+
+.. code-block:: ruby
+
+    require 'twilio-ruby'
+
+    # To find these visit https://www.twilio.com/user/account
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
+
+    @client = Twilio::REST::Client.new account_sid, auth_token
+    @msg_sid = 'MM123'
+    @msg = @client.messages.get('MM123')
+    # Deletes the Body field contents
+    @msg.redact
+
+    # Removes the entire Message record
+    @msg.delete
 
 Filtering Your Messages
 -------------------------

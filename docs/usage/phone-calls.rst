@@ -52,6 +52,23 @@ you can use the client to retrieve that record.
     sid = "CA12341234"
     @call = @client.calls.get(sid)
 
+Delete a Call Record
+--------------------
+
+.. code-block:: ruby
+
+    require 'twilio-ruby'
+
+    # To find these visit https://www.twilio.com/user/account
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
+
+    @client = Twilio::REST::Client.new account_sid, auth_token
+    sid = "CA12341234"
+    @call = @client.calls.get(sid)
+
+    # Removes the entire record from Twilio's storage
+    @call.delete
 
 Accessing Specific Call Resources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

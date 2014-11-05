@@ -12,6 +12,11 @@ module Twilio
         super
         resource :media
       end
+
+      def redact()
+        update({body: ''})
+      end
+
     end
   end
 end
