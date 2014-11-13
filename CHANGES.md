@@ -1,6 +1,14 @@
 twilio-ruby changelog
 =====================
 
+Version 3.14.0
+--------------
+
+Released November 13, 2014
+
+- Switch to a constant-time string comparison for TwiML request signature validation
+- Add support for Call and Message deletion/redaction
+
 Version 3.13.1
 --------------
 

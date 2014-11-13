@@ -6,6 +6,7 @@ A huge thanks to all of our contributors:
 
 - Adam Ballai
 - Alexander Murmann & Ryan Spore
+- Alexandre Payment
 - Andrew Benton
 - Brian Levine
 - Caley Woods
