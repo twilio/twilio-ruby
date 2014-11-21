@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 3.14.1
+--------------
+
+Released November 21, 2014
+
+- Add support for the new Tokens endpoint
+
 Version 3.14.0
 --------------
 
