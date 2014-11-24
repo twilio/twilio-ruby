@@ -71,4 +71,11 @@ describe Twilio::REST::Account do
       'someUri/Notifications'
     )
   end
+
+  it 'sets up a tokens resources object' do
+    expect(@account).to respond_to(:tokens)
+    expect(@account.tokens.instance_variable_get('@path')).to eq(
+      'someUri/Tokens'
+    )
+  end
 end
