@@ -31,6 +31,7 @@ A huge thanks to all of our contributors:
 - Rafael Chacon
 - Ryan Spore
 - Sam Kimbrel
+- Tom Moor
 - Torey Heinz
 - Vipul A M
 - vfrride

@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 3.14.2
+--------------
+
+Released November 24, 2014
+
+- Fixed incomplete token support
+
 Version 3.14.1
 --------------
 
