@@ -9,7 +9,7 @@ module Twilio
           :calls, :outgoing_caller_ids, :conferences, :sms, :recordings,
           :transcriptions, :notifications, :applications, :connect_apps,
           :authorized_connect_apps, :queues, :usage, :messages, :media, :sip,
-          :tokens
+          :tokens, :addresses
       end
     end
   end
