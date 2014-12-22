@@ -29,7 +29,7 @@ module Rack
       request = Rack::Request.new(env)
       original_url = request.url
       params = request.post? ? request.POST : {}
-      signature = env['HTTP_X_TWILIO_SIGNATURE']
+      signature = env['HTTP_X_TWILIO_SIGNATURE'] || ""
       if validator.validate(original_url, params, signature)
         @app.call(env)
       else
