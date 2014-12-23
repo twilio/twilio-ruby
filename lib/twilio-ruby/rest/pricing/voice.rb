@@ -1,4 +1,3 @@
-require 'pry'
 require 'twilio-ruby/rest/pricing/countries'
 
 module Twilio

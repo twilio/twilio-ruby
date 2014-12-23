@@ -51,7 +51,6 @@ module Twilio
     # ListResource#get to grab a particular account once you know its sid.
     class Client < BaseClient
       API_VERSION = '2010-04-01'
-
       attr_reader :account, :accounts
 
       host 'api.twilio.com'
