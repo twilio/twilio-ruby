@@ -32,7 +32,7 @@ Once we find one, we'll purchase it for our account.
     if numbers.any?
       numbers[0].purchase()
     else
-      print "No numbers in 530 available"
+      puts "No numbers in 530 available"
     end
 
 
