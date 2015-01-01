@@ -95,7 +95,7 @@ associate them. To do this, create an :class:`IpAccessControlListMapping`.
     @client = Twilio::REST::Client.new account_sid, auth_token
 
     @ip_acl_mapping = @client.sip.domains.get(
-        "SD456",  # SIP Domain sid
+      "SD456",  # SIP Domain sid
     ).ip_access_control_list_mappings.create(
       ip_access_control_list_sid: "AL789"
     )

@@ -36,10 +36,11 @@ for each :class:`Recording`.
     @client = Twilio::REST::Client.new account_sid, auth_token
 
     @client.recordings.list().each do |recording|
-        puts recording.duration
+      puts recording.duration
+    end
 
 You can filter recordings by CallSid by passing the Sid as :attr:`call`.
-Filter recordings using :attr:`before` and :attr:`after` dates.
+Filter recordings using :attr:`DateCreated<` and :attr:`DateCreated>` dates.
 
 The following will only show recordings made before January 1, 2011.
 
@@ -52,9 +53,9 @@ The following will only show recordings made before January 1, 2011.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @client.recordings.list(before=date(2011,1,1)).each do |recording|:
-        puts recording.duration
-
+    @client.recordings.list('DateCreated<' => '2011-01-01').each do |recording|
+      puts recording.duration
+    end
 
 Deleting Recordings
 ---------------------
@@ -92,5 +93,6 @@ with this recording.
     @recording = @client.recordings.get("RC123")
 
     @recording.transcriptions.list().each do |transcription|
-        puts transcription.transcription_text
+      puts transcription.transcription_text
+    end
 

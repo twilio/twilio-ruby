@@ -23,7 +23,7 @@ Listing Conferences
     @conferences = @client.conferences.list()
 
     @conferences.each do |conference|
-        puts conference.sid
+      puts conference.sid
     end
 
 
@@ -46,7 +46,7 @@ will return a list of all in-progress conferences and print their friendly name.
     @conferences = @client.conferences.list(status: "in-progress")
 
     @conference.each do |conference|
-        puts conference.friendly_name
+      puts conference.friendly_name
     end
 
 
@@ -67,7 +67,7 @@ Each :class:`Conference` has a :attr:`participants` instance which represents al
     @conference = @client.conferences.get("CF123")
 
     @conference.participants.list.each.do |paricipant|
-        puts participant.sid
+      puts participant.sid
     end
 
 :class:`Conferences` and :class:`Participants` are subclasses of :class:`ListResource`.
@@ -96,13 +96,13 @@ code kicks out the first participant and mutes the rest.
     @client = Twilio::REST::Client.new account_sid, auth_token
     @participants = @client.conferences.get("CF123").participants.list()
 
-    if @participants.empty?
-        return
+    return if @participants.empty?
 
     # Kick the first person out
     @participants.pop().kick()
 
     # And mute the rest
     @participants.each do |participant|
-        participant.mute()
+      participant.mute()
+    end
 

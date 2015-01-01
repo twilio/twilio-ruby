@@ -27,5 +27,6 @@ The following code will print out the length of each :class:`Transcription`.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     @client.transcriptions.list().each do |transcription|
-        puts transcription.duration
+      puts transcription.duration
+    end
 

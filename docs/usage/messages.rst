@@ -86,7 +86,8 @@ Retrieving Sent Messages
     @client = Twilio::REST::Client.new account_sid, auth_token
 
     @client.messages.list.each do |message|
-        puts message.body
+      puts message.body
+    end
 
 Redacting or Deleting Messages
 ------------------------------
@@ -131,6 +132,6 @@ The following will only show messages to "+5466758723" on January 1st, 2011.
     )
 
     @messages.each do |message|
-        puts message.body
-
+      puts message.body
+    end
 

@@ -48,9 +48,9 @@ actually from Twilio.
     signature = "HpS7PBa1Agvt4OtO+wZp75IuQa0=" # will look something like that
 
     if @validator.validate(url, post_vars, signature)
-        puts "Confirmed to have come from Twilio."
+      puts "Confirmed to have come from Twilio."
     else
-        puts "NOT VALID.  It might have been spoofed!"
+      puts "NOT VALID.  It might have been spoofed!"
     end
 
 Trailing Slashes

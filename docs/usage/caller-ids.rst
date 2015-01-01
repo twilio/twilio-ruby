@@ -20,7 +20,7 @@ Validating a phone number is quick and easy.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     @response = @client.outgoing_caller_ids.create(
-        phone_number: "+44 9876543212"
+      phone_number: "+44 9876543212"
     )
     puts @response.validation_code
 

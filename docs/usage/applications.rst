@@ -27,7 +27,7 @@ The following code will print out the :attr:`friendly_name` for each :class:`App
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     @client.applications.each do |app|
-        puts app.friendly_name
+      puts app.friendly_name
     end
 
 
@@ -46,7 +46,7 @@ You can filter applications by FriendlyName
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     @client.applications.list(friendly_name: 'FOO').each do |app|
-        puts app.sid
+      puts app.sid
     end
 
 

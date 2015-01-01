@@ -29,10 +29,11 @@ Once we find one, we'll purchase it for our account.
     @client = Twilio::REST::Client.new account_sid, auth_token
     numbers = @client.available_phone_numbers.get('US').list(area_code: "530")
 
-    if numbers:
-        numbers[0].purchase()
-    else:
-        print "No numbers in 530 available"
+    if numbers.any?
+      numbers[0].purchase()
+    else
+      print "No numbers in 530 available"
+    end
 
 
 Local, Toll-Free, and Mobile Numbers
@@ -51,13 +52,13 @@ You can search for numbers for a given type.
 .. code-block:: ruby
 
     # local
-	numbers = @client.available_phone_numbers.get('US').local.list()
+    numbers = @client.available_phone_numbers.get('US').local.list()
 
     # toll free
-	numbers = @client.available_phone_numbers.get('US').toll_free.list()
+    numbers = @client.available_phone_numbers.get('US').toll_free.list()
 
     # mobile
-	numbers = @client.available_phone_numbers.get('UK').mobile.list()
+    numbers = @client.available_phone_numbers.get('UK').mobile.list()
 
 Numbers Containing Words
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -67,13 +68,13 @@ The following example will find any phone number with "FOO" in it.
 
 .. code-block:: ruby
 
-	numbers = @client.available_phone_numbers.get('US').list(contains: "FOO")
+    numbers = @client.available_phone_numbers.get('US').list(contains: "FOO")
 
 You can use the ''*'' wildcard to match any character. The following example finds any phone number that matches the pattern ''D*D''.
 
 .. code-block:: ruby
 
-	numbers = @client.available_phone_numbers.get('US').list(contains: "D*D")
+    numbers = @client.available_phone_numbers.get('US').list(contains: "D*D")
 
 Other Number Searches
 ^^^^^^^^^^^^^^^^^^^^^
@@ -100,14 +101,14 @@ filter these numbers out when searching for phone numbers to purchase.
 
 .. code-block:: ruby
 
-        # Exclude all numbers requiring addresses
-        numbers = @client.available_phone_numbers.get('AU').list(exclude_all_address_required: true)
+    # Exclude all numbers requiring addresses
+    numbers = @client.available_phone_numbers.get('AU').list(exclude_all_address_required: true)
 
-        # Exclude numbers requiring local addresses
-        numbers = @client.available_phone_numbers.get('AU').list(exclude_local_address_required: true)
+    # Exclude numbers requiring local addresses
+    numbers = @client.available_phone_numbers.get('AU').list(exclude_local_address_required: true)
 
-        # Exclude numbers requiring foreign addresses
-        numbers = @client.available_phone_numbers.get('AU').list(exclude_foreign_address_required: true)
+    # Exclude numbers requiring foreign addresses
+    numbers = @client.available_phone_numbers.get('AU').list(exclude_foreign_address_required: true)
 
 
 Buying a Number
