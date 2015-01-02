@@ -18,12 +18,12 @@ handled appropriately.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     begin
-        @client = Twilio::REST::Client.new account_sid, auth_token
-        client.messages.create({
-            from: '+1234567890',
-            to: '+1234567890',
-            body: 'Hello world'
-        })
+      @client = Twilio::REST::Client.new account_sid, auth_token
+      client.messages.create({
+        from: '+1234567890',
+        to: '+1234567890',
+        body: 'Hello world'
+      })
     rescue Twilio::REST::RequestError => e
-        puts e.message
+      puts e.message
     end

@@ -131,7 +131,7 @@ redirect them as necessary
     @calls = @client.calls.list(status: "in-progress")
 
     @calls.each do |call|
-        call.redirect_to("http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient")
+      call.redirect_to("http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient")
     end
 
 
@@ -149,7 +149,7 @@ Ending all live calls is also possible
     @calls = @client.calls.list(status: "in-progress")
 
     @calls.each do |call|
-        call.hangup()
+      call.hangup()
     end
 
 Note that :meth:`hangup` will also cancel calls currently queued.

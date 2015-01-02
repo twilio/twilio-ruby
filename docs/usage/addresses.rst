@@ -28,13 +28,13 @@ addition to location information and an optional friendly name.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     @address = @client.addresses.create(
-        friendly_name: "Homer",
-        customer_name: "Homer Simpson",
-        street: "742 Evergreen Terrace",
-        city: "Springfield",
-        region "IL",
-        postal_code: "62701",
-        iso_country: "US"
+      friendly_name: "Homer",
+      customer_name: "Homer Simpson",
+      street: "742 Evergreen Terrace",
+      city: "Springfield",
+      region "IL",
+      postal_code: "62701",
+      iso_country: "US"
     )
 
 Listing Addresses
@@ -46,7 +46,7 @@ The following code will print out the :attr:`customer_name` for each :class:`Add
 
     @addresses = @client.addresses.list()
     @addresses.each do |address|
-        puts address.customer_name
+      puts address.customer_name
     end
 
 Filtering Addresses
@@ -59,7 +59,7 @@ The list of Addresses can be filtered on :attr:`friendly_name`,
 
     @addresses = @client.addresses.list(iso_country: 'AU')
     @addresses.each do |address|
-        puts address.customer_name
+      puts address.customer_name
     end
 
 Updating an Address
@@ -97,5 +97,5 @@ To see which phone numbers depend on a given address:
     address_sid = 'AD123'
     @address = @client.addresses.get(address_sid)
     @address.dependent_phone_numbers.list.each do |number|
-        puts number.sid
+      puts number.sid
     end
