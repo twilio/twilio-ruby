@@ -18,6 +18,22 @@ describe Rack::TwilioWebhookAuthentication do
         Rack::TwilioWebhookAuthentication.new(@app, 'ABC', /\/voice/, /\/sms/)
       }.not_to raise_error
     end
+
+    it 'should initialize with an app, dynamic token and paths' do
+      expect {
+        Rack::TwilioWebhookAuthentication.new(@app, nil, /\/voice/, /\/sms/)
+      }.not_to raise_error
+    end
+  end
+
+  describe 'calling against one path with dynamic auth token' do
+    it 'should allow a request through if it validates' do
+      @middleware = Rack::TwilioWebhookAuthentication.new(@app, nil, /\/voice/)
+      expect_any_instance_of(Twilio::Util::RequestValidator).to receive(:validate).and_return(true)
+      request = Rack::MockRequest.env_for('/voice')
+      status, headers, body = @middleware.call(request)
+      expect(status).to be(200)
+    end
   end
 
   describe 'calling against one path' do
