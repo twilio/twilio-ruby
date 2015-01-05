@@ -28,10 +28,15 @@ describe Rack::TwilioWebhookAuthentication do
 
   describe 'calling against one path with dynamic auth token' do
     it 'should allow a request through if it validates' do
-      @middleware = Rack::TwilioWebhookAuthentication.new(@app, nil, /\/voice/)
+      auth_token = 'qwerty'
+      account_sid = 12345
+      expect_any_instance_of(Rack::Request).to receive(:post?).and_return(true)
+      expect_any_instance_of(Rack::Request).to receive(:POST).and_return({'AccountSid' => account_sid})
+      @middleware = Rack::TwilioWebhookAuthentication.new(@app, nil, /\/voice/) { |asid| auth_token}
       expect_any_instance_of(Twilio::Util::RequestValidator).to receive(:validate).and_return(true)
       request = Rack::MockRequest.env_for('/voice')
       status, headers, body = @middleware.call(request)
+      expect(@middleware.instance_variable_get(:@auth_token)).to eq(auth_token)
       expect(status).to be(200)
     end
   end

@@ -17,9 +17,10 @@ module Rack
   # doesn't validate then the middleware responds immediately with a 403 status.
 
   class TwilioWebhookAuthentication
-    def initialize(app, auth_token, *paths)
+    def initialize(app, auth_token, *paths, &block)
       @app = app
       @auth_token = auth_token
+      define_singleton_method(:getAuthToken, block) if block_given?
       @path_regex = Regexp.union(paths)
     end
 
@@ -28,7 +29,7 @@ module Rack
       request = Rack::Request.new(env)
       original_url = request.url
       params = request.post? ? request.POST : {}
-      @auth_token ||= getAuthToken(params['AccountSid'])
+      @auth_token ||=  getAuthToken(params['AccountSid'])
       validator = Twilio::Util::RequestValidator.new(@auth_token)
       signature = env['HTTP_X_TWILIO_SIGNATURE'] || ""
       if validator.validate(original_url, params, signature)
@@ -41,9 +42,6 @@ module Rack
         ]
       end
     end
-
-    def getAuthToken account_sid
-      ''
-    end
   end
+
 end
