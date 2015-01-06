@@ -33,10 +33,11 @@ describe Rack::TwilioWebhookAuthentication do
       expect_any_instance_of(Rack::Request).to receive(:post?).and_return(true)
       expect_any_instance_of(Rack::Request).to receive(:POST).and_return({'AccountSid' => account_sid})
       @middleware = Rack::TwilioWebhookAuthentication.new(@app, nil, /\/voice/) { |asid| auth_token}
-      expect_any_instance_of(Twilio::Util::RequestValidator).to receive(:validate).and_return(true)
+      request_validator = double('RequestValidator')
+      expect(Twilio::Util::RequestValidator).to receive(:new).with(auth_token).and_return(request_validator)
+      expect(request_validator).to receive(:validate).and_return(true)
       request = Rack::MockRequest.env_for('/voice')
       status, headers, body = @middleware.call(request)
-      expect(@middleware.instance_variable_get(:@auth_token)).to eq(auth_token)
       expect(status).to be(200)
     end
   end
