@@ -1,6 +1,14 @@
 twilio-ruby changelog
 =====================
 
+Version 3.14.3
+--------------
+
+Released January 8, 2015
+
+- Fix nil error in RequestValidator middleware
+- Fix up docs
+
 Version 3.14.1
 --------------
 
