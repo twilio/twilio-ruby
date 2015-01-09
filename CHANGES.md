@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+Version 3.14.4
+--------------
+
+Released January 8, 2015
+
+- Feature: dynamically choose the auth token to validate requests with when using the TwilioWebhookAuthentication middleware.
+- Deprecation: The Twilio::REST::SMS::Message resource is deprecated.
+- More fixing of docs
+
 Version 3.14.3
 --------------
 
