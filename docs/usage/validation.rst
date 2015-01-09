@@ -95,3 +95,13 @@ a Sinatra application:
 Now, any POST request to /messages in your application that doesn't validate as
 a Twilio request, will automatically respond with a 403 status code and your
 action will not be hit.
+
+If you use subaccounts and need to validate with different auth tokens, you can pass a block to the middleware instead of an auth token. The block will be passed the Account Sid making the call.
+
+.. code-block:: ruby
+
+    use Rack::TwilioWebhookAuthentication, nil, /\/messages/ do |account_sid|
+      # lookup auth_token from account_sid
+    end
+
+Ensure you pass `nil` for the auth_token when passing a block, otherwise the block will not be called.
