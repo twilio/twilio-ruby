@@ -1,14 +1,14 @@
 module Twilio
   module REST
     module Pricing
-      class PhoneNumbers < ListResource
+      class Numbers < ListResource
         def initialize(path, client)
           super
           @submodule = :Pricing
         end
       end
 
-      class PhoneNumber < InstanceResource
+      class Number < InstanceResource
         def initialize(path, client)
           super
           @submodule = :Pricing

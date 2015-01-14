@@ -1,4 +1,5 @@
 require 'twilio-ruby/rest/pricing/countries'
+require 'twilio-ruby/rest/pricing/voice/numbers'
 
 module Twilio
   module REST
@@ -8,7 +9,7 @@ module Twilio
         def initialize(path, client, params={})
           super
           @submodule = :Pricing
-          resource :countries, :phone_numbers
+          resource :countries, :numbers
         end
 
       end
