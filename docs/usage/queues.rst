@@ -22,10 +22,10 @@ Listing Queues
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @queues = @client.queues.list()
+    @queues = @client.queues.list
 
     @queues.each do |queue|
-        puts queue.sid
+      puts queue.sid
     end
 
 
@@ -47,7 +47,7 @@ represents all current calls in the queue.
     @queue = @client.queues.get("QU123")
 
     @queue.members.list().each do |member|
-        print member.call_sid
+      puts member.call_sid
     end
 
 

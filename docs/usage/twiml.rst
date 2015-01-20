@@ -18,7 +18,7 @@ which returns raw TwiML.
     require 'twilio-ruby'
 
     Twilio::TwiML::Response.new do |r|
-        r.Say "Hello"
+      r.Say "Hello"
     end.text
 
 .. code-block:: xml
@@ -35,14 +35,14 @@ All attributes are keyword arguments.
     require 'twilio-ruby'
 
     Twilio::TwiML::Response.new do |r|
-        r.Play "https://api.twilio.com/cowbell.mp3", loop: 5
+      r.Play "https://api.twilio.com/cowbell.mp3", loop: 5
     end.text
 
 .. code-block:: xml
 
     <?xml version="1.0" encoding="utf-8"?>
     <Response>
-        <Play loop="3">https://api.twilio.com/cowbell.mp3</Play>
+      <Play loop="3">https://api.twilio.com/cowbell.mp3</Play>
     <Response>
 
 Any example of nesting nouns in verbs
@@ -52,10 +52,10 @@ Any example of nesting nouns in verbs
     require 'twilio-ruby'
 
     Twilio::TwiML::Response.new do |r|
-        r.Say "hello"
-        r.Gather finishOnKey: => 4 do |g|
-            g.Say "world"
-        end
+      r.Say "hello"
+      r.Gather finishOnKey: => 4 do |g|
+        g.Say "world"
+      end
     end.text
 
 which returns the following

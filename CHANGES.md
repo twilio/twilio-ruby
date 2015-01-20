@@ -8,6 +8,23 @@ Released November 24, 2014
 
 - Fixed incomplete token support
 
+Version 3.14.4
+--------------
+
+Released January 8, 2015
+
+- Feature: dynamically choose the auth token to validate requests with when using the TwilioWebhookAuthentication middleware.
+- Deprecation: The Twilio::REST::SMS::Message resource is deprecated.
+- More fixing of docs
+
+Version 3.14.3
+--------------
+
+Released January 8, 2015
+
+- Fix nil error in RequestValidator middleware
+- Fix up docs
+
 Version 3.14.1
 --------------
 

@@ -29,6 +29,7 @@ A huge thanks to all of our contributors:
 - Oscar Sanchez
 - Phil Nash
 - Rafael Chacon
+- Ryan Cavicchioni
 - Ryan Spore
 - Sam Kimbrel
 - Tom Moor
