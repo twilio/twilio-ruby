@@ -1,9 +1,11 @@
+sudo: false
 language: ruby
 cache: bundler
 bundler_args: --without development
 rvm:
   - ruby-head
   - ruby
+  - 2.2.0
   - 2.1.0
   - 2.0.0
   - 1.9.3
