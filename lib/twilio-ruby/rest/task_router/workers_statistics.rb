@@ -1,6 +1,6 @@
 module Twilio
   module REST
-    module Wds
+    module TaskRouter
       class WorkersStatistics < InstanceResource; end
       class WorkerStatistics < InstanceResource; end
     end

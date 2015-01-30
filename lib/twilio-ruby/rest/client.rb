@@ -288,11 +288,11 @@ module Twilio
       end
     end
 
-    class WdsClient < BaseClient
+    class TaskRouterClient < BaseClient
       API_VERSION = 'v1'
 
       DEFAULTS = {
-          host: 'wds.twilio.com',
+          host: 'taskrouter.twilio.com',
           port: 443,
           use_ssl: true,
           ssl_verify_peer: true,
@@ -308,14 +308,14 @@ module Twilio
       attr_reader :workspace, :workspace_sid, :workspaces
 
       ##
-      # Instantiate a new HTTP Wds client to talk to Twilio. The parameters
+      # Instantiate a new HTTP TaskRouter client to talk to Twilio. The parameters
       # +account_sid+, +auth_token+ and +workspace_sid are required, unless you
       # have configured them already using the block configure syntax, and used
       # to generate the HTTP basic auth header in each request. The +options+
       # parameter is a hash of connection configuration options. the following
       # keys are supported:
       #
-      # === <tt>host: 'wds.twilio.com'</tt>
+      # === <tt>host: 'taskrouter.twilio.com'</tt>
       #
       # The domain to which you'd like the client to make HTTP requests. Useful
       # for testing. Defaults to 'api.twilio.com'.
@@ -382,7 +382,7 @@ module Twilio
       end
 
       def inspect # :nodoc:
-        "<Twilio::REST::WdsClient @account_sid=#{@account_sid}>"
+        "<Twilio::REST::TaskRouterClient @account_sid=#{@account_sid}>"
       end
 
       ##
@@ -413,14 +413,14 @@ module Twilio
         end
         path = "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces/#{@workspace_sid}/Statistics/TaskQueues/#{task_queue_sid}"
         response = get path, args, true
-        Twilio::REST::Wds::TaskQueueStatistics.new path, self, response
+        Twilio::REST::TaskRouter::TaskQueueStatistics.new path, self, response
       end
 
       ##
       # Get statistics of task queues.
       def task_queues_statistics(*args) # :doc:
         path = "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces/#{@workspace_sid}/Statistics/TaskQueues"
-        stats = Twilio::REST::Wds::TaskQueuesStatistics.new path, self
+        stats = Twilio::REST::TaskRouter::TaskQueuesStatistics.new path, self
         stats.list args, true
       end
 
@@ -432,7 +432,7 @@ module Twilio
         end
         path = "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces/#{@workspace_sid}/Statistics/Workers/#{worker_sid}"
         response = get path, args, true
-        Twilio::REST::Wds::WorkerStatistics.new path, self, response
+        Twilio::REST::TaskRouter::WorkerStatistics.new path, self, response
       end
 
       ##
@@ -440,7 +440,7 @@ module Twilio
       def workers_statistics(*args) # :doc:
         path = "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces/#{@workspace_sid}/Statistics/Workers"
         response = get path, args, true
-        Twilio::REST::Wds::WorkersStatistics.new path, self, response
+        Twilio::REST::TaskRouter::WorkersStatistics.new path, self, response
       end
 
       ##
@@ -451,7 +451,7 @@ module Twilio
         end
         path = "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces/#{@workspace_sid}/Statistics/Workflows/#{workflow_sid}"
         response = get path, args, true
-        Twilio::REST::Wds::WorkflowStatistics.new path, self, response
+        Twilio::REST::TaskRouter::WorkflowStatistics.new path, self, response
       end
 
       ##
@@ -459,7 +459,7 @@ module Twilio
       def workspace_statistics(*args) # :doc:
         path = "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces/#{@workspace_sid}/Statistics"
         response = get path, args, true
-        Twilio::REST::Wds::WorkspaceStatistics.new path, self, response
+        Twilio::REST::TaskRouter::WorkspaceStatistics.new path, self, response
       end
 
       protected
@@ -473,7 +473,7 @@ module Twilio
       ##
       # Set up +workspace+ and +workspaces+ attributes.
       def set_up_subresources # :doc:
-        @workspaces = Twilio::REST::Wds::Workspaces.new "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces", self
+        @workspaces = Twilio::REST::TaskRouter::Workspaces.new "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces", self
         @workspace = @workspaces.get @workspace_sid
       end
 

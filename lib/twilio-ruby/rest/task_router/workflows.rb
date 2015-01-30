@@ -1,6 +1,6 @@
 module Twilio
   module REST
-    module Wds
+    module TaskRouter
       class Workflows < ListResource; end
       class Workflow < InstanceResource; end
     end

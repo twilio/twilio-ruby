@@ -1,10 +1,10 @@
 module Twilio
   module REST
-    module Wds
+    module TaskRouter
       class TaskQueuesStatistics < ListResource
         def initialize(path, client)
           @path, @client = path, client
-          @instance_class = Twilio::REST::Wds::TaskQueueStatistics
+          @instance_class = Twilio::REST::TaskRouter::TaskQueueStatistics
           @list_key, @instance_id_key = 'task_queues_statistics', 'task_queue_sid'
         end
       end

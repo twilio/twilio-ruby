@@ -1,6 +1,6 @@
 module Twilio
   module REST
-    module Wds
+    module TaskRouter
       class TaskQueues < ListResource; end
       class TaskQueue < InstanceResource; end
     end

@@ -1,6 +1,6 @@
 module Twilio
   module REST
-    module Wds
+    module TaskRouter
       class Activities < ListResource; end
       class Activity < InstanceResource; end
     end

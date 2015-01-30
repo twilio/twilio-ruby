@@ -1,12 +1,12 @@
 module Twilio
   module REST
-    module Wds
+    module TaskRouter
       class Tasks < ListResource; end
 
       class Task < InstanceResource
         def initialize(path, client, params={})
           super path, client, params
-          @submodule = :Wds
+          @submodule = :TaskRouter
           resource :reservations
         end
       end
