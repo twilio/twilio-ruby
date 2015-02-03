@@ -63,7 +63,7 @@ describe Twilio::TaskRouter::Capability do
       decoded, header = JWT.decode token, 'foobar'
       expect(decoded['policies'].size).to eq(3)
       activity_policy = {
-        'url' => 'https://taskrouter.twilio.com/v1/Workspaces/WS456/Workers/WK789',
+        'url' => 'https://taskrouter.twilio.com/v1/Accounts/AC123/Workspaces/WS456/Workers/WK789',
         'method' => 'POST',
         'query_filter' => {},
         'post_filter' => {'ActivitySid' => {'required' => true}},
@@ -78,7 +78,7 @@ describe Twilio::TaskRouter::Capability do
       decoded, header = JWT.decode token, 'foobar'
       expect(decoded['policies'].size).to eq(3)
       worker_policy = {
-        'url' => 'https://taskrouter.twilio.com/v1/Workspaces/WS456/Workers/WK789',
+        'url' => 'https://taskrouter.twilio.com/v1/Accounts/AC123/Workspaces/WS456/Workers/WK789',
         'method' => 'GET',
         'query_filter' => {},
         'post_filter' => {},
@@ -93,10 +93,10 @@ describe Twilio::TaskRouter::Capability do
       decoded, header = JWT.decode token, 'foobar'
       expect(decoded['policies'].size).to eq(3)
       task_policy = {
-        'url' => 'https://taskrouter.twilio.com/v1/Workspaces/WS456/Tasks/**',
+        'url' => 'https://taskrouter.twilio.com/v1/Accounts/AC123/Workspaces/WS456/Tasks/**',
         'method' => 'POST',
         'query_filter' => {},
-        'post_filter' => {'ReservationStatus' => {'Required' => true}},
+        'post_filter' => {'ReservationStatus' => {'required' => true}},
         'allow' => true
       }
       expect(decoded['policies'][2]).to eq(task_policy)

@@ -19,7 +19,7 @@ module Twilio
       end
 
       def workspace_url
-        "#{TASK_ROUTER_BASE_URL}/#{TASK_ROUTER_VERSION}/Workspaces/#{@workspace_sid}"
+        "#{TASK_ROUTER_BASE_URL}/#{TASK_ROUTER_VERSION}/Accounts/#{@account_sid}/Workspaces/#{@workspace_sid}"
       end
 
       def worker_url
