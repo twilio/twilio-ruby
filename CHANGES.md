@@ -1,12 +1,13 @@
 twilio-ruby changelog
 =====================
 
-Version 3.14.2
+Version 3.14.5
 --------------
 
-Released November 24, 2014
+Released February 9, 2015
 
-- Fixed incomplete token support
+- Relaxes JWT gem version requirement
+- Adds Ruby 2.2.0 testing to TravisCI
 
 Version 3.14.4
 --------------
@@ -24,6 +25,13 @@ Released January 8, 2015
 
 - Fix nil error in RequestValidator middleware
 - Fix up docs
+
+Version 3.14.2
+--------------
+
+Released November 24, 2014
+
+- Fixed incomplete token support
 
 Version 3.14.1
 --------------
