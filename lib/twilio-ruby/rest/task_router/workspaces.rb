@@ -7,7 +7,7 @@ module Twilio
         def initialize(path, client, params={})
           super path, client, params
           @submodule = :TaskRouter
-          resource :activities, :task_queues, :tasks, :workers, :workflows
+          resource :activities, :events, :task_queues, :tasks, :workers, :workflows
         end
       end
     end
