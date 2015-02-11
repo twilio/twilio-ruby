@@ -1,7 +1,7 @@
 module Twilio
   module REST
     module TaskRouter
-      class TaskQueuesStatistics < ListResource
+      class TaskQueuesStatistics < Twilio::REST::NextGenListResource
         def initialize(path, client)
           @path, @client = path, client
           @instance_class = Twilio::REST::TaskRouter::TaskQueueStatistics

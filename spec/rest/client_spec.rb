@@ -200,7 +200,7 @@ describe Twilio::REST::Client do
   end
 
   it 'should have task queues statistics resource' do
-    FakeWeb.register_uri(:get, %r/taskrouter\.twilio\.com/, body: '{"task_queues_statistics": [{"task_queue_sid": "WQ123"}]}')
+    FakeWeb.register_uri(:get, %r/taskrouter\.twilio\.com/, body: '{"meta": {"key": "task_queues_statistics"}, "task_queues_statistics": [{"task_queue_sid": "WQ123"}]}')
     client = Twilio::REST::TaskRouterClient.new('someSid', 'someToken', 'someSid')
     expect(client).to respond_to(:task_queues_statistics)
     expect(client.task_queues_statistics[0].task_queue_sid).to eq('WQ123')

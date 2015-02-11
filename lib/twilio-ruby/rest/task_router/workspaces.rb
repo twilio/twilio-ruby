@@ -1,7 +1,7 @@
 module Twilio
   module REST
     module TaskRouter
-      class Workspaces < ListResource; end
+      class Workspaces < Twilio::REST::NextGenListResource; end
 
       class Workspace < InstanceResource
         def initialize(path, client, params={})
