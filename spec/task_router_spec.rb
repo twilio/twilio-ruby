@@ -35,10 +35,10 @@ describe Twilio::TaskRouter::Capability do
       expect(decoded['exp']).to eq(seconds + ttl)
     end
 
-    it 'should allow websocket operations by default' do
+    it 'should allow websocket operations and activity list fetches by default' do
       token = @capability.generate_token
       decoded, header = JWT.decode token, 'foobar'
-      expect(decoded['policies'].size).to eq(2)
+      expect(decoded['policies'].size).to eq(3)
       get_policy = {
         "url" => 'https://event-bridge.twilio.com/v1/wschannels/AC123/WK789',
         "method" => 'GET',
@@ -55,51 +55,60 @@ describe Twilio::TaskRouter::Capability do
         "allow" => true
       }
       expect(decoded['policies'][1]).to eq(post_policy)
+
+      activities_policy = {
+        'url' => 'https://taskrouter.twilio.com/v1/Workspaces/WS456/Activities',
+        'method' => 'GET',
+        'query_filter' => {},
+        'post_filter' => {},
+        'allow' => true
+      }
+      expect(decoded['policies'][2]).to eq(activities_policy)
     end
 
     it 'should add a policy when #allow_worker_activity_updates is called' do
       @capability.allow_worker_activity_updates
       token = @capability.generate_token
       decoded, header = JWT.decode token, 'foobar'
-      expect(decoded['policies'].size).to eq(3)
+      expect(decoded['policies'].size).to eq(4)
       activity_policy = {
-        'url' => 'https://taskrouter.twilio.com/v1/Accounts/AC123/Workspaces/WS456/Workers/WK789',
+        'url' => 'https://taskrouter.twilio.com/v1/Workspaces/WS456/Workers/WK789',
         'method' => 'POST',
         'query_filter' => {},
         'post_filter' => {'ActivitySid' => {'required' => true}},
         'allow' => true
       }
-      expect(decoded['policies'][2]).to eq(activity_policy)
+      expect(decoded['policies'][-1]).to eq(activity_policy)
     end
 
     it 'should add a policy when #allow_worker_fetch_attributes is called' do
       @capability.allow_worker_fetch_attributes
       token = @capability.generate_token
       decoded, header = JWT.decode token, 'foobar'
-      expect(decoded['policies'].size).to eq(3)
+      expect(decoded['policies'].size).to eq(4)
       worker_policy = {
-        'url' => 'https://taskrouter.twilio.com/v1/Accounts/AC123/Workspaces/WS456/Workers/WK789',
+        'url' => 'https://taskrouter.twilio.com/v1/Workspaces/WS456/Workers/WK789',
         'method' => 'GET',
         'query_filter' => {},
         'post_filter' => {},
         'allow' => true
       }
-      expect(decoded['policies'][2]).to eq(worker_policy)
+      expect(decoded['policies'][-1]).to eq(worker_policy)
     end
 
     it 'should add a policy when #allow_task_reservation_updates is called' do
       @capability.allow_task_reservation_updates
       token = @capability.generate_token
       decoded, header = JWT.decode token, 'foobar'
-      expect(decoded['policies'].size).to eq(3)
+      expect(decoded['policies'].size).to eq(4)
       task_policy = {
-        'url' => 'https://taskrouter.twilio.com/v1/Accounts/AC123/Workspaces/WS456/Tasks/**',
+        'url' => 'https://taskrouter.twilio.com/v1/Workspaces/WS456/Tasks/**',
         'method' => 'POST',
         'query_filter' => {},
         'post_filter' => {'ReservationStatus' => {'required' => true}},
         'allow' => true
       }
-      expect(decoded['policies'][2]).to eq(task_policy)
+      expect(decoded['policies'][-1]).to eq(task_policy)
     end
   end
 end

@@ -16,10 +16,11 @@ module Twilio
         @worker_sid = worker_sid
         @policies = []
         allow_websocket_requests
+        allow_worker_activity_list_fetch
       end
 
       def workspace_url
-        "#{TASK_ROUTER_BASE_URL}/#{TASK_ROUTER_VERSION}/Accounts/#{@account_sid}/Workspaces/#{@workspace_sid}"
+        "#{TASK_ROUTER_BASE_URL}/#{TASK_ROUTER_VERSION}/Workspaces/#{@workspace_sid}"
       end
 
       def worker_url
@@ -74,6 +75,11 @@ module Twilio
         ['GET', 'POST'].each do |meth|
           add_policy(worker_url, meth)
         end
+      end
+
+      def allow_worker_activity_list_fetch
+        url = "#{workspace_url}/Activities"
+        add_policy(url, 'GET')
       end
 
     end
