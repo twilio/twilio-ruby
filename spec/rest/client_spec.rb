@@ -196,7 +196,7 @@ describe Twilio::REST::Client do
     FakeWeb.register_uri(:get, %r/taskrouter\.twilio\.com/, body: '{}')
     client = Twilio::REST::TaskRouterClient.new('someSid', 'someToken', 'someSid')
     expect(client).to respond_to(:task_queue_statistics)
-    expect(client.task_queue_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Workspaces/someSid/Statistics/TaskQueues/someSid')
+    expect(client.task_queue_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Workspaces/someSid/TaskQueues/someSid/Statistics')
   end
 
   it 'should have task queues statistics resource' do
@@ -210,21 +210,21 @@ describe Twilio::REST::Client do
     FakeWeb.register_uri(:get, %r/taskrouter\.twilio\.com/, body: '{}')
     client = Twilio::REST::TaskRouterClient.new('someSid', 'someToken', 'someSid')
     expect(client).to respond_to(:worker_statistics)
-    expect(client.worker_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Workspaces/someSid/Statistics/Workers/someSid')
+    expect(client.worker_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Workspaces/someSid/Workers/someSid/Statistics')
   end
 
   it 'should have workers statistics resource' do
     FakeWeb.register_uri(:get, %r/taskrouter\.twilio\.com/, body: '{}')
     client = Twilio::REST::TaskRouterClient.new('someSid', 'someToken', 'someSid')
     expect(client).to respond_to(:workers_statistics)
-    expect(client.workers_statistics.instance_variable_get('@path')).to eq('/v1/Workspaces/someSid/Statistics/Workers')
+    expect(client.workers_statistics.instance_variable_get('@path')).to eq('/v1/Workspaces/someSid/Workers/Statistics')
   end
 
   it 'should have workflow statistics resource' do
     FakeWeb.register_uri(:get, %r/taskrouter\.twilio\.com/, body: '{}')
     client = Twilio::REST::TaskRouterClient.new('someSid', 'someToken', 'someSid')
     expect(client).to respond_to(:workflow_statistics)
-    expect(client.workflow_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Workspaces/someSid/Statistics/Workflows/someSid')
+    expect(client.workflow_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Workspaces/someSid/Workflows/someSid/Statistics')
   end
 
   it 'should have workspace statistics resource' do
