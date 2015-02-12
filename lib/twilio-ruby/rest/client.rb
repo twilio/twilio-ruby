@@ -411,7 +411,7 @@ module Twilio
         if task_queue_sid.nil?
           raise ArgumentError, 'Task queue SID is required'
         end
-        path = "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces/#{@workspace_sid}/Statistics/TaskQueues/#{task_queue_sid}"
+        path = "/#{API_VERSION}/Workspaces/#{@workspace_sid}/Statistics/TaskQueues/#{task_queue_sid}"
         response = get path, args, true
         Twilio::REST::TaskRouter::TaskQueueStatistics.new path, self, response
       end
@@ -419,7 +419,7 @@ module Twilio
       ##
       # Get statistics of task queues.
       def task_queues_statistics(*args) # :doc:
-        path = "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces/#{@workspace_sid}/Statistics/TaskQueues"
+        path = "/#{API_VERSION}/Workspaces/#{@workspace_sid}/Statistics/TaskQueues"
         stats = Twilio::REST::TaskRouter::TaskQueuesStatistics.new path, self
         stats.list args, true
       end
@@ -430,7 +430,7 @@ module Twilio
         if worker_sid.nil?
           raise ArgumentError, 'Worker SID is required'
         end
-        path = "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces/#{@workspace_sid}/Statistics/Workers/#{worker_sid}"
+        path = "/#{API_VERSION}/Workspaces/#{@workspace_sid}/Statistics/Workers/#{worker_sid}"
         response = get path, args, true
         Twilio::REST::TaskRouter::WorkerStatistics.new path, self, response
       end
@@ -438,7 +438,7 @@ module Twilio
       ##
       # Get statistics of workers.
       def workers_statistics(*args) # :doc:
-        path = "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces/#{@workspace_sid}/Statistics/Workers"
+        path = "/#{API_VERSION}/Workspaces/#{@workspace_sid}/Statistics/Workers"
         response = get path, args, true
         Twilio::REST::TaskRouter::WorkersStatistics.new path, self, response
       end
@@ -449,7 +449,7 @@ module Twilio
         if workflow_sid.nil?
           raise ArgumentError, 'Workflow SID is required'
         end
-        path = "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces/#{@workspace_sid}/Statistics/Workflows/#{workflow_sid}"
+        path = "/#{API_VERSION}/Workspaces/#{@workspace_sid}/Statistics/Workflows/#{workflow_sid}"
         response = get path, args, true
         Twilio::REST::TaskRouter::WorkflowStatistics.new path, self, response
       end
@@ -457,7 +457,7 @@ module Twilio
       ##
       # Get statistics of a workspace.
       def workspace_statistics(*args) # :doc:
-        path = "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces/#{@workspace_sid}/Statistics"
+        path = "/#{API_VERSION}/Workspaces/#{@workspace_sid}/Statistics"
         response = get path, args, true
         Twilio::REST::TaskRouter::WorkspaceStatistics.new path, self, response
       end
@@ -473,7 +473,7 @@ module Twilio
       ##
       # Set up +workspace+ and +workspaces+ attributes.
       def set_up_subresources # :doc:
-        @workspaces = Twilio::REST::TaskRouter::Workspaces.new "/#{API_VERSION}/Accounts/#{@account_sid}/Workspaces", self
+        @workspaces = Twilio::REST::TaskRouter::Workspaces.new "/#{API_VERSION}/Workspaces", self
         @workspace = @workspaces.get @workspace_sid
       end
 

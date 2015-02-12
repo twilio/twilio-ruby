@@ -196,7 +196,7 @@ describe Twilio::REST::Client do
     FakeWeb.register_uri(:get, %r/taskrouter\.twilio\.com/, body: '{}')
     client = Twilio::REST::TaskRouterClient.new('someSid', 'someToken', 'someSid')
     expect(client).to respond_to(:task_queue_statistics)
-    expect(client.task_queue_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Accounts/someSid/Workspaces/someSid/Statistics/TaskQueues/someSid')
+    expect(client.task_queue_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Workspaces/someSid/Statistics/TaskQueues/someSid')
   end
 
   it 'should have task queues statistics resource' do
@@ -210,40 +210,40 @@ describe Twilio::REST::Client do
     FakeWeb.register_uri(:get, %r/taskrouter\.twilio\.com/, body: '{}')
     client = Twilio::REST::TaskRouterClient.new('someSid', 'someToken', 'someSid')
     expect(client).to respond_to(:worker_statistics)
-    expect(client.worker_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Accounts/someSid/Workspaces/someSid/Statistics/Workers/someSid')
+    expect(client.worker_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Workspaces/someSid/Statistics/Workers/someSid')
   end
 
   it 'should have workers statistics resource' do
     FakeWeb.register_uri(:get, %r/taskrouter\.twilio\.com/, body: '{}')
     client = Twilio::REST::TaskRouterClient.new('someSid', 'someToken', 'someSid')
     expect(client).to respond_to(:workers_statistics)
-    expect(client.workers_statistics.instance_variable_get('@path')).to eq('/v1/Accounts/someSid/Workspaces/someSid/Statistics/Workers')
+    expect(client.workers_statistics.instance_variable_get('@path')).to eq('/v1/Workspaces/someSid/Statistics/Workers')
   end
 
   it 'should have workflow statistics resource' do
     FakeWeb.register_uri(:get, %r/taskrouter\.twilio\.com/, body: '{}')
     client = Twilio::REST::TaskRouterClient.new('someSid', 'someToken', 'someSid')
     expect(client).to respond_to(:workflow_statistics)
-    expect(client.workflow_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Accounts/someSid/Workspaces/someSid/Statistics/Workflows/someSid')
+    expect(client.workflow_statistics('someSid').instance_variable_get('@path')).to eq('/v1/Workspaces/someSid/Statistics/Workflows/someSid')
   end
 
   it 'should have workspace statistics resource' do
     FakeWeb.register_uri(:get, %r/taskrouter\.twilio\.com/, body: '{}')
     client = Twilio::REST::TaskRouterClient.new('someSid', 'someToken', 'someSid')
     expect(client).to respond_to(:workspace_statistics)
-    expect(client.workspace_statistics.instance_variable_get('@path')).to eq('/v1/Accounts/someSid/Workspaces/someSid/Statistics')
+    expect(client.workspace_statistics.instance_variable_get('@path')).to eq('/v1/Workspaces/someSid/Statistics')
   end
 
   it 'should set up a workspaces resource object' do
     client = Twilio::REST::TaskRouterClient.new('someSid', 'someToken', 'someSid')
     expect(client).to respond_to(:workspaces)
-    expect(client.workspaces.instance_variable_get('@path')).to eq('/v1/Accounts/someSid/Workspaces')
+    expect(client.workspaces.instance_variable_get('@path')).to eq('/v1/Workspaces')
   end
 
   it 'should set up a workspace resource object' do
     client = Twilio::REST::TaskRouterClient.new('someSid', 'someToken', 'someSid')
     expect(client).to respond_to(:workspace)
-    expect(client.workspace.instance_variable_get('@path')).to eq('/v1/Accounts/someSid/Workspaces/someSid')
+    expect(client.workspace.instance_variable_get('@path')).to eq('/v1/Workspaces/someSid')
   end
 
   [
