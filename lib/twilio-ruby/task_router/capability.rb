@@ -16,7 +16,7 @@ module Twilio
         @worker_sid = worker_sid
         @policies = []
         allow_websocket_requests
-        allow_worker_activity_list_fetch
+        allow_activity_list_fetch
       end
 
       def workspace_url
@@ -77,7 +77,7 @@ module Twilio
         end
       end
 
-      def allow_worker_activity_list_fetch
+      def allow_activity_list_fetch
         url = "#{workspace_url}/Activities"
         add_policy(url, 'GET')
       end
