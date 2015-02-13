@@ -40,26 +40,6 @@ module Twilio
         set_up_subresources
       end
 
-      ##
-      # Define #get, #put, #post and #delete helper methods for sending HTTP
-      # requests to Twilio. You shouldn't need to use these methods directly,
-      # but they can be useful for debugging. Each method returns a hash
-      # obtained from parsing the JSON object in the response body.
-      [:get, :put, :post, :delete].each do |method|
-        method_class = Net::HTTP.const_get method.to_s.capitalize
-        define_method method do |path, *args|
-          params = twilify args[0]; params = {} if params.empty?
-          unless args[1] # build the full path unless already given
-            path = "#{path}.json"
-            path << "?#{url_encode(params)}" if method == :get && !params.empty?
-          end
-          request = method_class.new path, HTTP_HEADERS
-          request.basic_auth @account_sid, @auth_token
-          request.form_data = params if [:post, :put].include? method
-          connect_and_send request
-        end
-      end
-
       protected
 
       ##
@@ -259,6 +239,26 @@ module Twilio
       end
 
       ##
+      # Define #get, #put, #post and #delete helper methods for sending HTTP
+      # requests to Twilio. You shouldn't need to use these methods directly,
+      # but they can be useful for debugging. Each method returns a hash
+      # obtained from parsing the JSON object in the response body.
+      [:get, :put, :post, :delete].each do |method|
+        method_class = Net::HTTP.const_get method.to_s.capitalize
+        define_method method do |path, *args|
+          params = twilify args[0]; params = {} if params.empty?
+          unless args[1] # build the full path unless already given
+            path = "#{path}.json"
+            path << "?#{url_encode(params)}" if method == :get && !params.empty?
+          end
+          request = method_class.new path, HTTP_HEADERS
+          request.basic_auth @account_sid, @auth_token
+          request.form_data = params if [:post, :put].include? method
+          connect_and_send request
+        end
+      end
+
+      ##
       # Delegate account methods from the client. This saves having to call
       # <tt>client.account</tt> every time for resources on the default
       # account.
@@ -379,6 +379,25 @@ module Twilio
           raise ArgumentError, 'Workspace SID is required'
         end
         super(*args)
+      end
+
+      ##
+      # Define #get, #put, #post and #delete helper methods for sending HTTP
+      # requests to Twilio. You shouldn't need to use these methods directly,
+      # but they can be useful for debugging. Each method returns a hash
+      # obtained from parsing the JSON object in the response body.
+      [:get, :put, :post, :delete].each do |method|
+        method_class = Net::HTTP.const_get method.to_s.capitalize
+        define_method method do |path, *args|
+          params = twilify args[0]; params = {} if params.empty?
+          unless args[1] # build the full path unless already given
+            path << "?#{url_encode(params)}" if method == :get && !params.empty?
+          end
+          request = method_class.new path, HTTP_HEADERS
+          request.basic_auth @account_sid, @auth_token
+          request.form_data = params if [:post, :put].include? method
+          connect_and_send request
+        end
       end
 
       def inspect # :nodoc:
