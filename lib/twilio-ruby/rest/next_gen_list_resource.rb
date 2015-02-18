@@ -3,7 +3,7 @@ module Twilio
     class NextGenListResource < Twilio::REST::ListResource
       def list(params={}, full_path=false)
         raise "Can't get a resource list without a REST Client" unless @client
-        response = @client.get @path, params, true
+        response = @client.get @path, params, full_path
         list_key = response['meta']['key']
         raise "Couldn't find a list key in response meta" unless list_key
         resources = response[list_key]
