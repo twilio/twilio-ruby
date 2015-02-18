@@ -390,6 +390,7 @@ module Twilio
         define_method method do |path, *args|
           params = twilify args[0]; params = {} if params.empty?
           unless args[1] # build the full path unless already given
+            path = path.dup
             path << "?#{url_encode(params)}" if method == :get && !params.empty?
           end
           request = method_class.new path, HTTP_HEADERS
