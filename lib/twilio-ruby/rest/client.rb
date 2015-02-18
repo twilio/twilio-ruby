@@ -1,6 +1,8 @@
 module Twilio
   module REST
     class BaseClient
+      include Twilio::Util
+      include Twilio::REST::Utils
 
       HTTP_HEADERS = {
           'Accept' => 'application/json',
@@ -157,9 +159,6 @@ module Twilio
     # accounts and ListResource#create to create a new account. Use
     # ListResource#get to grab a particular account once you know its sid.
     class Client < BaseClient
-      include Twilio::Util
-      include Twilio::REST::Utils
-
       API_VERSION = '2010-04-01'
 
       attr_reader :account, :accounts
