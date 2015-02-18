@@ -5,6 +5,7 @@ module Twilio
 
       def initialize(path, client)
         custom_names = {
+          'Activities' => 'Activity',
           'Media' => 'MediaInstance',
           'IpAddresses' => 'IpAddress',
           'Feedback' => 'FeedbackInstance',
