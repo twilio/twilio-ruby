@@ -1,7 +1,7 @@
 module Twilio
   module REST
     module Pricing
-      class Countries < ListResource
+      class Countries < NextGenListResource
         def initialize(path, client)
           super
           @list_key = 'countries'

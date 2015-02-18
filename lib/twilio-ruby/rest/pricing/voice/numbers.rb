@@ -1,7 +1,7 @@
 module Twilio
   module REST
     module Pricing
-      class Numbers < ListResource
+      class Numbers < NextGenListResource
         def initialize(path, client)
           super
           @submodule = :Pricing
