@@ -92,16 +92,16 @@ for each country you are interested in individually:
     # available in this country
     @country.inbound_call_prices.each do |p|
         puts p.number_type
-        puts p.call_base_price # List price per minute
-        puts p.call_current_price # Discounted price per minute
+        puts p.base_price # List price per minute
+        puts p.current_price # Discounted price per minute
     end
 
     # A list of price rates for outbound calls to number, organized
     # by prefix.
     @country.outbound_prefix_prices.each do |p|
         puts p.prefixes # List of one or more prefixes this price applies to
-        puts p.call_base_price # Base price per minute
-        puts p.call_current_price # Discounted price per minute
+        puts p.base_price # Base price per minute
+        puts p.current_price # Discounted price per minute
 
 Voice Numbers
 -------------
@@ -121,7 +121,7 @@ number:
     @number = @client.voice.phone_numbers.get('+15105551234')
     puts @number.iso_country
     puts @number.price_unit
-    puts @number.outbound_call_price.call_base_price
+    puts @number.outbound_call_price.base_price
     puts @number.inbound_call_price.number_type # inbound_call_price will be nil if the number is not Twilio-hosted
 
 
@@ -163,7 +163,7 @@ each country you are interested in individually:
     puts @country.price_unit
 
     @country.phone_number_prices.each do |p|
-        puts p.type # 'local', 'mobile', 'national', or 'toll_free'
+        puts p.number_type # 'local', 'mobile', 'national', or 'toll_free'
         puts p.base_price # Price per month before any discounts have been applied
         puts p.current_price # Price per month after any available discounts from the requesting account have applied
 
