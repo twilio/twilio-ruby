@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 3.15.2
+--------------
+
+Released March 10, 2015
+
+- Add missing documentation on TaskRouter client
+
 Version 3.15.1
 --------------
 
