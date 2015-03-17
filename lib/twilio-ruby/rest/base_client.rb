@@ -42,6 +42,25 @@ module Twilio
         set_up_subresources
       end
 
+      ##
+      # Define #get, #put, #post and #delete helper methods for sending HTTP
+      # requests to Twilio. You shouldn't need to use these methods directly,
+      # but they can be useful for debugging. Each method returns a hash
+      # obtained from parsing the JSON object in the response body.
+      [:get, :put, :post, :delete].each do |method|
+        method_class = Net::HTTP.const_get method.to_s.capitalize
+        define_method method do |path, *args|
+          params = twilify(args[0])
+          params = {} if params.empty?
+          # build the full path unless already given
+          path = build_full_path(path, params, method) unless args[1]
+          request = method_class.new(path, HTTP_HEADERS)
+          request.basic_auth(@account_sid, @auth_token)
+          request.form_data = params if [:post, :put].include?(method)
+          connect_and_send(request)
+        end
+      end
+
       protected
 
       ##
@@ -49,6 +68,13 @@ module Twilio
       def get_defaults
         # To be overridden
         DEFAULTS
+      end
+
+      ##
+      # Builds up full request path
+      # Needs implementation in child classes
+      def build_full_path(path, params, method)
+        raise NotImplementedError
       end
 
       ##

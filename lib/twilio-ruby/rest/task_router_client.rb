@@ -94,26 +94,6 @@ module Twilio
         super(*args)
       end
 
-      ##
-      # Define #get, #put, #post and #delete helper methods for sending HTTP
-      # requests to Twilio. You shouldn't need to use these methods directly,
-      # but they can be useful for debugging. Each method returns a hash
-      # obtained from parsing the JSON object in the response body.
-      [:get, :put, :post, :delete].each do |method|
-        method_class = Net::HTTP.const_get method.to_s.capitalize
-        define_method method do |path, *args|
-          params = twilify args[0]; params = {} if params.empty?
-          unless args[1] # build the full path unless already given
-            path = path.dup
-            path << "?#{url_encode(params)}" if method == :get && !params.empty?
-          end
-          request = method_class.new path, HTTP_HEADERS
-          request.basic_auth @account_sid, @auth_token
-          request.form_data = params if [:post, :put].include? method
-          connect_and_send request
-        end
-      end
-
       def inspect # :nodoc:
         "<Twilio::REST::TaskRouterClient @account_sid=#{@account_sid}>"
       end
@@ -208,6 +188,14 @@ module Twilio
       def set_up_subresources # :doc:
         @workspaces = Twilio::REST::TaskRouter::Workspaces.new "/#{API_VERSION}/Workspaces", self
         @workspace = @workspaces.get @workspace_sid
+      end
+
+      ##
+      # Builds up full request path
+      def build_full_path(path, params, method)
+        path = path.dup
+        path << "?#{url_encode(params)}" if method == :get && !params.empty?
+        path
       end
 
     end
