@@ -31,7 +31,7 @@ module Twilio
       # === <tt>host: 'lookups.twilio.com'</tt>
       #
       # The domain to which you'd like the client to make HTTP requests. Useful
-      # for testing. Defaults to 'api.twilio.com'.
+      # for testing. Defaults to 'lookups.twilio.com'.
       #
       # === <tt>port: 443</tt>
       #
