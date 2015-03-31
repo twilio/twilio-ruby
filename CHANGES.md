@@ -1,6 +1,14 @@
 twilio-ruby changelog
 =====================
 
+Version 3.16.0
+--------------
+
+Released March 31, 2015
+
+- Add support for new Twilio Lookups API
+- Update LICENSE wording
+
 Version 3.15.2
 --------------
 
