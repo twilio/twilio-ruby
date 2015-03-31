@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 3.16.1
+--------------
+
+Released March 31, 2015
+
+- Fix bug in PhoneNumbers resource
+
 Version 3.16.0
 --------------
 
