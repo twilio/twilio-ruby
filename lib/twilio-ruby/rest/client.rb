@@ -53,6 +53,8 @@ module Twilio
 
       attr_reader :account, :accounts
 
+      host 'api.twilio.com'
+
       ##
       # Instantiate a new HTTP client to talk to Twilio. The parameters
       # +account_sid+ and +auth_token+ are required, unless you have configured

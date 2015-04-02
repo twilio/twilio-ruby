@@ -12,25 +12,17 @@ module Twilio
                         " #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL})"
       }
 
-      DEFAULTS = {
-          host: 'api.twilio.com',
-          port: 443,
-          use_ssl: true,
-          ssl_verify_peer: true,
-          ssl_ca_file: File.dirname(__FILE__) + '/../../../conf/cacert.pem',
-          timeout: 30,
-          proxy_addr: nil,
-          proxy_port: nil,
-          proxy_user: nil,
-          proxy_pass: nil,
-          retry_limit: 1
-      }
+      def self.host(host=nil)
+        return @host unless host
+        @host = host
+      end
 
       attr_reader :account_sid, :last_request, :last_response
 
       def initialize(*args)
         options = args.last.is_a?(Hash) ? args.pop : {}
-        @config = get_defaults.merge! options
+        options[:host] ||= self.class.host
+        @config = Twilio::Util::ClientConfig.new options
 
         @account_sid = args[0] || Twilio.account_sid
         @auth_token = args[1] || Twilio.auth_token
@@ -81,22 +73,22 @@ module Twilio
       # Set up and cache a Net::HTTP object to use when making requests. This is
       # a private method documented for completeness.
       def set_up_connection # :doc:
-        connection_class = Net::HTTP::Proxy @config[:proxy_addr],
-                                            @config[:proxy_port], @config[:proxy_user], @config[:proxy_pass]
-        @connection = connection_class.new @config[:host], @config[:port]
+        connection_class = Net::HTTP::Proxy @config.proxy_addr,
+                                            @config.proxy_port, @config.proxy_user, @config.proxy_pass
+        @connection = connection_class.new @config.host, @config.port
         set_up_ssl
-        @connection.open_timeout = @config[:timeout]
-        @connection.read_timeout = @config[:timeout]
+        @connection.open_timeout = @config.timeout
+        @connection.read_timeout = @config.timeout
       end
 
       ##
       # Set up the ssl properties of the <tt>@connection</tt> Net::HTTP object.
       # This is a private method documented for completeness.
       def set_up_ssl # :doc:
-        @connection.use_ssl = @config[:use_ssl]
-        if @config[:ssl_verify_peer]
+        @connection.use_ssl = @config.use_ssl
+        if @config.ssl_verify_peer
           @connection.verify_mode = OpenSSL::SSL::VERIFY_PEER
-          @connection.ca_file = @config[:ssl_ca_file]
+          @connection.ca_file = @config.ssl_ca_file
         else
           @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
         end
@@ -116,7 +108,7 @@ module Twilio
       # inspection later.
       def connect_and_send(request) # :doc:
         @last_request = request
-        retries_left = @config[:retry_limit]
+        retries_left = @config.retry_limit
         begin
           response = @connection.request request
           @last_response = response
