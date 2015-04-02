@@ -51,11 +51,17 @@ module Twilio
           @instance_class.new "#{path}/#{resource[@instance_id_key]}", @client,
             resource
         end
-        # set the +total+ and +next_page+ properties on the array
+        # set the +previous_page+ and +next_page+ properties on the array
         client, list_class = @client, self.class
         resource_list.instance_eval do
           eigenclass = class << self; self; end
-          eigenclass.send :define_method, :total, &lambda { response['total'] }
+          eigenclass.send :define_method, :previous_page, &lambda {
+            if response['previous_page_uri']
+              list_class.new(response['previous_page_uri'], client).list({}, true)
+            else
+              []
+            end
+          }
           eigenclass.send :define_method, :next_page, &lambda {
             if response['next_page_uri']
               list_class.new(response['next_page_uri'], client).list({}, true)
@@ -65,18 +71,6 @@ module Twilio
           }
         end
         resource_list
-      end
-
-      ##
-      # Ask Twilio for the total number of items in the list.
-      # Calling this method makes an HTTP GET request to <tt>@path</tt> with a
-      # page size parameter of 1 to minimize data over the wire while still
-      # obtaining the total. Don't use this if you are planning to
-      # call #list anyway, since the array returned from #list will have a
-      # +total+ attribute as well.
-      def total
-        raise "Can't get a resource total without a REST Client" unless @client
-        @client.get(@path, page_size: 1)['total']
       end
 
       ##
