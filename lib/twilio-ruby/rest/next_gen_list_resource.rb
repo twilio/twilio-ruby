@@ -21,6 +21,13 @@ module Twilio
               []
             end
           }
+          eigenclass.send :define_method, :previous_page, &lambda {
+            if response['meta']['previous_page_url']
+              list_class.new(response['meta']['previous_page_url'], client).list({})
+            else
+              []
+            end
+          }
         end
         resource_list
       end
