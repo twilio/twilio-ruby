@@ -12,6 +12,8 @@ module Twilio
                         " #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL})"
       }
 
+      ##
+      # Override the default host for a REST Client (api.twilio.com)
       def self.host(host=nil)
         return @host unless host
         @host = host
@@ -54,13 +56,6 @@ module Twilio
       end
 
       protected
-
-      ##
-      # Get the default config values.
-      def get_defaults
-        # To be overridden
-        DEFAULTS
-      end
 
       ##
       # Builds up full request path

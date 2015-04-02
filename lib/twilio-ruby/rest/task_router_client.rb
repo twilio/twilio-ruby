@@ -166,12 +166,6 @@ module Twilio
       protected
 
       ##
-      # Get the default config values.
-      def get_defaults
-        DEFAULTS
-      end
-
-      ##
       # Set up +workspace+ and +workspaces+ attributes.
       def set_up_subresources # :doc:
         @workspaces = Twilio::REST::TaskRouter::Workspaces.new "/#{API_VERSION}/Workspaces", self

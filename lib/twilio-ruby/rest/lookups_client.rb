@@ -81,12 +81,6 @@ module Twilio
       protected
 
       ##
-      # Get the default config values.
-      def get_defaults
-        DEFAULTS
-      end
-
-      ##
       # Set up +phone_numbers+ attribute.
       def set_up_subresources # :doc:
         @phone_numbers = Twilio::REST::Lookups::PhoneNumbers.new "/#{API_VERSION}/PhoneNumbers", self
