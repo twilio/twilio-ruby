@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Unreleased
+----------
+
+- Use configuration object instead of defaults hash for REST clients
+- Moves statistics from task router client to individual classes
+  - Deprecates statistics methods on task router client
+
 Version 3.16.1
 --------------
 
