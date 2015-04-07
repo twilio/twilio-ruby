@@ -109,58 +109,49 @@ module Twilio
       ##
       # Get statistics of a task queue.
       def task_queue_statistics(task_queue_sid, *args) # :doc:
-        if task_queue_sid.nil?
-          raise ArgumentError, 'Task queue SID is required'
-        end
-        path = "/#{API_VERSION}/Workspaces/#{@workspace_sid}/TaskQueues/#{task_queue_sid}/Statistics"
-        response = get path, args, true
-        Twilio::REST::TaskRouter::TaskQueueStatistics.new path, self, response
+        warn "[DEPRECATED] task_queue_statistics is deprecated. " \
+             "Please call client.task_queue.get(sid).statistics."
+        task_queues.get(task_queue_sid).statistics
       end
 
       ##
       # Get statistics of task queues.
       def task_queues_statistics(*args) # :doc:
-        path = "/#{API_VERSION}/Workspaces/#{@workspace_sid}/TaskQueues/Statistics"
-        stats = Twilio::REST::TaskRouter::TaskQueuesStatistics.new path, self
-        stats.list args, true
+        warn "[DEPRECATED] task_queues_statistics is deprecated. " \
+             "Please call client.task_queues.statistics."
+        task_queues.statistics
       end
 
       ##
       # Get statistics of a worker.
       def worker_statistics(worker_sid, *args) # :doc:
-        if worker_sid.nil?
-          raise ArgumentError, 'Worker SID is required'
-        end
-        path = "/#{API_VERSION}/Workspaces/#{@workspace_sid}/Workers/#{worker_sid}/Statistics"
-        response = get path, args, true
-        Twilio::REST::TaskRouter::WorkerStatistics.new path, self, response
+        warn "[DEPRECATED] worker_statistics is deprecated. " \
+             "Please call client.worker.get(sid).statistics."
+        workers.get(worker_sid).statistics
       end
 
       ##
       # Get statistics of workers.
       def workers_statistics(*args) # :doc:
-        path = "/#{API_VERSION}/Workspaces/#{@workspace_sid}/Workers/Statistics"
-        response = get path, args, true
-        Twilio::REST::TaskRouter::WorkersStatistics.new path, self, response
+        warn "[DEPRECATED] workers_statistics is deprecated. " \
+             "Please call client.workers.statistics."
+        workers.statistics
       end
 
       ##
       # Get statistics of a workflow.
       def workflow_statistics(workflow_sid, *args) # :doc:
-        if workflow_sid.nil?
-          raise ArgumentError, 'Workflow SID is required'
-        end
-        path = "/#{API_VERSION}/Workspaces/#{@workspace_sid}/Workflows/#{workflow_sid}/Statistics"
-        response = get path, args, true
-        Twilio::REST::TaskRouter::WorkflowStatistics.new path, self, response
+        warn "[DEPRECATED] workflow_statistics is deprecated. " \
+             "Please call client.workflow.get(sid).statistics."
+        workflows.get(workflow_sid).statistics
       end
 
       ##
       # Get statistics of a workspace.
       def workspace_statistics(*args) # :doc:
-        path = "/#{API_VERSION}/Workspaces/#{@workspace_sid}/Statistics"
-        response = get path, args, true
-        Twilio::REST::TaskRouter::WorkspaceStatistics.new path, self, response
+        warn "[DEPRECATED] worker_statistics is deprecated. " \
+             "Please call client.workspace.statistics."
+        workspace.statistics
       end
 
       protected
