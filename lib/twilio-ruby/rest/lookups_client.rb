@@ -4,21 +4,9 @@ module Twilio
     class LookupsClient < BaseClient
       API_VERSION = 'v1'
 
-      DEFAULTS = {
-          host: 'lookups.twilio.com',
-          port: 443,
-          use_ssl: true,
-          ssl_verify_peer: true,
-          ssl_ca_file: File.dirname(__FILE__) + '/../../../conf/cacert.pem',
-          timeout: 30,
-          proxy_addr: nil,
-          proxy_port: nil,
-          proxy_user: nil,
-          proxy_pass: nil,
-          retry_limit: 1
-      }
-
       attr_reader :phone_numbers
+
+      host 'lookups.twilio.com'
 
       ##
       # Instantiate a new HTTP Lookups client to talk to Twilio. The parameters
@@ -91,12 +79,6 @@ module Twilio
       end
 
       protected
-
-      ##
-      # Get the default config values.
-      def get_defaults
-        DEFAULTS
-      end
 
       ##
       # Set up +phone_numbers+ attribute.
