@@ -1,9 +1,12 @@
 twilio-ruby changelog
 =====================
 
-Unreleased
-----------
+Version 4.0.0
+-------------
 
+Released April 16, 2015
+
+- Remove support for total
 - Use configuration object instead of defaults hash for REST clients
 - Moves statistics from task router client to individual classes
   - Deprecates statistics methods on task router client
