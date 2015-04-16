@@ -17,7 +17,6 @@ module Twilio
         extend Deprecation
          
         deprecate :list
-        deprecate :total
         deprecate :get
         deprecate :create
 

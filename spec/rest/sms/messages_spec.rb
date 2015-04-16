@@ -28,9 +28,4 @@ describe Twilio::REST::SMS::Messages do
     expect(@messages).to receive(:warn)
     @messages.get sid: "qwerty"
   end  
-
-  it 'should warn of deprecation of SMS Messages total' do
-    expect(@messages).to receive(:warn)
-    @messages.total
-  end  
 end
