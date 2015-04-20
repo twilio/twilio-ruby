@@ -110,7 +110,7 @@ module Twilio
           if response.kind_of? Net::HTTPServerError
             raise Twilio::REST::ServerError
           end
-        rescue Exception
+        rescue
           raise if request.class == Net::HTTP::Post
           if retries_left > 0 then retries_left -= 1; retry else raise end
         end
