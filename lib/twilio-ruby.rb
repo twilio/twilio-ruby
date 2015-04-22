@@ -83,6 +83,7 @@ require 'twilio-ruby/rest/addresses/dependent_phone_numbers'
 require 'twilio-ruby/rest/client'
 require 'twilio-ruby/rest/task_router_client'
 require 'twilio-ruby/rest/lookups_client'
+require 'twilio-ruby/rest/pricing_client'
 require 'rack/twilio_webhook_authentication'
 
 module Twilio
