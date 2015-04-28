@@ -10,10 +10,11 @@ require 'jwt'
 
 require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
 require 'twilio-ruby/util'
+require 'twilio-ruby/util/capability'
 require 'twilio-ruby/util/client_config'
 require 'twilio-ruby/util/configuration'
 require 'twilio-ruby/util/request_validator'
-require 'twilio-ruby/util/capability'
+require 'twilio-ruby/util/scoped_authentication_token'
 require 'twilio-ruby/twiml/response'
 require 'twilio-ruby/task_router'
 require 'twilio-ruby/task_router/capability'
