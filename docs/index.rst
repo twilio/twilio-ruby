@@ -70,6 +70,16 @@ state.
     usage/taskrouter-tokens
 
 
+Lookups
+-------
+
+Query the Lookups API to get information about phone numbers and their carriers.
+
+.. toctree::
+    :maxdepth: 1
+
+    usage/lookups
+
 TwiML
 ---------
 
