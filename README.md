@@ -191,7 +191,6 @@ implementations:
 - Ruby 1.9.3
 - [JRuby][jruby]
 - [Rubinius][rubinius]
-- 
 
 ## Getting help
 
