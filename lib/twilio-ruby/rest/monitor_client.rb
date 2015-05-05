@@ -5,6 +5,7 @@ module Twilio
       API_VERSION = 'v1'
 
       attr_reader :events
+      attr_reader :alerts
 
       host 'monitor.twilio.com'
 
@@ -84,6 +85,7 @@ module Twilio
       # Set up +events+ attribute.
       def set_up_subresources # :doc:
         @events = Twilio::REST::Monitor::Events.new "/#{API_VERSION}/Events", self
+        @alerts = Twilio::REST::Monitor::Alerts.new "/#{API_VERSION}/Alerts", self
       end
 
       ##

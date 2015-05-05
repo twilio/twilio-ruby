@@ -9,4 +9,9 @@ describe Twilio::REST::MonitorClient do
     expect(@client).to respond_to(:events)
     expect(@client.events.instance_variable_get('@path')).to eq('/v1/Events')
   end
+
+  it 'should set up an alert resources object' do
+    expect(@client).to respond_to(:alerts)
+    expect(@client.alerts.instance_variable_get('@path')).to eq('/v1/Alerts')
+  end
 end
