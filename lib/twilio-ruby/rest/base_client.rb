@@ -108,7 +108,7 @@ module Twilio
           response = @connection.request request
           @last_response = response
           if response.kind_of? Net::HTTPServerError
-            raise Twilio::REST::ServerError
+            raise Twilio::REST::ServerError.new response.message, response.code
           end
         rescue
           raise if request.class == Net::HTTP::Post
