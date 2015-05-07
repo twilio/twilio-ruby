@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 4.1.0
+-------------
+
+Released May 7, 2015
+
+- Add support for the new Monitor API
+
 Version 4.0.1
 -------------
 
