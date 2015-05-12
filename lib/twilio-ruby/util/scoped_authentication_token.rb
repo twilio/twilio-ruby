@@ -1,9 +1,10 @@
 module Twilio
   module Util
     class ScopedAuthenticationToken
-      def initialize(signing_key_id, account_sid, ttl=3600)
+      def initialize(signing_key_id, account_sid, secret, ttl=3600)
         @signing_key_sid = signing_key_id
         @account_sid = account_sid
+        @secret = secret
         @ttl = ttl
         @grants = []
       end
@@ -18,7 +19,7 @@ module Twilio
         add_grant resource, actions
       end
 
-      def encode(secret)
+      def as_jwt()
         now = Time.now.to_i - 1
         headers = {
             'cty' => 'twilio-sat;v=1'
@@ -31,7 +32,11 @@ module Twilio
             'exp' => now + @ttl,
             'grants' => @grants
         }
-        JWT.encode payload, secret, 'HS256', headers
+        JWT.encode payload, @secret, 'HS256', headers
+      end
+
+      def to_s
+        as_jwt
       end
     end
 

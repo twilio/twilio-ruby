@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Twilio::Util::ScopedAuthenticationToken do
 
   it 'should generate a token for no grants' do
-    scat = Twilio::Util::ScopedAuthenticationToken.new 'SK123', 'AC123'
-    token = scat.encode 'secret'
+    scat = Twilio::Util::ScopedAuthenticationToken.new 'SK123', 'AC123', 'secret'
+    token = scat.to_s
     expect(token).not_to be_nil
     payload, header = JWT.decode token, 'secret'
 
@@ -20,9 +20,9 @@ describe Twilio::Util::ScopedAuthenticationToken do
   end
 
   it 'should be able to add standard grants' do
-    scat = Twilio::Util::ScopedAuthenticationToken.new 'SK123', 'AC123'
+    scat = Twilio::Util::ScopedAuthenticationToken.new 'SK123', 'AC123', 'secret'
     scat.add_grant 'https://api.twilio.com/**'
-    token = scat.encode 'secret'
+    token = scat.to_s
     expect(token).not_to be_nil
     payload, header = JWT.decode token, 'secret'
 
@@ -40,9 +40,9 @@ describe Twilio::Util::ScopedAuthenticationToken do
   end
 
   it 'should be able to add endpoint grants' do
-    scat = Twilio::Util::ScopedAuthenticationToken.new 'SK123', 'AC123'
+    scat = Twilio::Util::ScopedAuthenticationToken.new 'SK123', 'AC123', 'secret'
     scat.add_endpoint_grant 'bob'
-    token = scat.encode 'secret'
+    token = scat.to_s
     expect(token).not_to be_nil
     payload, header = JWT.decode token, 'secret'
 

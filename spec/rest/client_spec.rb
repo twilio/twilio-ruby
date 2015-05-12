@@ -59,19 +59,7 @@ describe Twilio::REST::Client do
       expect { Twilio::REST::Client.new 'someSid' }.to raise_error(ArgumentError)
     end
   end
-
-  it 'should overwrite account_sid with Token subject when account_sid is a Token' do
-    token = (Twilio::Util::ScopedAuthenticationToken.new 'SK123', 'AC123').encode 'secret'
-    client = Twilio::REST::Client.new 'Token', token
-    expect(client.instance_variable_get('@account_sid')).to eq('AC123')
-    expect(client.instance_variable_get('@auth_username')).to eq('Token')
-    expect(client.instance_variable_get('@auth_token')).to eq(token)
-  end
-
-  it 'should throw a JWT error if the account_sid is Token with an invalid JWT' do
-    expect { Twilio::REST::Client.new 'Token', 'invalid_jwt' }.to raise_error(JWT::DecodeError)
-  end
-
+  
   it 'should not raise an error if the response body is empty' do
     FakeWeb.register_uri(:any, %r/api\.twilio\.com/, body: '')
     twilio = Twilio::REST::Client.new('someSid', 'someToken')

@@ -32,14 +32,6 @@ module Twilio
           raise ArgumentError, 'Account SID and auth token are required'
         end
 
-        if @account_sid.downcase == 'token'
-          payload, header = JWT.decode @auth_token, nil, false
-          @auth_username = 'Token'
-          @account_sid = payload['sub']
-        else
-          @auth_username = @account_sid
-        end
-
         set_up_connection
         set_up_subresources
       end
@@ -57,7 +49,7 @@ module Twilio
           # build the full path unless already given
           path = build_full_path(path, params, method) unless args[1]
           request = method_class.new(path, HTTP_HEADERS)
-          request.basic_auth(@auth_username, @auth_token)
+          request.basic_auth(@account_sid, @auth_token)
           request.form_data = params if [:post, :put].include?(method)
           connect_and_send(request)
         end
