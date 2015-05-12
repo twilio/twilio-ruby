@@ -32,13 +32,12 @@ module Twilio
           raise ArgumentError, 'Account SID and auth token are required'
         end
 
-        @auth_username = @account_sid
-        begin
-          # if auth_token is a JWT the auth_username should be Token
-          JWT.decode @auth_token, nil, false
+        if @account_sid.downcase == 'token'
+          payload, header = JWT.decode @auth_token, nil, false
           @auth_username = 'Token'
-        rescue JWT::DecodeError
-          # Ignore exception and leave auth_username alone
+          @account_sid = payload['sub']
+        else
+          @auth_username = @account_sid
         end
 
         set_up_connection

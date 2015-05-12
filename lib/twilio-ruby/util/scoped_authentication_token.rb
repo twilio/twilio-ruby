@@ -1,32 +1,34 @@
 module Twilio
   module Util
     class ScopedAuthenticationToken
-      def initialize(signing_key_id, account_sid, token_id=nil, ttl=3600, grants=[])
+      def initialize(signing_key_id, account_sid, ttl=3600)
         @signing_key_sid = signing_key_id
         @account_sid = account_sid
-        if token_id.nil?
-          @token_id = "#{signing_key_id} - #{Time.now.to_i}"
-        else
-          @token_id = token_id
-        end
         @ttl = ttl
-        @grants = grants
+        @grants = []
       end
 
-      def add_grant(grant)
-        @grants.push(grant)
+      def add_grant(resource, actions=Action::ALL)
+        actions = [*actions]
+        @grants.push({"res" => resource, "act" => actions})
       end
 
-      def generate_token(secret)
+      def add_endpoint_grant(endpoint, actions=[Action::Client::LISTEN, Action::Client::INVITE])
+        resource = "sip:#{endpoint}@#{@account_sid}.endpoint.twilio.com"
+        add_grant resource, actions
+      end
+
+      def encode(secret)
+        now = Time.now.to_i - 1
         headers = {
             'cty' => 'twilio-sat;v=1'
         }
         payload = {
-            'jti' => @token_id,
+            'jti' => "#{@signing_key_sid}-#{now}",
             'iss' => @signing_key_sid,
             'sub' => @account_sid,
-            'nbf' => Time.now.to_i,
-            'exp' => Time.now.to_i + @ttl,
+            'nbf' => now,
+            'exp' => now + @ttl,
             'grants' => @grants
         }
         JWT.encode payload, secret, 'HS256', headers
@@ -35,20 +37,17 @@ module Twilio
 
     class Action
       ALL='*'
-      DELETE='DELETE'
-      GET='GET'
-      POST='POST'
-      PUT='PUT'
-    end
 
-    class Grant
-      def initialize(resource, actions=[Action::ALL])
-        @resource = resource
-        @actions = actions
+      class HTTP
+        DELETE='DELETE'
+        GET='GET'
+        POST='POST'
+        PUT='PUT'
       end
 
-      def to_json(*a)
-        {'res' => @resource, 'act' => @actions}.to_json(*a)
+      class Client
+        LISTEN='listen'
+        INVITE='invite'
       end
     end
   end
