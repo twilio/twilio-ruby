@@ -11,6 +11,8 @@ module Twilio
           'Feedback' => 'FeedbackInstance',
           'IpAddresses' => 'IpAddress',
           'Media' => 'MediaInstance',
+          'InProgressConversations' => 'Conversation',
+          'CompletedConversations' => 'Conversation',
         }
         @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]
