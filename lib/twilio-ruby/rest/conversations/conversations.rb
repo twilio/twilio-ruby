@@ -23,8 +23,8 @@ module Twilio
         attr :completed
         def initialize(path, client)
           super
-          @in_progress = InProgressConversations.new path, self
-          @completed = CompletedConversations.new path, self
+          @in_progress = InProgressConversations.new path, client
+          @completed = CompletedConversations.new path, client
         end
       end
 
