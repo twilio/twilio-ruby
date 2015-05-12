@@ -19,6 +19,8 @@ module Twilio
       end
 
       class Conversations < NextGenListResource
+        attr :in_progress
+        attr :completed
         def initialize(path, client)
           super
           @in_progress = InProgressConversations.new path, self
@@ -28,8 +30,8 @@ module Twilio
 
       class Conversation < InstanceResource
         def initialize(path, client, params={})
-          #path.gsub! '/InProgress', ''
-          #path.gsub! '/Completed', ''
+          path.gsub! '/InProgress', ''
+          path.gsub! '/Completed', ''
           super path, client, params
           @submodule = :Conversations
           resource :participants
