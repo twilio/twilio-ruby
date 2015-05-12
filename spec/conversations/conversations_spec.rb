@@ -50,12 +50,12 @@ describe Twilio::REST::Conversations::Conversation do
   end
   it 'has correct path when fetched from /Completed' do
     client = Twilio::REST::ConversationsClient.new 'otherSid', 'otherToken'
-    conversation = Twilio::REST::Conversations::Conversation.new '/v1/Conversations/InProgress/CA123', client
+    conversation = Twilio::REST::Conversations::Conversation.new '/v1/Conversations/Completed/CA123', client
     expect(conversation.instance_variable_get('@path')).to eq('/v1/Conversations/CA123')
   end
   it 'sets up participants subresource' do
     client = Twilio::REST::ConversationsClient.new 'otherSid', 'otherToken'
-    conversation = Twilio::REST::Conversations::Conversation.new '/v1/Conversations/InProgress/CA123', client
+    conversation = Twilio::REST::Conversations::Conversation.new '/v1/Conversations/CA123', client
     expect(conversation).to respond_to(:participants)
   end
 end
