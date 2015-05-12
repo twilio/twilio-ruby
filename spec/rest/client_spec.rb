@@ -59,7 +59,7 @@ describe Twilio::REST::Client do
       expect { Twilio::REST::Client.new 'someSid' }.to raise_error(ArgumentError)
     end
   end
-  
+
   it 'should not raise an error if the response body is empty' do
     FakeWeb.register_uri(:any, %r/api\.twilio\.com/, body: '')
     twilio = Twilio::REST::Client.new('someSid', 'someToken')

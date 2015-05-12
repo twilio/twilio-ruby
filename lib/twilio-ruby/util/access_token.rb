@@ -1,6 +1,6 @@
 module Twilio
   module Util
-    class ScopedAuthenticationToken
+    class AccessToken
       def initialize(signing_key_id, account_sid, secret, ttl=3600)
         @signing_key_sid = signing_key_id
         @account_sid = account_sid
