@@ -12,11 +12,22 @@ module Twilio
       def add_grant(resource, actions=Action::ALL)
         actions = [*actions]
         @grants.push({"res" => resource, "act" => actions})
+        self
       end
 
       def add_endpoint_grant(endpoint, actions=[Action::Client::LISTEN, Action::Client::INVITE])
         resource = "sip:#{endpoint}@#{@account_sid}.endpoint.twilio.com"
         add_grant resource, actions
+      end
+
+      def add_rest_grant(uri, actions=Action::ALL)
+        uri = uri[1..-1] if uri[0] == '/'
+        resource = "https://api.twilio.com/2010-04-01/Accounts/#{@account_sid}/#{uri}"
+        add_grant resource, actions
+      end
+
+      def enable_nts()
+        add_rest_grant('/Tokens', Action::HTTP::POST)
       end
 
       def as_jwt()
