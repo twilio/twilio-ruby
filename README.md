@@ -201,7 +201,7 @@ If you've instead found a bug in the library or would like new features added, g
 ## More Information
 
 There are more detailed examples in the included [examples][examples]
-directory. Also for thoose upgrading, the [upgrade guide][upgrade] is available in the [twilio-ruby github wiki][wiki].
+directory. Also for those upgrading, the [upgrade guide][upgrade] is available in the [twilio-ruby github wiki][wiki].
 
 [capability]: https://github.com/twilio/twilio-ruby/wiki/Capability
 [builder]: http://builder.rubyforge.org/
