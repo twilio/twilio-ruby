@@ -147,6 +147,30 @@ capability.allow_client_incoming 'andrew'
 There is a slightly more detailed document in the [Capability][capability]
 section of the wiki.
 
+## Lookup Phone Number information
+
+You can look up details on phone numbers with the Lookups API.
+
+```ruby
+require 'twilio-ruby'
+
+# put your own credentials here
+account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
+
+# set up a client to talk to the Twilio REST API
+@lookups_client = Twilio::REST::LookupsClient.new account_sid, auth_token
+
+# lookup a number
+number = @lookups_client.phone_numbers.get('+14159341234')
+
+# investigate the number
+number.national_format
+# => "(415) 934-1234"
+number.country_code
+# => "US"
+```
+
 ## Getting Started With TwiML
 
 TwiML support is based on the [Builder][builder] library. You can construct a
