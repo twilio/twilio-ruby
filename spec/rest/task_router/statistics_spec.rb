@@ -25,9 +25,9 @@ describe Twilio::REST::TaskRouter::Statistics do
   end
 
   it "passes parameters to the HTTP request for statistics" do
-    client = Twilio::REST::Client.new 'someSid', 'someAuthToken'
+    client = Twilio::REST::TaskRouterClient.new 'someSid', 'someAuthToken', 'someWorkspaceSid'
     allow(Net::HTTP::Get).to receive(:new)
-      .with("/test/harness/Statistics.json?Minutes=15", Twilio::REST::BaseClient::HTTP_HEADERS)
+      .with("/test/harness/Statistics?Minutes=15", Twilio::REST::BaseClient::HTTP_HEADERS)
       .and_call_original
     harness = StatisticsTestHarness.new("/test/harness", client)
     expect(harness.statistics(minutes: 15)).to(
