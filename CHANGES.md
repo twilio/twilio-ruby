@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+Version 4.2.1
+-------------
+
+Release June 19, 2015
+
+- Allow passing URL parameters through when getting statistics for TaskRouter objects
+- URI encode phone number lookups
+- Adds documentation for lookups
+
 Version 4.2.0
 -------------
 
