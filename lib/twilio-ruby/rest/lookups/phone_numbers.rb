@@ -6,7 +6,7 @@ module Twilio
         include Twilio::REST::Utils
 
         def get(number, query={})
-          full_path = "#{@path}/#{number}"
+          full_path = "#{@path}/#{URI.encode(number)}"
           full_path << "?#{url_encode(twilify(query))}" if !query.empty?
           @instance_class.new full_path, @client
         end
