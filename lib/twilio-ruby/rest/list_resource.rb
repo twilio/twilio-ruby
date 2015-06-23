@@ -35,11 +35,10 @@ module Twilio
 
       ##
       # Grab a list of this kind of resource and return it as an array. The
-      # array includes a special attribute named +total+ which will return the
-      # total number of items in the list on Twilio's server. This may differ
-      # from the +size+ and +length+ attributes of the returned array since
-      # by default Twilio will only return 50 resources, and the maximum number
-      # of resources you can request is 1000.
+      # array includes two special methods +previous_page+ and +next_page+
+      # which will return the previous or next page or resources. By default
+      # Twilio will only return 50 resources, and the maximum number of
+      # resources you can request (using the :page_size param) is 1000.
       #
       # The optional +params+ hash allows you to filter the list returned. The
       # filters for each list resource type are defined by Twilio.
