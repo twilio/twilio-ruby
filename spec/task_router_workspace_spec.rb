@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Twilio::TaskRouter::Capability do
   describe 'with a capability' do
     before :each do
-      @capability = Twilio::TaskRouter::Capability.new 'AC123', 'foobar', 'WS456', 'WS456'
+      @capability = Twilio::TaskRouter::WorkspaceCapability.new 'AC123', 'foobar', 'WS456'
     end
 
     it 'should return a valid jwt when #generate_token is called' do
