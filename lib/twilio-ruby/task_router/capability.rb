@@ -61,13 +61,7 @@ module Twilio
 
         validate_jwt
 
-        if(@channel_id[0..1] == 'WS')
-          @resourceUrl = @baseUrl
-        elsif(@channel_id[0..1] == 'WK')
-          @resourceUrl = @baseUrl + "/Workers/" + @channel_id
-        elsif(@channel_id[0..1] == 'WQ')
-          @resourceUrl = @baseUrl + "/TaskQueues/" + @channel_id
-        end
+        setup_resource
 
         allow_websocket_requests(@channel_id)
         allow(@resourceUrl, "GET")
@@ -93,13 +87,41 @@ module Twilio
         allow(@resourceUrl + "/**", "DELETE")
       end
 
+      # @deprecated Please use {Twilio::TaskRouter::WorkerCapability.allowActivityUpdates} instead
+      def allow_worker_activity_updates
+        if(@channel_id[0..1] == 'WK')
+          allow(@resourceUrl, "POST", nil, {ActivitySid: REQUIRED})
+        else
+          raise "Deprecreated function not applicable to non-Worker"
+        end
+      end
+
+      # @deprecated Please use {Twilio::TaskRouter::WorkerCapability} instead; added automatically in constructor
+      def allow_worker_fetch_attributes
+        if(@channel_id[0..1] == 'WK')
+          allow(@resourceUrl, "GET")
+        else
+          raise "Deprecated function not applicable to non Worker"
+        end
+      end
+
+      # @deprecated Please use {Twilio::TaskRouter::WorkerCapability.allowReservationUpdates} instead
+      def allow_task_reservation_updates
+        if(@channel_id[0..1] == 'WK')
+          task_url = "#{@baseUrl}/Tasks/**"
+          allow(task_url, "POST", nil, nil)
+        else
+          raise "Deprecated function not applicable to non Worker"
+        end
+      end
+
       def generate_token(ttl = 3600, extraAttributes = nil)
         taskRouterAttributes = {
             account_sid: @account_sid,
             workspace_sid: @workspace_sid,
             channel: @channel_id
         }
-        
+
         if(@channel_id[0..1] == 'WK')
           taskRouterAttributes['worker_sid'] = @channel_id
         elsif(@channel_id[0..1] == 'WQ')
@@ -110,6 +132,20 @@ module Twilio
       end
 
       protected
+
+      def setup_resource
+        if(@channel_id[0..1] == 'WS')
+          @resourceUrl = @baseUrl
+        elsif(@channel_id[0..1] == 'WK')
+          @resourceUrl = @baseUrl + "/Workers/" + @channel_id
+
+          @activityUrl = @baseUrl + "/Activities"
+          allow(@activityUrl, "GET")
+
+        elsif(@channel_id[0..1] == 'WQ')
+          @resourceUrl = @baseUrl + "/TaskQueues/" + @channel_id
+        end
+      end
 
       def allow_websocket_requests(channel_id)
         worker_url = "#{TASK_ROUTER_WEBSOCKET_BASE_URL}/#{@account_sid}/#{channel_id}"
@@ -150,7 +186,13 @@ module Twilio
       end
 
       def allow_reservation_updates
-        allow(@reservationsUrl, "POST", nil, {ReservationStatus: REQUIRED})
+        allow(@reservationsUrl, "POST", nil, nil)
+      end
+
+      protected
+
+      def setup_resource
+        @resourceUrl = @baseUrl + "/Workers/" + @channel_id
       end
 
     end
@@ -161,6 +203,12 @@ module Twilio
         super(account_sid, auth_token, workspace_sid, workspace_sid)
       end
 
+      protected
+
+      def setup_resource
+        @resourceUrl = @baseUrl
+      end
+
     end
 
     class TaskQueueCapability < Capability
@@ -169,6 +217,11 @@ module Twilio
         super(account_sid, auth_token, workspace_sid, taskqueue_sid)
       end
 
+      protected
+
+      def setup_resource
+        @resourceUrl = @baseUrl + "/TaskQueues/" + @channel_id
+      end
     end
   end
 end
