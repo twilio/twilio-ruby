@@ -142,6 +142,9 @@ module Twilio
           @activityUrl = @baseUrl + "/Activities"
           allow(@activityUrl, "GET")
 
+          @reservationsUrl = @baseUrl + "/Tasks/**"
+          allow(@reservationsUrl, "GET")
+
         elsif(@channel_id[0..1] == 'WQ')
           @resourceUrl = @baseUrl + "/TaskQueues/" + @channel_id
         end
