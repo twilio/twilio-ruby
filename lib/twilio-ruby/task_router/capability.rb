@@ -1,50 +1,6 @@
 module Twilio
   module TaskRouter
-    class CapabilityAPI
-      def initialize(account_sid, auth_token, version, friendly_name)
-        @account_sid = account_sid
-        @auth_token = auth_token
-        @version = version
-        @friendly_name = friendly_name
-        @policies = []
-      end
-
-      def add_policy(url, method, allowed = true, query_filters = nil, post_filters = nil)
-        policy = {
-            url: url,
-            method: method,
-            query_filter: query_filters || {},
-            post_filter: post_filters || {},
-            allow: allowed
-        }
-
-        @policies.push(policy)
-      end
-
-      def allow(url, method, query_filters = nil, post_filters = nil)
-        add_policy(url, method, true, query_filters, post_filters)
-      end
-
-      def deny(url, method, query_filters = nil, post_filters = nil)
-        add_policy(url, method, false, query_filters, post_filters)
-      end
-
-      def generate_token(ttl = 3600, extraAttributes)
-        payload = {
-            iss: @account_sid,
-            exp: (Time.now.to_i + ttl),
-            version: @version,
-            friendly_name: @worker_sid,
-            policies: @policies,
-        }
-        extraAttributes.each { |key, value|
-          payload[key] = value
-        }
-
-        JWT.encode payload, @auth_token
-      end
-    end
-    class Capability < CapabilityAPI
+    class Capability
       TASK_ROUTER_BASE_URL = 'https://taskrouter.twilio.com'
       TASK_ROUTER_VERSION = 'v1'
       TASK_ROUTER_WEBSOCKET_BASE_URL = 'https://event-bridge.twilio.com/v1/wschannels'
@@ -53,7 +9,10 @@ module Twilio
       OPTIONAL = {required: false}
 
       def initialize(account_sid, auth_token, workspace_sid, channel_id)
-        super(account_sid, auth_token, TASK_ROUTER_VERSION, channel_id)
+        @account_sid = account_sid
+        @auth_token = auth_token
+        @policies = []
+
         @workspace_sid = workspace_sid
         @channel_id = channel_id
 
@@ -115,7 +74,27 @@ module Twilio
         end
       end
 
-      def generate_token(ttl = 3600, extraAttributes = nil)
+      def add_policy(url, method, allowed = true, query_filters = nil, post_filters = nil)
+        policy = {
+            url: url,
+            method: method,
+            query_filter: query_filters || {},
+            post_filter: post_filters || {},
+            allow: allowed
+        }
+
+        @policies.push(policy)
+      end
+
+      def allow(url, method, query_filters = nil, post_filters = nil)
+        add_policy(url, method, true, query_filters, post_filters)
+      end
+
+      def deny(url, method, query_filters = nil, post_filters = nil)
+        add_policy(url, method, false, query_filters, post_filters)
+      end
+
+      def generate_token(ttl = 3600)
         taskRouterAttributes = {
             account_sid: @account_sid,
             workspace_sid: @workspace_sid,
@@ -128,10 +107,25 @@ module Twilio
           taskRouterAttributes['taskqueue_sid'] = @channel_id
         end
 
-        CapabilityAPI.instance_method(:generate_token).bind(self).call(ttl, taskRouterAttributes)
+        generate_token_protected(ttl, taskRouterAttributes)
       end
 
       protected
+
+      def generate_token_protected(ttl = 3600, extraAttributes)
+        payload = {
+            iss: @account_sid,
+            exp: (Time.now.to_i + ttl),
+            version: TASK_ROUTER_VERSION,
+            friendly_name: @channel_id,
+            policies: @policies,
+        }
+        extraAttributes.each { |key, value|
+          payload[key] = value
+        }
+
+        JWT.encode payload, @auth_token
+      end
 
       def setup_resource
         if(@channel_id[0..1] == 'WS')
