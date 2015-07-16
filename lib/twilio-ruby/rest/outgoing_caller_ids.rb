@@ -4,13 +4,16 @@ module Twilio
       def add(phone_number)
         create phone_number: phone_number
       end
-      alias :verify :add
+
+      def verify(phone_number)
+        create phone_number: phone_number
+      end
 
       ##
       # Override ListResource#create to instantiate the proper instance class.
       # This doesn't actually matter since all properties are lazily loaded into
       # whatever object is instantiated. But it might matter in the future.
-      def create(params={}) # :nodoc:
+      def create(params={})
         old_instance_class = @instance_class
         @instance_class = Twilio::REST::PhoneNumberVerificationRequest
         verification_request = super
@@ -20,6 +23,7 @@ module Twilio
     end
 
     class OutgoingCallerId < InstanceResource; end
+    
     class PhoneNumberVerificationRequest < InstanceResource; end
   end
 end

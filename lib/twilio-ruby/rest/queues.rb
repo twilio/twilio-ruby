@@ -4,7 +4,7 @@ module Twilio
 
     class Queue < InstanceResource
       def initialize(path, client, params={})
-        super path, client, params
+        super
         resource :members
       end
     end

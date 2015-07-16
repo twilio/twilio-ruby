@@ -1,7 +1,6 @@
 module Twilio
   module REST
     class Feedback < ListResource;
-
       ##
       # Get this feedback object.
       #

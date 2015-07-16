@@ -13,10 +13,9 @@ module Twilio
         resource :media
       end
 
-      def redact()
-        update({body: ''})
+      def redact
+        update body: ''
       end
-
     end
   end
 end
