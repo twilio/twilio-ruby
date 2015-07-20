@@ -11,7 +11,7 @@ A module for using the Twilio REST API and generating valid [TwiML](http://www.t
 To install using [Bundler][bundler] grab the latest stable version:
 
 ```ruby
-gem 'twilio-ruby', '~> 4.0.0'
+gem 'twilio-ruby', '~> 4.1.0'
 ```
 
 To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
@@ -191,7 +191,6 @@ implementations:
 - Ruby 1.9.3
 - [JRuby][jruby]
 - [Rubinius][rubinius]
-- 
 
 ## Getting help
 

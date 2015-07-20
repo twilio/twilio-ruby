@@ -116,7 +116,10 @@ module Twilio
         end
         if response.body and !response.body.empty?
           object = MultiJson.load response.body
+        elsif response.kind_of? Net::HTTPBadRequest
+          object = { message: 'Bad request', code: 400 }
         end
+
         if response.kind_of? Net::HTTPClientError
           raise Twilio::REST::RequestError.new object['message'], object['code']
         end

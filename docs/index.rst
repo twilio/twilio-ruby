@@ -54,6 +54,7 @@ Query the Twilio REST API to create phone calls, send SMS/MMS messages and more!
     usage/caller-ids
     usage/queues
     usage/sip
+    usage/pricing
 
 
 TaskRouter

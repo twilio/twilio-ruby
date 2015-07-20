@@ -255,4 +255,23 @@ describe Twilio::REST::Client do
       expect(client.send(method)).to eq(client.workspace.send(method))
     end
   end
+
+end
+
+describe Twilio::REST::PricingClient do
+  it 'should have its host set to pricing.twilio.com' do
+    client = Twilio::REST::PricingClient.new('sid', 'token')
+    connection = client.instance_variable_get('@connection')
+    expect(connection.address).to eq('pricing.twilio.com')
+  end
+
+  it 'should set up a voice resource object' do
+    client = Twilio::REST::PricingClient.new('sid', 'token')
+    expect(client).to respond_to(:voice)
+  end
+
+  it 'should set up a phone numbers resource object' do
+    client = Twilio::REST::PricingClient.new('sid', 'token')
+    expect(client).to respond_to(:phone_numbers)
+  end
 end

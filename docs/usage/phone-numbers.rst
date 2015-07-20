@@ -86,6 +86,7 @@ Other Number Searches
 - :data:`rate_center`: US only.
 - :data:`near_lat_long`: Find numbers near this latitude and longitude.
 - :data:`distance`: Search radius for a Near- query in miles.
+- :data:`beta`: Include or exclude numbers that are new to the Twilio platform.
 
 The `AvailablePhoneNumbers REST Resource
 <http://www.twilio.com/docs/api/rest/available-phone-numbers>`_ documentation

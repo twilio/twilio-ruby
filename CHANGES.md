@@ -1,6 +1,27 @@
 twilio-ruby changelog
 =====================
 
+Version 4.2.0
+-------------
+
+Release May 19, 2015
+
+- Add support for the beta field for IncomingPhoneNumbers and AvailablePhoneNumbers
+
+Version 4.1.0
+-------------
+
+Released May 7, 2015
+
+- Add support for the new Monitor API
+
+Version 4.0.1
+-------------
+
+Released May 6, 2015
+
+- Add support for the new Pricing API
+
 Version 4.0.0
 -------------
 

@@ -6,10 +6,11 @@ module Twilio
       def initialize(path, client)
         custom_names = {
           'Activities' => 'Activity',
-          'Media' => 'MediaInstance',
-          'IpAddresses' => 'IpAddress',
+          'Addresses' => 'Address',
+          'Countries' => 'Country',
           'Feedback' => 'FeedbackInstance',
-          'Addresses' => 'Address'
+          'IpAddresses' => 'IpAddress',
+          'Media' => 'MediaInstance',
         }
         @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]
