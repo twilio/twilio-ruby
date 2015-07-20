@@ -6,11 +6,8 @@ module Twilio
       #
       # Overridden because GETS to /Feedback
       # returns an instance, not a list.
-      def get(params={}, full_path=false)
-        raise "Can't fetch feedback without a REST Client" unless @client
-        response = @client.get @path, params, full_path
-        path = full_path ? @path.split('.')[0] : @path
-        @instance_class.new path, @client, response
+      def get
+        @instance_class.new @path, @client
       end
 
       ##
