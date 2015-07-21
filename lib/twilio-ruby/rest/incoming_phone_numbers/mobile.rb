@@ -3,7 +3,7 @@ module Twilio
     module NumberType
       class Mobile < ListResource
         def initialize(path, client)
-          super
+          @path, @client = path, client
           @instance_class = Twilio::REST::IncomingPhoneNumber
           @list_key = 'incoming_phone_numbers'
           @instance_id_key = 'sid'

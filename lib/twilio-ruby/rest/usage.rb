@@ -2,7 +2,7 @@ module Twilio
   module REST
     class Usage < ListResource
       def initialize(path, client)
-        super
+        @path, @client = path, client
         resource :records,
                  :triggers
       end

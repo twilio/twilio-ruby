@@ -9,6 +9,7 @@ module Twilio
           'Addresses' => 'Address',
           'Countries' => 'Country',
           'Feedback' => 'FeedbackInstance',
+          'FeedbackSummary' => 'FeedbackSummaryInstance',
           'IpAddresses' => 'IpAddress',
           'Media' => 'MediaInstance',
         }

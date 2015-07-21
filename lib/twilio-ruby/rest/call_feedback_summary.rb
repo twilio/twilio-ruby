@@ -3,7 +3,6 @@ module Twilio
     class FeedbackSummary < ListResource
       def initialize(path, client)
         super
-        @instance_class = Twilio::REST::FeedbackSummaryInstance
         @list_key = 'feedback_summary'
         @instance_id_key = 'sid'
       end

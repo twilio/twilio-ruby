@@ -2,7 +2,7 @@ module Twilio
   module REST
     class Sms < ListResource
       def initialize(path, client)
-        super
+        @path, @client = path, client
         @submodule = :SMS
         resource :messages,
                  :short_codes
