@@ -2,9 +2,10 @@ module Twilio
   module REST
     class Local < ListResource
       def initialize(path, client)
-        @path, @client = path, client
+        super
         @instance_class = Twilio::REST::AvailablePhoneNumber
-        @list_key, @instance_id_key = 'available_phone_numbers', 'sid'
+        @list_key = 'available_phone_numbers'
+        @instance_id_key = 'sid'
       end
     end
   end

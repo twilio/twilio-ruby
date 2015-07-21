@@ -1,6 +1,10 @@
 module Twilio
   module REST
-    class DependentPhoneNumbers < ListResource; end
-    class DependentPhoneNumber < InstanceResource; end
+    class DependentPhoneNumbers < ListResource
+      def initialize(path, client)
+        super
+        @instance_class = Twilio::REST::IncomingPhoneNumber
+      end
+    end
   end
 end

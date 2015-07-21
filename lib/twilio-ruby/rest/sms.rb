@@ -1,10 +1,11 @@
 module Twilio
   module REST
-    class Sms < InstanceResource
-      def initialize(path, client, params={})
+    class Sms < ListResource
+      def initialize(path, client)
         super
         @submodule = :SMS
-        resource :messages, :short_codes
+        resource :messages,
+                 :short_codes
       end
     end
   end
