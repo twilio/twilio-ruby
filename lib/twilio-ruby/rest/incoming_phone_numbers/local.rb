@@ -3,9 +3,10 @@ module Twilio
     module NumberType
       class Local < ListResource
         def initialize(path, client)
-          @path, @client = path, client
+          super
           @instance_class = Twilio::REST::IncomingPhoneNumber
-          @list_key, @instance_id_key = 'incoming_phone_numbers', 'sid'
+          @list_key = 'incoming_phone_numbers'
+          @instance_id_key = 'sid'
         end
       end
     end
