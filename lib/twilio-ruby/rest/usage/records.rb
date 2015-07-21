@@ -1,18 +1,19 @@
 module Twilio
   module REST
     class Records < ListResource
-
-      SUBRESOURCES = [:daily, :monthly, :yearly, :all_time, :today,
-                      :yesterday, :this_month, :last_month]
-
       def initialize(path, client)
         super
+        @submodule = :Records
+        @instance_class = Twilio::REST::Record
         @list_key = 'usage_records'
-      end
-
-      def method_missing(method, *args)
-        return super unless SUBRESOURCES.include? method
-        self.class.new "#{@path}/#{twilify(method)}", @client
+        resources :daily,
+                  :monthly,
+                  :yearly,
+                  :all_time,
+                  :today,
+                  :yesterday,
+                  :this_month,
+                  :last_month
       end
     end
 
