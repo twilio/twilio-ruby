@@ -128,8 +128,8 @@ require 'rubygems' # not necessary with ruby 1.9 but included for completeness
 require 'twilio-ruby'
 
 # put your own account credentials here:
-account_sid = 'AC043dcf9844e13758bc3a36a84c29761'
-auth_token = '62ea81de3a5b413254eb263595357c69'
+account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 
 # set up
 capability = Twilio::Util::Capability.new account_sid, auth_token
@@ -178,6 +178,30 @@ This will print the following (except for the whitespace):
     <Client>jenny</Client>
   </Dial>
 </Response>
+```
+
+## Getting Started with TaskRouter by creating a Task
+
+If you just need to generate a Capability Token for use with Twilio Client, you
+can do this:
+
+``` ruby
+require 'rubygems'
+require 'twilio-ruby'
+require 'json'
+
+# put your own account credentials here:
+@account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+@auth_token  = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
+@workspace_sid = 'WSzzzzzzzzzzzzzzzzzzzzzzzzzzz'
+
+# set up a client
+@client = Twilio::REST::TaskRouterClient.new @account_sid, @auth_token, @workspace_sid
+
+# create a task
+@workflow_sid = 'WWffffffffffffffffffffffffffff'
+@task_attributes = '{"foo":"bar"}'
+@client.workspace.tasks.create(attributes: @task_attributes, workflow_sid: @workflow_sid)
 ```
 
 ## Supported Ruby Versions
