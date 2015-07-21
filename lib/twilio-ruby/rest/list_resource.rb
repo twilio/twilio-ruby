@@ -12,6 +12,15 @@ module Twilio
           'FeedbackSummary' => 'FeedbackSummaryInstance',
           'IpAddresses' => 'IpAddress',
           'Media' => 'MediaInstance',
+          'RecordList' => 'RecordList',
+          'AllTime' => 'AllTime',
+          'Daily' => 'Daily',
+          'LastMonth' => 'LastMonth',
+          'Monthly' => 'Monthly',
+          'ThisMonth' => 'ThisMonth',
+          'Today' => 'Today',
+          'Yearly' => 'Yearly',
+          'Yesterday' => 'Yesterday',
         }
         @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]

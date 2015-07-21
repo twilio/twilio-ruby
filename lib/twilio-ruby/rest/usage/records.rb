@@ -1,19 +1,19 @@
 module Twilio
   module REST
-    class Records < ListResource
+    class RecordList < ListResource
       def initialize(path, client)
         super
         @submodule = :Records
         @instance_class = Twilio::REST::Record
         @list_key = 'usage_records'
-        resources :daily,
-                  :monthly,
-                  :yearly,
-                  :all_time,
-                  :today,
-                  :yesterday,
-                  :this_month,
-                  :last_month
+        resource :daily,
+                 :monthly,
+                 :yearly,
+                 :all_time,
+                 :today,
+                 :yesterday,
+                 :this_month,
+                 :last_month
       end
     end
 

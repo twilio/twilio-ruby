@@ -3,8 +3,12 @@ module Twilio
     class Usage < ListResource
       def initialize(path, client)
         @path, @client = path, client
-        resource :records,
+        resource :record_list,
                  :triggers
+      end
+
+      def records
+        record_list
       end
     end
   end
