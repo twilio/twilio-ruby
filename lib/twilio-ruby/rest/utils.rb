@@ -19,6 +19,13 @@ module Twilio
 
       protected
 
+      # Freeze the base list path.
+      # Used on list resources so filters (such as /Local) do not affect the
+      # instance resource path.
+      def freeze_path
+        @frozen_path = @path
+      end
+
       def resource(*resources)
         custom_resource_names = { sms: 'SMS', sip: 'SIP' }
         resources.each do |r|
@@ -31,7 +38,11 @@ module Twilio
             Twilio::REST.const_get(@submodule)
           end
           resource_class = enclosing_module.const_get resource
-          instance_variable_set("@#{r}", resource_class.new(path, @client))
+          resource_object = resource_class.new(path, @client)
+          instance_variable_set("@#{r}", resource_object)
+          if @frozen_path
+            resource_object.instance_variable_set(:@frozen_path, @frozen_path)
+          end
         end
         self.class.instance_eval { attr_reader *resources }
       end
