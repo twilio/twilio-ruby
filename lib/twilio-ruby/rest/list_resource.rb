@@ -10,9 +10,7 @@ module Twilio
           'Countries' => 'Country',
           'Feedback' => 'FeedbackInstance',
           'IpAddresses' => 'IpAddress',
-          'Media' => 'MediaInstance',
-          'InProgressConversations' => 'Conversation',
-          'CompletedConversations' => 'Conversation',
+          'Media' => 'MediaInstance'
         }
         @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]
@@ -49,7 +47,8 @@ module Twilio
         raise "Can't get a resource list without a REST Client" unless @client
         response = @client.get @path, params, full_path
         resources = response[@list_key]
-        path = full_path ? @path.split('.')[0] : @path
+        path = @frozen_path ? @frozen_path : @path
+        path = full_path ? path.split('.')[0] : path
         resource_list = resources.map do |resource|
           @instance_class.new "#{path}/#{resource[@instance_id_key]}", @client,
             resource

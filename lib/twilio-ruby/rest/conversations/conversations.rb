@@ -1,43 +1,23 @@
 module Twilio
   module REST
     module Conversations
-
-      class InProgressConversations < NextGenListResource
-        def initialize(path, client)
-          super
-          @path = "#{path}/InProgress"
-          @list_key = "conversations"
-        end
-      end
-
-      class CompletedConversations < NextGenListResource
-        def initialize(path, client)
-          super
-          @path = "#{path}/Completed"
-          @list_key = "conversations"
-        end
-      end
-
       class Conversations < NextGenListResource
-        attr :in_progress
-        attr :completed
         def initialize(path, client)
-          super
-          @in_progress = InProgressConversations.new path, client
-          @completed = CompletedConversations.new path, client
+          @path, @client = path, client
+          @submodule = :Conversations
+          freeze_path
+          resource :in_progress,
+                   :completed
         end
       end
 
       class Conversation < InstanceResource
         def initialize(path, client, params={})
-          path.gsub! '/InProgress', ''
-          path.gsub! '/Completed', ''
-          super path, client, params
+          super
           @submodule = :Conversations
           resource :participants
         end
       end
-
     end
   end
 end
