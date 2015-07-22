@@ -87,6 +87,29 @@ to easily create such responses.
         <Play loop="5">https://api.twilio.com/cowbell.mp3</Play>
     <Response>
 
+Create a Task with TaskRouter
+=================
+
+If you need to create a Task to TaskRouter, you can do so by using the TaskRouterClient.
+
+Additional resources had off of the workspace object (task_queues, workers, workflows, activities, tasks, statistics, events).
+
+.. code-block:: ruby
+
+    require 'twilio-ruby'
+
+    # To find these visit https://www.twilio.com/user/account
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
+    workspace_sid = "ZZZZZZZZZZZZZZZZ"
+
+    @client = Twilio::REST::TaskRouterClient.new account_sid, auth_token, workspace_sid
+
+    workflow_sid = "WWWWWWWWWWWWWWWWW"
+    task_attributes = '{"foo":"bar"}'
+
+    @task = @client.workspace.tasks.create(attributes: task_attributes, workflow_sid: workflow_sid)
+
 
 Digging Deeper
 ========================

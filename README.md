@@ -180,9 +180,10 @@ This will print the following (except for the whitespace):
 </Response>
 ```
 
-## Getting Started with TaskRouter
+## Create a Task with TaskRouter
 
 If you need to create a Task to TaskRouter, you can do so by using the TaskRouterClient.
+
 Additional resources had off of the workspace object (taskqueues, workers, workflows, activities, tasks).
 
 ``` ruby
