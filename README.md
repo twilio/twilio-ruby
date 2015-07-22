@@ -118,7 +118,32 @@ end
 @client.incoming_phone_numbers.create(phone_number: @number)
 ```
 
-## Getting Started With Client Capability Tokens
+## Create a Task with TaskRouter
+
+If you need to create a Task to TaskRouter, you can do so by using the TaskRouterClient.
+
+Additional resources had off of the workspace object (taskqueues, workers, workflows, activities, tasks).
+
+``` ruby
+require 'rubygems'
+require 'twilio-ruby'
+require 'json'
+
+# put your own account credentials here:
+@account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+@auth_token  = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
+@workspace_sid = 'WSzzzzzzzzzzzzzzzzzzzzzzzzzzz'
+
+# set up a client
+@client = Twilio::REST::TaskRouterClient.new @account_sid, @auth_token, @workspace_sid
+
+# create a task
+@workflow_sid = 'WWffffffffffffffffffffffffffff'
+@task_attributes = '{"foo":"bar"}'
+@client.workspace.tasks.create(attributes: @task_attributes, workflow_sid: @workflow_sid)
+```
+
+## Create a Twilio Client Capability Token
 
 If you just need to generate a Capability Token for use with Twilio Client, you
 can do this:
@@ -178,31 +203,6 @@ This will print the following (except for the whitespace):
     <Client>jenny</Client>
   </Dial>
 </Response>
-```
-
-## Create a Task with TaskRouter
-
-If you need to create a Task to TaskRouter, you can do so by using the TaskRouterClient.
-
-Additional resources had off of the workspace object (taskqueues, workers, workflows, activities, tasks).
-
-``` ruby
-require 'rubygems'
-require 'twilio-ruby'
-require 'json'
-
-# put your own account credentials here:
-@account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-@auth_token  = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
-@workspace_sid = 'WSzzzzzzzzzzzzzzzzzzzzzzzzzzz'
-
-# set up a client
-@client = Twilio::REST::TaskRouterClient.new @account_sid, @auth_token, @workspace_sid
-
-# create a task
-@workflow_sid = 'WWffffffffffffffffffffffffffff'
-@task_attributes = '{"foo":"bar"}'
-@client.workspace.tasks.create(attributes: @task_attributes, workflow_sid: @workflow_sid)
 ```
 
 ## Supported Ruby Versions
