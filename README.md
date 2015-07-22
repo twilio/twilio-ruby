@@ -180,10 +180,10 @@ This will print the following (except for the whitespace):
 </Response>
 ```
 
-## Getting Started with TaskRouter by creating a Task
+## Getting Started with TaskRouter
 
-If you just need to generate a Capability Token for use with Twilio Client, you
-can do this:
+If you need to create a Task to TaskRouter, you can do so by using the TaskRouterClient.
+Additional resources had off of the workspace object (taskqueues, workers, workflows, activities, tasks).
 
 ``` ruby
 require 'rubygems'
