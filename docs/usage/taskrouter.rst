@@ -11,6 +11,7 @@ can best handle them.
 For more information, see the `TaskRouter documentation
 <https://www.twilio.com/docs/taskrouter>_`.
 
+Note: Passed in Form/Query Parameters are based on their json equivalent attribute.
 
 Workspaces
 --------------------
@@ -18,8 +19,6 @@ Workspaces
 A Workspace is a container for your Tasks, Workers, TaskQueues, Workflows and
 Activities. Each of these items exists within a single Workspace and will not
 be shared across Workspaces.
-
-Note: Passed in Form/Query Parameters are based on their json equivalent attribute.
 
 .. code-block:: ruby
 
@@ -151,8 +150,6 @@ You can also utilize our Workflow Builder to make this process a bit easier util
 Fetching, Updating, Deleting Workflows
 --------------------
 
-Note: Passed in Form/Query Parameters are based on their json equivalent attribute.
-
 .. code-block:: ruby
 
     require twilio-ruby
@@ -188,8 +185,6 @@ Activities
 Activities describe the current status of your Workers, which determines
 whether they are eligible to receive task assignments. Workers are always set
 to a single Activity.
-
-Note: Passed in Form/Query Parameters are based on their json equivalent attribute.
 
 .. code-block:: ruby
 
@@ -231,8 +226,6 @@ Workers
 
 Workers represent an entity that is able to perform tasks, such as an agent
 working in a call center, or a salesperson handling leads.
-
-Note: Passed in Form/Query Parameters are based on their json equivalent attribute.
 
 .. code-block:: ruby
 
@@ -283,8 +276,6 @@ Workers are eligible to handle those Tasks. As your Workflows process Tasks,
 those Tasks will pass through one or more TaskQueues until the Task is assigned
 and accepted by an eligible Worker.
 
-Note: Passed in Form/Query Parameters are based on their json equivalent attribute.
-
 .. code-block:: ruby
 
     require 'twilio-ruby'
@@ -329,8 +320,6 @@ Tasks
 
 A Task instance resource represents a single item of work waiting to be
 processed.
-
-Note: Passed in Form/Query Parameters are based on their json equivalent attribute.
 
 .. code-block:: ruby
 
@@ -386,8 +375,6 @@ Reservations
 
 A Reservation instance resource represents a single matching item of work from a task to a worker.
 
-Note: Passed in Form/Query Parameters are based on their json equivalent attribute.
-
 .. code-block:: ruby
 
     # To find these visit https://www.twilio.com/user/account
@@ -404,7 +391,7 @@ Note: Passed in Form/Query Parameters are based on their json equivalent attribu
     @task = @client.workspace.tasks.get(TASK_SID)
 
     # fetching reservations for said task
-    task.reservations.list.each do |reservation|
+    @task.reservations.list.each do |reservation|
         puts reservation.sid
     end
 
@@ -412,8 +399,6 @@ Statistics
 -----
 
 A Statistics resource represents the statistics over a time period for a particular resource
-
-Note: Passed in Query Parameters are based on their json equivalent attribute.
 
 .. code-block:: ruby
 
@@ -437,8 +422,6 @@ Events
 
 A Event represents an internal TaskRouter event that occurred and has been logged.
 You can query based on time the event occurred, a certain resource or combination.
-
-Note: Passed in Query Parameters are based on their json equivalent attribute.
 
 .. code-block:: ruby
 
