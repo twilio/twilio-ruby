@@ -122,7 +122,7 @@ end
 
 If you need to create a Task to TaskRouter, you can do so by using the TaskRouterClient.
 
-Additional resources had off of the workspace object (taskqueues, workers, workflows, activities, tasks).
+Additional resources had off of the workspace object (task_queues, workers, workflows, activities, tasks, statistics, events).
 
 ``` ruby
 require 'rubygems'
