@@ -1,11 +1,13 @@
 module Twilio
   module REST
-    module Records
-      class AllTime < Twilio::REST::RecordList
-        def initialize(path, client)
-          @path, @client = path, client
-          @instance_class = Twilio::REST::Record
-          @list_key = 'usage_records'
+    class Usage
+      class Records
+        class AllTime < ListResource
+          def initialize(path, client)
+            super
+            path "/Accounts/#{@account_sid}/Usage/Records/AllTime.json"
+            list_key 'usage_records'
+          end
         end
       end
     end

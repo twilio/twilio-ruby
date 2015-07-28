@@ -3,7 +3,8 @@ module Twilio
     class Calls < ListResource
       def initialize(path, client)
         super
-        resource :feedback_summary
+        path "/Accounts/#{@account_sid}/Calls.json"
+        components :feedback_summary
       end
 
       def make(from, to, url)
@@ -14,9 +15,10 @@ module Twilio
     class Call < InstanceResource
       def initialize(path, client, params={})
         super
-        resource :recordings,
-                 :notifications,
-                 :feedback
+        path "/Accounts/#{@account_sid}/Calls/#{@sid}.json"
+        dependents :recordings,
+                   :notifications,
+                   :feedback
       end
 
       def redirect_to(url)

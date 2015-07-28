@@ -1,12 +1,10 @@
 module Twilio
   module REST
-    module NumberType
+    module IncomingPhoneNumbers
       class TollFree < ListResource
         def initialize(path, client)
-          @path, @client = path, client
-          @instance_class = Twilio::REST::IncomingPhoneNumber
-          @list_key = 'incoming_phone_numbers'
-          @instance_id_key = 'sid'
+          super
+          list_key 'incoming_phone_numbers'
         end
       end
     end
