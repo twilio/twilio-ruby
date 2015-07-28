@@ -6,14 +6,14 @@ module Twilio
         @submodule = :Records
         @instance_class = Twilio::REST::Record
         @list_key = 'usage_records'
-        resource :daily,
+        resource :all_time,
+                 :daily,
+                 :last_month,
                  :monthly,
-                 :yearly,
-                 :all_time,
-                 :today,
-                 :yesterday,
                  :this_month,
-                 :last_month
+                 :today,
+                 :yearly,
+                 :yesterday
       end
     end
 

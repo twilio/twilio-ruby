@@ -1,7 +1,7 @@
 module Twilio
   module REST
     module Records
-      class Monthly < Twilio::REST::RecordList
+      class Monthly < ListResource
         def initialize(path, client)
           @path, @client = path, client
           @instance_class = Twilio::REST::Record

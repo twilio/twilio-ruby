@@ -96,6 +96,8 @@ require 'twilio-ruby/rest/task_router_client'
 require 'twilio-ruby/rest/lookups_client'
 require 'twilio-ruby/rest/pricing_client'
 require 'twilio-ruby/rest/monitor_client'
+require 'twilio-ruby/rest/pricing/countries'
+require 'twilio-ruby/rest/pricing/voice/numbers'
 require 'rack/twilio_webhook_authentication'
 
 module Twilio
