@@ -3,7 +3,7 @@ module Twilio
     class Triggers < ListResource
       def initialize(path, client)
         super
-        @list_key = 'usage_triggers'
+        list_key 'usage_triggers'
       end
     end
 

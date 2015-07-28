@@ -3,9 +3,8 @@ module Twilio
     module Records
       class Monthly < ListResource
         def initialize(path, client)
-          @path, @client = path, client
-          @instance_class = Twilio::REST::Record
-          @list_key = 'usage_records'
+          super
+          list_key 'usage_records'
         end
       end
     end
