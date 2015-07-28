@@ -1,17 +1,17 @@
 module Twilio
   module REST
-    class Feedback < ListResource
-      def get
-        @instance_class.new @path, @client
+    class Call
+      class Feedback < ListResource
+        def initialize(path, client)
+          path "/Accounts/#{@account_sid}/Calls/#{@call_sid}/Feedback.json"
+        end
       end
 
-      def create(params={})
-        raise "Can't create feedback without a REST Client" unless @client
-        response = @client.post @path, params
-        @instance_class.new @path, @client, response
+      class FeedbackInstance < InstanceResource
+        def initialize(path, client, params={})
+          path "/Accounts/#{@account_sid}/Calls/#{@call_sid}/Feedback.json"
+        end
       end
     end
-
-    class FeedbackInstance < InstanceResource; end
   end
 end

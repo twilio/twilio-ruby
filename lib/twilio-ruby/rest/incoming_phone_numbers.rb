@@ -15,10 +15,10 @@ module Twilio
 
     class IncomingPhoneNumber < InstanceResource
       can :update, :delete
-      
+
       def initialize(client, params={})
         super
-        path "/Accounts/#{@account_sid}/IncomingPhoneNumbers/#{@sid}"
+        path "/Accounts/#{@account_sid}/IncomingPhoneNumbers/#{@sid}.json"
       end
     end
   end

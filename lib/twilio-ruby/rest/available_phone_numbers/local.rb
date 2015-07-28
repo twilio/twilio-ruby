@@ -1,6 +1,6 @@
 module Twilio
   module REST
-    module AvailablePhoneNumbers
+    class AvailablePhoneNumbers
       class Local < ListResource
         def initialize(path, client)
           super

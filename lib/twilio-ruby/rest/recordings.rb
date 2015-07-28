@@ -1,12 +1,17 @@
 module Twilio
   module REST
-    class Recordings < ListResource; end
+    class Recordings < ListResource
+      def initialize(client)
+        super
+        path "/Accounts/#{@account_sid}/Recordings.json"
+      end
+    end
 
     class Recording < InstanceResource
-      def initialize(path, client, params={})
-        path.sub! /\/Calls\/CA[^\/]+/, ''
-        super path, client, params
-        resource :transcriptions
+      def initialize(client, params={})
+        super
+        path "/Accounts/#{@account_sid}/Recordings/#{@sid}.json"
+        # TODO: Compatibility Class
         # grab a reference to the client's connection object for streaming
         @connection = @client.instance_variable_get :@connection
       end
