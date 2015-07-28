@@ -70,10 +70,13 @@ describe Twilio::TaskRouter::Capability do
     end
 
     it 'should add a policy when #allow_fetch_subresources is called' do
+      token = @capability.generate_token
+      decoded, header = JWT.decode token, 'foobar'
+      policies_size = decoded['policies'].size
+
       @capability.allow_fetch_subresources
       token = @capability.generate_token
       decoded, header = JWT.decode token, 'foobar'
-      expect(decoded['policies'].size).to eq(4)
       workspace_fetch_policy = {
         'url' => 'https://taskrouter.twilio.com/v1/Workspaces/WS456/**',
         'method' => 'GET',
@@ -82,13 +85,17 @@ describe Twilio::TaskRouter::Capability do
         'allow' => true
       }
       expect(decoded['policies'][-1]).to eq(workspace_fetch_policy)
+      expect(decoded['policies'].size).to eq(policies_size+1)
     end
 
     it 'should add a policy when #allow_update_subresources is called' do
+      token = @capability.generate_token
+      decoded, header = JWT.decode token, 'foobar'
+      policies_size = decoded['policies'].size
+
       @capability.allow_updates_subresources
       token = @capability.generate_token
       decoded, header = JWT.decode token, 'foobar'
-      expect(decoded['policies'].size).to eq(4)
       workspace_update_policy = {
         'url' => 'https://taskrouter.twilio.com/v1/Workspaces/WS456/**',
         'method' => 'POST',
@@ -97,6 +104,7 @@ describe Twilio::TaskRouter::Capability do
         'allow' => true
       }
       expect(decoded['policies'][-1]).to eq(workspace_update_policy)
+      expect(decoded['policies'].size).to eq(policies_size+1)
     end
   end
 end
