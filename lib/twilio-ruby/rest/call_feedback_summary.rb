@@ -1,12 +1,15 @@
 module Twilio
   module REST
-    class FeedbackSummary < ListResource
-      def initialize(path, client)
-        super
-        @list_key = 'feedback_summary'
+    class Calls
+      class FeedbackSummary < ListResource
+        def initialize(path, client)
+          super
+          @list_key = 'feedback_summary'
+          @instance_id_key = 'sid'
+        end
       end
-    end
 
-    class FeedbackSummaryInstance < InstanceResource; end
+      class FeedbackSummaryInstance < InstanceResource; end
+    end
   end
 end

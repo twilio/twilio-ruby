@@ -1,12 +1,14 @@
 module Twilio
   module REST
-    class Triggers < ListResource
-      def initialize(path, client)
-        super
-        list_key 'usage_triggers'
+    class Usage
+      class Triggers < ListResource
+        def initialize(path, client)
+          super
+          list_key 'usage_triggers'
+        end
       end
-    end
 
-    class Trigger < InstanceResource; end
+      class Trigger < InstanceResource; end
+    end
   end
 end

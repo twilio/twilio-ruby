@@ -1,9 +1,10 @@
 module Twilio
   module REST
-    module Records
+    class Records
       class ThisMonth < ListResource
         def initialize(path, client)
           super
+          path "/Accounts/#{@account_sid}/Usage/Records/ThisMonth.json"
           list_key 'usage_records'
         end
       end

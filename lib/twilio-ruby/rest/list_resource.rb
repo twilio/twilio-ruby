@@ -29,7 +29,9 @@ module Twilio
         # The next line grabs the enclosing module. Necessary for resources
         # contained in their own submodule like /SMS/Messages
         parent_module = self.class.to_s.split('::')[-2]
+        nesting = Module.nesting
         enclosing_module = Module.nesting[1]
+        enclosing_module = Module.nesting if nesting.size > 3
         full_module_path = if parent_module == "REST"
           Twilio::REST
         else
