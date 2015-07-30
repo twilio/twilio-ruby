@@ -1,16 +1,16 @@
 module Twilio
   module REST
     class Messages < ListResource
-      def initialize(path, client)
-        path.gsub! '/SMS', ''
+      def initialize(client)
         super
+        path "/Accounts/#{@account_sid}/Messages.json"
       end
     end
 
     class Message < InstanceResource
-      def initialize(path, client, params={})
+      def initialize(client, params={})
         super
-        resource :media
+        path "/Accounts/#{@account_sid}/Messages/#{@sid}.json"
       end
 
       def redact

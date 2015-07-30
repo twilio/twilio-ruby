@@ -1,29 +1,20 @@
 module Twilio
   module REST
-    class Accounts < ListResource; end
+    class Accounts < ListResource
+      can :list, :get, :create
+
+      def initialize(client)
+        super
+        path "/Accounts.json"
+      end
+    end
 
     class Account < InstanceResource
-      def initialize(path, client, params={})
+      can :update, :delete
+
+      def initialize(client, params={})
         super
-        resource :addresses,
-                 :applications,
-                 :authorized_connect_apps,
-                 :available_phone_numbers,
-                 :calls,
-                 :conferences,
-                 :connect_apps,
-                 :incoming_phone_numbers,
-                 :messages,
-                 :notifications,
-                 :outgoing_caller_ids,
-                 :queues,
-                 :recordings,
-                 :sandbox,
-                 :sip,
-                 :sms,
-                 :tokens,
-                 :transcriptions,
-                 :usage
+        path "/Accounts/#{@sid}.json"
       end
     end
   end

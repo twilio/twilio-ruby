@@ -2,8 +2,23 @@ module Twilio
   module REST
     class ListResource
       include Utils
+      attr_accessor :path, :instance_id_key
+      VERBS = [:list, :get, :create]
 
-      def initialize(path, client)
+      class << self
+        def can(*allowed_verbs)
+          allowed_verbs.each do |v|
+            unless VERBS.include?(v)
+              raise "ListResource has no verb named #{v.to_s}"
+            end
+
+            self.send :define_method, v,
+              &lambda {|*args| self.send 'internal_'+v.to_s, *args}
+          end
+        end
+      end
+
+      def initialize(client)
         custom_names = {
           'Activities' => 'Activity',
           'Addresses' => 'Address',
@@ -22,24 +37,32 @@ module Twilio
           'Yearly' => 'Yearly',
           'Yesterday' => 'Yesterday',
         }
-        @path, @client = path, client
-        resource_name = self.class.name.split('::')[-1]
-        instance_name = custom_names.fetch(resource_name, resource_name.chop)
-
-        # The next line grabs the enclosing module. Necessary for resources
-        # contained in their own submodule like /SMS/Messages
-        parent_module = self.class.to_s.split('::')[-2]
+        @client = client
+        resource_name = self.class.name.demodulize
         nesting = Module.nesting
+
+        instance_name =  custom_names.fetch(resource_name, resource_name.singularize)
         enclosing_module = Module.nesting[1]
-        enclosing_module = Module.nesting if nesting.size > 3
-        full_module_path = if parent_module == "REST"
-          Twilio::REST
-        else
-          Twilio::REST.const_get parent_module
+        @instance_class = enclosing_module.const_get instance_name
+
+        unless @instance_class
+          # We're a component without our own instance resource
+          resource_name = enclosing_module.name.demodulize
+          instance_name = custom_names.fetch(resource_name, resource_name.singularize)
+
+          @instance_class = Module.nesting[2].const_get(instance_name)
         end
 
-        @instance_class = full_module_path.const_get instance_name
-        @list_key, @instance_id_key = detwilify(resource_name), 'sid'
+        @list_key =
+        @instance_id_key = 'sid'
+      end
+
+      def path(new_path)
+        @path = new_path
+      end
+
+      def list_key
+        @list_key ||= detwilify(self.class.name.demodulize)
       end
 
       def list_key(key)
@@ -64,15 +87,15 @@ module Twilio
       #
       # The optional +params+ hash allows you to filter the list returned. The
       # filters for each list resource type are defined by Twilio.
-      def list(params={}, full_path=false)
+
+      protected
+
+      def internal_list(params={}, full_path=false)
         raise "Can't get a resource list without a REST Client" unless @client
         response = @client.get @path, params, full_path
         resources = response[@list_key]
-        path = @frozen_path ? @frozen_path : @path
-        path = full_path ? path.split('.')[0] : path
         resource_list = resources.map do |resource|
-          @instance_class.new "#{path}/#{resource[@instance_id_key]}", @client,
-            resource
+          @instance_class.new @client, resource
         end
         # set the +previous_page+ and +next_page+ properties on the array
         client, list_class = @client, self.class
@@ -80,14 +103,14 @@ module Twilio
           eigenclass = class << self; self; end
           eigenclass.send :define_method, :previous_page, &lambda {
             if response['previous_page_uri']
-              list_class.new(response['previous_page_uri'], client).list({}, true)
+              list_class.new.path(response['previous_page_uri'], client).list({}, true)
             else
               []
             end
           }
           eigenclass.send :define_method, :next_page, &lambda {
             if response['next_page_uri']
-              list_class.new(response['next_page_uri'], client).list({}, true)
+              list_class.new.path(response['next_page_uri'], client).list({}, true)
             else
               []
             end
@@ -102,21 +125,19 @@ module Twilio
       # request is made. The HTTP request is made when attempting to access an
       # attribute of the returned instance resource object, such as
       # its #date_created or #voice_url attributes.
-      def get(sid)
-        @instance_class.new "#{@path}/#{sid}", @client
+      def internal_get(sid)
+        @instance_class.new @client, "#{@instance_id_key}" => sid
       end
-      alias :find :get # for the ActiveRecord lovers
 
       ##
       # Return a newly created resource. Some +params+ may be required. Consult
       # the Twilio REST API documentation related to the kind of resource you
       # are attempting to create for details. Calling this method makes an HTTP
       # POST request to <tt>@path</tt> with the given params
-      def create(params={})
+      def internal_create(params={})
         raise "Can't create a resource without a REST Client" unless @client
         response = @client.post @path, params
-        @instance_class.new "#{@path}/#{response[@instance_id_key]}", @client,
-          response
+        @instance_class.new @client, response
       end
     end
   end

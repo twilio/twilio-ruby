@@ -50,7 +50,6 @@ module Twilio
     # accounts and ListResource#create to create a new account. Use
     # ListResource#get to grab a particular account once you know its sid.
     class Client < BaseClient
-      API_VERSION = '2010-04-01'
       attr_reader :account, :accounts
 
       host 'api.twilio.com'
@@ -154,7 +153,7 @@ module Twilio
       ##
       # Set up +account+ and +accounts+ attributes.
       def set_up_subresources # :doc:
-        @accounts = Twilio::REST::Accounts.new "/#{API_VERSION}/Accounts", self
+        @accounts = Twilio::REST::Accounts.new self
         @account = @accounts.get @account_sid
       end
 

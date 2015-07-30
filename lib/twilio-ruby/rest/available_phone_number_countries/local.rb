@@ -1,10 +1,12 @@
 module Twilio
   module REST
-    class AvailablePhoneNumbers
+    class AvailablePhoneNumberCountry
       class Local < ListResource
-        def initialize(path, client)
+        can :list
+
+        def initialize(client)
           super
-          path "/Accounts/#{@account_sid}/AvailablePhoneNumbers/Local.json"
+          path "/Accounts/#{@account_sid}/AvailablePhoneNumbers/#{@country_code}/Local.json"
           list_key 'available_phone_numbers'
           instance_id_key 'sid'
         end
