@@ -26,6 +26,15 @@ module Twilio
         @frozen_path = @path
       end
 
+      # Returns array of classes contained in Module or Class
+      def sub_classes(mod)
+        mod.constants.map {|c| mod.const_get(c) if mod.const_get(c).is_a?(Class)}.compact
+      end
+
+      def snake_class(c)
+        c.name.demodulize.underscore
+      end
+
       def resource(*resources)
         custom_resource_names = {
           sms: 'SMS',

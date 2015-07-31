@@ -1,21 +1,21 @@
 module Twilio
   module REST
-    module Conversations
-      class Conversations < NextGenListResource
-        def initialize(path, client)
-          super
-          @submodule = :Conversations
-          freeze_path
-          resource :in_progress,
-                   :completed
-        end
+    class Conversations < ListResource
+      def initialize(client, inheritance={})
+        super
+        components self.class::InProgress,
+                   self.class::Completed
+        instance_class Conversation
       end
+    end
 
-      class Conversation < InstanceResource
-        def initialize(path, client, params={})
-          super
-          resource :participants
-        end
+    class Conversation < InstanceResource
+      can :update, :delete
+
+      def initialize(client, inheritance={}, params={})
+        super
+        path "/Conversations/#{@sid}.json"
+        dependents self.class::Participants
       end
     end
   end

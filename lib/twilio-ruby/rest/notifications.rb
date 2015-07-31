@@ -3,7 +3,7 @@ module Twilio
     class Notifications < ListResource
       def initialize(client)
         super
-        path "/Accounts/#{@account_sid}/Notifications"
+        path "/Accounts/#{@account_sid}/Notifications.json"
       end
     end
 
