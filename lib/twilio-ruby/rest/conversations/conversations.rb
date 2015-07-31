@@ -3,8 +3,9 @@ module Twilio
     class Conversations < ListResource
       def initialize(client, inheritance={})
         super
-        components :in_progress,
-                   :completed
+        components self.class::InProgress,
+                   self.class::Completed
+        instance_class Conversation
       end
     end
 
@@ -14,7 +15,7 @@ module Twilio
       def initialize(client, inheritance={}, params={})
         super
         path "/Conversations/#{@sid}.json"
-        dependents :participants
+        dependents self.class::Participants
       end
     end
   end

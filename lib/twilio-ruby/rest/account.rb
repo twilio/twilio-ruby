@@ -6,6 +6,7 @@ module Twilio
       def initialize(client, inheritance={})
         super
         path "/Accounts.json"
+        instance_class Account
       end
     end
 
@@ -15,8 +16,8 @@ module Twilio
       def initialize(client, inheritance={}, params={})
         super
         path "/Accounts/#{@sid}.json"
-        dependents :calls,
-                   :available_phone_number_countries
+        dependents self.class::Calls,
+                   self.class::AvailablePhoneNumberCountries
       end
     end
   end

@@ -104,29 +104,24 @@ module Twilio
       end
 
       def dependents(*deps)
-        dep_classes = sub_classes(self.class)
-        deps.each do |d|
-          dep_class = dep_classes.select {|c| snake_class(c) == d.to_s}.first
-
-          unless dep_class
-            throw "Dependent #{d} does not exist"
-          end
-
+        deps.each do |dep|
           if !@instance_id_key || @instance_id_key == 'sid'
             key_variable_name = "@#{snake_class(self.class)}_sid"
           else
             key_variable_name = "@#{@instance_id_key}"
           end
 
-          dep_instance = dep_class.new(
+          dep_instance = dep.new(
             @client,
             @inheritance.merge({"#{key_variable_name}" => instance_id})
           )
 
-          instance_variable_set("@#{d}", dep_instance)
+          dep_name = dep.name.demodulize.underscore
+
+          instance_variable_set("@#{dep_name}", dep_instance)
 
           unless dep_instance.get_command_alias
-            self.class.instance_eval { attr_reader d }
+            self.class.instance_eval { attr_reader dep_name }
           else
             self.class.instance_eval do
               define_method dep_instance.get_command_alias.to_sym,

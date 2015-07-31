@@ -19,46 +19,11 @@ module Twilio
       end
 
       def initialize(client, inheritance={})
-        custom_names = {
-          'Activities' => 'Activity',
-          'Addresses' => 'Address',
-          'Countries' => 'Country',
-          'Feedback' => 'FeedbackInstance',
-          'FeedbackSummary' => 'FeedbackSummaryInstance',
-          'IpAddresses' => 'IpAddress',
-          'Media' => 'MediaInstance',
-          'RecordList' => 'RecordList',
-          'AllTime' => 'AllTime',
-          'Daily' => 'Daily',
-          'LastMonth' => 'LastMonth',
-          'Monthly' => 'Monthly',
-          'ThisMonth' => 'ThisMonth',
-          'Today' => 'Today',
-          'Yearly' => 'Yearly',
-          'Yesterday' => 'Yesterday',
-        }
         @client = client
 
         @inheritance = inheritance
         @inheritance.each do |k, v|
           instance_variable_set(k, v)
-        end
-
-        resource_name = self.class.name.demodulize
-
-        instance_name =  custom_names.fetch(resource_name, resource_name.singularize)
-        enclosing_module = nesting[1]
-
-        if instance_name != resource_name
-          @instance_class = enclosing_module.const_get instance_name
-        end
-
-        unless @instance_class
-          # We're a component without our own instance resource
-          resource_name = enclosing_module.name.demodulize
-          instance_name = custom_names.fetch(resource_name, resource_name.singularize)
-
-          @instance_class = nesting[2].const_get(instance_name)
         end
 
         @list_key = self.class.name.demodulize.underscore
@@ -75,6 +40,10 @@ module Twilio
 
       def list_key(key)
         @list_key = key
+      end
+
+      def instance_class(c)
+        @instance_class = c
       end
 
       def instance_id_key(key)
@@ -165,20 +134,15 @@ module Twilio
       end
 
       def components(*comps)
-        comp_classes = sub_classes(self.class)
-        comps.each do |co|
-          comp_class = comp_classes.select {|c| snake_class(c) == co.to_s}.first
+        comps.each do |comp|
+          comp_instance = comp.new(@client, @inheritance)
 
-          unless comp_class
-            throw "Component #{co} does not exist"
-          end
+          comp_name = comp.name.demodulize.underscore
 
-          comp_instance = comp_class.new(@client, @inheritance)
-
-          instance_variable_set("@#{co}", comp_instance)
+          instance_variable_set("@#{comp_name}", comp_instance)
 
           unless comp_instance.get_command_alias
-            self.class.instance_eval { attr_reader co }
+            self.class.instance_eval { attr_reader comp_name }
           else
             self.define_method(
               comp_instance.get_command_alias,
