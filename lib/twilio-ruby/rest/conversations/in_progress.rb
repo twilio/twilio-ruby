@@ -1,11 +1,13 @@
 module Twilio
   module REST
-    module Conversations
-      class InProgress < NextGenListResource
-        def initialize(path, client)
-          @path, @client = path, client
-          @instance_class = Twilio::REST::Conversations::Conversation
-          @instance_id_key = 'sid'
+    class Conversations
+      class InProgress < ListResource
+        can :list, :get
+        
+        def initialize(client, inheritance={})
+          super
+          path "/Conversations/InProgress.json"
+          instance_id_key 'sid'
         end
       end
     end

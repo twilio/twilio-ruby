@@ -1,14 +1,16 @@
 module Twilio
   module REST
-    class AvailablePhoneNumberCountry
-      class TollFree < ListResource
-        can :list
+    class Account
+      class AvailablePhoneNumberCountry
+        class TollFree < ListResource
+          can :list
 
-        def initialize(client)
-          super
-          path "/Accounts/#{@account_sid}/AvailablePhoneNumbers/#{@country_code}/TollFree.json"
-          list_key 'available_phone_numbers'
-          instance_id_key 'sid'
+          def initialize(client, inheritance={})
+            super
+            path "/Accounts/#{@account_sid}/AvailablePhoneNumbers/#{@country_code}/TollFree.json"
+            list_key 'available_phone_numbers'
+            instance_id_key 'sid'
+          end
         end
       end
     end

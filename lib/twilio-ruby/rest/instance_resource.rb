@@ -8,7 +8,7 @@ module Twilio
     # are rarely overridden in the inheriting class.
     class InstanceResource
       include Utils
-      attr_accessor :path
+      attr_accessor :path, :inheritance
       VERBS = [:update, :delete]
 
       class << self
@@ -18,7 +18,8 @@ module Twilio
               raise "InstanceResource has no verb named #{v.to_s}"
             end
 
-            self.send :alias_method, v, 'internal_'+v.to_s
+            self.send :define_method, v,
+              &lambda {|*args| self.send 'internal_'+v.to_s, *args}
           end
         end
       end
@@ -31,9 +32,21 @@ module Twilio
       # well be a mock object if you want to test the interface. The optional
       # +params+ hash will be converted into attributes on the instantiated
       # object.
-      def initialize(client, params = {})
+      def initialize(client, inheritance={}, params = {})
         @client = client
+        @inheritance = inheritance
+        @inheritance.each do |k, v|
+          instance_variable_set(k, v)
+        end
         set_up_properties_from params
+      end
+
+      def instance_id_key(key)
+        @instance_id_key = key
+      end
+
+      def instance_id
+        instance_variable_get("@#{@instance_id_key || 'sid'}")
       end
 
       def inspect # :nodoc:
@@ -88,6 +101,39 @@ module Twilio
       def internal_delete
         raise "Can't delete a resource without a REST Client" unless @client
         @client.delete @path
+      end
+
+      def dependents(*deps)
+        dep_classes = sub_classes(self.class)
+        deps.each do |d|
+          dep_class = dep_classes.select {|c| snake_class(c) == d.to_s}.first
+
+          unless dep_class
+            throw "Dependent #{d} does not exist"
+          end
+
+          if !@instance_id_key || @instance_id_key == 'sid'
+            key_variable_name = "@#{snake_class(self.class)}_sid"
+          else
+            key_variable_name = "@#{@instance_id_key}"
+          end
+
+          dep_instance = dep_class.new(
+            @client,
+            @inheritance.merge({"#{key_variable_name}" => instance_id})
+          )
+
+          instance_variable_set("@#{d}", dep_instance)
+
+          unless dep_instance.get_command_alias
+            self.class.instance_eval { attr_reader d }
+          else
+            self.class.instance_eval do
+              define_method dep_instance.get_command_alias.to_sym,
+                &lambda {dep_instance}
+            end
+          end
+        end
       end
 
       def set_up_properties_from(hash)

@@ -1,8 +1,22 @@
 module Twilio
   module REST
-    module Conversations
-      class Participants < NextGenListResource; end
-      class Participant < InstanceResource; end
+    class Conversation
+      class Participants < ListResource
+        can :list, :get, :create
+
+        def initialize(client, inheritance={})
+          super
+          path "/Conversations/#{@conversation_sid}/Participants.json"
+        end
+      end
+      class Participant < InstanceResource
+        can :update, :delete
+        
+        def initialize(client, inheritance={}, params={})
+          super
+          path "/Conversations/#{@conversation_sid}/Participants/#{@sid}.json"
+        end
+      end
     end
   end
 end

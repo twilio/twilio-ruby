@@ -2,7 +2,6 @@ require 'twilio-ruby/rest/base_client'
 module Twilio
   module REST
     class ConversationsClient < BaseClient
-      API_VERSION = 'v1'
 
       attr_reader :conversations
 
@@ -74,6 +73,11 @@ module Twilio
       #
       # The number of times to retry a request that has failed before throwing
       # an exception. Defaults to one.
+      def initialize(*args)
+        @API_VERSION = 'v1'
+        super *args
+      end
+
       def inspect # :nodoc:
         "<Twilio::REST::ConversationsClient @account_sid=#{@account_sid}>"
       end
@@ -83,7 +87,7 @@ module Twilio
       ##
       # Create subresource properties
       def set_up_subresources # :doc:
-        @conversations = Twilio::REST::Conversations::Conversations.new "/#{API_VERSION}/Conversations", self
+        @conversations = Twilio::REST::Conversations.new self
       end
 
       ##

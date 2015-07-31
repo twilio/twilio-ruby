@@ -4,9 +4,6 @@ module Twilio
       include Twilio::Util
       include Twilio::REST::Utils
 
-      # TODO: This needs to change so we can support NextGen
-      API_VERSION = '2010-04-01'
-
       HTTP_HEADERS = {
           'Accept' => 'application/json',
           'Accept-Charset' => 'utf-8',
@@ -51,7 +48,7 @@ module Twilio
           params = {} if params.empty?
           # build the full path unless already given
           path = build_full_path(path, params, method) unless args[1]
-          path = "/#{API_VERSION}" + path
+          path = "/#{@API_VERSION}" + path
           request = method_class.new(path, HTTP_HEADERS)
           request.basic_auth(@account_sid, @auth_token)
           request.form_data = params if [:post, :put].include?(method)

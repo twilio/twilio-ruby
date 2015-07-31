@@ -121,7 +121,8 @@ module Twilio
       # The number of times to retry a request that has failed before throwing
       # an exception. Defaults to one.
       def initialize(*args)
-        super(*args)
+        @API_VERSION = '2010-04-01'
+        super *args
       end
 
       def inspect # :nodoc:
@@ -153,14 +154,13 @@ module Twilio
       ##
       # Set up +account+ and +accounts+ attributes.
       def set_up_subresources # :doc:
-        @accounts = Twilio::REST::Accounts.new self
+        @accounts = Twilio::REST::Accounts.new self, {}
         @account = @accounts.get @account_sid
       end
 
       ##
       # Builds up full request path
       def build_full_path(path, params, method)
-        path = "#{path}.json"
         path << "?#{url_encode(params)}" if method == :get && !params.empty?
         path
       end
