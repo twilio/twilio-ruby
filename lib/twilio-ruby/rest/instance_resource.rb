@@ -103,18 +103,9 @@ module Twilio
         @client.delete @path
       end
 
-      def dependents(*deps)
+      def dependents(*deps, path_params)
         deps.each do |dep|
-          if !@instance_id_key || @instance_id_key == 'sid'
-            key_variable_name = "@#{snake_class(self.class)}_sid"
-          else
-            key_variable_name = "@#{@instance_id_key}"
-          end
-
-          dep_instance = dep.new(
-            @client,
-            @inheritance.merge({"#{key_variable_name}" => instance_id})
-          )
+          dep_instance = dep.new(@client, @inheritance.merge(path_params))
 
           dep_name = dep.name.demodulize.underscore
 

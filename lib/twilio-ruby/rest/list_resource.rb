@@ -16,6 +16,10 @@ module Twilio
               &lambda {|*args| self.send 'internal_'+v.to_s, *args}
           end
         end
+
+        def command_alias(a)
+          @@command_alias = a
+        end
       end
 
       def initialize(client, inheritance={})
@@ -51,11 +55,7 @@ module Twilio
       end
 
       def get_command_alias
-        @command_alias
-      end
-
-      def command_alias(a)
-        @command_alias = a
+        @@command_alias
       end
 
       def inspect # :nodoc:
