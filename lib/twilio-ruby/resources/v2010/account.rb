@@ -10,6 +10,7 @@ module Twilio
           path "/Accounts.json"
           instance_id_key 'sid'
           instance_class AccountInstance
+          list_key 'accounts'
         end
       end
     
@@ -29,7 +30,7 @@ module Twilio
           dependent Twilio::Resources::V2010::AccountInstance::AuthorizedConnectAppList, {
             account_sid: @sid
           }
-          dependent Twilio::Resources::V2010::AccountInstance::CountryList, {
+          dependent Twilio::Resources::V2010::AccountInstance::AvailablePhoneNumberCountryList, {
             account_sid: @sid
           }
           dependent Twilio::Resources::V2010::AccountInstance::CallList, {

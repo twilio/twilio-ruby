@@ -12,6 +12,7 @@ module Twilio
               path "/Accounts/#{@account_sid}/Messages/#{@message_sid}/Media.json"
               instance_id_key 'sid'
               instance_class MediaInstance
+              list_key 'media_list'
             end
           end
         

@@ -10,6 +10,7 @@ module Twilio
             super
             instance_id_key 'sid'
             instance_class ActivityInstance
+            list_key 'activity'
           end
         end
       

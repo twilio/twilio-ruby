@@ -11,6 +11,7 @@ module Twilio
             path "/Accounts/#{@account_sid}/ConnectApps.json"
             instance_id_key 'sid'
             instance_class ConnectAppInstance
+            list_key 'connect_apps'
           end
         end
       

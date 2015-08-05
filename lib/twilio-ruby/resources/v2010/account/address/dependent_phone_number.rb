@@ -12,6 +12,7 @@ module Twilio
               path "/Accounts/#{@account_sid}/Addresses/#{@address_sid}/DependentPhoneNumbers.json"
               instance_id_key 'sid'
               instance_class DependentPhoneNumberInstance
+              list_key 'dependent_phone_numbers'
             end
           end
         

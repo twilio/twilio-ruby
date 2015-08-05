@@ -11,6 +11,7 @@ module Twilio
             path "/Accounts/#{@account_sid}/OutgoingCallerIds.json"
             instance_id_key 'sid'
             instance_class OutgoingCallerIdInstance
+            list_key 'outgoing_caller_ids'
           end
           
           def add(phone_number)

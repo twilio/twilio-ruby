@@ -11,6 +11,7 @@ module Twilio
             path "/Accounts/#{@account_sid}/Messages.json"
             instance_id_key 'sid'
             instance_class MessageInstance
+            list_key 'messages'
           end
         end
       

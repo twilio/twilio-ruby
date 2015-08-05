@@ -136,19 +136,10 @@ module Twilio
       def components(*comps)
         comps.each do |comp|
           comp_instance = comp.new(@client, @inheritance)
-
-          comp_name = comp.name.demodulize.underscore
-
-          instance_variable_set("@#{comp_name}", comp_instance)
-
-          unless comp_instance.get_command_alias
-            self.class.instance_eval { attr_reader comp_name }
-          else
-            self.define_method(
-              comp_instance.get_command_alias,
-              &lambda {comp_instance}
-            )
-          end
+          self.define_method(
+            comp_instance.get_command_alias,
+            &lambda {comp_instance}
+          )
         end
       end
 

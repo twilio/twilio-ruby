@@ -11,7 +11,8 @@ module Twilio
             path "/Accounts/#{@account_sid}/Calls.json"
             instance_id_key 'sid'
             instance_class CallInstance
-            components Twilio::Resources::V2010::AccountInstance::CallList::CallFeedbackSummaryList
+            list_key 'calls'
+            components Twilio::Resources::V2010::AccountInstance::CallList::FeedbackSummaryList
           end
           
           def make(from, to, url)
@@ -26,11 +27,11 @@ module Twilio
             super
             path "/Accounts/#{@account_sid}/Calls/#{@sid}.json"
             instance_id_key 'sid'
-            dependent Twilio::Resources::V2010::AccountInstance::RecordingList, {
+            dependent Twilio::Resources::V2010::AccountInstance::CallInstance::RecordingList, {
               account_sid: @account_sid,
               call_sid: @sid
             }
-            dependent Twilio::Resources::V2010::AccountInstance::NotificationList, {
+            dependent Twilio::Resources::V2010::AccountInstance::CallInstance::NotificationList, {
               account_sid: @account_sid,
               call_sid: @sid
             }

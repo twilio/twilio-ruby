@@ -11,6 +11,7 @@ module Twilio
             path "/Workspace/#{@workspace_sid}/Workflows"
             instance_id_key 'sid'
             instance_class WorkflowInstance
+            list_key 'workflows'
           end
         end
       

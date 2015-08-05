@@ -11,6 +11,7 @@ module Twilio
             path "/Workspaces/#{@workspace_sid}/Events"
             instance_id_key 'sid'
             instance_class EventInstance
+            list_key 'events'
           end
         end
       

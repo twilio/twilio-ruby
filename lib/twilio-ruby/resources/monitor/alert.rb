@@ -10,6 +10,7 @@ module Twilio
           path "/Alerts"
           instance_id_key 'sid'
           instance_class AlertInstance
+          list_key 'alerts'
         end
       end
     

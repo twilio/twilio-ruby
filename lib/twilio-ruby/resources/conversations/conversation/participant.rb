@@ -11,6 +11,7 @@ module Twilio
             path "/Conversations/#{@conversation_sid}/Participants.json"
             instance_id_key 'sid'
             instance_class ParticipantInstance
+            list_key 'participants'
           end
         end
       

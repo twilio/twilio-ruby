@@ -12,6 +12,7 @@ module Twilio
               path "/Accounts/#{@account_sid}/SMS/ShortCodes"
               instance_id_key 'sid'
               instance_class ShortCodeInstance
+              list_key 'short_codes'
             end
           end
         

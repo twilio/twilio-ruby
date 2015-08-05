@@ -12,6 +12,7 @@ module Twilio
               path "/Accounts/#{@account_sid}/Recordings/#{@recording_sid}/Transcriptions.json"
               instance_id_key 'sid'
               instance_class TranscriptionInstance
+              list_key 'transcriptions'
             end
           end
         

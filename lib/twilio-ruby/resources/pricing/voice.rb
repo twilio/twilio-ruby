@@ -3,7 +3,7 @@ module Twilio
     module Pricing
       class VoiceList < ListResource
         can :get
-        command_alias :voices
+        command_alias :voice
         
         def initialize(client, inheritance={})
           super

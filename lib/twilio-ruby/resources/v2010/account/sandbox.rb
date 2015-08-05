@@ -4,7 +4,7 @@ module Twilio
       class AccountInstance
         class SandboxList < ListResource
           can :get
-          command_alias :sandboxes
+          command_alias :sandbox
           
           def initialize(client, inheritance={})
             super

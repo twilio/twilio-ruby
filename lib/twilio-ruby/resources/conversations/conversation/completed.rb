@@ -4,13 +4,14 @@ module Twilio
       class ConversationList
         class CompletedList < ListResource
           can :list
-          command_alias :completeds
+          command_alias :completed
           
           def initialize(client, inheritance={})
             super
             path "/Conversations/Completed.json"
             instance_id_key 'sid'
             instance_class CompletedInstance
+            list_key 'conversations'
           end
         end
       

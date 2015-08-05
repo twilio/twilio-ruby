@@ -3,7 +3,7 @@ module Twilio
     module V2010
       class AccountInstance
         class SipList < ListResource
-          command_alias :sips
+          command_alias :sip
           
           def initialize(client, inheritance={})
             super

@@ -9,6 +9,7 @@ module Twilio
           super
           instance_id_key 'sid'
           instance_class WorkspaceInstance
+          list_key 'workspaces'
         end
       end
     

@@ -9,7 +9,7 @@ describe Twilio::Resources::V2010::AccountInstance do
     :addresses,
     :applications,
     :authorized_connect_apps,
-    :countries,
+    :available_phone_numbers,
     :calls,
     :conferences,
     :connect_apps,
@@ -19,12 +19,12 @@ describe Twilio::Resources::V2010::AccountInstance do
     :outgoing_caller_ids,
     :queues,
     :recordings,
-    :sandboxes,
-    :sips,
+    :sandbox,
+    :sip,
     :sms,
     :tokens,
     :transcriptions,
-    :usages
+    :usage
   ].each do |symbol|
     it "sets up #{symbol.to_s} dependent" do
       expect(@instance).to respond_to(symbol)

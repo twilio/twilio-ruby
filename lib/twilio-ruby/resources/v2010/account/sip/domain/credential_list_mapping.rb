@@ -13,6 +13,7 @@ module Twilio
                 path "/Accounts/#{@account_sid}/SIP/Domains/#{@domain_sid}/CredentialListMappings.json"
                 instance_id_key 'sid'
                 instance_class CredentialListMappingInstance
+                list_key 'credential_list_mappings'
               end
             end
           

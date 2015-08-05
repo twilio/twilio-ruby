@@ -5,13 +5,14 @@ module Twilio
         class SmsList
           class SmsMessageList < ListResource
             can :list, :get, :create
-            command_alias :sms_messages
+            command_alias :messages
             
             def initialize(client, inheritance={})
               super
               path "/Accounts/#{@account_sid}/SMS/Messages.json"
               instance_id_key 'sid'
               instance_class SmsMessageInstance
+              list_key 'sms_messages'
             end
           end
         

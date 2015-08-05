@@ -10,6 +10,7 @@ module Twilio
           path "/Events"
           instance_id_key 'sid'
           instance_class EventInstance
+          list_key 'events'
         end
       end
     

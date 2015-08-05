@@ -4,13 +4,14 @@ module Twilio
       class ConversationList
         class InProgressList < ListResource
           can :list
-          command_alias :in_progresses
+          command_alias :in_progress
           
           def initialize(client, inheritance={})
             super
             path "/Conversations/InProgress.json"
             instance_id_key 'sid'
             instance_class InProgressInstance
+            list_key 'conversations'
           end
         end
       

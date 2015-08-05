@@ -12,6 +12,7 @@ module Twilio
               path "/Accounts/#{@account_sid}/SIP/Domains.json"
               instance_id_key 'sid'
               instance_class DomainInstance
+              list_key 'domains'
             end
           end
         

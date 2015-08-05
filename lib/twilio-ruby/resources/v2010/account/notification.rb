@@ -11,6 +11,7 @@ module Twilio
             path "/Accounts/#{@account_sid}/Notifications"
             instance_id_key 'sid'
             instance_class NotificationInstance
+            list_key 'notifications'
           end
         end
       

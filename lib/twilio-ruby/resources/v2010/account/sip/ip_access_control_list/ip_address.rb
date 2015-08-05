@@ -13,6 +13,7 @@ module Twilio
                 path "/Accounts/#{@account_sid}/SIP/IpAccessControlLists/#{@ip_control_list_sid}/IpAddresses.json"
                 instance_id_key 'sid'
                 instance_class IpAddressInstance
+                list_key 'ip_addresses'
               end
             end
           

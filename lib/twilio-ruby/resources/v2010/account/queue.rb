@@ -11,6 +11,7 @@ module Twilio
             path "/Accounts/#{@account_sid}/Queues.json"
             instance_id_key 'sid'
             instance_class QueueInstance
+            list_key 'queues'
           end
         end
       

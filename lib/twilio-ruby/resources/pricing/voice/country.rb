@@ -11,6 +11,7 @@ module Twilio
             path "/Voice/Countries"
             instance_id_key 'iso_country'
             instance_class CountryInstance
+            list_key 'countries'
           end
         end
       

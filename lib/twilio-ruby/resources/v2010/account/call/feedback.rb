@@ -5,7 +5,7 @@ module Twilio
         class CallInstance
           class FeedbackList < ListResource
             can :get, :create
-            command_alias :feedbacks
+            command_alias :feedback
             
             def initialize(client, inheritance={})
               super

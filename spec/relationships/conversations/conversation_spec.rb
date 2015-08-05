@@ -6,8 +6,8 @@ describe Twilio::Resources::Conversations::ConversationList do
   end
 
   [
-    :in_progresses,
-    :completeds
+    :in_progress,
+    :completed
   ].each do |symbol|
     it "sets up #{symbol.to_s} component" do
       expect(@list).to respond_to(symbol)

@@ -11,6 +11,7 @@ module Twilio
             path "/Workspaces/#{@workspace_sid}/Workers"
             instance_id_key 'sid'
             instance_class WorkerInstance
+            list_key 'workers'
             components Twilio::Resources::Taskrouter::WorkspaceInstance::WorkerList::StatisticsList
           end
         end
@@ -22,7 +23,7 @@ module Twilio
             super
             path "/Workspaces/#{@workspace_sid}/Workers/#{@worker_sid}"
             instance_id_key 'sid'
-            dependent Twilio::Resources::Taskrouter::WorkspaceInstance::WorkerInstance::WorkerStatisticsList, {
+            dependent Twilio::Resources::Taskrouter::WorkspaceInstance::WorkerInstance::StatisticsList, {
               workspace_sid: @workspace_sid,
               worker_sid: @sid
             }
