@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class NotificationList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class NotificationList < Twilio::REST::ListResource
           can :list, :get
           command_alias :notifications
           
@@ -15,7 +15,7 @@ module Twilio
           end
         end
       
-        class NotificationInstance < InstanceResource
+        class NotificationInstance < Twilio::REST::InstanceResource
           can :delete
           
           def initialize(client, inheritance={}, params={})

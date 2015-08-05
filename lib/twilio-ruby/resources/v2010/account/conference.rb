@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class ConferenceList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class ConferenceList < Twilio::REST::ListResource
           can :list, :get
           command_alias :conferences
           
@@ -15,7 +15,7 @@ module Twilio
           end
         end
       
-        class ConferenceInstance < InstanceResource
+        class ConferenceInstance < Twilio::REST::InstanceResource
           def initialize(client, inheritance={}, params={})
             super
             path "/Accounts/#{@account_sid}/Conferences/#{@sid}.json"

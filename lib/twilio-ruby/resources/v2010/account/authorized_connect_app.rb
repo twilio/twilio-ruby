@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class AuthorizedConnectAppList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class AuthorizedConnectAppList < Twilio::REST::ListResource
           can :list, :get
           command_alias :authorized_connect_apps
           
@@ -15,7 +15,7 @@ module Twilio
           end
         end
       
-        class AuthorizedConnectAppInstance < InstanceResource
+        class AuthorizedConnectAppInstance < Twilio::REST::InstanceResource
           def initialize(client, inheritance={}, params={})
             super
             path "/Accounts/#{@account_sid}/AuthorizedConnectApps/#{@sid}.json"

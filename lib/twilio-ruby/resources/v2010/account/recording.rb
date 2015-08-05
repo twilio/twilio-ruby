@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class RecordingList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class RecordingList < Twilio::REST::ListResource
           can :list, :get
           command_alias :recordings
           
@@ -15,7 +15,7 @@ module Twilio
           end
         end
       
-        class RecordingInstance < InstanceResource
+        class RecordingInstance < Twilio::REST::InstanceResource
           can :delete
           
           def initialize(client, inheritance={}, params={})

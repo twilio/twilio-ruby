@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class SmsList
-          class SmsMessageList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class SmsList < Twilio::REST::ListResource
+          class SmsMessageList < Twilio::REST::ListResource
             can :list, :get, :create
             command_alias :messages
             
@@ -16,7 +16,7 @@ module Twilio
             end
           end
         
-          class SmsMessageInstance < InstanceResource
+          class SmsMessageInstance < Twilio::REST::InstanceResource
             can :update, :delete
             
             def initialize(client, inheritance={}, params={})

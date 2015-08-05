@@ -1,17 +1,16 @@
 require 'twilio-ruby/rest/base_client'
+
 module Twilio
   module REST
+    
     class MonitorClient < BaseClient
-      API_VERSION = 'v1'
-
-      attr_reader :events
-      attr_reader :alerts
-
+      attr_reader :events,
+                  :alerts
       host 'monitor.twilio.com'
-
+      
       ##
-      # Instantiate a new HTTP Monitor client to talk to Twilio. The parameters
-      # +account_sid+, +auth_token+ are required, unless you have configured
+      # Instantiate a new HTTP client to talk to Twilio. The parameters
+      # +account_sid+ and +auth_token+ are required, unless you have configured
       # them already using the block configure syntax, and used to generate the
       # HTTP basic auth header in each request. The +options+ parameter is a
       # hash of connection configuration options. the following keys are
@@ -20,7 +19,7 @@ module Twilio
       # === <tt>host: 'monitor.twilio.com'</tt>
       #
       # The domain to which you'd like the client to make HTTP requests. Useful
-      # for testing. Defaults to 'monitor.twilio.com'.
+      # for testing. Defaults to 'api.twilio.com'.
       #
       # === <tt>port: 443</tt>
       #
@@ -75,27 +74,31 @@ module Twilio
       #
       # The number of times to retry a request that has failed before throwing
       # an exception. Defaults to one.
+      def initialize(*args)
+        @API_VERSION = 'v1'
+        super *args
+      end
+      
       def inspect # :nodoc:
         "<Twilio::REST::MonitorClient @account_sid=#{@account_sid}>"
       end
 
-      protected
 
+      protected
+      
       ##
-      # Set up +events+ attribute.
+      # Set up +account+ and +accounts+ attributes.
       def set_up_subresources # :doc:
-        @events = Twilio::REST::Monitor::Events.new "/#{API_VERSION}/Events", self
-        @alerts = Twilio::REST::Monitor::Alerts.new "/#{API_VERSION}/Alerts", self
+        @events = Twilio::Resources::Monitor::EventList.new self, {}
+        @alerts = Twilio::Resources::Monitor::AlertList.new self, {}
       end
 
       ##
       # Builds up full request path
       def build_full_path(path, params, method)
-        path = path.dup
         path << "?#{url_encode(params)}" if method == :get && !params.empty?
         path
       end
-
     end
   end
 end

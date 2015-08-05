@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class SipList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class SipList < Twilio::REST::ListResource
           command_alias :sip
           
           def initialize(client, inheritance={})
@@ -16,7 +16,7 @@ module Twilio
           end
         end
       
-        class SipInstance < InstanceResource
+        class SipInstance < Twilio::REST::InstanceResource
           def initialize(client, inheritance={}, params={})
             super
             instance_id_key 'sid'

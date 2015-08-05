@@ -1,10 +1,10 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class UsageList
-          class RecordList
-            class TodayList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class UsageList < Twilio::REST::ListResource
+          class RecordList < Twilio::REST::ListResource
+            class TodayList < Twilio::REST::ListResource
               can :list
               command_alias :today
               
@@ -17,7 +17,7 @@ module Twilio
               end
             end
           
-            class TodayInstance < InstanceResource
+            class TodayInstance < Twilio::REST::InstanceResource
               def initialize(client, inheritance={}, params={})
                 super
                 instance_id_key 'sid'

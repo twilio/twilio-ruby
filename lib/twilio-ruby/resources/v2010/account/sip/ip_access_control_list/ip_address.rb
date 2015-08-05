@@ -1,10 +1,10 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class SipList
-          class IpAccessControlListInstance
-            class IpAddressList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class SipList < Twilio::REST::ListResource
+          class IpAccessControlListInstance < Twilio::REST::InstanceResource
+            class IpAddressList < Twilio::REST::ListResource
               can :list, :get, :create
               command_alias :ip_addresses
               
@@ -17,7 +17,7 @@ module Twilio
               end
             end
           
-            class IpAddressInstance < InstanceResource
+            class IpAddressInstance < Twilio::REST::InstanceResource
               can :update, :delete
               
               def initialize(client, inheritance={}, params={})

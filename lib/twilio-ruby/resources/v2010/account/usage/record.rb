@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class UsageList
-          class RecordList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class UsageList < Twilio::REST::ListResource
+          class RecordList < Twilio::REST::ListResource
             can :list
             command_alias :records
             
@@ -12,7 +12,7 @@ module Twilio
               path "/Accounts/#{@account_sid}/Usage/Records"
               instance_id_key 'sid'
               instance_class RecordInstance
-              list_key 'usage_record'
+              list_key 'usage_records'
               components Twilio::Resources::V2010::AccountInstance::UsageList::RecordList::AllTimeList,
                          Twilio::Resources::V2010::AccountInstance::UsageList::RecordList::DailyList,
                          Twilio::Resources::V2010::AccountInstance::UsageList::RecordList::LastMonthList,
@@ -24,7 +24,7 @@ module Twilio
             end
           end
         
-          class RecordInstance < InstanceResource
+          class RecordInstance < Twilio::REST::InstanceResource
             def initialize(client, inheritance={}, params={})
               super
               instance_id_key 'sid'

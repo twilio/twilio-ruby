@@ -1,32 +1,25 @@
 require 'twilio-ruby/rest/base_client'
-require 'twilio-ruby/rest/pricing'
-require 'twilio-ruby/rest/pricing/voice'
-require 'twilio-ruby/rest/pricing/phone_numbers'
 
 module Twilio
   module REST
+    
     class PricingClient < BaseClient
-      include Twilio::Util
-      include Twilio::REST::Utils
-
-      API_VERSION = 'v1'
-
-      attr_reader :voice, :phone_numbers
-
+      attr_reader :phone_numbers,
+                  :voice
       host 'pricing.twilio.com'
-
+      
       ##
-      # Instantiate a new HTTP client to talk to Twilio's Pricing API. The
-      # parameters +account_sid+ and +auth_token+ are required, unless you have
-      # configured them already using the block configure syntax, and used to
-      # generate the HTTP basic auth header in each request. The +options+
-      # parameter is a hash of connection configuration options. the following
-      # keys are supported:
+      # Instantiate a new HTTP client to talk to Twilio. The parameters
+      # +account_sid+ and +auth_token+ are required, unless you have configured
+      # them already using the block configure syntax, and used to generate the
+      # HTTP basic auth header in each request. The +options+ parameter is a
+      # hash of connection configuration options. the following keys are
+      # supported:
       #
       # === <tt>host: 'pricing.twilio.com'</tt>
       #
       # The domain to which you'd like the client to make HTTP requests. Useful
-      # for testing. Defaults to 'pricing.twilio.com'.
+      # for testing. Defaults to 'api.twilio.com'.
       #
       # === <tt>port: 443</tt>
       #
@@ -82,26 +75,27 @@ module Twilio
       # The number of times to retry a request that has failed before throwing
       # an exception. Defaults to one.
       def initialize(*args)
-        super(*args)
+        @API_VERSION = 'v1'
+        super *args
       end
-
+      
       def inspect # :nodoc:
         "<Twilio::REST::PricingClient @account_sid=#{@account_sid}>"
       end
 
-      protected
 
+      protected
+      
       ##
-      # Set up +voice+ and +phone_numbers+ attributes.
+      # Set up +account+ and +accounts+ attributes.
       def set_up_subresources # :doc:
-        @voice = Twilio::REST::Pricing::Voice.new "/#{API_VERSION}/Voice", self
-        @phone_numbers = Twilio::REST::Pricing::PhoneNumbers.new "/#{API_VERSION}/PhoneNumbers", self
+        @phone_numbers = Twilio::Resources::Pricing::PhoneNumberList.new self, {}
+        @voice = Twilio::Resources::Pricing::VoiceList.new self, {}
       end
 
       ##
       # Builds up full request path
       def build_full_path(path, params, method)
-        path = path.dup
         path << "?#{url_encode(params)}" if method == :get && !params.empty?
         path
       end

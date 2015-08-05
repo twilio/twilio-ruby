@@ -1,7 +1,7 @@
 module Twilio
   module Resources
     module Monitor
-      class AlertList < ListResource
+      class AlertList < Twilio::REST::ListResource
         can :list, :get
         command_alias :alerts
         
@@ -14,7 +14,7 @@ module Twilio
         end
       end
     
-      class AlertInstance < InstanceResource
+      class AlertInstance < Twilio::REST::InstanceResource
         can :delete
         
         def initialize(client, inheritance={}, params={})

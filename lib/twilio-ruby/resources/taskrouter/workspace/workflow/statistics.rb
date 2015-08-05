@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module Taskrouter
-      class WorkspaceInstance
-        class WorkflowInstance
-          class StatisticsList < ListResource
+      class WorkspaceInstance < Twilio::REST::InstanceResource
+        class WorkflowInstance < Twilio::REST::InstanceResource
+          class StatisticsList < Twilio::REST::ListResource
             can :get
             command_alias :statistics
             
@@ -14,7 +14,7 @@ module Twilio
             end
           end
         
-          class StatisticsInstance < InstanceResource
+          class StatisticsInstance < Twilio::REST::InstanceResource
             def initialize(client, inheritance={}, params={})
               super
               path "/Workspace/#{@workspace_sid}/Workflows/#{@workflow_sid}/Statistics"

@@ -1,7 +1,7 @@
 module Twilio
   module Resources
     module Pricing
-      class VoiceList < ListResource
+      class VoiceList < Twilio::REST::ListResource
         can :get
         command_alias :voice
         
@@ -15,7 +15,7 @@ module Twilio
         end
       end
     
-      class VoiceInstance < InstanceResource
+      class VoiceInstance < Twilio::REST::InstanceResource
         def initialize(client, inheritance={}, params={})
           super
           instance_id_key 'sid'

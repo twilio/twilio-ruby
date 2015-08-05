@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class AvailablePhoneNumberCountryList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class AvailablePhoneNumberCountryList < Twilio::REST::ListResource
           can :list, :get
           command_alias :available_phone_numbers
           
@@ -15,7 +15,7 @@ module Twilio
           end
         end
       
-        class AvailablePhoneNumberCountryInstance < InstanceResource
+        class AvailablePhoneNumberCountryInstance < Twilio::REST::InstanceResource
           def initialize(client, inheritance={}, params={})
             super
             path "/Accounts/#{@account_sid}/AvailablePhoneNumbers/#{@country_code}.json"

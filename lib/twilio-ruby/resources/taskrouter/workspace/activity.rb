@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module Taskrouter
-      class WorkspaceInstance
-        class ActivityList < ListResource
+      class WorkspaceInstance < Twilio::REST::InstanceResource
+        class ActivityList < Twilio::REST::ListResource
           can :list, :get, :create
           command_alias :activities
           
@@ -14,7 +14,7 @@ module Twilio
           end
         end
       
-        class ActivityInstance < InstanceResource
+        class ActivityInstance < Twilio::REST::InstanceResource
           can :update, :delete
           
           def initialize(client, inheritance={}, params={})

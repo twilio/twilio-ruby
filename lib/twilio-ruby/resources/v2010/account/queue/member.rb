@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class QueueInstance
-          class MemberList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class QueueInstance < Twilio::REST::InstanceResource
+          class MemberList < Twilio::REST::ListResource
             can :list, :get
             command_alias :members
             
@@ -16,7 +16,7 @@ module Twilio
             end
           end
         
-          class MemberInstance < InstanceResource
+          class MemberInstance < Twilio::REST::InstanceResource
             can :update
             
             def initialize(client, inheritance={}, params={})

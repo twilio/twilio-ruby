@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class TokenList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class TokenList < Twilio::REST::ListResource
           can :create
           command_alias :tokens
           
@@ -13,7 +13,7 @@ module Twilio
           end
         end
       
-        class TokenInstance < InstanceResource
+        class TokenInstance < Twilio::REST::InstanceResource
           def initialize(client, inheritance={}, params={})
             super
             path "/Accounts/#{@account_sid}/Tokens.json"

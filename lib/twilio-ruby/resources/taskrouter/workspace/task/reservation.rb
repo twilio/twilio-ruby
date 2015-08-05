@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module Taskrouter
-      class WorkspaceInstance
-        class TaskInstance
-          class ReservationList < ListResource
+      class WorkspaceInstance < Twilio::REST::InstanceResource
+        class TaskInstance < Twilio::REST::InstanceResource
+          class ReservationList < Twilio::REST::ListResource
             can :get
             command_alias :reservations
             
@@ -14,7 +14,7 @@ module Twilio
             end
           end
         
-          class ReservationInstance < InstanceResource
+          class ReservationInstance < Twilio::REST::InstanceResource
             can :update
             
             def initialize(client, inheritance={}, params={})

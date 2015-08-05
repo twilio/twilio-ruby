@@ -2,57 +2,11 @@ require 'twilio-ruby/rest/base_client'
 
 module Twilio
   module REST
-    ##
-    # The Twilio::REST::Client class caches authentication parameters and
-    # exposes methods to make HTTP requests to Twilio's REST API. However, you
-    # should never really need to call these methods yourself since you can
-    # work with the more pleasant wrapper objects like Twilio::REST::Call.
-    #
-    # Instantiate a client like so:
-    #
-    #   @client = Twilio::REST::Client.new account_sid, auth_token
-    #
-    # There are a few options you can use to configure the way your client will
-    # communicate with Twilio. See #new for a list and descriptions.
-    #
-    # Once you have a client object you can use it to do fun things. Every
-    # client object exposes two wrapper objects which you can use as entry
-    # points into Twilio: +account+ and +accounts+.
-    #
-    # ==== @client.account
-    #
-    # Most of the time you'll want to start with the +account+ attribute. This
-    # object is an instance of Twilio::REST::Account that wraps the account
-    # referenced by the +account_sid+ you used when instantiating the client.
-    #
-    # An instance of Twilio::REST::Account exposes objects wrapping all of the
-    # account-level Twilio resources as properties. So
-    #
-    #   @client.account.calls
-    #
-    # For convenience, the resources of the default account are also available
-    # on the client object. So the following call is equivalent to the example
-    # above
-    #
-    #   @client.calls
-    #
-    # represents an account's call list.
-    #
-    # ==== @client.accounts
-    #
-    # If you are doing anything related to subaccounts you'll want to start
-    # here. This object is an instance of Twilio::REST::Accounts that wraps
-    # the list of accounts belonging to the master account referenced by
-    # the +account_sid+ used to instantiate the client.
-    #
-    # This class inherits from Twilio::REST::ListResource, so you can use
-    # methods like ListResource#list to return a (possibly filtered) list of
-    # accounts and ListResource#create to create a new account. Use
-    # ListResource#get to grab a particular account once you know its sid.
-    class Client < BaseClient
-      attr_reader :accounts,
-                  :account
-      host 'api.twilio.com'
+    
+    class TaskrouterClient < BaseClient
+      attr_reader :workspaces,
+                  :workspace
+      host 'taskrouter.twilio.com'
       
       ##
       # Instantiate a new HTTP client to talk to Twilio. The parameters
@@ -62,7 +16,7 @@ module Twilio
       # hash of connection configuration options. the following keys are
       # supported:
       #
-      # === <tt>host: 'api.twilio.com'</tt>
+      # === <tt>host: 'taskrouter.twilio.com'</tt>
       #
       # The domain to which you'd like the client to make HTTP requests. Useful
       # for testing. Defaults to 'api.twilio.com'.
@@ -121,28 +75,28 @@ module Twilio
       # The number of times to retry a request that has failed before throwing
       # an exception. Defaults to one.
       def initialize(*args)
-        @API_VERSION = '2010-04-01'
+        @API_VERSION = 'v1'
         super *args
       end
       
       def inspect # :nodoc:
-        "<Twilio::REST::Client @account_sid=#{@account_sid}>"
+        "<Twilio::REST::TaskrouterClient @account_sid=#{@account_sid}>"
       end
 
       ##
       # Delegate account methods from the client. This saves having to call
-      # <tt>client.account</tt> every time for resources on the default
-      # account.
+      # <tt>client.workspace</tt> every time for resources on the default
+      # workspace.
       def method_missing(method_name, *args, &block)
-        if account.respond_to?(method_name)
-          account.send(method_name, *args, &block)
+        if workspace.respond_to?(method_name)
+          workspace.send(method_name, *args, &block)
         else
           super
         end
       end
       
       def respond_to?(method_name, include_private=false)
-        if account.respond_to?(method_name, include_private)
+        if workspace.respond_to?(method_name, include_private)
           true
         else
           super
@@ -154,8 +108,8 @@ module Twilio
       ##
       # Set up +account+ and +accounts+ attributes.
       def set_up_subresources # :doc:
-        @accounts = Twilio::Resources::V2010::AccountList.new self, {}
-        @account = @accounts.get @account_sid
+        @workspaces = Twilio::Resources::Taskrouter::WorkspaceList.new self, {}
+        @workspace = @workspaces.get @workspace_sid
       end
 
       ##

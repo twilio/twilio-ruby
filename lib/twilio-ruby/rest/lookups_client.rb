@@ -1,25 +1,24 @@
 require 'twilio-ruby/rest/base_client'
+
 module Twilio
   module REST
+    
     class LookupsClient < BaseClient
-      API_VERSION = 'v1'
-
       attr_reader :phone_numbers
-
       host 'lookups.twilio.com'
-
+      
       ##
-      # Instantiate a new HTTP Lookups client to talk to Twilio. The parameters
-      # +account_sid+, +auth_token+ and +workspace_sid are required, unless you
-      # have configured them already using the block configure syntax, and used
-      # to generate the HTTP basic auth header in each request. The +options+
-      # parameter is a hash of connection configuration options. the following
-      # keys are supported:
+      # Instantiate a new HTTP client to talk to Twilio. The parameters
+      # +account_sid+ and +auth_token+ are required, unless you have configured
+      # them already using the block configure syntax, and used to generate the
+      # HTTP basic auth header in each request. The +options+ parameter is a
+      # hash of connection configuration options. the following keys are
+      # supported:
       #
       # === <tt>host: 'lookups.twilio.com'</tt>
       #
       # The domain to which you'd like the client to make HTTP requests. Useful
-      # for testing. Defaults to 'lookups.twilio.com'.
+      # for testing. Defaults to 'api.twilio.com'.
       #
       # === <tt>port: 443</tt>
       #
@@ -74,26 +73,30 @@ module Twilio
       #
       # The number of times to retry a request that has failed before throwing
       # an exception. Defaults to one.
+      def initialize(*args)
+        @API_VERSION = 'v1'
+        super *args
+      end
+      
       def inspect # :nodoc:
         "<Twilio::REST::LookupsClient @account_sid=#{@account_sid}>"
       end
 
-      protected
 
+      protected
+      
       ##
-      # Set up +phone_numbers+ attribute.
+      # Set up +account+ and +accounts+ attributes.
       def set_up_subresources # :doc:
-        @phone_numbers = Twilio::REST::Lookups::PhoneNumbers.new "/#{API_VERSION}/PhoneNumbers", self
+        @phone_numbers = Twilio::Resources::Lookups::PhoneNumberList.new self, {}
       end
 
       ##
       # Builds up full request path
       def build_full_path(path, params, method)
-        path = path.dup
         path << "?#{url_encode(params)}" if method == :get && !params.empty?
         path
       end
-
     end
   end
 end

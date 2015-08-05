@@ -1,10 +1,10 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class UsageList
-          class RecordList
-            class LastMonthList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class UsageList < Twilio::REST::ListResource
+          class RecordList < Twilio::REST::ListResource
+            class LastMonthList < Twilio::REST::ListResource
               can :list
               command_alias :last_month
               
@@ -17,7 +17,7 @@ module Twilio
               end
             end
           
-            class LastMonthInstance < InstanceResource
+            class LastMonthInstance < Twilio::REST::InstanceResource
               def initialize(client, inheritance={}, params={})
                 super
                 instance_id_key 'sid'

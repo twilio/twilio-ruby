@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class UsageList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class UsageList < Twilio::REST::ListResource
           command_alias :usage
           
           def initialize(client, inheritance={})
@@ -15,7 +15,7 @@ module Twilio
           end
         end
       
-        class UsageInstance < InstanceResource
+        class UsageInstance < Twilio::REST::InstanceResource
           def initialize(client, inheritance={}, params={})
             super
             instance_id_key 'sid'

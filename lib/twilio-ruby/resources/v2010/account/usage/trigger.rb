@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class UsageList
-          class TriggerList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class UsageList < Twilio::REST::ListResource
+          class TriggerList < Twilio::REST::ListResource
             can :list, :get, :create
             command_alias :triggers
             
@@ -16,7 +16,7 @@ module Twilio
             end
           end
         
-          class TriggerInstance < InstanceResource
+          class TriggerInstance < Twilio::REST::InstanceResource
             can :update, :delete
             
             def initialize(client, inheritance={}, params={})

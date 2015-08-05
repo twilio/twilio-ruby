@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class CallList
-          class FeedbackSummaryList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class CallList < Twilio::REST::ListResource
+          class FeedbackSummaryList < Twilio::REST::ListResource
             can :get, :create
             command_alias :feedback_summaries
             
@@ -15,7 +15,7 @@ module Twilio
             end
           end
         
-          class FeedbackSummaryInstance < InstanceResource
+          class FeedbackSummaryInstance < Twilio::REST::InstanceResource
             can :delete
             
             def initialize(client, inheritance={}, params={})

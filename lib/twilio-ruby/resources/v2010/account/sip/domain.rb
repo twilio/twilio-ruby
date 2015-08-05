@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class SipList
-          class DomainList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class SipList < Twilio::REST::ListResource
+          class DomainList < Twilio::REST::ListResource
             can :list, :get, :create
             command_alias :domains
             
@@ -16,7 +16,7 @@ module Twilio
             end
           end
         
-          class DomainInstance < InstanceResource
+          class DomainInstance < Twilio::REST::InstanceResource
             can :update, :delete
             
             def initialize(client, inheritance={}, params={})

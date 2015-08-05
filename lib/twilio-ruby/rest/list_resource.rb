@@ -18,7 +18,10 @@ module Twilio
         end
 
         def command_alias(a)
-          @@command_alias = a
+          self.instance_eval do
+            define_method :get_command_alias,
+                          &lambda {a}
+          end
         end
       end
 
@@ -27,7 +30,7 @@ module Twilio
 
         @inheritance = inheritance
         @inheritance.each do |k, v|
-          instance_variable_set(k, v)
+          instance_variable_set("@#{k}", v)
         end
 
         @list_key = self.class.name.demodulize.underscore
@@ -52,10 +55,6 @@ module Twilio
 
       def instance_id_key(key)
         @instance_id_key = key
-      end
-
-      def get_command_alias
-        @@command_alias
       end
 
       def inspect # :nodoc:
@@ -136,10 +135,10 @@ module Twilio
       def components(*comps)
         comps.each do |comp|
           comp_instance = comp.new(@client, @inheritance)
-          self.define_method(
-            comp_instance.get_command_alias,
-            &lambda {comp_instance}
-          )
+          self.class.instance_eval do
+            define_method comp_instance.get_command_alias,
+              &lambda {comp_instance}
+          end
         end
       end
 

@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class SmsList
-          class ShortCodeList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class SmsList < Twilio::REST::ListResource
+          class ShortCodeList < Twilio::REST::ListResource
             can :list, :get
             command_alias :short_codes
             
@@ -16,7 +16,7 @@ module Twilio
             end
           end
         
-          class ShortCodeInstance < InstanceResource
+          class ShortCodeInstance < Twilio::REST::InstanceResource
             can :update
             
             def initialize(client, inheritance={}, params={})

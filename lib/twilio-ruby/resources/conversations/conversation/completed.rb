@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module Conversations
-      class ConversationList
-        class CompletedList < ListResource
+      class ConversationList < Twilio::REST::ListResource
+        class CompletedList < Twilio::REST::ListResource
           can :list
           command_alias :completed
           
@@ -15,7 +15,7 @@ module Twilio
           end
         end
       
-        class CompletedInstance < InstanceResource
+        class CompletedInstance < Twilio::REST::InstanceResource
           def initialize(client, inheritance={}, params={})
             super
             path "/Conversations/#{@sid}.json"

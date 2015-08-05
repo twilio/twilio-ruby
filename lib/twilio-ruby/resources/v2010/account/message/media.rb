@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class MessageInstance
-          class MediaList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class MessageInstance < Twilio::REST::InstanceResource
+          class MediaList < Twilio::REST::ListResource
             can :list, :get
             command_alias :media
             
@@ -16,7 +16,7 @@ module Twilio
             end
           end
         
-          class MediaInstance < InstanceResource
+          class MediaInstance < Twilio::REST::InstanceResource
             can :delete
             
             def initialize(client, inheritance={}, params={})

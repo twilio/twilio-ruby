@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class ConnectAppList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class ConnectAppList < Twilio::REST::ListResource
           can :list, :get
           command_alias :connect_apps
           
@@ -15,7 +15,7 @@ module Twilio
           end
         end
       
-        class ConnectAppInstance < InstanceResource
+        class ConnectAppInstance < Twilio::REST::InstanceResource
           can :update
           
           def initialize(client, inheritance={}, params={})

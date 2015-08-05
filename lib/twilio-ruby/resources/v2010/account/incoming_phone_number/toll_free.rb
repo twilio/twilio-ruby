@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class IncomingPhoneNumberList
-          class TollFreeList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class IncomingPhoneNumberList < Twilio::REST::ListResource
+          class TollFreeList < Twilio::REST::ListResource
             can :list, :create
             command_alias :toll_free
             
@@ -16,7 +16,7 @@ module Twilio
             end
           end
         
-          class TollFreeInstance < InstanceResource
+          class TollFreeInstance < Twilio::REST::InstanceResource
             def initialize(client, inheritance={}, params={})
               super
               instance_id_key 'sid'

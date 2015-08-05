@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class TranscriptionList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class TranscriptionList < Twilio::REST::ListResource
           can :list, :get
           command_alias :transcriptions
           
@@ -15,7 +15,7 @@ module Twilio
           end
         end
       
-        class TranscriptionInstance < InstanceResource
+        class TranscriptionInstance < Twilio::REST::InstanceResource
           can :delete
           
           def initialize(client, inheritance={}, params={})

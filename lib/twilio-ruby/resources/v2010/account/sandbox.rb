@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class SandboxList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class SandboxList < Twilio::REST::ListResource
           can :get
           command_alias :sandbox
           
@@ -13,7 +13,7 @@ module Twilio
           end
         end
       
-        class SandboxInstance < InstanceResource
+        class SandboxInstance < Twilio::REST::InstanceResource
           can :update
           
           def initialize(client, inheritance={}, params={})

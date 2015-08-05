@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module Pricing
-      class VoiceList
-        class NumberList < ListResource
+      class VoiceList < Twilio::REST::ListResource
+        class NumberList < Twilio::REST::ListResource
           can :get
           command_alias :numbers
           
@@ -13,7 +13,7 @@ module Twilio
           end
         end
       
-        class NumberInstance < InstanceResource
+        class NumberInstance < Twilio::REST::InstanceResource
           def initialize(client, inheritance={}, params={})
             super
             path "/Voice/Numbers/#{@number}"

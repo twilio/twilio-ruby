@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class IncomingPhoneNumberList
-          class MobileList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class IncomingPhoneNumberList < Twilio::REST::ListResource
+          class MobileList < Twilio::REST::ListResource
             can :list, :create
             command_alias :mobile
             
@@ -16,7 +16,7 @@ module Twilio
             end
           end
         
-          class MobileInstance < InstanceResource
+          class MobileInstance < Twilio::REST::InstanceResource
             def initialize(client, inheritance={}, params={})
               super
               instance_id_key 'sid'

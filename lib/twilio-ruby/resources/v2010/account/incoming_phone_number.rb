@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class IncomingPhoneNumberList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class IncomingPhoneNumberList < Twilio::REST::ListResource
           can :list, :get, :create
           command_alias :incoming_phone_numbers
           
@@ -22,7 +22,7 @@ module Twilio
           end
         end
       
-        class IncomingPhoneNumberInstance < InstanceResource
+        class IncomingPhoneNumberInstance < Twilio::REST::InstanceResource
           can :update, :delete
           
           def initialize(client, inheritance={}, params={})

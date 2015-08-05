@@ -1,7 +1,7 @@
 module Twilio
   module Resources
     module Pricing
-      class PhoneNumberList < ListResource
+      class PhoneNumberList < Twilio::REST::ListResource
         can :get
         command_alias :phone_numbers
         
@@ -14,7 +14,7 @@ module Twilio
         end
       end
     
-      class PhoneNumberInstance < InstanceResource
+      class PhoneNumberInstance < Twilio::REST::InstanceResource
         def initialize(client, inheritance={}, params={})
           super
           instance_id_key 'sid'

@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class AddressInstance
-          class DependentPhoneNumberList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class AddressInstance < Twilio::REST::InstanceResource
+          class DependentPhoneNumberList < Twilio::REST::ListResource
             can :list
             command_alias :dependent_phone_numbers
             
@@ -16,7 +16,7 @@ module Twilio
             end
           end
         
-          class DependentPhoneNumberInstance < InstanceResource
+          class DependentPhoneNumberInstance < Twilio::REST::InstanceResource
             def initialize(client, inheritance={}, params={})
               super
               instance_id_key 'sid'

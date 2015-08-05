@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class ConferenceInstance
-          class ParticipantList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class ConferenceInstance < Twilio::REST::InstanceResource
+          class ParticipantList < Twilio::REST::ListResource
             can :list, :get
             command_alias :participants
             
@@ -16,7 +16,7 @@ module Twilio
             end
           end
         
-          class ParticipantInstance < InstanceResource
+          class ParticipantInstance < Twilio::REST::InstanceResource
             can :update, :delete
             
             def initialize(client, inheritance={}, params={})

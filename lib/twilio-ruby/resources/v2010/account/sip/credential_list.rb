@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class SipList
-          class CredentialListList < ListResource
+      class AccountInstance < Twilio::REST::InstanceResource
+        class SipList < Twilio::REST::ListResource
+          class CredentialListList < Twilio::REST::ListResource
             can :list, :get, :create
             command_alias :credential_lists
             
@@ -16,7 +16,7 @@ module Twilio
             end
           end
         
-          class CredentialListInstance < InstanceResource
+          class CredentialListInstance < Twilio::REST::InstanceResource
             can :update, :delete
             
             def initialize(client, inheritance={}, params={})

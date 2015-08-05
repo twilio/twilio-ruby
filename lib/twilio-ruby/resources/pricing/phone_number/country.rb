@@ -1,8 +1,8 @@
 module Twilio
   module Resources
     module Pricing
-      class PhoneNumberInstance
-        class CountryList < ListResource
+      class PhoneNumberInstance < Twilio::REST::InstanceResource
+        class CountryList < Twilio::REST::ListResource
           can :list, :get
           command_alias :countries
           
@@ -15,7 +15,7 @@ module Twilio
           end
         end
       
-        class CountryInstance < InstanceResource
+        class CountryInstance < Twilio::REST::InstanceResource
           def initialize(client, inheritance={}, params={})
             super
             path "/PhoneNumbers/Countries/#{@iso_country}"
