@@ -4,8 +4,8 @@ module Twilio
   module REST
     
     class PricingClient < BaseClient
-      attr_reader :phone_numbers,
-                  :voice
+      attr_reader :voice,
+                  :phone_numbers
       host 'pricing.twilio.com'
       
       ##
@@ -89,8 +89,8 @@ module Twilio
       ##
       # Set up +account+ and +accounts+ attributes.
       def set_up_subresources # :doc:
-        @phone_numbers = Twilio::Resources::Pricing::PhoneNumberList.new self, {}
         @voice = Twilio::Resources::Pricing::VoiceList.new self, {}
+        @phone_numbers = Twilio::Resources::Pricing::PhoneNumberList.new self, {}
       end
 
       ##
