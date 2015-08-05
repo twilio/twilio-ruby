@@ -129,7 +129,7 @@ module Twilio
       def internal_create(params={})
         raise "Can't create a resource without a REST Client" unless @client
         response = @client.post @path, params
-        @instance_class.new @client, response
+        @instance_class.new @client, response, @inheritance
       end
 
       def components(*comps)
