@@ -105,6 +105,9 @@ require 'twilio-ruby/resources/v2010/account/usage/record/yearly.rb'
 require 'twilio-ruby/resources/v2010/account/usage/record/yesterday.rb'
 require 'twilio-ruby/resources/v2010/account/usage/trigger.rb'
 
+require 'twilio-ruby/compatibility/v2010/account/call/feedback.rb'
+require 'twilio-ruby/compatibility/v2010/account/queue/member.rb'
+
 require 'twilio-ruby/rest/v2010_client'
 require 'twilio-ruby/rest/conversations_client'
 require 'twilio-ruby/rest/task_router_client'

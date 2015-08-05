@@ -1,9 +1,9 @@
 module Twilio
   module Resources
     module V2010
-      class AccountInstance
-        class QueueInstance
-          class MemberList
+      class AccountInstance < Twilio::REST::InstanceResource
+        class QueueInstance < Twilio::REST::InstanceResource
+          class MemberList < Twilio::REST::ListResource
             def front
               get "Front"
             end

@@ -36,7 +36,7 @@ module Twilio
         @client = client
         @inheritance = inheritance
         @inheritance.each do |k, v|
-          instance_variable_set(k, v)
+          instance_variable_set("@#{k}", v)
         end
         set_up_properties_from params
       end
