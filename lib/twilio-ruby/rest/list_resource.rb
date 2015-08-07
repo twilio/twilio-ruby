@@ -129,16 +129,14 @@ module Twilio
       def internal_create(params={})
         raise "Can't create a resource without a REST Client" unless @client
         response = @client.post @path, params
-        @instance_class.new @client, response, @inheritance
+        @instance_class.new @client, @inheritance, response
       end
 
       def components(*comps)
         comps.each do |comp|
           comp_instance = comp.new(@client, @inheritance)
-          self.class.instance_eval do
-            define_method comp_instance.get_command_alias,
-              &lambda {comp_instance}
-          end
+          self.define_singleton_method comp_instance.get_command_alias,
+            &lambda {comp_instance}
         end
       end
 

@@ -105,10 +105,8 @@ module Twilio
 
       def dependent(dep, path_params)
         dep_instance = dep.new(@client, @inheritance.merge(path_params))
-        self.class.instance_eval do
-          define_method dep_instance.get_command_alias.to_sym,
+        self.define_singleton_method dep_instance.get_command_alias.to_sym,
             &lambda {dep_instance}
-        end
       end
 
       def set_up_properties_from(hash)
