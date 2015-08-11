@@ -11,7 +11,7 @@ A module for using the Twilio REST API and generating valid [TwiML](http://www.t
 To install using [Bundler][bundler] grab the latest stable version:
 
 ```ruby
-gem 'twilio-ruby', '~> 4.1.0'
+gem 'twilio-ruby', '~> 4.2.1'
 ```
 
 To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
@@ -147,6 +147,30 @@ capability.allow_client_incoming 'andrew'
 There is a slightly more detailed document in the [Capability][capability]
 section of the wiki.
 
+## Lookup Phone Number information
+
+You can look up details on phone numbers with the Lookups API.
+
+```ruby
+require 'twilio-ruby'
+
+# put your own credentials here
+account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
+
+# set up a client to talk to the Twilio REST API
+@lookups_client = Twilio::REST::LookupsClient.new account_sid, auth_token
+
+# lookup a number
+number = @lookups_client.phone_numbers.get('+14159341234')
+
+# investigate the number
+number.national_format
+# => "(415) 934-1234"
+number.country_code
+# => "US"
+```
+
 ## Getting Started With TwiML
 
 TwiML support is based on the [Builder][builder] library. You can construct a
@@ -201,7 +225,7 @@ If you've instead found a bug in the library or would like new features added, g
 ## More Information
 
 There are more detailed examples in the included [examples][examples]
-directory. Also for thoose upgrading, the [upgrade guide][upgrade] is available in the [twilio-ruby github wiki][wiki].
+directory. Also for those upgrading, the [upgrade guide][upgrade] is available in the [twilio-ruby github wiki][wiki].
 
 [capability]: https://github.com/twilio/twilio-ruby/wiki/Capability
 [builder]: http://builder.rubyforge.org/

@@ -4,7 +4,7 @@ module Twilio
       module Statistics
         def statistics(args={})
           path = "#{@path}/Statistics"
-          response = @client.get(path, args, true)
+          response = @client.get(path, args)
           statistics_class.new(path, @client, response)
         end
 
