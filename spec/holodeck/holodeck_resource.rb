@@ -1,4 +1,5 @@
 class HolodeckResource
+  DEFAULT_HEADERS = {}
   @@sub_resources = {}
   @@holograms = []
 
