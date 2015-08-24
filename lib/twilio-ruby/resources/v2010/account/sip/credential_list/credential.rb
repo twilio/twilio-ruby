@@ -22,7 +22,7 @@ module Twilio
               
               def initialize(client, inheritance={}, params={})
                 super
-                path "/Accounts/#{@account_sid}/SIP/CredentialList/#{@sip_credential_list_sid}/Credentials/#{@sid}.json"
+                path "/Accounts/#{@account_sid}/SIP/CredentialLists/#{@sip_credential_list_sid}/Credentials/#{@sid}.json"
                 instance_id_key 'sid'
               end
             end

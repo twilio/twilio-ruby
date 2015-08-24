@@ -15,8 +15,8 @@ module Twilio
             components Twilio::Resources::V2010::AccountInstance::CallList::FeedbackSummaryList
           end
           
-          def make(from, to, url)
-            create from: from, to: to, url: url
+          def make(to, from, url)
+            create to: to, from: from, url: url
           end
         end
       

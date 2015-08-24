@@ -21,7 +21,7 @@ module Twilio
             
             def initialize(client, inheritance={}, params={})
               super
-              path "/Accounts/#{@account_sid}/SIP/CredentialList/#{@sid}.json"
+              path "/Accounts/#{@account_sid}/SIP/CredentialLists/#{@sid}.json"
               instance_id_key 'sid'
               dependent Twilio::Resources::V2010::AccountInstance::SipList::CredentialListInstance::CredentialList, {
                 account_sid: @account_sid,

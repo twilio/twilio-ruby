@@ -8,9 +8,10 @@ module Twilio
           
           def initialize(client, inheritance={})
             super
+            path "/Workspaces/#{@workspace_sid}/Activities"
             instance_id_key 'sid'
             instance_class ActivityInstance
-            list_key 'activity'
+            list_key 'activities'
           end
         end
       
@@ -19,7 +20,7 @@ module Twilio
           
           def initialize(client, inheritance={}, params={})
             super
-            path "/Workspaces/#{@workspace_sid}/Activities/#{@activity_sid}"
+            path "/Workspaces/#{@workspace_sid}/Activities/#{@sid}"
             instance_id_key 'sid'
           end
         end

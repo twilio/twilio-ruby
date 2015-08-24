@@ -4,13 +4,15 @@ module Twilio
       class WorkspaceInstance < Twilio::REST::InstanceResource
         class TaskInstance < Twilio::REST::InstanceResource
           class ReservationList < Twilio::REST::ListResource
-            can :get
+            can :list, :get
             command_alias :reservations
             
             def initialize(client, inheritance={})
               super
+              path "/Workspace/#{@workspace_sid}/Tasks/#{@task_sid}/Reservations"
               instance_id_key 'sid'
               instance_class ReservationInstance
+              list_key 'reservations'
             end
           end
         
@@ -19,7 +21,7 @@ module Twilio
             
             def initialize(client, inheritance={}, params={})
               super
-              path "/Workspace/#{@workspace_sid}/Tasks/#{@task_sid}/Reservations/#{@reservation_sid}"
+              path "/Workspace/#{@workspace_sid}/Tasks/#{@task_sid}/Reservations/#{@sid}"
               instance_id_key 'sid'
             end
           end

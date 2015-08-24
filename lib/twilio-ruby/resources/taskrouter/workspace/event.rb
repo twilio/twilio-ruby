@@ -18,7 +18,7 @@ module Twilio
         class EventInstance < Twilio::REST::InstanceResource
           def initialize(client, inheritance={}, params={})
             super
-            path "/Workspaces/#{@workspace_sid}/Events/#{@event_sid}"
+            path "/Workspaces/#{@workspace_sid}/Events/#{@sid}"
             instance_id_key 'sid'
           end
         end

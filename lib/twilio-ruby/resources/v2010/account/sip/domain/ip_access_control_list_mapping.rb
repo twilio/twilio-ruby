@@ -5,7 +5,7 @@ module Twilio
         class SipList < Twilio::REST::ListResource
           class DomainInstance < Twilio::REST::InstanceResource
             class IpAccessControlListMappingList < Twilio::REST::ListResource
-              can :list, :create
+              can :list, :get, :create
               command_alias :ip_access_control_list_mappings
               
               def initialize(client, inheritance={})

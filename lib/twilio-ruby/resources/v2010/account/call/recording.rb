@@ -23,10 +23,6 @@ module Twilio
               super
               path "/Accounts/#{@account_sid}/Calls/#{@call_sid}/Recordings/#{@sid}.json"
               instance_id_key 'sid'
-              dependent Twilio::Resources::V2010::AccountInstance::CallInstance::RecordingInstance::TranscriptionList, {
-                account_sid: @account_sid,
-                recording_sid: @sid
-              }
             end
           end
         end
