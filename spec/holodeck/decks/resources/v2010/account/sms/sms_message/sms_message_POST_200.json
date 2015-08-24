@@ -1,0 +1,15 @@
+{
+    "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "api_version": "2008-08-01",
+    "body": "n",
+    "date_created": "Mon, 26 Jul 2010 21:46:42 +0000",
+    "date_sent": "Mon, 26 Jul 2010 21:46:44 +0000",
+    "date_updated": "Mon, 26 Jul 2010 21:46:44 +0000",
+    "direction": "outbound-api",
+    "from": "+141586753093",
+    "price": "-0.03000",
+    "sid": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "status": "sent",
+    "to": "+141586753096",
+    "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SMS/Messages/SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+}

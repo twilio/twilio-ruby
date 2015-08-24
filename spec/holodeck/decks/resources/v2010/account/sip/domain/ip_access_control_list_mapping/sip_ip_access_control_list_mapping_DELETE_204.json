@@ -1,0 +1,11 @@
+{
+    "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "date_created": "Fri, 17 Jul 2015 21:25:15 +0000",
+    "date_updated": "Fri, 17 Jul 2015 21:25:15 +0000",
+    "friendly_name": "aaaa",
+    "sid": "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "subresource_uris": {
+        "ip_addresses": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/IpAccessControlLists/ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAddresses.json"
+    },
+    "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/Domains/SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlListMappings/ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+}

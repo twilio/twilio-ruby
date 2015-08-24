@@ -1,0 +1,25 @@
+{
+    "countries": [
+        {
+            "beta": null,
+            "country": "United States",
+            "country_code": "US",
+            "subresource_uris": {
+                "local": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/AvailablePhoneNumbers/US/Local.json",
+                "toll_free": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/AvailablePhoneNumbers/US/TollFree.json"
+            },
+            "uri": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/AvailablePhoneNumbers/US.json"
+        }
+    ],
+    "end": 41,
+    "first_page_uri": null,
+    "last_page_uri": null,
+    "next_page_uri": null,
+    "num_pages": 1,
+    "page": 0,
+    "page_size": 50,
+    "previous_page_uri": null,
+    "start": 0,
+    "total": 42,
+    "uri": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/AvailablePhoneNumbers.json"
+}

@@ -1,0 +1,15 @@
+{
+    "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "api_version": "2008-08-01",
+    "date_created": "Mon, 22 Aug 2011 20:58:44 +0000",
+    "date_updated": "Mon, 22 Aug 2011 20:58:44 +0000",
+    "duration": "10",
+    "price": "0.00000",
+    "price_unit": "USD",
+    "recording_sid": "REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "sid": "TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "status": "in-progress",
+    "transcription_text": "THIS IS A TEST",
+    "type": "fast",
+    "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Transcriptions/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+}

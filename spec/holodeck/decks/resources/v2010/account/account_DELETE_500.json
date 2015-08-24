@@ -1,0 +1,5 @@
+{
+    "code": 20500,
+    "message": "An internal server error has occurred",
+    "more_info": "https://www.twilio.com/docs/errors/20500"
+}
