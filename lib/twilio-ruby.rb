@@ -61,7 +61,6 @@ require 'twilio-ruby/resources/v2010/account/available_phone_number/mobile.rb'
 require 'twilio-ruby/resources/v2010/account/call.rb'
 require 'twilio-ruby/resources/v2010/account/call/feedback_summary.rb'
 require 'twilio-ruby/resources/v2010/account/call/recording.rb'
-require 'twilio-ruby/resources/v2010/account/call/recording/transcription.rb'
 require 'twilio-ruby/resources/v2010/account/call/notification.rb'
 require 'twilio-ruby/resources/v2010/account/call/feedback.rb'
 require 'twilio-ruby/resources/v2010/account/conference.rb'
@@ -108,9 +107,13 @@ require 'twilio-ruby/resources/v2010/account/usage/trigger.rb'
 require 'twilio-ruby/compatibility/v2010/account/call/feedback.rb'
 require 'twilio-ruby/compatibility/v2010/account/queue/member.rb'
 
+Dir[File.dirname(__FILE__) + "/twilio-ruby/compatibility/**/*.rb"].each do |file|
+  require file
+end
+
 require 'twilio-ruby/rest/v2010_client'
 require 'twilio-ruby/rest/conversations_client'
-require 'twilio-ruby/rest/task_router_client'
+require 'twilio-ruby/rest/taskrouter_client'
 require 'twilio-ruby/rest/lookups_client'
 require 'twilio-ruby/rest/pricing_client'
 require 'twilio-ruby/rest/monitor_client'
