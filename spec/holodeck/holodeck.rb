@@ -1,27 +1,30 @@
 class Holodeck
-  @@sub_resources = {}
-  @@holograms = []
-  @@active = false
+  @sub_resources = {}
+  @holograms = {}
+  @active = false
+
+  class MissingHologram < StandardError
+    def message
+      "Could not find matching Hologram for #{super}"
+    end
+  end
 
   def self.activate
-    raise "Holodeck already active!" if @@active
-    @@active = true
+    raise "Holodeck already active!" if @active
+    @active = true
 
-    @@sub_resources.each do |r|
-      r.activate(self)
+    @sub_resources.each do |k, v|
+      v.activate(self)
     end
 
     # Monkey patch BaseClient get/post/put/delete
+    holodeck_class = self
     base_client = Twilio::REST::BaseClient
-    [:get, :post, :put, :delete].each do |method|
-      m = base_client.instance_method(method)
-      base_client.send :define_method, 'original_' + method.to_s, m
-      base_client.send :define_method, method,
-        &lambda { |path, *args|
-          path = "https://" + @config.host + "/#{@API_VERSION}" + path
-          Holodeck.process_request(method, path, args[0])
-        }
-    end
+    m = base_client.instance_method(:connect_and_send)
+    base_client.send :define_method, 'original_connect_and_send', m
+    base_client.send :define_method, :connect_and_send, &lambda {|request|
+      holodeck_class.process_request(self.class.host, request)
+    }
   end
 
   def self.begin_program(&block)
@@ -32,31 +35,36 @@ class Holodeck
   end
 
   def self.deactivate
-    @@active = false
-    @@handlers = []
+    @active = false
+    @holograms = {}
 
     # Restore BaseClient
     base_client = Twilio::REST::BaseClient
-    [:get, :post, :put, :delete].each do |method|
-      m = base_client.instance_method('original_' + method.to_s)
-      base_client.send :define_method, method, m
-    end
+    m = base_client.instance_method('original_connect_and_send')
+    base_client.send :define_method, :connect_and_send, m
   end
 
   def self.add(hologram)
-    @@holograms << hologram
+    @holograms[hologram.url] ||= []
+    @holograms[hologram.url] << hologram
   end
 
-  def self.process_request(method, path, params)
-    method.upcase!
+  def self.process_request(host, request)
+    method = request.method.upcase
+    path = "https://#{host}" + request.path.split('?')[0]
+    query_params = request.path.split('?')[1] if request.path.include?('?')
+    form_params = request.body
 
-    @@holograms.each do |h|
-      return response if response = h.simulate(method, path, params)
-    end
+    @holograms[path].each do |h|
+      response = h.simulate(method, path, query_params, form_params)
+      return response if response
+    end if @holograms[path]
+
+    raise MissingHologram, path
   end
 
   def method_missing(name, *args)
-    super unless subresource = @@sub_resources[name]
+    super unless subresource = @sub_resources[name]
     subresource
   end
 end
