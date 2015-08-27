@@ -1,0 +1,30 @@
+{
+    "end": 49,
+    "first_page_uri": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/SMS/Messages.json?Page=0&PageSize=50",
+    "last_page_uri": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/SMS/Messages.json?Page=1&PageSize=50",
+    "next_page_uri": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/SMS/Messages.json?Page=1&PageSize=50",
+    "num_pages": 2,
+    "page": 0,
+    "page_size": 50,
+    "previous_page_uri": null,
+    "sms_messages": [
+        {
+            "account_sid": "ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "api_version": "2008-08-01",
+            "body": "n",
+            "date_created": "Mon, 26 Jul 2010 21:46:42 +0000",
+            "date_sent": "Mon, 26 Jul 2010 21:46:44 +0000",
+            "date_updated": "Mon, 26 Jul 2010 21:46:44 +0000",
+            "direction": "outbound-api",
+            "from": "+141586753093",
+            "price": "-0.03000",
+            "sid": "SMbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "status": "sent",
+            "to": "+141586753096",
+            "uri": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/SMS/Messages/SMbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.json"
+        }
+    ],
+    "start": 0,
+    "total": 54,
+    "uri": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/SMS/Messages.json"
+}

@@ -1,0 +1,18 @@
+{
+    "country": "Estonia",
+    "iso_country": "EE",
+    "phone_number_prices": [
+        {
+            "base_price": 3.0,
+            "current_price": 3.0,
+            "type": "mobile"
+        },
+        {
+            "base_price": 1.0,
+            "current_price": 1.0,
+            "type": "national"
+        }
+    ],
+    "price_unit": "usd",
+    "uri": "pricing.twilio.com/v1/PhoneNumbers/Countries/EE"
+}

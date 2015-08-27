@@ -1,0 +1,30 @@
+{
+    "meta": {
+        "first_page_url": "https://taskrouter.twilio.com/v1/Workspaces/WSbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Tasks/WTbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Reservations?PageSize=50&Page=0",
+        "key": "reservations",
+        "next_page_url": null,
+        "page": 0,
+        "page_size": 50,
+        "previous_page_url": null,
+        "url": "https://taskrouter.twilio.com/v1/Workspaces/WSbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Tasks/WTbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Reservations"
+    },
+    "reservations": [
+        {
+            "account_sid": "ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "date_created": "2014-05-14T10:50:02Z",
+            "date_updated": "2014-05-15T16:03:42Z",
+            "links": {
+                "task": "https://taskrouter.twilio.com/v1/Workspaces/WSbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Tasks/WTbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "worker": "https://taskrouter.twilio.com/v1/Workspaces/WSbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Workers/WKbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "workspace": "https://taskrouter.twilio.com/v1/Workspaces/WSbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            "reservation_status": "reserved",
+            "sid": "WRbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "task_sid": "WTbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "url": "https://taskrouter.twilio.com/v1/Workspaces/WSbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Tasks/WTbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Reservations/WRbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "worker_name": "Doug",
+            "worker_sid": "WKbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "workspace_sid": "WSbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+    ]
+}

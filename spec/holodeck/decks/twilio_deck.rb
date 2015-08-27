@@ -1,5 +1,5 @@
 class Twiliodeck < Holodeck
-  @@sub_resources = {
+  @sub_resources = {
     conversations: ConversationsHolodeckResource,
     lookups: LookupsHolodeckResource,
     monitor: MonitorHolodeckResource,
@@ -7,4 +7,5 @@ class Twiliodeck < Holodeck
     taskrouter: TaskrouterHolodeckResource,
     v2010: V2010HolodeckResource
   }
+  @holograms = {}
 end

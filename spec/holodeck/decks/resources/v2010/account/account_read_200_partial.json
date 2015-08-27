@@ -1,0 +1,37 @@
+{
+    "accounts": [
+        {
+            "auth_token": "AUTHTOKEN",
+            "date_created": "Sun, 15 Mar 2009 02:08:47 +0000",
+            "date_updated": "Wed, 25 Aug 2010 01:30:09 +0000",
+            "friendly_name": "Test Account",
+            "sid": "ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "status": "active",
+            "subresource_uris": {
+                "available_phone_numbers": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/AvailablePhoneNumbers.json",
+                "calls": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Calls.json",
+                "conferences": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Conferences.json",
+                "incoming_phone_numbers": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/IncomingPhoneNumbers.json",
+                "notifications": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Notifications.json",
+                "outgoing_caller_ids": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/OutgoingCallerIds.json",
+                "recordings": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Recordings.json",
+                "sandbox": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Sandbox.json",
+                "sms_messages": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/SMS/Messages.json",
+                "transcriptions": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Transcriptions.json"
+            },
+            "type": "Full",
+            "uri": "/2010-04-01/Accounts/ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.json"
+        }
+    ],
+    "end": 3,
+    "first_page_uri": "/2010-04-01/Accounts.json?Page=0&PageSize=50",
+    "last_page_uri": "/2010-04-01/Accounts.json?Page=0&PageSize=50",
+    "next_page_uri": null,
+    "num_pages": 1,
+    "page": 0,
+    "page_size": 50,
+    "previous_page_uri": null,
+    "start": 0,
+    "total": 4,
+    "uri": "/2010-04-01/Accounts.json"
+}

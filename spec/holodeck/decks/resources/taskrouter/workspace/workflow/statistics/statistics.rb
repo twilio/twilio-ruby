@@ -1,12 +1,14 @@
 class StatisticsInstanceHolodeckResource < HolodeckResource
-  @@handlers = [
+  @sub_resources = {}
+  @holograms = [
       Hologram.new(
           method: "GET",
           url: "https://taskrouter.twilio.com/v1Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Workflows/WFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Statistics",
           auth: ["ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "AUTHTOKEN"],
           status_code: 200,
-          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_200.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_fetch_200.json"),
+          query_params: '{"EndDate": "1199174400", "Minutes": "1", "StartDate": "1199174400"}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
@@ -14,8 +16,9 @@ class StatisticsInstanceHolodeckResource < HolodeckResource
           url: "https://taskrouter.twilio.com/v1Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Workflows/WFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Statistics",
           auth: ["ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "AUTHTOKEN"],
           status_code: 200,
-          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_200.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_update_200.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
@@ -23,26 +26,9 @@ class StatisticsInstanceHolodeckResource < HolodeckResource
           url: "https://taskrouter.twilio.com/v1Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Workflows/WFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Statistics",
           auth: ["ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "AUTHTOKEN"],
           status_code: 204,
-          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_204.json"),
-          params: '{}',
-          headers: HolodeckResource::DEFAULT_HEADERS
-      ),
-      Hologram.new(
-          method: "POST",
-          url: "https://taskrouter.twilio.com/v1Workspaces/WSllllllllllllllllllllllllllllllll/Workflows/WFllllllllllllllllllllllllllllllll/Statistics",
-          auth: ["ACllllllllllllllllllllllllllllllll", "AUTHTOKEN"],
-          status_code: 401,
-          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_401.json"),
-          params: '{}',
-          headers: HolodeckResource::DEFAULT_HEADERS
-      ),
-      Hologram.new(
-          method: "GET",
-          url: "https://taskrouter.twilio.com/v1Workspaces/WSllllllllllllllllllllllllllllllll/Workflows/WFllllllllllllllllllllllllllllllll/Statistics",
-          auth: ["ACllllllllllllllllllllllllllllllll", "AUTHTOKEN"],
-          status_code: 401,
-          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_401.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_delete_204.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
@@ -50,26 +36,29 @@ class StatisticsInstanceHolodeckResource < HolodeckResource
           url: "https://taskrouter.twilio.com/v1Workspaces/WSllllllllllllllllllllllllllllllll/Workflows/WFllllllllllllllllllllllllllllllll/Statistics",
           auth: ["ACllllllllllllllllllllllllllllllll", "AUTHTOKEN"],
           status_code: 401,
-          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_401.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_delete_401.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
           method: "GET",
-          url: "https://taskrouter.twilio.com/v1Workspaces/WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Workflows/WFkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Statistics",
-          auth: ["ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "AUTHTOKEN"],
-          status_code: 404,
-          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_404.json"),
-          params: '{}',
+          url: "https://taskrouter.twilio.com/v1Workspaces/WSllllllllllllllllllllllllllllllll/Workflows/WFllllllllllllllllllllllllllllllll/Statistics",
+          auth: ["ACllllllllllllllllllllllllllllllll", "AUTHTOKEN"],
+          status_code: 401,
+          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_fetch_401.json"),
+          query_params: '{"EndDate": "1199174400", "Minutes": "1", "StartDate": "1199174400"}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
           method: "POST",
-          url: "https://taskrouter.twilio.com/v1Workspaces/WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Workflows/WFkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Statistics",
-          auth: ["ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "AUTHTOKEN"],
-          status_code: 404,
-          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_404.json"),
-          params: '{}',
+          url: "https://taskrouter.twilio.com/v1Workspaces/WSllllllllllllllllllllllllllllllll/Workflows/WFllllllllllllllllllllllllllllllll/Statistics",
+          auth: ["ACllllllllllllllllllllllllllllllll", "AUTHTOKEN"],
+          status_code: 401,
+          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_update_401.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
@@ -77,26 +66,29 @@ class StatisticsInstanceHolodeckResource < HolodeckResource
           url: "https://taskrouter.twilio.com/v1Workspaces/WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Workflows/WFkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Statistics",
           auth: ["ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "AUTHTOKEN"],
           status_code: 404,
-          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_404.json"),
-          params: '{}',
-          headers: HolodeckResource::DEFAULT_HEADERS
-      ),
-      Hologram.new(
-          method: "POST",
-          url: "https://taskrouter.twilio.com/v1Workspaces/WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Workflows/WFmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Statistics",
-          auth: ["ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "AUTHTOKEN"],
-          status_code: 500,
-          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_500.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_delete_404.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
           method: "GET",
-          url: "https://taskrouter.twilio.com/v1Workspaces/WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Workflows/WFmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Statistics",
-          auth: ["ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "AUTHTOKEN"],
-          status_code: 500,
-          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_500.json"),
-          params: '{}',
+          url: "https://taskrouter.twilio.com/v1Workspaces/WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Workflows/WFkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Statistics",
+          auth: ["ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "AUTHTOKEN"],
+          status_code: 404,
+          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_fetch_404.json"),
+          query_params: '{"EndDate": "1199174400", "Minutes": "1", "StartDate": "1199174400"}',
+          form_params: '{}',
+          headers: HolodeckResource::DEFAULT_HEADERS
+      ),
+      Hologram.new(
+          method: "POST",
+          url: "https://taskrouter.twilio.com/v1Workspaces/WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Workflows/WFkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Statistics",
+          auth: ["ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "AUTHTOKEN"],
+          status_code: 404,
+          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_update_404.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
@@ -104,8 +96,29 @@ class StatisticsInstanceHolodeckResource < HolodeckResource
           url: "https://taskrouter.twilio.com/v1Workspaces/WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Workflows/WFmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Statistics",
           auth: ["ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "AUTHTOKEN"],
           status_code: 500,
-          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_500.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_delete_500.json"),
+          query_params: '{}',
+          form_params: '{}',
+          headers: HolodeckResource::DEFAULT_HEADERS
+      ),
+      Hologram.new(
+          method: "GET",
+          url: "https://taskrouter.twilio.com/v1Workspaces/WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Workflows/WFmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Statistics",
+          auth: ["ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "AUTHTOKEN"],
+          status_code: 500,
+          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_fetch_500.json"),
+          query_params: '{"EndDate": "1199174400", "Minutes": "1", "StartDate": "1199174400"}',
+          form_params: '{}',
+          headers: HolodeckResource::DEFAULT_HEADERS
+      ),
+      Hologram.new(
+          method: "POST",
+          url: "https://taskrouter.twilio.com/v1Workspaces/WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Workflows/WFmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Statistics",
+          auth: ["ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "AUTHTOKEN"],
+          status_code: 500,
+          content_file: File.join(File.dirname(__FILE__), "workflow_statistics_update_500.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
   ]

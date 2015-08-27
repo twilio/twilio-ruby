@@ -1,0 +1,44 @@
+{
+    "end": 1,
+    "last_page_uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Calls.json?Page=10&PageSize=50",
+    "next_page_uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Calls.json?Page=1&PageSize=50",
+    "num_pages": 1,
+    "page": 0,
+    "page_size": 50,
+    "previous_page_uri": null,
+    "start": 0,
+    "total": 2,
+    "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Usage/Triggers.json?Page=0&PageSize=50",
+    "usage_triggers": [
+        {
+            "callback_method": "POST",
+            "callback_url": "http://www.example.com/",
+            "current_usage_value": "7",
+            "date_created": "Sat, 29 Sep 2012 12:45:43 +0000",
+            "date_updated": "Sat, 29 Sep 2012 12:47:54 +0000",
+            "friendly_name": "Trigger for calls at usage of 500",
+            "recurring": "daily",
+            "sid": "UTcccccccccccccccccccccccccccccccc",
+            "trigger_by": "usage",
+            "trigger_value": "500.000000",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Usage/Triggers/UTcccccccccccccccccccccccccccccccc/UTcccccccccccccccccccccccccccccccc.json",
+            "usage_category": "calls",
+            "usage_record_uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Usage/Records.json?Category=calls"
+        },
+        {
+            "callback_method": "POST",
+            "callback_url": "http://www.example.com/",
+            "current_usage_value": "7",
+            "date_created": "Sat, 29 Sep 2012 12:45:43 +0000",
+            "date_updated": "Sat, 29 Sep 2012 12:47:54 +0000",
+            "friendly_name": "Trigger for calls at usage of 500",
+            "recurring": "daily",
+            "sid": "UTcccccccccccccccccccccccccccccccc",
+            "trigger_by": "usage",
+            "trigger_value": "500.000000",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Usage/Triggers/UTcccccccccccccccccccccccccccccccc/UTcccccccccccccccccccccccccccccccc.json",
+            "usage_category": "calls",
+            "usage_record_uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Usage/Records.json?Category=calls"
+        }
+    ]
+}

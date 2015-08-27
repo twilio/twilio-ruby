@@ -1,5 +1,6 @@
 class ConversationsHolodeckResource < HolodeckResource
-  @@sub_resources = {
+  @sub_resources = {
       conversations: ConversationInstanceHolodeckResource,
   }
+  @holograms = []
 end

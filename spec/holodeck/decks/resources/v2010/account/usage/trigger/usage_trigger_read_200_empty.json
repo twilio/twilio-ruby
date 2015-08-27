@@ -1,0 +1,13 @@
+{
+    "end": 1,
+    "last_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls.json?Page=10&PageSize=50",
+    "next_page_uri": null,
+    "num_pages": 1,
+    "page": 0,
+    "page_size": 50,
+    "previous_page_uri": null,
+    "start": 0,
+    "total": 2,
+    "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Usage/Triggers.json?Page=0&PageSize=50",
+    "usage_triggers": []
+}

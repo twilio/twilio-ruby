@@ -1,0 +1,10 @@
+{
+    "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "api_version": "2010-04-01",
+    "call_sid": "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "date_created": "Wed, 01 Sep 2010 15:15:41 +0000",
+    "date_updated": "Wed, 01 Sep 2010 15:15:41 +0000",
+    "duration": "6",
+    "sid": "REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings/REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+}

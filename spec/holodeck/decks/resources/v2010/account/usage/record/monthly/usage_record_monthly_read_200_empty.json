@@ -1,0 +1,14 @@
+{
+    "end": 49,
+    "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Usage/Records/Monthly?Page=0&PageSize=50",
+    "last_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Usage/Records/Monthly?Page=67&PageSize=50",
+    "next_page_uri": null,
+    "num_pages": 68,
+    "page": 0,
+    "page_size": 50,
+    "previous_page_uri": null,
+    "start": 0,
+    "total": 3381,
+    "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Usage/Records/Monthly",
+    "usage_records": []
+}

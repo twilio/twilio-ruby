@@ -1,12 +1,24 @@
 class ParticipantInstanceHolodeckResource < HolodeckResource
-  @@handlers = [
+  @sub_resources = {}
+  @holograms = [
       Hologram.new(
-          method: "POST",
+          method: "GET",
           url: "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants",
           auth: ["ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "AUTHTOKEN"],
           status_code: 200,
-          content_file: File.join(File.dirname(__FILE__), "participant_200.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "participant_read_200_empty.json"),
+          query_params: '{}',
+          form_params: '{}',
+          headers: HolodeckResource::DEFAULT_HEADERS
+      ),
+      Hologram.new(
+          method: "GET",
+          url: "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          auth: ["ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "AUTHTOKEN"],
+          status_code: 200,
+          content_file: File.join(File.dirname(__FILE__), "participant_fetch_200.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
@@ -14,26 +26,19 @@ class ParticipantInstanceHolodeckResource < HolodeckResource
           url: "https://conversations.twilio.com/v1/Conversations/CVbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/Participants",
           auth: ["ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "AUTHTOKEN"],
           status_code: 200,
-          content_file: File.join(File.dirname(__FILE__), "participant_200.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "participant_read_200_partial.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
-          method: "GET",
-          url: "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          auth: ["ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "AUTHTOKEN"],
-          status_code: 200,
-          content_file: File.join(File.dirname(__FILE__), "participant_200.json"),
-          params: '{}',
-          headers: HolodeckResource::DEFAULT_HEADERS
-      ),
-      Hologram.new(
-          method: "GET",
+          method: "POST",
           url: "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants",
           auth: ["ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "AUTHTOKEN"],
           status_code: 200,
-          content_file: File.join(File.dirname(__FILE__), "participant_200.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "participant_create_200.json"),
+          query_params: '{}',
+          form_params: '{"From": "from", "To": "to"}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
@@ -41,8 +46,9 @@ class ParticipantInstanceHolodeckResource < HolodeckResource
           url: "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           auth: ["ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "AUTHTOKEN"],
           status_code: 200,
-          content_file: File.join(File.dirname(__FILE__), "participant_200.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "participant_update_200.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
@@ -50,35 +56,9 @@ class ParticipantInstanceHolodeckResource < HolodeckResource
           url: "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           auth: ["ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "AUTHTOKEN"],
           status_code: 204,
-          content_file: File.join(File.dirname(__FILE__), "participant_204.json"),
-          params: '{}',
-          headers: HolodeckResource::DEFAULT_HEADERS
-      ),
-      Hologram.new(
-          method: "GET",
-          url: "https://conversations.twilio.com/v1/Conversations/CVllllllllllllllllllllllllllllllll/Participants/PAllllllllllllllllllllllllllllllll",
-          auth: ["ACllllllllllllllllllllllllllllllll", "AUTHTOKEN"],
-          status_code: 401,
-          content_file: File.join(File.dirname(__FILE__), "participant_401.json"),
-          params: '{}',
-          headers: HolodeckResource::DEFAULT_HEADERS
-      ),
-      Hologram.new(
-          method: "POST",
-          url: "https://conversations.twilio.com/v1/Conversations/CVllllllllllllllllllllllllllllllll/Participants/PAllllllllllllllllllllllllllllllll",
-          auth: ["ACllllllllllllllllllllllllllllllll", "AUTHTOKEN"],
-          status_code: 401,
-          content_file: File.join(File.dirname(__FILE__), "participant_401.json"),
-          params: '{}',
-          headers: HolodeckResource::DEFAULT_HEADERS
-      ),
-      Hologram.new(
-          method: "POST",
-          url: "https://conversations.twilio.com/v1/Conversations/CVllllllllllllllllllllllllllllllll/Participants",
-          auth: ["ACllllllllllllllllllllllllllllllll", "AUTHTOKEN"],
-          status_code: 401,
-          content_file: File.join(File.dirname(__FILE__), "participant_401.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "participant_delete_204.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
@@ -86,8 +66,9 @@ class ParticipantInstanceHolodeckResource < HolodeckResource
           url: "https://conversations.twilio.com/v1/Conversations/CVllllllllllllllllllllllllllllllll/Participants/PAllllllllllllllllllllllllllllllll",
           auth: ["ACllllllllllllllllllllllllllllllll", "AUTHTOKEN"],
           status_code: 401,
-          content_file: File.join(File.dirname(__FILE__), "participant_401.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "participant_delete_401.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
@@ -95,44 +76,39 @@ class ParticipantInstanceHolodeckResource < HolodeckResource
           url: "https://conversations.twilio.com/v1/Conversations/CVllllllllllllllllllllllllllllllll/Participants",
           auth: ["ACllllllllllllllllllllllllllllllll", "AUTHTOKEN"],
           status_code: 401,
-          content_file: File.join(File.dirname(__FILE__), "participant_401.json"),
-          params: '{}',
-          headers: HolodeckResource::DEFAULT_HEADERS
-      ),
-      Hologram.new(
-          method: "POST",
-          url: "https://conversations.twilio.com/v1/Conversations/CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Participants",
-          auth: ["ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "AUTHTOKEN"],
-          status_code: 404,
-          content_file: File.join(File.dirname(__FILE__), "participant_404.json"),
-          params: '{}',
-          headers: HolodeckResource::DEFAULT_HEADERS
-      ),
-      Hologram.new(
-          method: "POST",
-          url: "https://conversations.twilio.com/v1/Conversations/CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Participants/PAkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
-          auth: ["ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "AUTHTOKEN"],
-          status_code: 404,
-          content_file: File.join(File.dirname(__FILE__), "participant_404.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "participant_read_401.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
           method: "GET",
-          url: "https://conversations.twilio.com/v1/Conversations/CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Participants/PAkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
-          auth: ["ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "AUTHTOKEN"],
-          status_code: 404,
-          content_file: File.join(File.dirname(__FILE__), "participant_404.json"),
-          params: '{}',
+          url: "https://conversations.twilio.com/v1/Conversations/CVllllllllllllllllllllllllllllllll/Participants/PAllllllllllllllllllllllllllllllll",
+          auth: ["ACllllllllllllllllllllllllllllllll", "AUTHTOKEN"],
+          status_code: 401,
+          content_file: File.join(File.dirname(__FILE__), "participant_fetch_401.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
-          method: "GET",
-          url: "https://conversations.twilio.com/v1/Conversations/CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Participants",
-          auth: ["ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "AUTHTOKEN"],
-          status_code: 404,
-          content_file: File.join(File.dirname(__FILE__), "participant_404.json"),
-          params: '{}',
+          method: "POST",
+          url: "https://conversations.twilio.com/v1/Conversations/CVllllllllllllllllllllllllllllllll/Participants",
+          auth: ["ACllllllllllllllllllllllllllllllll", "AUTHTOKEN"],
+          status_code: 401,
+          content_file: File.join(File.dirname(__FILE__), "participant_create_401.json"),
+          query_params: '{}',
+          form_params: '{"From": "from", "To": "to"}',
+          headers: HolodeckResource::DEFAULT_HEADERS
+      ),
+      Hologram.new(
+          method: "POST",
+          url: "https://conversations.twilio.com/v1/Conversations/CVllllllllllllllllllllllllllllllll/Participants/PAllllllllllllllllllllllllllllllll",
+          auth: ["ACllllllllllllllllllllllllllllllll", "AUTHTOKEN"],
+          status_code: 401,
+          content_file: File.join(File.dirname(__FILE__), "participant_update_401.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
@@ -140,35 +116,49 @@ class ParticipantInstanceHolodeckResource < HolodeckResource
           url: "https://conversations.twilio.com/v1/Conversations/CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Participants/PAkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
           auth: ["ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "AUTHTOKEN"],
           status_code: 404,
-          content_file: File.join(File.dirname(__FILE__), "participant_404.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "participant_delete_404.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
           method: "GET",
-          url: "https://conversations.twilio.com/v1/Conversations/CVmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Participants",
-          auth: ["ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "AUTHTOKEN"],
-          status_code: 500,
-          content_file: File.join(File.dirname(__FILE__), "participant_500.json"),
-          params: '{}',
+          url: "https://conversations.twilio.com/v1/Conversations/CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Participants",
+          auth: ["ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "AUTHTOKEN"],
+          status_code: 404,
+          content_file: File.join(File.dirname(__FILE__), "participant_read_404.json"),
+          query_params: '{}',
+          form_params: '{}',
+          headers: HolodeckResource::DEFAULT_HEADERS
+      ),
+      Hologram.new(
+          method: "GET",
+          url: "https://conversations.twilio.com/v1/Conversations/CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Participants/PAkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
+          auth: ["ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "AUTHTOKEN"],
+          status_code: 404,
+          content_file: File.join(File.dirname(__FILE__), "participant_fetch_404.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
           method: "POST",
-          url: "https://conversations.twilio.com/v1/Conversations/CVmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Participants/PAmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
-          auth: ["ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "AUTHTOKEN"],
-          status_code: 500,
-          content_file: File.join(File.dirname(__FILE__), "participant_500.json"),
-          params: '{}',
+          url: "https://conversations.twilio.com/v1/Conversations/CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Participants",
+          auth: ["ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "AUTHTOKEN"],
+          status_code: 404,
+          content_file: File.join(File.dirname(__FILE__), "participant_create_404.json"),
+          query_params: '{}',
+          form_params: '{"From": "from", "To": "to"}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
-          method: "GET",
-          url: "https://conversations.twilio.com/v1/Conversations/CVmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Participants/PAmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
-          auth: ["ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "AUTHTOKEN"],
-          status_code: 500,
-          content_file: File.join(File.dirname(__FILE__), "participant_500.json"),
-          params: '{}',
+          method: "POST",
+          url: "https://conversations.twilio.com/v1/Conversations/CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/Participants/PAkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
+          auth: ["ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "AUTHTOKEN"],
+          status_code: 404,
+          content_file: File.join(File.dirname(__FILE__), "participant_update_404.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
@@ -176,8 +166,29 @@ class ParticipantInstanceHolodeckResource < HolodeckResource
           url: "https://conversations.twilio.com/v1/Conversations/CVmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Participants/PAmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
           auth: ["ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "AUTHTOKEN"],
           status_code: 500,
-          content_file: File.join(File.dirname(__FILE__), "participant_500.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "participant_delete_500.json"),
+          query_params: '{}',
+          form_params: '{}',
+          headers: HolodeckResource::DEFAULT_HEADERS
+      ),
+      Hologram.new(
+          method: "GET",
+          url: "https://conversations.twilio.com/v1/Conversations/CVmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Participants",
+          auth: ["ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "AUTHTOKEN"],
+          status_code: 500,
+          content_file: File.join(File.dirname(__FILE__), "participant_read_500.json"),
+          query_params: '{}',
+          form_params: '{}',
+          headers: HolodeckResource::DEFAULT_HEADERS
+      ),
+      Hologram.new(
+          method: "GET",
+          url: "https://conversations.twilio.com/v1/Conversations/CVmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Participants/PAmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
+          auth: ["ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "AUTHTOKEN"],
+          status_code: 500,
+          content_file: File.join(File.dirname(__FILE__), "participant_fetch_500.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
       Hologram.new(
@@ -185,8 +196,19 @@ class ParticipantInstanceHolodeckResource < HolodeckResource
           url: "https://conversations.twilio.com/v1/Conversations/CVmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Participants",
           auth: ["ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "AUTHTOKEN"],
           status_code: 500,
-          content_file: File.join(File.dirname(__FILE__), "participant_500.json"),
-          params: '{}',
+          content_file: File.join(File.dirname(__FILE__), "participant_create_500.json"),
+          query_params: '{}',
+          form_params: '{"From": "from", "To": "to"}',
+          headers: HolodeckResource::DEFAULT_HEADERS
+      ),
+      Hologram.new(
+          method: "POST",
+          url: "https://conversations.twilio.com/v1/Conversations/CVmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm/Participants/PAmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
+          auth: ["ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "AUTHTOKEN"],
+          status_code: 500,
+          content_file: File.join(File.dirname(__FILE__), "participant_update_500.json"),
+          query_params: '{}',
+          form_params: '{}',
           headers: HolodeckResource::DEFAULT_HEADERS
       ),
   ]

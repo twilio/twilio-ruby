@@ -1,0 +1,7 @@
+{
+    "links": {
+        "countries": "https://pricing.twilio.com/v1/PhoneNumbers/Countries"
+    },
+    "name": "PhoneNumbers",
+    "url": "https://pricing.twilio.com/v1/PhoneNumbers"
+}

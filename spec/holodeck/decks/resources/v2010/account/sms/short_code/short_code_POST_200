@@ -1,0 +1,14 @@
+{
+    "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "api_version": "2010-04-01",
+    "date_created": null,
+    "date_updated": null,
+    "friendly_name": "API_CLUSTER_TEST_SHORT_CODE",
+    "short_code": "99990",
+    "sid": "SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "sms_fallback_method": "POST",
+    "sms_fallback_url": null,
+    "sms_method": "POST",
+    "sms_url": null,
+    "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SMS/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+}

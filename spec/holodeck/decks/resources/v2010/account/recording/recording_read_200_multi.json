@@ -1,0 +1,515 @@
+{
+    "end": 49,
+    "first_page_uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings.json?Page=0&PageSize=50",
+    "last_page_uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings.json?Page=2&PageSize=50",
+    "next_page_uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings.json?Page=1&PageSize=50",
+    "num_pages": 3,
+    "page": 0,
+    "page_size": 50,
+    "previous_page_uri": null,
+    "recordings": [
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Tue, 15 Feb 2011 04:21:54 +0000",
+            "date_updated": "Tue, 15 Feb 2011 04:21:54 +0000",
+            "duration": "2",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Sun, 13 Feb 2011 02:12:05 +0000",
+            "date_updated": "Sun, 13 Feb 2011 02:12:05 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Sat, 12 Feb 2011 22:51:58 +0000",
+            "date_updated": "Sat, 12 Feb 2011 22:51:58 +0000",
+            "duration": "4",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Sat, 12 Feb 2011 22:50:26 +0000",
+            "date_updated": "Sat, 12 Feb 2011 22:50:26 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Thu, 03 Feb 2011 16:44:40 +0000",
+            "date_updated": "Thu, 03 Feb 2011 16:44:40 +0000",
+            "duration": "2",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Sat, 18 Dec 2010 22:40:39 +0000",
+            "date_updated": "Sat, 18 Dec 2010 22:40:39 +0000",
+            "duration": "2",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Sat, 18 Dec 2010 22:40:25 +0000",
+            "date_updated": "Sat, 18 Dec 2010 22:40:25 +0000",
+            "duration": "4",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Sun, 05 Dec 2010 21:01:16 +0000",
+            "date_updated": "Sun, 05 Dec 2010 21:01:16 +0000",
+            "duration": "5",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Thu, 11 Nov 2010 04:15:12 +0000",
+            "date_updated": "Thu, 11 Nov 2010 04:15:12 +0000",
+            "duration": "4",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Thu, 28 Oct 2010 11:57:50 +0000",
+            "date_updated": "Thu, 28 Oct 2010 11:57:50 +0000",
+            "duration": "2",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Thu, 28 Oct 2010 11:56:40 +0000",
+            "date_updated": "Thu, 28 Oct 2010 11:56:40 +0000",
+            "duration": "4",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Sat, 16 Oct 2010 05:26:56 +0000",
+            "date_updated": "Sat, 16 Oct 2010 05:26:56 +0000",
+            "duration": "2",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 06 Oct 2010 18:28:34 +0000",
+            "date_updated": "Wed, 06 Oct 2010 18:28:34 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 06 Oct 2010 18:28:27 +0000",
+            "date_updated": "Wed, 06 Oct 2010 18:28:27 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 06 Oct 2010 18:28:18 +0000",
+            "date_updated": "Wed, 06 Oct 2010 18:28:18 +0000",
+            "duration": "3",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 06 Oct 2010 16:52:15 +0000",
+            "date_updated": "Wed, 06 Oct 2010 16:52:15 +0000",
+            "duration": "4",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 06 Oct 2010 16:51:33 +0000",
+            "date_updated": "Wed, 06 Oct 2010 16:51:33 +0000",
+            "duration": "2",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 06 Oct 2010 16:51:26 +0000",
+            "date_updated": "Wed, 06 Oct 2010 16:51:26 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Mon, 04 Oct 2010 02:28:58 +0000",
+            "date_updated": "Mon, 04 Oct 2010 02:28:58 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Mon, 04 Oct 2010 02:28:51 +0000",
+            "date_updated": "Mon, 04 Oct 2010 02:28:51 +0000",
+            "duration": "2",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Mon, 04 Oct 2010 02:28:44 +0000",
+            "date_updated": "Mon, 04 Oct 2010 02:28:44 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Mon, 04 Oct 2010 02:28:37 +0000",
+            "date_updated": "Mon, 04 Oct 2010 02:28:37 +0000",
+            "duration": "2",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Mon, 04 Oct 2010 02:26:10 +0000",
+            "date_updated": "Mon, 04 Oct 2010 02:26:10 +0000",
+            "duration": "9",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Mon, 04 Oct 2010 02:25:34 +0000",
+            "date_updated": "Mon, 04 Oct 2010 02:25:34 +0000",
+            "duration": "3",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Mon, 04 Oct 2010 02:25:22 +0000",
+            "date_updated": "Mon, 04 Oct 2010 02:25:22 +0000",
+            "duration": "6",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 22 Sep 2010 12:41:50 +0000",
+            "date_updated": "Wed, 22 Sep 2010 12:41:50 +0000",
+            "duration": "3",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Tue, 21 Sep 2010 14:47:38 +0000",
+            "date_updated": "Tue, 21 Sep 2010 14:47:38 +0000",
+            "duration": "2",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Mon, 20 Sep 2010 23:53:45 +0000",
+            "date_updated": "Mon, 20 Sep 2010 23:53:45 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Sun, 19 Sep 2010 02:35:01 +0000",
+            "date_updated": "Sun, 19 Sep 2010 02:35:01 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Sat, 18 Sep 2010 02:45:56 +0000",
+            "date_updated": "Sat, 18 Sep 2010 02:45:56 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Sat, 18 Sep 2010 02:44:05 +0000",
+            "date_updated": "Sat, 18 Sep 2010 02:44:05 +0000",
+            "duration": "3",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Fri, 17 Sep 2010 12:07:07 +0000",
+            "date_updated": "Fri, 17 Sep 2010 12:07:07 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Mon, 13 Sep 2010 20:16:30 +0000",
+            "date_updated": "Mon, 13 Sep 2010 20:16:30 +0000",
+            "duration": "3",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Mon, 13 Sep 2010 20:15:31 +0000",
+            "date_updated": "Mon, 13 Sep 2010 20:15:31 +0000",
+            "duration": "3",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Mon, 13 Sep 2010 20:15:21 +0000",
+            "date_updated": "Mon, 13 Sep 2010 20:15:21 +0000",
+            "duration": "3",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Mon, 13 Sep 2010 20:06:32 +0000",
+            "date_updated": "Mon, 13 Sep 2010 20:06:32 +0000",
+            "duration": "2",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Mon, 13 Sep 2010 20:06:20 +0000",
+            "date_updated": "Mon, 13 Sep 2010 20:06:20 +0000",
+            "duration": "5",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Thu, 02 Sep 2010 13:35:31 +0000",
+            "date_updated": "Thu, 02 Sep 2010 13:35:31 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Thu, 02 Sep 2010 13:34:53 +0000",
+            "date_updated": "Thu, 02 Sep 2010 13:34:53 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Thu, 02 Sep 2010 13:34:39 +0000",
+            "date_updated": "Thu, 02 Sep 2010 13:34:39 +0000",
+            "duration": "6",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 01 Sep 2010 16:43:47 +0000",
+            "date_updated": "Wed, 01 Sep 2010 16:43:47 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 01 Sep 2010 16:43:38 +0000",
+            "date_updated": "Wed, 01 Sep 2010 16:43:38 +0000",
+            "duration": "3",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 01 Sep 2010 16:38:59 +0000",
+            "date_updated": "Wed, 01 Sep 2010 16:38:59 +0000",
+            "duration": "3",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 01 Sep 2010 16:38:07 +0000",
+            "date_updated": "Wed, 01 Sep 2010 16:38:07 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 01 Sep 2010 16:37:56 +0000",
+            "date_updated": "Wed, 01 Sep 2010 16:37:56 +0000",
+            "duration": "3",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 01 Sep 2010 15:15:54 +0000",
+            "date_updated": "Wed, 01 Sep 2010 15:15:54 +0000",
+            "duration": "2",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 01 Sep 2010 15:15:41 +0000",
+            "date_updated": "Wed, 01 Sep 2010 15:15:41 +0000",
+            "duration": "6",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 01 Sep 2010 02:20:11 +0000",
+            "date_updated": "Wed, 01 Sep 2010 02:20:11 +0000",
+            "duration": "14",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 01 Sep 2010 02:19:16 +0000",
+            "date_updated": "Wed, 01 Sep 2010 02:19:16 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        },
+        {
+            "account_sid": "ACcccccccccccccccccccccccccccccccc",
+            "api_version": "2010-04-01",
+            "call_sid": "CAcccccccccccccccccccccccccccccccc",
+            "date_created": "Wed, 01 Sep 2010 02:19:08 +0000",
+            "date_updated": "Wed, 01 Sep 2010 02:19:08 +0000",
+            "duration": "1",
+            "sid": "REcccccccccccccccccccccccccccccccc",
+            "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings/REcccccccccccccccccccccccccccccccc.json"
+        }
+    ],
+    "start": 0,
+    "total": 132,
+    "uri": "/2010-04-01/Accounts/ACcccccccccccccccccccccccccccccccc/Recordings.json"
+}

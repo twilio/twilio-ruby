@@ -1,0 +1,12 @@
+{
+    "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "address": "torkel2@ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.endpoint.twilio.com",
+    "conversation_sid": "CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "date_created": "2015-05-13T23:03:12Z",
+    "duration": 685,
+    "end_time": "2015-05-13T23:14:40Z",
+    "sid": "PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "start_time": "2015-05-13T23:03:15Z",
+    "status": "disconnected",
+    "url": "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}

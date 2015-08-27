@@ -1,6 +1,7 @@
 class PricingHolodeckResource < HolodeckResource
-  @@sub_resources = {
-      phone_numbers: PhoneNumberInstanceHolodeckResource,
+  @sub_resources = {
       voice: VoiceInstanceHolodeckResource,
+      phone_numbers: PhoneNumberInstanceHolodeckResource,
   }
+  @holograms = []
 end
