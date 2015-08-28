@@ -1,6 +1,6 @@
 class V2010HolodeckResource < HolodeckResource
   @sub_resources = {
-      accounts: AccountInstanceHolodeckResource,
+      accounts: V2010HolodeckResource::AccountInstanceHolodeckResource,
   }
   @holograms = []
 end

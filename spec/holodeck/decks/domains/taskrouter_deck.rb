@@ -1,6 +1,6 @@
 class TaskrouterHolodeckResource < HolodeckResource
   @sub_resources = {
-      workspaces: WorkspaceInstanceHolodeckResource,
+      workspaces: TaskrouterHolodeckResource::WorkspaceInstanceHolodeckResource,
   }
   @holograms = []
 end

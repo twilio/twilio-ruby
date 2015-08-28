@@ -71,25 +71,25 @@ describe Twilio::Resources::V2010::AccountInstance::SmsList::ShortCodeInstance d
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
       resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sms.short_codes.get('SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-      expect { resource.update(api_version: 'api_version', friendly_name: 'friendly_name', sms_fallback_method: "GET", sms_method: "GET", sms_fallback_url: "https://example.com", sms_url: "https://example.com") }.not_to raise_error
+      expect { resource.update(api_version: 'api_version', friendly_name: 'friendly_name', sms_fallback_method: "GET", sms_fallback_url: "https://example.com", sms_method: "GET", sms_url: "https://example.com") }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
       resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').sms.short_codes.get('SCllllllllllllllllllllllllllllllll')
-      expect { resource.update(api_version: 'api_version', friendly_name: 'friendly_name', sms_fallback_method: "GET", sms_method: "GET", sms_fallback_url: "https://example.com", sms_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(api_version: 'api_version', friendly_name: 'friendly_name', sms_fallback_method: "GET", sms_fallback_url: "https://example.com", sms_method: "GET", sms_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
       resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sms.short_codes.get('SCkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-      expect { resource.update(api_version: 'api_version', friendly_name: 'friendly_name', sms_fallback_method: "GET", sms_method: "GET", sms_fallback_url: "https://example.com", sms_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(api_version: 'api_version', friendly_name: 'friendly_name', sms_fallback_method: "GET", sms_fallback_url: "https://example.com", sms_method: "GET", sms_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
       resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sms.short_codes.get('SCmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-      expect { resource.update(api_version: 'api_version', friendly_name: 'friendly_name', sms_fallback_method: "GET", sms_method: "GET", sms_fallback_url: "https://example.com", sms_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(api_version: 'api_version', friendly_name: 'friendly_name', sms_fallback_method: "GET", sms_fallback_url: "https://example.com", sms_method: "GET", sms_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
     end
   end
 end

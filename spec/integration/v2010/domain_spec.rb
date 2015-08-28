@@ -34,22 +34,22 @@ describe Twilio::Resources::V2010::AccountInstance::SipList::DomainList do
   context "should create domains" do
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.domains.create(voice_fallback_url: "https://example.com", friendly_name: 'friendly_name', domain_name: 'domain_name', voice_method: "GET", voice_status_callback_method: "GET", voice_fallback_method: "GET", voice_url: "https://example.com", voice_status_callback_url: "https://example.com") }.not_to raise_error
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.domains.create(domain_name: 'domain_name', friendly_name: 'friendly_name', voice_fallback_method: "GET", voice_fallback_url: "https://example.com", voice_method: "GET", voice_status_callback_method: "GET", voice_status_callback_url: "https://example.com", voice_url: "https://example.com") }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.domains.create(voice_fallback_url: "https://example.com", friendly_name: 'friendly_name', domain_name: 'domain_name', voice_method: "GET", voice_status_callback_method: "GET", voice_fallback_method: "GET", voice_url: "https://example.com", voice_status_callback_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.domains.create(domain_name: 'domain_name', friendly_name: 'friendly_name', voice_fallback_method: "GET", voice_fallback_url: "https://example.com", voice_method: "GET", voice_status_callback_method: "GET", voice_status_callback_url: "https://example.com", voice_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.domains.create(voice_fallback_url: "https://example.com", friendly_name: 'friendly_name', domain_name: 'domain_name', voice_method: "GET", voice_status_callback_method: "GET", voice_fallback_method: "GET", voice_url: "https://example.com", voice_status_callback_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.domains.create(domain_name: 'domain_name', friendly_name: 'friendly_name', voice_fallback_method: "GET", voice_fallback_url: "https://example.com", voice_method: "GET", voice_status_callback_method: "GET", voice_status_callback_url: "https://example.com", voice_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.domains.create(voice_fallback_url: "https://example.com", friendly_name: 'friendly_name', domain_name: 'domain_name', voice_method: "GET", voice_status_callback_method: "GET", voice_fallback_method: "GET", voice_url: "https://example.com", voice_status_callback_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.domains.create(domain_name: 'domain_name', friendly_name: 'friendly_name', voice_fallback_method: "GET", voice_fallback_url: "https://example.com", voice_method: "GET", voice_status_callback_method: "GET", voice_status_callback_url: "https://example.com", voice_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
     end
   end
 
@@ -93,25 +93,25 @@ describe Twilio::Resources::V2010::AccountInstance::SipList::DomainInstance do
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
       resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.domains.get('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-      expect { resource.update(api_version: 'api_version', voice_method: "GET", friendly_name: 'friendly_name', voice_fallback_method: "GET", voice_fallback_url: "https://example.com", voice_status_callback_method: "GET", voice_url: "https://example.com", voice_status_callback_url: "https://example.com") }.not_to raise_error
+      expect { resource.update(api_version: 'api_version', friendly_name: 'friendly_name', voice_fallback_method: "GET", voice_fallback_url: "https://example.com", voice_method: "GET", voice_status_callback_method: "GET", voice_status_callback_url: "https://example.com", voice_url: "https://example.com") }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
       resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.domains.get('SDllllllllllllllllllllllllllllllll')
-      expect { resource.update(api_version: 'api_version', voice_method: "GET", friendly_name: 'friendly_name', voice_fallback_method: "GET", voice_fallback_url: "https://example.com", voice_status_callback_method: "GET", voice_url: "https://example.com", voice_status_callback_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(api_version: 'api_version', friendly_name: 'friendly_name', voice_fallback_method: "GET", voice_fallback_url: "https://example.com", voice_method: "GET", voice_status_callback_method: "GET", voice_status_callback_url: "https://example.com", voice_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
       resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.domains.get('SDkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-      expect { resource.update(api_version: 'api_version', voice_method: "GET", friendly_name: 'friendly_name', voice_fallback_method: "GET", voice_fallback_url: "https://example.com", voice_status_callback_method: "GET", voice_url: "https://example.com", voice_status_callback_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(api_version: 'api_version', friendly_name: 'friendly_name', voice_fallback_method: "GET", voice_fallback_url: "https://example.com", voice_method: "GET", voice_status_callback_method: "GET", voice_status_callback_url: "https://example.com", voice_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
       resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.domains.get('SDmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-      expect { resource.update(api_version: 'api_version', voice_method: "GET", friendly_name: 'friendly_name', voice_fallback_method: "GET", voice_fallback_url: "https://example.com", voice_status_callback_method: "GET", voice_url: "https://example.com", voice_status_callback_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(api_version: 'api_version', friendly_name: 'friendly_name', voice_fallback_method: "GET", voice_fallback_url: "https://example.com", voice_method: "GET", voice_status_callback_method: "GET", voice_status_callback_url: "https://example.com", voice_url: "https://example.com") }.to raise_error Twilio::REST::RequestError
     end
   end
 

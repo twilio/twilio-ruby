@@ -38,44 +38,44 @@ describe Twilio::Resources::Taskrouter::WorkspaceInstance::TaskList do
   context "should read tasks" do
     it "and return 200" do
       client = Twilio::REST::TaskrouterClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').tasks.list(workflow_sid: 'workflow_sid', task_queue_name: 'task_queue_name', assignment_status: 'assignment_status', priority: 1, workflow_name: 'workflow_name', task_queue_sid: 'task_queue_sid') }.not_to raise_error
+      expect { client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').tasks.list(assignment_status: 'assignment_status', priority: 1, task_queue_name: 'task_queue_name', task_queue_sid: 'task_queue_sid', workflow_name: 'workflow_name', workflow_sid: 'workflow_sid') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::TaskrouterClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSllllllllllllllllllllllllllllllll').tasks.list(workflow_sid: 'workflow_sid', task_queue_name: 'task_queue_name', assignment_status: 'assignment_status', priority: 1, workflow_name: 'workflow_name', task_queue_sid: 'task_queue_sid') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSllllllllllllllllllllllllllllllll').tasks.list(assignment_status: 'assignment_status', priority: 1, task_queue_name: 'task_queue_name', task_queue_sid: 'task_queue_sid', workflow_name: 'workflow_name', workflow_sid: 'workflow_sid') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::TaskrouterClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').tasks.list(workflow_sid: 'workflow_sid', task_queue_name: 'task_queue_name', assignment_status: 'assignment_status', priority: 1, workflow_name: 'workflow_name', task_queue_sid: 'task_queue_sid') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').tasks.list(assignment_status: 'assignment_status', priority: 1, task_queue_name: 'task_queue_name', task_queue_sid: 'task_queue_sid', workflow_name: 'workflow_name', workflow_sid: 'workflow_sid') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::TaskrouterClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').tasks.list(workflow_sid: 'workflow_sid', task_queue_name: 'task_queue_name', assignment_status: 'assignment_status', priority: 1, workflow_name: 'workflow_name', task_queue_sid: 'task_queue_sid') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').tasks.list(assignment_status: 'assignment_status', priority: 1, task_queue_name: 'task_queue_name', task_queue_sid: 'task_queue_sid', workflow_name: 'workflow_name', workflow_sid: 'workflow_sid') }.to raise_error Twilio::REST::RequestError
     end
   end
 
   context "should create tasks" do
     it "and return 200" do
       client = Twilio::REST::TaskrouterClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').tasks.create(priority: 1, workflow_sid: 'workflow_sid', timeout: 1, attributes: 'attributes') }.not_to raise_error
+      expect { client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').tasks.create(attributes: 'attributes', priority: 1, timeout: 1, workflow_sid: 'workflow_sid') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::TaskrouterClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSllllllllllllllllllllllllllllllll').tasks.create(priority: 1, workflow_sid: 'workflow_sid', timeout: 1, attributes: 'attributes') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSllllllllllllllllllllllllllllllll').tasks.create(attributes: 'attributes', priority: 1, timeout: 1, workflow_sid: 'workflow_sid') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::TaskrouterClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').tasks.create(priority: 1, workflow_sid: 'workflow_sid', timeout: 1, attributes: 'attributes') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').tasks.create(attributes: 'attributes', priority: 1, timeout: 1, workflow_sid: 'workflow_sid') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::TaskrouterClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').tasks.create(priority: 1, workflow_sid: 'workflow_sid', timeout: 1, attributes: 'attributes') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').tasks.create(attributes: 'attributes', priority: 1, timeout: 1, workflow_sid: 'workflow_sid') }.to raise_error Twilio::REST::RequestError
     end
   end
 end
@@ -93,25 +93,25 @@ describe Twilio::Resources::Taskrouter::WorkspaceInstance::TaskInstance do
     it "and return 200" do
       client = Twilio::REST::TaskrouterClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
       resource = client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').tasks.get('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-      expect { resource.update(priority: 1, assignment_status: 'assignment_status', reason: 'reason', attributes: 'attributes') }.not_to raise_error
+      expect { resource.update(assignment_status: 'assignment_status', attributes: 'attributes', priority: 1, reason: 'reason') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::TaskrouterClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
       resource = client.workspaces.get('WSllllllllllllllllllllllllllllllll').tasks.get('WTllllllllllllllllllllllllllllllll')
-      expect { resource.update(priority: 1, assignment_status: 'assignment_status', reason: 'reason', attributes: 'attributes') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(assignment_status: 'assignment_status', attributes: 'attributes', priority: 1, reason: 'reason') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::TaskrouterClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
       resource = client.workspaces.get('WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').tasks.get('WTkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-      expect { resource.update(priority: 1, assignment_status: 'assignment_status', reason: 'reason', attributes: 'attributes') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(assignment_status: 'assignment_status', attributes: 'attributes', priority: 1, reason: 'reason') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::TaskrouterClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
       resource = client.workspaces.get('WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').tasks.get('WTmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-      expect { resource.update(priority: 1, assignment_status: 'assignment_status', reason: 'reason', attributes: 'attributes') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(assignment_status: 'assignment_status', attributes: 'attributes', priority: 1, reason: 'reason') }.to raise_error Twilio::REST::RequestError
     end
   end
 

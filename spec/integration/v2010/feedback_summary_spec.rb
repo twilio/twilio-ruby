@@ -12,22 +12,22 @@ describe Twilio::Resources::V2010::AccountInstance::CallList::FeedbackSummaryLis
   context "should create None" do
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').calls.feedback_summaries.create(start_date: 1199174400, include_subaccounts: true, status_callback: "https://example.com", end_date: 1199174400, status_callback_method: "GET") }.not_to raise_error
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').calls.feedback_summaries.create(end_date: 1199174400, include_subaccounts: true, start_date: 1199174400, status_callback: "https://example.com", status_callback_method: "GET") }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').calls.feedback_summaries.create(start_date: 1199174400, include_subaccounts: true, status_callback: "https://example.com", end_date: 1199174400, status_callback_method: "GET") }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').calls.feedback_summaries.create(end_date: 1199174400, include_subaccounts: true, start_date: 1199174400, status_callback: "https://example.com", status_callback_method: "GET") }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').calls.feedback_summaries.create(start_date: 1199174400, include_subaccounts: true, status_callback: "https://example.com", end_date: 1199174400, status_callback_method: "GET") }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').calls.feedback_summaries.create(end_date: 1199174400, include_subaccounts: true, start_date: 1199174400, status_callback: "https://example.com", status_callback_method: "GET") }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').calls.feedback_summaries.create(start_date: 1199174400, include_subaccounts: true, status_callback: "https://example.com", end_date: 1199174400, status_callback_method: "GET") }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').calls.feedback_summaries.create(end_date: 1199174400, include_subaccounts: true, start_date: 1199174400, status_callback: "https://example.com", status_callback_method: "GET") }.to raise_error Twilio::REST::RequestError
     end
   end
 

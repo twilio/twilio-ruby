@@ -34,22 +34,22 @@ describe Twilio::Resources::V2010::AccountInstance::SipList::IpAccessControlList
   context "should create ip_addresses" do
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.ip_access_control_lists.get('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').ip_addresses.create(ip_address: 'ip_address', friendly_name: 'friendly_name') }.not_to raise_error
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.ip_access_control_lists.get('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').ip_addresses.create(friendly_name: 'friendly_name', ip_address: 'ip_address') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.ip_access_control_lists.get('ALllllllllllllllllllllllllllllllll').ip_addresses.create(ip_address: 'ip_address', friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.ip_access_control_lists.get('ALllllllllllllllllllllllllllllllll').ip_addresses.create(friendly_name: 'friendly_name', ip_address: 'ip_address') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.ip_access_control_lists.get('ALkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').ip_addresses.create(ip_address: 'ip_address', friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.ip_access_control_lists.get('ALkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').ip_addresses.create(friendly_name: 'friendly_name', ip_address: 'ip_address') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.ip_access_control_lists.get('ALmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').ip_addresses.create(ip_address: 'ip_address', friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.ip_access_control_lists.get('ALmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').ip_addresses.create(friendly_name: 'friendly_name', ip_address: 'ip_address') }.to raise_error Twilio::REST::RequestError
     end
   end
 

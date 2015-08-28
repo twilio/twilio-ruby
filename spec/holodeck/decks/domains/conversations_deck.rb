@@ -1,6 +1,6 @@
 class ConversationsHolodeckResource < HolodeckResource
   @sub_resources = {
-      conversations: ConversationInstanceHolodeckResource,
+      conversations: ConversationsHolodeckResource::ConversationInstanceHolodeckResource,
   }
   @holograms = []
 end

@@ -12,22 +12,22 @@ describe Twilio::Resources::V2010::AccountInstance::MessageList do
   context "should create messages" do
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').messages.create(to: 'to', body: 'body', from: 'from', application_sid: 'application_sid', status_callback: "https://example.com") }.not_to raise_error
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').messages.create(application_sid: 'application_sid', body: 'body', from: 'from', status_callback: "https://example.com", to: 'to') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').messages.create(to: 'to', body: 'body', from: 'from', application_sid: 'application_sid', status_callback: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').messages.create(application_sid: 'application_sid', body: 'body', from: 'from', status_callback: "https://example.com", to: 'to') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').messages.create(to: 'to', body: 'body', from: 'from', application_sid: 'application_sid', status_callback: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').messages.create(application_sid: 'application_sid', body: 'body', from: 'from', status_callback: "https://example.com", to: 'to') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').messages.create(to: 'to', body: 'body', from: 'from', application_sid: 'application_sid', status_callback: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').messages.create(application_sid: 'application_sid', body: 'body', from: 'from', status_callback: "https://example.com", to: 'to') }.to raise_error Twilio::REST::RequestError
     end
   end
 
@@ -60,22 +60,22 @@ describe Twilio::Resources::V2010::AccountInstance::MessageList do
   context "should read messages" do
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').messages.list(to: 'to', date_sent: 'date_sent', from: 'from') }.not_to raise_error
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').messages.list(date_sent: 'date_sent', from: 'from', to: 'to') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').messages.list(to: 'to', date_sent: 'date_sent', from: 'from') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').messages.list(date_sent: 'date_sent', from: 'from', to: 'to') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').messages.list(to: 'to', date_sent: 'date_sent', from: 'from') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').messages.list(date_sent: 'date_sent', from: 'from', to: 'to') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').messages.list(to: 'to', date_sent: 'date_sent', from: 'from') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').messages.list(date_sent: 'date_sent', from: 'from', to: 'to') }.to raise_error Twilio::REST::RequestError
     end
   end
 end

@@ -38,22 +38,22 @@ describe Twilio::Resources::Monitor::AlertList do
   context "should read alerts" do
     it "and return 200" do
       client = Twilio::REST::MonitorClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.alerts.list(start_date: 'start_date', log_level: 'log_level', end_date: 'end_date') }.not_to raise_error
+      expect { client.alerts.list(end_date: 'end_date', log_level: 'log_level', start_date: 'start_date') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::MonitorClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.alerts.list(start_date: 'start_date', log_level: 'log_level', end_date: 'end_date') }.to raise_error Twilio::REST::RequestError
+      expect { client.alerts.list(end_date: 'end_date', log_level: 'log_level', start_date: 'start_date') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::MonitorClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.alerts.list(start_date: 'start_date', log_level: 'log_level', end_date: 'end_date') }.to raise_error Twilio::REST::RequestError
+      expect { client.alerts.list(end_date: 'end_date', log_level: 'log_level', start_date: 'start_date') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::MonitorClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.alerts.list(start_date: 'start_date', log_level: 'log_level', end_date: 'end_date') }.to raise_error Twilio::REST::RequestError
+      expect { client.alerts.list(end_date: 'end_date', log_level: 'log_level', start_date: 'start_date') }.to raise_error Twilio::REST::RequestError
     end
   end
 end

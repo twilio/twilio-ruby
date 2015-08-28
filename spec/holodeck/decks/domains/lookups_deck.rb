@@ -1,6 +1,6 @@
 class LookupsHolodeckResource < HolodeckResource
   @sub_resources = {
-      phone_numbers: PhoneNumberInstanceHolodeckResource,
+      phone_numbers: LookupsHolodeckResource::PhoneNumberInstanceHolodeckResource,
   }
   @holograms = []
 end
