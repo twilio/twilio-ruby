@@ -7,7 +7,7 @@ class Hologram
   def initialize(params = {})
     @method = params[:method]
     @url = params[:url]
-    @auth = params[:auth]
+    @auth = params[:auth].join(':')
     @status_code = params[:status_code]
     @content_file = params[:content_file]
     @query_params = JSON.parse(params[:query_params])
@@ -15,7 +15,7 @@ class Hologram
     @headers = params[:headers]
   end
 
-  def simulate(method, url, raw_query = "", raw_form = "")
+  def simulate(method, url, auth, raw_query = "", raw_form = "")
     query = {}
     form = {}
 
@@ -31,7 +31,7 @@ class Hologram
       form[k] = v
     end if raw_form
 
-    if method == @method && url == @url && query == @query_params && form == @form_params
+    if method == @method && url == @url && auth == @auth && query == @query_params && form == @form_params
       if @status_code < 200 || @status_code > 299
         json = JSON.parse(File.read(@content_file))
         raise Twilio::REST::RequestError.new json, @status_code

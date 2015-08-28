@@ -1,3 +1,5 @@
+require 'base64'
+
 class Holodeck
   @sub_resources = {}
   @holograms = {}
@@ -45,6 +47,7 @@ class Holodeck
   end
 
   def self.add(hologram)
+    # puts hologram.url if hologram.url.include?('Conversations')
     @holograms[hologram.url] ||= []
     @holograms[hologram.url] << hologram
   end
@@ -54,9 +57,14 @@ class Holodeck
     path = "https://#{host}" + request.path.split('?')[0]
     query_params = request.path.split('?')[1] if request.path.include?('?')
     form_params = request.body
+    auth = request.get_fields('authorization')[0]
+
+    if auth
+      auth = Base64.decode64(auth.split(' ')[1])
+    end
 
     @holograms[path].each do |h|
-      response = h.simulate(method, path, query_params, form_params)
+      response = h.simulate(method, path, auth, query_params, form_params)
       return response if response
     end if @holograms[path]
 
