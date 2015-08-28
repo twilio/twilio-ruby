@@ -8,6 +8,7 @@ module Twilio
           
           def initialize(client, inheritance={})
             super
+            path "/Voice/Numbers/#{@number}"
             instance_id_key 'number'
             instance_class NumberInstance
           end

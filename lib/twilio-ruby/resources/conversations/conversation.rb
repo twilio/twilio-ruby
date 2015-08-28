@@ -7,6 +7,7 @@ module Twilio
         
         def initialize(client, inheritance={})
           super
+          path "/Conversations/#{@sid}.json"
           instance_id_key 'sid'
           instance_class ConversationInstance
           components Twilio::Resources::Conversations::ConversationList::InProgressList,

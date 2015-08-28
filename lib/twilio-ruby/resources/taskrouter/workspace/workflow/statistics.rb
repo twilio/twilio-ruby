@@ -9,6 +9,7 @@ module Twilio
             
             def initialize(client, inheritance={})
               super
+              path "/Workspace/#{@workspace_sid}/Workflows/#{@workflow_sid}/Statistics"
               instance_id_key 'sid'
               instance_class StatisticsInstance
             end

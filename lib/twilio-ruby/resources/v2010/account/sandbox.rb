@@ -8,6 +8,7 @@ module Twilio
           
           def initialize(client, inheritance={})
             super
+            path "/Accounts/#{@account_sid}/Sandbox.json"
             instance_id_key 'sid'
             instance_class SandboxInstance
           end

@@ -7,7 +7,8 @@ module Twilio
         
         def initialize(client, inheritance={})
           super
-          instance_id_key 'sid'
+          path "PhoneNumbers/#{@phone_number}"
+          instance_id_key 'phone_number'
           instance_class PhoneNumberInstance
         end
       end
@@ -16,7 +17,7 @@ module Twilio
         def initialize(client, inheritance={}, params={})
           super
           path "PhoneNumbers/#{@phone_number}"
-          instance_id_key 'sid'
+          instance_id_key 'phone_number'
         end
       end
     end
