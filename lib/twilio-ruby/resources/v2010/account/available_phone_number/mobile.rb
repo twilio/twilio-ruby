@@ -9,7 +9,7 @@ module Twilio
             
             def initialize(client, inheritance={})
               super
-              path "/Accounts/#{@account_sid}/AvailablePhoneNumbers/Mobile.json"
+              path "/Accounts/#{@account_sid}/AvailablePhoneNumbers/#{@country_code}/Mobile.json"
               instance_id_key 'sid'
               instance_class MobileInstance
               list_key 'available_phone_numbers'
