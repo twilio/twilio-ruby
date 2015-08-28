@@ -2,11 +2,32 @@ require 'spec_helper'
 
 describe Twilio::Resources::V2010::AccountInstance::UsageList::RecordList::YesterdayList do
   before do
-    @read_client = Twilio::REST::Client.new read_account_sid, read_auth_token
-    @write_client = Twilio::REST::Client.new write_account_sid, write_auth_token
+    Twiliodeck.activate
+  end
+
+  after do
+    Twiliodeck.deactivate
+  end
+
+  context "should read usage_records" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').usage.records.yesterday.list() }.not_to raise_error
+    end
   
-    it "can read usage_records" do
-      @read_client go read it
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').usage.records.yesterday.list() }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').usage.records.yesterday.list() }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').usage.records.yesterday.list() }.to raise_error Twilio::REST::RequestError
     end
   end
 end

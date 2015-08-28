@@ -2,19 +2,80 @@ require 'spec_helper'
 
 describe Twilio::Resources::Conversations::ConversationInstance::ParticipantList do
   before do
-    @read_client = Twilio::REST::ConversationsClient.new read_account_sid, read_auth_token
-    @write_client = Twilio::REST::ConversationsClient.new write_account_sid, write_auth_token
-  
-    it "can read participants" do
-      @read_client go read it
+    Twiliodeck.activate
+  end
+
+  after do
+    Twiliodeck.deactivate
+  end
+
+  context "should read participants" do
+    it "and return 200" do
+      client = Twilio::REST::ConversationsClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      expect { client.conversations.get('CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').participants.list() }.not_to raise_error
     end
   
-    it "can create participants" do
-      @write_client go create it
+    it "and return 401" do
+      client = Twilio::REST::ConversationsClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      expect { client.conversations.get('CVllllllllllllllllllllllllllllllll').participants.list() }.to raise_error Twilio::REST::RequestError
     end
   
-    it "can fetch participants" do
-      @read_client go fetch it conversations.participants
+    it "and return 404" do
+      client = Twilio::REST::ConversationsClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      expect { client.conversations.get('CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').participants.list() }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::ConversationsClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      expect { client.conversations.get('CVmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').participants.list() }.to raise_error Twilio::REST::RequestError
+    end
+  end
+
+  context "should create participants" do
+    it "and return 200" do
+      client = Twilio::REST::ConversationsClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      expect { client.conversations.get('CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').participants.create(to: 'to', from: 'from') }.not_to raise_error
+    end
+  
+    it "and return 401" do
+      client = Twilio::REST::ConversationsClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      expect { client.conversations.get('CVllllllllllllllllllllllllllllllll').participants.create(to: 'to', from: 'from') }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::ConversationsClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      expect { client.conversations.get('CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').participants.create(to: 'to', from: 'from') }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::ConversationsClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      expect { client.conversations.get('CVmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').participants.create(to: 'to', from: 'from') }.to raise_error Twilio::REST::RequestError
+    end
+  end
+
+  context "should fetch participants" do
+    it "and return 200" do
+      client = Twilio::REST::ConversationsClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      resource = client.conversations.get('CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').participants.get('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      expect { resource.sid }.not_to raise_error
+    end
+  
+    it "and return 401" do
+      client = Twilio::REST::ConversationsClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      resource = client.conversations.get('CVllllllllllllllllllllllllllllllll').participants.get('PAllllllllllllllllllllllllllllllll')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::ConversationsClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      resource = client.conversations.get('CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').participants.get('PAkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::ConversationsClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      resource = client.conversations.get('CVmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').participants.get('PAmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
     end
   end
 end

@@ -2,26 +2,94 @@ require 'spec_helper'
 
 describe Twilio::Resources::V2010::AccountInstance::QueueInstance::MemberList do
   before do
-    @read_client = Twilio::REST::Client.new read_account_sid, read_auth_token
-    @write_client = Twilio::REST::Client.new write_account_sid, write_auth_token
-  
-    it "can fetch queue_members" do
-      @read_client go fetch it accounts.queues.members
+    Twiliodeck.activate
+  end
+
+  after do
+    Twiliodeck.deactivate
+  end
+
+  context "should fetch queue_members" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').queues.get('QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').members.get('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      expect { resource.sid }.not_to raise_error
     end
   
-    it "can read queue_members" do
-      @read_client go read it
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').queues.get('QUllllllllllllllllllllllllllllllll').members.get('CAllllllllllllllllllllllllllllllll')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').queues.get('QUkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').members.get('CAkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').queues.get('QUmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').members.get('CAmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  end
+
+  context "should read queue_members" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').queues.get('QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').members.list() }.not_to raise_error
+    end
+  
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').queues.get('QUllllllllllllllllllllllllllllllll').members.list() }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').queues.get('QUkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').members.list() }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').queues.get('QUmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').members.list() }.to raise_error Twilio::REST::RequestError
     end
   end
 end
 
 describe Twilio::Resources::V2010::AccountInstance::QueueInstance::MemberInstance do
   before do
-    @read_client = Twilio::REST::Client.new read_account_sid, read_auth_token
-    @write_client = Twilio::REST::Client.new write_account_sid, write_auth_token
+    Twiliodeck.activate
+  end
+
+  after do
+    Twiliodeck.deactivate
+  end
+
+  context "should update queue_members" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').queues.get('QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').members.get('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      expect { resource.update(method: "GET", url: "https://example.com") }.not_to raise_error
+    end
   
-    it "can update queue_members" do
-      @write_client go update it
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').queues.get('QUllllllllllllllllllllllllllllllll').members.get('CAllllllllllllllllllllllllllllllll')
+      expect { resource.update(method: "GET", url: "https://example.com") }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').queues.get('QUkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').members.get('CAkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+      expect { resource.update(method: "GET", url: "https://example.com") }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').queues.get('QUmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').members.get('CAmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+      expect { resource.update(method: "GET", url: "https://example.com") }.to raise_error Twilio::REST::RequestError
     end
   end
 end

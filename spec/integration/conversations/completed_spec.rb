@@ -2,11 +2,32 @@ require 'spec_helper'
 
 describe Twilio::Resources::Conversations::ConversationList::CompletedList do
   before do
-    @read_client = Twilio::REST::ConversationsClient.new read_account_sid, read_auth_token
-    @write_client = Twilio::REST::ConversationsClient.new write_account_sid, write_auth_token
+    Twiliodeck.activate
+  end
+
+  after do
+    Twiliodeck.deactivate
+  end
+
+  context "should read conversations" do
+    it "and return 200" do
+      client = Twilio::REST::ConversationsClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      expect { client.conversations.completed.list() }.not_to raise_error
+    end
   
-    it "can read conversations" do
-      @read_client go read it
+    it "and return 401" do
+      client = Twilio::REST::ConversationsClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      expect { client.conversations.completed.list() }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::ConversationsClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      expect { client.conversations.completed.list() }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::ConversationsClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      expect { client.conversations.completed.list() }.to raise_error Twilio::REST::RequestError
     end
   end
 end

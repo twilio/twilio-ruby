@@ -2,22 +2,72 @@ require 'spec_helper'
 
 describe Twilio::Resources::V2010::AccountInstance::SandboxList do
   before do
-    @read_client = Twilio::REST::Client.new read_account_sid, read_auth_token
-    @write_client = Twilio::REST::Client.new write_account_sid, write_auth_token
+    Twiliodeck.activate
+  end
+
+  after do
+    Twiliodeck.deactivate
+  end
+
+  context "should fetch None" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sandbox.get()
+      expect { resource.sid }.not_to raise_error
+    end
   
-    it "can fetch None" do
-      @read_client go fetch it accounts.sandbox
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').sandbox.get()
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sandbox.get()
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sandbox.get()
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
     end
   end
 end
 
 describe Twilio::Resources::V2010::AccountInstance::SandboxInstance do
   before do
-    @read_client = Twilio::REST::Client.new read_account_sid, read_auth_token
-    @write_client = Twilio::REST::Client.new write_account_sid, write_auth_token
+    Twiliodeck.activate
+  end
+
+  after do
+    Twiliodeck.deactivate
+  end
+
+  context "should update None" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sandbox.get()
+      expect { resource.update(status_callback_method: "GET", voice_method: "GET", sms_method: "GET", voice_url: "https://example.com", sms_url: "https://example.com", status_callback: "https://example.com") }.not_to raise_error
+    end
   
-    it "can update None" do
-      @write_client go update it
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').sandbox.get()
+      expect { resource.update(status_callback_method: "GET", voice_method: "GET", sms_method: "GET", voice_url: "https://example.com", sms_url: "https://example.com", status_callback: "https://example.com") }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sandbox.get()
+      expect { resource.update(status_callback_method: "GET", voice_method: "GET", sms_method: "GET", voice_url: "https://example.com", sms_url: "https://example.com", status_callback: "https://example.com") }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sandbox.get()
+      expect { resource.update(status_callback_method: "GET", voice_method: "GET", sms_method: "GET", voice_url: "https://example.com", sms_url: "https://example.com", status_callback: "https://example.com") }.to raise_error Twilio::REST::RequestError
     end
   end
 end

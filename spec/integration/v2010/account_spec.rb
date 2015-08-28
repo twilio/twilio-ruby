@@ -2,30 +2,116 @@ require 'spec_helper'
 
 describe Twilio::Resources::V2010::AccountList do
   before do
-    @read_client = Twilio::REST::Client.new read_account_sid, read_auth_token
-    @write_client = Twilio::REST::Client.new write_account_sid, write_auth_token
-  
-    it "can create accounts" do
-      @write_client go create it
+    Twiliodeck.activate
+  end
+
+  after do
+    Twiliodeck.deactivate
+  end
+
+  context "should create accounts" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      expect { client.accounts.create(friendly_name: 'friendly_name') }.not_to raise_error
     end
   
-    it "can fetch accounts" do
-      @read_client go fetch it accounts
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      expect { client.accounts.create(friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
     end
   
-    it "can read accounts" do
-      @read_client go read it
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      expect { client.accounts.create(friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      expect { client.accounts.create(friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+    end
+  end
+
+  context "should fetch accounts" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      expect { resource.sid }.not_to raise_error
+    end
+  
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      resource = client.accounts.get('ACllllllllllllllllllllllllllllllll')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  end
+
+  context "should read accounts" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      expect { client.accounts.list() }.not_to raise_error
+    end
+  
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      expect { client.accounts.list() }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      expect { client.accounts.list() }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      expect { client.accounts.list() }.to raise_error Twilio::REST::RequestError
     end
   end
 end
 
 describe Twilio::Resources::V2010::AccountInstance do
   before do
-    @read_client = Twilio::REST::Client.new read_account_sid, read_auth_token
-    @write_client = Twilio::REST::Client.new write_account_sid, write_auth_token
+    Twiliodeck.activate
+  end
+
+  after do
+    Twiliodeck.deactivate
+  end
+
+  context "should update accounts" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      expect { resource.update(friendly_name: 'friendly_name', status: 'status') }.not_to raise_error
+    end
   
-    it "can update accounts" do
-      @write_client go update it
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      resource = client.accounts.get('ACllllllllllllllllllllllllllllllll')
+      expect { resource.update(friendly_name: 'friendly_name', status: 'status') }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+      expect { resource.update(friendly_name: 'friendly_name', status: 'status') }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+      expect { resource.update(friendly_name: 'friendly_name', status: 'status') }.to raise_error Twilio::REST::RequestError
     end
   end
 end

@@ -2,26 +2,94 @@ require 'spec_helper'
 
 describe Twilio::Resources::V2010::AccountInstance::NotificationList do
   before do
-    @read_client = Twilio::REST::Client.new read_account_sid, read_auth_token
-    @write_client = Twilio::REST::Client.new write_account_sid, write_auth_token
-  
-    it "can fetch notifications" do
-      @read_client go fetch it accounts.notifications
+    Twiliodeck.activate
+  end
+
+  after do
+    Twiliodeck.deactivate
+  end
+
+  context "should fetch notifications" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').notifications.get('NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      expect { resource.sid }.not_to raise_error
     end
   
-    it "can read notifications" do
-      @read_client go read it
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').notifications.get('NOllllllllllllllllllllllllllllllll')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').notifications.get('NOkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').notifications.get('NOmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  end
+
+  context "should read notifications" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').notifications.list(message_date: 'message_date', log: 1) }.not_to raise_error
+    end
+  
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').notifications.list(message_date: 'message_date', log: 1) }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').notifications.list(message_date: 'message_date', log: 1) }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').notifications.list(message_date: 'message_date', log: 1) }.to raise_error Twilio::REST::RequestError
     end
   end
 end
 
 describe Twilio::Resources::V2010::AccountInstance::NotificationInstance do
   before do
-    @read_client = Twilio::REST::Client.new read_account_sid, read_auth_token
-    @write_client = Twilio::REST::Client.new write_account_sid, write_auth_token
+    Twiliodeck.activate
+  end
+
+  after do
+    Twiliodeck.deactivate
+  end
+
+  context "should delete notifications" do
+    it "and return 204" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').notifications.get('NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      expect { resource.delete }.not_to raise_error
+    end
   
-    it "can delete notifications" do
-      @write_client go delete it
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').notifications.get('NOllllllllllllllllllllllllllllllll')
+      expect { resource.delete }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').notifications.get('NOkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+      expect { resource.delete }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').notifications.get('NOmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+      expect { resource.delete }.to raise_error Twilio::REST::RequestError
     end
   end
 end

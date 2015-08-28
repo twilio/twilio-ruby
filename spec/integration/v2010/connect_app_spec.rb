@@ -2,26 +2,94 @@ require 'spec_helper'
 
 describe Twilio::Resources::V2010::AccountInstance::ConnectAppList do
   before do
-    @read_client = Twilio::REST::Client.new read_account_sid, read_auth_token
-    @write_client = Twilio::REST::Client.new write_account_sid, write_auth_token
-  
-    it "can fetch connect_apps" do
-      @read_client go fetch it accounts.connect_apps
+    Twiliodeck.activate
+  end
+
+  after do
+    Twiliodeck.deactivate
+  end
+
+  context "should fetch connect_apps" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').connect_apps.get('CNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      expect { resource.sid }.not_to raise_error
     end
   
-    it "can read connect_apps" do
-      @read_client go read it
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').connect_apps.get('CNllllllllllllllllllllllllllllllll')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').connect_apps.get('CNkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').connect_apps.get('CNmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  end
+
+  context "should read connect_apps" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').connect_apps.list() }.not_to raise_error
+    end
+  
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').connect_apps.list() }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').connect_apps.list() }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').connect_apps.list() }.to raise_error Twilio::REST::RequestError
     end
   end
 end
 
 describe Twilio::Resources::V2010::AccountInstance::ConnectAppInstance do
   before do
-    @read_client = Twilio::REST::Client.new read_account_sid, read_auth_token
-    @write_client = Twilio::REST::Client.new write_account_sid, write_auth_token
+    Twiliodeck.activate
+  end
+
+  after do
+    Twiliodeck.deactivate
+  end
+
+  context "should update connect_apps" do
+    it "and return 200" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').connect_apps.get('CNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      expect { resource.update(homepage_url: "https://example.com", description: 'description', friendly_name: 'friendly_name', deauthorize_callback_method: "GET", company_name: 'company_name', authorize_redirect_url: "https://example.com", deauthorize_callback_url: "https://example.com", permissions: 'permissions') }.not_to raise_error
+    end
   
-    it "can update connect_apps" do
-      @write_client go update it
+    it "and return 401" do
+      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').connect_apps.get('CNllllllllllllllllllllllllllllllll')
+      expect { resource.update(homepage_url: "https://example.com", description: 'description', friendly_name: 'friendly_name', deauthorize_callback_method: "GET", company_name: 'company_name', authorize_redirect_url: "https://example.com", deauthorize_callback_url: "https://example.com", permissions: 'permissions') }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').connect_apps.get('CNkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+      expect { resource.update(homepage_url: "https://example.com", description: 'description', friendly_name: 'friendly_name', deauthorize_callback_method: "GET", company_name: 'company_name', authorize_redirect_url: "https://example.com", deauthorize_callback_url: "https://example.com", permissions: 'permissions') }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').connect_apps.get('CNmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+      expect { resource.update(homepage_url: "https://example.com", description: 'description', friendly_name: 'friendly_name', deauthorize_callback_method: "GET", company_name: 'company_name', authorize_redirect_url: "https://example.com", deauthorize_callback_url: "https://example.com", permissions: 'permissions') }.to raise_error Twilio::REST::RequestError
     end
   end
 end

@@ -2,11 +2,36 @@ require 'spec_helper'
 
 describe Twilio::Resources::Lookups::PhoneNumberList do
   before do
-    @read_client = Twilio::REST::LookupsClient.new read_account_sid, read_auth_token
-    @write_client = Twilio::REST::LookupsClient.new write_account_sid, write_auth_token
+    Twiliodeck.activate
+  end
+
+  after do
+    Twiliodeck.deactivate
+  end
+
+  context "should fetch None" do
+    it "and return 200" do
+      client = Twilio::REST::LookupsClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      resource = client.phone_numbers.get()
+      expect { resource.sid }.not_to raise_error
+    end
   
-    it "can fetch None" do
-      @read_client go fetch it phone_numbers
+    it "and return 401" do
+      client = Twilio::REST::LookupsClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
+      resource = client.phone_numbers.get()
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 404" do
+      client = Twilio::REST::LookupsClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
+      resource = client.phone_numbers.get()
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    end
+  
+    it "and return 500" do
+      client = Twilio::REST::LookupsClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
+      resource = client.phone_numbers.get()
+      expect { resource.sid }.to raise_error Twilio::REST::RequestError
     end
   end
 end
