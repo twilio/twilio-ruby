@@ -115,8 +115,10 @@ module Twilio
       # request is made. The HTTP request is made when attempting to access an
       # attribute of the returned instance resource object, such as
       # its #date_created or #voice_url attributes.
-      def internal_get(sid)
-        i = @instance_class.new @client, @inheritance.merge("#{@instance_id_key}" => sid)
+      def internal_get(sid = nil)
+        inheritance = @inheritance
+        inheritance = inheritance.merge("#{@instance_id_key}" => sid) if sid
+        i = @instance_class.new @client, inheritance
         i.instance_id_key @instance_id_key
         i
       end
