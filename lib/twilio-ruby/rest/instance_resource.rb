@@ -8,7 +8,7 @@ module Twilio
     # are rarely overridden in the inheriting class.
     class InstanceResource
       include Utils
-      attr_accessor :path, :inheritance
+      attr_accessor :path, :inheritance, :query_params
       VERBS = [:update, :delete]
 
       class << self
@@ -32,9 +32,10 @@ module Twilio
       # well be a mock object if you want to test the interface. The optional
       # +params+ hash will be converted into attributes on the instantiated
       # object.
-      def initialize(client, inheritance={}, params = {})
+      def initialize(client, inheritance={}, params = {}, query_params = {})
         @client = client
         @inheritance = inheritance
+        @query_params = query_params
         @inheritance.each do |k, v|
           instance_variable_set("@#{k}", v)
         end
@@ -63,7 +64,10 @@ module Twilio
       def refresh
         raise "Can't refresh a resource without a REST Client" unless @client
         @updated = false
-        set_up_properties_from(@client.get(@path))
+        params = @query_params.collect {|k, v| "#{k}=#{URI.escape(v)}"}
+        param_string = params.size > 0 ? '?' : ''
+        param_string += params.join('&')
+        set_up_properties_from(@client.get(@path + param_string))
         self
       end
 
@@ -72,7 +76,10 @@ module Twilio
       # until an attempt is made to access an unknown attribute.
       def method_missing(method, *args)
         super if @updated
-        set_up_properties_from(@client.get(@path))
+        params = @query_params.collect {|k, v| "#{k}=#{URI.escape(v)}"}
+        param_string = params.size > 0 ? '?' : ''
+        param_string += params.join('&')
+        set_up_properties_from(@client.get(@path + param_string))
         self.send method, *args
       end
 
