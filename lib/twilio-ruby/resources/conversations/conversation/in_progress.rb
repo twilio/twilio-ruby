@@ -16,7 +16,7 @@ module Twilio
         end
       
         class InProgressInstance < Twilio::REST::InstanceResource
-          def initialize(client, inheritance={}, params={})
+          def initialize(client, inheritance={}, params={}, query_params={})
             super
             path "/Conversations/#{@sid}.json"
             instance_id_key 'sid'

@@ -18,7 +18,7 @@ module Twilio
             end
           
             class YesterdayInstance < Twilio::REST::InstanceResource
-              def initialize(client, inheritance={}, params={})
+              def initialize(client, inheritance={}, params={}, query_params={})
                 super
                 instance_id_key 'sid'
               end

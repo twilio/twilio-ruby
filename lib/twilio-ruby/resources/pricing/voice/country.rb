@@ -16,7 +16,7 @@ module Twilio
         end
       
         class CountryInstance < Twilio::REST::InstanceResource
-          def initialize(client, inheritance={}, params={})
+          def initialize(client, inheritance={}, params={}, query_params={})
             super
             path "/Voice/Countries/#{@iso_country}"
             instance_id_key 'iso_country'

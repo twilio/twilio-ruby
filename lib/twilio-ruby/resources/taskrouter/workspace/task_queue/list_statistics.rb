@@ -16,7 +16,7 @@ module Twilio
           end
         
           class StatisticsInstance < Twilio::REST::InstanceResource
-            def initialize(client, inheritance={}, params={})
+            def initialize(client, inheritance={}, params={}, query_params={})
               super
               path "/Workspaces/#{@workspace_sid}/TaskQueues/Statistics"
               instance_id_key 'sid'

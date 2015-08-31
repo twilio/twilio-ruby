@@ -20,7 +20,7 @@ module Twilio
             class CredentialListMappingInstance < Twilio::REST::InstanceResource
               can :delete
               
-              def initialize(client, inheritance={}, params={})
+              def initialize(client, inheritance={}, params={}, query_params={})
                 super
                 path "/Accounts/#{@account_sid}/SIP/Domains/#{@domain_sid}/CredentialListMappings/#{@sid}.json"
                 instance_id_key 'sid'

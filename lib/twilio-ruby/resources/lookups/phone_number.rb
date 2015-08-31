@@ -14,7 +14,7 @@ module Twilio
       end
     
       class PhoneNumberInstance < Twilio::REST::InstanceResource
-        def initialize(client, inheritance={}, params={})
+        def initialize(client, inheritance={}, params={}, query_params={})
           super
           path "/PhoneNumbers/#{@phone_number}.json"
           instance_id_key 'phone_number'

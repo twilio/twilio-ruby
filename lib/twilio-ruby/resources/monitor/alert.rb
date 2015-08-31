@@ -17,7 +17,7 @@ module Twilio
       class AlertInstance < Twilio::REST::InstanceResource
         can :delete
         
-        def initialize(client, inheritance={}, params={})
+        def initialize(client, inheritance={}, params={}, query_params={})
           super
           path "/Alerts/#{@sid}"
           instance_id_key 'sid'

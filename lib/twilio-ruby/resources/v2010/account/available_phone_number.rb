@@ -16,7 +16,7 @@ module Twilio
         end
       
         class AvailablePhoneNumberCountryInstance < Twilio::REST::InstanceResource
-          def initialize(client, inheritance={}, params={})
+          def initialize(client, inheritance={}, params={}, query_params={})
             super
             path "/Accounts/#{@account_sid}/AvailablePhoneNumbers/#{@country_code}.json"
             instance_id_key 'country_code'

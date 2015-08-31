@@ -16,7 +16,7 @@ module Twilio
           end
         
           class StatisticsInstance < Twilio::REST::InstanceResource
-            def initialize(client, inheritance={}, params={})
+            def initialize(client, inheritance={}, params={}, query_params={})
               super
               path "/Workspace/#{@workspace_sid}/Workflows/#{@workflow_sid}/Statistics"
               instance_id_key 'sid'

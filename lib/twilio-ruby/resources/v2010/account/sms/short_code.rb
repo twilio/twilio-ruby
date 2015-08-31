@@ -19,7 +19,7 @@ module Twilio
           class ShortCodeInstance < Twilio::REST::InstanceResource
             can :update
             
-            def initialize(client, inheritance={}, params={})
+            def initialize(client, inheritance={}, params={}, query_params={})
               super
               path "/Accounts/#{@account_sid}/SMS/ShortCodes/#{@sid}.json"
               instance_id_key 'sid'

@@ -10,12 +10,12 @@ module Twilio
           path "/PhoneNumbers"
           instance_id_key 'sid'
           instance_class PhoneNumberInstance
-          components Twilio::Resources::Pricing::PhoneNumberInstance::CountryList
+          components Twilio::Resources::Pricing::PhoneNumberList::CountryList
         end
       end
     
       class PhoneNumberInstance < Twilio::REST::InstanceResource
-        def initialize(client, inheritance={}, params={})
+        def initialize(client, inheritance={}, params={}, query_params={})
           super
           instance_id_key 'sid'
         end

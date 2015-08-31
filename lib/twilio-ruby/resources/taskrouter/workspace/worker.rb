@@ -19,7 +19,7 @@ module Twilio
         class WorkerInstance < Twilio::REST::InstanceResource
           can :update, :delete
           
-          def initialize(client, inheritance={}, params={})
+          def initialize(client, inheritance={}, params={}, query_params={})
             super
             path "/Workspaces/#{@workspace_sid}/Workers/#{@sid}"
             instance_id_key 'sid'

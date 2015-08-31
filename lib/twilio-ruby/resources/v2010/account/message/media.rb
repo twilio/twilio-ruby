@@ -19,7 +19,7 @@ module Twilio
           class MediaInstance < Twilio::REST::InstanceResource
             can :delete
             
-            def initialize(client, inheritance={}, params={})
+            def initialize(client, inheritance={}, params={}, query_params={})
               super
               path "/Accounts/#{@account_sid}/Messages/#{@message_sid}/Media/#{@sid}.json"
               instance_id_key 'sid'

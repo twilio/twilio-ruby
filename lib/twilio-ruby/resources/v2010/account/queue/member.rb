@@ -19,7 +19,7 @@ module Twilio
           class MemberInstance < Twilio::REST::InstanceResource
             can :update
             
-            def initialize(client, inheritance={}, params={})
+            def initialize(client, inheritance={}, params={}, query_params={})
               super
               path "/Accounts/#{@account_sid}/Queues/#{@parent_sid}/Members/#{@sid}.json"
               instance_id_key 'call_sid'

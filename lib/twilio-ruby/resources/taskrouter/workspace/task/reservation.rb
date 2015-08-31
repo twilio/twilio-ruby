@@ -19,7 +19,7 @@ module Twilio
           class ReservationInstance < Twilio::REST::InstanceResource
             can :update
             
-            def initialize(client, inheritance={}, params={})
+            def initialize(client, inheritance={}, params={}, query_params={})
               super
               path "/Workspace/#{@workspace_sid}/Tasks/#{@task_sid}/Reservations/#{@sid}"
               instance_id_key 'sid'

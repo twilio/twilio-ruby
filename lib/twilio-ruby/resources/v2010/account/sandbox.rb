@@ -17,7 +17,7 @@ module Twilio
         class SandboxInstance < Twilio::REST::InstanceResource
           can :update
           
-          def initialize(client, inheritance={}, params={})
+          def initialize(client, inheritance={}, params={}, query_params={})
             super
             path "/Accounts/#{@account_sid}/Sandbox.json"
             instance_id_key 'sid'

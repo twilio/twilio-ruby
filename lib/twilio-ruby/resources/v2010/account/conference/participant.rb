@@ -19,7 +19,7 @@ module Twilio
           class ParticipantInstance < Twilio::REST::InstanceResource
             can :update, :delete
             
-            def initialize(client, inheritance={}, params={})
+            def initialize(client, inheritance={}, params={}, query_params={})
               super
               path "/Accounts/#{@account_sid}/Conferences/#{@parent_sid}/Participants/#{@sid}.json"
               instance_id_key 'call_sid'

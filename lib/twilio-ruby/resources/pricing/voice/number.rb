@@ -15,7 +15,7 @@ module Twilio
         end
       
         class NumberInstance < Twilio::REST::InstanceResource
-          def initialize(client, inheritance={}, params={})
+          def initialize(client, inheritance={}, params={}, query_params={})
             super
             path "/Voice/Numbers/#{@number}"
             instance_id_key 'number'

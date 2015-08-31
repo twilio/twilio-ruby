@@ -17,7 +17,7 @@ module Twilio
         end
       
         class SipInstance < Twilio::REST::InstanceResource
-          def initialize(client, inheritance={}, params={})
+          def initialize(client, inheritance={}, params={}, query_params={})
             super
             instance_id_key 'sid'
           end

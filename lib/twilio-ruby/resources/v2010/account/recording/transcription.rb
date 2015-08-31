@@ -19,7 +19,7 @@ module Twilio
           class TranscriptionInstance < Twilio::REST::InstanceResource
             can :delete
             
-            def initialize(client, inheritance={}, params={})
+            def initialize(client, inheritance={}, params={}, query_params={})
               super
               path "/Accounts/#{@account_sid}/Recordings/#{@recording_sid}/Transcriptions/#{@sid}.json"
               instance_id_key 'sid'

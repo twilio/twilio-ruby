@@ -23,7 +23,7 @@ module Twilio
         class CallInstance < Twilio::REST::InstanceResource
           can :update, :delete
           
-          def initialize(client, inheritance={}, params={})
+          def initialize(client, inheritance={}, params={}, query_params={})
             super
             path "/Accounts/#{@account_sid}/Calls/#{@sid}.json"
             instance_id_key 'sid'

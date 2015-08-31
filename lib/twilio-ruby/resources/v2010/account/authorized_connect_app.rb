@@ -16,7 +16,7 @@ module Twilio
         end
       
         class AuthorizedConnectAppInstance < Twilio::REST::InstanceResource
-          def initialize(client, inheritance={}, params={})
+          def initialize(client, inheritance={}, params={}, query_params={})
             super
             path "/Accounts/#{@account_sid}/AuthorizedConnectApps/#{@sid}.json"
             instance_id_key 'connect_app_sid'
