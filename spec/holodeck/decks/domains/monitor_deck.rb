@@ -1,7 +1,7 @@
 class MonitorHolodeckResource < HolodeckResource
   @sub_resources = {
-      events: MonitorHolodeckResource::EventInstanceHolodeckResource,
       alerts: MonitorHolodeckResource::AlertInstanceHolodeckResource,
+      events: MonitorHolodeckResource::EventInstanceHolodeckResource,
   }
   @holograms = []
 end
