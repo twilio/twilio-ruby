@@ -38,22 +38,22 @@ describe Twilio::Resources::V2010::AccountInstance::ConferenceList do
   context "should read conferences" do
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').conferences.list(date_created: 'date_created', date_updated: 'date_updated', friendly_name: 'friendly_name', status: 'status') }.not_to raise_error
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').conferences.list(:'DateCreated' => 'date_created', :'DateUpdated' => 'date_updated', :'FriendlyName' => 'friendly_name', :'Status' => 'status') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').conferences.list(date_created: 'date_created', date_updated: 'date_updated', friendly_name: 'friendly_name', status: 'status') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').conferences.list(:'DateCreated' => 'date_created', :'DateUpdated' => 'date_updated', :'FriendlyName' => 'friendly_name', :'Status' => 'status') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').conferences.list(date_created: 'date_created', date_updated: 'date_updated', friendly_name: 'friendly_name', status: 'status') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').conferences.list(:'DateCreated' => 'date_created', :'DateUpdated' => 'date_updated', :'FriendlyName' => 'friendly_name', :'Status' => 'status') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').conferences.list(date_created: 'date_created', date_updated: 'date_updated', friendly_name: 'friendly_name', status: 'status') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').conferences.list(:'DateCreated' => 'date_created', :'DateUpdated' => 'date_updated', :'FriendlyName' => 'friendly_name', :'Status' => 'status') }.to raise_error Twilio::REST::RequestError
     end
   end
 end

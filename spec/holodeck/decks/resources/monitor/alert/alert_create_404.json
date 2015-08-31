@@ -1,5 +1,5 @@
 {
     "code": 20404,
-    "message": "The requested resource /v1/Alerts?PageSize=2&Page=0 was not found",
+    "message": "The requested resource /Alerts.json was not found",
     "more_info": "https://www.twilio.com/docs/errors/20404"
 }

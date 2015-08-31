@@ -7,7 +7,7 @@ module Twilio
         
         def initialize(client, inheritance={})
           super
-          path "/Events"
+          path "/Events.json"
           instance_id_key 'sid'
           instance_class EventInstance
           list_key 'events'
@@ -17,7 +17,7 @@ module Twilio
       class EventInstance < Twilio::REST::InstanceResource
         def initialize(client, inheritance={}, params={}, query_params={})
           super
-          path "/Events/#{@sid}"
+          path "/Events/#{@sid}.json"
           instance_id_key 'sid'
         end
       end

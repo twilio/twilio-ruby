@@ -34,22 +34,22 @@ describe Twilio::Resources::V2010::AccountInstance::SipList::IpAccessControlList
   context "should create ip_access_control_lists" do
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.ip_access_control_lists.create(friendly_name: 'friendly_name') }.not_to raise_error
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.ip_access_control_lists.create(:'FriendlyName' => 'friendly_name') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.ip_access_control_lists.create(friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.ip_access_control_lists.create(:'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.ip_access_control_lists.create(friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.ip_access_control_lists.create(:'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.ip_access_control_lists.create(friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.ip_access_control_lists.create(:'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
     end
   end
 
@@ -93,25 +93,25 @@ describe Twilio::Resources::V2010::AccountInstance::SipList::IpAccessControlList
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
       resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.ip_access_control_lists.get('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-      expect { resource.update(friendly_name: 'friendly_name') }.not_to raise_error
+      expect { resource.update(:'FriendlyName' => 'friendly_name') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
       resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.ip_access_control_lists.get('ALllllllllllllllllllllllllllllllll')
-      expect { resource.update(friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
       resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.ip_access_control_lists.get('ALkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-      expect { resource.update(friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
       resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.ip_access_control_lists.get('ALmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-      expect { resource.update(friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
     end
   end
 

@@ -34,22 +34,22 @@ describe Twilio::Resources::V2010::AccountInstance::SipList::CredentialListInsta
   context "should create credentials" do
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.credential_lists.get('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').credentials.create(password: 'password', username: 'username') }.not_to raise_error
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.credential_lists.get('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').credentials.create(:'Password' => 'password', :'Username' => 'username') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.credential_lists.get('CLllllllllllllllllllllllllllllllll').credentials.create(password: 'password', username: 'username') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.credential_lists.get('CLllllllllllllllllllllllllllllllll').credentials.create(:'Password' => 'password', :'Username' => 'username') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.credential_lists.get('CLkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').credentials.create(password: 'password', username: 'username') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.credential_lists.get('CLkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').credentials.create(:'Password' => 'password', :'Username' => 'username') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.credential_lists.get('CLmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').credentials.create(password: 'password', username: 'username') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.credential_lists.get('CLmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').credentials.create(:'Password' => 'password', :'Username' => 'username') }.to raise_error Twilio::REST::RequestError
     end
   end
 
@@ -93,25 +93,25 @@ describe Twilio::Resources::V2010::AccountInstance::SipList::CredentialListInsta
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
       resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.credential_lists.get('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').credentials.get('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-      expect { resource.update(password: 'password', username: 'username') }.not_to raise_error
+      expect { resource.update(:'Password' => 'password', :'Username' => 'username') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
       resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.credential_lists.get('CLllllllllllllllllllllllllllllllll').credentials.get('CRllllllllllllllllllllllllllllllll')
-      expect { resource.update(password: 'password', username: 'username') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'Password' => 'password', :'Username' => 'username') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
       resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.credential_lists.get('CLkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').credentials.get('CRkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-      expect { resource.update(password: 'password', username: 'username') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'Password' => 'password', :'Username' => 'username') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
       resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.credential_lists.get('CLmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').credentials.get('CRmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-      expect { resource.update(password: 'password', username: 'username') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'Password' => 'password', :'Username' => 'username') }.to raise_error Twilio::REST::RequestError
     end
   end
 

@@ -38,22 +38,22 @@ describe Twilio::Resources::Taskrouter::WorkspaceInstance::EventList do
   context "should read events" do
     it "and return 200" do
       client = Twilio::REST::TaskrouterClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').events.list(end_date: 1199174400, event_type: 'event_type', minutes: 1, reservation_sid: 'reservation_sid', start_date: 1199174400, task_queue_sid: 'task_queue_sid', task_sid: 'task_sid', worker_sid: 'worker_sid', workflow_sid: 'workflow_sid') }.not_to raise_error
+      expect { client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').events.list(:'EndDate' => 1199174400, :'EventType' => 'event_type', :'Minutes' => 1, :'ReservationSid' => 'reservation_sid', :'StartDate' => 1199174400, :'TaskQueueSid' => 'task_queue_sid', :'TaskSid' => 'task_sid', :'WorkerSid' => 'worker_sid', :'WorkflowSid' => 'workflow_sid') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::TaskrouterClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSllllllllllllllllllllllllllllllll').events.list(end_date: 1199174400, event_type: 'event_type', minutes: 1, reservation_sid: 'reservation_sid', start_date: 1199174400, task_queue_sid: 'task_queue_sid', task_sid: 'task_sid', worker_sid: 'worker_sid', workflow_sid: 'workflow_sid') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSllllllllllllllllllllllllllllllll').events.list(:'EndDate' => 1199174400, :'EventType' => 'event_type', :'Minutes' => 1, :'ReservationSid' => 'reservation_sid', :'StartDate' => 1199174400, :'TaskQueueSid' => 'task_queue_sid', :'TaskSid' => 'task_sid', :'WorkerSid' => 'worker_sid', :'WorkflowSid' => 'workflow_sid') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::TaskrouterClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').events.list(end_date: 1199174400, event_type: 'event_type', minutes: 1, reservation_sid: 'reservation_sid', start_date: 1199174400, task_queue_sid: 'task_queue_sid', task_sid: 'task_sid', worker_sid: 'worker_sid', workflow_sid: 'workflow_sid') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').events.list(:'EndDate' => 1199174400, :'EventType' => 'event_type', :'Minutes' => 1, :'ReservationSid' => 'reservation_sid', :'StartDate' => 1199174400, :'TaskQueueSid' => 'task_queue_sid', :'TaskSid' => 'task_sid', :'WorkerSid' => 'worker_sid', :'WorkflowSid' => 'workflow_sid') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::TaskrouterClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').events.list(end_date: 1199174400, event_type: 'event_type', minutes: 1, reservation_sid: 'reservation_sid', start_date: 1199174400, task_queue_sid: 'task_queue_sid', task_sid: 'task_sid', worker_sid: 'worker_sid', workflow_sid: 'workflow_sid') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').events.list(:'EndDate' => 1199174400, :'EventType' => 'event_type', :'Minutes' => 1, :'ReservationSid' => 'reservation_sid', :'StartDate' => 1199174400, :'TaskQueueSid' => 'task_queue_sid', :'TaskSid' => 'task_sid', :'WorkerSid' => 'worker_sid', :'WorkflowSid' => 'workflow_sid') }.to raise_error Twilio::REST::RequestError
     end
   end
 end

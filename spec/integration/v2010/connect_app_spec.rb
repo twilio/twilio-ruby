@@ -71,25 +71,25 @@ describe Twilio::Resources::V2010::AccountInstance::ConnectAppInstance do
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
       resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').connect_apps.get('CNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-      expect { resource.update(authorize_redirect_url: "https://example.com", company_name: 'company_name', deauthorize_callback_method: "GET", deauthorize_callback_url: "https://example.com", description: 'description', friendly_name: 'friendly_name', homepage_url: "https://example.com", permissions: 'permissions') }.not_to raise_error
+      expect { resource.update(:'AuthorizeRedirectUrl' => "https://example.com", :'CompanyName' => 'company_name', :'DeauthorizeCallbackMethod' => "GET", :'DeauthorizeCallbackUrl' => "https://example.com", :'Description' => 'description', :'FriendlyName' => 'friendly_name', :'HomepageUrl' => "https://example.com", :'Permissions' => 'permissions') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
       resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').connect_apps.get('CNllllllllllllllllllllllllllllllll')
-      expect { resource.update(authorize_redirect_url: "https://example.com", company_name: 'company_name', deauthorize_callback_method: "GET", deauthorize_callback_url: "https://example.com", description: 'description', friendly_name: 'friendly_name', homepage_url: "https://example.com", permissions: 'permissions') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'AuthorizeRedirectUrl' => "https://example.com", :'CompanyName' => 'company_name', :'DeauthorizeCallbackMethod' => "GET", :'DeauthorizeCallbackUrl' => "https://example.com", :'Description' => 'description', :'FriendlyName' => 'friendly_name', :'HomepageUrl' => "https://example.com", :'Permissions' => 'permissions') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
       resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').connect_apps.get('CNkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-      expect { resource.update(authorize_redirect_url: "https://example.com", company_name: 'company_name', deauthorize_callback_method: "GET", deauthorize_callback_url: "https://example.com", description: 'description', friendly_name: 'friendly_name', homepage_url: "https://example.com", permissions: 'permissions') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'AuthorizeRedirectUrl' => "https://example.com", :'CompanyName' => 'company_name', :'DeauthorizeCallbackMethod' => "GET", :'DeauthorizeCallbackUrl' => "https://example.com", :'Description' => 'description', :'FriendlyName' => 'friendly_name', :'HomepageUrl' => "https://example.com", :'Permissions' => 'permissions') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
       resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').connect_apps.get('CNmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-      expect { resource.update(authorize_redirect_url: "https://example.com", company_name: 'company_name', deauthorize_callback_method: "GET", deauthorize_callback_url: "https://example.com", description: 'description', friendly_name: 'friendly_name', homepage_url: "https://example.com", permissions: 'permissions') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'AuthorizeRedirectUrl' => "https://example.com", :'CompanyName' => 'company_name', :'DeauthorizeCallbackMethod' => "GET", :'DeauthorizeCallbackUrl' => "https://example.com", :'Description' => 'description', :'FriendlyName' => 'friendly_name', :'HomepageUrl' => "https://example.com", :'Permissions' => 'permissions') }.to raise_error Twilio::REST::RequestError
     end
   end
 end

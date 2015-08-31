@@ -38,22 +38,22 @@ describe Twilio::Resources::V2010::AccountInstance::MessageInstance::MediaList d
   context "should read media_list" do
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').messages.get('SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').media.list(date_created: 'date_created') }.not_to raise_error
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').messages.get('SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').media.list(:'DateCreated' => 'date_created') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').messages.get('SMllllllllllllllllllllllllllllllll').media.list(date_created: 'date_created') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').messages.get('SMllllllllllllllllllllllllllllllll').media.list(:'DateCreated' => 'date_created') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').messages.get('SMkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').media.list(date_created: 'date_created') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').messages.get('SMkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').media.list(:'DateCreated' => 'date_created') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').messages.get('SMmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').media.list(date_created: 'date_created') }.to raise_error Twilio::REST::RequestError
+      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').messages.get('SMmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').media.list(:'DateCreated' => 'date_created') }.to raise_error Twilio::REST::RequestError
     end
   end
 end

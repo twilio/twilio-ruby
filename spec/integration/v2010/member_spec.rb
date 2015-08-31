@@ -71,25 +71,25 @@ describe Twilio::Resources::V2010::AccountInstance::QueueInstance::MemberInstanc
     it "and return 200" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
       resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').queues.get('QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').members.get('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-      expect { resource.update(method: "GET", url: "https://example.com") }.not_to raise_error
+      expect { resource.update(:'Method' => "GET", :'Url' => "https://example.com") }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
       resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').queues.get('QUllllllllllllllllllllllllllllllll').members.get('CAllllllllllllllllllllllllllllllll')
-      expect { resource.update(method: "GET", url: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'Method' => "GET", :'Url' => "https://example.com") }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
       resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').queues.get('QUkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').members.get('CAkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-      expect { resource.update(method: "GET", url: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'Method' => "GET", :'Url' => "https://example.com") }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
       resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').queues.get('QUmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').members.get('CAmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-      expect { resource.update(method: "GET", url: "https://example.com") }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'Method' => "GET", :'Url' => "https://example.com") }.to raise_error Twilio::REST::RequestError
     end
   end
 end

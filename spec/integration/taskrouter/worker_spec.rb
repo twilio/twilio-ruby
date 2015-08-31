@@ -12,44 +12,44 @@ describe Twilio::Resources::Taskrouter::WorkspaceInstance::WorkerList do
   context "should read workers" do
     it "and return 200" do
       client = Twilio::REST::TaskrouterClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').workers.list(activity_name: 'activity_name', activity_sid: 'activity_sid', available: 'available', friendly_name: 'friendly_name', target_workers_expression: 'target_workers_expression', task_queue_name: 'task_queue_name', task_queue_sid: 'task_queue_sid') }.not_to raise_error
+      expect { client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').workers.list(:'ActivityName' => 'activity_name', :'ActivitySid' => 'activity_sid', :'Available' => 'available', :'FriendlyName' => 'friendly_name', :'TargetWorkersExpression' => 'target_workers_expression', :'TaskQueueName' => 'task_queue_name', :'TaskQueueSid' => 'task_queue_sid') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::TaskrouterClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSllllllllllllllllllllllllllllllll').workers.list(activity_name: 'activity_name', activity_sid: 'activity_sid', available: 'available', friendly_name: 'friendly_name', target_workers_expression: 'target_workers_expression', task_queue_name: 'task_queue_name', task_queue_sid: 'task_queue_sid') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSllllllllllllllllllllllllllllllll').workers.list(:'ActivityName' => 'activity_name', :'ActivitySid' => 'activity_sid', :'Available' => 'available', :'FriendlyName' => 'friendly_name', :'TargetWorkersExpression' => 'target_workers_expression', :'TaskQueueName' => 'task_queue_name', :'TaskQueueSid' => 'task_queue_sid') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::TaskrouterClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').workers.list(activity_name: 'activity_name', activity_sid: 'activity_sid', available: 'available', friendly_name: 'friendly_name', target_workers_expression: 'target_workers_expression', task_queue_name: 'task_queue_name', task_queue_sid: 'task_queue_sid') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').workers.list(:'ActivityName' => 'activity_name', :'ActivitySid' => 'activity_sid', :'Available' => 'available', :'FriendlyName' => 'friendly_name', :'TargetWorkersExpression' => 'target_workers_expression', :'TaskQueueName' => 'task_queue_name', :'TaskQueueSid' => 'task_queue_sid') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::TaskrouterClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').workers.list(activity_name: 'activity_name', activity_sid: 'activity_sid', available: 'available', friendly_name: 'friendly_name', target_workers_expression: 'target_workers_expression', task_queue_name: 'task_queue_name', task_queue_sid: 'task_queue_sid') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').workers.list(:'ActivityName' => 'activity_name', :'ActivitySid' => 'activity_sid', :'Available' => 'available', :'FriendlyName' => 'friendly_name', :'TargetWorkersExpression' => 'target_workers_expression', :'TaskQueueName' => 'task_queue_name', :'TaskQueueSid' => 'task_queue_sid') }.to raise_error Twilio::REST::RequestError
     end
   end
 
   context "should create workers" do
     it "and return 200" do
       client = Twilio::REST::TaskrouterClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').workers.create(activity_sid: 'activity_sid', attributes: 'attributes', friendly_name: 'friendly_name') }.not_to raise_error
+      expect { client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').workers.create(:'ActivitySid' => 'activity_sid', :'Attributes' => 'attributes', :'FriendlyName' => 'friendly_name') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::TaskrouterClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSllllllllllllllllllllllllllllllll').workers.create(activity_sid: 'activity_sid', attributes: 'attributes', friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSllllllllllllllllllllllllllllllll').workers.create(:'ActivitySid' => 'activity_sid', :'Attributes' => 'attributes', :'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::TaskrouterClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').workers.create(activity_sid: 'activity_sid', attributes: 'attributes', friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').workers.create(:'ActivitySid' => 'activity_sid', :'Attributes' => 'attributes', :'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::TaskrouterClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.workspaces.get('WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').workers.create(activity_sid: 'activity_sid', attributes: 'attributes', friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { client.workspaces.get('WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').workers.create(:'ActivitySid' => 'activity_sid', :'Attributes' => 'attributes', :'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
     end
   end
 
@@ -93,25 +93,25 @@ describe Twilio::Resources::Taskrouter::WorkspaceInstance::WorkerInstance do
     it "and return 200" do
       client = Twilio::REST::TaskrouterClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
       resource = client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').workers.get('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-      expect { resource.update(activity_sid: 'activity_sid', attributes: 'attributes', friendly_name: 'friendly_name') }.not_to raise_error
+      expect { resource.update(:'ActivitySid' => 'activity_sid', :'Attributes' => 'attributes', :'FriendlyName' => 'friendly_name') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::TaskrouterClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
       resource = client.workspaces.get('WSllllllllllllllllllllllllllllllll').workers.get('WKllllllllllllllllllllllllllllllll')
-      expect { resource.update(activity_sid: 'activity_sid', attributes: 'attributes', friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'ActivitySid' => 'activity_sid', :'Attributes' => 'attributes', :'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::TaskrouterClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
       resource = client.workspaces.get('WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').workers.get('WKkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-      expect { resource.update(activity_sid: 'activity_sid', attributes: 'attributes', friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'ActivitySid' => 'activity_sid', :'Attributes' => 'attributes', :'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::TaskrouterClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
       resource = client.workspaces.get('WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').workers.get('WKmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-      expect { resource.update(activity_sid: 'activity_sid', attributes: 'attributes', friendly_name: 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'ActivitySid' => 'activity_sid', :'Attributes' => 'attributes', :'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
     end
   end
 

@@ -71,25 +71,25 @@ describe Twilio::Resources::Taskrouter::WorkspaceInstance::TaskInstance::Reserva
     it "and return 200" do
       client = Twilio::REST::TaskrouterClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
       resource = client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').tasks.get('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').reservations.get('WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-      expect { resource.update(reservation_status: 'reservation_status', worker_activity_sid: 'worker_activity_sid') }.not_to raise_error
+      expect { resource.update(:'ReservationStatus' => 'reservation_status', :'WorkerActivitySid' => 'worker_activity_sid') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::TaskrouterClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
       resource = client.workspaces.get('WSllllllllllllllllllllllllllllllll').tasks.get('WTllllllllllllllllllllllllllllllll').reservations.get('WRllllllllllllllllllllllllllllllll')
-      expect { resource.update(reservation_status: 'reservation_status', worker_activity_sid: 'worker_activity_sid') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'ReservationStatus' => 'reservation_status', :'WorkerActivitySid' => 'worker_activity_sid') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::TaskrouterClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
       resource = client.workspaces.get('WSkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').tasks.get('WTkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').reservations.get('WRkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-      expect { resource.update(reservation_status: 'reservation_status', worker_activity_sid: 'worker_activity_sid') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'ReservationStatus' => 'reservation_status', :'WorkerActivitySid' => 'worker_activity_sid') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::TaskrouterClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
       resource = client.workspaces.get('WSmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').tasks.get('WTmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').reservations.get('WRmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-      expect { resource.update(reservation_status: 'reservation_status', worker_activity_sid: 'worker_activity_sid') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'ReservationStatus' => 'reservation_status', :'WorkerActivitySid' => 'worker_activity_sid') }.to raise_error Twilio::REST::RequestError
     end
   end
 end

@@ -29,6 +29,6 @@
         "page_size": 2,
         "previous_page_uri": null,
         "start": 0,
-        "uri": "/v1/Alerts?PageSize=2&Page=0"
+        "uri": "/Alerts.json"
     }
 }

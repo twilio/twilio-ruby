@@ -34,22 +34,22 @@ describe Twilio::Resources::Conversations::ConversationInstance::ParticipantList
   context "should create participants" do
     it "and return 200" do
       client = Twilio::REST::ConversationsClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.conversations.get('CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').participants.create(from: 'from', to: 'to') }.not_to raise_error
+      expect { client.conversations.get('CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').participants.create(:'From' => 'from', :'To' => 'to') }.not_to raise_error
     end
   
     it "and return 401" do
       client = Twilio::REST::ConversationsClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.conversations.get('CVllllllllllllllllllllllllllllllll').participants.create(from: 'from', to: 'to') }.to raise_error Twilio::REST::RequestError
+      expect { client.conversations.get('CVllllllllllllllllllllllllllllllll').participants.create(:'From' => 'from', :'To' => 'to') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 404" do
       client = Twilio::REST::ConversationsClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.conversations.get('CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').participants.create(from: 'from', to: 'to') }.to raise_error Twilio::REST::RequestError
+      expect { client.conversations.get('CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').participants.create(:'From' => 'from', :'To' => 'to') }.to raise_error Twilio::REST::RequestError
     end
   
     it "and return 500" do
       client = Twilio::REST::ConversationsClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.conversations.get('CVmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').participants.create(from: 'from', to: 'to') }.to raise_error Twilio::REST::RequestError
+      expect { client.conversations.get('CVmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').participants.create(:'From' => 'from', :'To' => 'to') }.to raise_error Twilio::REST::RequestError
     end
   end
 
