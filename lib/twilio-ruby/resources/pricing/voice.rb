@@ -7,7 +7,7 @@ module Twilio
         
         def initialize(client, inheritance={})
           super
-          path "/Voice"
+          path "/Voice.json"
           instance_id_key 'sid'
           instance_class VoiceInstance
           components Twilio::Resources::Pricing::VoiceList::NumberList,

@@ -8,7 +8,7 @@ module Twilio
           
           def initialize(client, inheritance={})
             super
-            path "/Voice/Numbers/#{@number}"
+            path "/Voice/Numbers/#{@number}.json"
             instance_id_key 'number'
             instance_class NumberInstance
           end
@@ -17,7 +17,7 @@ module Twilio
         class NumberInstance < Twilio::REST::InstanceResource
           def initialize(client, inheritance={}, params={}, query_params={})
             super
-            path "/Voice/Numbers/#{@number}"
+            path "/Voice/Numbers/#{@number}.json"
             instance_id_key 'number'
           end
         end

@@ -8,7 +8,7 @@ module Twilio
           
           def initialize(client, inheritance={})
             super
-            path "/Voice/Countries"
+            path "/Voice/Countries.json"
             instance_id_key 'iso_country'
             instance_class CountryInstance
             list_key 'countries'
@@ -18,7 +18,7 @@ module Twilio
         class CountryInstance < Twilio::REST::InstanceResource
           def initialize(client, inheritance={}, params={}, query_params={})
             super
-            path "/Voice/Countries/#{@iso_country}"
+            path "/Voice/Countries/#{@iso_country}.json"
             instance_id_key 'iso_country'
           end
         end
