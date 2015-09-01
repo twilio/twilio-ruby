@@ -1,3 +1,5 @@
+require 'json'
+
 module Twilio
   module REST
     class BaseClient
@@ -32,7 +34,11 @@ module Twilio
           raise ArgumentError, 'Account SID and auth token are required'
         end
 
-        set_up_connection
+        unless args.first.is_a(Hash)
+          set_up_connection
+        else
+          @connection = args.first
+        end
         set_up_subresources
       end
 
@@ -116,7 +122,7 @@ module Twilio
           if retries_left > 0 then retries_left -= 1; retry else raise end
         end
         if response.body and !response.body.empty?
-          object = MultiJson.load response.body
+          object = JSON.parse response.body
         elsif response.kind_of? Net::HTTPBadRequest
           object = { message: 'Bad request', code: 400 }
         end
