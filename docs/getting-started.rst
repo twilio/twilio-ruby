@@ -101,14 +101,12 @@ Additional resources had off of the workspace object (task_queues, workers, work
     # To find these visit https://www.twilio.com/user/account
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
-    workspace_sid = "ZZZZZZZZZZZZZZZZ"
+    workspace_sid = "WSzzzzzzzzzzzzzzzzzzzzzzzzzzz"
 
-    @client = Twilio::REST::TaskRouterClient.new account_sid, auth_token, workspace_sid
+    client = Twilio::REST::TaskRouterClient.new account_sid, auth_token, workspace_sid
 
-    workflow_sid = "WWWWWWWWWWWWWWWWW"
-    task_attributes = '{"foo":"bar"}'
-
-    @task = @client.workspace.tasks.create(attributes: task_attributes, workflow_sid: workflow_sid)
+    workflow_sid = "WFzzzzzzzzzzzzz"
+    task = client.workspace.tasks.create(attributes: '{"foo":"bar"}', workflow_sid: workflow_sid)
 
 
 Digging Deeper
