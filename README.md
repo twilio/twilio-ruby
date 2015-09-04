@@ -138,8 +138,7 @@ client = Twilio::REST::TaskRouterClient.new account_sid, auth_token, workspace_s
 
 # create a task
 workflow_sid = 'WWffffffffffffffffffffffffffff'
-task_attributes = '{"foo":"bar"}'
-client.workspace.tasks.create(attributes: task_attributes, workflow_sid: workflow_sid)
+client.workspace.tasks.create(attributes: '{"foo": "bar"}', workflow_sid: "WWfffffffffffffffffffffffffffffff")
 ```
 
 ## Create a Twilio Client Capability Token

@@ -24,8 +24,7 @@ end
 
 # create a task
 workflow_sid = 'YourWorkflowSid'
-task_attributes = '{"foo":"bar"}'
-task = client.workspace.tasks.create(attributes: task_attributes, workflow_sid: workflow_sid)
+task = client.workspace.tasks.create(attributes: '{"foo":"bar"}', workflow_sid: workflow_sid)
 
 # list all the tasks created
 client.workspace.tasks.list.each do |task|
