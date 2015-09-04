@@ -22,9 +22,9 @@ module Twilio
         @rules.each do |rule|
           filters.push(rule.to_json)
         end
-
-        task_routing = {'filters' => filters, 'default_filter' => @default_target.to_json}
-        config = {'task_routing' => task_routing}
+        
+        task_routing = {filters: filters, default_filter: @default_target.to_json}
+        config = {task_routing: task_routing}
         config.to_json
       end
 
@@ -62,7 +62,7 @@ module Twilio
       end
 
       def to_json
-        rule = {'expression' => @expression}
+        rule = {expression: @expression}
         ruleTargets = Array.new
         @targets.each do |target|
           ruleTargets.push(target.to_json)
@@ -108,7 +108,7 @@ module Twilio
       end
 
       def to_json
-        target = {'queue' => @queue}
+        target = {queue: @queue}
         unless @priority.nil?
           target['priority'] = @priority
         end
