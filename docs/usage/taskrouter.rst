@@ -134,8 +134,7 @@ You can also utilize our Workflow Builder to make this process a bit easier util
     gold_ticket_queue_sid = 'YourGoldTicketQueueSid'
     default_queue_sid = 'YourDefaultQueueSid'
 
-    gold_ticket_target = Twilio::TaskRouter::WorkflowRuleTarget.new gold_ticket_queue_sid
-    gold_ticket_targets = [gold_ticket_target]
+    gold_ticket_targets = [Twilio::TaskRouter::WorkflowRuleTarget.new(gold_ticket_queue_sid)]
     gold_ticket_rule = Twilio::TaskRouter::WorkflowRule.new 'customer_value == "Gold" AND type == "ticket"', gold_ticket_targets, 'Gold Tickets'
 
     @rules = [gold_ticket_rule]

@@ -63,12 +63,10 @@ support_queue_sid = 'YourSupportQueueSid'
 marketing_queue_sid = 'YourMarketingQueueSid'
 default_queue_sid = 'YourDefaultQueue'
 
-support_target = Twilio::TaskRouter::WorkflowRuleTarget.new support_queue_sid
-support_targets = [support_target]
+support_targets = [Twilio::TaskRouter::WorkflowRuleTarget.new support_queue_sid]
 support_rule = Twilio::TaskRouter::WorkflowRule.new 'type == "support"', support_targets
 
-marketing_target = Twilio::TaskRouter::WorkflowRuleTarget.new marketing_queue_sid
-marketing_targets = [marketing_target]
+marketing_targets = [Twilio::TaskRouter::WorkflowRuleTarget.new marketing_queue_sid]
 marketing_rule = Twilio::TaskRouter::WorkflowRule.new 'type == "marketing"', marketing_targets
 
 rules = [support_rule, marketing_rule]
