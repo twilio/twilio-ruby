@@ -127,20 +127,19 @@ Additional resources had off of the workspace object (task_queues, workers, work
 ``` ruby
 require 'rubygems'
 require 'twilio-ruby'
-require 'json'
 
 # put your own account credentials here:
-@account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-@auth_token  = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
-@workspace_sid = 'WSzzzzzzzzzzzzzzzzzzzzzzzzzzz'
+account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+auth_token  = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
+workspace_sid = 'WSzzzzzzzzzzzzzzzzzzzzzzzzzzz'
 
 # set up a client
-@client = Twilio::REST::TaskRouterClient.new @account_sid, @auth_token, @workspace_sid
+client = Twilio::REST::TaskRouterClient.new account_sid, auth_token, workspace_sid
 
 # create a task
-@workflow_sid = 'WWffffffffffffffffffffffffffff'
-@task_attributes = '{"foo":"bar"}'
-@client.workspace.tasks.create(attributes: @task_attributes, workflow_sid: @workflow_sid)
+workflow_sid = 'WWffffffffffffffffffffffffffff'
+task_attributes = '{"foo":"bar"}'
+client.workspace.tasks.create(attributes: task_attributes, workflow_sid: workflow_sid)
 ```
 
 ## Create a Twilio Client Capability Token
