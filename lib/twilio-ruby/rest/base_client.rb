@@ -1,4 +1,5 @@
 require 'json'
+require_relative 'http_client.rb'
 
 module Twilio
   module REST
@@ -34,12 +35,17 @@ module Twilio
           raise ArgumentError, 'Account SID and auth token are required'
         end
 
-        unless args.first.is_a(Hash)
-          set_up_connection
-        else
-          @connection = args.first
-        end
+        @http_client = HTTPClient.new(@config)
+
         set_up_subresources
+      end
+
+      def http_client_class=(new_client)
+        @http_client = new_client.new(@config)
+      end
+
+      def http_client
+        @http_client
       end
 
       ##
@@ -72,31 +78,6 @@ module Twilio
       end
 
       ##
-      # Set up and cache a Net::HTTP object to use when making requests. This is
-      # a private method documented for completeness.
-      def set_up_connection # :doc:
-        connection_class = Net::HTTP::Proxy @config.proxy_addr,
-                                            @config.proxy_port, @config.proxy_user, @config.proxy_pass
-        @connection = connection_class.new @config.host, @config.port
-        set_up_ssl
-        @connection.open_timeout = @config.timeout
-        @connection.read_timeout = @config.timeout
-      end
-
-      ##
-      # Set up the ssl properties of the <tt>@connection</tt> Net::HTTP object.
-      # This is a private method documented for completeness.
-      def set_up_ssl # :doc:
-        @connection.use_ssl = @config.use_ssl
-        if @config.ssl_verify_peer
-          @connection.verify_mode = OpenSSL::SSL::VERIFY_PEER
-          @connection.ca_file = @config.ssl_ca_file
-        else
-          @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        end
-      end
-
-      ##
       # Set up sub resources attributes.
       def set_up_subresources # :doc:
         # To be overridden
@@ -109,28 +90,15 @@ module Twilio
       # <tt>@last_request</tt> and <tt>@last_response</tt> to allow for
       # inspection later.
       def connect_and_send(request) # :doc:
-        @last_request = request
-        retries_left = @config.retry_limit
-        begin
-          response = @connection.request request
-          @last_response = response
-          if response.kind_of? Net::HTTPServerError
-            raise Twilio::REST::ServerError
-          end
-        rescue
-          raise if request.class == Net::HTTP::Post
-          if retries_left > 0 then retries_left -= 1; retry else raise end
-        end
-        if response.body and !response.body.empty?
-          object = JSON.parse response.body
-        elsif response.kind_of? Net::HTTPBadRequest
-          object = { message: 'Bad request', code: 400 }
+        response = @http_client.request(request)
+        case response.status_code
+        when 500
+          raise Twilio::REST::ServerError
+        when 300..499
+          raise Twilio::REST::RequestError.new response.body['message'], response.body['code']
         end
 
-        if response.kind_of? Net::HTTPClientError
-          raise Twilio::REST::RequestError.new object['message'], object['code']
-        end
-        object
+        response.body
       end
     end
   end
