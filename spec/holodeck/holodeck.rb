@@ -1,9 +1,7 @@
 require 'base64'
 
 class Holodeck
-  @sub_resources = {}
-  @holograms = {}
-  @active = false
+  attr_accessor :host, :port
 
   class MissingHologram < StandardError
     def message
@@ -11,68 +9,65 @@ class Holodeck
     end
   end
 
-  def self.activate
-    raise "Holodeck already active!" if @active
-    @active = true
-
-    @sub_resources.each do |k, v|
-      v.activate(self)
-    end
-
-    # Monkey patch BaseClient get/post/put/delete
-    holodeck_class = self
-    base_client = Twilio::REST::BaseClient
-    m = base_client.instance_method(:connect_and_send)
-    base_client.send :define_method, 'original_connect_and_send', m
-    base_client.send :define_method, :connect_and_send, &lambda {|request|
-      holodeck_class.process_request(self.class.host, request)
-    }
+  def initialize(config)
+    @host = config.host
+    @holograms = []
+    @requests = []
   end
 
-  def self.begin_program(&block)
-    activate
-    block.call
-  ensure
-    deactivate
+  def mock(request, response)
+    @holograms << Hologram.new(request, response)
   end
 
-  def self.deactivate
-    @active = false
-    @holograms = {}
-
-    # Restore BaseClient
-    base_client = Twilio::REST::BaseClient
-    m = base_client.instance_method('original_connect_and_send')
-    base_client.send :define_method, :connect_and_send, m
-  end
-
-  def self.add(hologram)
-    # puts hologram.url if hologram.url.include?('Conversations')
-    @holograms[hologram.url] ||= []
-    @holograms[hologram.url] << hologram
-  end
-
-  def self.process_request(host, request)
+  def request(request)
     method = request.method.upcase
-    path = "https://#{host}" + request.path.split('?')[0]
-    query_params = request.path.split('?')[1] if request.path.include?('?')
-    form_params = request.body
+    path = "https://#{@host}" + request.path.split('?')[0]
+    raw_query = request.path.split('?')[1] if request.path.include?('?')
+    raw_form = request.body
     auth = request.get_fields('authorization')[0]
+    query = {}
+    form = {}
+
+    raw_query.split('&').each do |p|
+      p = URI.decode(p)
+      k, v = p.split('=')
+      query[k.to_sym] = v
+    end if raw_query
+
+    raw_form.split('&').each do |p|
+      p = URI.decode(p)
+      k, v = p.split('=')
+      if form[k.to_sym]
+        if form[k.to_sym].is_a? Array
+          form[k.to_sym] << v
+        else
+          form[k.to_sym] = [form[k.to_sym][0], v]
+        end
+      else
+        form[k.to_sym] = v
+      end
+    end if raw_form
 
     if auth
       auth = Base64.decode64(auth.split(' ')[1])
     end
 
-    @holograms[path].each do |h|
-      response = h.simulate(method, path, auth, query_params, form_params)
-      return response if response
-    end if @holograms[path]
+    hrequest = Hologram::Request.new(method: method,
+                                     url: path,
+                                     query_params: query,
+                                     form_params: form,
+                                     auth: auth)
+    @requests << hrequest
 
-    raise MissingHologram, path
+    @holograms.each do |h|
+      response = h.simulate(method, path, auth, hrequest.query_params, hrequest.form_params)
+      return response if response
+    end
+
+    raise MissingHologram, "#{method} #{path}"
   end
 
-  def method_missing(name, *args)
-    super unless subresource = @sub_resources[name]
-    subresource
+  def requested?(request)
+    @requests.include?(request)
   end
 end
