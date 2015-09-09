@@ -9,7 +9,7 @@ module Twilio
             
             def initialize(client, inheritance={})
               super
-              path "/Workspaces/#{@workspace_sid}/Workers/Statistics"
+              path "/Workspaces/#{@workspace_sid}/Workers/Statistics.json"
               instance_id_key 'sid'
               instance_class StatisticsInstance
             end
@@ -18,7 +18,7 @@ module Twilio
           class StatisticsInstance < Twilio::REST::InstanceResource
             def initialize(client, inheritance={}, params={}, query_params={})
               super
-              path "/Workspaces/#{@workspace_sid}/Workers/Statistics"
+              path "/Workspaces/#{@workspace_sid}/Workers/Statistics.json"
               instance_id_key 'sid'
             end
           end

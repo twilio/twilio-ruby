@@ -1,37 +1,53 @@
 require 'spec_helper'
 
 describe Twilio::Resources::Lookups::PhoneNumberList do
-  before do
-    Twiliodeck.activate
-  end
-
-  after do
-    Twiliodeck.deactivate
-  end
-
   context "should fetch None" do
-    it "and return 200" do
+    it "and succeed" do
       client = Twilio::REST::LookupsClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      resource = client.phone_numbers.get('phone_number', {CountryCode: 'country_code', Type: 'type'})
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, %q<
+          {
+       "carrier": {
+        "error_code": null,
+        "mobile_country_code": "310",
+        "mobile_network_code": "456",
+        "name": "verizon",
+        "type": "mobile"
+       },
+       "country_code": "US",
+       "national_format": "(510) 867-5309",
+       "phone_number": "+15108675309",
+       "url": "https://lookups.twilio.com/v1/PhoneNumbers/phone_number"
+      }
+          >))
+      resource = client.phone_numbers.get("+987654321", {CountryCode: "country_code", Type: "type"})
       expect { resource.phone_number }.not_to raise_error
     end
   
-    it "and return 401" do
-      client = Twilio::REST::LookupsClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      resource = client.phone_numbers.get('phone_number', {CountryCode: 'country_code', Type: 'type'})
-      expect { resource.phone_number }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 404" do
-      client = Twilio::REST::LookupsClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      resource = client.phone_numbers.get('phone_number', {CountryCode: 'country_code', Type: 'type'})
-      expect { resource.phone_number }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 500" do
-      client = Twilio::REST::LookupsClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      resource = client.phone_numbers.get('phone_number', {CountryCode: 'country_code', Type: 'type'})
-      expect { resource.phone_number }.to raise_error Twilio::REST::RequestError
+    it "and receive" do
+      client = Twilio::REST::LookupsClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, %q<
+          {
+       "carrier": {
+        "error_code": null,
+        "mobile_country_code": "310",
+        "mobile_network_code": "456",
+        "name": "verizon",
+        "type": "mobile"
+       },
+       "country_code": "US",
+       "national_format": "(510) 867-5309",
+       "phone_number": "+15108675309",
+       "url": "https://lookups.twilio.com/v1/PhoneNumbers/phone_number"
+      }
+          >))
+      resource = client.phone_numbers.get("+987654321", {CountryCode: "country_code", Type: "type"})
+      expect { resource.phone_number }.not_to raise_error
     end
   end
 end

@@ -1,5 +1,0 @@
-{
-    "code": 20404,
-    "message": "The requested resource https://pricing.twilio.com/v1/Voice/Countries/AU was not found",
-    "more_info": "https://www.twilio.com/docs/errors/20404"
-}

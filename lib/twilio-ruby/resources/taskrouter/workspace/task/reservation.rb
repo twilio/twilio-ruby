@@ -9,7 +9,7 @@ module Twilio
             
             def initialize(client, inheritance={})
               super
-              path "/Workspace/#{@workspace_sid}/Tasks/#{@task_sid}/Reservations"
+              path "/Workspaces/#{@workspace_sid}/Tasks/#{@task_sid}/Reservations"
               instance_id_key 'sid'
               instance_class ReservationInstance
               list_key 'reservations'
@@ -21,7 +21,7 @@ module Twilio
             
             def initialize(client, inheritance={}, params={}, query_params={})
               super
-              path "/Workspace/#{@workspace_sid}/Tasks/#{@task_sid}/Reservations/#{@sid}"
+              path "/Workspaces/#{@workspace_sid}/Tasks/#{@task_sid}/Reservations/#{@sid}"
               instance_id_key 'sid'
             end
           end

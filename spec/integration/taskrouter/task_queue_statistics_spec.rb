@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Twilio::Resources::Taskrouter::WorkspaceInstance::StatisticsList do
+describe Twilio::Resources::Taskrouter::WorkspaceInstance::TaskQueueInstance::StatisticsList do
   context "should fetch None" do
     it "and succeed" do
       client = Twilio::REST::TaskrouterClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
@@ -12,26 +12,25 @@ describe Twilio::Resources::Taskrouter::WorkspaceInstance::StatisticsList do
        "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
        "cumulative": {
         "avg_task_acceptance_time": 0.0,
-        "end_time": "2015-08-18T17:03:13Z",
+        "end_time": "2015-08-18T00:42:34Z",
         "reservations_accepted": 0,
         "reservations_canceled": 0,
         "reservations_created": 0,
         "reservations_rejected": 0,
         "reservations_rescinded": 0,
         "reservations_timed_out": 0,
-        "start_time": "2015-08-18T16:48:13Z",
+        "start_time": "2015-08-18T00:27:34Z",
         "tasks_canceled": 0,
-        "tasks_created": 0,
         "tasks_deleted": 0,
-        "tasks_moved": 0,
-        "tasks_timed_out_in_workflow": 0
+        "tasks_entered": 0,
+        "tasks_moved": 0
        },
        "realtime": {
         "activity_statistics": [
          {
           "friendly_name": "Offline",
           "sid": "WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "workers": 1
+          "workers": 0
          },
          {
           "friendly_name": "Idle",
@@ -66,13 +65,15 @@ describe Twilio::Resources::Taskrouter::WorkspaceInstance::StatisticsList do
          "pending": 0,
          "reserved": 0
         },
-        "total_tasks": 0,
-        "total_workers": 1
+        "total_available_workers": 0,
+        "total_eligible_workers": 0,
+        "total_tasks": 0
        },
+       "task_queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
        "workspace_sid": "WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
           >))
-      resource = client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').statistics.get('', {EndDate: Date.new(2008, 1, 1), Minutes: 1, StartDate: Date.new(2008, 1, 1)})
+      resource = client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').task_queues.get('WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').statistics.get('', {EndDate: Date.new(2008, 1, 2), FriendlyName: "friendly_name", Minutes: 1, StartDate: Date.new(2008, 1, 2)})
       expect { resource.sid }.not_to raise_error
     end
   
@@ -86,26 +87,25 @@ describe Twilio::Resources::Taskrouter::WorkspaceInstance::StatisticsList do
        "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
        "cumulative": {
         "avg_task_acceptance_time": 0.0,
-        "end_time": "2015-08-18T17:03:13Z",
+        "end_time": "2015-08-18T00:42:34Z",
         "reservations_accepted": 0,
         "reservations_canceled": 0,
         "reservations_created": 0,
         "reservations_rejected": 0,
         "reservations_rescinded": 0,
         "reservations_timed_out": 0,
-        "start_time": "2015-08-18T16:48:13Z",
+        "start_time": "2015-08-18T00:27:34Z",
         "tasks_canceled": 0,
-        "tasks_created": 0,
         "tasks_deleted": 0,
-        "tasks_moved": 0,
-        "tasks_timed_out_in_workflow": 0
+        "tasks_entered": 0,
+        "tasks_moved": 0
        },
        "realtime": {
         "activity_statistics": [
          {
           "friendly_name": "Offline",
           "sid": "WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "workers": 1
+          "workers": 0
          },
          {
           "friendly_name": "Idle",
@@ -140,13 +140,15 @@ describe Twilio::Resources::Taskrouter::WorkspaceInstance::StatisticsList do
          "pending": 0,
          "reserved": 0
         },
-        "total_tasks": 0,
-        "total_workers": 1
+        "total_available_workers": 0,
+        "total_eligible_workers": 0,
+        "total_tasks": 0
        },
+       "task_queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
        "workspace_sid": "WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
           >))
-      resource = client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').statistics.get('', {EndDate: Date.new(2008, 1, 1), Minutes: 1, StartDate: Date.new(2008, 1, 1)})
+      resource = client.workspaces.get('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').task_queues.get('WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').statistics.get('', {EndDate: Date.new(2008, 1, 2), FriendlyName: "friendly_name", Minutes: 1, StartDate: Date.new(2008, 1, 2)})
       expect { resource.sid }.not_to raise_error
     end
   end

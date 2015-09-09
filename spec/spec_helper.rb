@@ -8,14 +8,6 @@ Dir.glob(File.expand_path("../support/**/*.rb", __FILE__), &method(:require))
 require_relative './holodeck/holodeck.rb'
 require_relative './holodeck/holodeck_resource.rb'
 require_relative './holodeck/hologram.rb'
-Dir[File.dirname(__FILE__) + "/holodeck/decks/resources/**/**.rb"].each do |file|
-  require file
-end
-
-Dir[File.dirname(__FILE__) + "/holodeck/decks/domains/*.rb"].each do |file|
-  require file
-end
-require_relative './holodeck/decks/twilio_deck.rb'
 
 require 'twilio-ruby'
 require 'rack'

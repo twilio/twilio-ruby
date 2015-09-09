@@ -1,33 +1,77 @@
 require 'spec_helper'
 
 describe Twilio::Resources::Conversations::ConversationList::CompletedList do
-  before do
-    Twiliodeck.activate
-  end
-
-  after do
-    Twiliodeck.deactivate
-  end
-
   context "should read conversations" do
-    it "and return 200" do
+    it "and succeed" do
       client = Twilio::REST::ConversationsClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, %q<
+          {
+       "conversations": [
+        {
+         "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+         "date_created": "2015-05-12T21:08:50Z",
+         "duration": 60,
+         "end_time": "2015-05-12T21:09:50Z",
+         "links": {
+          "participants": "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants"
+         },
+         "sid": "CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+         "start_time": "2015-05-12T21:08:50Z",
+         "status": "completed",
+         "url": "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+       ],
+       "meta": {
+        "first_page_url": "https://conversations.twilio.com/v1/Conversations/Completed?PageSize=50&Page=0",
+        "key": "conversations",
+        "next_page_url": null,
+        "page": 0,
+        "page_size": 50,
+        "previous_page_url": null,
+        "url": "https://conversations.twilio.com/v1/Conversations/Completed?PageSize=50&Page=0"
+       }
+      }
+          >))
       expect { client.conversations.completed.list() }.not_to raise_error
     end
   
-    it "and return 401" do
-      client = Twilio::REST::ConversationsClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.conversations.completed.list() }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 404" do
-      client = Twilio::REST::ConversationsClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.conversations.completed.list() }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 500" do
-      client = Twilio::REST::ConversationsClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.conversations.completed.list() }.to raise_error Twilio::REST::RequestError
+    it "and receive" do
+      client = Twilio::REST::ConversationsClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, %q<
+          {
+       "conversations": [
+        {
+         "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+         "date_created": "2015-05-12T21:08:50Z",
+         "duration": 60,
+         "end_time": "2015-05-12T21:09:50Z",
+         "links": {
+          "participants": "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants"
+         },
+         "sid": "CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+         "start_time": "2015-05-12T21:08:50Z",
+         "status": "completed",
+         "url": "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+       ],
+       "meta": {
+        "first_page_url": "https://conversations.twilio.com/v1/Conversations/Completed?PageSize=50&Page=0",
+        "key": "conversations",
+        "next_page_url": null,
+        "page": 0,
+        "page_size": 50,
+        "previous_page_url": null,
+        "url": "https://conversations.twilio.com/v1/Conversations/Completed?PageSize=50&Page=0"
+       }
+      }
+          >))
+      expect { client.conversations.completed.list() }.not_to raise_error
     end
   end
 end

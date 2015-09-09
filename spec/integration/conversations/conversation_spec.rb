@@ -1,37 +1,53 @@
 require 'spec_helper'
 
 describe Twilio::Resources::Conversations::ConversationList do
-  before do
-    Twiliodeck.activate
-  end
-
-  after do
-    Twiliodeck.deactivate
-  end
-
   context "should fetch None" do
-    it "and return 200" do
+    it "and succeed" do
       client = Twilio::REST::ConversationsClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, %q<
+          {
+       "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "date_created": "2015-05-12T21:13:15Z",
+       "duration": 60,
+       "end_time": "2015-05-12T21:14:15Z",
+       "links": {
+        "participants": "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants"
+       },
+       "sid": "CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "start_time": "2015-05-12T21:13:15Z",
+       "status": "created",
+       "url": "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+          >))
       resource = client.conversations.get('CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
       expect { resource.sid }.not_to raise_error
     end
   
-    it "and return 401" do
-      client = Twilio::REST::ConversationsClient.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      resource = client.conversations.get('CVllllllllllllllllllllllllllllllll')
-      expect { resource.sid }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 404" do
-      client = Twilio::REST::ConversationsClient.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      resource = client.conversations.get('CVkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-      expect { resource.sid }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 500" do
-      client = Twilio::REST::ConversationsClient.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      resource = client.conversations.get('CVmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    it "and receive" do
+      client = Twilio::REST::ConversationsClient.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, %q<
+          {
+       "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "date_created": "2015-05-12T21:13:15Z",
+       "duration": 60,
+       "end_time": "2015-05-12T21:14:15Z",
+       "links": {
+        "participants": "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants"
+       },
+       "sid": "CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "start_time": "2015-05-12T21:13:15Z",
+       "status": "created",
+       "url": "https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+          >))
+      resource = client.conversations.get('CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      expect { resource.sid }.not_to raise_error
     end
   end
 end

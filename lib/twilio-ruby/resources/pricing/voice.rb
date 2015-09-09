@@ -2,12 +2,11 @@ module Twilio
   module Resources
     module Pricing
       class VoiceList < Twilio::REST::ListResource
-        can :get
         command_alias :voice
         
         def initialize(client, inheritance={})
           super
-          path "/Voice.json"
+          path "/Voice"
           instance_id_key 'sid'
           instance_class VoiceInstance
           components Twilio::Resources::Pricing::VoiceList::NumberList,

@@ -2,12 +2,11 @@ module Twilio
   module Resources
     module Pricing
       class PhoneNumberList < Twilio::REST::ListResource
-        can :get
         command_alias :phone_numbers
         
         def initialize(client, inheritance={})
           super
-          path "/PhoneNumbers.json"
+          path "/PhoneNumbers"
           instance_id_key 'sid'
           instance_class PhoneNumberInstance
           components Twilio::Resources::Pricing::PhoneNumberList::CountryList

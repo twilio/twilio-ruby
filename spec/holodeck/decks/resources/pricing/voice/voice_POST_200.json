@@ -1,8 +1,0 @@
-{
-    "links": {
-        "countries": "https://pricing.twilio.com/v1/Voice/Countries",
-        "numbers": "https://pricing.twilio.com/v1/Voice/Numbers"
-    },
-    "name": "Voice",
-    "url": "https://pricing.twilio.com/v1/Voice"
-}

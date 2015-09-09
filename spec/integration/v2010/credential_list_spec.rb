@@ -1,143 +1,225 @@
 require 'spec_helper'
 
 describe Twilio::Resources::V2010::AccountInstance::SipList::CredentialListList do
-  before do
-    Twiliodeck.activate
-  end
-
-  after do
-    Twiliodeck.deactivate
-  end
-
   context "should read credential_lists" do
-    it "and return 200" do
+    it "and succeed" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, %q<
+          {
+       "credential_lists": [
+        {
+         "date_created": "Wed, 11 Sep 2013 17:51:38 -0000",
+         "date_updated": "Wed, 11 Sep 2013 17:51:38 -0000",
+         "friendly_name": "Low Rises",
+         "sid": "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+         "subresource_uris": {
+          "credentials": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json"
+         },
+         "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+        }
+       ],
+       "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists.json?PageSize=50&Page=0",
+       "next_page_uri": null,
+       "page": 0,
+       "page_size": 50,
+       "previous_page_uri": null,
+       "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists.json?PageSize=50&Page=0"
+      }
+          >))
       expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.credential_lists.list() }.not_to raise_error
     end
   
-    it "and return 401" do
-      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.credential_lists.list() }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 404" do
-      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.credential_lists.list() }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 500" do
-      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.credential_lists.list() }.to raise_error Twilio::REST::RequestError
+    it "and receive" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, %q<
+          {
+       "credential_lists": [
+        {
+         "date_created": "Wed, 11 Sep 2013 17:51:38 -0000",
+         "date_updated": "Wed, 11 Sep 2013 17:51:38 -0000",
+         "friendly_name": "Low Rises",
+         "sid": "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+         "subresource_uris": {
+          "credentials": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json"
+         },
+         "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+        }
+       ],
+       "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists.json?PageSize=50&Page=0",
+       "next_page_uri": null,
+       "page": 0,
+       "page_size": 50,
+       "previous_page_uri": null,
+       "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists.json?PageSize=50&Page=0"
+      }
+          >))
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.credential_lists.list() }.not_to raise_error
     end
   end
 
   context "should create credential_lists" do
-    it "and return 200" do
+    it "and succeed" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
-      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.credential_lists.create(:'FriendlyName' => 'friendly_name') }.not_to raise_error
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, %q<
+          {
+       "date_created": "Wed, 11 Sep 2013 17:51:38 -0000",
+       "date_updated": "Wed, 11 Sep 2013 17:51:38 -0000",
+       "friendly_name": "Low Rises",
+       "sid": "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "subresource_uris": {
+        "credentials": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json"
+       },
+       "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+      }
+          >))
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.credential_lists.create(:'FriendlyName' => "friendly_name") }.not_to raise_error
     end
   
-    it "and return 401" do
-      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      expect { client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.credential_lists.create(:'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 404" do
-      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      expect { client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.credential_lists.create(:'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 500" do
-      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      expect { client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.credential_lists.create(:'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
+    it "and receive" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, %q<
+          {
+       "date_created": "Wed, 11 Sep 2013 17:51:38 -0000",
+       "date_updated": "Wed, 11 Sep 2013 17:51:38 -0000",
+       "friendly_name": "Low Rises",
+       "sid": "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "subresource_uris": {
+        "credentials": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json"
+       },
+       "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+      }
+          >))
+      expect { client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.credential_lists.create(:'FriendlyName' => "friendly_name") }.not_to raise_error
     end
   end
 
   context "should fetch credential_lists" do
-    it "and return 200" do
+    it "and succeed" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, %q<
+          {
+       "date_created": "Wed, 11 Sep 2013 17:51:38 -0000",
+       "date_updated": "Wed, 11 Sep 2013 17:51:38 -0000",
+       "friendly_name": "Low Rises",
+       "sid": "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "subresource_uris": {
+        "credentials": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json"
+       },
+       "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+      }
+          >))
       resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.credential_lists.get('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
       expect { resource.sid }.not_to raise_error
     end
   
-    it "and return 401" do
-      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.credential_lists.get('CLllllllllllllllllllllllllllllllll')
-      expect { resource.sid }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 404" do
-      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.credential_lists.get('CLkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-      expect { resource.sid }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 500" do
-      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.credential_lists.get('CLmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-      expect { resource.sid }.to raise_error Twilio::REST::RequestError
+    it "and receive" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, %q<
+          {
+       "date_created": "Wed, 11 Sep 2013 17:51:38 -0000",
+       "date_updated": "Wed, 11 Sep 2013 17:51:38 -0000",
+       "friendly_name": "Low Rises",
+       "sid": "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "subresource_uris": {
+        "credentials": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json"
+       },
+       "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+      }
+          >))
+      resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.credential_lists.get('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      expect { resource.sid }.not_to raise_error
     end
   end
 end
 
 describe Twilio::Resources::V2010::AccountInstance::SipList::CredentialListInstance do
-  before do
-    Twiliodeck.activate
-  end
-
-  after do
-    Twiliodeck.deactivate
-  end
-
   context "should update credential_lists" do
-    it "and return 200" do
+    it "and succeed" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      request = Hologram::Request.new(
+          method: "POST",
+          url: "https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json",
+          auth: ["ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "AUTHTOKEN"],
+          query_params: {},
+          form_params: {:FriendlyName => "friendly_name"})
+      holodeck.mock(request,
+                              Twilio::REST::TwilioResponse.new(200, %q<
+          {
+       "date_created": "Wed, 11 Sep 2013 17:51:38 -0000",
+       "date_updated": "Wed, 11 Sep 2013 17:51:38 -0000",
+       "friendly_name": "Low Rises",
+       "sid": "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "subresource_uris": {
+        "credentials": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json"
+       },
+       "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+      }
+          >))
+      resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.credential_lists.get('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update(:'FriendlyName' => "friendly_name")
+      expect(holodeck.requested?(request)).to equal(true)
+    end
+  
+    it "and receive" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, %q<
+          {
+       "date_created": "Wed, 11 Sep 2013 17:51:38 -0000",
+       "date_updated": "Wed, 11 Sep 2013 17:51:38 -0000",
+       "friendly_name": "Low Rises",
+       "sid": "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "subresource_uris": {
+        "credentials": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json"
+       },
+       "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+      }
+          >))
       resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.credential_lists.get('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-      expect { resource.update(:'FriendlyName' => 'friendly_name') }.not_to raise_error
-    end
-  
-    it "and return 401" do
-      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.credential_lists.get('CLllllllllllllllllllllllllllllllll')
-      expect { resource.update(:'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 404" do
-      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.credential_lists.get('CLkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-      expect { resource.update(:'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 500" do
-      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.credential_lists.get('CLmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-      expect { resource.update(:'FriendlyName' => 'friendly_name') }.to raise_error Twilio::REST::RequestError
+      expect { resource.update(:'FriendlyName' => "friendly_name") }.not_to raise_error
     end
   end
 
   context "should delete credential_lists" do
-    it "and return 204" do
+    it "and succeed" do
       client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, '{}'))
       resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.credential_lists.get('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
       expect { resource.delete }.not_to raise_error
     end
   
-    it "and return 401" do
-      client = Twilio::REST::Client.new('ACllllllllllllllllllllllllllllllll', 'AUTHTOKEN')
-      resource = client.accounts.get('ACllllllllllllllllllllllllllllllll').sip.credential_lists.get('CLllllllllllllllllllllllllllllllll')
-      expect { resource.delete }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 404" do
-      client = Twilio::REST::Client.new('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', 'AUTHTOKEN')
-      resource = client.accounts.get('ACkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk').sip.credential_lists.get('CLkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-      expect { resource.delete }.to raise_error Twilio::REST::RequestError
-    end
-  
-    it "and return 500" do
-      client = Twilio::REST::Client.new('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm', 'AUTHTOKEN')
-      resource = client.accounts.get('ACmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm').sip.credential_lists.get('CLmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
-      expect { resource.delete }.to raise_error Twilio::REST::RequestError
+    it "and receive" do
+      client = Twilio::REST::Client.new('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'AUTHTOKEN')
+      client.http_client_class = Holodeck
+      holodeck = client.http_client
+      holodeck.mock(Hologram::ANY,
+                              Twilio::REST::TwilioResponse.new(200, '{}'))
+      resource = client.accounts.get('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').sip.credential_lists.get('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      expect { resource.delete }.not_to raise_error
     end
   end
 end

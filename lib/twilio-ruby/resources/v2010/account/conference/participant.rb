@@ -9,7 +9,7 @@ module Twilio
             
             def initialize(client, inheritance={})
               super
-              path "/Accounts/#{@account_sid}/Conferences/#{@parent_sid}/Participants.json"
+              path "/Accounts/#{@account_sid}/Conferences/#{@conference_sid}/Participants.json"
               instance_id_key 'call_sid'
               instance_class ParticipantInstance
               list_key 'participants'
@@ -21,7 +21,7 @@ module Twilio
             
             def initialize(client, inheritance={}, params={}, query_params={})
               super
-              path "/Accounts/#{@account_sid}/Conferences/#{@parent_sid}/Participants/#{@sid}.json"
+              path "/Accounts/#{@account_sid}/Conferences/#{@conference_sid}/Participants/#{@call_sid}.json"
               instance_id_key 'call_sid'
             end
             

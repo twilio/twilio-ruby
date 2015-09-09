@@ -8,7 +8,7 @@ module Twilio
           
           def initialize(client, inheritance={})
             super
-            path "/Workspace/#{@workspace_sid}/TaskQueues"
+            path "/Workspaces/#{@workspace_sid}/TaskQueues"
             instance_id_key 'sid'
             instance_class TaskQueueInstance
             list_key 'task_queues'
@@ -21,7 +21,7 @@ module Twilio
           
           def initialize(client, inheritance={}, params={}, query_params={})
             super
-            path "/Workspace/#{@workspace_sid}/TaskQueues/#{@sid}"
+            path "/Workspaces/#{@workspace_sid}/TaskQueues/#{@sid}"
             instance_id_key 'sid'
             dependent Twilio::Resources::Taskrouter::WorkspaceInstance::TaskQueueInstance::StatisticsList, {
               workspace_sid: @workspace_sid,
