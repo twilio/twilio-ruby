@@ -75,6 +75,25 @@ for outputting valid TwiML to control phone calls and messages.
     # Twilio Application Sid
     application_sid = "APabe7650f654fc34655fc81ae71caa3ff"
     @capability.allow_client_outgoing(application_sid)
+    
+Add Parameters to an Outgoing Scope
+===================================
+
+You can send parameters to your Twilio Application's :attr:`VoiceUrl` by passing
+a hash to :attr:`#allow_client_outgoing`. Here we pass along a hypothetical user
+id.
+
+.. code-block:: ruby
+
+    application_sid = "APabe7650f654fc34655fc81ae71caa3ff"
+    params = {'user_id' => @user.id}
+
+    # Allow outgoing calls to an application and pass the user id to your server.
+    @capability.allow_client_outgoing(application_sid, params)
+
+The :attr:`user_id` parameter and its value will be sent to your Application's
+:attr:`VoiceUrl` along with the other parameters that Twilio usually sends, like
+:attr:`From`, :attr:`To` and :attr:`CallSid`.
 
 
 Generate a Token
