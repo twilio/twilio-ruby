@@ -19,20 +19,21 @@ module Rack
   class TwilioWebhookAuthentication
     def initialize(app, auth_token, *paths, &auth_token_lookup)
       @app = app
-      @auth_token = auth_token
-      define_singleton_method(:get_auth_token, auth_token_lookup) if block_given?
+      if block_given?
+        @auth_token_lookup = auth_token_lookup
+      else
+        @validator = Twilio::Util::RequestValidator.new(auth_token)
+      end
       @path_regex = Regexp.union(paths)
     end
 
     def call(env)
       return @app.call(env) unless env["PATH_INFO"].match(@path_regex)
       request = Rack::Request.new(env)
-      original_url = request.url
+      url = request.url
       params = request.post? ? request.POST : {}
-      auth_token = @auth_token || get_auth_token(params['AccountSid'])
-      validator = Twilio::Util::RequestValidator.new(auth_token)
       signature = env['HTTP_X_TWILIO_SIGNATURE'] || ""
-      if validator.validate(original_url, params, signature)
+      if validator(params['AccountSid']).validate(url, params, signature)
         @app.call(env)
       else
         [
@@ -42,6 +43,12 @@ module Rack
         ]
       end
     end
+
+    def validator account_sid
+      @validator ||
+        Twilio::Util::RequestValidator.new(@auth_token_lookup[account_sid])
+    end
+
   end
 
 end

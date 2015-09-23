@@ -21,7 +21,7 @@ describe Rack::TwilioWebhookAuthentication do
 
     it 'should initialize with an app, dynamic token and paths' do
       expect {
-        Rack::TwilioWebhookAuthentication.new(@app, nil, /\/voice/, /\/sms/)
+        Rack::TwilioWebhookAuthentication.new(@app, nil, /\/voice/, /\/sms/) { 'ABC' }
       }.not_to raise_error
     end
   end
