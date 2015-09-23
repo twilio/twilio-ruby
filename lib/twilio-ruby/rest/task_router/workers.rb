@@ -7,6 +7,12 @@ module Twilio
 
       class Worker < InstanceResource
         include Twilio::REST::TaskRouter::Statistics
+
+        def initialize(path, client, params={})
+          super path, client, params
+          @submodule = :TaskRouter
+          resource :reservations
+        end
       end
     end
   end
