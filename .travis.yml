@@ -24,6 +24,8 @@ matrix:
     - rvm: rbx-head
 notifications:
   slack:
+    on_success: change
+    on_failure: change
     rooms:
       - secure: SVfWQUsuPNfFXU0gFl5OKDQU76Xw5FyZiGz3WzjNCLzLiUXvlu77b8v83ZATCBEgewhu/cXgy4BKTs2hmZ+R3jr/tEBR8wd9V+0cdffgN8L3Ald5MXtISofW5v33CXHYp5P9xIdvOJHVLl4ob01o53rfnfZF6Xi//2+VxR9lI9w=
       - secure: MqUkEiU0WjSMeyhTkicCbftSQW0dK1Bp8qkoSidWqgM5hGFUAMwjxLZT5Erpua1o5V5cpOfyOqNNcYfgxyOamPLpbnQkaCu7VEABbkuPhVTtM+yuN/odwhGFd/Ph47Z63xxyVLdI4QxVAg+1TzlMijxFC7HAQtyuKYwrPrOSgTI=
