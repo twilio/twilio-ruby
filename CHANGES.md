@@ -1,6 +1,14 @@
 twilio-ruby changelog
 =====================
 
+Version 4.4.0
+-------------
+
+Release September 23, 2015
+
+- Add fetching a list of worker reservations
+- Add TaskRouter Workflow builder
+
 Version 4.3.0
 -------------
 
