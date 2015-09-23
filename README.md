@@ -118,7 +118,30 @@ end
 @client.incoming_phone_numbers.create(phone_number: @number)
 ```
 
-## Getting Started With Client Capability Tokens
+## Create a Task with TaskRouter
+
+If you need to create a Task to TaskRouter, you can do so by using the TaskRouterClient.
+
+Additional resources had off of the workspace object (task_queues, workers, workflows, activities, tasks, statistics, events).
+
+``` ruby
+require 'rubygems'
+require 'twilio-ruby'
+
+# put your own account credentials here:
+account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+auth_token  = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
+workspace_sid = 'WSzzzzzzzzzzzzzzzzzzzzzzzzzzz'
+
+# set up a client
+client = Twilio::REST::TaskRouterClient.new account_sid, auth_token, workspace_sid
+
+# create a task
+workflow_sid = 'WWffffffffffffffffffffffffffff'
+client.workspace.tasks.create(attributes: '{"foo": "bar"}', workflow_sid: "WWfffffffffffffffffffffffffffffff")
+```
+
+## Create a Twilio Client Capability Token
 
 If you just need to generate a Capability Token for use with Twilio Client, you
 can do this:
@@ -128,8 +151,8 @@ require 'rubygems' # not necessary with ruby 1.9 but included for completeness
 require 'twilio-ruby'
 
 # put your own account credentials here:
-account_sid = 'AC043dcf9844e13758bc3a36a84c29761'
-auth_token = '62ea81de3a5b413254eb263595357c69'
+account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 
 # set up
 capability = Twilio::Util::Capability.new account_sid, auth_token
