@@ -16,7 +16,7 @@ describe Twilio::REST::Conversations::Conversations do
 
 end
 
-describe Twilio::REST::Conversations::InProgressConversations do
+describe Twilio::REST::Conversations::InProgress do
   it 'gets constructed by conversations' do
     client = Twilio::REST::ConversationsClient.new 'otherSid', 'otherToken'
     conversations = Twilio::REST::Conversations::Conversations.new '/v1/Conversations', client
@@ -29,7 +29,7 @@ describe Twilio::REST::Conversations::InProgressConversations do
   end
 end
 
-describe Twilio::REST::Conversations::CompletedConversations do
+describe Twilio::REST::Conversations::Completed do
   it 'gets constructed by conversations' do
     client = Twilio::REST::ConversationsClient.new 'otherSid', 'otherToken'
     conversations = Twilio::REST::Conversations::Conversations.new '/v1/Conversations', client
@@ -45,12 +45,12 @@ end
 describe Twilio::REST::Conversations::Conversation do
   it 'has correct path when fetched from /InProgress' do
     client = Twilio::REST::ConversationsClient.new 'otherSid', 'otherToken'
-    conversation = Twilio::REST::Conversations::Conversation.new '/v1/Conversations/InProgress/CA123', client
+    conversation = client.conversations.in_progress.get('CA123')
     expect(conversation.instance_variable_get('@path')).to eq('/v1/Conversations/CA123')
   end
   it 'has correct path when fetched from /Completed' do
     client = Twilio::REST::ConversationsClient.new 'otherSid', 'otherToken'
-    conversation = Twilio::REST::Conversations::Conversation.new '/v1/Conversations/Completed/CA123', client
+    conversation = client.conversations.completed.get('CA123')
     expect(conversation.instance_variable_get('@path')).to eq('/v1/Conversations/CA123')
   end
   it 'sets up participants subresource' do

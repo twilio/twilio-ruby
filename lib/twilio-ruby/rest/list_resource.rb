@@ -81,7 +81,7 @@ module Twilio
       # attribute of the returned instance resource object, such as
       # its #date_created or #voice_url attributes.
       def get(sid)
-        @instance_class.new "#{@path}/#{sid}", @client
+        @instance_class.new "#{@frozen_path || @path}/#{sid}", @client
       end
       alias :find :get # for the ActiveRecord lovers
 
