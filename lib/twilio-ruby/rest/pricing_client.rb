@@ -1,7 +1,4 @@
 require 'twilio-ruby/rest/base_client'
-require 'twilio-ruby/rest/pricing'
-require 'twilio-ruby/rest/pricing/voice'
-require 'twilio-ruby/rest/pricing/phone_numbers'
 
 module Twilio
   module REST
@@ -96,6 +93,7 @@ module Twilio
       def set_up_subresources # :doc:
         @voice = Twilio::REST::Pricing::Voice.new "/#{API_VERSION}/Voice", self
         @phone_numbers = Twilio::REST::Pricing::PhoneNumbers.new "/#{API_VERSION}/PhoneNumbers", self
+        @messaging = Twilio::REST::Pricing::Messaging.new "/#{API_VERSION}/Messaging", self
       end
 
       ##

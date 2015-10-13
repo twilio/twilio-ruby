@@ -1,12 +1,12 @@
 module Twilio
   module REST
     module Pricing
-      class Voice < InstanceResource
+      class Messaging < InstanceResource
 
         def initialize(path, client, params={})
           super
           @submodule = :Pricing
-          resource :countries, :numbers
+          resource :countries
         end
 
       end
