@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 4.6.0
+-------------
+
+Release October 28, 2015
+
+- Add /Keys endpoint
+
 Version 4.4.0
 -------------
 
