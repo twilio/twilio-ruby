@@ -12,7 +12,6 @@ module Twilio
 
       def add_grant(grant)
         @grants.push(grant)
-        self
       end
 
       def to_jwt(algorithm='HS256')
