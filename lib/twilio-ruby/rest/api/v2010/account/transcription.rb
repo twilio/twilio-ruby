@@ -10,32 +10,31 @@ module Twilio
       ##
       # Initialize the TranscriptionList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Transcriptions.json"
       end
       
       ##
       # Reads TranscriptionInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of TranscriptionInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             TranscriptionInstance,
@@ -56,6 +55,158 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.TranscriptionList>'
+      end
+    end
+  
+    class TranscriptionContext < InstanceContext
+      def initialize(version, account_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/Transcriptions/#{@solution[:sid]}.json"
+      end
+      
+      ##
+      # Fetch a TranscriptionInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            TranscriptionInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Deletes the TranscriptionInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.TranscriptionContext #{context}>"
+      end
+    end
+  
+    class TranscriptionInstance < InstanceResource
+      def initialize(version, payload, account_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'api_version' => payload['api_version'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'duration' => payload['duration'],
+            'price' => deserialize.decimal(payload['price']),
+            'price_unit' => payload['price_unit'],
+            'recording_sid' => payload['recording_sid'],
+            'sid' => payload['sid'],
+            'status' => payload['status'],
+            'transcription_text' => payload['transcription_text'],
+            'type' => payload['type'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = TranscriptionContext(
+              @version,
+              @params['account_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def api_version
+        @properties['api_version']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def duration
+        @properties['duration']
+      end
+      
+      def price
+        @properties['price']
+      end
+      
+      def price_unit
+        @properties['price_unit']
+      end
+      
+      def recording_sid
+        @properties['recording_sid']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def status
+        @properties['status']
+      end
+      
+      def transcription_text
+        @properties['transcription_text']
+      end
+      
+      def type
+        @properties['type']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a TranscriptionInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Deletes the TranscriptionInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.TranscriptionInstance #{context}>"
       end
     end
   end

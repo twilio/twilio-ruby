@@ -10,32 +10,31 @@ module Twilio
       ##
       # Initialize the QueueList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Queues.json"
       end
       
       ##
       # Reads QueueInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of QueueInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             QueueInstance,
@@ -48,18 +47,18 @@ module Twilio
       
       ##
       # Create a new QueueInstance
-      def create(self, friendly_name=values.unset, max_size=values.unset)
-        data = values.of({
-            FriendlyName: friendly_name,
-            MaxSize: max_size,
-        })
+      def create(friendly_name: nil, max_size: nil)
+        data = {
+            'FriendlyName' => friendly_name,
+            'MaxSize' => max_size,
+        }
         
         @version.create(
             QueueInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
@@ -74,6 +73,182 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.QueueList>'
+      end
+    end
+  
+    class QueueContext < InstanceContext
+      def initialize(version, account_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/Queues/#{@solution[:sid]}.json"
+        
+        # Dependents
+        @members = nil
+      end
+      
+      ##
+      # Fetch a QueueInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            QueueInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the QueueInstance
+      def update(friendly_name: nil, max_size: nil)
+        data = {
+            'FriendlyName' => friendly_name,
+            'MaxSize' => max_size,
+        }
+        
+        @version.update(
+            QueueInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Deletes the QueueInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      def members
+        unless @members
+          @members = MemberList.new(
+              @version,
+              account_sid: @solution[:account_sid],
+              queue_sid: @solution[:sid],
+          )
+        end
+        @members
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.QueueContext #{context}>"
+      end
+    end
+  
+    class QueueInstance < InstanceResource
+      def initialize(version, payload, account_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'average_wait_time' => deserialize.integer(payload['average_wait_time']),
+            'current_size' => deserialize.integer(payload['current_size']),
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'friendly_name' => payload['friendly_name'],
+            'max_size' => deserialize.integer(payload['max_size']),
+            'sid' => payload['sid'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = QueueContext(
+              @version,
+              @params['account_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def average_wait_time
+        @properties['average_wait_time']
+      end
+      
+      def current_size
+        @properties['current_size']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def max_size
+        @properties['max_size']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a QueueInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the QueueInstance
+      def update(friendly_name: nil, max_size: nil)
+        @context.update(
+            max_size: nil,
+        )
+      end
+      
+      ##
+      # Deletes the QueueInstance
+      def delete
+        @context.delete()
+      end
+      
+      def members
+        @context.members
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.QueueInstance #{context}>"
       end
     end
   end

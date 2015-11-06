@@ -10,33 +10,32 @@ module Twilio
       ##
       # Initialize the IpAddressList
       def initialize(version, account_sid, ip_access_control_list_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid,
-            ip_access_control_list_sid: ip_access_control_list_sid
+            'account_sid' => account_sid,
+            'ip_access_control_list_sid' => ip_access_control_list_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/SIP/IpAccessControlLists/#{@solution[:ip_access_control_list_sid]}/IpAddresses.json"
       end
       
       ##
       # Reads IpAddressInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of IpAddressInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             IpAddressInstance,
@@ -49,18 +48,18 @@ module Twilio
       
       ##
       # Create a new IpAddressInstance
-      def create(self, friendly_name, ip_address)
-        data = values.of({
-            FriendlyName: friendly_name,
-            IpAddress: ip_address,
-        })
+      def create(friendly_name, ip_address)
+        data = {
+            'FriendlyName' => friendly_name,
+            'IpAddress' => ip_address,
+        }
         
         @version.create(
             IpAddressInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
@@ -75,6 +74,162 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.IpAddressList>'
+      end
+    end
+  
+    class IpAddressContext < InstanceContext
+      def initialize(version, account_sid, ip_access_control_list_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'ip_access_control_list_sid' => ip_access_control_list_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/SIP/IpAccessControlLists/#{@solution[:ip_access_control_list_sid]}/IpAddresses/#{@solution[:sid]}.json"
+      end
+      
+      ##
+      # Fetch a IpAddressInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            IpAddressInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the IpAddressInstance
+      def update(ip_address, friendly_name)
+        data = {
+            'IpAddress' => ip_address,
+            'FriendlyName' => friendly_name,
+        }
+        
+        @version.update(
+            IpAddressInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Deletes the IpAddressInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.IpAddressContext #{context}>"
+      end
+    end
+  
+    class IpAddressInstance < InstanceResource
+      def initialize(version, payload, account_sid, ip_access_control_list_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'sid' => payload['sid'],
+            'account_sid' => payload['account_sid'],
+            'friendly_name' => payload['friendly_name'],
+            'ip_address' => payload['ip_address'],
+            'ip_access_control_list_sid' => payload['ip_access_control_list_sid'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'ip_access_control_list_sid' => ip_access_control_list_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = IpAddressContext(
+              @version,
+              @params['account_sid'],
+              @params['ip_access_control_list_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def ip_address
+        @properties['ip_address']
+      end
+      
+      def ip_access_control_list_sid
+        @properties['ip_access_control_list_sid']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a IpAddressInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the IpAddressInstance
+      def update(ip_address, friendly_name)
+        @context.update(
+            friendly_name,
+        )
+      end
+      
+      ##
+      # Deletes the IpAddressInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.IpAddressInstance #{context}>"
       end
     end
   end

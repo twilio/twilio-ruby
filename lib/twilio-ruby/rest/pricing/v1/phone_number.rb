@@ -10,25 +10,56 @@ module Twilio
       ##
       # Initialize the PhoneNumberList
       def initialize(version)
-        super
+        super(version)
         
         # Path Solution
         @solution = {}
         
         # Components
-        @countries = None
+        @countries = nil
       end
       
       ##
       # Access the countries
       def countries
-        @countries ||= CountryList(@version, @solution)
+        @countries ||= CountryList.new(@version, @solution)
       end
       
       ##
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Pricing.V1.PhoneNumberList>'
+      end
+    end
+  
+    class PhoneNumberInstance < InstanceResource
+      def initialize(version, payload)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'name' => payload['name'],
+            'url' => payload['url'],
+            'links' => payload['links'],
+        }
+      end
+      
+      def name
+        @properties['name']
+      end
+      
+      def url
+        @properties['url']
+      end
+      
+      def links
+        @properties['links']
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        "<Twilio.Pricing.V1.PhoneNumberInstance>"
       end
     end
   end

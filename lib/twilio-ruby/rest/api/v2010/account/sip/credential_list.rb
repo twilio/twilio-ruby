@@ -10,32 +10,31 @@ module Twilio
       ##
       # Initialize the CredentialListList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/SIP/CredentialLists.json"
       end
       
       ##
       # Reads CredentialListInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of CredentialListInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             CredentialListInstance,
@@ -48,17 +47,17 @@ module Twilio
       
       ##
       # Create a new CredentialListInstance
-      def create(self, friendly_name)
-        data = values.of({
-            FriendlyName: friendly_name,
-        })
+      def create(friendly_name)
+        data = {
+            'FriendlyName' => friendly_name,
+        }
         
         @version.create(
             CredentialListInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
@@ -73,6 +72,169 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.CredentialListList>'
+      end
+    end
+  
+    class CredentialListContext < InstanceContext
+      def initialize(version, account_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/SIP/CredentialLists/#{@solution[:sid]}.json"
+        
+        # Dependents
+        @credentials = nil
+      end
+      
+      ##
+      # Fetch a CredentialListInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            CredentialListInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the CredentialListInstance
+      def update(friendly_name)
+        data = {
+            'FriendlyName' => friendly_name,
+        }
+        
+        @version.update(
+            CredentialListInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Deletes the CredentialListInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      def credentials
+        unless @credentials
+          @credentials = CredentialList.new(
+              @version,
+              account_sid: @solution[:account_sid],
+              credential_list_sid: @solution[:sid],
+          )
+        end
+        @credentials
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.CredentialListContext #{context}>"
+      end
+    end
+  
+    class CredentialListInstance < InstanceResource
+      def initialize(version, payload, account_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'friendly_name' => payload['friendly_name'],
+            'sid' => payload['sid'],
+            'subresource_uris' => payload['subresource_uris'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = CredentialListContext(
+              @version,
+              @params['account_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def subresource_uris
+        @properties['subresource_uris']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a CredentialListInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the CredentialListInstance
+      def update(friendly_name)
+        @context.update()
+      end
+      
+      ##
+      # Deletes the CredentialListInstance
+      def delete
+        @context.delete()
+      end
+      
+      def credentials
+        @context.credentials
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.CredentialListInstance #{context}>"
       end
     end
   end

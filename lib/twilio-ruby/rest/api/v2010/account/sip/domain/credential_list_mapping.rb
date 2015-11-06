@@ -10,50 +10,49 @@ module Twilio
       ##
       # Initialize the CredentialListMappingList
       def initialize(version, account_sid, domain_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid,
-            domain_sid: domain_sid
+            'account_sid' => account_sid,
+            'domain_sid' => domain_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:domain_sid]}/CredentialListMappings.json"
       end
       
       ##
       # Create a new CredentialListMappingInstance
-      def create(self, credential_list_sid)
-        data = values.of({
-            CredentialListSid: credential_list_sid,
-        })
+      def create(credential_list_sid)
+        data = {
+            'CredentialListSid' => credential_list_sid,
+        }
         
         @version.create(
             CredentialListMappingInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
       
       ##
       # Reads CredentialListMappingInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of CredentialListMappingInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             CredentialListMappingInstance,
@@ -74,6 +73,126 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.CredentialListMappingList>'
+      end
+    end
+  
+    class CredentialListMappingContext < InstanceContext
+      def initialize(version, account_sid, domain_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'domain_sid' => domain_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:domain_sid]}/CredentialListMappings/#{@solution[:sid]}.json"
+      end
+      
+      ##
+      # Fetch a CredentialListMappingInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            CredentialListMappingInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Deletes the CredentialListMappingInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.CredentialListMappingContext #{context}>"
+      end
+    end
+  
+    class CredentialListMappingInstance < InstanceResource
+      def initialize(version, payload, account_sid, domain_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'friendly_name' => payload['friendly_name'],
+            'sid' => payload['sid'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'domain_sid' => domain_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = CredentialListMappingContext(
+              @version,
+              @params['account_sid'],
+              @params['domain_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a CredentialListMappingInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Deletes the CredentialListMappingInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.CredentialListMappingInstance #{context}>"
       end
     end
   end

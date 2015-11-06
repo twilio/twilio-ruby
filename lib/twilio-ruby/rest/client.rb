@@ -9,6 +9,8 @@ module Twilio
     ##
     # A client for accessing the Twilio API.
     class Client
+      attr_accessor :http_client, :account_sid, :auth_token
+      
       ##
       # Initializes the Twilio Client
       def initialize(account_sid, auth_token, http_client=Twilio::HTTP::Client.new)

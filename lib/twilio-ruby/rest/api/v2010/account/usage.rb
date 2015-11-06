@@ -10,34 +10,46 @@ module Twilio
       ##
       # Initialize the UsageList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         
         # Components
-        @records = None
-        @triggers = None
+        @records = nil
+        @triggers = nil
       end
       
       ##
       # Access the records
       def records
-        @records ||= RecordList(@version, @solution)
+        @records ||= RecordList.new(@version, @solution)
       end
       
       ##
       # Access the triggers
       def triggers
-        @triggers ||= TriggerList(@version, @solution)
+        @triggers ||= TriggerList.new(@version, @solution)
       end
       
       ##
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.UsageList>'
+      end
+    end
+  
+    class UsageInstance < InstanceResource
+      def initialize(version, payload)
+        super(version)
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        "<Twilio.Api.V2010.UsageInstance>"
       end
     end
   end

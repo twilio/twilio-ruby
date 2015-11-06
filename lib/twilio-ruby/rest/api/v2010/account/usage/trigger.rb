@@ -10,61 +10,60 @@ module Twilio
       ##
       # Initialize the TriggerList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Usage/Triggers.json"
       end
       
       ##
       # Create a new TriggerInstance
-      def create(self, callback_url, trigger_value, usage_category, callback_method=values.unset, friendly_name=values.unset, recurring=values.unset, trigger_by=values.unset)
-        data = values.of({
-            CallbackUrl: callback_url,
-            TriggerValue: trigger_value,
-            UsageCategory: usage_category,
-            CallbackMethod: callback_method,
-            FriendlyName: friendly_name,
-            Recurring: recurring,
-            TriggerBy: trigger_by,
-        })
+      def create(callback_url, trigger_value, usage_category, callback_method: nil, friendly_name: nil, recurring: nil, trigger_by: nil)
+        data = {
+            'CallbackUrl' => callback_url,
+            'TriggerValue' => trigger_value,
+            'UsageCategory' => usage_category,
+            'CallbackMethod' => callback_method,
+            'FriendlyName' => friendly_name,
+            'Recurring' => recurring,
+            'TriggerBy' => trigger_by,
+        }
         
         @version.create(
             TriggerInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
       
       ##
       # Reads TriggerInstance records from the API as a list.
-      def read(self, recurring=values.unset, trigger_by=values.unset, usage_category=values.unset, limit=nil, page_size=nil)
+      def read(recurring: nil, trigger_by: nil, usage_category: nil, limit: nil, page_size: nil)
         @version.read(
-            recurring,
-            trigger_by,
-            usage_category,
-            limit,
-            page_size
-        ))
+            trigger_by: nil,
+            usage_category: nil,
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of TriggerInstance records from the API.
-      def page(self, recurring=values.unset, trigger_by=values.unset, usage_category=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            Recurring: recurring,
-            TriggerBy: trigger_by,
-            UsageCategory: usage_category,
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(recurring: nil, trigger_by: nil, usage_category: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'Recurring' => recurring,
+            'TriggerBy' => trigger_by,
+            'UsageCategory' => usage_category,
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             TriggerInstance,
@@ -85,6 +84,201 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.TriggerList>'
+      end
+    end
+  
+    class TriggerContext < InstanceContext
+      def initialize(version, account_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/Usage/Triggers/#{@solution[:sid]}.json"
+      end
+      
+      ##
+      # Fetch a TriggerInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            TriggerInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the TriggerInstance
+      def update(callback_method: nil, callback_url: nil, friendly_name: nil)
+        data = {
+            'CallbackMethod' => callback_method,
+            'CallbackUrl' => callback_url,
+            'FriendlyName' => friendly_name,
+        }
+        
+        @version.update(
+            TriggerInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Deletes the TriggerInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.TriggerContext #{context}>"
+      end
+    end
+  
+    class TriggerInstance < InstanceResource
+      def initialize(version, payload, account_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'api_version' => payload['api_version'],
+            'callback_method' => payload['callback_method'],
+            'callback_url' => payload['callback_url'],
+            'current_value' => payload['current_value'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_fired' => deserialize.rfc2822_datetime(payload['date_fired']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'friendly_name' => payload['friendly_name'],
+            'recurring' => payload['recurring'],
+            'sid' => payload['sid'],
+            'trigger_by' => payload['trigger_by'],
+            'trigger_value' => payload['trigger_value'],
+            'uri' => payload['uri'],
+            'usage_category' => payload['usage_category'],
+            'usage_record_uri' => payload['usage_record_uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = TriggerContext(
+              @version,
+              @params['account_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def api_version
+        @properties['api_version']
+      end
+      
+      def callback_method
+        @properties['callback_method']
+      end
+      
+      def callback_url
+        @properties['callback_url']
+      end
+      
+      def current_value
+        @properties['current_value']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_fired
+        @properties['date_fired']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def recurring
+        @properties['recurring']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def trigger_by
+        @properties['trigger_by']
+      end
+      
+      def trigger_value
+        @properties['trigger_value']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      def usage_category
+        @properties['usage_category']
+      end
+      
+      def usage_record_uri
+        @properties['usage_record_uri']
+      end
+      
+      ##
+      # Fetch a TriggerInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the TriggerInstance
+      def update(callback_method: nil, callback_url: nil, friendly_name: nil)
+        @context.update(
+            callback_url: nil,
+            friendly_name: nil,
+        )
+      end
+      
+      ##
+      # Deletes the TriggerInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.TriggerInstance #{context}>"
       end
     end
   end

@@ -10,7 +10,7 @@ module Twilio
       ##
       # Initialize the AlertList
       def initialize(version)
-        super
+        super(version)
         
         # Path Solution
         @solution = {}
@@ -19,35 +19,34 @@ module Twilio
       
       ##
       # Reads AlertInstance records from the API as a list.
-      def read(self, log_level=values.unset, start_date_before=values.unset, start_date=values.unset, start_date_after=values.unset, end_date_before=values.unset, end_date=values.unset, end_date_after=values.unset, limit=nil, page_size=nil)
+      def read(log_level: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, limit: nil, page_size: nil)
         @version.read(
-            log_level,
-            start_date_before,
-            start_date,
-            start_date_after,
-            end_date_before,
-            end_date,
-            end_date_after,
-            limit,
-            page_size
-        ))
+            start_date_before: nil,
+            start_date: nil,
+            start_date_after: nil,
+            end_date_before: nil,
+            end_date: nil,
+            end_date_after: nil,
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of AlertInstance records from the API.
-      def page(self, log_level=values.unset, start_date_before=values.unset, start_date=values.unset, start_date_after=values.unset, end_date_before=values.unset, end_date=values.unset, end_date_after=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            LogLevel: log_level,
-            StartDate<: serialize.iso8601_date(start_date_before),
-            StartDate: serialize.iso8601_date(start_date),
-            StartDate>: serialize.iso8601_date(start_date_after),
-            EndDate<: serialize.iso8601_date(end_date_before),
-            EndDate: serialize.iso8601_date(end_date),
-            EndDate>: serialize.iso8601_date(end_date_after),
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(log_level: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'LogLevel' => log_level,
+            'StartDate<' => serialize.iso8601_date(start_date_before),
+            'StartDate' => serialize.iso8601_date(start_date),
+            'StartDate>' => serialize.iso8601_date(start_date_after),
+            'EndDate<' => serialize.iso8601_date(end_date_before),
+            'EndDate' => serialize.iso8601_date(end_date),
+            'EndDate>' => serialize.iso8601_date(end_date_after),
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             AlertInstance,
@@ -68,6 +67,175 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Monitor.V1.AlertList>'
+      end
+    end
+  
+    class AlertContext < InstanceContext
+      def initialize(version, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'sid' => sid,
+        }
+        @uri = "/Alerts/#{@solution[:sid]}"
+      end
+      
+      ##
+      # Fetch a AlertInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            AlertInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Deletes the AlertInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Monitor.V1.AlertContext #{context}>"
+      end
+    end
+  
+    class AlertInstance < InstanceResource
+      def initialize(version, payload, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
+            'url' => payload['url'],
+            'sid' => payload['sid'],
+            'more_info' => payload['more_info'],
+            'resource_sid' => payload['resource_sid'],
+            'api_version' => payload['api_version'],
+            'log_level' => payload['log_level'],
+            'error_code' => payload['error_code'],
+            'account_sid' => payload['account_sid'],
+            'request_url' => payload['request_url'],
+            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
+            'alert_text' => payload['alert_text'],
+            'request_method' => payload['request_method'],
+            'date_generated' => deserialize.iso8601_datetime(payload['date_generated']),
+            'response_headers' => payload.get('response_headers'),
+            'response_body' => payload.get('response_body'),
+            'request_variables' => payload.get('request_variables'),
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = AlertContext(
+              @version,
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def url
+        @properties['url']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def request_method
+        @properties['request_method']
+      end
+      
+      def resource_sid
+        @properties['resource_sid']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def api_version
+        @properties['api_version']
+      end
+      
+      def response_body
+        @properties['response_body']
+      end
+      
+      def log_level
+        @properties['log_level']
+      end
+      
+      def error_code
+        @properties['error_code']
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def request_url
+        @properties['request_url']
+      end
+      
+      def request_variables
+        @properties['request_variables']
+      end
+      
+      def response_headers
+        @properties['response_headers']
+      end
+      
+      def alert_text
+        @properties['alert_text']
+      end
+      
+      def more_info
+        @properties['more_info']
+      end
+      
+      def date_generated
+        @properties['date_generated']
+      end
+      
+      ##
+      # Fetch a AlertInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Deletes the AlertInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Monitor.V1.AlertInstance #{context}>"
       end
     end
   end

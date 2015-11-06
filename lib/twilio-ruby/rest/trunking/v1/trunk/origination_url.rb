@@ -10,53 +10,52 @@ module Twilio
       ##
       # Initialize the OriginationUrlList
       def initialize(version, trunk_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            trunk_sid: trunk_sid
+            'trunk_sid' => trunk_sid
         }
         @uri = "/Trunks/#{@solution[:trunk_sid]}/OriginationUrls"
       end
       
       ##
       # Create a new OriginationUrlInstance
-      def create(self, weight, priority, enabled, friendly_name, sip_url)
-        data = values.of({
-            Weight: weight,
-            Priority: priority,
-            Enabled: enabled,
-            FriendlyName: friendly_name,
-            SipUrl: sip_url,
-        })
+      def create(weight, priority, enabled, friendly_name, sip_url)
+        data = {
+            'Weight' => weight,
+            'Priority' => priority,
+            'Enabled' => enabled,
+            'FriendlyName' => friendly_name,
+            'SipUrl' => sip_url,
+        }
         
         @version.create(
             OriginationUrlInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
       
       ##
       # Reads OriginationUrlInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of OriginationUrlInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             OriginationUrlInstance,
@@ -77,6 +76,180 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Trunking.V1.OriginationUrlList>'
+      end
+    end
+  
+    class OriginationUrlContext < InstanceContext
+      def initialize(version, trunk_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'trunk_sid' => trunk_sid,
+            'sid' => sid,
+        }
+        @uri = "/Trunks/#{@solution[:trunk_sid]}/OriginationUrls/#{@solution[:sid]}"
+      end
+      
+      ##
+      # Fetch a OriginationUrlInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            OriginationUrlInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Deletes the OriginationUrlInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Update the OriginationUrlInstance
+      def update(weight: nil, priority: nil, enabled: nil, friendly_name: nil, sip_url: nil)
+        data = {
+            'Weight' => weight,
+            'Priority' => priority,
+            'Enabled' => enabled,
+            'FriendlyName' => friendly_name,
+            'SipUrl' => sip_url,
+        }
+        
+        @version.update(
+            OriginationUrlInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Trunking.V1.OriginationUrlContext #{context}>"
+      end
+    end
+  
+    class OriginationUrlInstance < InstanceResource
+      def initialize(version, payload, trunk_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'sid' => payload['sid'],
+            'trunk_sid' => payload['trunk_sid'],
+            'weight' => deserialize.integer(payload['weight']),
+            'enabled' => payload['enabled'],
+            'sip_url' => payload['sip_url'],
+            'friendly_name' => payload['friendly_name'],
+            'priority' => deserialize.integer(payload['priority']),
+            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
+            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
+            'url' => payload['url'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'trunk_sid' => trunk_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = OriginationUrlContext(
+              @version,
+              @params['trunk_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def trunk_sid
+        @properties['trunk_sid']
+      end
+      
+      def weight
+        @properties['weight']
+      end
+      
+      def enabled
+        @properties['enabled']
+      end
+      
+      def sip_url
+        @properties['sip_url']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def priority
+        @properties['priority']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def url
+        @properties['url']
+      end
+      
+      ##
+      # Fetch a OriginationUrlInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Deletes the OriginationUrlInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Update the OriginationUrlInstance
+      def update(weight: nil, priority: nil, enabled: nil, friendly_name: nil, sip_url: nil)
+        @context.update(
+            priority: nil,
+            enabled: nil,
+            friendly_name: nil,
+            sip_url: nil,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Trunking.V1.OriginationUrlInstance #{context}>"
       end
     end
   end

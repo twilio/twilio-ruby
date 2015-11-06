@@ -10,84 +10,83 @@ module Twilio
       ##
       # Initialize the CallList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Calls.json"
         
         # Components
-        @feedback_summaries = None
+        @feedback_summaries = nil
       end
       
       ##
       # Create a new CallInstance
-      def create(self, to, from, method=values.unset, fallback_url=values.unset, fallback_method=values.unset, status_callback=values.unset, status_callback_method=values.unset, send_digits=values.unset, if_machine=values.unset, timeout=values.unset, record=values.unset, url=values.unset, application_sid=values.unset)
-        data = values.of({
-            To: to,
-            From: from,
-            Url: url,
-            ApplicationSid: application_sid,
-            Method: method,
-            FallbackUrl: fallback_url,
-            FallbackMethod: fallback_method,
-            StatusCallback: status_callback,
-            StatusCallbackMethod: status_callback_method,
-            SendDigits: send_digits,
-            IfMachine: if_machine,
-            Timeout: timeout,
-            Record: record,
-        })
+      def create(to, from, method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, status_callback_method: nil, send_digits: nil, if_machine: nil, timeout: nil, record: nil, url: nil, application_sid: nil)
+        data = {
+            'To' => to,
+            'From' => from,
+            'Url' => url,
+            'ApplicationSid' => application_sid,
+            'Method' => method,
+            'FallbackUrl' => fallback_url,
+            'FallbackMethod' => fallback_method,
+            'StatusCallback' => status_callback,
+            'StatusCallbackMethod' => status_callback_method,
+            'SendDigits' => send_digits,
+            'IfMachine' => if_machine,
+            'Timeout' => timeout,
+            'Record' => record,
+        }
         
         @version.create(
             CallInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
       
       ##
       # Reads CallInstance records from the API as a list.
-      def read(self, to=values.unset, from=values.unset, parent_call_sid=values.unset, status=values.unset, start_time_before=values.unset, start_time=values.unset, start_time_after=values.unset, end_time_before=values.unset, end_time=values.unset, end_time_after=values.unset, limit=nil, page_size=nil)
+      def read(to: nil, from: nil, parent_call_sid: nil, status: nil, start_time_before: nil, start_time: nil, start_time_after: nil, end_time_before: nil, end_time: nil, end_time_after: nil, limit: nil, page_size: nil)
         @version.read(
-            to,
-            from,
-            parent_call_sid,
-            status,
-            start_time_before,
-            start_time,
-            start_time_after,
-            end_time_before,
-            end_time,
-            end_time_after,
-            limit,
-            page_size
-        ))
+            from: nil,
+            parent_call_sid: nil,
+            status: nil,
+            start_time_before: nil,
+            start_time: nil,
+            start_time_after: nil,
+            end_time_before: nil,
+            end_time: nil,
+            end_time_after: nil,
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of CallInstance records from the API.
-      def page(self, to=values.unset, from=values.unset, parent_call_sid=values.unset, status=values.unset, start_time_before=values.unset, start_time=values.unset, start_time_after=values.unset, end_time_before=values.unset, end_time=values.unset, end_time_after=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            To: to,
-            From: from,
-            ParentCallSid: parent_call_sid,
-            Status: status,
-            StartTime<: serialize.iso8601_date(start_time_before),
-            StartTime: serialize.iso8601_date(start_time),
-            StartTime>: serialize.iso8601_date(start_time_after),
-            EndTime<: serialize.iso8601_date(end_time_before),
-            EndTime: serialize.iso8601_date(end_time),
-            EndTime>: serialize.iso8601_date(end_time_after),
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(to: nil, from: nil, parent_call_sid: nil, status: nil, start_time_before: nil, start_time: nil, start_time_after: nil, end_time_before: nil, end_time: nil, end_time_after: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'To' => to,
+            'From' => from,
+            'ParentCallSid' => parent_call_sid,
+            'Status' => status,
+            'StartTime<' => serialize.iso8601_date(start_time_before),
+            'StartTime' => serialize.iso8601_date(start_time),
+            'StartTime>' => serialize.iso8601_date(start_time_after),
+            'EndTime<' => serialize.iso8601_date(end_time_before),
+            'EndTime' => serialize.iso8601_date(end_time),
+            'EndTime>' => serialize.iso8601_date(end_time_after),
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             CallInstance,
@@ -101,7 +100,7 @@ module Twilio
       ##
       # Access the feedback_summaries
       def feedback_summaries
-        @feedback_summaries ||= FeedbackSummaryList(@version, @solution)
+        @feedback_summaries ||= FeedbackSummaryList.new(@version, @solution)
       end
       
       ##
@@ -114,6 +113,304 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.CallList>'
+      end
+    end
+  
+    class CallContext < InstanceContext
+      def initialize(version, account_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:sid]}.json"
+        
+        # Dependents
+        @recordings = nil
+        @notifications = nil
+        @feedback = nil
+      end
+      
+      ##
+      # Deletes the CallInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Fetch a CallInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            CallInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the CallInstance
+      def update(url: nil, method: nil, status: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, status_callback_method: nil)
+        data = {
+            'Url' => url,
+            'Method' => method,
+            'Status' => status,
+            'FallbackUrl' => fallback_url,
+            'FallbackMethod' => fallback_method,
+            'StatusCallback' => status_callback,
+            'StatusCallbackMethod' => status_callback_method,
+        }
+        
+        @version.update(
+            CallInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      def recordings
+        unless @recordings
+          @recordings = RecordingList.new(
+              @version,
+              account_sid: @solution[:account_sid],
+              call_sid: @solution[:sid],
+          )
+        end
+        @recordings
+      end
+      
+      def notifications
+        unless @notifications
+          @notifications = NotificationList.new(
+              @version,
+              account_sid: @solution[:account_sid],
+              call_sid: @solution[:sid],
+          )
+        end
+        @notifications
+      end
+      
+      def feedback
+        unless @feedback
+          @feedback = FeedbackList.new(
+              @version,
+              account_sid: @solution[:account_sid],
+              call_sid: @solution[:sid],
+          )
+        end
+        @feedback
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.CallContext #{context}>"
+      end
+    end
+  
+    class CallInstance < InstanceResource
+      def initialize(version, payload, account_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'annotation' => payload['annotation'],
+            'answered_by' => payload['answered_by'],
+            'api_version' => payload['api_version'],
+            'caller_name' => payload['caller_name'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'direction' => payload['direction'],
+            'duration' => payload['duration'],
+            'end_time' => deserialize.rfc2822_datetime(payload['end_time']),
+            'forwarded_from' => payload['forwarded_from'],
+            'from' => payload['from'],
+            'from_formatted' => payload['from_formatted'],
+            'group_sid' => payload['group_sid'],
+            'parent_call_sid' => payload['parent_call_sid'],
+            'phone_number_sid' => payload['phone_number_sid'],
+            'price' => deserialize.decimal(payload['price']),
+            'price_unit' => payload['price_unit'],
+            'sid' => payload['sid'],
+            'start_time' => deserialize.rfc2822_datetime(payload['start_time']),
+            'status' => payload['status'],
+            'subresource_uris' => payload['subresource_uris'],
+            'to' => payload['to'],
+            'to_formatted' => payload['to_formatted'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = CallContext(
+              @version,
+              @params['account_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def annotation
+        @properties['annotation']
+      end
+      
+      def answered_by
+        @properties['answered_by']
+      end
+      
+      def api_version
+        @properties['api_version']
+      end
+      
+      def caller_name
+        @properties['caller_name']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def direction
+        @properties['direction']
+      end
+      
+      def duration
+        @properties['duration']
+      end
+      
+      def end_time
+        @properties['end_time']
+      end
+      
+      def forwarded_from
+        @properties['forwarded_from']
+      end
+      
+      def from
+        @properties['from']
+      end
+      
+      def from_formatted
+        @properties['from_formatted']
+      end
+      
+      def group_sid
+        @properties['group_sid']
+      end
+      
+      def parent_call_sid
+        @properties['parent_call_sid']
+      end
+      
+      def phone_number_sid
+        @properties['phone_number_sid']
+      end
+      
+      def price
+        @properties['price']
+      end
+      
+      def price_unit
+        @properties['price_unit']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def start_time
+        @properties['start_time']
+      end
+      
+      def status
+        @properties['status']
+      end
+      
+      def subresource_uris
+        @properties['subresource_uris']
+      end
+      
+      def to
+        @properties['to']
+      end
+      
+      def to_formatted
+        @properties['to_formatted']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Deletes the CallInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Fetch a CallInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the CallInstance
+      def update(url: nil, method: nil, status: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, status_callback_method: nil)
+        @context.update(
+            method: nil,
+            status: nil,
+            fallback_url: nil,
+            fallback_method: nil,
+            status_callback: nil,
+            status_callback_method: nil,
+        )
+      end
+      
+      def recordings
+        @context.recordings
+      end
+      
+      def notifications
+        @context.notifications
+      end
+      
+      def feedback
+        @context.feedback
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.CallInstance #{context}>"
       end
     end
   end

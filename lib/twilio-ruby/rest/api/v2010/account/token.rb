@@ -10,28 +10,28 @@ module Twilio
       ##
       # Initialize the TokenList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Tokens.json"
       end
       
       ##
       # Create a new TokenInstance
-      def create(self, ttl=values.unset)
-        data = values.of({
-            Ttl: ttl,
-        })
+      def create(ttl: nil)
+        data = {
+            'Ttl' => ttl,
+        }
         
         @version.create(
             TokenInstance,
             {},
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
@@ -40,6 +40,57 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.TokenList>'
+      end
+    end
+  
+    class TokenInstance < InstanceResource
+      def initialize(version, payload)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'ice_servers' => payload['ice_servers'],
+            'password' => payload['password'],
+            'ttl' => payload['ttl'],
+            'username' => payload['username'],
+        }
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def ice_servers
+        @properties['ice_servers']
+      end
+      
+      def password
+        @properties['password']
+      end
+      
+      def ttl
+        @properties['ttl']
+      end
+      
+      def username
+        @properties['username']
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        "<Twilio.Api.V2010.TokenInstance>"
       end
     end
   end

@@ -10,7 +10,7 @@ module Twilio
       ##
       # Initialize the CountryList
       def initialize(version)
-        super
+        super(version)
         
         # Path Solution
         @solution = {}
@@ -19,21 +19,20 @@ module Twilio
       
       ##
       # Reads CountryInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of CountryInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             CountryInstance,
@@ -54,6 +53,108 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Pricing.V1.CountryList>'
+      end
+    end
+  
+    class CountryContext < InstanceContext
+      def initialize(version, iso_country)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'iso_country' => iso_country,
+        }
+        @uri = "/PhoneNumbers/Countries/#{@solution[:iso_country]}"
+      end
+      
+      ##
+      # Fetch a CountryInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            CountryInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Pricing.V1.CountryContext #{context}>"
+      end
+    end
+  
+    class CountryInstance < InstanceResource
+      def initialize(version, payload, iso_country: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'iso_country' => payload['iso_country'],
+            'country' => payload['country'],
+            'price_unit' => payload.get('price_unit'),
+            'uri' => payload.get('uri'),
+            'url' => payload.get('url'),
+            'phone_number_prices' => payload.get('phone_number_prices'),
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'iso_country' => iso_country || @properties['iso_country'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = CountryContext(
+              @version,
+              @params['iso_country'],
+          )
+        end
+        @instance_context
+      end
+      
+      def price_unit
+        @properties['price_unit']
+      end
+      
+      def url
+        @properties['url']
+      end
+      
+      def country
+        @properties['country']
+      end
+      
+      def iso_country
+        @properties['iso_country']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      def phone_number_prices
+        @properties['phone_number_prices']
+      end
+      
+      ##
+      # Fetch a CountryInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Pricing.V1.CountryInstance #{context}>"
       end
     end
   end

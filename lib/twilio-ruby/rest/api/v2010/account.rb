@@ -10,7 +10,7 @@ module Twilio
       ##
       # Initialize the AccountList
       def initialize(version)
-        super
+        super(version)
         
         # Path Solution
         @solution = {}
@@ -19,42 +19,41 @@ module Twilio
       
       ##
       # Create a new AccountInstance
-      def create(self, friendly_name=values.unset)
-        data = values.of({
-            FriendlyName: friendly_name,
-        })
+      def create(friendly_name: nil)
+        data = {
+            'FriendlyName' => friendly_name,
+        }
         
         @version.create(
             AccountInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
       
       ##
       # Reads AccountInstance records from the API as a list.
-      def read(self, friendly_name=values.unset, status=values.unset, limit=nil, page_size=nil)
+      def read(friendly_name: nil, status: nil, limit: nil, page_size: nil)
         @version.read(
-            friendly_name,
-            status,
-            limit,
-            page_size
-        ))
+            status: nil,
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of AccountInstance records from the API.
-      def page(self, friendly_name=values.unset, status=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            FriendlyName: friendly_name,
-            Status: status,
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(friendly_name: nil, status: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'FriendlyName' => friendly_name,
+            'Status' => status,
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             AccountInstance,
@@ -75,6 +74,456 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.AccountList>'
+      end
+    end
+  
+    class AccountContext < InstanceContext
+      def initialize(version, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:sid]}.json"
+        
+        # Dependents
+        @addresses = nil
+        @applications = nil
+        @authorized_connect_apps = nil
+        @available_phone_numbers = nil
+        @calls = nil
+        @conferences = nil
+        @connect_apps = nil
+        @incoming_phone_numbers = nil
+        @messages = nil
+        @notifications = nil
+        @outgoing_caller_ids = nil
+        @queues = nil
+        @recordings = nil
+        @sandbox = nil
+        @sip = nil
+        @sms = nil
+        @tokens = nil
+        @transcriptions = nil
+        @usage = nil
+        @validation_requests = nil
+      end
+      
+      ##
+      # Fetch a AccountInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            AccountInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the AccountInstance
+      def update(friendly_name: nil, status: nil)
+        data = {
+            'FriendlyName' => friendly_name,
+            'Status' => status,
+        }
+        
+        @version.update(
+            AccountInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      def addresses
+        unless @addresses
+          @addresses = AddressList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @addresses
+      end
+      
+      def applications
+        unless @applications
+          @applications = ApplicationList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @applications
+      end
+      
+      def authorized_connect_apps
+        unless @authorized_connect_apps
+          @authorized_connect_apps = AuthorizedConnectAppList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @authorized_connect_apps
+      end
+      
+      def available_phone_numbers
+        unless @available_phone_numbers
+          @available_phone_numbers = AvailablePhoneNumberCountryList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @available_phone_numbers
+      end
+      
+      def calls
+        unless @calls
+          @calls = CallList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @calls
+      end
+      
+      def conferences
+        unless @conferences
+          @conferences = ConferenceList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @conferences
+      end
+      
+      def connect_apps
+        unless @connect_apps
+          @connect_apps = ConnectAppList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @connect_apps
+      end
+      
+      def incoming_phone_numbers
+        unless @incoming_phone_numbers
+          @incoming_phone_numbers = IncomingPhoneNumberList.new(
+              @version,
+              owner_account_sid: @solution[:sid],
+          )
+        end
+        @incoming_phone_numbers
+      end
+      
+      def messages
+        unless @messages
+          @messages = MessageList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @messages
+      end
+      
+      def notifications
+        unless @notifications
+          @notifications = NotificationList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @notifications
+      end
+      
+      def outgoing_caller_ids
+        unless @outgoing_caller_ids
+          @outgoing_caller_ids = OutgoingCallerIdList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @outgoing_caller_ids
+      end
+      
+      def queues
+        unless @queues
+          @queues = QueueList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @queues
+      end
+      
+      def recordings
+        unless @recordings
+          @recordings = RecordingList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @recordings
+      end
+      
+      def sandbox
+        unless @sandbox
+          @sandbox = SandboxList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @sandbox
+      end
+      
+      def sip
+        unless @sip
+          @sip = SipList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @sip
+      end
+      
+      def sms
+        unless @sms
+          @sms = SmsList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @sms
+      end
+      
+      def tokens
+        unless @tokens
+          @tokens = TokenList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @tokens
+      end
+      
+      def transcriptions
+        unless @transcriptions
+          @transcriptions = TranscriptionList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @transcriptions
+      end
+      
+      def usage
+        unless @usage
+          @usage = UsageList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @usage
+      end
+      
+      def validation_requests
+        unless @validation_requests
+          @validation_requests = ValidationRequestList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        @validation_requests
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.AccountContext #{context}>"
+      end
+    end
+  
+    class AccountInstance < InstanceResource
+      def initialize(version, payload, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'auth_token' => payload['auth_token'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'friendly_name' => payload['friendly_name'],
+            'owner_account_sid' => payload['owner_account_sid'],
+            'sid' => payload['sid'],
+            'status' => payload['status'],
+            'subresource_uris' => payload['subresource_uris'],
+            'type' => payload['type'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = AccountContext(
+              @version,
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def auth_token
+        @properties['auth_token']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def owner_account_sid
+        @properties['owner_account_sid']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def status
+        @properties['status']
+      end
+      
+      def subresource_uris
+        @properties['subresource_uris']
+      end
+      
+      def type
+        @properties['type']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a AccountInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the AccountInstance
+      def update(friendly_name: nil, status: nil)
+        @context.update(
+            status: nil,
+        )
+      end
+      
+      def addresses
+        @context.addresses
+      end
+      
+      def applications
+        @context.applications
+      end
+      
+      def authorized_connect_apps
+        @context.authorized_connect_apps
+      end
+      
+      def available_phone_numbers
+        @context.available_phone_numbers
+      end
+      
+      def calls
+        @context.calls
+      end
+      
+      def conferences
+        @context.conferences
+      end
+      
+      def connect_apps
+        @context.connect_apps
+      end
+      
+      def incoming_phone_numbers
+        @context.incoming_phone_numbers
+      end
+      
+      def messages
+        @context.messages
+      end
+      
+      def notifications
+        @context.notifications
+      end
+      
+      def outgoing_caller_ids
+        @context.outgoing_caller_ids
+      end
+      
+      def queues
+        @context.queues
+      end
+      
+      def recordings
+        @context.recordings
+      end
+      
+      def sandbox
+        @context.sandbox
+      end
+      
+      def sip
+        @context.sip
+      end
+      
+      def sms
+        @context.sms
+      end
+      
+      def tokens
+        @context.tokens
+      end
+      
+      def transcriptions
+        @context.transcriptions
+      end
+      
+      def usage
+        @context.usage
+      end
+      
+      def validation_requests
+        @context.validation_requests
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.AccountInstance #{context}>"
       end
     end
   end

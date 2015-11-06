@@ -24,7 +24,7 @@ module Twilio
         ##
         # Account provided as the authenticating account
         def account
-          @account ||= AccountContext.new(self, @domain.twilio.account_sid)
+          @account ||= AccountContext.new(self, @domain.client.account_sid)
         end
         
         ##

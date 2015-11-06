@@ -10,32 +10,31 @@ module Twilio
       ##
       # Initialize the ParticipantList
       def initialize(version, conversation_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            conversation_sid: conversation_sid
+            'conversation_sid' => conversation_sid
         }
         @uri = "/Conversations/#{@solution[:conversation_sid]}/Participants"
       end
       
       ##
       # Reads ParticipantInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of ParticipantInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             ParticipantInstance,
@@ -48,18 +47,18 @@ module Twilio
       
       ##
       # Create a new ParticipantInstance
-      def create(self, to, from)
-        data = values.of({
-            To: to,
-            From: from,
-        })
+      def create(to, from)
+        data = {
+            'To' => to,
+            'From' => from,
+        }
         
         @version.create(
             ParticipantInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
@@ -74,6 +73,131 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Conversations.V1.ParticipantList>'
+      end
+    end
+  
+    class ParticipantContext < InstanceContext
+      def initialize(version, conversation_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'conversation_sid' => conversation_sid,
+            'sid' => sid,
+        }
+        @uri = "/Conversations/#{@solution[:conversation_sid]}/Participants/#{@solution[:sid]}"
+      end
+      
+      ##
+      # Fetch a ParticipantInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            ParticipantInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Conversations.V1.ParticipantContext #{context}>"
+      end
+    end
+  
+    class ParticipantInstance < InstanceResource
+      def initialize(version, payload, conversation_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'sid' => payload['sid'],
+            'address' => payload['address'],
+            'status' => payload['status'],
+            'conversation_sid' => payload['conversation_sid'],
+            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
+            'start_time' => deserialize.iso8601_datetime(payload['start_time']),
+            'end_time' => deserialize.iso8601_datetime(payload['end_time']),
+            'duration' => deserialize.integer(payload['duration']),
+            'account_sid' => payload['account_sid'],
+            'url' => payload['url'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'conversation_sid' => conversation_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = ParticipantContext(
+              @version,
+              @params['conversation_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def address
+        @properties['address']
+      end
+      
+      def status
+        @properties['status']
+      end
+      
+      def conversation_sid
+        @properties['conversation_sid']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def start_time
+        @properties['start_time']
+      end
+      
+      def end_time
+        @properties['end_time']
+      end
+      
+      def duration
+        @properties['duration']
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def url
+        @properties['url']
+      end
+      
+      ##
+      # Fetch a ParticipantInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Conversations.V1.ParticipantInstance #{context}>"
       end
     end
   end

@@ -10,49 +10,48 @@ module Twilio
       ##
       # Initialize the IpAccessControlListList
       def initialize(version, trunk_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            trunk_sid: trunk_sid
+            'trunk_sid' => trunk_sid
         }
         @uri = "/Trunks/#{@solution[:trunk_sid]}/IpAccessControlLists"
       end
       
       ##
       # Create a new IpAccessControlListInstance
-      def create(self, ip_access_control_list_sid)
-        data = values.of({
-            IpAccessControlListSid: ip_access_control_list_sid,
-        })
+      def create(ip_access_control_list_sid)
+        data = {
+            'IpAccessControlListSid' => ip_access_control_list_sid,
+        }
         
         @version.create(
             IpAccessControlListInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
       
       ##
       # Reads IpAccessControlListInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of IpAccessControlListInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             IpAccessControlListInstance,
@@ -73,6 +72,128 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Trunking.V1.IpAccessControlListList>'
+      end
+    end
+  
+    class IpAccessControlListContext < InstanceContext
+      def initialize(version, trunk_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'trunk_sid' => trunk_sid,
+            'sid' => sid,
+        }
+        @uri = "/Trunks/#{@solution[:trunk_sid]}/IpAccessControlLists/#{@solution[:sid]}"
+      end
+      
+      ##
+      # Fetch a IpAccessControlListInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            IpAccessControlListInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Deletes the IpAccessControlListInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Trunking.V1.IpAccessControlListContext #{context}>"
+      end
+    end
+  
+    class IpAccessControlListInstance < InstanceResource
+      def initialize(version, payload, trunk_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'sid' => payload['sid'],
+            'trunk_sid' => payload['trunk_sid'],
+            'friendly_name' => payload['friendly_name'],
+            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
+            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
+            'url' => payload['url'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'trunk_sid' => trunk_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = IpAccessControlListContext(
+              @version,
+              @params['trunk_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def trunk_sid
+        @properties['trunk_sid']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def url
+        @properties['url']
+      end
+      
+      ##
+      # Fetch a IpAccessControlListInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Deletes the IpAccessControlListInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Trunking.V1.IpAccessControlListInstance #{context}>"
       end
     end
   end

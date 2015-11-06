@@ -10,12 +10,12 @@ module Twilio
       ##
       # Initialize the FeedbackList
       def initialize(version, account_sid, call_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid,
-            call_sid: call_sid
+            'account_sid' => account_sid,
+            'call_sid' => call_sid
         }
       end
       
@@ -29,6 +29,163 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.FeedbackList>'
+      end
+    end
+  
+    class FeedbackContext < InstanceContext
+      def initialize(version, account_sid, call_sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'call_sid' => call_sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/Feedback.json"
+      end
+      
+      ##
+      # Create a new FeedbackInstance
+      def create(quality_score, issue: nil)
+        data = {
+            'QualityScore' => quality_score,
+            'Issue' => issue,
+        }
+        
+        @version.create(
+            FeedbackInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data
+        )
+      end
+      
+      ##
+      # Fetch a FeedbackInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            FeedbackInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the FeedbackInstance
+      def update(quality_score, issue: nil)
+        data = {
+            'QualityScore' => quality_score,
+            'Issue' => issue,
+        }
+        
+        @version.update(
+            FeedbackInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.FeedbackContext #{context}>"
+      end
+    end
+  
+    class FeedbackInstance < InstanceResource
+      def initialize(version, payload, account_sid, call_sid)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'issues' => payload['issues'],
+            'quality_score' => deserialize.integer(payload['quality_score']),
+            'sid' => payload['sid'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'call_sid' => call_sid,
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = FeedbackContext(
+              @version,
+              @params['account_sid'],
+              @params['call_sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def issues
+        @properties['issues']
+      end
+      
+      def quality_score
+        @properties['quality_score']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      ##
+      # Create a new FeedbackInstance
+      def create(quality_score, issue: nil)
+        @context.create(
+            issue: nil,
+        )
+      end
+      
+      ##
+      # Fetch a FeedbackInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the FeedbackInstance
+      def update(quality_score, issue: nil)
+        @context.update(
+            issue: nil,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.FeedbackInstance #{context}>"
       end
     end
   end

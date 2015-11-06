@@ -10,32 +10,31 @@ module Twilio
       ##
       # Initialize the IpAccessControlListList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/SIP/IpAccessControlLists.json"
       end
       
       ##
       # Reads IpAccessControlListInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of IpAccessControlListInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             IpAccessControlListInstance,
@@ -48,17 +47,17 @@ module Twilio
       
       ##
       # Create a new IpAccessControlListInstance
-      def create(self, friendly_name)
-        data = values.of({
-            FriendlyName: friendly_name,
-        })
+      def create(friendly_name)
+        data = {
+            'FriendlyName' => friendly_name,
+        }
         
         @version.create(
             IpAccessControlListInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
@@ -73,6 +72,169 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.IpAccessControlListList>'
+      end
+    end
+  
+    class IpAccessControlListContext < InstanceContext
+      def initialize(version, account_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/SIP/IpAccessControlLists/#{@solution[:sid]}.json"
+        
+        # Dependents
+        @ip_addresses = nil
+      end
+      
+      ##
+      # Fetch a IpAccessControlListInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            IpAccessControlListInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the IpAccessControlListInstance
+      def update(friendly_name)
+        data = {
+            'FriendlyName' => friendly_name,
+        }
+        
+        @version.update(
+            IpAccessControlListInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Deletes the IpAccessControlListInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      def ip_addresses
+        unless @ip_addresses
+          @ip_addresses = IpAddressList.new(
+              @version,
+              account_sid: @solution[:account_sid],
+              ip_access_control_list_sid: @solution[:sid],
+          )
+        end
+        @ip_addresses
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.IpAccessControlListContext #{context}>"
+      end
+    end
+  
+    class IpAccessControlListInstance < InstanceResource
+      def initialize(version, payload, account_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'sid' => payload['sid'],
+            'account_sid' => payload['account_sid'],
+            'friendly_name' => payload['friendly_name'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'subresource_uris' => payload['subresource_uris'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = IpAccessControlListContext(
+              @version,
+              @params['account_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def subresource_uris
+        @properties['subresource_uris']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a IpAccessControlListInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the IpAccessControlListInstance
+      def update(friendly_name)
+        @context.update()
+      end
+      
+      ##
+      # Deletes the IpAccessControlListInstance
+      def delete
+        @context.delete()
+      end
+      
+      def ip_addresses
+        @context.ip_addresses
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.IpAccessControlListInstance #{context}>"
       end
     end
   end

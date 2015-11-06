@@ -10,26 +10,26 @@ module Twilio
       ##
       # Initialize the ConversationList
       def initialize(version)
-        super
+        super(version)
         
         # Path Solution
         @solution = {}
         
         # Components
-        @in_progress = None
-        @completed = None
+        @in_progress = nil
+        @completed = nil
       end
       
       ##
       # Access the in_progress
       def in_progress
-        @in_progress ||= InProgressList(@version, @solution)
+        @in_progress ||= InProgressList.new(@version, @solution)
       end
       
       ##
       # Access the completed
       def completed
-        @completed ||= CompletedList(@version, @solution)
+        @completed ||= CompletedList.new(@version, @solution)
       end
       
       ##
@@ -42,6 +42,135 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Conversations.V1.ConversationList>'
+      end
+    end
+  
+    class ConversationContext < InstanceContext
+      def initialize(version, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'sid' => sid,
+        }
+        @uri = "/Conversations/#{@solution[:sid]}"
+        
+        # Dependents
+        @participants = nil
+      end
+      
+      ##
+      # Fetch a ConversationInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            ConversationInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      def participants
+        unless @participants
+          @participants = ParticipantList.new(
+              @version,
+              conversation_sid: @solution[:sid],
+          )
+        end
+        @participants
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Conversations.V1.ConversationContext #{context}>"
+      end
+    end
+  
+    class ConversationInstance < InstanceResource
+      def initialize(version, payload, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'sid' => payload['sid'],
+            'status' => payload['status'],
+            'duration' => deserialize.integer(payload['duration']),
+            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
+            'start_time' => deserialize.iso8601_datetime(payload['start_time']),
+            'end_time' => deserialize.iso8601_datetime(payload['end_time']),
+            'account_sid' => payload['account_sid'],
+            'url' => payload['url'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = ConversationContext(
+              @version,
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def status
+        @properties['status']
+      end
+      
+      def duration
+        @properties['duration']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def start_time
+        @properties['start_time']
+      end
+      
+      def end_time
+        @properties['end_time']
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def url
+        @properties['url']
+      end
+      
+      ##
+      # Fetch a ConversationInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      def participants
+        @context.participants
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Conversations.V1.ConversationInstance #{context}>"
       end
     end
   end

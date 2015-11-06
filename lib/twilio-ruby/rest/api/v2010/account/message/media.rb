@@ -10,39 +10,38 @@ module Twilio
       ##
       # Initialize the MediaList
       def initialize(version, account_sid, message_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid,
-            message_sid: message_sid
+            'account_sid' => account_sid,
+            'message_sid' => message_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Messages/#{@solution[:message_sid]}/Media.json"
       end
       
       ##
       # Reads MediaInstance records from the API as a list.
-      def read(self, date_created_before=values.unset, date_created=values.unset, date_created_after=values.unset, limit=nil, page_size=nil)
+      def read(date_created_before: nil, date_created: nil, date_created_after: nil, limit: nil, page_size: nil)
         @version.read(
-            date_created_before,
-            date_created,
-            date_created_after,
-            limit,
-            page_size
-        ))
+            date_created: nil,
+            date_created_after: nil,
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of MediaInstance records from the API.
-      def page(self, date_created_before=values.unset, date_created=values.unset, date_created_after=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            DateCreated<: serialize.iso8601_date(date_created_before),
-            DateCreated: serialize.iso8601_date(date_created),
-            DateCreated>: serialize.iso8601_date(date_created_after),
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(date_created_before: nil, date_created: nil, date_created_after: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'DateCreated<' => serialize.iso8601_date(date_created_before),
+            'DateCreated' => serialize.iso8601_date(date_created),
+            'DateCreated>' => serialize.iso8601_date(date_created_after),
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             MediaInstance,
@@ -63,6 +62,131 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.MediaList>'
+      end
+    end
+  
+    class MediaContext < InstanceContext
+      def initialize(version, account_sid, message_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'message_sid' => message_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/Messages/#{@solution[:message_sid]}/Media/#{@solution[:sid]}.json"
+      end
+      
+      ##
+      # Deletes the MediaInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Fetch a MediaInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            MediaInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.MediaContext #{context}>"
+      end
+    end
+  
+    class MediaInstance < InstanceResource
+      def initialize(version, payload, account_sid, message_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'content_type' => payload['content_type'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'parent_sid' => payload['parent_sid'],
+            'sid' => payload['sid'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'message_sid' => message_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = MediaContext(
+              @version,
+              @params['account_sid'],
+              @params['message_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def content_type
+        @properties['content_type']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def parent_sid
+        @properties['parent_sid']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Deletes the MediaInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Fetch a MediaInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.MediaInstance #{context}>"
       end
     end
   end

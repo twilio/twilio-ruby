@@ -10,48 +10,47 @@ module Twilio
       ##
       # Initialize the ConferenceList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Conferences.json"
       end
       
       ##
       # Reads ConferenceInstance records from the API as a list.
-      def read(self, date_created_before=values.unset, date_created=values.unset, date_created_after=values.unset, date_updated_before=values.unset, date_updated=values.unset, date_updated_after=values.unset, friendly_name=values.unset, status=values.unset, limit=nil, page_size=nil)
+      def read(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, limit: nil, page_size: nil)
         @version.read(
-            date_created_before,
-            date_created,
-            date_created_after,
-            date_updated_before,
-            date_updated,
-            date_updated_after,
-            friendly_name,
-            status,
-            limit,
-            page_size
-        ))
+            date_created: nil,
+            date_created_after: nil,
+            date_updated_before: nil,
+            date_updated: nil,
+            date_updated_after: nil,
+            friendly_name: nil,
+            status: nil,
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of ConferenceInstance records from the API.
-      def page(self, date_created_before=values.unset, date_created=values.unset, date_created_after=values.unset, date_updated_before=values.unset, date_updated=values.unset, date_updated_after=values.unset, friendly_name=values.unset, status=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            DateCreated<: serialize.iso8601_date(date_created_before),
-            DateCreated: serialize.iso8601_date(date_created),
-            DateCreated>: serialize.iso8601_date(date_created_after),
-            DateUpdated<: serialize.iso8601_date(date_updated_before),
-            DateUpdated: serialize.iso8601_date(date_updated),
-            DateUpdated>: serialize.iso8601_date(date_updated_after),
-            FriendlyName: friendly_name,
-            Status: status,
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'DateCreated<' => serialize.iso8601_date(date_created_before),
+            'DateCreated' => serialize.iso8601_date(date_created),
+            'DateCreated>' => serialize.iso8601_date(date_created_after),
+            'DateUpdated<' => serialize.iso8601_date(date_updated_before),
+            'DateUpdated' => serialize.iso8601_date(date_updated),
+            'DateUpdated>' => serialize.iso8601_date(date_updated_after),
+            'FriendlyName' => friendly_name,
+            'Status' => status,
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             ConferenceInstance,
@@ -72,6 +71,139 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.ConferenceList>'
+      end
+    end
+  
+    class ConferenceContext < InstanceContext
+      def initialize(version, account_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/Conferences/#{@solution[:sid]}.json"
+        
+        # Dependents
+        @participants = nil
+      end
+      
+      ##
+      # Fetch a ConferenceInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            ConferenceInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      def participants
+        unless @participants
+          @participants = ParticipantList.new(
+              @version,
+              account_sid: @solution[:account_sid],
+              conference_sid: @solution[:sid],
+          )
+        end
+        @participants
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.ConferenceContext #{context}>"
+      end
+    end
+  
+    class ConferenceInstance < InstanceResource
+      def initialize(version, payload, account_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'api_version' => payload['api_version'],
+            'friendly_name' => payload['friendly_name'],
+            'sid' => payload['sid'],
+            'status' => payload['status'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = ConferenceContext(
+              @version,
+              @params['account_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def api_version
+        @properties['api_version']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def status
+        @properties['status']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a ConferenceInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      def participants
+        @context.participants
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.ConferenceInstance #{context}>"
       end
     end
   end

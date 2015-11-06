@@ -10,64 +10,63 @@ module Twilio
       ##
       # Initialize the MessageList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Messages.json"
       end
       
       ##
       # Create a new MessageInstance
-      def create(self, to, from, status_callback=values.unset, application_sid=values.unset, body=values.unset, media_url=values.unset)
-        data = values.of({
-            To: to,
-            From: from,
-            Body: body,
-            MediaUrl: media_url,
-            StatusCallback: status_callback,
-            ApplicationSid: application_sid,
-        })
+      def create(to, from, status_callback: nil, application_sid: nil, body: nil, media_url: nil)
+        data = {
+            'To' => to,
+            'From' => from,
+            'Body' => body,
+            'MediaUrl' => media_url,
+            'StatusCallback' => status_callback,
+            'ApplicationSid' => application_sid,
+        }
         
         @version.create(
             MessageInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
       
       ##
       # Reads MessageInstance records from the API as a list.
-      def read(self, to=values.unset, from=values.unset, date_sent_before=values.unset, date_sent=values.unset, date_sent_after=values.unset, limit=nil, page_size=nil)
+      def read(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, limit: nil, page_size: nil)
         @version.read(
-            to,
-            from,
-            date_sent_before,
-            date_sent,
-            date_sent_after,
-            limit,
-            page_size
-        ))
+            from: nil,
+            date_sent_before: nil,
+            date_sent: nil,
+            date_sent_after: nil,
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of MessageInstance records from the API.
-      def page(self, to=values.unset, from=values.unset, date_sent_before=values.unset, date_sent=values.unset, date_sent_after=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            To: to,
-            From: from,
-            DateSent<: serialize.iso8601_date(date_sent_before),
-            DateSent: serialize.iso8601_date(date_sent),
-            DateSent>: serialize.iso8601_date(date_sent_after),
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'To' => to,
+            'From' => from,
+            'DateSent<' => serialize.iso8601_date(date_sent_before),
+            'DateSent' => serialize.iso8601_date(date_sent),
+            'DateSent>' => serialize.iso8601_date(date_sent_after),
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             MessageInstance,
@@ -88,6 +87,229 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.MessageList>'
+      end
+    end
+  
+    class MessageContext < InstanceContext
+      def initialize(version, account_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/Messages/#{@solution[:sid]}.json"
+        
+        # Dependents
+        @media = nil
+      end
+      
+      ##
+      # Deletes the MessageInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Fetch a MessageInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            MessageInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the MessageInstance
+      def update(body: nil)
+        data = {
+            'Body' => body,
+        }
+        
+        @version.update(
+            MessageInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      def media
+        unless @media
+          @media = MediaList.new(
+              @version,
+              account_sid: @solution[:account_sid],
+              message_sid: @solution[:sid],
+          )
+        end
+        @media
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.MessageContext #{context}>"
+      end
+    end
+  
+    class MessageInstance < InstanceResource
+      def initialize(version, payload, account_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'api_version' => payload['api_version'],
+            'body' => payload['body'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_sent' => deserialize.rfc2822_datetime(payload['date_sent']),
+            'direction' => payload['direction'],
+            'error_code' => deserialize.integer(payload['error_code']),
+            'error_message' => payload['error_message'],
+            'from' => payload['from'],
+            'num_media' => payload['num_media'],
+            'num_segments' => payload['num_segments'],
+            'price' => deserialize.decimal(payload['price']),
+            'price_unit' => payload['price_unit'],
+            'sid' => payload['sid'],
+            'status' => payload['status'],
+            'subresource_uris' => payload['subresource_uris'],
+            'to' => payload['to'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = MessageContext(
+              @version,
+              @params['account_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def api_version
+        @properties['api_version']
+      end
+      
+      def body
+        @properties['body']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def date_sent
+        @properties['date_sent']
+      end
+      
+      def direction
+        @properties['direction']
+      end
+      
+      def error_code
+        @properties['error_code']
+      end
+      
+      def error_message
+        @properties['error_message']
+      end
+      
+      def from
+        @properties['from']
+      end
+      
+      def num_media
+        @properties['num_media']
+      end
+      
+      def num_segments
+        @properties['num_segments']
+      end
+      
+      def price
+        @properties['price']
+      end
+      
+      def price_unit
+        @properties['price_unit']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def status
+        @properties['status']
+      end
+      
+      def subresource_uris
+        @properties['subresource_uris']
+      end
+      
+      def to
+        @properties['to']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Deletes the MessageInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Fetch a MessageInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the MessageInstance
+      def update(body: nil)
+        @context.update()
+      end
+      
+      def media
+        @context.media
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.MessageInstance #{context}>"
       end
     end
   end

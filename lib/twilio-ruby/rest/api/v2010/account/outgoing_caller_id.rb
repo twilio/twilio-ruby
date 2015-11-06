@@ -10,36 +10,35 @@ module Twilio
       ##
       # Initialize the OutgoingCallerIdList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/OutgoingCallerIds.json"
       end
       
       ##
       # Reads OutgoingCallerIdInstance records from the API as a list.
-      def read(self, phone_number=values.unset, friendly_name=values.unset, limit=nil, page_size=nil)
+      def read(phone_number: nil, friendly_name: nil, limit: nil, page_size: nil)
         @version.read(
-            phone_number,
-            friendly_name,
-            limit,
-            page_size
-        ))
+            friendly_name: nil,
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of OutgoingCallerIdInstance records from the API.
-      def page(self, phone_number=values.unset, friendly_name=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PhoneNumber: phone_number,
-            FriendlyName: friendly_name,
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(phone_number: nil, friendly_name: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PhoneNumber' => phone_number,
+            'FriendlyName' => friendly_name,
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             OutgoingCallerIdInstance,
@@ -60,6 +59,151 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.OutgoingCallerIdList>'
+      end
+    end
+  
+    class OutgoingCallerIdContext < InstanceContext
+      def initialize(version, account_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/OutgoingCallerIds/#{@solution[:sid]}.json"
+      end
+      
+      ##
+      # Fetch a OutgoingCallerIdInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            OutgoingCallerIdInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the OutgoingCallerIdInstance
+      def update(friendly_name: nil)
+        data = {
+            'FriendlyName' => friendly_name,
+        }
+        
+        @version.update(
+            OutgoingCallerIdInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Deletes the OutgoingCallerIdInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.OutgoingCallerIdContext #{context}>"
+      end
+    end
+  
+    class OutgoingCallerIdInstance < InstanceResource
+      def initialize(version, payload, account_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'sid' => payload['sid'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'friendly_name' => payload['friendly_name'],
+            'account_sid' => payload['account_sid'],
+            'phone_number' => payload['phone_number'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = OutgoingCallerIdContext(
+              @version,
+              @params['account_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def phone_number
+        @properties['phone_number']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a OutgoingCallerIdInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the OutgoingCallerIdInstance
+      def update(friendly_name: nil)
+        @context.update()
+      end
+      
+      ##
+      # Deletes the OutgoingCallerIdInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.OutgoingCallerIdInstance #{context}>"
       end
     end
   end

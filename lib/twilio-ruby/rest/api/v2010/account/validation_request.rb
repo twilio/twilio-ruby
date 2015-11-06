@@ -10,33 +10,33 @@ module Twilio
       ##
       # Initialize the ValidationRequestList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/OutgoingCallerIds.json"
       end
       
       ##
       # Create a new ValidationRequestInstance
-      def create(self, phone_number, friendly_name=values.unset, call_delay=values.unset, extension=values.unset, status_callback=values.unset, status_callback_method=values.unset)
-        data = values.of({
-            PhoneNumber: phone_number,
-            FriendlyName: friendly_name,
-            CallDelay: call_delay,
-            Extension: extension,
-            StatusCallback: status_callback,
-            StatusCallbackMethod: status_callback_method,
-        })
+      def create(phone_number, friendly_name: nil, call_delay: nil, extension: nil, status_callback: nil, status_callback_method: nil)
+        data = {
+            'PhoneNumber' => phone_number,
+            'FriendlyName' => friendly_name,
+            'CallDelay' => call_delay,
+            'Extension' => extension,
+            'StatusCallback' => status_callback,
+            'StatusCallbackMethod' => status_callback_method,
+        }
         
         @version.create(
             ValidationRequestInstance,
             {},
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
@@ -45,6 +45,47 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.ValidationRequestList>'
+      end
+    end
+  
+    class ValidationRequestInstance < InstanceResource
+      def initialize(version, payload)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'phone_number' => payload['phone_number'],
+            'friendly_name' => payload['friendly_name'],
+            'validation_code' => deserialize.integer(payload['validation_code']),
+            'call_sid' => payload['call_sid'],
+        }
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def phone_number
+        @properties['phone_number']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def validation_code
+        @properties['validation_code']
+      end
+      
+      def call_sid
+        @properties['call_sid']
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        "<Twilio.Api.V2010.ValidationRequestInstance>"
       end
     end
   end

@@ -10,7 +10,7 @@ module Twilio
       ##
       # Initialize the WorkspaceList
       def initialize(version)
-        super
+        super(version)
         
         # Path Solution
         @solution = {}
@@ -19,23 +19,22 @@ module Twilio
       
       ##
       # Reads WorkspaceInstance records from the API as a list.
-      def read(self, friendly_name=values.unset, limit=nil, page_size=nil)
+      def read(friendly_name: nil, limit: nil, page_size: nil)
         @version.read(
-            friendly_name,
-            limit,
-            page_size
-        ))
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of WorkspaceInstance records from the API.
-      def page(self, friendly_name=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            FriendlyName: friendly_name,
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(friendly_name: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'FriendlyName' => friendly_name,
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             WorkspaceInstance,
@@ -48,19 +47,19 @@ module Twilio
       
       ##
       # Create a new WorkspaceInstance
-      def create(self, friendly_name, event_callback_url=values.unset, template=values.unset)
-        data = values.of({
-            FriendlyName: friendly_name,
-            EventCallbackUrl: event_callback_url,
-            Template: template,
-        })
+      def create(friendly_name, event_callback_url: nil, template: nil)
+        data = {
+            'FriendlyName' => friendly_name,
+            'EventCallbackUrl' => event_callback_url,
+            'Template' => template,
+        }
         
         @version.create(
             WorkspaceInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
@@ -75,6 +74,277 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Taskrouter.V1.WorkspaceList>'
+      end
+    end
+  
+    class WorkspaceContext < InstanceContext
+      def initialize(version, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'sid' => sid,
+        }
+        @uri = "/Workspaces/#{@solution[:sid]}"
+        
+        # Dependents
+        @activities = nil
+        @events = nil
+        @tasks = nil
+        @task_queues = nil
+        @workers = nil
+        @workflows = nil
+        @statistics = nil
+      end
+      
+      ##
+      # Fetch a WorkspaceInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            WorkspaceInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the WorkspaceInstance
+      def update(default_activity_sid: nil, event_callback_url: nil, friendly_name: nil, timeout_activity_sid: nil)
+        data = {
+            'DefaultActivitySid' => default_activity_sid,
+            'EventCallbackUrl' => event_callback_url,
+            'FriendlyName' => friendly_name,
+            'TimeoutActivitySid' => timeout_activity_sid,
+        }
+        
+        @version.update(
+            WorkspaceInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Deletes the WorkspaceInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      def activities
+        unless @activities
+          @activities = ActivityList.new(
+              @version,
+              workspace_sid: @solution[:sid],
+          )
+        end
+        @activities
+      end
+      
+      def events
+        unless @events
+          @events = EventList.new(
+              @version,
+              workspace_sid: @solution[:sid],
+          )
+        end
+        @events
+      end
+      
+      def tasks
+        unless @tasks
+          @tasks = TaskList.new(
+              @version,
+              workspace_sid: @solution[:sid],
+          )
+        end
+        @tasks
+      end
+      
+      def task_queues
+        unless @task_queues
+          @task_queues = TaskQueueList.new(
+              @version,
+              workspace_sid: @solution[:sid],
+          )
+        end
+        @task_queues
+      end
+      
+      def workers
+        unless @workers
+          @workers = WorkerList.new(
+              @version,
+              workspace_sid: @solution[:sid],
+          )
+        end
+        @workers
+      end
+      
+      def workflows
+        unless @workflows
+          @workflows = WorkflowList.new(
+              @version,
+              workspace_sid: @solution[:sid],
+          )
+        end
+        @workflows
+      end
+      
+      def statistics
+        unless @statistics
+          @statistics = WorkspaceStatisticsList.new(
+              @version,
+              workspace_sid: @solution[:sid],
+          )
+        end
+        @statistics
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Taskrouter.V1.WorkspaceContext #{context}>"
+      end
+    end
+  
+    class WorkspaceInstance < InstanceResource
+      def initialize(version, payload, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
+            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
+            'default_activity_name' => payload['default_activity_name'],
+            'default_activity_sid' => payload['default_activity_sid'],
+            'event_callback_url' => payload['event_callback_url'],
+            'friendly_name' => payload['friendly_name'],
+            'sid' => payload['sid'],
+            'timeout_activity_name' => payload['timeout_activity_name'],
+            'timeout_activity_sid' => payload['timeout_activity_sid'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = WorkspaceContext(
+              @version,
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def default_activity_name
+        @properties['default_activity_name']
+      end
+      
+      def default_activity_sid
+        @properties['default_activity_sid']
+      end
+      
+      def event_callback_url
+        @properties['event_callback_url']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def timeout_activity_name
+        @properties['timeout_activity_name']
+      end
+      
+      def timeout_activity_sid
+        @properties['timeout_activity_sid']
+      end
+      
+      ##
+      # Fetch a WorkspaceInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the WorkspaceInstance
+      def update(default_activity_sid: nil, event_callback_url: nil, friendly_name: nil, timeout_activity_sid: nil)
+        @context.update(
+            event_callback_url: nil,
+            friendly_name: nil,
+            timeout_activity_sid: nil,
+        )
+      end
+      
+      ##
+      # Deletes the WorkspaceInstance
+      def delete
+        @context.delete()
+      end
+      
+      def activities
+        @context.activities
+      end
+      
+      def events
+        @context.events
+      end
+      
+      def tasks
+        @context.tasks
+      end
+      
+      def task_queues
+        @context.task_queues
+      end
+      
+      def workers
+        @context.workers
+      end
+      
+      def workflows
+        @context.workflows
+      end
+      
+      def statistics
+        @context.statistics
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Taskrouter.V1.WorkspaceInstance #{context}>"
       end
     end
   end

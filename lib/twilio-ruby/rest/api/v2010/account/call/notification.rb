@@ -10,41 +10,40 @@ module Twilio
       ##
       # Initialize the NotificationList
       def initialize(version, account_sid, call_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid,
-            call_sid: call_sid
+            'account_sid' => account_sid,
+            'call_sid' => call_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/Notifications.json"
       end
       
       ##
       # Reads NotificationInstance records from the API as a list.
-      def read(self, log=values.unset, message_date_before=values.unset, message_date=values.unset, message_date_after=values.unset, limit=nil, page_size=nil)
+      def read(log: nil, message_date_before: nil, message_date: nil, message_date_after: nil, limit: nil, page_size: nil)
         @version.read(
-            log,
-            message_date_before,
-            message_date,
-            message_date_after,
-            limit,
-            page_size
-        ))
+            message_date_before: nil,
+            message_date: nil,
+            message_date_after: nil,
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of NotificationInstance records from the API.
-      def page(self, log=values.unset, message_date_before=values.unset, message_date=values.unset, message_date_after=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            Log: log,
-            MessageDate<: serialize.iso8601_date(message_date_before),
-            MessageDate: serialize.iso8601_date(message_date),
-            MessageDate>: serialize.iso8601_date(message_date_after),
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(log: nil, message_date_before: nil, message_date: nil, message_date_after: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'Log' => log,
+            'MessageDate<' => serialize.iso8601_date(message_date_before),
+            'MessageDate' => serialize.iso8601_date(message_date),
+            'MessageDate>' => serialize.iso8601_date(message_date_after),
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             NotificationInstance,
@@ -65,6 +64,181 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.NotificationList>'
+      end
+    end
+  
+    class NotificationContext < InstanceContext
+      def initialize(version, account_sid, call_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'call_sid' => call_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/Notifications/#{@solution[:sid]}.json"
+      end
+      
+      ##
+      # Fetch a NotificationInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            NotificationInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Deletes the NotificationInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.NotificationContext #{context}>"
+      end
+    end
+  
+    class NotificationInstance < InstanceResource
+      def initialize(version, payload, account_sid, call_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'log' => payload['log'],
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'sid' => payload['sid'],
+            'request_method' => payload['request_method'],
+            'api_version' => payload['api_version'],
+            'uri' => payload['uri'],
+            'error_code' => payload['error_code'],
+            'call_sid' => payload['call_sid'],
+            'account_sid' => payload['account_sid'],
+            'request_url' => payload['request_url'],
+            'message_text' => payload['message_text'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'more_info' => payload['more_info'],
+            'message_date' => deserialize.rfc2822_datetime(payload['message_date']),
+            'response_headers' => payload.get('response_headers'),
+            'response_body' => payload.get('response_body'),
+            'request_variables' => payload.get('request_variables'),
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'call_sid' => call_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = NotificationContext(
+              @version,
+              @params['account_sid'],
+              @params['call_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def log
+        @properties['log']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def request_method
+        @properties['request_method']
+      end
+      
+      def message_text
+        @properties['message_text']
+      end
+      
+      def api_version
+        @properties['api_version']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      def response_body
+        @properties['response_body']
+      end
+      
+      def error_code
+        @properties['error_code']
+      end
+      
+      def call_sid
+        @properties['call_sid']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def request_url
+        @properties['request_url']
+      end
+      
+      def request_variables
+        @properties['request_variables']
+      end
+      
+      def response_headers
+        @properties['response_headers']
+      end
+      
+      def more_info
+        @properties['more_info']
+      end
+      
+      def message_date
+        @properties['message_date']
+      end
+      
+      ##
+      # Fetch a NotificationInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Deletes the NotificationInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.NotificationInstance #{context}>"
       end
     end
   end

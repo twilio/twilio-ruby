@@ -10,35 +10,34 @@ module Twilio
       ##
       # Initialize the ParticipantList
       def initialize(version, account_sid, conference_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid,
-            conference_sid: conference_sid
+            'account_sid' => account_sid,
+            'conference_sid' => conference_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Conferences/#{@solution[:conference_sid]}/Participants.json"
       end
       
       ##
       # Reads ParticipantInstance records from the API as a list.
-      def read(self, muted=values.unset, limit=nil, page_size=nil)
+      def read(muted: nil, limit: nil, page_size: nil)
         @version.read(
-            muted,
-            limit,
-            page_size
-        ))
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of ParticipantInstance records from the API.
-      def page(self, muted=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            Muted: muted,
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(muted: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'Muted' => muted,
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             ParticipantInstance,
@@ -59,6 +58,164 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.ParticipantList>'
+      end
+    end
+  
+    class ParticipantContext < InstanceContext
+      def initialize(version, account_sid, conference_sid, call_sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'conference_sid' => conference_sid,
+            'call_sid' => call_sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/Conferences/#{@solution[:conference_sid]}/Participants/#{@solution[:call_sid]}.json"
+      end
+      
+      ##
+      # Fetch a ParticipantInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            ParticipantInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the ParticipantInstance
+      def update(muted)
+        data = {
+            'Muted' => muted,
+        }
+        
+        @version.update(
+            ParticipantInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Deletes the ParticipantInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.ParticipantContext #{context}>"
+      end
+    end
+  
+    class ParticipantInstance < InstanceResource
+      def initialize(version, payload, account_sid, conference_sid, call_sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'call_sid' => payload['call_sid'],
+            'conference_sid' => payload['conference_sid'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'end_conference_on_exit' => payload['end_conference_on_exit'],
+            'muted' => payload['muted'],
+            'start_conference_on_enter' => payload['start_conference_on_enter'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'conference_sid' => conference_sid,
+            'call_sid' => call_sid || @properties['call_sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = ParticipantContext(
+              @version,
+              @params['account_sid'],
+              @params['conference_sid'],
+              @params['call_sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def call_sid
+        @properties['call_sid']
+      end
+      
+      def conference_sid
+        @properties['conference_sid']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def end_conference_on_exit
+        @properties['end_conference_on_exit']
+      end
+      
+      def muted
+        @properties['muted']
+      end
+      
+      def start_conference_on_enter
+        @properties['start_conference_on_enter']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a ParticipantInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the ParticipantInstance
+      def update(muted)
+        @context.update()
+      end
+      
+      ##
+      # Deletes the ParticipantInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.ParticipantInstance #{context}>"
       end
     end
   end

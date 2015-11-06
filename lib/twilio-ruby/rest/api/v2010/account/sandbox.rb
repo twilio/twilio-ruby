@@ -10,11 +10,11 @@ module Twilio
       ##
       # Initialize the SandboxList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
       end
       
@@ -28,6 +28,182 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.SandboxList>'
+      end
+    end
+  
+    class SandboxContext < InstanceContext
+      def initialize(version, account_sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/Sandbox.json"
+      end
+      
+      ##
+      # Fetch a SandboxInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            SandboxInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the SandboxInstance
+      def update(voice_url: nil, voice_method: nil, sms_url: nil, sms_method: nil, status_callback: nil, status_callback_method: nil)
+        data = {
+            'VoiceUrl' => voice_url,
+            'VoiceMethod' => voice_method,
+            'SmsUrl' => sms_url,
+            'SmsMethod' => sms_method,
+            'StatusCallback' => status_callback,
+            'StatusCallbackMethod' => status_callback_method,
+        }
+        
+        @version.update(
+            SandboxInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.SandboxContext #{context}>"
+      end
+    end
+  
+    class SandboxInstance < InstanceResource
+      def initialize(version, payload, account_sid)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'pin' => deserialize.integer(payload['pin']),
+            'account_sid' => payload['account_sid'],
+            'phone_number' => payload['phone_number'],
+            'application_sid' => payload['application_sid'],
+            'api_version' => payload['api_version'],
+            'voice_url' => payload['voice_url'],
+            'voice_method' => payload['voice_method'],
+            'sms_url' => payload['sms_url'],
+            'sms_method' => payload['sms_method'],
+            'status_callback' => payload['status_callback'],
+            'status_callback_method' => payload['status_callback_method'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = SandboxContext(
+              @version,
+              @params['account_sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def pin
+        @properties['pin']
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def phone_number
+        @properties['phone_number']
+      end
+      
+      def application_sid
+        @properties['application_sid']
+      end
+      
+      def api_version
+        @properties['api_version']
+      end
+      
+      def voice_url
+        @properties['voice_url']
+      end
+      
+      def voice_method
+        @properties['voice_method']
+      end
+      
+      def sms_url
+        @properties['sms_url']
+      end
+      
+      def sms_method
+        @properties['sms_method']
+      end
+      
+      def status_callback
+        @properties['status_callback']
+      end
+      
+      def status_callback_method
+        @properties['status_callback_method']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a SandboxInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the SandboxInstance
+      def update(voice_url: nil, voice_method: nil, sms_url: nil, sms_method: nil, status_callback: nil, status_callback_method: nil)
+        @context.update(
+            voice_method: nil,
+            sms_url: nil,
+            sms_method: nil,
+            status_callback: nil,
+            status_callback_method: nil,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.SandboxInstance #{context}>"
       end
     end
   end

@@ -10,33 +10,32 @@ module Twilio
       ##
       # Initialize the DependentPhoneNumberList
       def initialize(version, account_sid, address_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid,
-            address_sid: address_sid
+            'account_sid' => account_sid,
+            'address_sid' => address_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Addresses/#{@solution[:address_sid]}/DependentPhoneNumbers.json"
       end
       
       ##
       # Reads DependentPhoneNumberInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of DependentPhoneNumberInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             DependentPhoneNumberInstance,
@@ -51,6 +50,77 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.DependentPhoneNumberList>'
+      end
+    end
+  
+    class DependentPhoneNumberInstance < InstanceResource
+      def initialize(version, payload)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'friendly_name' => payload['friendly_name'],
+            'phone_number' => payload['phone_number'],
+            'lata' => payload['lata'],
+            'rate_center' => payload['rate_center'],
+            'latitude' => deserialize.decimal(payload['latitude']),
+            'longitude' => deserialize.decimal(payload['longitude']),
+            'region' => payload['region'],
+            'postal_code' => payload['postal_code'],
+            'iso_country' => payload['iso_country'],
+            'address_requirements' => payload['address_requirements'],
+            'capabilities' => payload['capabilities'],
+        }
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def phone_number
+        @properties['phone_number']
+      end
+      
+      def lata
+        @properties['lata']
+      end
+      
+      def rate_center
+        @properties['rate_center']
+      end
+      
+      def latitude
+        @properties['latitude']
+      end
+      
+      def longitude
+        @properties['longitude']
+      end
+      
+      def region
+        @properties['region']
+      end
+      
+      def postal_code
+        @properties['postal_code']
+      end
+      
+      def iso_country
+        @properties['iso_country']
+      end
+      
+      def address_requirements
+        @properties['address_requirements']
+      end
+      
+      def capabilities
+        @properties['capabilities']
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        "<Twilio.Api.V2010.DependentPhoneNumberInstance>"
       end
     end
   end

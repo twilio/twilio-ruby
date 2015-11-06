@@ -10,36 +10,35 @@ module Twilio
       ##
       # Initialize the ShortCodeList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/SMS/ShortCodes"
       end
       
       ##
       # Reads ShortCodeInstance records from the API as a list.
-      def read(self, friendly_name=values.unset, short_code=values.unset, limit=nil, page_size=nil)
+      def read(friendly_name: nil, short_code: nil, limit: nil, page_size: nil)
         @version.read(
-            friendly_name,
-            short_code,
-            limit,
-            page_size
-        ))
+            short_code: nil,
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of ShortCodeInstance records from the API.
-      def page(self, friendly_name=values.unset, short_code=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            FriendlyName: friendly_name,
-            ShortCode: short_code,
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(friendly_name: nil, short_code: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'FriendlyName' => friendly_name,
+            'ShortCode' => short_code,
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             ShortCodeInstance,
@@ -60,6 +59,175 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.ShortCodeList>'
+      end
+    end
+  
+    class ShortCodeContext < InstanceContext
+      def initialize(version, account_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/SMS/ShortCodes/#{@solution[:sid]}.json"
+      end
+      
+      ##
+      # Fetch a ShortCodeInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            ShortCodeInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the ShortCodeInstance
+      def update(friendly_name: nil, api_version: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil)
+        data = {
+            'FriendlyName' => friendly_name,
+            'ApiVersion' => api_version,
+            'SmsUrl' => sms_url,
+            'SmsMethod' => sms_method,
+            'SmsFallbackUrl' => sms_fallback_url,
+            'SmsFallbackMethod' => sms_fallback_method,
+        }
+        
+        @version.update(
+            ShortCodeInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.ShortCodeContext #{context}>"
+      end
+    end
+  
+    class ShortCodeInstance < InstanceResource
+      def initialize(version, payload, account_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'api_version' => payload['api_version'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'friendly_name' => payload['friendly_name'],
+            'short_code' => payload['short_code'],
+            'sid' => payload['sid'],
+            'sms_fallback_method' => payload['sms_fallback_method'],
+            'sms_fallback_url' => payload['sms_fallback_url'],
+            'sms_method' => payload['sms_method'],
+            'sms_url' => payload['sms_url'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = ShortCodeContext(
+              @version,
+              @params['account_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def api_version
+        @properties['api_version']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def short_code
+        @properties['short_code']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def sms_fallback_method
+        @properties['sms_fallback_method']
+      end
+      
+      def sms_fallback_url
+        @properties['sms_fallback_url']
+      end
+      
+      def sms_method
+        @properties['sms_method']
+      end
+      
+      def sms_url
+        @properties['sms_url']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a ShortCodeInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the ShortCodeInstance
+      def update(friendly_name: nil, api_version: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil)
+        @context.update(
+            api_version: nil,
+            sms_url: nil,
+            sms_method: nil,
+            sms_fallback_url: nil,
+            sms_fallback_method: nil,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.ShortCodeInstance #{context}>"
       end
     end
   end

@@ -10,49 +10,48 @@ module Twilio
       ##
       # Initialize the WorkerList
       def initialize(version, workspace_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            workspace_sid: workspace_sid
+            'workspace_sid' => workspace_sid
         }
         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers"
         
         # Components
-        @statistics = None
+        @statistics = nil
       end
       
       ##
       # Reads WorkerInstance records from the API as a list.
-      def read(self, activity_name=values.unset, activity_sid=values.unset, available=values.unset, friendly_name=values.unset, target_workers_expression=values.unset, task_queue_name=values.unset, task_queue_sid=values.unset, limit=nil, page_size=nil)
+      def read(activity_name: nil, activity_sid: nil, available: nil, friendly_name: nil, target_workers_expression: nil, task_queue_name: nil, task_queue_sid: nil, limit: nil, page_size: nil)
         @version.read(
-            activity_name,
-            activity_sid,
-            available,
-            friendly_name,
-            target_workers_expression,
-            task_queue_name,
-            task_queue_sid,
-            limit,
-            page_size
-        ))
+            activity_sid: nil,
+            available: nil,
+            friendly_name: nil,
+            target_workers_expression: nil,
+            task_queue_name: nil,
+            task_queue_sid: nil,
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of WorkerInstance records from the API.
-      def page(self, activity_name=values.unset, activity_sid=values.unset, available=values.unset, friendly_name=values.unset, target_workers_expression=values.unset, task_queue_name=values.unset, task_queue_sid=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            ActivityName: activity_name,
-            ActivitySid: activity_sid,
-            Available: available,
-            FriendlyName: friendly_name,
-            TargetWorkersExpression: target_workers_expression,
-            TaskQueueName: task_queue_name,
-            TaskQueueSid: task_queue_sid,
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(activity_name: nil, activity_sid: nil, available: nil, friendly_name: nil, target_workers_expression: nil, task_queue_name: nil, task_queue_sid: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'ActivityName' => activity_name,
+            'ActivitySid' => activity_sid,
+            'Available' => available,
+            'FriendlyName' => friendly_name,
+            'TargetWorkersExpression' => target_workers_expression,
+            'TaskQueueName' => task_queue_name,
+            'TaskQueueSid' => task_queue_sid,
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             WorkerInstance,
@@ -65,19 +64,19 @@ module Twilio
       
       ##
       # Create a new WorkerInstance
-      def create(self, friendly_name, activity_sid=values.unset, attributes=values.unset)
-        data = values.of({
-            FriendlyName: friendly_name,
-            ActivitySid: activity_sid,
-            Attributes: attributes,
-        })
+      def create(friendly_name, activity_sid: nil, attributes: nil)
+        data = {
+            'FriendlyName' => friendly_name,
+            'ActivitySid' => activity_sid,
+            'Attributes' => attributes,
+        }
         
         @version.create(
             WorkerInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
@@ -85,7 +84,7 @@ module Twilio
       ##
       # Access the statistics
       def statistics
-        @statistics ||= WorkersStatisticsList(@version, @solution)
+        @statistics ||= WorkersStatisticsList.new(@version, @solution)
       end
       
       ##
@@ -98,6 +97,194 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Taskrouter.V1.WorkerList>'
+      end
+    end
+  
+    class WorkerContext < InstanceContext
+      def initialize(version, workspace_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'workspace_sid' => workspace_sid,
+            'sid' => sid,
+        }
+        @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers/#{@solution[:sid]}"
+        
+        # Dependents
+        @statistics = nil
+      end
+      
+      ##
+      # Fetch a WorkerInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            WorkerInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the WorkerInstance
+      def update(activity_sid: nil, attributes: nil, friendly_name: nil)
+        data = {
+            'ActivitySid' => activity_sid,
+            'Attributes' => attributes,
+            'FriendlyName' => friendly_name,
+        }
+        
+        @version.update(
+            WorkerInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Deletes the WorkerInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      def statistics
+        unless @statistics
+          @statistics = WorkerStatisticsList.new(
+              @version,
+              workspace_sid: @solution[:workspace_sid],
+              worker_sid: @solution[:sid],
+          )
+        end
+        @statistics
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Taskrouter.V1.WorkerContext #{context}>"
+      end
+    end
+  
+    class WorkerInstance < InstanceResource
+      def initialize(version, payload, workspace_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'activity_name' => payload['activity_name'],
+            'activity_sid' => payload['activity_sid'],
+            'attributes' => payload['attributes'],
+            'available' => payload['available'],
+            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
+            'date_status_changed' => deserialize.iso8601_datetime(payload['date_status_changed']),
+            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
+            'friendly_name' => payload['friendly_name'],
+            'sid' => payload['sid'],
+            'workspace_sid' => payload['workspace_sid'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'workspace_sid' => workspace_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = WorkerContext(
+              @version,
+              @params['workspace_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def activity_name
+        @properties['activity_name']
+      end
+      
+      def activity_sid
+        @properties['activity_sid']
+      end
+      
+      def attributes
+        @properties['attributes']
+      end
+      
+      def available
+        @properties['available']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_status_changed
+        @properties['date_status_changed']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def workspace_sid
+        @properties['workspace_sid']
+      end
+      
+      ##
+      # Fetch a WorkerInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the WorkerInstance
+      def update(activity_sid: nil, attributes: nil, friendly_name: nil)
+        @context.update(
+            attributes: nil,
+            friendly_name: nil,
+        )
+      end
+      
+      ##
+      # Deletes the WorkerInstance
+      def delete
+        @context.delete()
+      end
+      
+      def statistics
+        @context.statistics
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Taskrouter.V1.WorkerInstance #{context}>"
       end
     end
   end

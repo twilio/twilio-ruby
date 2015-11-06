@@ -10,49 +10,48 @@ module Twilio
       ##
       # Initialize the PhoneNumberList
       def initialize(version, trunk_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            trunk_sid: trunk_sid
+            'trunk_sid' => trunk_sid
         }
         @uri = "/Trunks/#{@solution[:trunk_sid]}/PhoneNumbers"
       end
       
       ##
       # Create a new PhoneNumberInstance
-      def create(self, phone_number_sid)
-        data = values.of({
-            PhoneNumberSid: phone_number_sid,
-        })
+      def create(phone_number_sid)
+        data = {
+            'PhoneNumberSid' => phone_number_sid,
+        }
         
         @version.create(
             PhoneNumberInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
       
       ##
       # Reads PhoneNumberInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of PhoneNumberInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             PhoneNumberInstance,
@@ -73,6 +72,223 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Trunking.V1.PhoneNumberList>'
+      end
+    end
+  
+    class PhoneNumberContext < InstanceContext
+      def initialize(version, trunk_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'trunk_sid' => trunk_sid,
+            'sid' => sid,
+        }
+        @uri = "/Trunks/#{@solution[:trunk_sid]}/PhoneNumbers/#{@solution[:sid]}"
+      end
+      
+      ##
+      # Fetch a PhoneNumberInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            PhoneNumberInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Deletes the PhoneNumberInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Trunking.V1.PhoneNumberContext #{context}>"
+      end
+    end
+  
+    class PhoneNumberInstance < InstanceResource
+      def initialize(version, payload, trunk_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'address_requirements' => payload['address_requirements'],
+            'api_version' => payload['api_version'],
+            'beta' => payload['beta'],
+            'capabilities' => payload['capabilities'],
+            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
+            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
+            'friendly_name' => payload['friendly_name'],
+            'links' => payload['links'],
+            'phone_number' => payload['phone_number'],
+            'sid' => payload['sid'],
+            'sms_application_sid' => payload['sms_application_sid'],
+            'sms_fallback_method' => payload['sms_fallback_method'],
+            'sms_fallback_url' => payload['sms_fallback_url'],
+            'sms_method' => payload['sms_method'],
+            'sms_url' => payload['sms_url'],
+            'status_callback' => payload['status_callback'],
+            'status_callback_method' => payload['status_callback_method'],
+            'trunk_sid' => payload['trunk_sid'],
+            'url' => payload['url'],
+            'voice_application_sid' => payload['voice_application_sid'],
+            'voice_caller_id_lookup' => payload['voice_caller_id_lookup'],
+            'voice_fallback_method' => payload['voice_fallback_method'],
+            'voice_fallback_url' => payload['voice_fallback_url'],
+            'voice_method' => payload['voice_method'],
+            'voice_url' => payload['voice_url'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'trunk_sid' => trunk_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = PhoneNumberContext(
+              @version,
+              @params['trunk_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def address_requirements
+        @properties['address_requirements']
+      end
+      
+      def api_version
+        @properties['api_version']
+      end
+      
+      def beta
+        @properties['beta']
+      end
+      
+      def capabilities
+        @properties['capabilities']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def links
+        @properties['links']
+      end
+      
+      def phone_number
+        @properties['phone_number']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def sms_application_sid
+        @properties['sms_application_sid']
+      end
+      
+      def sms_fallback_method
+        @properties['sms_fallback_method']
+      end
+      
+      def sms_fallback_url
+        @properties['sms_fallback_url']
+      end
+      
+      def sms_method
+        @properties['sms_method']
+      end
+      
+      def sms_url
+        @properties['sms_url']
+      end
+      
+      def status_callback
+        @properties['status_callback']
+      end
+      
+      def status_callback_method
+        @properties['status_callback_method']
+      end
+      
+      def trunk_sid
+        @properties['trunk_sid']
+      end
+      
+      def url
+        @properties['url']
+      end
+      
+      def voice_application_sid
+        @properties['voice_application_sid']
+      end
+      
+      def voice_caller_id_lookup
+        @properties['voice_caller_id_lookup']
+      end
+      
+      def voice_fallback_method
+        @properties['voice_fallback_method']
+      end
+      
+      def voice_fallback_url
+        @properties['voice_fallback_url']
+      end
+      
+      def voice_method
+        @properties['voice_method']
+      end
+      
+      def voice_url
+        @properties['voice_url']
+      end
+      
+      ##
+      # Fetch a PhoneNumberInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Deletes the PhoneNumberInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Trunking.V1.PhoneNumberInstance #{context}>"
       end
     end
   end

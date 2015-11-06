@@ -10,33 +10,32 @@ module Twilio
       ##
       # Initialize the CredentialList
       def initialize(version, account_sid, credential_list_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid,
-            credential_list_sid: credential_list_sid
+            'account_sid' => account_sid,
+            'credential_list_sid' => credential_list_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/SIP/CredentialLists/#{@solution[:credential_list_sid]}/Credentials.json"
       end
       
       ##
       # Reads CredentialInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of CredentialInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             CredentialInstance,
@@ -49,18 +48,18 @@ module Twilio
       
       ##
       # Create a new CredentialInstance
-      def create(self, username, password)
-        data = values.of({
-            Username: username,
-            Password: password,
-        })
+      def create(username, password)
+        data = {
+            'Username' => username,
+            'Password' => password,
+        }
         
         @version.create(
             CredentialInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
@@ -75,6 +74,157 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.CredentialList>'
+      end
+    end
+  
+    class CredentialContext < InstanceContext
+      def initialize(version, account_sid, credential_list_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'credential_list_sid' => credential_list_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/SIP/CredentialLists/#{@solution[:credential_list_sid]}/Credentials/#{@solution[:sid]}.json"
+      end
+      
+      ##
+      # Fetch a CredentialInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            CredentialInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the CredentialInstance
+      def update(username, password)
+        data = {
+            'Username' => username,
+            'Password' => password,
+        }
+        
+        @version.update(
+            CredentialInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Deletes the CredentialInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.CredentialContext #{context}>"
+      end
+    end
+  
+    class CredentialInstance < InstanceResource
+      def initialize(version, payload, account_sid, credential_list_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'sid' => payload['sid'],
+            'account_sid' => payload['account_sid'],
+            'credential_list_sid' => payload['credential_list_sid'],
+            'username' => payload['username'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'credential_list_sid' => credential_list_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = CredentialContext(
+              @version,
+              @params['account_sid'],
+              @params['credential_list_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def credential_list_sid
+        @properties['credential_list_sid']
+      end
+      
+      def username
+        @properties['username']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a CredentialInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the CredentialInstance
+      def update(username, password)
+        @context.update(
+            password,
+        )
+      end
+      
+      ##
+      # Deletes the CredentialInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.CredentialInstance #{context}>"
       end
     end
   end

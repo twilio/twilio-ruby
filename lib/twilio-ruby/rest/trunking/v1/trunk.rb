@@ -10,7 +10,7 @@ module Twilio
       ##
       # Initialize the TrunkList
       def initialize(version)
-        super
+        super(version)
         
         # Path Solution
         @solution = {}
@@ -19,43 +19,42 @@ module Twilio
       
       ##
       # Create a new TrunkInstance
-      def create(self, friendly_name=values.unset, domain_name=values.unset, disaster_recovery_url=values.unset, disaster_recovery_method=values.unset, recording=values.unset, secure=values.unset)
-        data = values.of({
-            FriendlyName: friendly_name,
-            DomainName: domain_name,
-            DisasterRecoveryUrl: disaster_recovery_url,
-            DisasterRecoveryMethod: disaster_recovery_method,
-            Recording: recording,
-            Secure: secure,
-        })
+      def create(friendly_name: nil, domain_name: nil, disaster_recovery_url: nil, disaster_recovery_method: nil, recording: nil, secure: nil)
+        data = {
+            'FriendlyName' => friendly_name,
+            'DomainName' => domain_name,
+            'DisasterRecoveryUrl' => disaster_recovery_url,
+            'DisasterRecoveryMethod' => disaster_recovery_method,
+            'Recording' => recording,
+            'Secure' => secure,
+        }
         
         @version.create(
             TrunkInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
       
       ##
       # Reads TrunkInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of TrunkInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             TrunkInstance,
@@ -76,6 +75,256 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Trunking.V1.TrunkList>'
+      end
+    end
+  
+    class TrunkContext < InstanceContext
+      def initialize(version, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'sid' => sid,
+        }
+        @uri = "/Trunks/#{@solution[:sid]}"
+        
+        # Dependents
+        @origination_urls = nil
+        @credentials_lists = nil
+        @ip_access_control_lists = nil
+        @phone_numbers = nil
+      end
+      
+      ##
+      # Fetch a TrunkInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            TrunkInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Deletes the TrunkInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Update the TrunkInstance
+      def update(friendly_name: nil, domain_name: nil, disaster_recovery_url: nil, disaster_recovery_method: nil, recording: nil, secure: nil)
+        data = {
+            'FriendlyName' => friendly_name,
+            'DomainName' => domain_name,
+            'DisasterRecoveryUrl' => disaster_recovery_url,
+            'DisasterRecoveryMethod' => disaster_recovery_method,
+            'Recording' => recording,
+            'Secure' => secure,
+        }
+        
+        @version.update(
+            TrunkInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      def origination_urls
+        unless @origination_urls
+          @origination_urls = OriginationUrlList.new(
+              @version,
+              trunk_sid: @solution[:sid],
+          )
+        end
+        @origination_urls
+      end
+      
+      def credentials_lists
+        unless @credentials_lists
+          @credentials_lists = CredentialListList.new(
+              @version,
+              trunk_sid: @solution[:sid],
+          )
+        end
+        @credentials_lists
+      end
+      
+      def ip_access_control_lists
+        unless @ip_access_control_lists
+          @ip_access_control_lists = IpAccessControlListList.new(
+              @version,
+              trunk_sid: @solution[:sid],
+          )
+        end
+        @ip_access_control_lists
+      end
+      
+      def phone_numbers
+        unless @phone_numbers
+          @phone_numbers = PhoneNumberList.new(
+              @version,
+              trunk_sid: @solution[:sid],
+          )
+        end
+        @phone_numbers
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Trunking.V1.TrunkContext #{context}>"
+      end
+    end
+  
+    class TrunkInstance < InstanceResource
+      def initialize(version, payload, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'domain_name' => payload['domain_name'],
+            'disaster_recovery_method' => payload['disaster_recovery_method'],
+            'disaster_recovery_url' => payload['disaster_recovery_url'],
+            'friendly_name' => payload['friendly_name'],
+            'secure' => payload['secure'],
+            'recording' => payload['recording'],
+            'auth_type' => payload['auth_type'],
+            'auth_type_set' => payload['auth_type_set'],
+            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
+            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
+            'sid' => payload['sid'],
+            'url' => payload['url'],
+            'links' => payload['links'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = TrunkContext(
+              @version,
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def domain_name
+        @properties['domain_name']
+      end
+      
+      def disaster_recovery_method
+        @properties['disaster_recovery_method']
+      end
+      
+      def disaster_recovery_url
+        @properties['disaster_recovery_url']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def secure
+        @properties['secure']
+      end
+      
+      def recording
+        @properties['recording']
+      end
+      
+      def auth_type
+        @properties['auth_type']
+      end
+      
+      def auth_type_set
+        @properties['auth_type_set']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def url
+        @properties['url']
+      end
+      
+      def links
+        @properties['links']
+      end
+      
+      ##
+      # Fetch a TrunkInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Deletes the TrunkInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Update the TrunkInstance
+      def update(friendly_name: nil, domain_name: nil, disaster_recovery_url: nil, disaster_recovery_method: nil, recording: nil, secure: nil)
+        @context.update(
+            domain_name: nil,
+            disaster_recovery_url: nil,
+            disaster_recovery_method: nil,
+            recording: nil,
+            secure: nil,
+        )
+      end
+      
+      def origination_urls
+        @context.origination_urls
+      end
+      
+      def credentials_lists
+        @context.credentials_lists
+      end
+      
+      def ip_access_control_lists
+        @context.ip_access_control_lists
+      end
+      
+      def phone_numbers
+        @context.phone_numbers
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Trunking.V1.TrunkInstance #{context}>"
       end
     end
   end

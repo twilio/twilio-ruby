@@ -10,38 +10,37 @@ module Twilio
       ##
       # Initialize the RecordingList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Recordings.json"
       end
       
       ##
       # Reads RecordingInstance records from the API as a list.
-      def read(self, date_created_before=values.unset, date_created=values.unset, date_created_after=values.unset, limit=nil, page_size=nil)
+      def read(date_created_before: nil, date_created: nil, date_created_after: nil, limit: nil, page_size: nil)
         @version.read(
-            date_created_before,
-            date_created,
-            date_created_after,
-            limit,
-            page_size
-        ))
+            date_created: nil,
+            date_created_after: nil,
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of RecordingInstance records from the API.
-      def page(self, date_created_before=values.unset, date_created=values.unset, date_created_after=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            DateCreated<: serialize.iso8601_date(date_created_before),
-            DateCreated: serialize.iso8601_date(date_created),
-            DateCreated>: serialize.iso8601_date(date_created_after),
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(date_created_before: nil, date_created: nil, date_created_after: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'DateCreated<' => serialize.iso8601_date(date_created_before),
+            'DateCreated' => serialize.iso8601_date(date_created),
+            'DateCreated>' => serialize.iso8601_date(date_created_after),
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             RecordingInstance,
@@ -62,6 +61,151 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.RecordingList>'
+      end
+    end
+  
+    class RecordingContext < InstanceContext
+      def initialize(version, account_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/Recordings/#{@solution[:sid]}.json"
+        
+        # Dependents
+        @transcriptions = nil
+      end
+      
+      ##
+      # Fetch a RecordingInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            RecordingInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Deletes the RecordingInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      def transcriptions
+        unless @transcriptions
+          @transcriptions = TranscriptionList.new(
+              @version,
+              account_sid: @solution[:account_sid],
+              recording_sid: @solution[:sid],
+          )
+        end
+        @transcriptions
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.RecordingContext #{context}>"
+      end
+    end
+  
+    class RecordingInstance < InstanceResource
+      def initialize(version, payload, account_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'api_version' => payload['api_version'],
+            'call_sid' => payload['call_sid'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'duration' => payload['duration'],
+            'sid' => payload['sid'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = RecordingContext(
+              @version,
+              @params['account_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def api_version
+        @properties['api_version']
+      end
+      
+      def call_sid
+        @properties['call_sid']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def duration
+        @properties['duration']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a RecordingInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Deletes the RecordingInstance
+      def delete
+        @context.delete()
+      end
+      
+      def transcriptions
+        @context.transcriptions
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.RecordingInstance #{context}>"
       end
     end
   end

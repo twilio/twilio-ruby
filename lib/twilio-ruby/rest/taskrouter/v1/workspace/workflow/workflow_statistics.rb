@@ -10,12 +10,12 @@ module Twilio
       ##
       # Initialize the WorkflowStatisticsList
       def initialize(version, workspace_sid, workflow_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            workspace_sid: workspace_sid,
-            workflow_sid: workflow_sid
+            'workspace_sid' => workspace_sid,
+            'workflow_sid' => workflow_sid
         }
       end
       
@@ -29,6 +29,113 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Taskrouter.V1.WorkflowStatisticsList>'
+      end
+    end
+  
+    class WorkflowStatisticsContext < InstanceContext
+      def initialize(version, workspace_sid, workflow_sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'workspace_sid' => workspace_sid,
+            'workflow_sid' => workflow_sid,
+        }
+        @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workflows/#{@solution[:workflow_sid]}/Statistics"
+      end
+      
+      ##
+      # Fetch a WorkflowStatisticsInstance
+      def fetch(minutes: nil, start_date: nil, end_date: nil)
+        params = {
+            'Minutes' => minutes,
+            'StartDate' => serialize.iso8601_datetime(start_date),
+            'EndDate' => serialize.iso8601_datetime(end_date),
+        }
+        
+        @version.fetch(
+            WorkflowStatisticsInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Taskrouter.V1.WorkflowStatisticsContext #{context}>"
+      end
+    end
+  
+    class WorkflowStatisticsInstance < InstanceResource
+      def initialize(version, payload, workspace_sid, workflow_sid)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'cumulative' => payload['cumulative'],
+            'realtime' => payload['realtime'],
+            'workflow_sid' => payload['workflow_sid'],
+            'workspace_sid' => payload['workspace_sid'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'workspace_sid' => workspace_sid,
+            'workflow_sid' => workflow_sid,
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = WorkflowStatisticsContext(
+              @version,
+              @params['workspace_sid'],
+              @params['workflow_sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def cumulative
+        @properties['cumulative']
+      end
+      
+      def realtime
+        @properties['realtime']
+      end
+      
+      def workflow_sid
+        @properties['workflow_sid']
+      end
+      
+      def workspace_sid
+        @properties['workspace_sid']
+      end
+      
+      ##
+      # Fetch a WorkflowStatisticsInstance
+      def fetch(minutes: nil, start_date: nil, end_date: nil)
+        @context.fetch(
+            start_date: nil,
+            end_date: nil,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Taskrouter.V1.WorkflowStatisticsInstance #{context}>"
       end
     end
   end

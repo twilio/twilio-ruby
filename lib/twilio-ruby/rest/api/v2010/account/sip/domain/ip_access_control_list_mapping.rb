@@ -10,50 +10,49 @@ module Twilio
       ##
       # Initialize the IpAccessControlListMappingList
       def initialize(version, account_sid, domain_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid,
-            domain_sid: domain_sid
+            'account_sid' => account_sid,
+            'domain_sid' => domain_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:domain_sid]}/IpAccessControlListMappings.json"
       end
       
       ##
       # Create a new IpAccessControlListMappingInstance
-      def create(self, ip_access_control_list_sid)
-        data = values.of({
-            IpAccessControlListSid: ip_access_control_list_sid,
-        })
+      def create(ip_access_control_list_sid)
+        data = {
+            'IpAccessControlListSid' => ip_access_control_list_sid,
+        }
         
         @version.create(
             IpAccessControlListMappingInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
       
       ##
       # Reads IpAccessControlListMappingInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of IpAccessControlListMappingInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             IpAccessControlListMappingInstance,
@@ -74,6 +73,126 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.IpAccessControlListMappingList>'
+      end
+    end
+  
+    class IpAccessControlListMappingContext < InstanceContext
+      def initialize(version, account_sid, domain_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'domain_sid' => domain_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:domain_sid]}/IpAccessControlListMappings/#{@solution[:sid]}.json"
+      end
+      
+      ##
+      # Fetch a IpAccessControlListMappingInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            IpAccessControlListMappingInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Deletes the IpAccessControlListMappingInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.IpAccessControlListMappingContext #{context}>"
+      end
+    end
+  
+    class IpAccessControlListMappingInstance < InstanceResource
+      def initialize(version, payload, account_sid, domain_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'friendly_name' => payload['friendly_name'],
+            'sid' => payload['sid'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'domain_sid' => domain_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = IpAccessControlListMappingContext(
+              @version,
+              @params['account_sid'],
+              @params['domain_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def friendly_name
+        @properties['friendly_name']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Fetch a IpAccessControlListMappingInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Deletes the IpAccessControlListMappingInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.IpAccessControlListMappingInstance #{context}>"
       end
     end
   end

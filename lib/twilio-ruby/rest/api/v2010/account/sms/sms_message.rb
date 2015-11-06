@@ -10,64 +10,63 @@ module Twilio
       ##
       # Initialize the SmsMessageList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/SMS/Messages.json"
       end
       
       ##
       # Create a new SmsMessageInstance
-      def create(self, to, from, status_callback=values.unset, application_sid=values.unset, body=values.unset, media_url=values.unset)
-        data = values.of({
-            To: to,
-            From: from,
-            Body: body,
-            MediaUrl: media_url,
-            StatusCallback: status_callback,
-            ApplicationSid: application_sid,
-        })
+      def create(to, from, status_callback: nil, application_sid: nil, body: nil, media_url: nil)
+        data = {
+            'To' => to,
+            'From' => from,
+            'Body' => body,
+            'MediaUrl' => media_url,
+            'StatusCallback' => status_callback,
+            'ApplicationSid' => application_sid,
+        }
         
         @version.create(
             SmsMessageInstance,
             @solution,
             'POST',
             @uri,
-            {}
+            {},
             data
         )
       end
       
       ##
       # Reads SmsMessageInstance records from the API as a list.
-      def read(self, to=values.unset, from=values.unset, date_sent_before=values.unset, date_sent=values.unset, date_sent_after=values.unset, limit=nil, page_size=nil)
+      def read(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, limit: nil, page_size: nil)
         @version.read(
-            to,
-            from,
-            date_sent_before,
-            date_sent,
-            date_sent_after,
-            limit,
-            page_size
-        ))
+            from: nil,
+            date_sent_before: nil,
+            date_sent: nil,
+            date_sent_after: nil,
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of SmsMessageInstance records from the API.
-      def page(self, to=values.unset, from=values.unset, date_sent_before=values.unset, date_sent=values.unset, date_sent_after=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            To: to,
-            From: from,
-            DateSent<: serialize.iso8601_date(date_sent_before),
-            DateSent: serialize.iso8601_date(date_sent),
-            DateSent>: serialize.iso8601_date(date_sent_after),
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'To' => to,
+            'From' => from,
+            'DateSent<' => serialize.iso8601_date(date_sent_before),
+            'DateSent' => serialize.iso8601_date(date_sent),
+            'DateSent>' => serialize.iso8601_date(date_sent_after),
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             SmsMessageInstance,
@@ -88,6 +87,186 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.SmsMessageList>'
+      end
+    end
+  
+    class SmsMessageContext < InstanceContext
+      def initialize(version, account_sid, sid)
+        super(version)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'sid' => sid,
+        }
+        @uri = "/Accounts/#{@solution[:account_sid]}/SMS/Messages/#{@solution[:sid]}.json"
+      end
+      
+      ##
+      # Deletes the SmsMessageInstance
+      def delete
+        return @version.delete('delete', @uri)
+      end
+      
+      ##
+      # Fetch a SmsMessageInstance
+      def fetch
+        params = {}
+        
+        @version.fetch(
+            SmsMessageInstance,
+            @solution,
+            'GET',
+            @uri,
+            params,
+        )
+      end
+      
+      ##
+      # Update the SmsMessageInstance
+      def update(body: nil)
+        data = {
+            'Body' => body,
+        }
+        
+        @version.update(
+            SmsMessageInstance,
+            @solution,
+            'POST',
+            @uri,
+            {},
+            data=data,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+        "#<Twilio.Api.V2010.SmsMessageContext #{context}>"
+      end
+    end
+  
+    class SmsMessageInstance < InstanceResource
+      def initialize(version, payload, account_sid, sid: nil)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'api_version' => payload['api_version'],
+            'body' => payload['body'],
+            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
+            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_sent' => deserialize.rfc2822_datetime(payload['date_sent']),
+            'direction' => payload['direction'],
+            'from' => payload['from'],
+            'price' => deserialize.decimal(payload['price']),
+            'price_unit' => payload['price_unit'],
+            'sid' => payload['sid'],
+            'status' => payload['status'],
+            'to' => payload['to'],
+            'uri' => payload['uri'],
+        }
+        
+        # Context
+        @instance_context = nil
+        @params = {
+            'account_sid' => account_sid,
+            'sid' => sid || @properties['sid'],
+        }
+      end
+      
+      def _context
+        unless @instance_context
+          @instance_context = SmsMessageContext(
+              @version,
+              @params['account_sid'],
+              @params['sid'],
+          )
+        end
+        @instance_context
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def api_version
+        @properties['api_version']
+      end
+      
+      def body
+        @properties['body']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def date_sent
+        @properties['date_sent']
+      end
+      
+      def direction
+        @properties['direction']
+      end
+      
+      def from
+        @properties['from']
+      end
+      
+      def price
+        @properties['price']
+      end
+      
+      def price_unit
+        @properties['price_unit']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def status
+        @properties['status']
+      end
+      
+      def to
+        @properties['to']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      ##
+      # Deletes the SmsMessageInstance
+      def delete
+        @context.delete()
+      end
+      
+      ##
+      # Fetch a SmsMessageInstance
+      def fetch
+        @context.fetch()
+      end
+      
+      ##
+      # Update the SmsMessageInstance
+      def update(body: nil)
+        @context.update()
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+        "<Twilio.Api.V2010.SmsMessageInstance #{context}>"
       end
     end
   end

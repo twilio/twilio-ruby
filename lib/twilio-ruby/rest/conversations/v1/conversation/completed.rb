@@ -10,7 +10,7 @@ module Twilio
       ##
       # Initialize the CompletedList
       def initialize(version)
-        super
+        super(version)
         
         # Path Solution
         @solution = {}
@@ -19,21 +19,20 @@ module Twilio
       
       ##
       # Reads CompletedInstance records from the API as a list.
-      def read(self, limit=nil, page_size=nil)
+      def read(limit: nil, page_size: nil)
         @version.read(
-            limit,
-            page_size
-        ))
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of CompletedInstance records from the API.
-      def page(self, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             CompletedInstance,
@@ -48,6 +47,66 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Conversations.V1.CompletedList>'
+      end
+    end
+  
+    class CompletedInstance < InstanceResource
+      def initialize(version, payload)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'sid' => payload['sid'],
+            'status' => payload['status'],
+            'duration' => deserialize.integer(payload['duration']),
+            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
+            'start_time' => deserialize.iso8601_datetime(payload['start_time']),
+            'end_time' => deserialize.iso8601_datetime(payload['end_time']),
+            'account_sid' => payload['account_sid'],
+            'url' => payload['url'],
+        }
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
+      def status
+        @properties['status']
+      end
+      
+      def duration
+        @properties['duration']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def start_time
+        @properties['start_time']
+      end
+      
+      def end_time
+        @properties['end_time']
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def url
+        @properties['url']
+      end
+      
+      def participants
+        @context.participants
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        "<Twilio.Conversations.V1.CompletedInstance>"
       end
     end
   end

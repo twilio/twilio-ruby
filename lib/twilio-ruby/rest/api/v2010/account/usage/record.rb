@@ -10,56 +10,55 @@ module Twilio
       ##
       # Initialize the RecordList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Usage/Records"
         
         # Components
-        @all_time = None
-        @daily = None
-        @last_month = None
-        @monthly = None
-        @this_month = None
-        @today = None
-        @yearly = None
-        @yesterday = None
+        @all_time = nil
+        @daily = nil
+        @last_month = nil
+        @monthly = nil
+        @this_month = nil
+        @today = nil
+        @yearly = nil
+        @yesterday = nil
       end
       
       ##
       # Reads RecordInstance records from the API as a list.
-      def read(self, category=values.unset, start_date_before=values.unset, start_date=values.unset, start_date_after=values.unset, end_date_before=values.unset, end_date=values.unset, end_date_after=values.unset, limit=nil, page_size=nil)
+      def read(category: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, limit: nil, page_size: nil)
         @version.read(
-            category,
-            start_date_before,
-            start_date,
-            start_date_after,
-            end_date_before,
-            end_date,
-            end_date_after,
-            limit,
-            page_size
-        ))
+            start_date_before: nil,
+            start_date: nil,
+            start_date_after: nil,
+            end_date_before: nil,
+            end_date: nil,
+            end_date_after: nil,
+            limit: nil,
+            page_size: nil
+        )
       end
       
       ##
       # Retrieve a single page of RecordInstance records from the API.
-      def page(self, category=values.unset, start_date_before=values.unset, start_date=values.unset, start_date_after=values.unset, end_date_before=values.unset, end_date=values.unset, end_date_after=values.unset, page_token=None, page_number=None, page_size=None)
-        params = values.of({
-            Category: category,
-            StartDate<: serialize.iso8601_date(start_date_before),
-            StartDate: serialize.iso8601_date(start_date),
-            StartDate>: serialize.iso8601_date(start_date_after),
-            EndDate<: serialize.iso8601_date(end_date_before),
-            EndDate: serialize.iso8601_date(end_date),
-            EndDate>: serialize.iso8601_date(end_date_after),
-            PageToken: page_token,
-            Page: page_number,
-            PageSize: page_size,
-        })
+      def page(category: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, page_token: nil, page_number: nil, page_size: nil)
+        params = {
+            'Category' => category,
+            'StartDate<' => serialize.iso8601_date(start_date_before),
+            'StartDate' => serialize.iso8601_date(start_date),
+            'StartDate>' => serialize.iso8601_date(start_date_after),
+            'EndDate<' => serialize.iso8601_date(end_date_before),
+            'EndDate' => serialize.iso8601_date(end_date),
+            'EndDate>' => serialize.iso8601_date(end_date_after),
+            'PageToken' => page_token,
+            'Page' => page_number,
+            'PageSize' => page_size,
+        }
         @version.page(
             self,
             RecordInstance,
@@ -73,55 +72,141 @@ module Twilio
       ##
       # Access the all_time
       def all_time
-        @all_time ||= AllTimeList(@version, @solution)
+        @all_time ||= AllTimeList.new(@version, @solution)
       end
       
       ##
       # Access the daily
       def daily
-        @daily ||= DailyList(@version, @solution)
+        @daily ||= DailyList.new(@version, @solution)
       end
       
       ##
       # Access the last_month
       def last_month
-        @last_month ||= LastMonthList(@version, @solution)
+        @last_month ||= LastMonthList.new(@version, @solution)
       end
       
       ##
       # Access the monthly
       def monthly
-        @monthly ||= MonthlyList(@version, @solution)
+        @monthly ||= MonthlyList.new(@version, @solution)
       end
       
       ##
       # Access the this_month
       def this_month
-        @this_month ||= ThisMonthList(@version, @solution)
+        @this_month ||= ThisMonthList.new(@version, @solution)
       end
       
       ##
       # Access the today
       def today
-        @today ||= TodayList(@version, @solution)
+        @today ||= TodayList.new(@version, @solution)
       end
       
       ##
       # Access the yearly
       def yearly
-        @yearly ||= YearlyList(@version, @solution)
+        @yearly ||= YearlyList.new(@version, @solution)
       end
       
       ##
       # Access the yesterday
       def yesterday
-        @yesterday ||= YesterdayList(@version, @solution)
+        @yesterday ||= YesterdayList.new(@version, @solution)
       end
       
       ##
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.RecordList>'
+      end
+    end
+  
+    class RecordInstance < InstanceResource
+      def initialize(version, payload)
+        super(version)
+        
+        # Marshaled Properties
+        @properties = {
+            'account_sid' => payload['account_sid'],
+            'api_version' => payload['api_version'],
+            'category' => payload['category'],
+            'count' => payload['count'],
+            'count_unit' => payload['count_unit'],
+            'description' => payload['description'],
+            'end_date' => deserialize.rfc2822_datetime(payload['end_date']),
+            'price' => deserialize.decimal(payload['price']),
+            'price_unit' => payload['price_unit'],
+            'start_date' => deserialize.rfc2822_datetime(payload['start_date']),
+            'subresource_uris' => payload['subresource_uris'],
+            'uri' => payload['uri'],
+            'usage' => payload['usage'],
+            'usage_unit' => payload['usage_unit'],
+        }
+      end
+      
+      def account_sid
+        @properties['account_sid']
+      end
+      
+      def api_version
+        @properties['api_version']
+      end
+      
+      def category
+        @properties['category']
+      end
+      
+      def count
+        @properties['count']
+      end
+      
+      def count_unit
+        @properties['count_unit']
+      end
+      
+      def description
+        @properties['description']
+      end
+      
+      def end_date
+        @properties['end_date']
+      end
+      
+      def price
+        @properties['price']
+      end
+      
+      def price_unit
+        @properties['price_unit']
+      end
+      
+      def start_date
+        @properties['start_date']
+      end
+      
+      def subresource_uris
+        @properties['subresource_uris']
+      end
+      
+      def uri
+        @properties['uri']
+      end
+      
+      def usage
+        @properties['usage']
+      end
+      
+      def usage_unit
+        @properties['usage_unit']
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        "<Twilio.Api.V2010.RecordInstance>"
       end
     end
   end

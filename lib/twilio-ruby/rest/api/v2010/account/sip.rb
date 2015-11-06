@@ -10,41 +10,53 @@ module Twilio
       ##
       # Initialize the SipList
       def initialize(version, account_sid)
-        super
+        super(version)
         
         # Path Solution
         @solution = {
-            account_sid: account_sid
+            'account_sid' => account_sid
         }
         
         # Components
-        @domains = None
-        @ip_access_control_lists = None
-        @credential_lists = None
+        @domains = nil
+        @ip_access_control_lists = nil
+        @credential_lists = nil
       end
       
       ##
       # Access the domains
       def domains
-        @domains ||= DomainList(@version, @solution)
+        @domains ||= DomainList.new(@version, @solution)
       end
       
       ##
       # Access the ip_access_control_lists
       def ip_access_control_lists
-        @ip_access_control_lists ||= IpAccessControlListList(@version, @solution)
+        @ip_access_control_lists ||= IpAccessControlListList.new(@version, @solution)
       end
       
       ##
       # Access the credential_lists
       def credential_lists
-        @credential_lists ||= CredentialListList(@version, @solution)
+        @credential_lists ||= CredentialListList.new(@version, @solution)
       end
       
       ##
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.SipList>'
+      end
+    end
+  
+    class SipInstance < InstanceResource
+      def initialize(version, payload)
+        super(version)
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        "<Twilio.Api.V2010.SipInstance>"
       end
     end
   end
