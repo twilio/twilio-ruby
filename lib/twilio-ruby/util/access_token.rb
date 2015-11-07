@@ -17,7 +17,7 @@ module Twilio
       def to_jwt(algorithm='HS256')
         now = Time.now.to_i - 1
         headers = {
-            'cty' => 'twilio-sat;v=2',
+            'cty' => 'twilio-fpa;v=1',
             'typ' => 'JWT'
         }
 
