@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Twilio::Util::AccessToken do
 
   it 'should generate a token for no grants' do
-    scat = Twilio::Util::AccessToken.new 'SK123', 'AC123', 'secret'
+    scat = Twilio::Util::AccessToken.new 'AC123', 'SK123','secret'
     token = scat.to_s
     expect(token).not_to be_nil
     payload, header = JWT.decode token, 'secret'
@@ -20,7 +20,7 @@ describe Twilio::Util::AccessToken do
   end
 
   it 'should be able to add conversation grant' do
-    scat = Twilio::Util::AccessToken.new 'SK123', 'AC123', 'secret'
+    scat = Twilio::Util::AccessToken.new 'AC123', 'SK123','secret'
     scat.add_grant(Twilio::Util::AccessToken::ConversationGrant.new)
 
     token = scat.to_s
@@ -40,7 +40,7 @@ describe Twilio::Util::AccessToken do
   end
 
   it 'should be able to add endpoint grants' do
-    scat = Twilio::Util::AccessToken.new 'SK123', 'AC123', 'secret'
+    scat = Twilio::Util::AccessToken.new 'AC123', 'SK123','secret'
     scat.add_grant(Twilio::Util::AccessToken::IpMessagingGrant.new)
 
     token = scat.to_s
@@ -60,7 +60,7 @@ describe Twilio::Util::AccessToken do
   end
 
   it 'should add rest grants' do
-    scat = Twilio::Util::AccessToken.new 'SK123', 'AC123', 'secret'
+    scat = Twilio::Util::AccessToken.new 'AC123', 'SK123','secret'
     scat.add_grant(Twilio::Util::AccessToken::ConversationGrant.new)
     scat.add_grant(Twilio::Util::AccessToken::IpMessagingGrant.new)
 

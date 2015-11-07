@@ -1,9 +1,9 @@
 module Twilio
   module Util
     class AccessToken
-      def initialize(signing_key_id, account_sid, secret, ttl=3600, identity=nil)
-        @signing_key_sid = signing_key_id
+      def initialize(account_sid, signing_key_id, secret, ttl=3600, identity=nil)
         @account_sid = account_sid
+        @signing_key_sid = signing_key_id
         @secret = secret
         @ttl = ttl
         @identity = identity
