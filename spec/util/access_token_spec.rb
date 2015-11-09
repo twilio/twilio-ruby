@@ -21,7 +21,7 @@ describe Twilio::Util::AccessToken do
 
   it 'should be able to add conversation grant' do
     scat = Twilio::Util::AccessToken.new 'AC123', 'SK123','secret'
-    scat.add_grant(Twilio::Util::AccessToken::ConversationGrant.new)
+    scat.add_grant(Twilio::Util::AccessToken::ConversationsGrant.new)
 
     token = scat.to_s
     expect(token).not_to be_nil
@@ -61,7 +61,7 @@ describe Twilio::Util::AccessToken do
 
   it 'should add rest grants' do
     scat = Twilio::Util::AccessToken.new 'AC123', 'SK123','secret'
-    scat.add_grant(Twilio::Util::AccessToken::ConversationGrant.new)
+    scat.add_grant(Twilio::Util::AccessToken::ConversationsGrant.new)
     scat.add_grant(Twilio::Util::AccessToken::IpMessagingGrant.new)
 
     token = scat.to_s

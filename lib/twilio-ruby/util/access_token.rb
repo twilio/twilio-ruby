@@ -43,7 +43,7 @@ module Twilio
         to_jwt
       end
 
-      class ConversationGrant
+      class ConversationsGrant
         attr_writer :configuration_profile_sid
 
         def key
