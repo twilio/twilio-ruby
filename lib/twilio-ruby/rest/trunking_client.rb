@@ -89,9 +89,9 @@ module Twilio
       protected
 
       ##
-      # Set up +voice+ and +phone_numbers+ attributes.
+      # Set up +trunks+ attribute.
       def set_up_subresources # :doc:
-        @voice = Twilio::REST::Trunking::Trunks.new "/#{API_VERSION}/Trunks", self
+        @trunks = Twilio::REST::Trunking::Trunks.new "/#{API_VERSION}/Trunks", self
       end
 
       ##
