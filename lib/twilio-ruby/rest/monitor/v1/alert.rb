@@ -37,23 +37,24 @@ module Twilio
       def page(log_level: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, page_token: nil, page_number: nil, page_size: nil)
         params = {
             'LogLevel' => log_level,
-            'StartDate<' => serialize.iso8601_date(start_date_before),
-            'StartDate' => serialize.iso8601_date(start_date),
-            'StartDate>' => serialize.iso8601_date(start_date_after),
-            'EndDate<' => serialize.iso8601_date(end_date_before),
-            'EndDate' => serialize.iso8601_date(end_date),
-            'EndDate>' => serialize.iso8601_date(end_date_after),
+            'StartDate<' => start_date_before.iso8601,
+            'StartDate' => start_date.iso8601,
+            'StartDate>' => start_date_after.iso8601,
+            'EndDate<' => end_date_before.iso8601,
+            'EndDate' => end_date.iso8601,
+            'EndDate>' => end_date_after.iso8601,
             'PageToken' => page_token,
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            AlertInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return AlertPage.new(
+            @version,
+            response,
         )
       end
       
@@ -87,11 +88,15 @@ module Twilio
         params = {}
         
         @version.fetch(
-            AlertInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return AlertInstance.new(
+            @version,
+            payload,
+            sid: @solution['sid'],
         )
       end
       
@@ -115,23 +120,23 @@ module Twilio
         
         # Marshaled Properties
         @properties = {
-            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
-            'url' => payload['url'],
-            'sid' => payload['sid'],
-            'more_info' => payload['more_info'],
             'resource_sid' => payload['resource_sid'],
-            'api_version' => payload['api_version'],
-            'log_level' => payload['log_level'],
-            'error_code' => payload['error_code'],
-            'account_sid' => payload['account_sid'],
+            'more_info' => payload['more_info'],
             'request_url' => payload['request_url'],
-            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
+            'url' => payload['url'],
+            'error_code' => payload['error_code'],
+            'log_level' => payload['log_level'],
             'alert_text' => payload['alert_text'],
+            'account_sid' => payload['account_sid'],
+            'date_updated' => Time.iso8601(payload['date_updated']),
+            'api_version' => payload['api_version'],
+            'sid' => payload['sid'],
             'request_method' => payload['request_method'],
-            'date_generated' => deserialize.iso8601_datetime(payload['date_generated']),
+            'date_created' => Time.iso8601(payload['date_created']),
+            'date_generated' => Time.iso8601(payload['date_generated']),
+            'request_variables' => payload.get('request_variables'),
             'response_headers' => payload.get('response_headers'),
             'response_body' => payload.get('response_body'),
-            'request_variables' => payload.get('request_variables'),
         }
         
         # Context
@@ -151,72 +156,72 @@ module Twilio
         @instance_context
       end
       
-      def date_updated
-        @properties['date_updated']
-      end
-      
-      def url
-        @properties['url']
-      end
-      
-      def sid
-        @properties['sid']
-      end
-      
-      def request_method
-        @properties['request_method']
-      end
-      
       def resource_sid
         @properties['resource_sid']
-      end
-      
-      def date_created
-        @properties['date_created']
-      end
-      
-      def api_version
-        @properties['api_version']
-      end
-      
-      def response_body
-        @properties['response_body']
-      end
-      
-      def log_level
-        @properties['log_level']
-      end
-      
-      def error_code
-        @properties['error_code']
-      end
-      
-      def account_sid
-        @properties['account_sid']
-      end
-      
-      def request_url
-        @properties['request_url']
-      end
-      
-      def request_variables
-        @properties['request_variables']
-      end
-      
-      def response_headers
-        @properties['response_headers']
-      end
-      
-      def alert_text
-        @properties['alert_text']
       end
       
       def more_info
         @properties['more_info']
       end
       
+      def response_headers
+        @properties['response_headers']
+      end
+      
+      def request_url
+        @properties['request_url']
+      end
+      
+      def date_updated
+        @properties['date_updated']
+      end
+      
+      def error_code
+        @properties['error_code']
+      end
+      
+      def log_level
+        @properties['log_level']
+      end
+      
+      def response_body
+        @properties['response_body']
+      end
+      
+      def alert_text
+        @properties['alert_text']
+      end
+      
+      def request_variables
+        @properties['request_variables']
+      end
+      
+      def url
+        @properties['url']
+      end
+      
+      def api_version
+        @properties['api_version']
+      end
+      
+      def sid
+        @properties['sid']
+      end
+      
       def date_generated
         @properties['date_generated']
+      end
+      
+      def request_method
+        @properties['request_method']
+      end
+      
+      def date_created
+        @properties['date_created']
+      end
+      
+      def account_sid
+        @properties['account_sid']
       end
       
       ##

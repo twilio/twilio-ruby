@@ -35,13 +35,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            QueueInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return QueuePage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -53,13 +55,16 @@ module Twilio
             'MaxSize' => max_size,
         }
         
-        @version.create(
-            QueueInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return QueueInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -97,11 +102,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            QueueInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return QueueInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -113,13 +123,17 @@ module Twilio
             'MaxSize' => max_size,
         }
         
-        @version.update(
-            QueueInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return QueueInstance(
+            self._version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -155,12 +169,12 @@ module Twilio
         # Marshaled Properties
         @properties = {
             'account_sid' => payload['account_sid'],
-            'average_wait_time' => deserialize.integer(payload['average_wait_time']),
-            'current_size' => deserialize.integer(payload['current_size']),
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'average_wait_time' => payload['average_wait_time'].to_i,
+            'current_size' => payload['current_size'].to_i,
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
-            'max_size' => deserialize.integer(payload['max_size']),
+            'max_size' => payload['max_size'].to_i,
             'sid' => payload['sid'],
             'uri' => payload['uri'],
         }

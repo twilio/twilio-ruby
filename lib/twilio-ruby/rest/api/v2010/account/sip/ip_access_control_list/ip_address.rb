@@ -36,13 +36,16 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            IpAddressInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return IpAddressPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
+            ip_access_control_list_sid: @solution['ip_access_control_list_sid'],
         )
       end
       
@@ -54,13 +57,17 @@ module Twilio
             'IpAddress' => ip_address,
         }
         
-        @version.create(
-            IpAddressInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return IpAddressInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            ip_access_control_list_sid: @solution['ip_access_control_list_sid'],
         )
       end
       
@@ -96,11 +103,17 @@ module Twilio
         params = {}
         
         @version.fetch(
-            IpAddressInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return IpAddressInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            ip_access_control_list_sid: @solution['ip_access_control_list_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -112,13 +125,18 @@ module Twilio
             'FriendlyName' => friendly_name,
         }
         
-        @version.update(
-            IpAddressInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return IpAddressInstance(
+            self._version,
+            payload,
+            account_sid: @solution['account_sid'],
+            ip_access_control_list_sid: @solution['ip_access_control_list_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -147,8 +165,8 @@ module Twilio
             'friendly_name' => payload['friendly_name'],
             'ip_address' => payload['ip_address'],
             'ip_access_control_list_sid' => payload['ip_access_control_list_sid'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'uri' => payload['uri'],
         }
         

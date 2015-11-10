@@ -52,13 +52,17 @@ module Twilio
             'Issue' => issue,
         }
         
-        @version.create(
-            FeedbackInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return FeedbackInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            call_sid: @solution['call_sid'],
         )
       end
       
@@ -68,11 +72,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            FeedbackInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return FeedbackInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            call_sid: @solution['call_sid'],
         )
       end
       
@@ -84,13 +93,17 @@ module Twilio
             'Issue' => issue,
         }
         
-        @version.update(
-            FeedbackInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return FeedbackInstance(
+            self._version,
+            payload,
+            account_sid: @solution['account_sid'],
+            call_sid: @solution['call_sid'],
         )
       end
       
@@ -109,10 +122,10 @@ module Twilio
         # Marshaled Properties
         @properties = {
             'account_sid' => payload['account_sid'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'issues' => payload['issues'],
-            'quality_score' => deserialize.integer(payload['quality_score']),
+            'quality_score' => payload['quality_score'].to_i,
             'sid' => payload['sid'],
         }
         

@@ -33,13 +33,14 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            InProgressInstance,
-            {},
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return InProgressPage.new(
+            @version,
+            response,
         )
       end
       
@@ -58,10 +59,10 @@ module Twilio
         @properties = {
             'sid' => payload['sid'],
             'status' => payload['status'],
-            'duration' => deserialize.integer(payload['duration']),
-            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
-            'start_time' => deserialize.iso8601_datetime(payload['start_time']),
-            'end_time' => deserialize.iso8601_datetime(payload['end_time']),
+            'duration' => payload['duration'].to_i,
+            'date_created' => Time.iso8601(payload['date_created']),
+            'start_time' => Time.iso8601(payload['start_time']),
+            'end_time' => Time.iso8601(payload['end_time']),
             'account_sid' => payload['account_sid'],
             'url' => payload['url'],
         }

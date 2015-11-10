@@ -48,18 +48,23 @@ module Twilio
       # Fetch a TaskQueueStatisticsInstance
       def fetch(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil)
         params = {
-            'EndDate' => serialize.iso8601_datetime(end_date),
+            'EndDate' => end_date.iso8601,
             'FriendlyName' => friendly_name,
             'Minutes' => minutes,
-            'StartDate' => serialize.iso8601_datetime(start_date),
+            'StartDate' => start_date.iso8601,
         }
         
         @version.fetch(
-            TaskQueueStatisticsInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return TaskQueueStatisticsInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+            task_queue_sid: @solution['task_queue_sid'],
         )
       end
       

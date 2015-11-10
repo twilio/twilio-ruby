@@ -46,11 +46,15 @@ module Twilio
         params = {}
         
         @version.fetch(
-            NumberInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return NumberInstance.new(
+            @version,
+            payload,
+            number: @solution['number'],
         )
       end
       

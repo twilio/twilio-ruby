@@ -49,23 +49,25 @@ module Twilio
       def page(category: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, page_token: nil, page_number: nil, page_size: nil)
         params = {
             'Category' => category,
-            'StartDate<' => serialize.iso8601_date(start_date_before),
-            'StartDate' => serialize.iso8601_date(start_date),
-            'StartDate>' => serialize.iso8601_date(start_date_after),
-            'EndDate<' => serialize.iso8601_date(end_date_before),
-            'EndDate' => serialize.iso8601_date(end_date),
-            'EndDate>' => serialize.iso8601_date(end_date_after),
+            'StartDate<' => start_date_before.iso8601,
+            'StartDate' => start_date.iso8601,
+            'StartDate>' => start_date_after.iso8601,
+            'EndDate<' => end_date_before.iso8601,
+            'EndDate' => end_date.iso8601,
+            'EndDate>' => end_date_after.iso8601,
             'PageToken' => page_token,
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            RecordInstance,
-            {},
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return RecordPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -136,10 +138,10 @@ module Twilio
             'count' => payload['count'],
             'count_unit' => payload['count_unit'],
             'description' => payload['description'],
-            'end_date' => deserialize.rfc2822_datetime(payload['end_date']),
-            'price' => deserialize.decimal(payload['price']),
+            'end_date' => Time.rfc2822(payload['end_date']),
+            'price' => payload['price'].to_f,
             'price_unit' => payload['price_unit'],
-            'start_date' => deserialize.rfc2822_datetime(payload['start_date']),
+            'start_date' => Time.rfc2822(payload['start_date']),
             'subresource_uris' => payload['subresource_uris'],
             'uri' => payload['uri'],
             'usage' => payload['usage'],

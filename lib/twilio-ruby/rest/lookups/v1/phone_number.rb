@@ -49,11 +49,15 @@ module Twilio
         }
         
         @version.fetch(
-            PhoneNumberInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return PhoneNumberInstance.new(
+            @version,
+            payload,
+            phone_number: @solution['phone_number'],
         )
       end
       

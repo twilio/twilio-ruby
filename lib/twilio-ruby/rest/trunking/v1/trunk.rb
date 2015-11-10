@@ -29,13 +29,15 @@ module Twilio
             'Secure' => secure,
         }
         
-        @version.create(
-            TrunkInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return TrunkInstance.new(
+            @version,
+            payload,
         )
       end
       
@@ -55,13 +57,14 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            TrunkInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return TrunkPage.new(
+            @version,
+            response,
         )
       end
       
@@ -101,11 +104,15 @@ module Twilio
         params = {}
         
         @version.fetch(
-            TrunkInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return TrunkInstance.new(
+            @version,
+            payload,
+            sid: @solution['sid'],
         )
       end
       
@@ -127,13 +134,16 @@ module Twilio
             'Secure' => secure,
         }
         
-        @version.update(
-            TrunkInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return TrunkInstance(
+            self._version,
+            payload,
+            sid: @solution['sid'],
         )
       end
       
@@ -200,8 +210,8 @@ module Twilio
             'recording' => payload['recording'],
             'auth_type' => payload['auth_type'],
             'auth_type_set' => payload['auth_type_set'],
-            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
-            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
+            'date_created' => Time.iso8601(payload['date_created']),
+            'date_updated' => Time.iso8601(payload['date_updated']),
             'sid' => payload['sid'],
             'url' => payload['url'],
             'links' => payload['links'],

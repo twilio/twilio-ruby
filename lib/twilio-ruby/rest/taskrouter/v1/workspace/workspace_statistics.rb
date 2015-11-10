@@ -47,20 +47,24 @@ module Twilio
       def fetch(minutes: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil)
         params = {
             'Minutes' => minutes,
-            'StartDate<' => serialize.iso8601_date(start_date_before),
-            'StartDate' => serialize.iso8601_date(start_date),
-            'StartDate>' => serialize.iso8601_date(start_date_after),
-            'EndDate<' => serialize.iso8601_date(end_date_before),
-            'EndDate' => serialize.iso8601_date(end_date),
-            'EndDate>' => serialize.iso8601_date(end_date_after),
+            'StartDate<' => start_date_before.iso8601,
+            'StartDate' => start_date.iso8601,
+            'StartDate>' => start_date_after.iso8601,
+            'EndDate<' => end_date_before.iso8601,
+            'EndDate' => end_date.iso8601,
+            'EndDate>' => end_date_after.iso8601,
         }
         
         @version.fetch(
-            WorkspaceStatisticsInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return WorkspaceStatisticsInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
         )
       end
       

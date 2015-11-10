@@ -42,13 +42,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            TaskQueueInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return TaskQueuePage.new(
+            @version,
+            response,
+            workspace_sid: @solution['workspace_sid'],
         )
       end
       
@@ -63,13 +65,16 @@ module Twilio
             'MaxReservedWorkers' => max_reserved_workers,
         }
         
-        @version.create(
-            TaskQueueInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return TaskQueueInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
         )
       end
       
@@ -113,11 +118,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            TaskQueueInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return TaskQueueInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -132,13 +142,17 @@ module Twilio
             'MaxReservedWorkers' => max_reserved_workers,
         }
         
-        @version.update(
-            TaskQueueInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return TaskQueueInstance(
+            self._version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -176,10 +190,10 @@ module Twilio
             'account_sid' => payload['account_sid'],
             'assignment_activity_sid' => payload['assignment_activity_sid'],
             'assignment_activity_name' => payload['assignment_activity_name'],
-            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
-            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
+            'date_created' => Time.iso8601(payload['date_created']),
+            'date_updated' => Time.iso8601(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
-            'max_reserved_workers' => deserialize.integer(payload['max_reserved_workers']),
+            'max_reserved_workers' => payload['max_reserved_workers'].to_i,
             'reservation_activity_sid' => payload['reservation_activity_sid'],
             'reservation_activity_name' => payload['reservation_activity_name'],
             'sid' => payload['sid'],

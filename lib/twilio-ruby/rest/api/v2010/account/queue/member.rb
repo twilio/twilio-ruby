@@ -36,13 +36,16 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            MemberInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return MemberPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
+            queue_sid: @solution['queue_sid'],
         )
       end
       
@@ -78,11 +81,17 @@ module Twilio
         params = {}
         
         @version.fetch(
-            MemberInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return MemberInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            queue_sid: @solution['queue_sid'],
+            call_sid: @solution['call_sid'],
         )
       end
       
@@ -94,13 +103,18 @@ module Twilio
             'Method' => method,
         }
         
-        @version.update(
-            MemberInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return MemberInstance(
+            self._version,
+            payload,
+            account_sid: @solution['account_sid'],
+            queue_sid: @solution['queue_sid'],
+            call_sid: @solution['call_sid'],
         )
       end
       
@@ -119,10 +133,10 @@ module Twilio
         # Marshaled Properties
         @properties = {
             'call_sid' => payload['call_sid'],
-            'date_enqueued' => deserialize.rfc2822_datetime(payload['date_enqueued']),
-            'position' => deserialize.integer(payload['position']),
+            'date_enqueued' => Time.rfc2822(payload['date_enqueued']),
+            'position' => payload['position'].to_i,
             'uri' => payload['uri'],
-            'wait_time' => deserialize.integer(payload['wait_time']),
+            'wait_time' => payload['wait_time'].to_i,
         }
         
         # Context

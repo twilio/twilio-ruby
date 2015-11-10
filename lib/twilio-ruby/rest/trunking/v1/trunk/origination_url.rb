@@ -30,13 +30,16 @@ module Twilio
             'SipUrl' => sip_url,
         }
         
-        @version.create(
-            OriginationUrlInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return OriginationUrlInstance.new(
+            @version,
+            payload,
+            trunk_sid: @solution['trunk_sid'],
         )
       end
       
@@ -56,13 +59,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            OriginationUrlInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return OriginationUrlPage.new(
+            @version,
+            response,
+            trunk_sid: @solution['trunk_sid'],
         )
       end
       
@@ -97,11 +102,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            OriginationUrlInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return OriginationUrlInstance.new(
+            @version,
+            payload,
+            trunk_sid: @solution['trunk_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -122,13 +132,17 @@ module Twilio
             'SipUrl' => sip_url,
         }
         
-        @version.update(
-            OriginationUrlInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return OriginationUrlInstance(
+            self._version,
+            payload,
+            trunk_sid: @solution['trunk_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -149,13 +163,13 @@ module Twilio
             'account_sid' => payload['account_sid'],
             'sid' => payload['sid'],
             'trunk_sid' => payload['trunk_sid'],
-            'weight' => deserialize.integer(payload['weight']),
+            'weight' => payload['weight'].to_i,
             'enabled' => payload['enabled'],
             'sip_url' => payload['sip_url'],
             'friendly_name' => payload['friendly_name'],
-            'priority' => deserialize.integer(payload['priority']),
-            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
-            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
+            'priority' => payload['priority'].to_i,
+            'date_created' => Time.iso8601(payload['date_created']),
+            'date_updated' => Time.iso8601(payload['date_updated']),
             'url' => payload['url'],
         }
         

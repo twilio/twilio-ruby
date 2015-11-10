@@ -39,13 +39,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            ShortCodeInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return ShortCodePage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -80,11 +82,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            ShortCodeInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return ShortCodeInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -100,13 +107,17 @@ module Twilio
             'SmsFallbackMethod' => sms_fallback_method,
         }
         
-        @version.update(
-            ShortCodeInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return ShortCodeInstance(
+            self._version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -126,8 +137,8 @@ module Twilio
         @properties = {
             'account_sid' => payload['account_sid'],
             'api_version' => payload['api_version'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
             'short_code' => payload['short_code'],
             'sid' => payload['sid'],

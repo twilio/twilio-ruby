@@ -23,20 +23,23 @@ module Twilio
       # Create a new FeedbackSummaryInstance
       def create(start_date, end_date, include_subaccounts: nil, status_callback: nil, status_callback_method: nil)
         data = {
-            'StartDate' => serialize.iso8601_date(start_date),
-            'EndDate' => serialize.iso8601_date(end_date),
+            'StartDate' => start_date.iso8601,
+            'EndDate' => end_date.iso8601,
             'IncludeSubaccounts' => include_subaccounts,
             'StatusCallback' => status_callback,
             'StatusCallbackMethod' => status_callback_method,
         }
         
-        @version.create(
-            FeedbackSummaryInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return FeedbackSummaryInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -71,11 +74,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            FeedbackSummaryInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return FeedbackSummaryInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -100,18 +108,18 @@ module Twilio
         # Marshaled Properties
         @properties = {
             'account_sid' => payload['account_sid'],
-            'call_count' => deserialize.integer(payload['call_count']),
-            'call_feedback_count' => deserialize.integer(payload['call_feedback_count']),
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
-            'end_date' => deserialize.rfc2822_datetime(payload['end_date']),
+            'call_count' => payload['call_count'].to_i,
+            'call_feedback_count' => payload['call_feedback_count'].to_i,
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
+            'end_date' => Time.rfc2822(payload['end_date']),
             'include_subaccounts' => payload['include_subaccounts'],
             'issues' => payload['issues'],
-            'quality_score_average' => deserialize.decimal(payload['quality_score_average']),
-            'quality_score_median' => deserialize.decimal(payload['quality_score_median']),
-            'quality_score_standard_deviation' => deserialize.decimal(payload['quality_score_standard_deviation']),
+            'quality_score_average' => payload['quality_score_average'].to_f,
+            'quality_score_median' => payload['quality_score_median'].to_f,
+            'quality_score_standard_deviation' => payload['quality_score_standard_deviation'].to_f,
             'sid' => payload['sid'],
-            'start_date' => deserialize.rfc2822_datetime(payload['start_date']),
+            'start_date' => Time.rfc2822(payload['start_date']),
             'status' => payload['status'],
         }
         

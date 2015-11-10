@@ -33,13 +33,14 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            CountryInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return CountryPage.new(
+            @version,
+            response,
         )
       end
       
@@ -73,11 +74,15 @@ module Twilio
         params = {}
         
         @version.fetch(
-            CountryInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return CountryInstance.new(
+            @version,
+            payload,
+            iso_country: @solution['iso_country'],
         )
       end
       
@@ -99,8 +104,8 @@ module Twilio
             'country' => payload['country'],
             'price_unit' => payload.get('price_unit'),
             'uri' => payload.get('uri'),
-            'url' => payload.get('url'),
             'phone_number_prices' => payload.get('phone_number_prices'),
+            'url' => payload.get('url'),
         }
         
         # Context
@@ -124,24 +129,24 @@ module Twilio
         @properties['price_unit']
       end
       
-      def url
-        @properties['url']
-      end
-      
-      def country
-        @properties['country']
+      def phone_number_prices
+        @properties['phone_number_prices']
       end
       
       def iso_country
         @properties['iso_country']
       end
       
+      def url
+        @properties['url']
+      end
+      
       def uri
         @properties['uri']
       end
       
-      def phone_number_prices
-        @properties['phone_number_prices']
+      def country
+        @properties['country']
       end
       
       ##

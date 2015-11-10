@@ -41,13 +41,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            TollFreeInstance,
-            {},
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return TollFreePage.new(
+            @version,
+            response,
+            owner_account_sid: @solution['owner_account_sid'],
         )
       end
       
@@ -73,13 +75,16 @@ module Twilio
             'VoiceUrl' => voice_url,
         }
         
-        @version.create(
-            TollFreeInstance,
-            {},
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return TollFreeInstance.new(
+            @version,
+            payload,
+            owner_account_sid: @solution['owner_account_sid'],
         )
       end
       
@@ -101,8 +106,8 @@ module Twilio
             'api_version' => payload['api_version'],
             'beta' => payload['beta'],
             'capabilities' => payload['capabilities'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
             'phone_number' => payload['phone_number'],
             'sid' => payload['sid'],

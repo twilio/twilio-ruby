@@ -35,21 +35,23 @@ module Twilio
       # Retrieve a single page of TaskQueuesStatisticsInstance records from the API.
       def page(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil, page_token: nil, page_number: nil, page_size: nil)
         params = {
-            'EndDate' => serialize.iso8601_datetime(end_date),
+            'EndDate' => end_date.iso8601,
             'FriendlyName' => friendly_name,
             'Minutes' => minutes,
-            'StartDate' => serialize.iso8601_datetime(start_date),
+            'StartDate' => start_date.iso8601,
             'PageToken' => page_token,
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            TaskQueuesStatisticsInstance,
-            {},
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return TaskQueuesStatisticsPage.new(
+            @version,
+            response,
+            workspace_sid: @solution['workspace_sid'],
         )
       end
       

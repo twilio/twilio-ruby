@@ -48,11 +48,15 @@ module Twilio
         params = {}
         
         @version.fetch(
-            SandboxInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return SandboxInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -68,13 +72,16 @@ module Twilio
             'StatusCallbackMethod' => status_callback_method,
         }
         
-        @version.update(
-            SandboxInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return SandboxInstance(
+            self._version,
+            payload,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -92,9 +99,9 @@ module Twilio
         
         # Marshaled Properties
         @properties = {
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
-            'pin' => deserialize.integer(payload['pin']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
+            'pin' => payload['pin'].to_i,
             'account_sid' => payload['account_sid'],
             'phone_number' => payload['phone_number'],
             'application_sid' => payload['application_sid'],

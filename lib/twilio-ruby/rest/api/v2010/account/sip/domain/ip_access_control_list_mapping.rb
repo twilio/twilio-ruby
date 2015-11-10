@@ -27,13 +27,17 @@ module Twilio
             'IpAccessControlListSid' => ip_access_control_list_sid,
         }
         
-        @version.create(
-            IpAccessControlListMappingInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return IpAccessControlListMappingInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            domain_sid: @solution['domain_sid'],
         )
       end
       
@@ -53,13 +57,16 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            IpAccessControlListMappingInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return IpAccessControlListMappingPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
+            domain_sid: @solution['domain_sid'],
         )
       end
       
@@ -95,11 +102,17 @@ module Twilio
         params = {}
         
         @version.fetch(
-            IpAccessControlListMappingInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return IpAccessControlListMappingInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            domain_sid: @solution['domain_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -124,8 +137,8 @@ module Twilio
         # Marshaled Properties
         @properties = {
             'account_sid' => payload['account_sid'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
             'sid' => payload['sid'],
             'uri' => payload['uri'],

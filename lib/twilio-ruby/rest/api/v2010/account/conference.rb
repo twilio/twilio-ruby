@@ -39,25 +39,27 @@ module Twilio
       # Retrieve a single page of ConferenceInstance records from the API.
       def page(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, page_token: nil, page_number: nil, page_size: nil)
         params = {
-            'DateCreated<' => serialize.iso8601_date(date_created_before),
-            'DateCreated' => serialize.iso8601_date(date_created),
-            'DateCreated>' => serialize.iso8601_date(date_created_after),
-            'DateUpdated<' => serialize.iso8601_date(date_updated_before),
-            'DateUpdated' => serialize.iso8601_date(date_updated),
-            'DateUpdated>' => serialize.iso8601_date(date_updated_after),
+            'DateCreated<' => date_created_before.iso8601,
+            'DateCreated' => date_created.iso8601,
+            'DateCreated>' => date_created_after.iso8601,
+            'DateUpdated<' => date_updated_before.iso8601,
+            'DateUpdated' => date_updated.iso8601,
+            'DateUpdated>' => date_updated_after.iso8601,
             'FriendlyName' => friendly_name,
             'Status' => status,
             'PageToken' => page_token,
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            ConferenceInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return ConferencePage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -95,11 +97,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            ConferenceInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return ConferenceInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -129,8 +136,8 @@ module Twilio
         # Marshaled Properties
         @properties = {
             'account_sid' => payload['account_sid'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'api_version' => payload['api_version'],
             'friendly_name' => payload['friendly_name'],
             'sid' => payload['sid'],

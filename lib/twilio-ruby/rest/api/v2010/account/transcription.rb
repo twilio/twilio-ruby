@@ -35,13 +35,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            TranscriptionInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return TranscriptionPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -76,11 +78,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            TranscriptionInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return TranscriptionInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -106,10 +113,10 @@ module Twilio
         @properties = {
             'account_sid' => payload['account_sid'],
             'api_version' => payload['api_version'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'duration' => payload['duration'],
-            'price' => deserialize.decimal(payload['price']),
+            'price' => payload['price'].to_f,
             'price_unit' => payload['price_unit'],
             'recording_sid' => payload['recording_sid'],
             'sid' => payload['sid'],

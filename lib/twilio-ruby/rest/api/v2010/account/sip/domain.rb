@@ -35,13 +35,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            DomainInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return DomainPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -59,13 +61,16 @@ module Twilio
             'VoiceStatusCallbackMethod' => voice_status_callback_method,
         }
         
-        @version.create(
-            DomainInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return DomainInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -104,11 +109,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            DomainInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return DomainInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -126,13 +136,17 @@ module Twilio
             'VoiceUrl' => voice_url,
         }
         
-        @version.update(
-            DomainInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return DomainInstance(
+            self._version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -181,8 +195,8 @@ module Twilio
             'account_sid' => payload['account_sid'],
             'api_version' => payload['api_version'],
             'auth_type' => payload['auth_type'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'domain_name' => payload['domain_name'],
             'friendly_name' => payload['friendly_name'],
             'sid' => payload['sid'],

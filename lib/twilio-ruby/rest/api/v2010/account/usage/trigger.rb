@@ -32,13 +32,16 @@ module Twilio
             'TriggerBy' => trigger_by,
         }
         
-        @version.create(
-            TriggerInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return TriggerInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -64,13 +67,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            TriggerInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return TriggerPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -105,11 +110,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            TriggerInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return TriggerInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -122,13 +132,17 @@ module Twilio
             'FriendlyName' => friendly_name,
         }
         
-        @version.update(
-            TriggerInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return TriggerInstance(
+            self._version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -157,9 +171,9 @@ module Twilio
             'callback_method' => payload['callback_method'],
             'callback_url' => payload['callback_url'],
             'current_value' => payload['current_value'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_fired' => deserialize.rfc2822_datetime(payload['date_fired']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_fired' => Time.rfc2822(payload['date_fired']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
             'recurring' => payload['recurring'],
             'sid' => payload['sid'],

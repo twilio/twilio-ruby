@@ -40,11 +40,11 @@ module Twilio
       # Retrieve a single page of EventInstance records from the API.
       def page(end_date: nil, event_type: nil, minutes: nil, reservation_sid: nil, start_date: nil, task_queue_sid: nil, task_sid: nil, worker_sid: nil, workflow_sid: nil, page_token: nil, page_number: nil, page_size: nil)
         params = {
-            'EndDate' => serialize.iso8601_datetime(end_date),
+            'EndDate' => end_date.iso8601,
             'EventType' => event_type,
             'Minutes' => minutes,
             'ReservationSid' => reservation_sid,
-            'StartDate' => serialize.iso8601_datetime(start_date),
+            'StartDate' => start_date.iso8601,
             'TaskQueueSid' => task_queue_sid,
             'TaskSid' => task_sid,
             'WorkerSid' => worker_sid,
@@ -53,13 +53,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            EventInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return EventPage.new(
+            @version,
+            response,
+            workspace_sid: @solution['workspace_sid'],
         )
       end
       
@@ -94,11 +96,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            EventInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return EventInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -122,7 +129,7 @@ module Twilio
             'actor_url' => payload['actor_url'],
             'description' => payload['description'],
             'event_data' => payload['event_data'],
-            'event_date' => deserialize.iso8601_datetime(payload['event_date']),
+            'event_date' => Time.iso8601(payload['event_date']),
             'event_type' => payload['event_type'],
             'resource_sid' => payload['resource_sid'],
             'resource_type' => payload['resource_type'],

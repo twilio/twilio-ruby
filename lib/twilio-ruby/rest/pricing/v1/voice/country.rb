@@ -33,13 +33,14 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            CountryInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return CountryPage.new(
+            @version,
+            response,
         )
       end
       
@@ -73,11 +74,15 @@ module Twilio
         params = {}
         
         @version.fetch(
-            CountryInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return CountryInstance.new(
+            @version,
+            payload,
+            iso_country: @solution['iso_country'],
         )
       end
       
@@ -95,11 +100,11 @@ module Twilio
         
         # Marshaled Properties
         @properties = {
-            'iso_country' => payload['iso_country'],
             'url' => payload['url'],
+            'iso_country' => payload['iso_country'],
             'country' => payload['country'],
-            'outbound_prefix_prices' => payload.get('outbound_prefix_prices'),
             'price_unit' => payload.get('price_unit'),
+            'outbound_prefix_prices' => payload.get('outbound_prefix_prices'),
             'inbound_call_prices' => payload.get('inbound_call_prices'),
         }
         
@@ -120,28 +125,28 @@ module Twilio
         @instance_context
       end
       
-      def outbound_prefix_prices
-        @properties['outbound_prefix_prices']
-      end
-      
       def price_unit
         @properties['price_unit']
       end
       
-      def country
-        @properties['country']
-      end
-      
-      def url
-        @properties['url']
+      def inbound_call_prices
+        @properties['inbound_call_prices']
       end
       
       def iso_country
         @properties['iso_country']
       end
       
-      def inbound_call_prices
-        @properties['inbound_call_prices']
+      def url
+        @properties['url']
+      end
+      
+      def outbound_prefix_prices
+        @properties['outbound_prefix_prices']
+      end
+      
+      def country
+        @properties['country']
       end
       
       ##

@@ -40,26 +40,27 @@ module Twilio
       def page(actor_sid: nil, end_date_before: nil, end_date: nil, end_date_after: nil, event_type: nil, resource_sid: nil, source_ip_address: nil, start_date_before: nil, start_date: nil, start_date_after: nil, page_token: nil, page_number: nil, page_size: nil)
         params = {
             'ActorSid' => actor_sid,
-            'EndDate<' => serialize.iso8601_date(end_date_before),
-            'EndDate' => serialize.iso8601_date(end_date),
-            'EndDate>' => serialize.iso8601_date(end_date_after),
+            'EndDate<' => end_date_before.iso8601,
+            'EndDate' => end_date.iso8601,
+            'EndDate>' => end_date_after.iso8601,
             'EventType' => event_type,
             'ResourceSid' => resource_sid,
             'SourceIpAddress' => source_ip_address,
-            'StartDate<' => serialize.iso8601_date(start_date_before),
-            'StartDate' => serialize.iso8601_date(start_date),
-            'StartDate>' => serialize.iso8601_date(start_date_after),
+            'StartDate<' => start_date_before.iso8601,
+            'StartDate' => start_date.iso8601,
+            'StartDate>' => start_date_after.iso8601,
             'PageToken' => page_token,
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            EventInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return EventPage.new(
+            @version,
+            response,
         )
       end
       
@@ -93,11 +94,15 @@ module Twilio
         params = {}
         
         @version.fetch(
-            EventInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return EventInstance.new(
+            @version,
+            payload,
+            sid: @solution['sid'],
         )
       end
       
@@ -120,7 +125,7 @@ module Twilio
             'actor_type' => payload['actor_type'],
             'description' => payload['description'],
             'event_data' => payload['event_data'],
-            'event_date' => deserialize.iso8601_datetime(payload['event_date']),
+            'event_date' => Time.iso8601(payload['event_date']),
             'event_type' => payload['event_type'],
             'resource_sid' => payload['resource_sid'],
             'resource_type' => payload['resource_type'],

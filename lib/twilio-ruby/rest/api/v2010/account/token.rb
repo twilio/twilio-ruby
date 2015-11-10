@@ -26,13 +26,16 @@ module Twilio
             'Ttl' => ttl,
         }
         
-        @version.create(
-            TokenInstance,
-            {},
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return TokenInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -50,8 +53,8 @@ module Twilio
         # Marshaled Properties
         @properties = {
             'account_sid' => payload['account_sid'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'ice_servers' => payload['ice_servers'],
             'password' => payload['password'],
             'ttl' => payload['ttl'],

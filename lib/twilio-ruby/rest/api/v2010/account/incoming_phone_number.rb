@@ -46,13 +46,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            IncomingPhoneNumberInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return IncomingPhoneNumberPage.new(
+            @version,
+            response,
+            owner_account_sid: @solution['owner_account_sid'],
         )
       end
       
@@ -79,13 +81,16 @@ module Twilio
             'VoiceUrl' => voice_url,
         }
         
-        @version.create(
-            IncomingPhoneNumberInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return IncomingPhoneNumberInstance.new(
+            @version,
+            payload,
+            owner_account_sid: @solution['owner_account_sid'],
         )
       end
       
@@ -154,13 +159,17 @@ module Twilio
             'VoiceUrl' => voice_url,
         }
         
-        @version.update(
-            IncomingPhoneNumberInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return IncomingPhoneNumberInstance(
+            self._version,
+            payload,
+            owner_account_sid: @solution['owner_account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -170,11 +179,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            IncomingPhoneNumberInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return IncomingPhoneNumberInstance.new(
+            @version,
+            payload,
+            owner_account_sid: @solution['owner_account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -203,8 +217,8 @@ module Twilio
             'api_version' => payload['api_version'],
             'beta' => payload['beta'],
             'capabilities' => payload['capabilities'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
             'phone_number' => payload['phone_number'],
             'sid' => payload['sid'],

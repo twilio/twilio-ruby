@@ -31,13 +31,16 @@ module Twilio
             'StatusCallbackMethod' => status_callback_method,
         }
         
-        @version.create(
-            ValidationRequestInstance,
-            {},
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return ValidationRequestInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -57,7 +60,7 @@ module Twilio
             'account_sid' => payload['account_sid'],
             'phone_number' => payload['phone_number'],
             'friendly_name' => payload['friendly_name'],
-            'validation_code' => deserialize.integer(payload['validation_code']),
+            'validation_code' => payload['validation_code'].to_i,
             'call_sid' => payload['call_sid'],
         }
       end

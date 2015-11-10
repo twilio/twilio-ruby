@@ -35,13 +35,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            ParticipantInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return ParticipantPage.new(
+            @version,
+            response,
+            conversation_sid: @solution['conversation_sid'],
         )
       end
       
@@ -53,13 +55,16 @@ module Twilio
             'From' => from,
         }
         
-        @version.create(
-            ParticipantInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return ParticipantInstance.new(
+            @version,
+            payload,
+            conversation_sid: @solution['conversation_sid'],
         )
       end
       
@@ -94,11 +99,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            ParticipantInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return ParticipantInstance.new(
+            @version,
+            payload,
+            conversation_sid: @solution['conversation_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -120,10 +130,10 @@ module Twilio
             'address' => payload['address'],
             'status' => payload['status'],
             'conversation_sid' => payload['conversation_sid'],
-            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
-            'start_time' => deserialize.iso8601_datetime(payload['start_time']),
-            'end_time' => deserialize.iso8601_datetime(payload['end_time']),
-            'duration' => deserialize.integer(payload['duration']),
+            'date_created' => Time.iso8601(payload['date_created']),
+            'start_time' => Time.iso8601(payload['start_time']),
+            'end_time' => Time.iso8601(payload['end_time']),
+            'duration' => payload['duration'].to_i,
             'account_sid' => payload['account_sid'],
             'url' => payload['url'],
         }

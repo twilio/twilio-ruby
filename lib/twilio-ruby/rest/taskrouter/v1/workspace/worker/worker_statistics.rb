@@ -49,16 +49,21 @@ module Twilio
       def fetch(minutes: nil, start_date: nil, end_date: nil)
         params = {
             'Minutes' => minutes,
-            'StartDate' => serialize.iso8601_datetime(start_date),
-            'EndDate' => serialize.iso8601_datetime(end_date),
+            'StartDate' => start_date.iso8601,
+            'EndDate' => end_date.iso8601,
         }
         
         @version.fetch(
-            WorkerStatisticsInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return WorkerStatisticsInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+            worker_sid: @solution['worker_sid'],
         )
       end
       

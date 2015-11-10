@@ -41,13 +41,16 @@ module Twilio
             'Record' => record,
         }
         
-        @version.create(
-            CallInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return CallInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -77,23 +80,25 @@ module Twilio
             'From' => from,
             'ParentCallSid' => parent_call_sid,
             'Status' => status,
-            'StartTime<' => serialize.iso8601_date(start_time_before),
-            'StartTime' => serialize.iso8601_date(start_time),
-            'StartTime>' => serialize.iso8601_date(start_time_after),
-            'EndTime<' => serialize.iso8601_date(end_time_before),
-            'EndTime' => serialize.iso8601_date(end_time),
-            'EndTime>' => serialize.iso8601_date(end_time_after),
+            'StartTime<' => start_time_before.iso8601,
+            'StartTime' => start_time.iso8601,
+            'StartTime>' => start_time_after.iso8601,
+            'EndTime<' => end_time_before.iso8601,
+            'EndTime' => end_time.iso8601,
+            'EndTime>' => end_time_after.iso8601,
             'PageToken' => page_token,
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            CallInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return CallPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -145,11 +150,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            CallInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return CallInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -166,13 +176,17 @@ module Twilio
             'StatusCallbackMethod' => status_callback_method,
         }
         
-        @version.update(
-            CallInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return CallInstance(
+            self._version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -228,21 +242,21 @@ module Twilio
             'answered_by' => payload['answered_by'],
             'api_version' => payload['api_version'],
             'caller_name' => payload['caller_name'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'direction' => payload['direction'],
             'duration' => payload['duration'],
-            'end_time' => deserialize.rfc2822_datetime(payload['end_time']),
+            'end_time' => Time.rfc2822(payload['end_time']),
             'forwarded_from' => payload['forwarded_from'],
             'from' => payload['from'],
             'from_formatted' => payload['from_formatted'],
             'group_sid' => payload['group_sid'],
             'parent_call_sid' => payload['parent_call_sid'],
             'phone_number_sid' => payload['phone_number_sid'],
-            'price' => deserialize.decimal(payload['price']),
+            'price' => payload['price'].to_f,
             'price_unit' => payload['price_unit'],
             'sid' => payload['sid'],
-            'start_time' => deserialize.rfc2822_datetime(payload['start_time']),
+            'start_time' => Time.rfc2822(payload['start_time']),
             'status' => payload['status'],
             'subresource_uris' => payload['subresource_uris'],
             'to' => payload['to'],

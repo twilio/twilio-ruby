@@ -32,13 +32,16 @@ module Twilio
             'FriendlyName' => friendly_name,
         }
         
-        @version.create(
-            AddressInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return AddressInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -64,13 +67,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            AddressInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return AddressPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -114,11 +119,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            AddressInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return AddressInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -134,13 +144,17 @@ module Twilio
             'PostalCode' => postal_code,
         }
         
-        @version.update(
-            AddressInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return AddressInstance(
+            self._version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -172,8 +186,8 @@ module Twilio
             'account_sid' => payload['account_sid'],
             'city' => payload['city'],
             'customer_name' => payload['customer_name'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
             'iso_country' => payload['iso_country'],
             'postal_code' => payload['postal_code'],

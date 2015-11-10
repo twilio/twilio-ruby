@@ -26,13 +26,16 @@ module Twilio
             'IpAccessControlListSid' => ip_access_control_list_sid,
         }
         
-        @version.create(
-            IpAccessControlListInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return IpAccessControlListInstance.new(
+            @version,
+            payload,
+            trunk_sid: @solution['trunk_sid'],
         )
       end
       
@@ -52,13 +55,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            IpAccessControlListInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return IpAccessControlListPage.new(
+            @version,
+            response,
+            trunk_sid: @solution['trunk_sid'],
         )
       end
       
@@ -93,11 +98,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            IpAccessControlListInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return IpAccessControlListInstance.new(
+            @version,
+            payload,
+            trunk_sid: @solution['trunk_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -125,8 +135,8 @@ module Twilio
             'sid' => payload['sid'],
             'trunk_sid' => payload['trunk_sid'],
             'friendly_name' => payload['friendly_name'],
-            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
-            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
+            'date_created' => Time.iso8601(payload['date_created']),
+            'date_updated' => Time.iso8601(payload['date_updated']),
             'url' => payload['url'],
         }
         

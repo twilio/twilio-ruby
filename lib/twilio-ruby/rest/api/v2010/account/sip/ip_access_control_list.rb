@@ -35,13 +35,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            IpAccessControlListInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return IpAccessControlListPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -52,13 +54,16 @@ module Twilio
             'FriendlyName' => friendly_name,
         }
         
-        @version.create(
-            IpAccessControlListInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return IpAccessControlListInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -96,11 +101,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            IpAccessControlListInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return IpAccessControlListInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -111,13 +121,17 @@ module Twilio
             'FriendlyName' => friendly_name,
         }
         
-        @version.update(
-            IpAccessControlListInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return IpAccessControlListInstance(
+            self._version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -155,8 +169,8 @@ module Twilio
             'sid' => payload['sid'],
             'account_sid' => payload['account_sid'],
             'friendly_name' => payload['friendly_name'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'subresource_uris' => payload['subresource_uris'],
             'uri' => payload['uri'],
         }

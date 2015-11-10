@@ -38,13 +38,16 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            LocalInstance,
-            {},
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return LocalPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
+            country_code: @solution['country_code'],
         )
       end
       
@@ -65,8 +68,8 @@ module Twilio
             'phone_number' => payload['phone_number'],
             'lata' => payload['lata'],
             'rate_center' => payload['rate_center'],
-            'latitude' => deserialize.decimal(payload['latitude']),
-            'longitude' => deserialize.decimal(payload['longitude']),
+            'latitude' => payload['latitude'].to_f,
+            'longitude' => payload['longitude'].to_f,
             'region' => payload['region'],
             'postal_code' => payload['postal_code'],
             'iso_country' => payload['iso_country'],

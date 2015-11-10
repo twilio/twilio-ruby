@@ -47,13 +47,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            TaskInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return TaskPage.new(
+            @version,
+            response,
+            workspace_sid: @solution['workspace_sid'],
         )
       end
       
@@ -67,13 +69,16 @@ module Twilio
             'Priority' => priority,
         }
         
-        @version.create(
-            TaskInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return TaskInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
         )
       end
       
@@ -111,11 +116,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            TaskInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return TaskInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -129,13 +139,17 @@ module Twilio
             'Priority' => priority,
         }
         
-        @version.update(
-            TaskInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return TaskInstance(
+            self._version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -171,16 +185,16 @@ module Twilio
         # Marshaled Properties
         @properties = {
             'account_sid' => payload['account_sid'],
-            'age' => deserialize.integer(payload['age']),
+            'age' => payload['age'].to_i,
             'assignment_status' => payload['assignment_status'],
             'attributes' => payload['attributes'],
-            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
-            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
-            'priority' => deserialize.integer(payload['priority']),
+            'date_created' => Time.iso8601(payload['date_created']),
+            'date_updated' => Time.iso8601(payload['date_updated']),
+            'priority' => payload['priority'].to_i,
             'reason' => payload['reason'],
             'sid' => payload['sid'],
             'task_queue_sid' => payload['task_queue_sid'],
-            'timeout' => deserialize.integer(payload['timeout']),
+            'timeout' => payload['timeout'].to_i,
             'workflow_sid' => payload['workflow_sid'],
             'workspace_sid' => payload['workspace_sid'],
         }

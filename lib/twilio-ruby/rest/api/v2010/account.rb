@@ -24,13 +24,15 @@ module Twilio
             'FriendlyName' => friendly_name,
         }
         
-        @version.create(
-            AccountInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return AccountInstance.new(
+            @version,
+            payload,
         )
       end
       
@@ -54,13 +56,14 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            AccountInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return AccountPage.new(
+            @version,
+            response,
         )
       end
       
@@ -116,11 +119,15 @@ module Twilio
         params = {}
         
         @version.fetch(
-            AccountInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return AccountInstance.new(
+            @version,
+            payload,
+            sid: @solution['sid'],
         )
       end
       
@@ -132,13 +139,16 @@ module Twilio
             'Status' => status,
         }
         
-        @version.update(
-            AccountInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return AccountInstance(
+            self._version,
+            payload,
+            sid: @solution['sid'],
         )
       end
       
@@ -357,8 +367,8 @@ module Twilio
         # Marshaled Properties
         @properties = {
             'auth_token' => payload['auth_token'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
             'owner_account_sid' => payload['owner_account_sid'],
             'sid' => payload['sid'],

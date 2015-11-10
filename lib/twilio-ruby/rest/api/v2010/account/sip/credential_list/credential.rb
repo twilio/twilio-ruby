@@ -36,13 +36,16 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            CredentialInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return CredentialPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
+            credential_list_sid: @solution['credential_list_sid'],
         )
       end
       
@@ -54,13 +57,17 @@ module Twilio
             'Password' => password,
         }
         
-        @version.create(
-            CredentialInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return CredentialInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            credential_list_sid: @solution['credential_list_sid'],
         )
       end
       
@@ -96,11 +103,17 @@ module Twilio
         params = {}
         
         @version.fetch(
-            CredentialInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return CredentialInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            credential_list_sid: @solution['credential_list_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -112,13 +125,18 @@ module Twilio
             'Password' => password,
         }
         
-        @version.update(
-            CredentialInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return CredentialInstance(
+            self._version,
+            payload,
+            account_sid: @solution['account_sid'],
+            credential_list_sid: @solution['credential_list_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -146,8 +164,8 @@ module Twilio
             'account_sid' => payload['account_sid'],
             'credential_list_sid' => payload['credential_list_sid'],
             'username' => payload['username'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'uri' => payload['uri'],
         }
         

@@ -40,13 +40,16 @@ module Twilio
             'MessageStatusCallback' => message_status_callback,
         }
         
-        @version.create(
-            ApplicationInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return ApplicationInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -68,13 +71,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            ApplicationInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return ApplicationPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -115,11 +120,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            ApplicationInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return ApplicationInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -144,13 +154,17 @@ module Twilio
             'MessageStatusCallback' => message_status_callback,
         }
         
-        @version.update(
-            ApplicationInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return ApplicationInstance(
+            self._version,
+            payload,
+            account_sid: @solution['account_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -170,8 +184,8 @@ module Twilio
         @properties = {
             'account_sid' => payload['account_sid'],
             'api_version' => payload['api_version'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
             'message_status_callback' => payload['message_status_callback'],
             'sid' => payload['sid'],

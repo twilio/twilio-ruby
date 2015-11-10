@@ -35,13 +35,14 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            WorkspaceInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return WorkspacePage.new(
+            @version,
+            response,
         )
       end
       
@@ -54,13 +55,15 @@ module Twilio
             'Template' => template,
         }
         
-        @version.create(
-            WorkspaceInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return WorkspaceInstance.new(
+            @version,
+            payload,
         )
       end
       
@@ -103,11 +106,15 @@ module Twilio
         params = {}
         
         @version.fetch(
-            WorkspaceInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return WorkspaceInstance.new(
+            @version,
+            payload,
+            sid: @solution['sid'],
         )
       end
       
@@ -121,13 +128,16 @@ module Twilio
             'TimeoutActivitySid' => timeout_activity_sid,
         }
         
-        @version.update(
-            WorkspaceInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return WorkspaceInstance(
+            self._version,
+            payload,
+            sid: @solution['sid'],
         )
       end
       
@@ -222,8 +232,8 @@ module Twilio
         # Marshaled Properties
         @properties = {
             'account_sid' => payload['account_sid'],
-            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
-            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
+            'date_created' => Time.iso8601(payload['date_created']),
+            'date_updated' => Time.iso8601(payload['date_updated']),
             'default_activity_name' => payload['default_activity_name'],
             'default_activity_sid' => payload['default_activity_sid'],
             'event_callback_url' => payload['event_callback_url'],

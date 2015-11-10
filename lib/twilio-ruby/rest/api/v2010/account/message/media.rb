@@ -35,20 +35,23 @@ module Twilio
       # Retrieve a single page of MediaInstance records from the API.
       def page(date_created_before: nil, date_created: nil, date_created_after: nil, page_token: nil, page_number: nil, page_size: nil)
         params = {
-            'DateCreated<' => serialize.iso8601_date(date_created_before),
-            'DateCreated' => serialize.iso8601_date(date_created),
-            'DateCreated>' => serialize.iso8601_date(date_created_after),
+            'DateCreated<' => date_created_before.iso8601,
+            'DateCreated' => date_created.iso8601,
+            'DateCreated>' => date_created_after.iso8601,
             'PageToken' => page_token,
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            MediaInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return MediaPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
+            message_sid: @solution['message_sid'],
         )
       end
       
@@ -90,11 +93,17 @@ module Twilio
         params = {}
         
         @version.fetch(
-            MediaInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return MediaInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            message_sid: @solution['message_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -114,8 +123,8 @@ module Twilio
         @properties = {
             'account_sid' => payload['account_sid'],
             'content_type' => payload['content_type'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'parent_sid' => payload['parent_sid'],
             'sid' => payload['sid'],
             'uri' => payload['uri'],

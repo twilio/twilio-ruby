@@ -35,13 +35,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            AuthorizedConnectAppInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return AuthorizedConnectAppPage.new(
+            @version,
+            response,
+            account_sid: @solution['account_sid'],
         )
       end
       
@@ -76,11 +78,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            AuthorizedConnectAppInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return AuthorizedConnectAppInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            connect_app_sid: @solution['connect_app_sid'],
         )
       end
       
@@ -104,8 +111,8 @@ module Twilio
             'connect_app_friendly_name' => payload['connect_app_friendly_name'],
             'connect_app_homepage_url' => payload['connect_app_homepage_url'],
             'connect_app_sid' => payload['connect_app_sid'],
-            'date_created' => deserialize.rfc2822_datetime(payload['date_created']),
-            'date_updated' => deserialize.rfc2822_datetime(payload['date_updated']),
+            'date_created' => Time.rfc2822(payload['date_created']),
+            'date_updated' => Time.rfc2822(payload['date_updated']),
             'permissions' => payload['permissions'],
             'uri' => payload['uri'],
         }

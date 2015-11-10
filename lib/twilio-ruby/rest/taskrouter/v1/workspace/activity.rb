@@ -39,13 +39,15 @@ module Twilio
             'Page' => page_number,
             'PageSize' => page_size,
         }
-        @version.page(
-            self,
-            ActivityInstance,
-            @solution,
+        response = @version.page(
             'GET',
             @uri,
             params
+        )
+        return ActivityPage.new(
+            @version,
+            response,
+            workspace_sid: @solution['workspace_sid'],
         )
       end
       
@@ -57,13 +59,16 @@ module Twilio
             'Available' => available,
         }
         
-        @version.create(
-            ActivityInstance,
-            @solution,
+        payload = @version.create(
             'POST',
             @uri,
-            {},
             data
+        )
+        
+        return ActivityInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
         )
       end
       
@@ -98,11 +103,16 @@ module Twilio
         params = {}
         
         @version.fetch(
-            ActivityInstance,
-            @solution,
             'GET',
             @uri,
             params,
+        )
+        
+        return ActivityInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -113,13 +123,17 @@ module Twilio
             'FriendlyName' => friendly_name,
         }
         
-        @version.update(
-            ActivityInstance,
-            @solution,
+        payload = @version.update(
             'POST',
             @uri,
-            {},
             data=data,
+        )
+        
+        return ActivityInstance(
+            self._version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+            sid: @solution['sid'],
         )
       end
       
@@ -145,8 +159,8 @@ module Twilio
         @properties = {
             'account_sid' => payload['account_sid'],
             'available' => payload['available'],
-            'date_created' => deserialize.iso8601_datetime(payload['date_created']),
-            'date_updated' => deserialize.iso8601_datetime(payload['date_updated']),
+            'date_created' => Time.iso8601(payload['date_created']),
+            'date_updated' => Time.iso8601(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
             'sid' => payload['sid'],
             'workspace_sid' => payload['workspace_sid'],
