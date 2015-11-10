@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 4.6.1
+-------------
+
+Release November 10, 2015
+
+- Fix TrunkingClient references
+
 Version 4.6.0
 -------------
 
