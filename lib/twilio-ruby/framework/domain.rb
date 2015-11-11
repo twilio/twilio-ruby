@@ -6,7 +6,12 @@ module Twilio
       def initialize(client)
         @client = client
         @host = nil
+        @base_url = nil
         @port = nil
+      end
+
+      def absolute_url(uri)
+        "#{@base_url.chomp('/')}/#{uri.chomp('/')}"
       end
 
       def request(method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
