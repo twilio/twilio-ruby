@@ -33,7 +33,7 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       def each
@@ -43,7 +43,9 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page,
+                        limit: limits['limit'],
+                        page_limit: limits['page_limit']).each {|x| yield x}
       end
       
       ##
@@ -146,12 +148,12 @@ module Twilio
         
         # Marshaled Properties
         @properties = {
+            'url' => payload['url'],
             'iso_country' => payload['iso_country'],
             'country' => payload['country'],
-            'url' => payload['url'],
+            'inbound_call_prices' => payload.get('inbound_call_prices'),
             'outbound_prefix_prices' => payload.get('outbound_prefix_prices'),
             'price_unit' => payload.get('price_unit'),
-            'inbound_call_prices' => payload.get('inbound_call_prices'),
         }
         
         # Context
@@ -171,28 +173,28 @@ module Twilio
         @instance_context
       end
       
+      def inbound_call_prices
+        @properties['inbound_call_prices']
+      end
+      
       def url
         @properties['url']
-      end
-      
-      def iso_country
-        @properties['iso_country']
-      end
-      
-      def outbound_prefix_prices
-        @properties['outbound_prefix_prices']
       end
       
       def price_unit
         @properties['price_unit']
       end
       
-      def country
-        @properties['country']
+      def outbound_prefix_prices
+        @properties['outbound_prefix_prices']
       end
       
-      def inbound_call_prices
-        @properties['inbound_call_prices']
+      def iso_country
+        @properties['iso_country']
+      end
+      
+      def country
+        @properties['country']
       end
       
       ##

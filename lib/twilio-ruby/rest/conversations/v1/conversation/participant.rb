@@ -35,7 +35,7 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       def each
@@ -45,7 +45,9 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page,
+                        limit: limits['limit'],
+                        page_limit: limits['page_limit']).each {|x| yield x}
       end
       
       ##
@@ -79,7 +81,7 @@ module Twilio
         payload = @version.create(
             'POST',
             @uri,
-            data
+            data: data
         )
         
         return ParticipantInstance.new(
@@ -180,9 +182,9 @@ module Twilio
             'address' => payload['address'],
             'status' => payload['status'],
             'conversation_sid' => payload['conversation_sid'],
-            'date_created' => Time.iso8601(payload['date_created']),
-            'start_time' => Time.iso8601(payload['start_time']),
-            'end_time' => Time.iso8601(payload['end_time']),
+            'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
+            'start_time' => Twilio.deserialize_iso8601(payload['start_time']),
+            'end_time' => Twilio.deserialize_iso8601(payload['end_time']),
             'duration' => payload['duration'].to_i,
             'account_sid' => payload['account_sid'],
             'url' => payload['url'],

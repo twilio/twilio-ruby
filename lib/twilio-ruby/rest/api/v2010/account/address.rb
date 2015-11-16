@@ -35,7 +35,7 @@ module Twilio
         payload = @version.create(
             'POST',
             @uri,
-            data
+            data: data
         )
         
         return AddressInstance.new(
@@ -67,7 +67,7 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       def each
@@ -77,7 +77,9 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page,
+                        limit: limits['limit'],
+                        page_limit: limits['page_limit']).each {|x| yield x}
       end
       
       ##
@@ -236,8 +238,8 @@ module Twilio
             'account_sid' => payload['account_sid'],
             'city' => payload['city'],
             'customer_name' => payload['customer_name'],
-            'date_created' => Time.rfc2822(payload['date_created']),
-            'date_updated' => Time.rfc2822(payload['date_updated']),
+            'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
+            'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
             'iso_country' => payload['iso_country'],
             'postal_code' => payload['postal_code'],

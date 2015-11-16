@@ -44,7 +44,7 @@ module Twilio
         payload = @version.create(
             'POST',
             @uri,
-            data
+            data: data
         )
         
         return CallInstance.new(
@@ -90,7 +90,7 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       def each
@@ -100,7 +100,9 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page,
+                        limit: limits['limit'],
+                        page_limit: limits['page_limit']).each {|x| yield x}
       end
       
       ##
@@ -319,11 +321,11 @@ module Twilio
             'answered_by' => payload['answered_by'],
             'api_version' => payload['api_version'],
             'caller_name' => payload['caller_name'],
-            'date_created' => Time.rfc2822(payload['date_created']),
-            'date_updated' => Time.rfc2822(payload['date_updated']),
+            'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
+            'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
             'direction' => payload['direction'],
             'duration' => payload['duration'],
-            'end_time' => Time.rfc2822(payload['end_time']),
+            'end_time' => Twilio.deserialize_rfc2822(payload['end_time']),
             'forwarded_from' => payload['forwarded_from'],
             'from' => payload['from'],
             'from_formatted' => payload['from_formatted'],
@@ -333,7 +335,7 @@ module Twilio
             'price' => payload['price'].to_f,
             'price_unit' => payload['price_unit'],
             'sid' => payload['sid'],
-            'start_time' => Time.rfc2822(payload['start_time']),
+            'start_time' => Twilio.deserialize_rfc2822(payload['start_time']),
             'status' => payload['status'],
             'subresource_uris' => payload['subresource_uris'],
             'to' => payload['to'],

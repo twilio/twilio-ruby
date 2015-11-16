@@ -33,7 +33,7 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       def each
@@ -43,7 +43,9 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page,
+                        limit: limits['limit'],
+                        page_limit: limits['page_limit']).each {|x| yield x}
       end
       
       ##
@@ -149,9 +151,9 @@ module Twilio
             'iso_country' => payload['iso_country'],
             'country' => payload['country'],
             'url' => payload.get('url'),
+            'price_unit' => payload.get('price_unit'),
             'uri' => payload.get('uri'),
             'phone_number_prices' => payload.get('phone_number_prices'),
-            'price_unit' => payload.get('price_unit'),
         }
         
         # Context
@@ -175,20 +177,20 @@ module Twilio
         @properties['url']
       end
       
-      def uri
-        @properties['uri']
+      def price_unit
+        @properties['price_unit']
       end
       
-      def iso_country
-        @properties['iso_country']
+      def uri
+        @properties['uri']
       end
       
       def phone_number_prices
         @properties['phone_number_prices']
       end
       
-      def price_unit
-        @properties['price_unit']
+      def iso_country
+        @properties['iso_country']
       end
       
       def country

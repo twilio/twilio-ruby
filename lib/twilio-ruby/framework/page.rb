@@ -90,7 +90,7 @@ module Twilio
 
       def each
         @records.each do |record|
-          yield record
+          yield self.get_instance(record)
         end
       end
 

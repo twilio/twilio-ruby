@@ -86,7 +86,7 @@ module Twilio
         payload = @version.create(
             'POST',
             @uri,
-            data
+            data: data
         )
         
         return FeedbackInstance.new(
@@ -153,8 +153,8 @@ module Twilio
         # Marshaled Properties
         @properties = {
             'account_sid' => payload['account_sid'],
-            'date_created' => Time.rfc2822(payload['date_created']),
-            'date_updated' => Time.rfc2822(payload['date_updated']),
+            'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
+            'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
             'issues' => payload['issues'],
             'quality_score' => payload['quality_score'].to_i,
             'sid' => payload['sid'],

@@ -42,7 +42,7 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       def each
@@ -52,7 +52,9 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page,
+                        limit: limits['limit'],
+                        page_limit: limits['page_limit']).each {|x| yield x}
       end
       
       ##
@@ -91,7 +93,7 @@ module Twilio
         payload = @version.create(
             'POST',
             @uri,
-            data
+            data: data
         )
         
         return TaskQueueInstance.new(
@@ -239,8 +241,8 @@ module Twilio
             'account_sid' => payload['account_sid'],
             'assignment_activity_sid' => payload['assignment_activity_sid'],
             'assignment_activity_name' => payload['assignment_activity_name'],
-            'date_created' => Time.iso8601(payload['date_created']),
-            'date_updated' => Time.iso8601(payload['date_updated']),
+            'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
+            'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
             'max_reserved_workers' => payload['max_reserved_workers'].to_i,
             'reservation_activity_sid' => payload['reservation_activity_sid'],

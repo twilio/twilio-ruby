@@ -27,7 +27,7 @@ module Twilio
         payload = @version.create(
             'POST',
             @uri,
-            data
+            data: data
         )
         
         return AccountInstance.new(
@@ -56,7 +56,7 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       def each
@@ -66,7 +66,9 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page,
+                        limit: limits['limit'],
+                        page_limit: limits['page_limit']).each {|x| yield x}
       end
       
       ##
@@ -523,8 +525,8 @@ module Twilio
         # Marshaled Properties
         @properties = {
             'auth_token' => payload['auth_token'],
-            'date_created' => Time.rfc2822(payload['date_created']),
-            'date_updated' => Time.rfc2822(payload['date_updated']),
+            'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
+            'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
             'owner_account_sid' => payload['owner_account_sid'],
             'sid' => payload['sid'],

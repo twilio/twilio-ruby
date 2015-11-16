@@ -35,7 +35,7 @@ module Twilio
         payload = @version.create(
             'POST',
             @uri,
-            data
+            data: data
         )
         
         return TriggerInstance.new(
@@ -67,7 +67,7 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       def each
@@ -77,7 +77,9 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page,
+                        limit: limits['limit'],
+                        page_limit: limits['page_limit']).each {|x| yield x}
       end
       
       ##
@@ -224,9 +226,9 @@ module Twilio
             'callback_method' => payload['callback_method'],
             'callback_url' => payload['callback_url'],
             'current_value' => payload['current_value'],
-            'date_created' => Time.rfc2822(payload['date_created']),
-            'date_fired' => Time.rfc2822(payload['date_fired']),
-            'date_updated' => Time.rfc2822(payload['date_updated']),
+            'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
+            'date_fired' => Twilio.deserialize_rfc2822(payload['date_fired']),
+            'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
             'recurring' => payload['recurring'],
             'sid' => payload['sid'],

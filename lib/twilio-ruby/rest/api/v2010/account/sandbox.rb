@@ -127,8 +127,8 @@ module Twilio
         
         # Marshaled Properties
         @properties = {
-            'date_created' => Time.rfc2822(payload['date_created']),
-            'date_updated' => Time.rfc2822(payload['date_updated']),
+            'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
+            'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
             'pin' => payload['pin'].to_i,
             'account_sid' => payload['account_sid'],
             'phone_number' => payload['phone_number'],

@@ -42,11 +42,13 @@ module Twilio
       end
 
       def relative_uri(uri)
-        "#{@version.chomp('/')}/#{uri.chomp('/')}"
+        "#{@version.chomp('/')}#{uri.chomp('/')}"
       end
 
       def request(method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
         url = self.relative_uri(uri)
+        params = params.delete_if {|k,v| v.nil?}
+        data = data.delete_if {|k,v| v.nil?}
         @domain.request(
           method,
           url,
@@ -144,14 +146,21 @@ module Twilio
         RecordStream.new(page, limit: limit, page_limit: page_limit)
       end
 
-      def create(instance, instance_kwargs, method, uri, kwargs)
-        response = self.request(method, uri, **kwargs)
+      def create(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+        response = self.request(
+                    method,
+                    uri,
+                    params,
+                    data,
+                    headers,
+                    auth,
+                    timeout)
 
-        unless [200, 201].contains?(response.status_code)
-          raise TwilioException("[#{response.status_code}] Unable to create record\n#{response.body}")
+        unless [200, 201].include?(response.status_code)
+          raise TwilioException.new("[#{response.status_code}] Unable to create record\n#{response.body}")
         end
 
-        instance.new(self, response.body, instance_kwargs)
+        return response.body
       end
     end
   end

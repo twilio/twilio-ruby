@@ -59,7 +59,7 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       def each
@@ -69,7 +69,9 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page,
+                        limit: limits['limit'],
+                        page_limit: limits['page_limit']).each {|x| yield x}
       end
       
       ##
@@ -191,10 +193,10 @@ module Twilio
             'count' => payload['count'],
             'count_unit' => payload['count_unit'],
             'description' => payload['description'],
-            'end_date' => Time.rfc2822(payload['end_date']),
+            'end_date' => Twilio.deserialize_rfc2822(payload['end_date']),
             'price' => payload['price'].to_f,
             'price_unit' => payload['price_unit'],
-            'start_date' => Time.rfc2822(payload['start_date']),
+            'start_date' => Twilio.deserialize_rfc2822(payload['start_date']),
             'subresource_uris' => payload['subresource_uris'],
             'uri' => payload['uri'],
             'usage' => payload['usage'],

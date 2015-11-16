@@ -33,7 +33,7 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       def each
@@ -43,7 +43,9 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page,
+                        limit: limits['limit'],
+                        page_limit: limits['page_limit']).each {|x| yield x}
       end
       
       ##
@@ -103,9 +105,9 @@ module Twilio
             'sid' => payload['sid'],
             'status' => payload['status'],
             'duration' => payload['duration'].to_i,
-            'date_created' => Time.iso8601(payload['date_created']),
-            'start_time' => Time.iso8601(payload['start_time']),
-            'end_time' => Time.iso8601(payload['end_time']),
+            'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
+            'start_time' => Twilio.deserialize_iso8601(payload['start_time']),
+            'end_time' => Twilio.deserialize_iso8601(payload['end_time']),
             'account_sid' => payload['account_sid'],
             'url' => payload['url'],
         }

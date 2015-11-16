@@ -34,7 +34,7 @@ module Twilio
         payload = @version.create(
             'POST',
             @uri,
-            data
+            data: data
         )
         
         return ValidationRequestInstance.new(

@@ -52,7 +52,7 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       def each
@@ -62,7 +62,9 @@ module Twilio
             page_size: limits['page_size'],
         )
         
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+        @version.stream(page,
+                        limit: limits['limit'],
+                        page_limit: limits['page_limit']).each {|x| yield x}
       end
       
       ##
@@ -104,7 +106,7 @@ module Twilio
         payload = @version.create(
             'POST',
             @uri,
-            data
+            data: data
         )
         
         return WorkerInstance.new(
@@ -252,9 +254,9 @@ module Twilio
             'activity_sid' => payload['activity_sid'],
             'attributes' => payload['attributes'],
             'available' => payload['available'],
-            'date_created' => Time.iso8601(payload['date_created']),
-            'date_status_changed' => Time.iso8601(payload['date_status_changed']),
-            'date_updated' => Time.iso8601(payload['date_updated']),
+            'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
+            'date_status_changed' => Twilio.deserialize_iso8601(payload['date_status_changed']),
+            'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
             'friendly_name' => payload['friendly_name'],
             'sid' => payload['sid'],
             'workspace_sid' => payload['workspace_sid'],

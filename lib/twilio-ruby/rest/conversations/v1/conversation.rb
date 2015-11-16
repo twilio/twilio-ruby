@@ -138,9 +138,9 @@ module Twilio
             'sid' => payload['sid'],
             'status' => payload['status'],
             'duration' => payload['duration'].to_i,
-            'date_created' => Time.iso8601(payload['date_created']),
-            'start_time' => Time.iso8601(payload['start_time']),
-            'end_time' => Time.iso8601(payload['end_time']),
+            'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
+            'start_time' => Twilio.deserialize_iso8601(payload['start_time']),
+            'end_time' => Twilio.deserialize_iso8601(payload['end_time']),
             'account_sid' => payload['account_sid'],
             'url' => payload['url'],
         }

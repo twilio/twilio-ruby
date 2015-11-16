@@ -1,3 +1,5 @@
+require 'uri'
+
 module Twilio
   module HTTP
     class Client
@@ -22,11 +24,12 @@ module Twilio
         @connection.open_timeout = timeout
         @connection.read_timeout = timeout
 
+        method = method.to_s.upcase
         method_class = Net::HTTP.const_get method.to_s.capitalize
-        url = "#{url}?#{url_encode(params)}" if method == :get && !params.empty?
+        url = "#{url}?#{URI.encode(params.join('&'))}" if method == 'GET' && !params.empty?
         request = method_class.new(url, headers)
         request.basic_auth(auth[0], auth[1])
-        request.form_data = data if [:post, :put].include?(method)
+        request.form_data = data if ['POST', 'PUT'].include?(method)
 
         @last_request = request
         response = @connection.request request
