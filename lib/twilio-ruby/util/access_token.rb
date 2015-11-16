@@ -64,8 +64,8 @@ module Twilio
       class IpMessagingGrant
         attr_writer :service_sid
         attr_writer :endpoint_id
-        attr_writer :role_sid
-        attr_writer :credential_sid
+        attr_writer :deployement_role_sid
+        attr_writer :push_credential_sid
 
         def key
           'ip_messaging'
@@ -80,10 +80,10 @@ module Twilio
             payload['endpoint_id'] = @endpoint_id
           end
           if @role_sid
-            payload['deployment_role_sid'] = @role_sid
+            payload['deployment_role_sid'] = @deployment_role_sid
           end
           if @credential_sid
-            payload['push_credential_sid'] = @credential_sid
+            payload['push_credential_sid'] = @push_credential_sid
           end
 
           payload
