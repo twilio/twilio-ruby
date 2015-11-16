@@ -22,18 +22,34 @@ module Twilio
       
       ##
       # Reads MobileInstance records from the API as a list.
-      def list(beta: nil, limit: nil, page_size: nil)
+      def list(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, limit: nil, page_size: nil)
         self.stream(
+            area_code: area_code,
+            contains: contains,
+            sms_enabled: sms_enabled,
+            mms_enabled: mms_enabled,
+            voice_enabled: voice_enabled,
+            exclude_all_address_required: exclude_all_address_required,
+            exclude_local_address_required: exclude_local_address_required,
+            exclude_foreign_address_required: exclude_foreign_address_required,
             beta: beta,
             limit: limit,
             page_size: page_size
         ).entries
       end
       
-      def stream(beta: nil, limit: nil, page_size: nil)
+      def stream(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, limit: nil, page_size: nil)
         limits = @version.read_limits(limit, page_size)
         
         page = self.page(
+            area_code: area_code,
+            contains: contains,
+            sms_enabled: sms_enabled,
+            mms_enabled: mms_enabled,
+            voice_enabled: voice_enabled,
+            exclude_all_address_required: exclude_all_address_required,
+            exclude_local_address_required: exclude_local_address_required,
+            exclude_foreign_address_required: exclude_foreign_address_required,
             beta: beta,
             page_size: limits['page_size'],
         )
@@ -55,8 +71,16 @@ module Twilio
       
       ##
       # Retrieve a single page of MobileInstance records from the API.
-      def page(beta: nil, page_token: nil, page_number: nil, page_size: nil)
+      def page(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, page_token: nil, page_number: nil, page_size: nil)
         params = {
+            'AreaCode' => area_code,
+            'Contains' => contains,
+            'SmsEnabled' => sms_enabled,
+            'MmsEnabled' => mms_enabled,
+            'VoiceEnabled' => voice_enabled,
+            'ExcludeAllAddressRequired' => exclude_all_address_required,
+            'ExcludeLocalAddressRequired' => exclude_local_address_required,
+            'ExcludeForeignAddressRequired' => exclude_foreign_address_required,
             'Beta' => beta,
             'PageToken' => page_token,
             'Page' => page_number,

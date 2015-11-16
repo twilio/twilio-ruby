@@ -16,7 +16,7 @@ module Twilio
         @solution = {
             account_sid: account_sid
         }
-        @uri = "/Accounts/#{@solution[:account_sid]}/Usage/Records/ThisMonth"
+        @uri = "/Accounts/#{@solution[:account_sid]}/Usage/Records/ThisMonth.json"
       end
       
       ##

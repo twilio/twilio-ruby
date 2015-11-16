@@ -148,11 +148,11 @@ module Twilio
         
         # Marshaled Properties
         @properties = {
-            'url' => payload['url'],
-            'iso_country' => payload['iso_country'],
             'country' => payload['country'],
-            'inbound_call_prices' => payload.get('inbound_call_prices'),
+            'iso_country' => payload['iso_country'],
+            'url' => payload['url'],
             'outbound_prefix_prices' => payload.get('outbound_prefix_prices'),
+            'inbound_call_prices' => payload.get('inbound_call_prices'),
             'price_unit' => payload.get('price_unit'),
         }
         
@@ -173,28 +173,28 @@ module Twilio
         @instance_context
       end
       
-      def inbound_call_prices
-        @properties['inbound_call_prices']
-      end
-      
-      def url
-        @properties['url']
-      end
-      
-      def price_unit
-        @properties['price_unit']
-      end
-      
-      def outbound_prefix_prices
-        @properties['outbound_prefix_prices']
+      def country
+        @properties['country']
       end
       
       def iso_country
         @properties['iso_country']
       end
       
-      def country
-        @properties['country']
+      def outbound_prefix_prices
+        @properties['outbound_prefix_prices']
+      end
+      
+      def inbound_call_prices
+        @properties['inbound_call_prices']
+      end
+      
+      def price_unit
+        @properties['price_unit']
+      end
+      
+      def url
+        @properties['url']
       end
       
       ##

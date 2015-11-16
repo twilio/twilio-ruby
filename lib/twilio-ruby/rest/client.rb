@@ -103,6 +103,94 @@ module Twilio
         @trunking ||= Trunking.new self
       end
       
+      def account
+        return self.api.v2010.account
+      end
+      
+      def accounts
+        return self.api.v2010.accounts
+      end
+      
+      def addresses
+        return self.account.addresses
+      end
+      
+      def applications
+        return self.account.applications
+      end
+      
+      def authorized_connect_apps
+        return self.account.authorized_connect_apps
+      end
+      
+      def available_phone_numbers
+        return self.account.available_phone_numbers
+      end
+      
+      def calls
+        return self.account.calls
+      end
+      
+      def conferences
+        return self.account.conferences
+      end
+      
+      def connect_apps
+        return self.account.connect_apps
+      end
+      
+      def incoming_phone_numbers
+        return self.account.incoming_phone_numbers
+      end
+      
+      def messages
+        return self.account.messages
+      end
+      
+      def notifications
+        return self.account.notifications
+      end
+      
+      def outgoing_caller_ids
+        return self.account.outgoing_caller_ids
+      end
+      
+      def queues
+        return self.account.queues
+      end
+      
+      def recordings
+        return self.account.recordings
+      end
+      
+      def sandbox
+        return self.account.sandbox
+      end
+      
+      def sip
+        return self.account.sip
+      end
+      
+      def sms
+        return self.account.sms
+      end
+      
+      def tokens
+        return self.account.tokens
+      end
+      
+      def transcriptions
+        return self.account.transcriptions
+      end
+      
+      def usage
+        return self.account.usage
+      end
+      
+      def validation_requests
+        return self.account.validation_requests
+      end
+      
       ##
       # Provide a user friendly representation
       def to_s
