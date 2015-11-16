@@ -9,35 +9,59 @@ module Twilio
     class MediaList < ListResource
       ##
       # Initialize the MediaList
-      def initialize(version, account_sid, message_sid)
+      def initialize(version, account_sid: nil, message_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'message_sid' => message_sid
+            account_sid: account_sid,
+            message_sid: message_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Messages/#{@solution[:message_sid]}/Media.json"
       end
       
       ##
       # Reads MediaInstance records from the API as a list.
-      def read(date_created_before: nil, date_created: nil, date_created_after: nil, limit: nil, page_size: nil)
-        @version.read(
-            date_created: nil,
-            date_created_after: nil,
-            limit: nil,
-            page_size: nil
+      def list(date_created_before: nil, date_created: nil, date_created_after: nil, limit: nil, page_size: nil)
+        self.stream(
+            date_created_before: date_created_before,
+            date_created: date_created,
+            date_created_after: date_created_after,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(date_created_before: nil, date_created: nil, date_created_after: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            date_created_before: date_created_before,
+            date_created: date_created,
+            date_created_after: date_created_after,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
       # Retrieve a single page of MediaInstance records from the API.
       def page(date_created_before: nil, date_created: nil, date_created_after: nil, page_token: nil, page_number: nil, page_size: nil)
         params = {
-            'DateCreated<' => date_created_before.iso8601,
-            'DateCreated' => date_created.iso8601,
-            'DateCreated>' => date_created_after.iso8601,
+            'DateCreated<' => Twilio.serialize_iso8601(date_created_before),
+            'DateCreated' => Twilio.serialize_iso8601(date_created),
+            'DateCreated>' => Twilio.serialize_iso8601(date_created_after),
             'PageToken' => page_token,
             'Page' => page_number,
             'PageSize' => page_size,
@@ -58,7 +82,12 @@ module Twilio
       ##
       # Constructs a MediaContext
       def get(sid)
-        MediaContext.new(@version, sid, @solution)
+        MediaContext.new(
+            @version,
+            account_sid: @solution[:account_sid],
+            message_sid: @solution[:message_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -68,15 +97,42 @@ module Twilio
       end
     end
   
+    class MediaPage < Page
+      def initialize(version, response, account_sid, message_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'message_sid' => message_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return MediaInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            message_sid: @solution['message_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.MediaPage>'
+      end
+    end
+  
     class MediaContext < InstanceContext
       def initialize(version, account_sid, message_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'message_sid' => message_sid,
-            'sid' => sid,
+            account_sid: account_sid,
+            message_sid: message_sid,
+            sid: sid,
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Messages/#{@solution[:message_sid]}/Media/#{@solution[:sid]}.json"
       end
@@ -139,9 +195,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = MediaContext(
+          @instance_context = MediaContext.new(
               @version,
               @params['account_sid'],
               @params['message_sid'],

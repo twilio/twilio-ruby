@@ -9,42 +9,72 @@ module Twilio
     class EventList < ListResource
       ##
       # Initialize the EventList
-      def initialize(version, workspace_sid)
+      def initialize(version, workspace_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid
+            workspace_sid: workspace_sid
         }
         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Events"
       end
       
       ##
       # Reads EventInstance records from the API as a list.
-      def read(end_date: nil, event_type: nil, minutes: nil, reservation_sid: nil, start_date: nil, task_queue_sid: nil, task_sid: nil, worker_sid: nil, workflow_sid: nil, limit: nil, page_size: nil)
-        @version.read(
-            event_type: nil,
-            minutes: nil,
-            reservation_sid: nil,
-            start_date: nil,
-            task_queue_sid: nil,
-            task_sid: nil,
-            worker_sid: nil,
-            workflow_sid: nil,
-            limit: nil,
-            page_size: nil
+      def list(end_date: nil, event_type: nil, minutes: nil, reservation_sid: nil, start_date: nil, task_queue_sid: nil, task_sid: nil, worker_sid: nil, workflow_sid: nil, limit: nil, page_size: nil)
+        self.stream(
+            end_date: end_date,
+            event_type: event_type,
+            minutes: minutes,
+            reservation_sid: reservation_sid,
+            start_date: start_date,
+            task_queue_sid: task_queue_sid,
+            task_sid: task_sid,
+            worker_sid: worker_sid,
+            workflow_sid: workflow_sid,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(end_date: nil, event_type: nil, minutes: nil, reservation_sid: nil, start_date: nil, task_queue_sid: nil, task_sid: nil, worker_sid: nil, workflow_sid: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            end_date: end_date,
+            event_type: event_type,
+            minutes: minutes,
+            reservation_sid: reservation_sid,
+            start_date: start_date,
+            task_queue_sid: task_queue_sid,
+            task_sid: task_sid,
+            worker_sid: worker_sid,
+            workflow_sid: workflow_sid,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
       # Retrieve a single page of EventInstance records from the API.
       def page(end_date: nil, event_type: nil, minutes: nil, reservation_sid: nil, start_date: nil, task_queue_sid: nil, task_sid: nil, worker_sid: nil, workflow_sid: nil, page_token: nil, page_number: nil, page_size: nil)
         params = {
-            'EndDate' => end_date.iso8601,
+            'EndDate' => Twilio.serialize_iso8601(end_date),
             'EventType' => event_type,
             'Minutes' => minutes,
             'ReservationSid' => reservation_sid,
-            'StartDate' => start_date.iso8601,
+            'StartDate' => Twilio.serialize_iso8601(start_date),
             'TaskQueueSid' => task_queue_sid,
             'TaskSid' => task_sid,
             'WorkerSid' => worker_sid,
@@ -68,7 +98,11 @@ module Twilio
       ##
       # Constructs a EventContext
       def get(sid)
-        EventContext.new(@version, sid, @solution)
+        EventContext.new(
+            @version,
+            workspace_sid: @solution[:workspace_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -78,14 +112,39 @@ module Twilio
       end
     end
   
+    class EventPage < Page
+      def initialize(version, response, workspace_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'workspace_sid' => workspace_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return EventInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Taskrouter.V1.EventPage>'
+      end
+    end
+  
     class EventContext < InstanceContext
       def initialize(version, workspace_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid,
-            'sid' => sid,
+            workspace_sid: workspace_sid,
+            sid: sid,
         }
         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Events/#{@solution[:sid]}"
       end
@@ -148,9 +207,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = EventContext(
+          @instance_context = EventContext.new(
               @version,
               @params['workspace_sid'],
               @params['sid'],

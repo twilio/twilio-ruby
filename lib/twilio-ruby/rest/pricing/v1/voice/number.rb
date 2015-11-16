@@ -19,7 +19,10 @@ module Twilio
       ##
       # Constructs a NumberContext
       def get(number)
-        NumberContext.new(@version, number, @solution)
+        NumberContext.new(
+            @version,
+            number: number,
+        )
       end
       
       ##
@@ -29,13 +32,35 @@ module Twilio
       end
     end
   
+    class NumberPage < Page
+      def initialize(version, response)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {}
+      end
+      
+      def get_instance(payload)
+        return NumberInstance.new(
+            @version,
+            payload,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Pricing.V1.NumberPage>'
+      end
+    end
+  
     class NumberContext < InstanceContext
       def initialize(version, number)
         super(version)
         
         # Path Solution
         @solution = {
-            'number' => number,
+            number: number,
         }
         @uri = "/Voice/Numbers/#{@solution[:number]}"
       end
@@ -88,9 +113,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = NumberContext(
+          @instance_context = NumberContext.new(
               @version,
               @params['number'],
           )

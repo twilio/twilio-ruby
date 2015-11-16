@@ -9,26 +9,51 @@ module Twilio
     class NotificationList < ListResource
       ##
       # Initialize the NotificationList
-      def initialize(version, account_sid)
+      def initialize(version, account_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid
+            account_sid: account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Notifications"
       end
       
       ##
       # Reads NotificationInstance records from the API as a list.
-      def read(log: nil, message_date_before: nil, message_date: nil, message_date_after: nil, limit: nil, page_size: nil)
-        @version.read(
-            message_date_before: nil,
-            message_date: nil,
-            message_date_after: nil,
-            limit: nil,
-            page_size: nil
+      def list(log: nil, message_date_before: nil, message_date: nil, message_date_after: nil, limit: nil, page_size: nil)
+        self.stream(
+            log: log,
+            message_date_before: message_date_before,
+            message_date: message_date,
+            message_date_after: message_date_after,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(log: nil, message_date_before: nil, message_date: nil, message_date_after: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            log: log,
+            message_date_before: message_date_before,
+            message_date: message_date,
+            message_date_after: message_date_after,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -36,9 +61,9 @@ module Twilio
       def page(log: nil, message_date_before: nil, message_date: nil, message_date_after: nil, page_token: nil, page_number: nil, page_size: nil)
         params = {
             'Log' => log,
-            'MessageDate<' => message_date_before.iso8601,
-            'MessageDate' => message_date.iso8601,
-            'MessageDate>' => message_date_after.iso8601,
+            'MessageDate<' => Twilio.serialize_iso8601(message_date_before),
+            'MessageDate' => Twilio.serialize_iso8601(message_date),
+            'MessageDate>' => Twilio.serialize_iso8601(message_date_after),
             'PageToken' => page_token,
             'Page' => page_number,
             'PageSize' => page_size,
@@ -58,7 +83,11 @@ module Twilio
       ##
       # Constructs a NotificationContext
       def get(sid)
-        NotificationContext.new(@version, sid, @solution)
+        NotificationContext.new(
+            @version,
+            account_sid: @solution[:account_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -68,14 +97,39 @@ module Twilio
       end
     end
   
+    class NotificationPage < Page
+      def initialize(version, response, account_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return NotificationInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.NotificationPage>'
+      end
+    end
+  
     class NotificationContext < InstanceContext
       def initialize(version, account_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'sid' => sid,
+            account_sid: account_sid,
+            sid: sid,
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Notifications/#{@solution[:sid]}.json"
       end
@@ -119,23 +173,23 @@ module Twilio
         
         # Marshaled Properties
         @properties = {
-            'more_info' => payload['more_info'],
-            'request_url' => payload['request_url'],
-            'error_code' => payload['error_code'],
-            'message_text' => payload['message_text'],
-            'request_method' => payload['request_method'],
-            'date_updated' => Time.rfc2822(payload['date_updated']),
-            'log' => payload['log'],
             'account_sid' => payload['account_sid'],
-            'call_sid' => payload['call_sid'],
             'api_version' => payload['api_version'],
+            'date_updated' => Time.rfc2822(payload['date_updated']),
+            'error_code' => payload['error_code'],
+            'more_info' => payload['more_info'],
             'sid' => payload['sid'],
-            'message_date' => Time.rfc2822(payload['message_date']),
+            'request_url' => payload['request_url'],
             'uri' => payload['uri'],
             'date_created' => Time.rfc2822(payload['date_created']),
+            'message_text' => payload['message_text'],
+            'call_sid' => payload['call_sid'],
+            'message_date' => Time.rfc2822(payload['message_date']),
+            'request_method' => payload['request_method'],
+            'log' => payload['log'],
+            'response_body' => payload.get('response_body'),
             'request_variables' => payload.get('request_variables'),
             'response_headers' => payload.get('response_headers'),
-            'response_body' => payload.get('response_body'),
         }
         
         # Context
@@ -146,9 +200,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = NotificationContext(
+          @instance_context = NotificationContext.new(
               @version,
               @params['account_sid'],
               @params['sid'],
@@ -157,52 +211,28 @@ module Twilio
         @instance_context
       end
       
-      def more_info
-        @properties['more_info']
+      def response_body
+        @properties['response_body']
       end
       
-      def response_headers
-        @properties['response_headers']
+      def account_sid
+        @properties['account_sid']
       end
       
-      def request_url
-        @properties['request_url']
+      def api_version
+        @properties['api_version']
       end
       
       def error_code
         @properties['error_code']
       end
       
-      def request_method
-        @properties['request_method']
-      end
-      
-      def response_body
-        @properties['response_body']
-      end
-      
       def date_updated
         @properties['date_updated']
       end
       
-      def request_variables
-        @properties['request_variables']
-      end
-      
-      def log
-        @properties['log']
-      end
-      
-      def message_text
-        @properties['message_text']
-      end
-      
-      def call_sid
-        @properties['call_sid']
-      end
-      
-      def api_version
-        @properties['api_version']
+      def more_info
+        @properties['more_info']
       end
       
       def sid
@@ -217,12 +247,36 @@ module Twilio
         @properties['uri']
       end
       
-      def date_created
-        @properties['date_created']
+      def request_variables
+        @properties['request_variables']
       end
       
-      def account_sid
-        @properties['account_sid']
+      def log
+        @properties['log']
+      end
+      
+      def response_headers
+        @properties['response_headers']
+      end
+      
+      def message_text
+        @properties['message_text']
+      end
+      
+      def call_sid
+        @properties['call_sid']
+      end
+      
+      def request_url
+        @properties['request_url']
+      end
+      
+      def request_method
+        @properties['request_method']
+      end
+      
+      def date_created
+        @properties['date_created']
       end
       
       ##

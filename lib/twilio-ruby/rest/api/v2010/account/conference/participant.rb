@@ -9,24 +9,46 @@ module Twilio
     class ParticipantList < ListResource
       ##
       # Initialize the ParticipantList
-      def initialize(version, account_sid, conference_sid)
+      def initialize(version, account_sid: nil, conference_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'conference_sid' => conference_sid
+            account_sid: account_sid,
+            conference_sid: conference_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Conferences/#{@solution[:conference_sid]}/Participants.json"
       end
       
       ##
       # Reads ParticipantInstance records from the API as a list.
-      def read(muted: nil, limit: nil, page_size: nil)
-        @version.read(
-            limit: nil,
-            page_size: nil
+      def list(muted: nil, limit: nil, page_size: nil)
+        self.stream(
+            muted: muted,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(muted: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            muted: muted,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -54,7 +76,12 @@ module Twilio
       ##
       # Constructs a ParticipantContext
       def get(call_sid)
-        ParticipantContext.new(@version, call_sid, @solution)
+        ParticipantContext.new(
+            @version,
+            account_sid: @solution[:account_sid],
+            conference_sid: @solution[:conference_sid],
+            call_sid: call_sid,
+        )
       end
       
       ##
@@ -64,15 +91,42 @@ module Twilio
       end
     end
   
+    class ParticipantPage < Page
+      def initialize(version, response, account_sid, conference_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'conference_sid' => conference_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return ParticipantInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            conference_sid: @solution['conference_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.ParticipantPage>'
+      end
+    end
+  
     class ParticipantContext < InstanceContext
       def initialize(version, account_sid, conference_sid, call_sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'conference_sid' => conference_sid,
-            'call_sid' => call_sid,
+            account_sid: account_sid,
+            conference_sid: conference_sid,
+            call_sid: call_sid,
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Conferences/#{@solution[:conference_sid]}/Participants/#{@solution[:call_sid]}.json"
       end
@@ -159,9 +213,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = ParticipantContext(
+          @instance_context = ParticipantContext.new(
               @version,
               @params['account_sid'],
               @params['conference_sid'],

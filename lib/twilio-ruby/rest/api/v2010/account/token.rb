@@ -9,12 +9,12 @@ module Twilio
     class TokenList < ListResource
       ##
       # Initialize the TokenList
-      def initialize(version, account_sid)
+      def initialize(version, account_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid
+            account_sid: account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Tokens.json"
       end
@@ -43,6 +43,31 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.TokenList>'
+      end
+    end
+  
+    class TokenPage < Page
+      def initialize(version, response, account_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return TokenInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.TokenPage>'
       end
     end
   

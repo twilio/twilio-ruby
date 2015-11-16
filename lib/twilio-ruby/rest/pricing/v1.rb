@@ -17,12 +17,20 @@ module Twilio
           @voice = nil
         end
         
-        def phone_numbers
-          @phone_numbers ||= PhoneNumberList.new self
+        def phone_numbers(sid=:unset)
+          if sid == :unset
+            @phone_numbers ||= PhoneNumberList.new self
+          else
+            PhoneNumberContext.new sid
+          end
         end
         
-        def voice
-          @voice ||= VoiceList.new self
+        def voice(sid=:unset)
+          if sid == :unset
+            @voice ||= VoiceList.new self
+          else
+            VoiceContext.new sid
+          end
         end
         
         ##

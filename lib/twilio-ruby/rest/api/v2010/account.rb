@@ -38,12 +38,35 @@ module Twilio
       
       ##
       # Reads AccountInstance records from the API as a list.
-      def read(friendly_name: nil, status: nil, limit: nil, page_size: nil)
-        @version.read(
-            status: nil,
-            limit: nil,
-            page_size: nil
+      def list(friendly_name: nil, status: nil, limit: nil, page_size: nil)
+        self.stream(
+            friendly_name: friendly_name,
+            status: status,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(friendly_name: nil, status: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            friendly_name: friendly_name,
+            status: status,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -70,7 +93,10 @@ module Twilio
       ##
       # Constructs a AccountContext
       def get(sid)
-        AccountContext.new(@version, sid, @solution)
+        AccountContext.new(
+            @version,
+            sid: sid,
+        )
       end
       
       ##
@@ -80,13 +106,35 @@ module Twilio
       end
     end
   
+    class AccountPage < Page
+      def initialize(version, response)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {}
+      end
+      
+      def get_instance(payload)
+        return AccountInstance.new(
+            @version,
+            payload,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.AccountPage>'
+      end
+    end
+  
     class AccountContext < InstanceContext
       def initialize(version, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'sid' => sid,
+            sid: sid,
         }
         @uri = "/Accounts/#{@solution[:sid]}.json"
         
@@ -152,204 +200,312 @@ module Twilio
         )
       end
       
-      def addresses
+      def addresses(sid=:unset)
+        if sid != :unset
+          return AddressContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @addresses
           @addresses = AddressList.new(
               @version,
               account_sid: @solution[:sid],
           )
         end
+        
         @addresses
       end
       
-      def applications
+      def applications(sid=:unset)
+        if sid != :unset
+          return ApplicationContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @applications
           @applications = ApplicationList.new(
               @version,
               account_sid: @solution[:sid],
           )
         end
+        
         @applications
       end
       
-      def authorized_connect_apps
+      def authorized_connect_apps(connect_app_sid=:unset)
+        if connect_app_sid != :unset
+          return AuthorizedConnectAppContext.new(
+              @version,
+              @solution[:sid],
+              connect_app_sid,
+          )
+        end
+        
         unless @authorized_connect_apps
           @authorized_connect_apps = AuthorizedConnectAppList.new(
               @version,
               account_sid: @solution[:sid],
           )
         end
+        
         @authorized_connect_apps
       end
       
-      def available_phone_numbers
+      def available_phone_numbers(country_code=:unset)
+        if country_code != :unset
+          return AvailablePhoneNumberCountryContext.new(
+              @version,
+              @solution[:sid],
+              country_code,
+          )
+        end
+        
         unless @available_phone_numbers
           @available_phone_numbers = AvailablePhoneNumberCountryList.new(
               @version,
               account_sid: @solution[:sid],
           )
         end
+        
         @available_phone_numbers
       end
       
-      def calls
+      def calls(sid=:unset)
+        if sid != :unset
+          return CallContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @calls
           @calls = CallList.new(
               @version,
               account_sid: @solution[:sid],
           )
         end
+        
         @calls
       end
       
-      def conferences
+      def conferences(sid=:unset)
+        if sid != :unset
+          return ConferenceContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @conferences
           @conferences = ConferenceList.new(
               @version,
               account_sid: @solution[:sid],
           )
         end
+        
         @conferences
       end
       
-      def connect_apps
+      def connect_apps(sid=:unset)
+        if sid != :unset
+          return ConnectAppContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @connect_apps
           @connect_apps = ConnectAppList.new(
               @version,
               account_sid: @solution[:sid],
           )
         end
+        
         @connect_apps
       end
       
-      def incoming_phone_numbers
+      def incoming_phone_numbers(sid=:unset)
+        if sid != :unset
+          return IncomingPhoneNumberContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @incoming_phone_numbers
           @incoming_phone_numbers = IncomingPhoneNumberList.new(
               @version,
               owner_account_sid: @solution[:sid],
           )
         end
+        
         @incoming_phone_numbers
       end
       
-      def messages
+      def messages(sid=:unset)
+        if sid != :unset
+          return MessageContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @messages
           @messages = MessageList.new(
               @version,
               account_sid: @solution[:sid],
           )
         end
+        
         @messages
       end
       
-      def notifications
+      def notifications(sid=:unset)
+        if sid != :unset
+          return NotificationContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @notifications
           @notifications = NotificationList.new(
               @version,
               account_sid: @solution[:sid],
           )
         end
+        
         @notifications
       end
       
-      def outgoing_caller_ids
+      def outgoing_caller_ids(sid=:unset)
+        if sid != :unset
+          return OutgoingCallerIdContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @outgoing_caller_ids
           @outgoing_caller_ids = OutgoingCallerIdList.new(
               @version,
               account_sid: @solution[:sid],
           )
         end
+        
         @outgoing_caller_ids
       end
       
-      def queues
+      def queues(sid=:unset)
+        if sid != :unset
+          return QueueContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @queues
           @queues = QueueList.new(
               @version,
               account_sid: @solution[:sid],
           )
         end
+        
         @queues
       end
       
-      def recordings
+      def recordings(sid=:unset)
+        if sid != :unset
+          return RecordingContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @recordings
           @recordings = RecordingList.new(
               @version,
               account_sid: @solution[:sid],
           )
         end
+        
         @recordings
       end
       
       def sandbox
-        unless @sandbox
-          @sandbox = SandboxList.new(
-              @version,
-              account_sid: @solution[:sid],
-          )
-        end
-        @sandbox
+        return SandboxContext.new(
+            @version,
+            @solution[:sid],
+        )
       end
       
       def sip
-        unless @sip
-          @sip = SipList.new(
-              @version,
-              account_sid: @solution[:sid],
-          )
-        end
-        @sip
+        return SipContext.new(
+            @version,
+            @solution[:sid],
+        )
       end
       
       def sms
-        unless @sms
-          @sms = SmsList.new(
-              @version,
-              account_sid: @solution[:sid],
-          )
-        end
-        @sms
+        return SmsContext.new(
+            @version,
+            @solution[:sid],
+        )
       end
       
       def tokens
-        unless @tokens
-          @tokens = TokenList.new(
-              @version,
-              account_sid: @solution[:sid],
-          )
-        end
-        @tokens
+        return TokenContext.new(
+            @version,
+            @solution[:sid],
+        )
       end
       
-      def transcriptions
+      def transcriptions(sid=:unset)
+        if sid != :unset
+          return TranscriptionContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @transcriptions
           @transcriptions = TranscriptionList.new(
               @version,
               account_sid: @solution[:sid],
           )
         end
+        
         @transcriptions
       end
       
       def usage
-        unless @usage
-          @usage = UsageList.new(
-              @version,
-              account_sid: @solution[:sid],
-          )
-        end
-        @usage
+        return UsageContext.new(
+            @version,
+            @solution[:sid],
+        )
       end
       
       def validation_requests
-        unless @validation_requests
-          @validation_requests = ValidationRequestList.new(
-              @version,
-              account_sid: @solution[:sid],
-          )
-        end
-        @validation_requests
+        return ValidationRequestContext.new(
+            @version,
+            @solution[:sid],
+        )
       end
       
       ##
@@ -385,9 +541,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = AccountContext(
+          @instance_context = AccountContext.new(
               @version,
               @params['sid'],
           )

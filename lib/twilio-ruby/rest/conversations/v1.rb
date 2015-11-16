@@ -16,8 +16,12 @@ module Twilio
           @conversations = nil
         end
         
-        def conversations
-          @conversations ||= ConversationList.new self
+        def conversations(sid=:unset)
+          if sid == :unset
+            @conversations ||= ConversationList.new self
+          else
+            ConversationContext.new sid
+          end
         end
         
         ##

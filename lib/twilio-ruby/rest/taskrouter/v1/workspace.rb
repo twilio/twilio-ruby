@@ -19,11 +19,33 @@ module Twilio
       
       ##
       # Reads WorkspaceInstance records from the API as a list.
-      def read(friendly_name: nil, limit: nil, page_size: nil)
-        @version.read(
-            limit: nil,
-            page_size: nil
+      def list(friendly_name: nil, limit: nil, page_size: nil)
+        self.stream(
+            friendly_name: friendly_name,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(friendly_name: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            friendly_name: friendly_name,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -70,7 +92,10 @@ module Twilio
       ##
       # Constructs a WorkspaceContext
       def get(sid)
-        WorkspaceContext.new(@version, sid, @solution)
+        WorkspaceContext.new(
+            @version,
+            sid: sid,
+        )
       end
       
       ##
@@ -80,13 +105,35 @@ module Twilio
       end
     end
   
+    class WorkspacePage < Page
+      def initialize(version, response)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {}
+      end
+      
+      def get_instance(payload)
+        return WorkspaceInstance.new(
+            @version,
+            payload,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Taskrouter.V1.WorkspacePage>'
+      end
+    end
+  
     class WorkspaceContext < InstanceContext
       def initialize(version, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'sid' => sid,
+            sid: sid,
         }
         @uri = "/Workspaces/#{@solution[:sid]}"
         
@@ -147,74 +194,125 @@ module Twilio
         return @version.delete('delete', @uri)
       end
       
-      def activities
+      def activities(sid=:unset)
+        if sid != :unset
+          return ActivityContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @activities
           @activities = ActivityList.new(
               @version,
               workspace_sid: @solution[:sid],
           )
         end
+        
         @activities
       end
       
-      def events
+      def events(sid=:unset)
+        if sid != :unset
+          return EventContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @events
           @events = EventList.new(
               @version,
               workspace_sid: @solution[:sid],
           )
         end
+        
         @events
       end
       
-      def tasks
+      def tasks(sid=:unset)
+        if sid != :unset
+          return TaskContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @tasks
           @tasks = TaskList.new(
               @version,
               workspace_sid: @solution[:sid],
           )
         end
+        
         @tasks
       end
       
-      def task_queues
+      def task_queues(sid=:unset)
+        if sid != :unset
+          return TaskQueueContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @task_queues
           @task_queues = TaskQueueList.new(
               @version,
               workspace_sid: @solution[:sid],
           )
         end
+        
         @task_queues
       end
       
-      def workers
+      def workers(sid=:unset)
+        if sid != :unset
+          return WorkerContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @workers
           @workers = WorkerList.new(
               @version,
               workspace_sid: @solution[:sid],
           )
         end
+        
         @workers
       end
       
-      def workflows
+      def workflows(sid=:unset)
+        if sid != :unset
+          return WorkflowContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @workflows
           @workflows = WorkflowList.new(
               @version,
               workspace_sid: @solution[:sid],
           )
         end
+        
         @workflows
       end
       
       def statistics
-        unless @statistics
-          @statistics = WorkspaceStatisticsList.new(
-              @version,
-              workspace_sid: @solution[:sid],
-          )
-        end
-        @statistics
+        return WorkspaceStatisticsContext.new(
+            @version,
+            @solution[:sid],
+        )
       end
       
       ##
@@ -250,9 +348,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = WorkspaceContext(
+          @instance_context = WorkspaceContext.new(
               @version,
               @params['sid'],
           )

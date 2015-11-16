@@ -17,8 +17,12 @@ module Twilio
           @account = nil
         end
         
-        def accounts
-          @accounts ||= AccountList.new self
+        def accounts(sid=:unset)
+          if sid == :unset
+            @accounts ||= AccountList.new self
+          else
+            AccountContext.new sid
+          end
         end
         
         ##

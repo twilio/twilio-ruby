@@ -9,12 +9,12 @@ module Twilio
     class ApplicationList < ListResource
       ##
       # Initialize the ApplicationList
-      def initialize(version, account_sid)
+      def initialize(version, account_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid
+            account_sid: account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Applications.json"
       end
@@ -55,11 +55,33 @@ module Twilio
       
       ##
       # Reads ApplicationInstance records from the API as a list.
-      def read(friendly_name: nil, limit: nil, page_size: nil)
-        @version.read(
-            limit: nil,
-            page_size: nil
+      def list(friendly_name: nil, limit: nil, page_size: nil)
+        self.stream(
+            friendly_name: friendly_name,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(friendly_name: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            friendly_name: friendly_name,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -86,7 +108,11 @@ module Twilio
       ##
       # Constructs a ApplicationContext
       def get(sid)
-        ApplicationContext.new(@version, sid, @solution)
+        ApplicationContext.new(
+            @version,
+            account_sid: @solution[:account_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -96,14 +122,39 @@ module Twilio
       end
     end
   
+    class ApplicationPage < Page
+      def initialize(version, response, account_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return ApplicationInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.ApplicationPage>'
+      end
+    end
+  
     class ApplicationContext < InstanceContext
       def initialize(version, account_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'sid' => sid,
+            account_sid: account_sid,
+            sid: sid,
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Applications/#{@solution[:sid]}.json"
       end
@@ -212,9 +263,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = ApplicationContext(
+          @instance_context = ApplicationContext.new(
               @version,
               @params['account_sid'],
               @params['sid'],

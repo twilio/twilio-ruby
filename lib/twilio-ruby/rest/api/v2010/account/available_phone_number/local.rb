@@ -9,24 +9,46 @@ module Twilio
     class LocalList < ListResource
       ##
       # Initialize the LocalList
-      def initialize(version, account_sid, country_code)
+      def initialize(version, account_sid: nil, country_code: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'country_code' => country_code
+            account_sid: account_sid,
+            country_code: country_code
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/AvailablePhoneNumbers/#{@solution[:country_code]}/Local.json"
       end
       
       ##
       # Reads LocalInstance records from the API as a list.
-      def read(beta: nil, limit: nil, page_size: nil)
-        @version.read(
-            limit: nil,
-            page_size: nil
+      def list(beta: nil, limit: nil, page_size: nil)
+        self.stream(
+            beta: beta,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(beta: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            beta: beta,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -55,6 +77,33 @@ module Twilio
       # Provide a user friendly representation
       def to_s
         '#<Twilio.Api.V2010.LocalList>'
+      end
+    end
+  
+    class LocalPage < Page
+      def initialize(version, response, account_sid, country_code)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'country_code' => country_code,
+        }
+      end
+      
+      def get_instance(payload)
+        return LocalInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            country_code: @solution['country_code'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.LocalPage>'
       end
     end
   

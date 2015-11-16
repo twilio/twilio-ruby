@@ -3,6 +3,35 @@ module Twilio
     class Version
       MAX_PAGE_SIZE = 1000
 
+      class RecordStream
+        include Enumerable
+
+        def initialize(page, limit: nil, page_limit: nil)
+          @page = page
+          @limit = limit
+          @page_limit = page_limit
+
+        end
+
+        def each
+          current_record = 1
+          current_page = 1
+
+          while @page
+            @page.each do |record|
+              yield record
+              current_record += 1
+              return if @limit && @limit <= current_record
+            end
+
+            return if @page_limit && @page_limit <= current_page
+
+            @page = @page.next_page
+            current_page += 1
+          end
+        end
+      end
+
       def initialize(domain)
         @domain = domain
         @version = nil
@@ -41,7 +70,7 @@ module Twilio
         )
 
         if response.status_code != 200
-          raise TwilioException.new('Unable to fetch record')
+          raise Twilio::REST::TwilioException.new('Unable to fetch record')
         end
 
         response.body
@@ -84,17 +113,17 @@ module Twilio
       end
 
       def read_limits(limit=nil, page_size=nil)
-        page_limit = values.unset
+        page_limit = nil
 
         unless limit.nil?
           # If there is no user-specified page_size, pick the most network efficient size
-          page_size ||= min(limit, MAX_PAGE_SIZE)
+          page_size ||= [limit, MAX_PAGE_SIZE].min
           page_limit = (limit / page_size.to_f).ceil
         end
 
         {
-          limit: limit || values.unset,
-          page_size: page_size || values.unset,
+          limit: limit || nil,
+          page_size: page_size || nil,
           page_limit: page_limit,
         }
       end
@@ -109,6 +138,10 @@ module Twilio
           auth,
           timeout
         )
+      end
+
+      def stream(page, limit: nil, page_limit: nil)
+        RecordStream.new(page, limit: limit, page_limit: page_limit)
       end
 
       def create(instance, instance_kwargs, method, uri, kwargs)

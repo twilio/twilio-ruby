@@ -1,6 +1,8 @@
 module Twilio
   module REST
     class Page
+      include Enumerable
+
       META_KEYS = [
           'end',
           'first_page_uri',
@@ -24,12 +26,12 @@ module Twilio
         @records = self.load_page(payload)
       end
 
-      def proccess_response(response)
+      def process_response(response)
         if response.status_code != 200
-          raise TwilioException.new('Unable to fetch page', response)
+          raise Twilio::REST::TwilioException.new('Unable to fetch page', response)
         end
 
-        JSON.parse(response)
+        response.body
       end
 
       def load_page(payload)
@@ -43,31 +45,31 @@ module Twilio
           end
         end
 
-        raise TwilioException.new('Page Records can not be deserialized')
+        raise Twilio::REST::TwilioException.new('Page Records can not be deserialized')
       end
 
       def previous_page_url
-        if payload['meta'] && payload['meta']['previous_page_url']
-          return payload['meta']['previous_page_url']
-        elsif payload['previous_page_uri']
-          return @version.domain.absolute_url(payload['previous_page_uri'])
+        if @payload['meta'] && @payload['meta']['previous_page_url']
+          return @payload['meta']['previous_page_url']
+        elsif @payload['previous_page_uri']
+          return @version.domain.absolute_url(@payload['previous_page_uri'])
         end
 
         nil
       end
 
       def next_page_url
-        if payload['meta'] && payload['meta']['next_page_url']
-          return payload['meta']['next_page_url']
-        elsif payload['next_page_uri']
-          return @version.domain.absolute_url(payload['next_page_uri'])
+        if @payload['meta'] && @payload['meta']['next_page_url']
+          return @payload['meta']['next_page_url']
+        elsif @payload['next_page_uri']
+          return @version.domain.absolute_url(@payload['next_page_uri'])
         end
 
         nil
       end
 
       def get_instance(payload)
-        raise TwilioException.new('Page.get_instance() must be implemented in the derived class')
+        raise Twilio::REST::TwilioException.new('Page.get_instance() must be implemented in the derived class')
       end
 
       def previous_page
@@ -84,6 +86,12 @@ module Twilio
         response = @version.domain.client.request('GET', self.next_page_url)
 
         self.class.new(@version, response, @solution)
+      end
+
+      def each
+        @records.each do |record|
+          yield record
+        end
       end
 
       def to_s

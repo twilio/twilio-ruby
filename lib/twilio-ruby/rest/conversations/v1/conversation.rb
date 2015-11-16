@@ -35,7 +35,10 @@ module Twilio
       ##
       # Constructs a ConversationContext
       def get(sid)
-        ConversationContext.new(@version, sid, @solution)
+        ConversationContext.new(
+            @version,
+            sid: sid,
+        )
       end
       
       ##
@@ -45,13 +48,35 @@ module Twilio
       end
     end
   
+    class ConversationPage < Page
+      def initialize(version, response)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {}
+      end
+      
+      def get_instance(payload)
+        return ConversationInstance.new(
+            @version,
+            payload,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Conversations.V1.ConversationPage>'
+      end
+    end
+  
     class ConversationContext < InstanceContext
       def initialize(version, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'sid' => sid,
+            sid: sid,
         }
         @uri = "/Conversations/#{@solution[:sid]}"
         
@@ -77,13 +102,22 @@ module Twilio
         )
       end
       
-      def participants
+      def participants(sid=:unset)
+        if sid != :unset
+          return ParticipantContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @participants
           @participants = ParticipantList.new(
               @version,
               conversation_sid: @solution[:sid],
           )
         end
+        
         @participants
       end
       
@@ -118,9 +152,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = ConversationContext(
+          @instance_context = ConversationContext.new(
               @version,
               @params['sid'],
           )

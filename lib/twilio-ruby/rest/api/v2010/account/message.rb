@@ -9,12 +9,12 @@ module Twilio
     class MessageList < ListResource
       ##
       # Initialize the MessageList
-      def initialize(version, account_sid)
+      def initialize(version, account_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid
+            account_sid: account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Messages.json"
       end
@@ -46,15 +46,41 @@ module Twilio
       
       ##
       # Reads MessageInstance records from the API as a list.
-      def read(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, limit: nil, page_size: nil)
-        @version.read(
-            from: nil,
-            date_sent_before: nil,
-            date_sent: nil,
-            date_sent_after: nil,
-            limit: nil,
-            page_size: nil
+      def list(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, limit: nil, page_size: nil)
+        self.stream(
+            to: to,
+            from: from,
+            date_sent_before: date_sent_before,
+            date_sent: date_sent,
+            date_sent_after: date_sent_after,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            to: to,
+            from: from,
+            date_sent_before: date_sent_before,
+            date_sent: date_sent,
+            date_sent_after: date_sent_after,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -63,9 +89,9 @@ module Twilio
         params = {
             'To' => to,
             'From' => from,
-            'DateSent<' => date_sent_before.iso8601,
-            'DateSent' => date_sent.iso8601,
-            'DateSent>' => date_sent_after.iso8601,
+            'DateSent<' => Twilio.serialize_iso8601(date_sent_before),
+            'DateSent' => Twilio.serialize_iso8601(date_sent),
+            'DateSent>' => Twilio.serialize_iso8601(date_sent_after),
             'PageToken' => page_token,
             'Page' => page_number,
             'PageSize' => page_size,
@@ -85,7 +111,11 @@ module Twilio
       ##
       # Constructs a MessageContext
       def get(sid)
-        MessageContext.new(@version, sid, @solution)
+        MessageContext.new(
+            @version,
+            account_sid: @solution[:account_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -95,14 +125,39 @@ module Twilio
       end
     end
   
+    class MessagePage < Page
+      def initialize(version, response, account_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return MessageInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.MessagePage>'
+      end
+    end
+  
     class MessageContext < InstanceContext
       def initialize(version, account_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'sid' => sid,
+            account_sid: account_sid,
+            sid: sid,
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Messages/#{@solution[:sid]}.json"
         
@@ -156,7 +211,16 @@ module Twilio
         )
       end
       
-      def media
+      def media(sid=:unset)
+        if sid != :unset
+          return MediaContext.new(
+              @version,
+              @solution[:sid],
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @media
           @media = MediaList.new(
               @version,
@@ -164,6 +228,7 @@ module Twilio
               message_sid: @solution[:sid],
           )
         end
+        
         @media
       end
       
@@ -210,9 +275,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = MessageContext(
+          @instance_context = MessageContext.new(
               @version,
               @params['account_sid'],
               @params['sid'],

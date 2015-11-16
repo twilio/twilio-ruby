@@ -9,28 +9,55 @@ module Twilio
     class TaskList < ListResource
       ##
       # Initialize the TaskList
-      def initialize(version, workspace_sid)
+      def initialize(version, workspace_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid
+            workspace_sid: workspace_sid
         }
         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Tasks"
       end
       
       ##
       # Reads TaskInstance records from the API as a list.
-      def read(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, limit: nil, page_size: nil)
-        @version.read(
-            assignment_status: nil,
-            workflow_sid: nil,
-            workflow_name: nil,
-            task_queue_sid: nil,
-            task_queue_name: nil,
-            limit: nil,
-            page_size: nil
+      def list(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, limit: nil, page_size: nil)
+        self.stream(
+            priority: priority,
+            assignment_status: assignment_status,
+            workflow_sid: workflow_sid,
+            workflow_name: workflow_name,
+            task_queue_sid: task_queue_sid,
+            task_queue_name: task_queue_name,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            priority: priority,
+            assignment_status: assignment_status,
+            workflow_sid: workflow_sid,
+            workflow_name: workflow_name,
+            task_queue_sid: task_queue_sid,
+            task_queue_name: task_queue_name,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -85,7 +112,11 @@ module Twilio
       ##
       # Constructs a TaskContext
       def get(sid)
-        TaskContext.new(@version, sid, @solution)
+        TaskContext.new(
+            @version,
+            workspace_sid: @solution[:workspace_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -95,14 +126,39 @@ module Twilio
       end
     end
   
+    class TaskPage < Page
+      def initialize(version, response, workspace_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'workspace_sid' => workspace_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return TaskInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Taskrouter.V1.TaskPage>'
+      end
+    end
+  
     class TaskContext < InstanceContext
       def initialize(version, workspace_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid,
-            'sid' => sid,
+            workspace_sid: workspace_sid,
+            sid: sid,
         }
         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Tasks/#{@solution[:sid]}"
         
@@ -159,7 +215,16 @@ module Twilio
         return @version.delete('delete', @uri)
       end
       
-      def reservations
+      def reservations(sid=:unset)
+        if sid != :unset
+          return ReservationContext.new(
+              @version,
+              @solution[:sid],
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @reservations
           @reservations = ReservationList.new(
               @version,
@@ -167,6 +232,7 @@ module Twilio
               task_sid: @solution[:sid],
           )
         end
+        
         @reservations
       end
       
@@ -207,9 +273,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = TaskContext(
+          @instance_context = TaskContext.new(
               @version,
               @params['workspace_sid'],
               @params['sid'],

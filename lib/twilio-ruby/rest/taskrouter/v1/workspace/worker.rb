@@ -9,12 +9,12 @@ module Twilio
     class WorkerList < ListResource
       ##
       # Initialize the WorkerList
-      def initialize(version, workspace_sid)
+      def initialize(version, workspace_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid
+            workspace_sid: workspace_sid
         }
         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers"
         
@@ -24,17 +24,45 @@ module Twilio
       
       ##
       # Reads WorkerInstance records from the API as a list.
-      def read(activity_name: nil, activity_sid: nil, available: nil, friendly_name: nil, target_workers_expression: nil, task_queue_name: nil, task_queue_sid: nil, limit: nil, page_size: nil)
-        @version.read(
-            activity_sid: nil,
-            available: nil,
-            friendly_name: nil,
-            target_workers_expression: nil,
-            task_queue_name: nil,
-            task_queue_sid: nil,
-            limit: nil,
-            page_size: nil
+      def list(activity_name: nil, activity_sid: nil, available: nil, friendly_name: nil, target_workers_expression: nil, task_queue_name: nil, task_queue_sid: nil, limit: nil, page_size: nil)
+        self.stream(
+            activity_name: activity_name,
+            activity_sid: activity_sid,
+            available: available,
+            friendly_name: friendly_name,
+            target_workers_expression: target_workers_expression,
+            task_queue_name: task_queue_name,
+            task_queue_sid: task_queue_sid,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(activity_name: nil, activity_sid: nil, available: nil, friendly_name: nil, target_workers_expression: nil, task_queue_name: nil, task_queue_sid: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            activity_name: activity_name,
+            activity_sid: activity_sid,
+            available: available,
+            friendly_name: friendly_name,
+            target_workers_expression: target_workers_expression,
+            task_queue_name: task_queue_name,
+            task_queue_sid: task_queue_sid,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -95,7 +123,11 @@ module Twilio
       ##
       # Constructs a WorkerContext
       def get(sid)
-        WorkerContext.new(@version, sid, @solution)
+        WorkerContext.new(
+            @version,
+            workspace_sid: @solution[:workspace_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -105,14 +137,39 @@ module Twilio
       end
     end
   
+    class WorkerPage < Page
+      def initialize(version, response, workspace_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'workspace_sid' => workspace_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return WorkerInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Taskrouter.V1.WorkerPage>'
+      end
+    end
+  
     class WorkerContext < InstanceContext
       def initialize(version, workspace_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid,
-            'sid' => sid,
+            workspace_sid: workspace_sid,
+            sid: sid,
         }
         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers/#{@solution[:sid]}"
         
@@ -169,14 +226,11 @@ module Twilio
       end
       
       def statistics
-        unless @statistics
-          @statistics = WorkerStatisticsList.new(
-              @version,
-              workspace_sid: @solution[:workspace_sid],
-              worker_sid: @solution[:sid],
-          )
-        end
-        @statistics
+        return WorkerStatisticsContext.new(
+            @version,
+            @solution[:sid],
+            @solution[:sid],
+        )
       end
       
       ##
@@ -214,9 +268,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = WorkerContext(
+          @instance_context = WorkerContext.new(
               @version,
               @params['workspace_sid'],
               @params['sid'],

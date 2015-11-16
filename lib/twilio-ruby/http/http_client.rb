@@ -29,7 +29,6 @@ module Twilio
         request.form_data = data if [:post, :put].include?(method)
 
         @last_request = request
-        retries_left = @config.retry_limit
         response = @connection.request request
         @last_response = response
         if response.body and !response.body.empty?
@@ -38,7 +37,7 @@ module Twilio
           object = { message: 'Bad request', code: 400 }.to_json
         end
 
-        TwilioResponse.new(response.status_code, object)
+        TwilioResponse.new(response.code.to_i, object)
       end
     end
 

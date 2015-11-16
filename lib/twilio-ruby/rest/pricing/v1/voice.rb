@@ -39,6 +39,28 @@ module Twilio
       end
     end
   
+    class VoicePage < Page
+      def initialize(version, response)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {}
+      end
+      
+      def get_instance(payload)
+        return VoiceInstance.new(
+            @version,
+            payload,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Pricing.V1.VoicePage>'
+      end
+    end
+  
     class VoiceInstance < InstanceResource
       def initialize(version, payload)
         super(version)

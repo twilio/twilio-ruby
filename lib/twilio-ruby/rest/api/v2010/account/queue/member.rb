@@ -9,23 +9,44 @@ module Twilio
     class MemberList < ListResource
       ##
       # Initialize the MemberList
-      def initialize(version, account_sid, queue_sid)
+      def initialize(version, account_sid: nil, queue_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'queue_sid' => queue_sid
+            account_sid: account_sid,
+            queue_sid: queue_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Queues/#{@solution[:queue_sid]}/Members.json"
       end
       
       ##
       # Reads MemberInstance records from the API as a list.
-      def read(limit: nil, page_size: nil)
-        @version.read(
-            page_size: nil
+      def list(limit: nil, page_size: nil)
+        self.stream(
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -52,7 +73,12 @@ module Twilio
       ##
       # Constructs a MemberContext
       def get(call_sid)
-        MemberContext.new(@version, call_sid, @solution)
+        MemberContext.new(
+            @version,
+            account_sid: @solution[:account_sid],
+            queue_sid: @solution[:queue_sid],
+            call_sid: call_sid,
+        )
       end
       
       ##
@@ -62,15 +88,42 @@ module Twilio
       end
     end
   
+    class MemberPage < Page
+      def initialize(version, response, account_sid, queue_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'queue_sid' => queue_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return MemberInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            queue_sid: @solution['queue_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.MemberPage>'
+      end
+    end
+  
     class MemberContext < InstanceContext
       def initialize(version, account_sid, queue_sid, call_sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'queue_sid' => queue_sid,
-            'call_sid' => call_sid,
+            account_sid: account_sid,
+            queue_sid: queue_sid,
+            call_sid: call_sid,
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Queues/#{@solution[:queue_sid]}/Members/#{@solution[:call_sid]}.json"
       end
@@ -148,9 +201,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = MemberContext(
+          @instance_context = MemberContext.new(
               @version,
               @params['account_sid'],
               @params['queue_sid'],

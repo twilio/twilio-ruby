@@ -19,10 +19,31 @@ module Twilio
       
       ##
       # Reads CountryInstance records from the API as a list.
-      def read(limit: nil, page_size: nil)
-        @version.read(
-            page_size: nil
+      def list(limit: nil, page_size: nil)
+        self.stream(
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -47,7 +68,10 @@ module Twilio
       ##
       # Constructs a CountryContext
       def get(iso_country)
-        CountryContext.new(@version, iso_country, @solution)
+        CountryContext.new(
+            @version,
+            iso_country: iso_country,
+        )
       end
       
       ##
@@ -57,13 +81,35 @@ module Twilio
       end
     end
   
+    class CountryPage < Page
+      def initialize(version, response)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {}
+      end
+      
+      def get_instance(payload)
+        return CountryInstance.new(
+            @version,
+            payload,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Pricing.V1.CountryPage>'
+      end
+    end
+  
     class CountryContext < InstanceContext
       def initialize(version, iso_country)
         super(version)
         
         # Path Solution
         @solution = {
-            'iso_country' => iso_country,
+            iso_country: iso_country,
         }
         @uri = "/PhoneNumbers/Countries/#{@solution[:iso_country]}"
       end
@@ -102,10 +148,10 @@ module Twilio
         @properties = {
             'iso_country' => payload['iso_country'],
             'country' => payload['country'],
-            'price_unit' => payload.get('price_unit'),
+            'url' => payload.get('url'),
             'uri' => payload.get('uri'),
             'phone_number_prices' => payload.get('phone_number_prices'),
-            'url' => payload.get('url'),
+            'price_unit' => payload.get('price_unit'),
         }
         
         # Context
@@ -115,26 +161,14 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = CountryContext(
+          @instance_context = CountryContext.new(
               @version,
               @params['iso_country'],
           )
         end
         @instance_context
-      end
-      
-      def price_unit
-        @properties['price_unit']
-      end
-      
-      def phone_number_prices
-        @properties['phone_number_prices']
-      end
-      
-      def iso_country
-        @properties['iso_country']
       end
       
       def url
@@ -143,6 +177,18 @@ module Twilio
       
       def uri
         @properties['uri']
+      end
+      
+      def iso_country
+        @properties['iso_country']
+      end
+      
+      def phone_number_prices
+        @properties['phone_number_prices']
+      end
+      
+      def price_unit
+        @properties['price_unit']
       end
       
       def country

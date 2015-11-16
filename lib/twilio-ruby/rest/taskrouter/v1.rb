@@ -16,8 +16,12 @@ module Twilio
           @workspaces = nil
         end
         
-        def workspaces
-          @workspaces ||= WorkspaceList.new self
+        def workspaces(sid=:unset)
+          if sid == :unset
+            @workspaces ||= WorkspaceList.new self
+          else
+            WorkspaceContext.new sid
+          end
         end
         
         ##

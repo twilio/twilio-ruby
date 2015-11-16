@@ -9,20 +9,24 @@ module Twilio
     class FeedbackList < ListResource
       ##
       # Initialize the FeedbackList
-      def initialize(version, account_sid, call_sid)
+      def initialize(version, account_sid: nil, call_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'call_sid' => call_sid
+            account_sid: account_sid,
+            call_sid: call_sid
         }
       end
       
       ##
       # Constructs a FeedbackContext
       def get
-        FeedbackContext.new(@version, @solution)
+        FeedbackContext.new(
+            @version,
+            account_sid: @solution[:account_sid],
+            call_sid: @solution[:call_sid],
+        )
       end
       
       ##
@@ -32,14 +36,41 @@ module Twilio
       end
     end
   
+    class FeedbackPage < Page
+      def initialize(version, response, account_sid, call_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+            'call_sid' => call_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return FeedbackInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+            call_sid: @solution['call_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.FeedbackPage>'
+      end
+    end
+  
     class FeedbackContext < InstanceContext
       def initialize(version, account_sid, call_sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'call_sid' => call_sid,
+            account_sid: account_sid,
+            call_sid: call_sid,
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/Feedback.json"
       end
@@ -137,9 +168,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = FeedbackContext(
+          @instance_context = FeedbackContext.new(
               @version,
               @params['account_sid'],
               @params['call_sid'],

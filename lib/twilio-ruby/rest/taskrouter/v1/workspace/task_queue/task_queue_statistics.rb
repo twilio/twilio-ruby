@@ -9,20 +9,24 @@ module Twilio
     class TaskQueueStatisticsList < ListResource
       ##
       # Initialize the TaskQueueStatisticsList
-      def initialize(version, workspace_sid, task_queue_sid)
+      def initialize(version, workspace_sid: nil, task_queue_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid,
-            'task_queue_sid' => task_queue_sid
+            workspace_sid: workspace_sid,
+            task_queue_sid: task_queue_sid
         }
       end
       
       ##
       # Constructs a TaskQueueStatisticsContext
       def get
-        TaskQueueStatisticsContext.new(@version, @solution)
+        TaskQueueStatisticsContext.new(
+            @version,
+            workspace_sid: @solution[:workspace_sid],
+            task_queue_sid: @solution[:task_queue_sid],
+        )
       end
       
       ##
@@ -32,14 +36,41 @@ module Twilio
       end
     end
   
+    class TaskQueueStatisticsPage < Page
+      def initialize(version, response, workspace_sid, task_queue_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'workspace_sid' => workspace_sid,
+            'task_queue_sid' => task_queue_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return TaskQueueStatisticsInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+            task_queue_sid: @solution['task_queue_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Taskrouter.V1.TaskQueueStatisticsPage>'
+      end
+    end
+  
     class TaskQueueStatisticsContext < InstanceContext
       def initialize(version, workspace_sid, task_queue_sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid,
-            'task_queue_sid' => task_queue_sid,
+            workspace_sid: workspace_sid,
+            task_queue_sid: task_queue_sid,
         }
         @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues/#{@solution[:task_queue_sid]}/Statistics"
       end
@@ -48,10 +79,10 @@ module Twilio
       # Fetch a TaskQueueStatisticsInstance
       def fetch(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil)
         params = {
-            'EndDate' => end_date.iso8601,
+            'EndDate' => Twilio.serialize_iso8601(end_date),
             'FriendlyName' => friendly_name,
             'Minutes' => minutes,
-            'StartDate' => start_date.iso8601,
+            'StartDate' => Twilio.serialize_iso8601(start_date),
         }
         
         @version.fetch(
@@ -97,9 +128,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = TaskQueueStatisticsContext(
+          @instance_context = TaskQueueStatisticsContext.new(
               @version,
               @params['workspace_sid'],
               @params['task_queue_sid'],

@@ -9,42 +9,71 @@ module Twilio
     class ConferenceList < ListResource
       ##
       # Initialize the ConferenceList
-      def initialize(version, account_sid)
+      def initialize(version, account_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid
+            account_sid: account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Conferences.json"
       end
       
       ##
       # Reads ConferenceInstance records from the API as a list.
-      def read(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, limit: nil, page_size: nil)
-        @version.read(
-            date_created: nil,
-            date_created_after: nil,
-            date_updated_before: nil,
-            date_updated: nil,
-            date_updated_after: nil,
-            friendly_name: nil,
-            status: nil,
-            limit: nil,
-            page_size: nil
+      def list(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, limit: nil, page_size: nil)
+        self.stream(
+            date_created_before: date_created_before,
+            date_created: date_created,
+            date_created_after: date_created_after,
+            date_updated_before: date_updated_before,
+            date_updated: date_updated,
+            date_updated_after: date_updated_after,
+            friendly_name: friendly_name,
+            status: status,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            date_created_before: date_created_before,
+            date_created: date_created,
+            date_created_after: date_created_after,
+            date_updated_before: date_updated_before,
+            date_updated: date_updated,
+            date_updated_after: date_updated_after,
+            friendly_name: friendly_name,
+            status: status,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
       # Retrieve a single page of ConferenceInstance records from the API.
       def page(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, page_token: nil, page_number: nil, page_size: nil)
         params = {
-            'DateCreated<' => date_created_before.iso8601,
-            'DateCreated' => date_created.iso8601,
-            'DateCreated>' => date_created_after.iso8601,
-            'DateUpdated<' => date_updated_before.iso8601,
-            'DateUpdated' => date_updated.iso8601,
-            'DateUpdated>' => date_updated_after.iso8601,
+            'DateCreated<' => Twilio.serialize_iso8601(date_created_before),
+            'DateCreated' => Twilio.serialize_iso8601(date_created),
+            'DateCreated>' => Twilio.serialize_iso8601(date_created_after),
+            'DateUpdated<' => Twilio.serialize_iso8601(date_updated_before),
+            'DateUpdated' => Twilio.serialize_iso8601(date_updated),
+            'DateUpdated>' => Twilio.serialize_iso8601(date_updated_after),
             'FriendlyName' => friendly_name,
             'Status' => status,
             'PageToken' => page_token,
@@ -66,7 +95,11 @@ module Twilio
       ##
       # Constructs a ConferenceContext
       def get(sid)
-        ConferenceContext.new(@version, sid, @solution)
+        ConferenceContext.new(
+            @version,
+            account_sid: @solution[:account_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -76,14 +109,39 @@ module Twilio
       end
     end
   
+    class ConferencePage < Page
+      def initialize(version, response, account_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return ConferenceInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.ConferencePage>'
+      end
+    end
+  
     class ConferenceContext < InstanceContext
       def initialize(version, account_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'sid' => sid,
+            account_sid: account_sid,
+            sid: sid,
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Conferences/#{@solution[:sid]}.json"
         
@@ -110,7 +168,16 @@ module Twilio
         )
       end
       
-      def participants
+      def participants(call_sid=:unset)
+        if call_sid != :unset
+          return ParticipantContext.new(
+              @version,
+              @solution[:sid],
+              @solution[:sid],
+              call_sid,
+          )
+        end
+        
         unless @participants
           @participants = ParticipantList.new(
               @version,
@@ -118,6 +185,7 @@ module Twilio
               conference_sid: @solution[:sid],
           )
         end
+        
         @participants
       end
       
@@ -153,9 +221,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = ConferenceContext(
+          @instance_context = ConferenceContext.new(
               @version,
               @params['account_sid'],
               @params['sid'],

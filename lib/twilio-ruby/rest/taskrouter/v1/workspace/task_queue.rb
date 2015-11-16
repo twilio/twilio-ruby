@@ -9,12 +9,12 @@ module Twilio
     class TaskQueueList < ListResource
       ##
       # Initialize the TaskQueueList
-      def initialize(version, workspace_sid)
+      def initialize(version, workspace_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid
+            workspace_sid: workspace_sid
         }
         @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues"
         
@@ -24,12 +24,35 @@ module Twilio
       
       ##
       # Reads TaskQueueInstance records from the API as a list.
-      def read(friendly_name: nil, evaluate_worker_attributes: nil, limit: nil, page_size: nil)
-        @version.read(
-            evaluate_worker_attributes: nil,
-            limit: nil,
-            page_size: nil
+      def list(friendly_name: nil, evaluate_worker_attributes: nil, limit: nil, page_size: nil)
+        self.stream(
+            friendly_name: friendly_name,
+            evaluate_worker_attributes: evaluate_worker_attributes,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(friendly_name: nil, evaluate_worker_attributes: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            friendly_name: friendly_name,
+            evaluate_worker_attributes: evaluate_worker_attributes,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -87,7 +110,11 @@ module Twilio
       ##
       # Constructs a TaskQueueContext
       def get(sid)
-        TaskQueueContext.new(@version, sid, @solution)
+        TaskQueueContext.new(
+            @version,
+            workspace_sid: @solution[:workspace_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -97,14 +124,39 @@ module Twilio
       end
     end
   
+    class TaskQueuePage < Page
+      def initialize(version, response, workspace_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'workspace_sid' => workspace_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return TaskQueueInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Taskrouter.V1.TaskQueuePage>'
+      end
+    end
+  
     class TaskQueueContext < InstanceContext
       def initialize(version, workspace_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid,
-            'sid' => sid,
+            workspace_sid: workspace_sid,
+            sid: sid,
         }
         @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues/#{@solution[:sid]}"
         
@@ -163,14 +215,11 @@ module Twilio
       end
       
       def statistics
-        unless @statistics
-          @statistics = TaskQueueStatisticsList.new(
-              @version,
-              workspace_sid: @solution[:workspace_sid],
-              task_queue_sid: @solution[:sid],
-          )
-        end
-        @statistics
+        return TaskQueueStatisticsContext.new(
+            @version,
+            @solution[:sid],
+            @solution[:sid],
+        )
       end
       
       ##
@@ -210,9 +259,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = TaskQueueContext(
+          @instance_context = TaskQueueContext.new(
               @version,
               @params['workspace_sid'],
               @params['sid'],

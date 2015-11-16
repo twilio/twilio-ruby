@@ -9,12 +9,12 @@ module Twilio
     class FeedbackSummaryList < ListResource
       ##
       # Initialize the FeedbackSummaryList
-      def initialize(version, account_sid)
+      def initialize(version, account_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid
+            account_sid: account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Calls/FeedbackSummary.json"
       end
@@ -23,8 +23,8 @@ module Twilio
       # Create a new FeedbackSummaryInstance
       def create(start_date, end_date, include_subaccounts: nil, status_callback: nil, status_callback_method: nil)
         data = {
-            'StartDate' => start_date.iso8601,
-            'EndDate' => end_date.iso8601,
+            'StartDate' => Twilio.serialize_iso8601(start_date),
+            'EndDate' => Twilio.serialize_iso8601(end_date),
             'IncludeSubaccounts' => include_subaccounts,
             'StatusCallback' => status_callback,
             'StatusCallbackMethod' => status_callback_method,
@@ -46,7 +46,11 @@ module Twilio
       ##
       # Constructs a FeedbackSummaryContext
       def get(sid)
-        FeedbackSummaryContext.new(@version, sid, @solution)
+        FeedbackSummaryContext.new(
+            @version,
+            account_sid: @solution[:account_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -56,14 +60,39 @@ module Twilio
       end
     end
   
+    class FeedbackSummaryPage < Page
+      def initialize(version, response, account_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return FeedbackSummaryInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.FeedbackSummaryPage>'
+      end
+    end
+  
     class FeedbackSummaryContext < InstanceContext
       def initialize(version, account_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'sid' => sid,
+            account_sid: account_sid,
+            sid: sid,
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Calls/FeedbackSummary/#{@solution[:sid]}.json"
       end
@@ -131,9 +160,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = FeedbackSummaryContext(
+          @instance_context = FeedbackSummaryContext.new(
               @version,
               @params['account_sid'],
               @params['sid'],

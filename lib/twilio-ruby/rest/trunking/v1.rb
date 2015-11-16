@@ -16,8 +16,12 @@ module Twilio
           @trunks = nil
         end
         
-        def trunks
-          @trunks ||= TrunkList.new self
+        def trunks(sid=:unset)
+          if sid == :unset
+            @trunks ||= TrunkList.new self
+          else
+            TrunkContext.new sid
+          end
         end
         
         ##

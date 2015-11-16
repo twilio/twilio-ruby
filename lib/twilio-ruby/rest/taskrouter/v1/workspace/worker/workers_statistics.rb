@@ -9,19 +9,22 @@ module Twilio
     class WorkersStatisticsList < ListResource
       ##
       # Initialize the WorkersStatisticsList
-      def initialize(version, workspace_sid)
+      def initialize(version, workspace_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid
+            workspace_sid: workspace_sid
         }
       end
       
       ##
       # Constructs a WorkersStatisticsContext
       def get
-        WorkersStatisticsContext.new(@version, @solution)
+        WorkersStatisticsContext.new(
+            @version,
+            workspace_sid: @solution[:workspace_sid],
+        )
       end
       
       ##
@@ -31,13 +34,38 @@ module Twilio
       end
     end
   
+    class WorkersStatisticsPage < Page
+      def initialize(version, response, workspace_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'workspace_sid' => workspace_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return WorkersStatisticsInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Taskrouter.V1.WorkersStatisticsPage>'
+      end
+    end
+  
     class WorkersStatisticsContext < InstanceContext
       def initialize(version, workspace_sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid,
+            workspace_sid: workspace_sid,
         }
         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers/Statistics"
       end
@@ -47,8 +75,8 @@ module Twilio
       def fetch(minutes: nil, start_date: nil, end_date: nil, task_queue_sid: nil, task_queue_name: nil, friendly_name: nil)
         params = {
             'Minutes' => minutes,
-            'StartDate' => start_date.iso8601,
-            'EndDate' => end_date.iso8601,
+            'StartDate' => Twilio.serialize_iso8601(start_date),
+            'EndDate' => Twilio.serialize_iso8601(end_date),
             'TaskQueueSid' => task_queue_sid,
             'TaskQueueName' => task_queue_name,
             'FriendlyName' => friendly_name,
@@ -94,9 +122,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = WorkersStatisticsContext(
+          @instance_context = WorkersStatisticsContext.new(
               @version,
               @params['workspace_sid'],
           )

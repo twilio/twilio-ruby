@@ -19,7 +19,10 @@ module Twilio
       ##
       # Constructs a PhoneNumberContext
       def get(phone_number)
-        PhoneNumberContext.new(@version, phone_number, @solution)
+        PhoneNumberContext.new(
+            @version,
+            phone_number: phone_number,
+        )
       end
       
       ##
@@ -29,13 +32,35 @@ module Twilio
       end
     end
   
+    class PhoneNumberPage < Page
+      def initialize(version, response)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {}
+      end
+      
+      def get_instance(payload)
+        return PhoneNumberInstance.new(
+            @version,
+            payload,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Lookups.V1.PhoneNumberPage>'
+      end
+    end
+  
     class PhoneNumberContext < InstanceContext
       def initialize(version, phone_number)
         super(version)
         
         # Path Solution
         @solution = {
-            'phone_number' => phone_number,
+            phone_number: phone_number,
         }
         @uri = "/PhoneNumbers/#{@solution[:phone_number]}"
       end
@@ -88,9 +113,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = PhoneNumberContext(
+          @instance_context = PhoneNumberContext.new(
               @version,
               @params['phone_number'],
           )

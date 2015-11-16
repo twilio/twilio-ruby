@@ -9,22 +9,43 @@ module Twilio
     class QueueList < ListResource
       ##
       # Initialize the QueueList
-      def initialize(version, account_sid)
+      def initialize(version, account_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid
+            account_sid: account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Queues.json"
       end
       
       ##
       # Reads QueueInstance records from the API as a list.
-      def read(limit: nil, page_size: nil)
-        @version.read(
-            page_size: nil
+      def list(limit: nil, page_size: nil)
+        self.stream(
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -71,7 +92,11 @@ module Twilio
       ##
       # Constructs a QueueContext
       def get(sid)
-        QueueContext.new(@version, sid, @solution)
+        QueueContext.new(
+            @version,
+            account_sid: @solution[:account_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -81,14 +106,39 @@ module Twilio
       end
     end
   
+    class QueuePage < Page
+      def initialize(version, response, account_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return QueueInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.QueuePage>'
+      end
+    end
+  
     class QueueContext < InstanceContext
       def initialize(version, account_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'sid' => sid,
+            account_sid: account_sid,
+            sid: sid,
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Queues/#{@solution[:sid]}.json"
         
@@ -143,7 +193,16 @@ module Twilio
         return @version.delete('delete', @uri)
       end
       
-      def members
+      def members(call_sid=:unset)
+        if call_sid != :unset
+          return MemberContext.new(
+              @version,
+              @solution[:sid],
+              @solution[:sid],
+              call_sid,
+          )
+        end
+        
         unless @members
           @members = MemberList.new(
               @version,
@@ -151,6 +210,7 @@ module Twilio
               queue_sid: @solution[:sid],
           )
         end
+        
         @members
       end
       
@@ -187,9 +247,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = QueueContext(
+          @instance_context = QueueContext.new(
               @version,
               @params['account_sid'],
               @params['sid'],

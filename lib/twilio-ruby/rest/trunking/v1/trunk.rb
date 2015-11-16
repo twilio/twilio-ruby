@@ -43,10 +43,31 @@ module Twilio
       
       ##
       # Reads TrunkInstance records from the API as a list.
-      def read(limit: nil, page_size: nil)
-        @version.read(
-            page_size: nil
+      def list(limit: nil, page_size: nil)
+        self.stream(
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -71,7 +92,10 @@ module Twilio
       ##
       # Constructs a TrunkContext
       def get(sid)
-        TrunkContext.new(@version, sid, @solution)
+        TrunkContext.new(
+            @version,
+            sid: sid,
+        )
       end
       
       ##
@@ -81,13 +105,35 @@ module Twilio
       end
     end
   
+    class TrunkPage < Page
+      def initialize(version, response)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {}
+      end
+      
+      def get_instance(payload)
+        return TrunkInstance.new(
+            @version,
+            payload,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Trunking.V1.TrunkPage>'
+      end
+    end
+  
     class TrunkContext < InstanceContext
       def initialize(version, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'sid' => sid,
+            sid: sid,
         }
         @uri = "/Trunks/#{@solution[:sid]}"
         
@@ -147,43 +193,79 @@ module Twilio
         )
       end
       
-      def origination_urls
+      def origination_urls(sid=:unset)
+        if sid != :unset
+          return OriginationUrlContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @origination_urls
           @origination_urls = OriginationUrlList.new(
               @version,
               trunk_sid: @solution[:sid],
           )
         end
+        
         @origination_urls
       end
       
-      def credentials_lists
+      def credentials_lists(sid=:unset)
+        if sid != :unset
+          return CredentialListContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @credentials_lists
           @credentials_lists = CredentialListList.new(
               @version,
               trunk_sid: @solution[:sid],
           )
         end
+        
         @credentials_lists
       end
       
-      def ip_access_control_lists
+      def ip_access_control_lists(sid=:unset)
+        if sid != :unset
+          return IpAccessControlListContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @ip_access_control_lists
           @ip_access_control_lists = IpAccessControlListList.new(
               @version,
               trunk_sid: @solution[:sid],
           )
         end
+        
         @ip_access_control_lists
       end
       
-      def phone_numbers
+      def phone_numbers(sid=:unset)
+        if sid != :unset
+          return PhoneNumberContext.new(
+              @version,
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @phone_numbers
           @phone_numbers = PhoneNumberList.new(
               @version,
               trunk_sid: @solution[:sid],
           )
         end
+        
         @phone_numbers
       end
       
@@ -224,9 +306,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = TrunkContext(
+          @instance_context = TrunkContext.new(
               @version,
               @params['sid'],
           )

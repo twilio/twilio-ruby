@@ -9,23 +9,45 @@ module Twilio
     class WorkflowList < ListResource
       ##
       # Initialize the WorkflowList
-      def initialize(version, workspace_sid)
+      def initialize(version, workspace_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid
+            workspace_sid: workspace_sid
         }
         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workflows"
       end
       
       ##
       # Reads WorkflowInstance records from the API as a list.
-      def read(friendly_name: nil, limit: nil, page_size: nil)
-        @version.read(
-            limit: nil,
-            page_size: nil
+      def list(friendly_name: nil, limit: nil, page_size: nil)
+        self.stream(
+            friendly_name: friendly_name,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(friendly_name: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            friendly_name: friendly_name,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -76,7 +98,11 @@ module Twilio
       ##
       # Constructs a WorkflowContext
       def get(sid)
-        WorkflowContext.new(@version, sid, @solution)
+        WorkflowContext.new(
+            @version,
+            workspace_sid: @solution[:workspace_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -86,14 +112,39 @@ module Twilio
       end
     end
   
+    class WorkflowPage < Page
+      def initialize(version, response, workspace_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'workspace_sid' => workspace_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return WorkflowInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Taskrouter.V1.WorkflowPage>'
+      end
+    end
+  
     class WorkflowContext < InstanceContext
       def initialize(version, workspace_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid,
-            'sid' => sid,
+            workspace_sid: workspace_sid,
+            sid: sid,
         }
         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workflows/#{@solution[:sid]}"
         
@@ -152,14 +203,11 @@ module Twilio
       end
       
       def statistics
-        unless @statistics
-          @statistics = WorkflowStatisticsList.new(
-              @version,
-              workspace_sid: @solution[:workspace_sid],
-              workflow_sid: @solution[:sid],
-          )
-        end
-        @statistics
+        return WorkflowStatisticsContext.new(
+            @version,
+            @solution[:sid],
+            @solution[:sid],
+        )
       end
       
       ##
@@ -197,9 +245,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = WorkflowContext(
+          @instance_context = WorkflowContext.new(
               @version,
               @params['workspace_sid'],
               @params['sid'],

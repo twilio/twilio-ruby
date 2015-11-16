@@ -17,12 +17,20 @@ module Twilio
           @events = nil
         end
         
-        def alerts
-          @alerts ||= AlertList.new self
+        def alerts(sid=:unset)
+          if sid == :unset
+            @alerts ||= AlertList.new self
+          else
+            AlertContext.new sid
+          end
         end
         
-        def events
-          @events ||= EventList.new self
+        def events(sid=:unset)
+          if sid == :unset
+            @events ||= EventList.new self
+          else
+            EventContext.new sid
+          end
         end
         
         ##

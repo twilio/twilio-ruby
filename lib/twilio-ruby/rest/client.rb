@@ -40,11 +40,11 @@ module Twilio
                                 " #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL})"
         headers['Accept-Charset'] = 'utf-8'
         
-        if method == 'POST' && !headers.contains?('Content-Type')
+        if method == 'POST' && !headers['Content-Type']
           headers['Content-Type'] = 'application/x-www-form-urlencoded'
         end
         
-        unless headers.contains?('Accept')
+        unless headers['Accept']
           headers['Accept'] = 'application/json'
         end
         

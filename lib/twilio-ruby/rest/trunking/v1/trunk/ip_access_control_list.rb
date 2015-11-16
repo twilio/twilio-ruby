@@ -9,12 +9,12 @@ module Twilio
     class IpAccessControlListList < ListResource
       ##
       # Initialize the IpAccessControlListList
-      def initialize(version, trunk_sid)
+      def initialize(version, trunk_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'trunk_sid' => trunk_sid
+            trunk_sid: trunk_sid
         }
         @uri = "/Trunks/#{@solution[:trunk_sid]}/IpAccessControlLists"
       end
@@ -41,10 +41,31 @@ module Twilio
       
       ##
       # Reads IpAccessControlListInstance records from the API as a list.
-      def read(limit: nil, page_size: nil)
-        @version.read(
-            page_size: nil
+      def list(limit: nil, page_size: nil)
+        self.stream(
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -70,7 +91,11 @@ module Twilio
       ##
       # Constructs a IpAccessControlListContext
       def get(sid)
-        IpAccessControlListContext.new(@version, sid, @solution)
+        IpAccessControlListContext.new(
+            @version,
+            trunk_sid: @solution[:trunk_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -80,14 +105,39 @@ module Twilio
       end
     end
   
+    class IpAccessControlListPage < Page
+      def initialize(version, response, trunk_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'trunk_sid' => trunk_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return IpAccessControlListInstance.new(
+            @version,
+            payload,
+            trunk_sid: @solution['trunk_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Trunking.V1.IpAccessControlListPage>'
+      end
+    end
+  
     class IpAccessControlListContext < InstanceContext
       def initialize(version, trunk_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'trunk_sid' => trunk_sid,
-            'sid' => sid,
+            trunk_sid: trunk_sid,
+            sid: sid,
         }
         @uri = "/Trunks/#{@solution[:trunk_sid]}/IpAccessControlLists/#{@solution[:sid]}"
       end
@@ -148,9 +198,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = IpAccessControlListContext(
+          @instance_context = IpAccessControlListContext.new(
               @version,
               @params['trunk_sid'],
               @params['sid'],

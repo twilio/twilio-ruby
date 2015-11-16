@@ -9,12 +9,12 @@ module Twilio
     class TriggerList < ListResource
       ##
       # Initialize the TriggerList
-      def initialize(version, account_sid)
+      def initialize(version, account_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid
+            account_sid: account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Usage/Triggers.json"
       end
@@ -47,13 +47,37 @@ module Twilio
       
       ##
       # Reads TriggerInstance records from the API as a list.
-      def read(recurring: nil, trigger_by: nil, usage_category: nil, limit: nil, page_size: nil)
-        @version.read(
-            trigger_by: nil,
-            usage_category: nil,
-            limit: nil,
-            page_size: nil
+      def list(recurring: nil, trigger_by: nil, usage_category: nil, limit: nil, page_size: nil)
+        self.stream(
+            recurring: recurring,
+            trigger_by: trigger_by,
+            usage_category: usage_category,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(recurring: nil, trigger_by: nil, usage_category: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            recurring: recurring,
+            trigger_by: trigger_by,
+            usage_category: usage_category,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -82,7 +106,11 @@ module Twilio
       ##
       # Constructs a TriggerContext
       def get(sid)
-        TriggerContext.new(@version, sid, @solution)
+        TriggerContext.new(
+            @version,
+            account_sid: @solution[:account_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -92,14 +120,39 @@ module Twilio
       end
     end
   
+    class TriggerPage < Page
+      def initialize(version, response, account_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return TriggerInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.TriggerPage>'
+      end
+    end
+  
     class TriggerContext < InstanceContext
       def initialize(version, account_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'sid' => sid,
+            account_sid: account_sid,
+            sid: sid,
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Usage/Triggers/#{@solution[:sid]}.json"
       end
@@ -192,9 +245,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = TriggerContext(
+          @instance_context = TriggerContext.new(
               @version,
               @params['account_sid'],
               @params['sid'],

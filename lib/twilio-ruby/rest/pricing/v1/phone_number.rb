@@ -32,6 +32,28 @@ module Twilio
       end
     end
   
+    class PhoneNumberPage < Page
+      def initialize(version, response)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {}
+      end
+      
+      def get_instance(payload)
+        return PhoneNumberInstance.new(
+            @version,
+            payload,
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Pricing.V1.PhoneNumberPage>'
+      end
+    end
+  
     class PhoneNumberInstance < InstanceResource
       def initialize(version, payload)
         super(version)

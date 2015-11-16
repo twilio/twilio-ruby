@@ -9,20 +9,24 @@ module Twilio
     class WorkerStatisticsList < ListResource
       ##
       # Initialize the WorkerStatisticsList
-      def initialize(version, workspace_sid, worker_sid)
+      def initialize(version, workspace_sid: nil, worker_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid,
-            'worker_sid' => worker_sid
+            workspace_sid: workspace_sid,
+            worker_sid: worker_sid
         }
       end
       
       ##
       # Constructs a WorkerStatisticsContext
       def get
-        WorkerStatisticsContext.new(@version, @solution)
+        WorkerStatisticsContext.new(
+            @version,
+            workspace_sid: @solution[:workspace_sid],
+            worker_sid: @solution[:worker_sid],
+        )
       end
       
       ##
@@ -32,14 +36,41 @@ module Twilio
       end
     end
   
+    class WorkerStatisticsPage < Page
+      def initialize(version, response, workspace_sid, worker_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'workspace_sid' => workspace_sid,
+            'worker_sid' => worker_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return WorkerStatisticsInstance.new(
+            @version,
+            payload,
+            workspace_sid: @solution['workspace_sid'],
+            worker_sid: @solution['worker_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Taskrouter.V1.WorkerStatisticsPage>'
+      end
+    end
+  
     class WorkerStatisticsContext < InstanceContext
       def initialize(version, workspace_sid, worker_sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'workspace_sid' => workspace_sid,
-            'worker_sid' => worker_sid,
+            workspace_sid: workspace_sid,
+            worker_sid: worker_sid,
         }
         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers/#{@solution[:worker_sid]}/Statistics"
       end
@@ -49,8 +80,8 @@ module Twilio
       def fetch(minutes: nil, start_date: nil, end_date: nil)
         params = {
             'Minutes' => minutes,
-            'StartDate' => start_date.iso8601,
-            'EndDate' => end_date.iso8601,
+            'StartDate' => Twilio.serialize_iso8601(start_date),
+            'EndDate' => Twilio.serialize_iso8601(end_date),
         }
         
         @version.fetch(
@@ -95,9 +126,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = WorkerStatisticsContext(
+          @instance_context = WorkerStatisticsContext.new(
               @version,
               @params['workspace_sid'],
               @params['worker_sid'],

@@ -9,12 +9,12 @@ module Twilio
     class IncomingPhoneNumberList < ListResource
       ##
       # Initialize the IncomingPhoneNumberList
-      def initialize(version, owner_account_sid)
+      def initialize(version, owner_account_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'owner_account_sid' => owner_account_sid
+            owner_account_sid: owner_account_sid
         }
         @uri = "/Accounts/#{@solution[:owner_account_sid]}/IncomingPhoneNumbers.json"
         
@@ -26,13 +26,37 @@ module Twilio
       
       ##
       # Reads IncomingPhoneNumberInstance records from the API as a list.
-      def read(beta: nil, friendly_name: nil, phone_number: nil, limit: nil, page_size: nil)
-        @version.read(
-            friendly_name: nil,
-            phone_number: nil,
-            limit: nil,
-            page_size: nil
+      def list(beta: nil, friendly_name: nil, phone_number: nil, limit: nil, page_size: nil)
+        self.stream(
+            beta: beta,
+            friendly_name: friendly_name,
+            phone_number: phone_number,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(beta: nil, friendly_name: nil, phone_number: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            beta: beta,
+            friendly_name: friendly_name,
+            phone_number: phone_number,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -115,7 +139,11 @@ module Twilio
       ##
       # Constructs a IncomingPhoneNumberContext
       def get(sid)
-        IncomingPhoneNumberContext.new(@version, sid, @solution)
+        IncomingPhoneNumberContext.new(
+            @version,
+            owner_account_sid: @solution[:owner_account_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -125,14 +153,39 @@ module Twilio
       end
     end
   
+    class IncomingPhoneNumberPage < Page
+      def initialize(version, response, owner_account_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'owner_account_sid' => owner_account_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return IncomingPhoneNumberInstance.new(
+            @version,
+            payload,
+            owner_account_sid: @solution['owner_account_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.IncomingPhoneNumberPage>'
+      end
+    end
+  
     class IncomingPhoneNumberContext < InstanceContext
       def initialize(version, owner_account_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'owner_account_sid' => owner_account_sid,
-            'sid' => sid,
+            owner_account_sid: owner_account_sid,
+            sid: sid,
         }
         @uri = "/Accounts/#{@solution[:owner_account_sid]}/IncomingPhoneNumbers/#{@solution[:sid]}.json"
       end
@@ -246,9 +299,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = IncomingPhoneNumberContext(
+          @instance_context = IncomingPhoneNumberContext.new(
               @version,
               @params['owner_account_sid'],
               @params['sid'],

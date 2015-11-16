@@ -9,22 +9,43 @@ module Twilio
     class IpAccessControlListList < ListResource
       ##
       # Initialize the IpAccessControlListList
-      def initialize(version, account_sid)
+      def initialize(version, account_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid
+            account_sid: account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/SIP/IpAccessControlLists.json"
       end
       
       ##
       # Reads IpAccessControlListInstance records from the API as a list.
-      def read(limit: nil, page_size: nil)
-        @version.read(
-            page_size: nil
+      def list(limit: nil, page_size: nil)
+        self.stream(
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -70,7 +91,11 @@ module Twilio
       ##
       # Constructs a IpAccessControlListContext
       def get(sid)
-        IpAccessControlListContext.new(@version, sid, @solution)
+        IpAccessControlListContext.new(
+            @version,
+            account_sid: @solution[:account_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -80,14 +105,39 @@ module Twilio
       end
     end
   
+    class IpAccessControlListPage < Page
+      def initialize(version, response, account_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return IpAccessControlListInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.IpAccessControlListPage>'
+      end
+    end
+  
     class IpAccessControlListContext < InstanceContext
       def initialize(version, account_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'sid' => sid,
+            account_sid: account_sid,
+            sid: sid,
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/SIP/IpAccessControlLists/#{@solution[:sid]}.json"
         
@@ -141,7 +191,16 @@ module Twilio
         return @version.delete('delete', @uri)
       end
       
-      def ip_addresses
+      def ip_addresses(sid=:unset)
+        if sid != :unset
+          return IpAddressContext.new(
+              @version,
+              @solution[:sid],
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @ip_addresses
           @ip_addresses = IpAddressList.new(
               @version,
@@ -149,6 +208,7 @@ module Twilio
               ip_access_control_list_sid: @solution[:sid],
           )
         end
+        
         @ip_addresses
       end
       
@@ -183,9 +243,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = IpAccessControlListContext(
+          @instance_context = IpAccessControlListContext.new(
               @version,
               @params['account_sid'],
               @params['sid'],

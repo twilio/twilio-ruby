@@ -9,19 +9,22 @@ module Twilio
     class SandboxList < ListResource
       ##
       # Initialize the SandboxList
-      def initialize(version, account_sid)
+      def initialize(version, account_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid
+            account_sid: account_sid
         }
       end
       
       ##
       # Constructs a SandboxContext
       def get
-        SandboxContext.new(@version, @solution)
+        SandboxContext.new(
+            @version,
+            account_sid: @solution[:account_sid],
+        )
       end
       
       ##
@@ -31,13 +34,38 @@ module Twilio
       end
     end
   
+    class SandboxPage < Page
+      def initialize(version, response, account_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return SandboxInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.SandboxPage>'
+      end
+    end
+  
     class SandboxContext < InstanceContext
       def initialize(version, account_sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
+            account_sid: account_sid,
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Sandbox.json"
       end
@@ -122,9 +150,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = SandboxContext(
+          @instance_context = SandboxContext.new(
               @version,
               @params['account_sid'],
           )

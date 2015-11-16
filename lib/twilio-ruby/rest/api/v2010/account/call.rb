@@ -9,12 +9,12 @@ module Twilio
     class CallList < ListResource
       ##
       # Initialize the CallList
-      def initialize(version, account_sid)
+      def initialize(version, account_sid: nil)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid
+            account_sid: account_sid
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Calls.json"
         
@@ -56,20 +56,51 @@ module Twilio
       
       ##
       # Reads CallInstance records from the API as a list.
-      def read(to: nil, from: nil, parent_call_sid: nil, status: nil, start_time_before: nil, start_time: nil, start_time_after: nil, end_time_before: nil, end_time: nil, end_time_after: nil, limit: nil, page_size: nil)
-        @version.read(
-            from: nil,
-            parent_call_sid: nil,
-            status: nil,
-            start_time_before: nil,
-            start_time: nil,
-            start_time_after: nil,
-            end_time_before: nil,
-            end_time: nil,
-            end_time_after: nil,
-            limit: nil,
-            page_size: nil
+      def list(to: nil, from: nil, parent_call_sid: nil, status: nil, start_time_before: nil, start_time: nil, start_time_after: nil, end_time_before: nil, end_time: nil, end_time_after: nil, limit: nil, page_size: nil)
+        self.stream(
+            to: to,
+            from: from,
+            parent_call_sid: parent_call_sid,
+            status: status,
+            start_time_before: start_time_before,
+            start_time: start_time,
+            start_time_after: start_time_after,
+            end_time_before: end_time_before,
+            end_time: end_time,
+            end_time_after: end_time_after,
+            limit: limit,
+            page_size: page_size
+        ).entries
+      end
+      
+      def stream(to: nil, from: nil, parent_call_sid: nil, status: nil, start_time_before: nil, start_time: nil, start_time_after: nil, end_time_before: nil, end_time: nil, end_time_after: nil, limit: nil, page_size: nil)
+        limits = @version.read_limits(limit, page_size)
+        
+        page = self.page(
+            to: to,
+            from: from,
+            parent_call_sid: parent_call_sid,
+            status: status,
+            start_time_before: start_time_before,
+            start_time: start_time,
+            start_time_after: start_time_after,
+            end_time_before: end_time_before,
+            end_time: end_time,
+            end_time_after: end_time_after,
+            page_size: limits['page_size'],
         )
+        
+        return @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+      end
+      
+      def each
+        limits = @version.read_limits
+        
+        page = self.page(
+            page_size: limits['page_size'],
+        )
+        
+        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
       end
       
       ##
@@ -80,12 +111,12 @@ module Twilio
             'From' => from,
             'ParentCallSid' => parent_call_sid,
             'Status' => status,
-            'StartTime<' => start_time_before.iso8601,
-            'StartTime' => start_time.iso8601,
-            'StartTime>' => start_time_after.iso8601,
-            'EndTime<' => end_time_before.iso8601,
-            'EndTime' => end_time.iso8601,
-            'EndTime>' => end_time_after.iso8601,
+            'StartTime<' => Twilio.serialize_iso8601(start_time_before),
+            'StartTime' => Twilio.serialize_iso8601(start_time),
+            'StartTime>' => Twilio.serialize_iso8601(start_time_after),
+            'EndTime<' => Twilio.serialize_iso8601(end_time_before),
+            'EndTime' => Twilio.serialize_iso8601(end_time),
+            'EndTime>' => Twilio.serialize_iso8601(end_time_after),
             'PageToken' => page_token,
             'Page' => page_number,
             'PageSize' => page_size,
@@ -111,7 +142,11 @@ module Twilio
       ##
       # Constructs a CallContext
       def get(sid)
-        CallContext.new(@version, sid, @solution)
+        CallContext.new(
+            @version,
+            account_sid: @solution[:account_sid],
+            sid: sid,
+        )
       end
       
       ##
@@ -121,14 +156,39 @@ module Twilio
       end
     end
   
+    class CallPage < Page
+      def initialize(version, response, account_sid)
+        super(version, response)
+        
+        # Path Solution
+        @solution = {
+            'account_sid' => account_sid,
+        }
+      end
+      
+      def get_instance(payload)
+        return CallInstance.new(
+            @version,
+            payload,
+            account_sid: @solution['account_sid'],
+        )
+      end
+      
+      ##
+      # Provide a user friendly representation
+      def to_s
+        '<Twilio.Api.V2010.CallPage>'
+      end
+    end
+  
     class CallContext < InstanceContext
       def initialize(version, account_sid, sid)
         super(version)
         
         # Path Solution
         @solution = {
-            'account_sid' => account_sid,
-            'sid' => sid,
+            account_sid: account_sid,
+            sid: sid,
         }
         @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:sid]}.json"
         
@@ -190,7 +250,16 @@ module Twilio
         )
       end
       
-      def recordings
+      def recordings(sid=:unset)
+        if sid != :unset
+          return RecordingContext.new(
+              @version,
+              @solution[:sid],
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @recordings
           @recordings = RecordingList.new(
               @version,
@@ -198,10 +267,20 @@ module Twilio
               call_sid: @solution[:sid],
           )
         end
+        
         @recordings
       end
       
-      def notifications
+      def notifications(sid=:unset)
+        if sid != :unset
+          return NotificationContext.new(
+              @version,
+              @solution[:sid],
+              @solution[:sid],
+              sid,
+          )
+        end
+        
         unless @notifications
           @notifications = NotificationList.new(
               @version,
@@ -209,18 +288,16 @@ module Twilio
               call_sid: @solution[:sid],
           )
         end
+        
         @notifications
       end
       
       def feedback
-        unless @feedback
-          @feedback = FeedbackList.new(
-              @version,
-              account_sid: @solution[:account_sid],
-              call_sid: @solution[:sid],
-          )
-        end
-        @feedback
+        return FeedbackContext.new(
+            @version,
+            @solution[:sid],
+            @solution[:sid],
+        )
       end
       
       ##
@@ -272,9 +349,9 @@ module Twilio
         }
       end
       
-      def _context
+      def context
         unless @instance_context
-          @instance_context = CallContext(
+          @instance_context = CallContext.new(
               @version,
               @params['account_sid'],
               @params['sid'],
