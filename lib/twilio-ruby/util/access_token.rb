@@ -44,7 +44,7 @@ module Twilio
       end
 
       class ConversationsGrant
-        attr_writer :configuration_profile_sid
+        attr_accessor :configuration_profile_sid
 
         def key
           'rtc'
@@ -62,10 +62,10 @@ module Twilio
       end
 
       class IpMessagingGrant
-        attr_writer :service_sid
-        attr_writer :endpoint_id
-        attr_writer :deployement_role_sid
-        attr_writer :push_credential_sid
+        attr_accessor :service_sid
+        attr_accessor :endpoint_id
+        attr_accessor :deployement_role_sid
+        attr_accessor :push_credential_sid
 
         def key
           'ip_messaging'
