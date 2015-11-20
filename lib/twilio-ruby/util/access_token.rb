@@ -62,10 +62,10 @@ module Twilio
       end
 
       class IpMessagingGrant
-        attr_accessor :service_sid
-        attr_accessor :endpoint_id
-        attr_accessor :deployement_role_sid
-        attr_accessor :push_credential_sid
+        attr_accessor :service_sid,
+                      :endpoint_id,
+                      :deployement_role_sid,
+                      :push_credential_sid
 
         def key
           'ip_messaging'
