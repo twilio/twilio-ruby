@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 4.6.2
+-------------
+
+Release November 19, 2015
+
+- Fix Pricing Messages
+
 Version 4.6.1
 -------------
 
