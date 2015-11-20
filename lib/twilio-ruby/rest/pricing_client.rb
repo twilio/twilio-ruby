@@ -8,7 +8,7 @@ module Twilio
 
       API_VERSION = 'v1'
 
-      attr_reader :voice, :phone_numbers
+      attr_reader :voice, :phone_numbers, :messaging
 
       host 'pricing.twilio.com'
 
