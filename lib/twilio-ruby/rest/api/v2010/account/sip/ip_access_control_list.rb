@@ -179,8 +179,8 @@ module Twilio
             data=data,
         )
         
-        return IpAccessControlListInstance(
-            self._version,
+        return IpAccessControlListInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             sid: @solution['sid'],

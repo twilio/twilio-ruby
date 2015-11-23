@@ -21,7 +21,7 @@ module Twilio
           if sid == :unset
             @phone_numbers ||= PhoneNumberList.new self
           else
-            PhoneNumberContext.new sid
+            PhoneNumberContext.new(self, sid)
           end
         end
         
@@ -29,7 +29,7 @@ module Twilio
           if sid == :unset
             @voice ||= VoiceList.new self
           else
-            VoiceContext.new sid
+            VoiceContext.new(self, sid)
           end
         end
         

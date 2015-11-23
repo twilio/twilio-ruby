@@ -164,8 +164,8 @@ module Twilio
             data=data,
         )
         
-        return MemberInstance(
-            self._version,
+        return MemberInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             queue_sid: @solution['queue_sid'],

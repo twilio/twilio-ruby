@@ -203,8 +203,8 @@ module Twilio
             data=data,
         )
         
-        return TaskInstance(
-            self._version,
+        return TaskInstance.new(
+            @version,
             payload,
             workspace_sid: @solution['workspace_sid'],
             sid: @solution['sid'],

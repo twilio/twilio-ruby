@@ -21,7 +21,7 @@ module Twilio
           if sid == :unset
             @alerts ||= AlertList.new self
           else
-            AlertContext.new sid
+            AlertContext.new(self, sid)
           end
         end
         
@@ -29,7 +29,7 @@ module Twilio
           if sid == :unset
             @events ||= EventList.new self
           else
-            EventContext.new sid
+            EventContext.new(self, sid)
           end
         end
         

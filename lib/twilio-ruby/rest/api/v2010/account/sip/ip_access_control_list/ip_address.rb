@@ -186,8 +186,8 @@ module Twilio
             data=data,
         )
         
-        return IpAddressInstance(
-            self._version,
+        return IpAddressInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             ip_access_control_list_sid: @solution['ip_access_control_list_sid'],

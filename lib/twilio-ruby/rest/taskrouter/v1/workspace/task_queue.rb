@@ -202,8 +202,8 @@ module Twilio
             data=data,
         )
         
-        return TaskQueueInstance(
-            self._version,
+        return TaskQueueInstance.new(
+            @version,
             payload,
             workspace_sid: @solution['workspace_sid'],
             sid: @solution['sid'],
@@ -217,11 +217,15 @@ module Twilio
       end
       
       def statistics
-        return TaskQueueStatisticsContext.new(
-            @version,
-            @solution[:sid],
-            @solution[:sid],
-        )
+        unless @statistics
+          @statistics = TaskQueueStatisticsList.new(
+              @version,
+              workspace_sid: @solution[:workspace_sid],
+              task_queue_sid: @solution[:sid],
+          )
+        end
+        
+        @statistics
       end
       
       ##

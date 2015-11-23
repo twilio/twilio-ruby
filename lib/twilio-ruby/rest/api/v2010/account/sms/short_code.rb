@@ -167,8 +167,8 @@ module Twilio
             data=data,
         )
         
-        return ShortCodeInstance(
-            self._version,
+        return ShortCodeInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             sid: @solution['sid'],

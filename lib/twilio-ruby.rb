@@ -34,6 +34,9 @@ end
 Dir[File.dirname(__FILE__) + "/twilio-ruby/compatibility/**/*.rb"].each do |file|
   require file
 end
+Dir[File.dirname(__FILE__) + "/twilio-ruby/task_router/**/*.rb"].each do |file|
+  require file
+end
 
 
 module Twilio

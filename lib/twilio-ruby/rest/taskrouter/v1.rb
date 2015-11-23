@@ -20,7 +20,7 @@ module Twilio
           if sid == :unset
             @workspaces ||= WorkspaceList.new self
           else
-            WorkspaceContext.new sid
+            WorkspaceContext.new(self, sid)
           end
         end
         

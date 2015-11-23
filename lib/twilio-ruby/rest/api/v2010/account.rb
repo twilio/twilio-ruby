@@ -195,8 +195,8 @@ module Twilio
             data=data,
         )
         
-        return AccountInstance(
-            self._version,
+        return AccountInstance.new(
+            @version,
             payload,
             sid: @solution['sid'],
         )
@@ -450,31 +450,47 @@ module Twilio
       end
       
       def sandbox
-        return SandboxContext.new(
-            @version,
-            @solution[:sid],
-        )
+        unless @sandbox
+          @sandbox = SandboxList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        
+        @sandbox
       end
       
       def sip
-        return SipContext.new(
-            @version,
-            @solution[:sid],
-        )
+        unless @sip
+          @sip = SipList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        
+        @sip
       end
       
       def sms
-        return SmsContext.new(
-            @version,
-            @solution[:sid],
-        )
+        unless @sms
+          @sms = SmsList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        
+        @sms
       end
       
       def tokens
-        return TokenContext.new(
-            @version,
-            @solution[:sid],
-        )
+        unless @tokens
+          @tokens = TokenList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        
+        @tokens
       end
       
       def transcriptions(sid=:unset)
@@ -497,17 +513,25 @@ module Twilio
       end
       
       def usage
-        return UsageContext.new(
-            @version,
-            @solution[:sid],
-        )
+        unless @usage
+          @usage = UsageList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        
+        @usage
       end
       
       def validation_requests
-        return ValidationRequestContext.new(
-            @version,
-            @solution[:sid],
-        )
+        unless @validation_requests
+          @validation_requests = ValidationRequestList.new(
+              @version,
+              account_sid: @solution[:sid],
+          )
+        end
+        
+        @validation_requests
       end
       
       ##

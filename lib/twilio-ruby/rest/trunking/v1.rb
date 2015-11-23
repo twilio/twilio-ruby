@@ -20,7 +20,7 @@ module Twilio
           if sid == :unset
             @trunks ||= TrunkList.new self
           else
-            TrunkContext.new sid
+            TrunkContext.new(self, sid)
           end
         end
         

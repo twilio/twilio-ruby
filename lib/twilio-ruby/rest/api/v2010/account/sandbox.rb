@@ -106,8 +106,8 @@ module Twilio
             data=data,
         )
         
-        return SandboxInstance(
-            self._version,
+        return SandboxInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
         )

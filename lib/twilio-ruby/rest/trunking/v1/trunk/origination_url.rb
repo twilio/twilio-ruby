@@ -190,8 +190,8 @@ module Twilio
             data=data,
         )
         
-        return OriginationUrlInstance(
-            self._version,
+        return OriginationUrlInstance.new(
+            @version,
             payload,
             trunk_sid: @solution['trunk_sid'],
             sid: @solution['sid'],

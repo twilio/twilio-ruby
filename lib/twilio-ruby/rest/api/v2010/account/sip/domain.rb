@@ -194,8 +194,8 @@ module Twilio
             data=data,
         )
         
-        return DomainInstance(
-            self._version,
+        return DomainInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             sid: @solution['sid'],

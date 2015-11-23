@@ -107,7 +107,7 @@ module Twilio
           timeout
         )
 
-        if 500 <= response.status_code < 600
+        if 500 <= response.status_code && response.status_code < 600
           raise TwilioException.new('Unable to delete record')
         end
 

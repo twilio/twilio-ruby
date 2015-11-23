@@ -164,8 +164,8 @@ module Twilio
             data=data,
         )
         
-        return ReservationInstance(
-            self._version,
+        return ReservationInstance.new(
+            @version,
             payload,
             workspace_sid: @solution['workspace_sid'],
             task_sid: @solution['task_sid'],

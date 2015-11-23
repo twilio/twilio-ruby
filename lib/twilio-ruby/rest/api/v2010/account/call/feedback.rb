@@ -130,8 +130,8 @@ module Twilio
             data=data,
         )
         
-        return FeedbackInstance(
-            self._version,
+        return FeedbackInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             call_sid: @solution['call_sid'],

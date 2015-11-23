@@ -183,8 +183,8 @@ module Twilio
             data=data,
         )
         
-        return ActivityInstance(
-            self._version,
+        return ActivityInstance.new(
+            @version,
             payload,
             workspace_sid: @solution['workspace_sid'],
             sid: @solution['sid'],

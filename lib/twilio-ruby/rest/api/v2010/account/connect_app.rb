@@ -163,8 +163,8 @@ module Twilio
             data=data,
         )
         
-        return ConnectAppInstance(
-            self._version,
+        return ConnectAppInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             sid: @solution['sid'],

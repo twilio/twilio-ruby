@@ -179,8 +179,8 @@ module Twilio
             data=data,
         )
         
-        return CredentialListInstance(
-            self._version,
+        return CredentialListInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             sid: @solution['sid'],

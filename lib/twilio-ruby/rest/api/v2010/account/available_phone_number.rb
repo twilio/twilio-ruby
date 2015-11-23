@@ -149,27 +149,39 @@ module Twilio
       end
       
       def local
-        return LocalContext.new(
-            @version,
-            @solution[:sid],
-            @solution[:country_code],
-        )
+        unless @local
+          @local = LocalList.new(
+              @version,
+              country_code: @solution[:country_code],
+              account_sid: @solution[:account_sid],
+          )
+        end
+        
+        @local
       end
       
       def toll_free
-        return TollFreeContext.new(
-            @version,
-            @solution[:sid],
-            @solution[:country_code],
-        )
+        unless @toll_free
+          @toll_free = TollFreeList.new(
+              @version,
+              country_code: @solution[:country_code],
+              account_sid: @solution[:account_sid],
+          )
+        end
+        
+        @toll_free
       end
       
       def mobile
-        return MobileContext.new(
-            @version,
-            @solution[:sid],
-            @solution[:country_code],
-        )
+        unless @mobile
+          @mobile = MobileList.new(
+              @version,
+              country_code: @solution[:country_code],
+              account_sid: @solution[:account_sid],
+          )
+        end
+        
+        @mobile
       end
       
       ##

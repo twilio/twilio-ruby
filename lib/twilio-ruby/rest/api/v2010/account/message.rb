@@ -205,8 +205,8 @@ module Twilio
             data=data,
         )
         
-        return MessageInstance(
-            self._version,
+        return MessageInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             sid: @solution['sid'],

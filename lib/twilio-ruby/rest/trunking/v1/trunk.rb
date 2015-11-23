@@ -188,8 +188,8 @@ module Twilio
             data=data,
         )
         
-        return TrunkInstance(
-            self._version,
+        return TrunkInstance.new(
+            @version,
             payload,
             sid: @solution['sid'],
         )

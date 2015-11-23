@@ -193,8 +193,8 @@ module Twilio
             data=data,
         )
         
-        return TriggerInstance(
-            self._version,
+        return TriggerInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             sid: @solution['sid'],

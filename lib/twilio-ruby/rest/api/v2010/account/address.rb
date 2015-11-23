@@ -205,8 +205,8 @@ module Twilio
             data=data,
         )
         
-        return AddressInstance(
-            self._version,
+        return AddressInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             sid: @solution['sid'],
@@ -214,11 +214,15 @@ module Twilio
       end
       
       def dependent_phone_numbers
-        return DependentPhoneNumberContext.new(
-            @version,
-            @solution[:sid],
-            @solution[:sid],
-        )
+        unless @dependent_phone_numbers
+          @dependent_phone_numbers = DependentPhoneNumberList.new(
+              @version,
+              account_sid: @solution[:account_sid],
+              address_sid: @solution[:sid],
+          )
+        end
+        
+        @dependent_phone_numbers
       end
       
       ##

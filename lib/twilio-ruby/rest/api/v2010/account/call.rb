@@ -244,8 +244,8 @@ module Twilio
             data=data,
         )
         
-        return CallInstance(
-            self._version,
+        return CallInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             sid: @solution['sid'],
@@ -295,11 +295,15 @@ module Twilio
       end
       
       def feedback
-        return FeedbackContext.new(
-            @version,
-            @solution[:sid],
-            @solution[:sid],
-        )
+        unless @feedback
+          @feedback = FeedbackList.new(
+              @version,
+              account_sid: @solution[:account_sid],
+              call_sid: @solution[:sid],
+          )
+        end
+        
+        @feedback
       end
       
       ##

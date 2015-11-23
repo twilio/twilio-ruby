@@ -166,8 +166,8 @@ module Twilio
             data=data,
         )
         
-        return ParticipantInstance(
-            self._version,
+        return ParticipantInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             conference_sid: @solution['conference_sid'],

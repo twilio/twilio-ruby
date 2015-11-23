@@ -190,8 +190,8 @@ module Twilio
             data=data,
         )
         
-        return WorkflowInstance(
-            self._version,
+        return WorkflowInstance.new(
+            @version,
             payload,
             workspace_sid: @solution['workspace_sid'],
             sid: @solution['sid'],
@@ -205,11 +205,15 @@ module Twilio
       end
       
       def statistics
-        return WorkflowStatisticsContext.new(
-            @version,
-            @solution[:sid],
-            @solution[:sid],
-        )
+        unless @statistics
+          @statistics = WorkflowStatisticsList.new(
+              @version,
+              workspace_sid: @solution[:workspace_sid],
+              workflow_sid: @solution[:sid],
+          )
+        end
+        
+        @statistics
       end
       
       ##

@@ -181,8 +181,8 @@ module Twilio
             data=data,
         )
         
-        return QueueInstance(
-            self._version,
+        return QueueInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             sid: @solution['sid'],

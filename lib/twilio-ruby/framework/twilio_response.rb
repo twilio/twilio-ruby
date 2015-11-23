@@ -4,6 +4,7 @@ module Twilio
 
     def initialize(status_code, body)
       @status_code = status_code
+      body = '{}' if !body || body.empty?
       @body = JSON.parse(body)
     end
     

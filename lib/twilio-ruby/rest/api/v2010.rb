@@ -21,7 +21,7 @@ module Twilio
           if sid == :unset
             @accounts ||= AccountList.new self
           else
-            AccountContext.new sid
+            AccountContext.new(self, sid)
           end
         end
         

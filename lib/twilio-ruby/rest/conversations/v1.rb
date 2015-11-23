@@ -20,7 +20,7 @@ module Twilio
           if sid == :unset
             @conversations ||= ConversationList.new self
           else
-            ConversationContext.new sid
+            ConversationContext.new(self, sid)
           end
         end
         

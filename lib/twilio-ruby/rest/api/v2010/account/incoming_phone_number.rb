@@ -220,8 +220,8 @@ module Twilio
             data=data,
         )
         
-        return IncomingPhoneNumberInstance(
-            self._version,
+        return IncomingPhoneNumberInstance.new(
+            @version,
             payload,
             owner_account_sid: @solution['owner_account_sid'],
             sid: @solution['sid'],

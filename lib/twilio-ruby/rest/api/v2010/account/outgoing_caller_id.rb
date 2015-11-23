@@ -162,8 +162,8 @@ module Twilio
             data=data,
         )
         
-        return OutgoingCallerIdInstance(
-            self._version,
+        return OutgoingCallerIdInstance.new(
+            @version,
             payload,
             account_sid: @solution['account_sid'],
             sid: @solution['sid'],
