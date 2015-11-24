@@ -21,7 +21,7 @@ module Twilio
       
       ##
       # Create a new PhoneNumberInstance
-      def create(phone_number_sid)
+      def create(phone_number_sid: nil)
         data = {
             'PhoneNumberSid' => phone_number_sid,
         }
@@ -108,7 +108,7 @@ module Twilio
     end
   
     class PhoneNumberPage < Page
-      def initialize(version, response, trunk_sid)
+      def initialize(version, response, trunk_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -149,7 +149,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -178,7 +178,7 @@ module Twilio
     end
   
     class PhoneNumberInstance < InstanceResource
-      def initialize(version, payload, trunk_sid, sid: nil)
+      def initialize(version, payload, trunk_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

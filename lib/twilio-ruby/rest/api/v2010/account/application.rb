@@ -21,7 +21,7 @@ module Twilio
       
       ##
       # Create a new ApplicationInstance
-      def create(friendly_name, api_version: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, status_callback: nil, status_callback_method: nil, voice_caller_id_lookup: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil, sms_status_callback: nil, message_status_callback: nil)
+      def create(friendly_name: nil, api_version: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, status_callback: nil, status_callback_method: nil, voice_caller_id_lookup: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil, sms_status_callback: nil, message_status_callback: nil)
         data = {
             'FriendlyName' => friendly_name,
             'ApiVersion' => api_version,
@@ -125,7 +125,7 @@ module Twilio
     end
   
     class ApplicationPage < Page
-      def initialize(version, response, account_sid)
+      def initialize(version, response, account_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -172,7 +172,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -230,7 +230,7 @@ module Twilio
     end
   
     class ApplicationInstance < InstanceResource
-      def initialize(version, payload, account_sid, sid: nil)
+      def initialize(version, payload, account_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

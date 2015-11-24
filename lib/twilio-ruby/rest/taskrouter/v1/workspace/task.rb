@@ -90,7 +90,7 @@ module Twilio
       
       ##
       # Create a new TaskInstance
-      def create(attributes, workflow_sid, timeout: nil, priority: nil)
+      def create(attributes: nil, workflow_sid: nil, timeout: nil, priority: nil)
         data = {
             'Attributes' => attributes,
             'WorkflowSid' => workflow_sid,
@@ -129,7 +129,7 @@ module Twilio
     end
   
     class TaskPage < Page
-      def initialize(version, response, workspace_sid)
+      def initialize(version, response, workspace_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -173,7 +173,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -247,7 +247,7 @@ module Twilio
     end
   
     class TaskInstance < InstanceResource
-      def initialize(version, payload, workspace_sid, sid: nil)
+      def initialize(version, payload, workspace_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

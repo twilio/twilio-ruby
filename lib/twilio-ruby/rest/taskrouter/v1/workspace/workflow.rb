@@ -75,7 +75,7 @@ module Twilio
       
       ##
       # Create a new WorkflowInstance
-      def create(friendly_name, configuration, assignment_callback_url, fallback_assignment_callback_url: nil, task_reservation_timeout: nil)
+      def create(friendly_name: nil, configuration: nil, assignment_callback_url: nil, fallback_assignment_callback_url: nil, task_reservation_timeout: nil)
         data = {
             'FriendlyName' => friendly_name,
             'Configuration' => configuration,
@@ -115,7 +115,7 @@ module Twilio
     end
   
     class WorkflowPage < Page
-      def initialize(version, response, workspace_sid)
+      def initialize(version, response, workspace_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -159,7 +159,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -225,7 +225,7 @@ module Twilio
     end
   
     class WorkflowInstance < InstanceResource
-      def initialize(version, payload, workspace_sid, sid: nil)
+      def initialize(version, payload, workspace_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

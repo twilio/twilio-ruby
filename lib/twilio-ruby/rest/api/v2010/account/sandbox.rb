@@ -35,7 +35,7 @@ module Twilio
     end
   
     class SandboxPage < Page
-      def initialize(version, response, account_sid)
+      def initialize(version, response, account_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -75,7 +75,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -122,7 +122,7 @@ module Twilio
     end
   
     class SandboxInstance < InstanceResource
-      def initialize(version, payload, account_sid)
+      def initialize(version, payload, account_sid: nil)
         super(version)
         
         # Marshaled Properties

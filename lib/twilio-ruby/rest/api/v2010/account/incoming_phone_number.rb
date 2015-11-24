@@ -156,7 +156,7 @@ module Twilio
     end
   
     class IncomingPhoneNumberPage < Page
-      def initialize(version, response, owner_account_sid)
+      def initialize(version, response, owner_account_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -233,7 +233,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -262,7 +262,7 @@ module Twilio
     end
   
     class IncomingPhoneNumberInstance < InstanceResource
-      def initialize(version, payload, owner_account_sid, sid: nil)
+      def initialize(version, payload, owner_account_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

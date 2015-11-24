@@ -21,7 +21,7 @@ module Twilio
       
       ##
       # Create a new TriggerInstance
-      def create(callback_url, trigger_value, usage_category, callback_method: nil, friendly_name: nil, recurring: nil, trigger_by: nil)
+      def create(callback_url: nil, trigger_value: nil, usage_category: nil, callback_method: nil, friendly_name: nil, recurring: nil, trigger_by: nil)
         data = {
             'CallbackUrl' => callback_url,
             'TriggerValue' => trigger_value,
@@ -123,7 +123,7 @@ module Twilio
     end
   
     class TriggerPage < Page
-      def initialize(version, response, account_sid)
+      def initialize(version, response, account_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -164,7 +164,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -216,7 +216,7 @@ module Twilio
     end
   
     class TriggerInstance < InstanceResource
-      def initialize(version, payload, account_sid, sid: nil)
+      def initialize(version, payload, account_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

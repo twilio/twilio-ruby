@@ -88,7 +88,7 @@ module Twilio
     end
   
     class AuthorizedConnectAppPage < Page
-      def initialize(version, response, account_sid)
+      def initialize(version, response, account_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -129,7 +129,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -152,7 +152,7 @@ module Twilio
     end
   
     class AuthorizedConnectAppInstance < InstanceResource
-      def initialize(version, payload, account_sid, connect_app_sid: nil)
+      def initialize(version, payload, account_sid: nil, connect_app_sid: nil)
         super(version)
         
         # Marshaled Properties

@@ -107,7 +107,7 @@ module Twilio
     end
   
     class TollFreePage < Page
-      def initialize(version, response, account_sid, country_code)
+      def initialize(version, response, account_sid: nil, country_code: nil)
         super(version, response)
         
         # Path Solution
@@ -134,7 +134,7 @@ module Twilio
     end
   
     class TollFreeInstance < InstanceResource
-      def initialize(version, payload)
+      def initialize(version, payload, account_sid: nil, country_code: nil)
         super(version)
         
         # Marshaled Properties

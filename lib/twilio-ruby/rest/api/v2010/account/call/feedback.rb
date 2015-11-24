@@ -37,7 +37,7 @@ module Twilio
     end
   
     class FeedbackPage < Page
-      def initialize(version, response, account_sid, call_sid)
+      def initialize(version, response, account_sid: nil, call_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -77,7 +77,7 @@ module Twilio
       
       ##
       # Create a new FeedbackInstance
-      def create(quality_score, issue: nil)
+      def create(quality_score: nil, issue: nil)
         data = {
             'QualityScore' => quality_score,
             'Issue' => issue,
@@ -102,7 +102,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -118,7 +118,7 @@ module Twilio
       
       ##
       # Update the FeedbackInstance
-      def update(quality_score, issue: nil)
+      def update(quality_score: nil, issue: nil)
         data = {
             'QualityScore' => quality_score,
             'Issue' => issue,
@@ -147,7 +147,7 @@ module Twilio
     end
   
     class FeedbackInstance < InstanceResource
-      def initialize(version, payload, account_sid, call_sid)
+      def initialize(version, payload, account_sid: nil, call_sid: nil)
         super(version)
         
         # Marshaled Properties
@@ -205,7 +205,7 @@ module Twilio
       
       ##
       # Create a new FeedbackInstance
-      def create(quality_score, issue: nil)
+      def create(quality_score: nil, issue: nil)
         @context.create(
             issue: nil,
         )
@@ -219,7 +219,7 @@ module Twilio
       
       ##
       # Update the FeedbackInstance
-      def update(quality_score, issue: nil)
+      def update(quality_score: nil, issue: nil)
         @context.update(
             issue: nil,
         )

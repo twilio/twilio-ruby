@@ -35,7 +35,7 @@ module Twilio
     end
   
     class WorkersStatisticsPage < Page
-      def initialize(version, response, workspace_sid)
+      def initialize(version, response, workspace_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -82,7 +82,7 @@ module Twilio
             'FriendlyName' => friendly_name,
         }
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -104,7 +104,7 @@ module Twilio
     end
   
     class WorkersStatisticsInstance < InstanceResource
-      def initialize(version, payload, workspace_sid)
+      def initialize(version, payload, workspace_sid: nil)
         super(version)
         
         # Marshaled Properties

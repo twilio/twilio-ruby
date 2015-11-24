@@ -21,7 +21,7 @@ module Twilio
       
       ##
       # Create a new IpAccessControlListInstance
-      def create(ip_access_control_list_sid)
+      def create(ip_access_control_list_sid: nil)
         data = {
             'IpAccessControlListSid' => ip_access_control_list_sid,
         }
@@ -108,7 +108,7 @@ module Twilio
     end
   
     class IpAccessControlListPage < Page
-      def initialize(version, response, trunk_sid)
+      def initialize(version, response, trunk_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -149,7 +149,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -178,7 +178,7 @@ module Twilio
     end
   
     class IpAccessControlListInstance < InstanceResource
-      def initialize(version, payload, trunk_sid, sid: nil)
+      def initialize(version, payload, trunk_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

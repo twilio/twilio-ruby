@@ -91,7 +91,7 @@ module Twilio
     end
   
     class ReservationPage < Page
-      def initialize(version, response, workspace_sid, task_sid)
+      def initialize(version, response, workspace_sid: nil, task_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -135,7 +135,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -152,7 +152,7 @@ module Twilio
       
       ##
       # Update the ReservationInstance
-      def update(reservation_status, worker_activity_sid: nil)
+      def update(reservation_status: nil, worker_activity_sid: nil)
         data = {
             'ReservationStatus' => reservation_status,
             'WorkerActivitySid' => worker_activity_sid,
@@ -182,7 +182,7 @@ module Twilio
     end
   
     class ReservationInstance < InstanceResource
-      def initialize(version, payload, workspace_sid, task_sid, sid: nil)
+      def initialize(version, payload, workspace_sid: nil, task_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties
@@ -263,7 +263,7 @@ module Twilio
       
       ##
       # Update the ReservationInstance
-      def update(reservation_status, worker_activity_sid: nil)
+      def update(reservation_status: nil, worker_activity_sid: nil)
         @context.update(
             worker_activity_sid: nil,
         )

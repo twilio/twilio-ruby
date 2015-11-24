@@ -72,7 +72,7 @@ module Twilio
       
       ##
       # Create a new ParticipantInstance
-      def create(to, from)
+      def create(to: nil, from: nil)
         data = {
             'To' => to,
             'From' => from,
@@ -109,7 +109,7 @@ module Twilio
     end
   
     class ParticipantPage < Page
-      def initialize(version, response, conversation_sid)
+      def initialize(version, response, conversation_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -150,7 +150,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -173,7 +173,7 @@ module Twilio
     end
   
     class ParticipantInstance < InstanceResource
-      def initialize(version, payload, conversation_sid, sid: nil)
+      def initialize(version, payload, conversation_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

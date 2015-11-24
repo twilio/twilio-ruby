@@ -80,7 +80,7 @@ module Twilio
     end
   
     class DependentPhoneNumberPage < Page
-      def initialize(version, response, account_sid, address_sid)
+      def initialize(version, response, account_sid: nil, address_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -107,7 +107,7 @@ module Twilio
     end
   
     class DependentPhoneNumberInstance < InstanceResource
-      def initialize(version, payload)
+      def initialize(version, payload, account_sid: nil, address_sid: nil)
         super(version)
         
         # Marshaled Properties

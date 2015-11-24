@@ -78,7 +78,7 @@ module Twilio
       
       ##
       # Create a new ActivityInstance
-      def create(friendly_name, available)
+      def create(friendly_name: nil, available: nil)
         data = {
             'FriendlyName' => friendly_name,
             'Available' => available,
@@ -115,7 +115,7 @@ module Twilio
     end
   
     class ActivityPage < Page
-      def initialize(version, response, workspace_sid)
+      def initialize(version, response, workspace_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -156,7 +156,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -172,7 +172,7 @@ module Twilio
       
       ##
       # Update the ActivityInstance
-      def update(friendly_name)
+      def update(friendly_name: nil)
         data = {
             'FriendlyName' => friendly_name,
         }
@@ -206,7 +206,7 @@ module Twilio
     end
   
     class ActivityInstance < InstanceResource
-      def initialize(version, payload, workspace_sid, sid: nil)
+      def initialize(version, payload, workspace_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties
@@ -275,7 +275,7 @@ module Twilio
       
       ##
       # Update the ActivityInstance
-      def update(friendly_name)
+      def update(friendly_name: nil)
         @context.update()
       end
       

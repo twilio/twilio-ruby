@@ -100,7 +100,7 @@ module Twilio
     end
   
     class MediaPage < Page
-      def initialize(version, response, account_sid, message_sid)
+      def initialize(version, response, account_sid: nil, message_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -150,7 +150,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -174,7 +174,7 @@ module Twilio
     end
   
     class MediaInstance < InstanceResource
-      def initialize(version, payload, account_sid, message_sid, sid: nil)
+      def initialize(version, payload, account_sid: nil, message_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

@@ -21,7 +21,7 @@ module Twilio
       
       ##
       # Create a new AddressInstance
-      def create(customer_name, street, city, region, postal_code, iso_country, friendly_name: nil)
+      def create(customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil, iso_country: nil, friendly_name: nil)
         data = {
             'CustomerName' => customer_name,
             'Street' => street,
@@ -123,7 +123,7 @@ module Twilio
     end
   
     class AddressPage < Page
-      def initialize(version, response, account_sid)
+      def initialize(version, response, account_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -173,7 +173,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -234,7 +234,7 @@ module Twilio
     end
   
     class AddressInstance < InstanceResource
-      def initialize(version, payload, account_sid, sid: nil)
+      def initialize(version, payload, account_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

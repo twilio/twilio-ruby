@@ -49,7 +49,7 @@ module Twilio
     end
   
     class SipPage < Page
-      def initialize(version, response, account_sid)
+      def initialize(version, response, account_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -74,7 +74,7 @@ module Twilio
     end
   
     class SipInstance < InstanceResource
-      def initialize(version, payload)
+      def initialize(version, payload, account_sid: nil)
         super(version)
       end
       

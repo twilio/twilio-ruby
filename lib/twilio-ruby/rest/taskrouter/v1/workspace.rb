@@ -72,7 +72,7 @@ module Twilio
       
       ##
       # Create a new WorkspaceInstance
-      def create(friendly_name, event_callback_url: nil, template: nil)
+      def create(friendly_name: nil, event_callback_url: nil, template: nil)
         data = {
             'FriendlyName' => friendly_name,
             'EventCallbackUrl' => event_callback_url,
@@ -154,7 +154,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,

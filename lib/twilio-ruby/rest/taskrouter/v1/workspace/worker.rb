@@ -96,7 +96,7 @@ module Twilio
       
       ##
       # Create a new WorkerInstance
-      def create(friendly_name, activity_sid: nil, attributes: nil)
+      def create(friendly_name: nil, activity_sid: nil, attributes: nil)
         data = {
             'FriendlyName' => friendly_name,
             'ActivitySid' => activity_sid,
@@ -140,7 +140,7 @@ module Twilio
     end
   
     class WorkerPage < Page
-      def initialize(version, response, workspace_sid)
+      def initialize(version, response, workspace_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -184,7 +184,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -248,7 +248,7 @@ module Twilio
     end
   
     class WorkerInstance < InstanceResource
-      def initialize(version, payload, workspace_sid, sid: nil)
+      def initialize(version, payload, workspace_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

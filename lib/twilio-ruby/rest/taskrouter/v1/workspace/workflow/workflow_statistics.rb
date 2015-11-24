@@ -37,7 +37,7 @@ module Twilio
     end
   
     class WorkflowStatisticsPage < Page
-      def initialize(version, response, workspace_sid, workflow_sid)
+      def initialize(version, response, workspace_sid: nil, workflow_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -84,7 +84,7 @@ module Twilio
             'EndDate' => Twilio.serialize_iso8601(end_date),
         }
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -107,7 +107,7 @@ module Twilio
     end
   
     class WorkflowStatisticsInstance < InstanceResource
-      def initialize(version, payload, workspace_sid, workflow_sid)
+      def initialize(version, payload, workspace_sid: nil, workflow_sid: nil)
         super(version)
         
         # Marshaled Properties

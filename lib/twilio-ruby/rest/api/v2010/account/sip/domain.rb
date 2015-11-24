@@ -72,7 +72,7 @@ module Twilio
       
       ##
       # Create a new DomainInstance
-      def create(domain_name, friendly_name: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, voice_status_callback_url: nil, voice_status_callback_method: nil)
+      def create(domain_name: nil, friendly_name: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, voice_status_callback_url: nil, voice_status_callback_method: nil)
         data = {
             'DomainName' => domain_name,
             'FriendlyName' => friendly_name,
@@ -115,7 +115,7 @@ module Twilio
     end
   
     class DomainPage < Page
-      def initialize(version, response, account_sid)
+      def initialize(version, response, account_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -160,7 +160,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -259,7 +259,7 @@ module Twilio
     end
   
     class DomainInstance < InstanceResource
-      def initialize(version, payload, account_sid, sid: nil)
+      def initialize(version, payload, account_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

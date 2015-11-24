@@ -37,7 +37,7 @@ module Twilio
     end
   
     class TaskQueueStatisticsPage < Page
-      def initialize(version, response, workspace_sid, task_queue_sid)
+      def initialize(version, response, workspace_sid: nil, task_queue_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -85,7 +85,7 @@ module Twilio
             'StartDate' => Twilio.serialize_iso8601(start_date),
         }
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -108,7 +108,7 @@ module Twilio
     end
   
     class TaskQueueStatisticsInstance < InstanceResource
-      def initialize(version, payload, workspace_sid, task_queue_sid)
+      def initialize(version, payload, workspace_sid: nil, task_queue_sid: nil)
         super(version)
         
         # Marshaled Properties

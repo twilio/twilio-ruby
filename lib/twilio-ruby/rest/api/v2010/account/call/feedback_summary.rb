@@ -21,7 +21,7 @@ module Twilio
       
       ##
       # Create a new FeedbackSummaryInstance
-      def create(start_date, end_date, include_subaccounts: nil, status_callback: nil, status_callback_method: nil)
+      def create(start_date: nil, end_date: nil, include_subaccounts: nil, status_callback: nil, status_callback_method: nil)
         data = {
             'StartDate' => Twilio.serialize_iso8601(start_date),
             'EndDate' => Twilio.serialize_iso8601(end_date),
@@ -61,7 +61,7 @@ module Twilio
     end
   
     class FeedbackSummaryPage < Page
-      def initialize(version, response, account_sid)
+      def initialize(version, response, account_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -102,7 +102,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -131,7 +131,7 @@ module Twilio
     end
   
     class FeedbackSummaryInstance < InstanceResource
-      def initialize(version, payload, account_sid, sid: nil)
+      def initialize(version, payload, account_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

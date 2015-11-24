@@ -73,7 +73,7 @@ module Twilio
             'Type' => type,
         }
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,

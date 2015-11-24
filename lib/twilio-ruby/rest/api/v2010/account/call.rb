@@ -24,7 +24,7 @@ module Twilio
       
       ##
       # Create a new CallInstance
-      def create(to, from, method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, status_callback_method: nil, send_digits: nil, if_machine: nil, timeout: nil, record: nil, url: nil, application_sid: nil)
+      def create(to: nil, from: nil, method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, status_callback_method: nil, send_digits: nil, if_machine: nil, timeout: nil, record: nil, url: nil, application_sid: nil)
         data = {
             'To' => to,
             'From' => from,
@@ -159,7 +159,7 @@ module Twilio
     end
   
     class CallPage < Page
-      def initialize(version, response, account_sid)
+      def initialize(version, response, account_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -211,7 +211,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -315,7 +315,7 @@ module Twilio
     end
   
     class CallInstance < InstanceResource
-      def initialize(version, payload, account_sid, sid: nil)
+      def initialize(version, payload, account_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

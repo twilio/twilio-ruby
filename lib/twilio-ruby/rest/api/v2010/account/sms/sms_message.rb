@@ -21,7 +21,7 @@ module Twilio
       
       ##
       # Create a new SmsMessageInstance
-      def create(to, from, status_callback: nil, application_sid: nil, body: nil, media_url: nil)
+      def create(to: nil, from: nil, status_callback: nil, application_sid: nil, body: nil, media_url: nil)
         data = {
             'To' => to,
             'From' => from,
@@ -128,7 +128,7 @@ module Twilio
     end
   
     class SmsMessagePage < Page
-      def initialize(version, response, account_sid)
+      def initialize(version, response, account_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -175,7 +175,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -219,7 +219,7 @@ module Twilio
     end
   
     class SmsMessageInstance < InstanceResource
-      def initialize(version, payload, account_sid, sid: nil)
+      def initialize(version, payload, account_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

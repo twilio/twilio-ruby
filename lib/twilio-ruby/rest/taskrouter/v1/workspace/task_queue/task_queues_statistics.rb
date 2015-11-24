@@ -90,7 +90,7 @@ module Twilio
     end
   
     class TaskQueuesStatisticsPage < Page
-      def initialize(version, response, workspace_sid)
+      def initialize(version, response, workspace_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -115,7 +115,7 @@ module Twilio
     end
   
     class TaskQueuesStatisticsInstance < InstanceResource
-      def initialize(version, payload)
+      def initialize(version, payload, workspace_sid: nil)
         super(version)
         
         # Marshaled Properties

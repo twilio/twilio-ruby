@@ -74,7 +74,7 @@ module Twilio
       
       ##
       # Create a new IpAddressInstance
-      def create(friendly_name, ip_address)
+      def create(friendly_name: nil, ip_address: nil)
         data = {
             'FriendlyName' => friendly_name,
             'IpAddress' => ip_address,
@@ -113,7 +113,7 @@ module Twilio
     end
   
     class IpAddressPage < Page
-      def initialize(version, response, account_sid, ip_access_control_list_sid)
+      def initialize(version, response, account_sid: nil, ip_access_control_list_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -157,7 +157,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -174,7 +174,7 @@ module Twilio
       
       ##
       # Update the IpAddressInstance
-      def update(ip_address, friendly_name)
+      def update(ip_address: nil, friendly_name: nil)
         data = {
             'IpAddress' => ip_address,
             'FriendlyName' => friendly_name,
@@ -210,7 +210,7 @@ module Twilio
     end
   
     class IpAddressInstance < InstanceResource
-      def initialize(version, payload, account_sid, ip_access_control_list_sid, sid: nil)
+      def initialize(version, payload, account_sid: nil, ip_access_control_list_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties
@@ -286,9 +286,9 @@ module Twilio
       
       ##
       # Update the IpAddressInstance
-      def update(ip_address, friendly_name)
+      def update(ip_address: nil, friendly_name: nil)
         @context.update(
-            friendly_name,
+            friendly_name: nil,
         )
       end
       

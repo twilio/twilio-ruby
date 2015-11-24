@@ -115,7 +115,7 @@ module Twilio
     end
   
     class EventPage < Page
-      def initialize(version, response, workspace_sid)
+      def initialize(version, response, workspace_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -156,7 +156,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -179,7 +179,7 @@ module Twilio
     end
   
     class EventInstance < InstanceResource
-      def initialize(version, payload, workspace_sid, sid: nil)
+      def initialize(version, payload, workspace_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

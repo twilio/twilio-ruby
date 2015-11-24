@@ -91,7 +91,7 @@ module Twilio
     end
   
     class MemberPage < Page
-      def initialize(version, response, account_sid, queue_sid)
+      def initialize(version, response, account_sid: nil, queue_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -135,7 +135,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -152,7 +152,7 @@ module Twilio
       
       ##
       # Update the MemberInstance
-      def update(url, method)
+      def update(url: nil, method: nil)
         data = {
             'Url' => url,
             'Method' => method,
@@ -182,7 +182,7 @@ module Twilio
     end
   
     class MemberInstance < InstanceResource
-      def initialize(version, payload, account_sid, queue_sid, call_sid: nil)
+      def initialize(version, payload, account_sid: nil, queue_sid: nil, call_sid: nil)
         super(version)
         
         # Marshaled Properties
@@ -243,9 +243,9 @@ module Twilio
       
       ##
       # Update the MemberInstance
-      def update(url, method)
+      def update(url: nil, method: nil)
         @context.update(
-            method,
+            method: nil,
         )
       end
       

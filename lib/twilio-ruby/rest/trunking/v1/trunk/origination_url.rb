@@ -21,7 +21,7 @@ module Twilio
       
       ##
       # Create a new OriginationUrlInstance
-      def create(weight, priority, enabled, friendly_name, sip_url)
+      def create(weight: nil, priority: nil, enabled: nil, friendly_name: nil, sip_url: nil)
         data = {
             'Weight' => weight,
             'Priority' => priority,
@@ -112,7 +112,7 @@ module Twilio
     end
   
     class OriginationUrlPage < Page
-      def initialize(version, response, trunk_sid)
+      def initialize(version, response, trunk_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -153,7 +153,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -207,7 +207,7 @@ module Twilio
     end
   
     class OriginationUrlInstance < InstanceResource
-      def initialize(version, payload, trunk_sid, sid: nil)
+      def initialize(version, payload, trunk_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

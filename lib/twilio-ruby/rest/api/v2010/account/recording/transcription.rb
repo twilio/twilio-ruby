@@ -91,7 +91,7 @@ module Twilio
     end
   
     class TranscriptionPage < Page
-      def initialize(version, response, account_sid, recording_sid)
+      def initialize(version, response, account_sid: nil, recording_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -135,7 +135,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -165,7 +165,7 @@ module Twilio
     end
   
     class TranscriptionInstance < InstanceResource
-      def initialize(version, payload, account_sid, recording_sid, sid: nil)
+      def initialize(version, payload, account_sid: nil, recording_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

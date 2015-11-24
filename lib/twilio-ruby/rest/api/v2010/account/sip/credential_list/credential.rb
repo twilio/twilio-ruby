@@ -74,7 +74,7 @@ module Twilio
       
       ##
       # Create a new CredentialInstance
-      def create(username, password)
+      def create(username: nil, password: nil)
         data = {
             'Username' => username,
             'Password' => password,
@@ -113,7 +113,7 @@ module Twilio
     end
   
     class CredentialPage < Page
-      def initialize(version, response, account_sid, credential_list_sid)
+      def initialize(version, response, account_sid: nil, credential_list_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -157,7 +157,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -174,7 +174,7 @@ module Twilio
       
       ##
       # Update the CredentialInstance
-      def update(username, password)
+      def update(username: nil, password: nil)
         data = {
             'Username' => username,
             'Password' => password,
@@ -210,7 +210,7 @@ module Twilio
     end
   
     class CredentialInstance < InstanceResource
-      def initialize(version, payload, account_sid, credential_list_sid, sid: nil)
+      def initialize(version, payload, account_sid: nil, credential_list_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties
@@ -281,9 +281,9 @@ module Twilio
       
       ##
       # Update the CredentialInstance
-      def update(username, password)
+      def update(username: nil, password: nil)
         @context.update(
-            password,
+            password: nil,
         )
       end
       

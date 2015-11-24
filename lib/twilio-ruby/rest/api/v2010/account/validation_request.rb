@@ -21,7 +21,7 @@ module Twilio
       
       ##
       # Create a new ValidationRequestInstance
-      def create(phone_number, friendly_name: nil, call_delay: nil, extension: nil, status_callback: nil, status_callback_method: nil)
+      def create(phone_number: nil, friendly_name: nil, call_delay: nil, extension: nil, status_callback: nil, status_callback_method: nil)
         data = {
             'PhoneNumber' => phone_number,
             'FriendlyName' => friendly_name,
@@ -52,7 +52,7 @@ module Twilio
     end
   
     class ValidationRequestPage < Page
-      def initialize(version, response, account_sid)
+      def initialize(version, response, account_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -77,7 +77,7 @@ module Twilio
     end
   
     class ValidationRequestInstance < InstanceResource
-      def initialize(version, payload)
+      def initialize(version, payload, account_sid: nil)
         super(version)
         
         # Marshaled Properties

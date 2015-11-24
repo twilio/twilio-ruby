@@ -81,7 +81,7 @@ module Twilio
       
       ##
       # Create a new TaskQueueInstance
-      def create(friendly_name, reservation_activity_sid, assignment_activity_sid, target_workers: nil, max_reserved_workers: nil)
+      def create(friendly_name: nil, reservation_activity_sid: nil, assignment_activity_sid: nil, target_workers: nil, max_reserved_workers: nil)
         data = {
             'FriendlyName' => friendly_name,
             'ReservationActivitySid' => reservation_activity_sid,
@@ -127,7 +127,7 @@ module Twilio
     end
   
     class TaskQueuePage < Page
-      def initialize(version, response, workspace_sid)
+      def initialize(version, response, workspace_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -171,7 +171,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -237,7 +237,7 @@ module Twilio
     end
   
     class TaskQueueInstance < InstanceResource
-      def initialize(version, payload, workspace_sid, sid: nil)
+      def initialize(version, payload, workspace_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties

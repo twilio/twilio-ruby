@@ -22,7 +22,7 @@ module Twilio
       
       ##
       # Create a new CredentialListMappingInstance
-      def create(credential_list_sid)
+      def create(credential_list_sid: nil)
         data = {
             'CredentialListSid' => credential_list_sid,
         }
@@ -112,7 +112,7 @@ module Twilio
     end
   
     class CredentialListMappingPage < Page
-      def initialize(version, response, account_sid, domain_sid)
+      def initialize(version, response, account_sid: nil, domain_sid: nil)
         super(version, response)
         
         # Path Solution
@@ -156,7 +156,7 @@ module Twilio
       def fetch
         params = {}
         
-        @version.fetch(
+        payload = @version.fetch(
             'GET',
             @uri,
             params,
@@ -186,7 +186,7 @@ module Twilio
     end
   
     class CredentialListMappingInstance < InstanceResource
-      def initialize(version, payload, account_sid, domain_sid, sid: nil)
+      def initialize(version, payload, account_sid: nil, domain_sid: nil, sid: nil)
         super(version)
         
         # Marshaled Properties
