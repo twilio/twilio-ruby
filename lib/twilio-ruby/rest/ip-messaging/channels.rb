@@ -5,6 +5,7 @@ module Twilio
       class Channel < InstanceResource
         def initialize(path, client, params={})
           super
+          @submodule = :IpMessaging
           resource :messages,
                    :members
         end
