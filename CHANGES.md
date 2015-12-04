@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 4.7.0
+-------------
+
+Release December 3, 2015
+
+- Add access tokens
+
 Version 4.6.2
 -------------
 
