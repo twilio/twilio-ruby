@@ -10,6 +10,7 @@ require 'jwt'
 
 require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
 require 'twilio-ruby/util'
+require 'twilio-ruby/util/access_token'
 require 'twilio-ruby/util/client_config'
 require 'twilio-ruby/util/configuration'
 require 'twilio-ruby/util/request_validator'
