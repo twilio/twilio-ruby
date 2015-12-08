@@ -1,12 +1,13 @@
 module Twilio
   module Util
     class AccessToken
-      def initialize(account_sid, signing_key_id, secret, ttl=3600, identity=nil)
+      def initialize(account_sid, signing_key_id, secret, ttl=3600, identity=nil, nbf=nil)
         @account_sid = account_sid
         @signing_key_sid = signing_key_id
         @secret = secret
         @ttl = ttl
         @identity = identity
+        @nbf = nbf
         @grants = []
       end
 
@@ -32,10 +33,14 @@ module Twilio
             'jti' => "#{@signing_key_sid}-#{now}",
             'iss' => @signing_key_sid,
             'sub' => @account_sid,
-            'nbf' => now,
             'exp' => now + @ttl,
             'grants' => grants
         }
+        
+        if @nbf
+          payload['nbf'] = @nbf.to_i
+        end
+
         JWT.encode payload, @secret, algorithm, headers
       end
 

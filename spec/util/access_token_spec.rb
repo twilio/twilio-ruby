@@ -10,13 +10,32 @@ describe Twilio::Util::AccessToken do
 
     expect(payload['iss']).to eq('SK123')
     expect(payload['sub']).to eq('AC123')
-    expect(payload['nbf']).not_to be_nil
     expect(payload['exp']).not_to be_nil
-    expect(payload['nbf'] + 3600).to eq(payload['exp'])
+    expect(payload['exp']).to be >= Time.now.to_i
     expect(payload['jti']).not_to be_nil
-    expect("#{payload['iss']}-#{payload['nbf']}").to eq(payload['jti'])
+    expect(payload['jti']).to start_with payload['iss']
     expect(payload['grants']).not_to be_nil
     expect(payload['grants'].count).to eq(0)
+  end
+
+  it 'should generate a nbf' do
+    now = Time.new
+    scat = Twilio::Util::AccessToken.new 'AC123', 'SK123','secret', 3600, 'abc', now
+    token = scat.to_s
+    expect(token).not_to be_nil
+    payload, header = JWT.decode token, 'secret'
+
+    expect(payload['iss']).to eq('SK123')
+    expect(payload['sub']).to eq('AC123')
+    expect(payload['nbf']).not_to be_nil
+    expect(payload['nbf']).to eq(now.to_i)
+    expect(payload['exp']).not_to be_nil
+    expect(payload['exp']).to be >= Time.now.to_i
+    expect(payload['jti']).not_to be_nil
+    expect(payload['jti']).to start_with payload['iss']
+    expect(payload['grants']).not_to be_nil
+    expect(payload['grants'].count).to eq(1)
+    expect(payload['grants']['identity']).to eq('abc')
   end
 
   it 'should be able to add conversation grant' do
@@ -29,11 +48,10 @@ describe Twilio::Util::AccessToken do
 
     expect(payload['iss']).to eq('SK123')
     expect(payload['sub']).to eq('AC123')
-    expect(payload['nbf']).not_to be_nil
     expect(payload['exp']).not_to be_nil
-    expect(payload['nbf'] + 3600).to eq(payload['exp'])
+    expect(payload['exp']).to be >= Time.now.to_i
     expect(payload['jti']).not_to be_nil
-    expect("#{payload['iss']}-#{payload['nbf']}").to eq(payload['jti'])
+    expect(payload['jti']).to start_with payload['iss']
     expect(payload['grants']).not_to be_nil
     expect(payload['grants'].count).to eq(1)
     expect(payload['grants']['rtc']).not_to be_nil
@@ -49,11 +67,10 @@ describe Twilio::Util::AccessToken do
 
     expect(payload['iss']).to eq('SK123')
     expect(payload['sub']).to eq('AC123')
-    expect(payload['nbf']).not_to be_nil
     expect(payload['exp']).not_to be_nil
-    expect(payload['nbf'] + 3600).to eq(payload['exp'])
+    expect(payload['exp']).to be >= Time.now.to_i
     expect(payload['jti']).not_to be_nil
-    expect("#{payload['iss']}-#{payload['nbf']}").to eq(payload['jti'])
+    expect(payload['jti']).to start_with payload['iss']
     expect(payload['grants']).not_to be_nil
     expect(payload['grants'].count).to eq(1)
     expect(payload['grants']['ip_messaging']).not_to be_nil
@@ -70,11 +87,10 @@ describe Twilio::Util::AccessToken do
 
     expect(payload['iss']).to eq('SK123')
     expect(payload['sub']).to eq('AC123')
-    expect(payload['nbf']).not_to be_nil
     expect(payload['exp']).not_to be_nil
-    expect(payload['nbf'] + 3600).to eq(payload['exp'])
+    expect(payload['exp']).to be >= Time.now.to_i
     expect(payload['jti']).not_to be_nil
-    expect("#{payload['iss']}-#{payload['nbf']}").to eq(payload['jti'])
+    expect(payload['jti']).to start_with payload['iss']
     expect(payload['grants']).not_to be_nil
     expect(payload['grants'].count).to eq(2)
     expect(payload['grants']['rtc']).not_to be_nil
