@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 4.8.0
+-------------
+
+Release December 8, 2015
+
+- Make nbf optional
+
 Version 4.7.0
 -------------
 
