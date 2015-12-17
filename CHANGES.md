@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 4.9.0
+-------------
+
+Release December 17, 2015
+
+- Release ip messaging
+
 Version 4.8.0
 -------------
 
