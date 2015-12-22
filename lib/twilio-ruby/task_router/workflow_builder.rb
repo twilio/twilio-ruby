@@ -79,7 +79,13 @@ module Twilio
         rule['targets'].each do |target|
           targets.push(Twilio::TaskRouter::WorkflowRuleTarget.parse_json(target))
         end
-        Twilio::TaskRouter::WorkflowRule.new rule['expression'], targets, rule['friendly_name']
+        unless rule['filter_friendly_name'].nil?
+          friendly_name = rule['filter_friendly_name']
+        end
+        unless rule['friendly_name'].nil?
+          friendly_name = rule['friendly_name']
+        end
+        Twilio::TaskRouter::WorkflowRule.new rule['expression'], targets, friendly_name
       end
     end
     class WorkflowRuleTarget
