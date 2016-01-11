@@ -6,75 +6,81 @@
 
 module Twilio
   module REST
-    class SmsList < ListResource
-      ##
-      # Initialize the SmsList
-      def initialize(version, account_sid: nil)
-        super(version)
+    class Api < Domain
+      class V2010 < Version
+        class AccountContext < InstanceContext
+          class SmsList < ListResource
+            ##
+            # Initialize the SmsList
+            def initialize(version, account_sid: nil)
+              super(version)
+              
+              # Path Solution
+              @solution = {
+                  account_sid: account_sid
+              }
+              
+              # Components
+              @messages = nil
+              @short_codes = nil
+            end
+            
+            ##
+            # Access the messages
+            def messages
+              @messages ||= SmsMessageList.new(@version, @solution)
+            end
+            
+            ##
+            # Access the short_codes
+            def short_codes
+              @short_codes ||= ShortCodeList.new(@version, @solution)
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              '#<Twilio.Api.V2010.SmsList>'
+            end
+          end
         
-        # Path Solution
-        @solution = {
-            account_sid: account_sid
-        }
+          class SmsPage < Page
+            def initialize(version, response, account_sid: nil)
+              super(version, response)
+              
+              # Path Solution
+              @solution = {
+                  'account_sid' => account_sid,
+              }
+            end
+            
+            def get_instance(payload)
+              return SmsInstance.new(
+                  @version,
+                  payload,
+                  account_sid: @solution['account_sid'],
+              )
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              '<Twilio.Api.V2010.SmsPage>'
+            end
+          end
         
-        # Components
-        @messages = nil
-        @short_codes = nil
-      end
-      
-      ##
-      # Access the messages
-      def messages
-        @messages ||= SmsMessageList.new(@version, @solution)
-      end
-      
-      ##
-      # Access the short_codes
-      def short_codes
-        @short_codes ||= ShortCodeList.new(@version, @solution)
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '#<Twilio.Api.V2010.SmsList>'
-      end
-    end
-  
-    class SmsPage < Page
-      def initialize(version, response, account_sid: nil)
-        super(version, response)
-        
-        # Path Solution
-        @solution = {
-            'account_sid' => account_sid,
-        }
-      end
-      
-      def get_instance(payload)
-        return SmsInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '<Twilio.Api.V2010.SmsPage>'
-      end
-    end
-  
-    class SmsInstance < InstanceResource
-      def initialize(version, payload, account_sid: nil)
-        super(version)
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        "<Twilio.Api.V2010.SmsInstance>"
+          class SmsInstance < InstanceResource
+            def initialize(version, payload, account_sid: nil)
+              super(version)
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              "<Twilio.Api.V2010.SmsInstance>"
+            end
+          end
+        end
       end
     end
   end

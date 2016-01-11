@@ -6,75 +6,81 @@
 
 module Twilio
   module REST
-    class UsageList < ListResource
-      ##
-      # Initialize the UsageList
-      def initialize(version, account_sid: nil)
-        super(version)
+    class Api < Domain
+      class V2010 < Version
+        class AccountContext < InstanceContext
+          class UsageList < ListResource
+            ##
+            # Initialize the UsageList
+            def initialize(version, account_sid: nil)
+              super(version)
+              
+              # Path Solution
+              @solution = {
+                  account_sid: account_sid
+              }
+              
+              # Components
+              @records = nil
+              @triggers = nil
+            end
+            
+            ##
+            # Access the records
+            def records
+              @records ||= RecordList.new(@version, @solution)
+            end
+            
+            ##
+            # Access the triggers
+            def triggers
+              @triggers ||= TriggerList.new(@version, @solution)
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              '#<Twilio.Api.V2010.UsageList>'
+            end
+          end
         
-        # Path Solution
-        @solution = {
-            account_sid: account_sid
-        }
+          class UsagePage < Page
+            def initialize(version, response, account_sid: nil)
+              super(version, response)
+              
+              # Path Solution
+              @solution = {
+                  'account_sid' => account_sid,
+              }
+            end
+            
+            def get_instance(payload)
+              return UsageInstance.new(
+                  @version,
+                  payload,
+                  account_sid: @solution['account_sid'],
+              )
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              '<Twilio.Api.V2010.UsagePage>'
+            end
+          end
         
-        # Components
-        @records = nil
-        @triggers = nil
-      end
-      
-      ##
-      # Access the records
-      def records
-        @records ||= RecordList.new(@version, @solution)
-      end
-      
-      ##
-      # Access the triggers
-      def triggers
-        @triggers ||= TriggerList.new(@version, @solution)
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '#<Twilio.Api.V2010.UsageList>'
-      end
-    end
-  
-    class UsagePage < Page
-      def initialize(version, response, account_sid: nil)
-        super(version, response)
-        
-        # Path Solution
-        @solution = {
-            'account_sid' => account_sid,
-        }
-      end
-      
-      def get_instance(payload)
-        return UsageInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '<Twilio.Api.V2010.UsagePage>'
-      end
-    end
-  
-    class UsageInstance < InstanceResource
-      def initialize(version, payload, account_sid: nil)
-        super(version)
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        "<Twilio.Api.V2010.UsageInstance>"
+          class UsageInstance < InstanceResource
+            def initialize(version, payload, account_sid: nil)
+              super(version)
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              "<Twilio.Api.V2010.UsageInstance>"
+            end
+          end
+        end
       end
     end
   end

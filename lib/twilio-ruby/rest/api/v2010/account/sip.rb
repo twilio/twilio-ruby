@@ -6,82 +6,88 @@
 
 module Twilio
   module REST
-    class SipList < ListResource
-      ##
-      # Initialize the SipList
-      def initialize(version, account_sid: nil)
-        super(version)
+    class Api < Domain
+      class V2010 < Version
+        class AccountContext < InstanceContext
+          class SipList < ListResource
+            ##
+            # Initialize the SipList
+            def initialize(version, account_sid: nil)
+              super(version)
+              
+              # Path Solution
+              @solution = {
+                  account_sid: account_sid
+              }
+              
+              # Components
+              @domains = nil
+              @ip_access_control_lists = nil
+              @credential_lists = nil
+            end
+            
+            ##
+            # Access the domains
+            def domains
+              @domains ||= DomainList.new(@version, @solution)
+            end
+            
+            ##
+            # Access the ip_access_control_lists
+            def ip_access_control_lists
+              @ip_access_control_lists ||= IpAccessControlListList.new(@version, @solution)
+            end
+            
+            ##
+            # Access the credential_lists
+            def credential_lists
+              @credential_lists ||= CredentialListList.new(@version, @solution)
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              '#<Twilio.Api.V2010.SipList>'
+            end
+          end
         
-        # Path Solution
-        @solution = {
-            account_sid: account_sid
-        }
+          class SipPage < Page
+            def initialize(version, response, account_sid: nil)
+              super(version, response)
+              
+              # Path Solution
+              @solution = {
+                  'account_sid' => account_sid,
+              }
+            end
+            
+            def get_instance(payload)
+              return SipInstance.new(
+                  @version,
+                  payload,
+                  account_sid: @solution['account_sid'],
+              )
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              '<Twilio.Api.V2010.SipPage>'
+            end
+          end
         
-        # Components
-        @domains = nil
-        @ip_access_control_lists = nil
-        @credential_lists = nil
-      end
-      
-      ##
-      # Access the domains
-      def domains
-        @domains ||= DomainList.new(@version, @solution)
-      end
-      
-      ##
-      # Access the ip_access_control_lists
-      def ip_access_control_lists
-        @ip_access_control_lists ||= IpAccessControlListList.new(@version, @solution)
-      end
-      
-      ##
-      # Access the credential_lists
-      def credential_lists
-        @credential_lists ||= CredentialListList.new(@version, @solution)
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '#<Twilio.Api.V2010.SipList>'
-      end
-    end
-  
-    class SipPage < Page
-      def initialize(version, response, account_sid: nil)
-        super(version, response)
-        
-        # Path Solution
-        @solution = {
-            'account_sid' => account_sid,
-        }
-      end
-      
-      def get_instance(payload)
-        return SipInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '<Twilio.Api.V2010.SipPage>'
-      end
-    end
-  
-    class SipInstance < InstanceResource
-      def initialize(version, payload, account_sid: nil)
-        super(version)
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        "<Twilio.Api.V2010.SipInstance>"
+          class SipInstance < InstanceResource
+            def initialize(version, payload, account_sid: nil)
+              super(version)
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              "<Twilio.Api.V2010.SipInstance>"
+            end
+          end
+        end
       end
     end
   end

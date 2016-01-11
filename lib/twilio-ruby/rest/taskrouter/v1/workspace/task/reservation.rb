@@ -6,274 +6,282 @@
 
 module Twilio
   module REST
-    class ReservationList < ListResource
-      ##
-      # Initialize the ReservationList
-      def initialize(version, workspace_sid: nil, task_sid: nil)
-        super(version)
-        
-        # Path Solution
-        @solution = {
-            workspace_sid: workspace_sid,
-            task_sid: task_sid
-        }
-        @uri = "/Workspaces/#{@solution[:workspace_sid]}/Tasks/#{@solution[:task_sid]}/Reservations"
-      end
-      
-      ##
-      # Reads ReservationInstance records from the API as a list.
-      def list(limit: nil, page_size: nil)
-        self.stream(
-            limit: limit,
-            page_size: page_size
-        ).entries
-      end
-      
-      def stream(limit: nil, page_size: nil)
-        limits = @version.read_limits(limit, page_size)
-        
-        page = self.page(
-            page_size: limits['page_size'],
-        )
-        
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
-      end
-      
-      def each
-        limits = @version.read_limits
-        
-        page = self.page(
-            page_size: limits['page_size'],
-        )
-        
-        @version.stream(page,
-                        limit: limits['limit'],
-                        page_limit: limits['page_limit']).each {|x| yield x}
-      end
-      
-      ##
-      # Retrieve a single page of ReservationInstance records from the API.
-      def page(page_token: nil, page_number: nil, page_size: nil)
-        params = {
-            'PageToken' => page_token,
-            'Page' => page_number,
-            'PageSize' => page_size,
-        }
-        response = @version.page(
-            'GET',
-            @uri,
-            params
-        )
-        return ReservationPage.new(
-            @version,
-            response,
-            workspace_sid: @solution['workspace_sid'],
-            task_sid: @solution['task_sid'],
-        )
-      end
-      
-      ##
-      # Constructs a ReservationContext
-      def get(sid)
-        ReservationContext.new(
-            @version,
-            workspace_sid: @solution[:workspace_sid],
-            task_sid: @solution[:task_sid],
-            sid: sid,
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '#<Twilio.Taskrouter.V1.ReservationList>'
-      end
-    end
-  
-    class ReservationPage < Page
-      def initialize(version, response, workspace_sid: nil, task_sid: nil)
-        super(version, response)
-        
-        # Path Solution
-        @solution = {
-            'workspace_sid' => workspace_sid,
-            'task_sid' => task_sid,
-        }
-      end
-      
-      def get_instance(payload)
-        return ReservationInstance.new(
-            @version,
-            payload,
-            workspace_sid: @solution['workspace_sid'],
-            task_sid: @solution['task_sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '<Twilio.Taskrouter.V1.ReservationPage>'
-      end
-    end
-  
-    class ReservationContext < InstanceContext
-      def initialize(version, workspace_sid, task_sid, sid)
-        super(version)
-        
-        # Path Solution
-        @solution = {
-            workspace_sid: workspace_sid,
-            task_sid: task_sid,
-            sid: sid,
-        }
-        @uri = "/Workspaces/#{@solution[:workspace_sid]}/Tasks/#{@solution[:task_sid]}/Reservations/#{@solution[:sid]}"
-      end
-      
-      ##
-      # Fetch a ReservationInstance
-      def fetch
-        params = {}
-        
-        payload = @version.fetch(
-            'GET',
-            @uri,
-            params,
-        )
-        
-        return ReservationInstance.new(
-            @version,
-            payload,
-            workspace_sid: @solution['workspace_sid'],
-            task_sid: @solution['task_sid'],
-            sid: @solution['sid'],
-        )
-      end
-      
-      ##
-      # Update the ReservationInstance
-      def update(reservation_status: nil, worker_activity_sid: nil)
-        data = {
-            'ReservationStatus' => reservation_status,
-            'WorkerActivitySid' => worker_activity_sid,
-        }
-        
-        payload = @version.update(
-            'POST',
-            @uri,
-            data=data,
-        )
-        
-        return ReservationInstance.new(
-            @version,
-            payload,
-            workspace_sid: @solution['workspace_sid'],
-            task_sid: @solution['task_sid'],
-            sid: @solution['sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-        "#<Twilio.Taskrouter.V1.ReservationContext #{context}>"
-      end
-    end
-  
-    class ReservationInstance < InstanceResource
-      def initialize(version, payload, workspace_sid: nil, task_sid: nil, sid: nil)
-        super(version)
-        
-        # Marshaled Properties
-        @properties = {
-            'account_sid' => payload['account_sid'],
-            'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-            'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
-            'reservation_status' => payload['reservation_status'],
-            'sid' => payload['sid'],
-            'task_sid' => payload['task_sid'],
-            'worker_name' => payload['worker_name'],
-            'worker_sid' => payload['worker_sid'],
-            'workspace_sid' => payload['workspace_sid'],
-        }
-        
-        # Context
-        @instance_context = nil
-        @params = {
-            'workspace_sid' => workspace_sid,
-            'task_sid' => task_sid,
-            'sid' => sid || @properties['sid'],
-        }
-      end
-      
-      def context
-        unless @instance_context
-          @instance_context = ReservationContext.new(
-              @version,
-              @params['workspace_sid'],
-              @params['task_sid'],
-              @params['sid'],
-          )
+    class Taskrouter < Domain
+      class V1 < Version
+        class WorkspaceContext < InstanceContext
+          class TaskContext < InstanceContext
+            class ReservationList < ListResource
+              ##
+              # Initialize the ReservationList
+              def initialize(version, workspace_sid: nil, task_sid: nil)
+                super(version)
+                
+                # Path Solution
+                @solution = {
+                    workspace_sid: workspace_sid,
+                    task_sid: task_sid
+                }
+                @uri = "/Workspaces/#{@solution[:workspace_sid]}/Tasks/#{@solution[:task_sid]}/Reservations"
+              end
+              
+              ##
+              # Reads ReservationInstance records from the API as a list.
+              def list(limit: nil, page_size: nil)
+                self.stream(
+                    limit: limit,
+                    page_size: page_size
+                ).entries
+              end
+              
+              def stream(limit: nil, page_size: nil)
+                limits = @version.read_limits(limit, page_size)
+                
+                page = self.page(
+                    page_size: limits['page_size'],
+                )
+                
+                @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+              end
+              
+              def each
+                limits = @version.read_limits
+                
+                page = self.page(
+                    page_size: limits['page_size'],
+                )
+                
+                @version.stream(page,
+                                limit: limits['limit'],
+                                page_limit: limits['page_limit']).each {|x| yield x}
+              end
+              
+              ##
+              # Retrieve a single page of ReservationInstance records from the API.
+              def page(page_token: nil, page_number: nil, page_size: nil)
+                params = {
+                    'PageToken' => page_token,
+                    'Page' => page_number,
+                    'PageSize' => page_size,
+                }
+                response = @version.page(
+                    'GET',
+                    @uri,
+                    params
+                )
+                return ReservationPage.new(
+                    @version,
+                    response,
+                    workspace_sid: @solution['workspace_sid'],
+                    task_sid: @solution['task_sid'],
+                )
+              end
+              
+              ##
+              # Constructs a ReservationContext
+              def get(sid)
+                ReservationContext.new(
+                    @version,
+                    workspace_sid: @solution[:workspace_sid],
+                    task_sid: @solution[:task_sid],
+                    sid: sid,
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                '#<Twilio.Taskrouter.V1.ReservationList>'
+              end
+            end
+          
+            class ReservationPage < Page
+              def initialize(version, response, workspace_sid: nil, task_sid: nil)
+                super(version, response)
+                
+                # Path Solution
+                @solution = {
+                    'workspace_sid' => workspace_sid,
+                    'task_sid' => task_sid,
+                }
+              end
+              
+              def get_instance(payload)
+                return ReservationInstance.new(
+                    @version,
+                    payload,
+                    workspace_sid: @solution['workspace_sid'],
+                    task_sid: @solution['task_sid'],
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                '<Twilio.Taskrouter.V1.ReservationPage>'
+              end
+            end
+          
+            class ReservationContext < InstanceContext
+              def initialize(version, workspace_sid, task_sid, sid)
+                super(version)
+                
+                # Path Solution
+                @solution = {
+                    workspace_sid: workspace_sid,
+                    task_sid: task_sid,
+                    sid: sid,
+                }
+                @uri = "/Workspaces/#{@solution[:workspace_sid]}/Tasks/#{@solution[:task_sid]}/Reservations/#{@solution[:sid]}"
+              end
+              
+              ##
+              # Fetch a ReservationInstance
+              def fetch
+                params = {}
+                
+                payload = @version.fetch(
+                    'GET',
+                    @uri,
+                    params,
+                )
+                
+                return ReservationInstance.new(
+                    @version,
+                    payload,
+                    workspace_sid: @solution['workspace_sid'],
+                    task_sid: @solution['task_sid'],
+                    sid: @solution['sid'],
+                )
+              end
+              
+              ##
+              # Update the ReservationInstance
+              def update(reservation_status: nil, worker_activity_sid: nil)
+                data = {
+                    'ReservationStatus' => reservation_status,
+                    'WorkerActivitySid' => worker_activity_sid,
+                }
+                
+                payload = @version.update(
+                    'POST',
+                    @uri,
+                    data=data,
+                )
+                
+                return ReservationInstance.new(
+                    @version,
+                    payload,
+                    workspace_sid: @solution['workspace_sid'],
+                    task_sid: @solution['task_sid'],
+                    sid: @solution['sid'],
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                "#<Twilio.Taskrouter.V1.ReservationContext #{context}>"
+              end
+            end
+          
+            class ReservationInstance < InstanceResource
+              def initialize(version, payload, workspace_sid: nil, task_sid: nil, sid: nil)
+                super(version)
+                
+                # Marshaled Properties
+                @properties = {
+                    'account_sid' => payload['account_sid'],
+                    'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
+                    'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                    'reservation_status' => payload['reservation_status'],
+                    'sid' => payload['sid'],
+                    'task_sid' => payload['task_sid'],
+                    'worker_name' => payload['worker_name'],
+                    'worker_sid' => payload['worker_sid'],
+                    'workspace_sid' => payload['workspace_sid'],
+                }
+                
+                # Context
+                @instance_context = nil
+                @params = {
+                    'workspace_sid' => workspace_sid,
+                    'task_sid' => task_sid,
+                    'sid' => sid || @properties['sid'],
+                }
+              end
+              
+              def context
+                unless @instance_context
+                  @instance_context = ReservationContext.new(
+                      @version,
+                      @params['workspace_sid'],
+                      @params['task_sid'],
+                      @params['sid'],
+                  )
+                end
+                @instance_context
+              end
+              
+              def account_sid
+                @properties['account_sid']
+              end
+              
+              def date_created
+                @properties['date_created']
+              end
+              
+              def date_updated
+                @properties['date_updated']
+              end
+              
+              def reservation_status
+                @properties['reservation_status']
+              end
+              
+              def sid
+                @properties['sid']
+              end
+              
+              def task_sid
+                @properties['task_sid']
+              end
+              
+              def worker_name
+                @properties['worker_name']
+              end
+              
+              def worker_sid
+                @properties['worker_sid']
+              end
+              
+              def workspace_sid
+                @properties['workspace_sid']
+              end
+              
+              ##
+              # Fetch a ReservationInstance
+              def fetch
+                @context.fetch()
+              end
+              
+              ##
+              # Update the ReservationInstance
+              def update(reservation_status: nil, worker_activity_sid: nil)
+                @context.update(
+                    worker_activity_sid: nil,
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Taskrouter.V1.ReservationInstance #{context}>"
+              end
+            end
+          end
         end
-        @instance_context
-      end
-      
-      def account_sid
-        @properties['account_sid']
-      end
-      
-      def date_created
-        @properties['date_created']
-      end
-      
-      def date_updated
-        @properties['date_updated']
-      end
-      
-      def reservation_status
-        @properties['reservation_status']
-      end
-      
-      def sid
-        @properties['sid']
-      end
-      
-      def task_sid
-        @properties['task_sid']
-      end
-      
-      def worker_name
-        @properties['worker_name']
-      end
-      
-      def worker_sid
-        @properties['worker_sid']
-      end
-      
-      def workspace_sid
-        @properties['workspace_sid']
-      end
-      
-      ##
-      # Fetch a ReservationInstance
-      def fetch
-        @context.fetch()
-      end
-      
-      ##
-      # Update the ReservationInstance
-      def update(reservation_status: nil, worker_activity_sid: nil)
-        @context.update(
-            worker_activity_sid: nil,
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-        "<Twilio.Taskrouter.V1.ReservationInstance #{context}>"
       end
     end
   end

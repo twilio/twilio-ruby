@@ -6,325 +6,331 @@
 
 module Twilio
   module REST
-    class QueueList < ListResource
-      ##
-      # Initialize the QueueList
-      def initialize(version, account_sid: nil)
-        super(version)
+    class Api < Domain
+      class V2010 < Version
+        class AccountContext < InstanceContext
+          class QueueList < ListResource
+            ##
+            # Initialize the QueueList
+            def initialize(version, account_sid: nil)
+              super(version)
+              
+              # Path Solution
+              @solution = {
+                  account_sid: account_sid
+              }
+              @uri = "/Accounts/#{@solution[:account_sid]}/Queues.json"
+            end
+            
+            ##
+            # Reads QueueInstance records from the API as a list.
+            def list(limit: nil, page_size: nil)
+              self.stream(
+                  limit: limit,
+                  page_size: page_size
+              ).entries
+            end
+            
+            def stream(limit: nil, page_size: nil)
+              limits = @version.read_limits(limit, page_size)
+              
+              page = self.page(
+                  page_size: limits['page_size'],
+              )
+              
+              @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+            end
+            
+            def each
+              limits = @version.read_limits
+              
+              page = self.page(
+                  page_size: limits['page_size'],
+              )
+              
+              @version.stream(page,
+                              limit: limits['limit'],
+                              page_limit: limits['page_limit']).each {|x| yield x}
+            end
+            
+            ##
+            # Retrieve a single page of QueueInstance records from the API.
+            def page(page_token: nil, page_number: nil, page_size: nil)
+              params = {
+                  'PageToken' => page_token,
+                  'Page' => page_number,
+                  'PageSize' => page_size,
+              }
+              response = @version.page(
+                  'GET',
+                  @uri,
+                  params
+              )
+              return QueuePage.new(
+                  @version,
+                  response,
+                  account_sid: @solution['account_sid'],
+              )
+            end
+            
+            ##
+            # Create a new QueueInstance
+            def create(friendly_name: nil, max_size: nil)
+              data = {
+                  'FriendlyName' => friendly_name,
+                  'MaxSize' => max_size,
+              }
+              
+              payload = @version.create(
+                  'POST',
+                  @uri,
+                  data: data
+              )
+              
+              return QueueInstance.new(
+                  @version,
+                  payload,
+                  account_sid: @solution['account_sid'],
+              )
+            end
+            
+            ##
+            # Constructs a QueueContext
+            def get(sid)
+              QueueContext.new(
+                  @version,
+                  account_sid: @solution[:account_sid],
+                  sid: sid,
+              )
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              '#<Twilio.Api.V2010.QueueList>'
+            end
+          end
         
-        # Path Solution
-        @solution = {
-            account_sid: account_sid
-        }
-        @uri = "/Accounts/#{@solution[:account_sid]}/Queues.json"
-      end
-      
-      ##
-      # Reads QueueInstance records from the API as a list.
-      def list(limit: nil, page_size: nil)
-        self.stream(
-            limit: limit,
-            page_size: page_size
-        ).entries
-      end
-      
-      def stream(limit: nil, page_size: nil)
-        limits = @version.read_limits(limit, page_size)
+          class QueuePage < Page
+            def initialize(version, response, account_sid: nil)
+              super(version, response)
+              
+              # Path Solution
+              @solution = {
+                  'account_sid' => account_sid,
+              }
+            end
+            
+            def get_instance(payload)
+              return QueueInstance.new(
+                  @version,
+                  payload,
+                  account_sid: @solution['account_sid'],
+              )
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              '<Twilio.Api.V2010.QueuePage>'
+            end
+          end
         
-        page = self.page(
-            page_size: limits['page_size'],
-        )
+          class QueueContext < InstanceContext
+            def initialize(version, account_sid, sid)
+              super(version)
+              
+              # Path Solution
+              @solution = {
+                  account_sid: account_sid,
+                  sid: sid,
+              }
+              @uri = "/Accounts/#{@solution[:account_sid]}/Queues/#{@solution[:sid]}.json"
+              
+              # Dependents
+              @members = nil
+            end
+            
+            ##
+            # Fetch a QueueInstance
+            def fetch
+              params = {}
+              
+              payload = @version.fetch(
+                  'GET',
+                  @uri,
+                  params,
+              )
+              
+              return QueueInstance.new(
+                  @version,
+                  payload,
+                  account_sid: @solution['account_sid'],
+                  sid: @solution['sid'],
+              )
+            end
+            
+            ##
+            # Update the QueueInstance
+            def update(friendly_name: nil, max_size: nil)
+              data = {
+                  'FriendlyName' => friendly_name,
+                  'MaxSize' => max_size,
+              }
+              
+              payload = @version.update(
+                  'POST',
+                  @uri,
+                  data=data,
+              )
+              
+              return QueueInstance.new(
+                  @version,
+                  payload,
+                  account_sid: @solution['account_sid'],
+                  sid: @solution['sid'],
+              )
+            end
+            
+            ##
+            # Deletes the QueueInstance
+            def delete
+              return @version.delete('delete', @uri)
+            end
+            
+            def members(call_sid=:unset)
+              if call_sid != :unset
+                return MemberContext.new(
+                    @version,
+                    @solution[:account_sid],
+                    @solution[:queue_sid],
+                    call_sid,
+                )
+              end
+              
+              unless @members
+                @members = MemberList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                    queue_sid: @solution[:sid],
+                )
+              end
+              
+              @members
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Api.V2010.QueueContext #{context}>"
+            end
+          end
         
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
-      end
-      
-      def each
-        limits = @version.read_limits
-        
-        page = self.page(
-            page_size: limits['page_size'],
-        )
-        
-        @version.stream(page,
-                        limit: limits['limit'],
-                        page_limit: limits['page_limit']).each {|x| yield x}
-      end
-      
-      ##
-      # Retrieve a single page of QueueInstance records from the API.
-      def page(page_token: nil, page_number: nil, page_size: nil)
-        params = {
-            'PageToken' => page_token,
-            'Page' => page_number,
-            'PageSize' => page_size,
-        }
-        response = @version.page(
-            'GET',
-            @uri,
-            params
-        )
-        return QueuePage.new(
-            @version,
-            response,
-            account_sid: @solution['account_sid'],
-        )
-      end
-      
-      ##
-      # Create a new QueueInstance
-      def create(friendly_name: nil, max_size: nil)
-        data = {
-            'FriendlyName' => friendly_name,
-            'MaxSize' => max_size,
-        }
-        
-        payload = @version.create(
-            'POST',
-            @uri,
-            data: data
-        )
-        
-        return QueueInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-        )
-      end
-      
-      ##
-      # Constructs a QueueContext
-      def get(sid)
-        QueueContext.new(
-            @version,
-            account_sid: @solution[:account_sid],
-            sid: sid,
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '#<Twilio.Api.V2010.QueueList>'
-      end
-    end
-  
-    class QueuePage < Page
-      def initialize(version, response, account_sid: nil)
-        super(version, response)
-        
-        # Path Solution
-        @solution = {
-            'account_sid' => account_sid,
-        }
-      end
-      
-      def get_instance(payload)
-        return QueueInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '<Twilio.Api.V2010.QueuePage>'
-      end
-    end
-  
-    class QueueContext < InstanceContext
-      def initialize(version, account_sid, sid)
-        super(version)
-        
-        # Path Solution
-        @solution = {
-            account_sid: account_sid,
-            sid: sid,
-        }
-        @uri = "/Accounts/#{@solution[:account_sid]}/Queues/#{@solution[:sid]}.json"
-        
-        # Dependents
-        @members = nil
-      end
-      
-      ##
-      # Fetch a QueueInstance
-      def fetch
-        params = {}
-        
-        payload = @version.fetch(
-            'GET',
-            @uri,
-            params,
-        )
-        
-        return QueueInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-            sid: @solution['sid'],
-        )
-      end
-      
-      ##
-      # Update the QueueInstance
-      def update(friendly_name: nil, max_size: nil)
-        data = {
-            'FriendlyName' => friendly_name,
-            'MaxSize' => max_size,
-        }
-        
-        payload = @version.update(
-            'POST',
-            @uri,
-            data=data,
-        )
-        
-        return QueueInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-            sid: @solution['sid'],
-        )
-      end
-      
-      ##
-      # Deletes the QueueInstance
-      def delete
-        return @version.delete('delete', @uri)
-      end
-      
-      def members(call_sid=:unset)
-        if call_sid != :unset
-          return MemberContext.new(
-              @version,
-              @solution[:sid],
-              @solution[:sid],
-              call_sid,
-          )
+          class QueueInstance < InstanceResource
+            def initialize(version, payload, account_sid: nil, sid: nil)
+              super(version)
+              
+              # Marshaled Properties
+              @properties = {
+                  'account_sid' => payload['account_sid'],
+                  'average_wait_time' => payload['average_wait_time'].to_i,
+                  'current_size' => payload['current_size'].to_i,
+                  'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
+                  'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
+                  'friendly_name' => payload['friendly_name'],
+                  'max_size' => payload['max_size'].to_i,
+                  'sid' => payload['sid'],
+                  'uri' => payload['uri'],
+              }
+              
+              # Context
+              @instance_context = nil
+              @params = {
+                  'account_sid' => account_sid,
+                  'sid' => sid || @properties['sid'],
+              }
+            end
+            
+            def context
+              unless @instance_context
+                @instance_context = QueueContext.new(
+                    @version,
+                    @params['account_sid'],
+                    @params['sid'],
+                )
+              end
+              @instance_context
+            end
+            
+            def account_sid
+              @properties['account_sid']
+            end
+            
+            def average_wait_time
+              @properties['average_wait_time']
+            end
+            
+            def current_size
+              @properties['current_size']
+            end
+            
+            def date_created
+              @properties['date_created']
+            end
+            
+            def date_updated
+              @properties['date_updated']
+            end
+            
+            def friendly_name
+              @properties['friendly_name']
+            end
+            
+            def max_size
+              @properties['max_size']
+            end
+            
+            def sid
+              @properties['sid']
+            end
+            
+            def uri
+              @properties['uri']
+            end
+            
+            ##
+            # Fetch a QueueInstance
+            def fetch
+              @context.fetch()
+            end
+            
+            ##
+            # Update the QueueInstance
+            def update(friendly_name: nil, max_size: nil)
+              @context.update(
+                  max_size: nil,
+              )
+            end
+            
+            ##
+            # Deletes the QueueInstance
+            def delete
+              @context.delete()
+            end
+            
+            def members
+              @context.members
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Api.V2010.QueueInstance #{context}>"
+            end
+          end
         end
-        
-        unless @members
-          @members = MemberList.new(
-              @version,
-              account_sid: @solution[:account_sid],
-              queue_sid: @solution[:sid],
-          )
-        end
-        
-        @members
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-        "#<Twilio.Api.V2010.QueueContext #{context}>"
-      end
-    end
-  
-    class QueueInstance < InstanceResource
-      def initialize(version, payload, account_sid: nil, sid: nil)
-        super(version)
-        
-        # Marshaled Properties
-        @properties = {
-            'account_sid' => payload['account_sid'],
-            'average_wait_time' => payload['average_wait_time'].to_i,
-            'current_size' => payload['current_size'].to_i,
-            'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
-            'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-            'friendly_name' => payload['friendly_name'],
-            'max_size' => payload['max_size'].to_i,
-            'sid' => payload['sid'],
-            'uri' => payload['uri'],
-        }
-        
-        # Context
-        @instance_context = nil
-        @params = {
-            'account_sid' => account_sid,
-            'sid' => sid || @properties['sid'],
-        }
-      end
-      
-      def context
-        unless @instance_context
-          @instance_context = QueueContext.new(
-              @version,
-              @params['account_sid'],
-              @params['sid'],
-          )
-        end
-        @instance_context
-      end
-      
-      def account_sid
-        @properties['account_sid']
-      end
-      
-      def average_wait_time
-        @properties['average_wait_time']
-      end
-      
-      def current_size
-        @properties['current_size']
-      end
-      
-      def date_created
-        @properties['date_created']
-      end
-      
-      def date_updated
-        @properties['date_updated']
-      end
-      
-      def friendly_name
-        @properties['friendly_name']
-      end
-      
-      def max_size
-        @properties['max_size']
-      end
-      
-      def sid
-        @properties['sid']
-      end
-      
-      def uri
-        @properties['uri']
-      end
-      
-      ##
-      # Fetch a QueueInstance
-      def fetch
-        @context.fetch()
-      end
-      
-      ##
-      # Update the QueueInstance
-      def update(friendly_name: nil, max_size: nil)
-        @context.update(
-            max_size: nil,
-        )
-      end
-      
-      ##
-      # Deletes the QueueInstance
-      def delete
-        @context.delete()
-      end
-      
-      def members
-        @context.members
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-        "<Twilio.Api.V2010.QueueInstance #{context}>"
       end
     end
   end

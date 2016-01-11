@@ -6,89 +6,93 @@
 
 module Twilio
   module REST
-    class VoiceList < ListResource
-      ##
-      # Initialize the VoiceList
-      def initialize(version)
-        super(version)
-        
-        # Path Solution
-        @solution = {}
-        
-        # Components
-        @numbers = nil
-        @countries = nil
-      end
+    class Pricing < Domain
+      class V1 < Version
+        class VoiceList < ListResource
+          ##
+          # Initialize the VoiceList
+          def initialize(version)
+            super(version)
+            
+            # Path Solution
+            @solution = {}
+            
+            # Components
+            @numbers = nil
+            @countries = nil
+          end
+          
+          ##
+          # Access the numbers
+          def numbers
+            @numbers ||= NumberList.new(@version, @solution)
+          end
+          
+          ##
+          # Access the countries
+          def countries
+            @countries ||= CountryList.new(@version, @solution)
+          end
+          
+          ##
+          # Provide a user friendly representation
+          def to_s
+            '#<Twilio.Pricing.V1.VoiceList>'
+          end
+        end
       
-      ##
-      # Access the numbers
-      def numbers
-        @numbers ||= NumberList.new(@version, @solution)
-      end
+        class VoicePage < Page
+          def initialize(version, response)
+            super(version, response)
+            
+            # Path Solution
+            @solution = {}
+          end
+          
+          def get_instance(payload)
+            return VoiceInstance.new(
+                @version,
+                payload,
+            )
+          end
+          
+          ##
+          # Provide a user friendly representation
+          def to_s
+            '<Twilio.Pricing.V1.VoicePage>'
+          end
+        end
       
-      ##
-      # Access the countries
-      def countries
-        @countries ||= CountryList.new(@version, @solution)
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '#<Twilio.Pricing.V1.VoiceList>'
-      end
-    end
-  
-    class VoicePage < Page
-      def initialize(version, response)
-        super(version, response)
-        
-        # Path Solution
-        @solution = {}
-      end
-      
-      def get_instance(payload)
-        return VoiceInstance.new(
-            @version,
-            payload,
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '<Twilio.Pricing.V1.VoicePage>'
-      end
-    end
-  
-    class VoiceInstance < InstanceResource
-      def initialize(version, payload)
-        super(version)
-        
-        # Marshaled Properties
-        @properties = {
-            'name' => payload['name'],
-            'url' => payload['url'],
-            'links' => payload['links'],
-        }
-      end
-      
-      def name
-        @properties['name']
-      end
-      
-      def url
-        @properties['url']
-      end
-      
-      def links
-        @properties['links']
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        "<Twilio.Pricing.V1.VoiceInstance>"
+        class VoiceInstance < InstanceResource
+          def initialize(version, payload)
+            super(version)
+            
+            # Marshaled Properties
+            @properties = {
+                'name' => payload['name'],
+                'url' => payload['url'],
+                'links' => payload['links'],
+            }
+          end
+          
+          def name
+            @properties['name']
+          end
+          
+          def url
+            @properties['url']
+          end
+          
+          def links
+            @properties['links']
+          end
+          
+          ##
+          # Provide a user friendly representation
+          def to_s
+            "<Twilio.Pricing.V1.VoiceInstance>"
+          end
+        end
       end
     end
   end

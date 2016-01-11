@@ -6,230 +6,238 @@
 
 module Twilio
   module REST
-    class FeedbackList < ListResource
-      ##
-      # Initialize the FeedbackList
-      def initialize(version, account_sid: nil, call_sid: nil)
-        super(version)
-        
-        # Path Solution
-        @solution = {
-            account_sid: account_sid,
-            call_sid: call_sid
-        }
-      end
-      
-      ##
-      # Constructs a FeedbackContext
-      def get
-        FeedbackContext.new(
-            @version,
-            account_sid: @solution[:account_sid],
-            call_sid: @solution[:call_sid],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '#<Twilio.Api.V2010.FeedbackList>'
-      end
-    end
-  
-    class FeedbackPage < Page
-      def initialize(version, response, account_sid: nil, call_sid: nil)
-        super(version, response)
-        
-        # Path Solution
-        @solution = {
-            'account_sid' => account_sid,
-            'call_sid' => call_sid,
-        }
-      end
-      
-      def get_instance(payload)
-        return FeedbackInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-            call_sid: @solution['call_sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '<Twilio.Api.V2010.FeedbackPage>'
-      end
-    end
-  
-    class FeedbackContext < InstanceContext
-      def initialize(version, account_sid, call_sid)
-        super(version)
-        
-        # Path Solution
-        @solution = {
-            account_sid: account_sid,
-            call_sid: call_sid,
-        }
-        @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/Feedback.json"
-      end
-      
-      ##
-      # Create a new FeedbackInstance
-      def create(quality_score: nil, issue: nil)
-        data = {
-            'QualityScore' => quality_score,
-            'Issue' => issue,
-        }
-        
-        payload = @version.create(
-            'POST',
-            @uri,
-            data: data
-        )
-        
-        return FeedbackInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-            call_sid: @solution['call_sid'],
-        )
-      end
-      
-      ##
-      # Fetch a FeedbackInstance
-      def fetch
-        params = {}
-        
-        payload = @version.fetch(
-            'GET',
-            @uri,
-            params,
-        )
-        
-        return FeedbackInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-            call_sid: @solution['call_sid'],
-        )
-      end
-      
-      ##
-      # Update the FeedbackInstance
-      def update(quality_score: nil, issue: nil)
-        data = {
-            'QualityScore' => quality_score,
-            'Issue' => issue,
-        }
-        
-        payload = @version.update(
-            'POST',
-            @uri,
-            data=data,
-        )
-        
-        return FeedbackInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-            call_sid: @solution['call_sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-        "#<Twilio.Api.V2010.FeedbackContext #{context}>"
-      end
-    end
-  
-    class FeedbackInstance < InstanceResource
-      def initialize(version, payload, account_sid: nil, call_sid: nil)
-        super(version)
-        
-        # Marshaled Properties
-        @properties = {
-            'account_sid' => payload['account_sid'],
-            'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
-            'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-            'issues' => payload['issues'],
-            'quality_score' => payload['quality_score'].to_i,
-            'sid' => payload['sid'],
-        }
-        
-        # Context
-        @instance_context = nil
-        @params = {
-            'account_sid' => account_sid,
-            'call_sid' => call_sid,
-        }
-      end
-      
-      def context
-        unless @instance_context
-          @instance_context = FeedbackContext.new(
-              @version,
-              @params['account_sid'],
-              @params['call_sid'],
-          )
+    class Api < Domain
+      class V2010 < Version
+        class AccountContext < InstanceContext
+          class CallContext < InstanceContext
+            class FeedbackList < ListResource
+              ##
+              # Initialize the FeedbackList
+              def initialize(version, account_sid: nil, call_sid: nil)
+                super(version)
+                
+                # Path Solution
+                @solution = {
+                    account_sid: account_sid,
+                    call_sid: call_sid
+                }
+              end
+              
+              ##
+              # Constructs a FeedbackContext
+              def get
+                FeedbackContext.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                    call_sid: @solution[:call_sid],
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                '#<Twilio.Api.V2010.FeedbackList>'
+              end
+            end
+          
+            class FeedbackPage < Page
+              def initialize(version, response, account_sid: nil, call_sid: nil)
+                super(version, response)
+                
+                # Path Solution
+                @solution = {
+                    'account_sid' => account_sid,
+                    'call_sid' => call_sid,
+                }
+              end
+              
+              def get_instance(payload)
+                return FeedbackInstance.new(
+                    @version,
+                    payload,
+                    account_sid: @solution['account_sid'],
+                    call_sid: @solution['call_sid'],
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                '<Twilio.Api.V2010.FeedbackPage>'
+              end
+            end
+          
+            class FeedbackContext < InstanceContext
+              def initialize(version, account_sid, call_sid)
+                super(version)
+                
+                # Path Solution
+                @solution = {
+                    account_sid: account_sid,
+                    call_sid: call_sid,
+                }
+                @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/Feedback.json"
+              end
+              
+              ##
+              # Create a new FeedbackInstance
+              def create(quality_score: nil, issue: nil)
+                data = {
+                    'QualityScore' => quality_score,
+                    'Issue' => issue,
+                }
+                
+                payload = @version.create(
+                    'POST',
+                    @uri,
+                    data: data
+                )
+                
+                return FeedbackInstance.new(
+                    @version,
+                    payload,
+                    account_sid: @solution['account_sid'],
+                    call_sid: @solution['call_sid'],
+                )
+              end
+              
+              ##
+              # Fetch a FeedbackInstance
+              def fetch
+                params = {}
+                
+                payload = @version.fetch(
+                    'GET',
+                    @uri,
+                    params,
+                )
+                
+                return FeedbackInstance.new(
+                    @version,
+                    payload,
+                    account_sid: @solution['account_sid'],
+                    call_sid: @solution['call_sid'],
+                )
+              end
+              
+              ##
+              # Update the FeedbackInstance
+              def update(quality_score: nil, issue: nil)
+                data = {
+                    'QualityScore' => quality_score,
+                    'Issue' => issue,
+                }
+                
+                payload = @version.update(
+                    'POST',
+                    @uri,
+                    data=data,
+                )
+                
+                return FeedbackInstance.new(
+                    @version,
+                    payload,
+                    account_sid: @solution['account_sid'],
+                    call_sid: @solution['call_sid'],
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                "#<Twilio.Api.V2010.FeedbackContext #{context}>"
+              end
+            end
+          
+            class FeedbackInstance < InstanceResource
+              def initialize(version, payload, account_sid: nil, call_sid: nil)
+                super(version)
+                
+                # Marshaled Properties
+                @properties = {
+                    'account_sid' => payload['account_sid'],
+                    'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
+                    'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
+                    'issues' => payload['issues'],
+                    'quality_score' => payload['quality_score'].to_i,
+                    'sid' => payload['sid'],
+                }
+                
+                # Context
+                @instance_context = nil
+                @params = {
+                    'account_sid' => account_sid,
+                    'call_sid' => call_sid,
+                }
+              end
+              
+              def context
+                unless @instance_context
+                  @instance_context = FeedbackContext.new(
+                      @version,
+                      @params['account_sid'],
+                      @params['call_sid'],
+                  )
+                end
+                @instance_context
+              end
+              
+              def account_sid
+                @properties['account_sid']
+              end
+              
+              def date_created
+                @properties['date_created']
+              end
+              
+              def date_updated
+                @properties['date_updated']
+              end
+              
+              def issues
+                @properties['issues']
+              end
+              
+              def quality_score
+                @properties['quality_score']
+              end
+              
+              def sid
+                @properties['sid']
+              end
+              
+              ##
+              # Create a new FeedbackInstance
+              def create(quality_score: nil, issue: nil)
+                @context.create(
+                    issue: nil,
+                )
+              end
+              
+              ##
+              # Fetch a FeedbackInstance
+              def fetch
+                @context.fetch()
+              end
+              
+              ##
+              # Update the FeedbackInstance
+              def update(quality_score: nil, issue: nil)
+                @context.update(
+                    issue: nil,
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.FeedbackInstance #{context}>"
+              end
+            end
+          end
         end
-        @instance_context
-      end
-      
-      def account_sid
-        @properties['account_sid']
-      end
-      
-      def date_created
-        @properties['date_created']
-      end
-      
-      def date_updated
-        @properties['date_updated']
-      end
-      
-      def issues
-        @properties['issues']
-      end
-      
-      def quality_score
-        @properties['quality_score']
-      end
-      
-      def sid
-        @properties['sid']
-      end
-      
-      ##
-      # Create a new FeedbackInstance
-      def create(quality_score: nil, issue: nil)
-        @context.create(
-            issue: nil,
-        )
-      end
-      
-      ##
-      # Fetch a FeedbackInstance
-      def fetch
-        @context.fetch()
-      end
-      
-      ##
-      # Update the FeedbackInstance
-      def update(quality_score: nil, issue: nil)
-        @context.update(
-            issue: nil,
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-        "<Twilio.Api.V2010.FeedbackInstance #{context}>"
       end
     end
   end

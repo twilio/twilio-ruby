@@ -6,174 +6,182 @@
 
 module Twilio
   module REST
-    class TaskQueueStatisticsList < ListResource
-      ##
-      # Initialize the TaskQueueStatisticsList
-      def initialize(version, workspace_sid: nil, task_queue_sid: nil)
-        super(version)
-        
-        # Path Solution
-        @solution = {
-            workspace_sid: workspace_sid,
-            task_queue_sid: task_queue_sid
-        }
-      end
-      
-      ##
-      # Constructs a TaskQueueStatisticsContext
-      def get
-        TaskQueueStatisticsContext.new(
-            @version,
-            workspace_sid: @solution[:workspace_sid],
-            task_queue_sid: @solution[:task_queue_sid],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '#<Twilio.Taskrouter.V1.TaskQueueStatisticsList>'
-      end
-    end
-  
-    class TaskQueueStatisticsPage < Page
-      def initialize(version, response, workspace_sid: nil, task_queue_sid: nil)
-        super(version, response)
-        
-        # Path Solution
-        @solution = {
-            'workspace_sid' => workspace_sid,
-            'task_queue_sid' => task_queue_sid,
-        }
-      end
-      
-      def get_instance(payload)
-        return TaskQueueStatisticsInstance.new(
-            @version,
-            payload,
-            workspace_sid: @solution['workspace_sid'],
-            task_queue_sid: @solution['task_queue_sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '<Twilio.Taskrouter.V1.TaskQueueStatisticsPage>'
-      end
-    end
-  
-    class TaskQueueStatisticsContext < InstanceContext
-      def initialize(version, workspace_sid, task_queue_sid)
-        super(version)
-        
-        # Path Solution
-        @solution = {
-            workspace_sid: workspace_sid,
-            task_queue_sid: task_queue_sid,
-        }
-        @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues/#{@solution[:task_queue_sid]}/Statistics"
-      end
-      
-      ##
-      # Fetch a TaskQueueStatisticsInstance
-      def fetch(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil)
-        params = {
-            'EndDate' => Twilio.serialize_iso8601(end_date),
-            'FriendlyName' => friendly_name,
-            'Minutes' => minutes,
-            'StartDate' => Twilio.serialize_iso8601(start_date),
-        }
-        
-        payload = @version.fetch(
-            'GET',
-            @uri,
-            params,
-        )
-        
-        return TaskQueueStatisticsInstance.new(
-            @version,
-            payload,
-            workspace_sid: @solution['workspace_sid'],
-            task_queue_sid: @solution['task_queue_sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-        "#<Twilio.Taskrouter.V1.TaskQueueStatisticsContext #{context}>"
-      end
-    end
-  
-    class TaskQueueStatisticsInstance < InstanceResource
-      def initialize(version, payload, workspace_sid: nil, task_queue_sid: nil)
-        super(version)
-        
-        # Marshaled Properties
-        @properties = {
-            'account_sid' => payload['account_sid'],
-            'cumulative' => payload['cumulative'],
-            'realtime' => payload['realtime'],
-            'task_queue_sid' => payload['task_queue_sid'],
-            'workspace_sid' => payload['workspace_sid'],
-        }
-        
-        # Context
-        @instance_context = nil
-        @params = {
-            'workspace_sid' => workspace_sid,
-            'task_queue_sid' => task_queue_sid,
-        }
-      end
-      
-      def context
-        unless @instance_context
-          @instance_context = TaskQueueStatisticsContext.new(
-              @version,
-              @params['workspace_sid'],
-              @params['task_queue_sid'],
-          )
+    class Taskrouter < Domain
+      class V1 < Version
+        class WorkspaceContext < InstanceContext
+          class TaskQueueContext < InstanceContext
+            class TaskQueueStatisticsList < ListResource
+              ##
+              # Initialize the TaskQueueStatisticsList
+              def initialize(version, workspace_sid: nil, task_queue_sid: nil)
+                super(version)
+                
+                # Path Solution
+                @solution = {
+                    workspace_sid: workspace_sid,
+                    task_queue_sid: task_queue_sid
+                }
+              end
+              
+              ##
+              # Constructs a TaskQueueStatisticsContext
+              def get
+                TaskQueueStatisticsContext.new(
+                    @version,
+                    workspace_sid: @solution[:workspace_sid],
+                    task_queue_sid: @solution[:task_queue_sid],
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                '#<Twilio.Taskrouter.V1.TaskQueueStatisticsList>'
+              end
+            end
+          
+            class TaskQueueStatisticsPage < Page
+              def initialize(version, response, workspace_sid: nil, task_queue_sid: nil)
+                super(version, response)
+                
+                # Path Solution
+                @solution = {
+                    'workspace_sid' => workspace_sid,
+                    'task_queue_sid' => task_queue_sid,
+                }
+              end
+              
+              def get_instance(payload)
+                return TaskQueueStatisticsInstance.new(
+                    @version,
+                    payload,
+                    workspace_sid: @solution['workspace_sid'],
+                    task_queue_sid: @solution['task_queue_sid'],
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                '<Twilio.Taskrouter.V1.TaskQueueStatisticsPage>'
+              end
+            end
+          
+            class TaskQueueStatisticsContext < InstanceContext
+              def initialize(version, workspace_sid, task_queue_sid)
+                super(version)
+                
+                # Path Solution
+                @solution = {
+                    workspace_sid: workspace_sid,
+                    task_queue_sid: task_queue_sid,
+                }
+                @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues/#{@solution[:task_queue_sid]}/Statistics"
+              end
+              
+              ##
+              # Fetch a TaskQueueStatisticsInstance
+              def fetch(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil)
+                params = {
+                    'EndDate' => Twilio.serialize_iso8601(end_date),
+                    'FriendlyName' => friendly_name,
+                    'Minutes' => minutes,
+                    'StartDate' => Twilio.serialize_iso8601(start_date),
+                }
+                
+                payload = @version.fetch(
+                    'GET',
+                    @uri,
+                    params,
+                )
+                
+                return TaskQueueStatisticsInstance.new(
+                    @version,
+                    payload,
+                    workspace_sid: @solution['workspace_sid'],
+                    task_queue_sid: @solution['task_queue_sid'],
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                "#<Twilio.Taskrouter.V1.TaskQueueStatisticsContext #{context}>"
+              end
+            end
+          
+            class TaskQueueStatisticsInstance < InstanceResource
+              def initialize(version, payload, workspace_sid: nil, task_queue_sid: nil)
+                super(version)
+                
+                # Marshaled Properties
+                @properties = {
+                    'account_sid' => payload['account_sid'],
+                    'cumulative' => payload['cumulative'],
+                    'realtime' => payload['realtime'],
+                    'task_queue_sid' => payload['task_queue_sid'],
+                    'workspace_sid' => payload['workspace_sid'],
+                }
+                
+                # Context
+                @instance_context = nil
+                @params = {
+                    'workspace_sid' => workspace_sid,
+                    'task_queue_sid' => task_queue_sid,
+                }
+              end
+              
+              def context
+                unless @instance_context
+                  @instance_context = TaskQueueStatisticsContext.new(
+                      @version,
+                      @params['workspace_sid'],
+                      @params['task_queue_sid'],
+                  )
+                end
+                @instance_context
+              end
+              
+              def account_sid
+                @properties['account_sid']
+              end
+              
+              def cumulative
+                @properties['cumulative']
+              end
+              
+              def realtime
+                @properties['realtime']
+              end
+              
+              def task_queue_sid
+                @properties['task_queue_sid']
+              end
+              
+              def workspace_sid
+                @properties['workspace_sid']
+              end
+              
+              ##
+              # Fetch a TaskQueueStatisticsInstance
+              def fetch(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil)
+                @context.fetch(
+                    friendly_name: nil,
+                    minutes: nil,
+                    start_date: nil,
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Taskrouter.V1.TaskQueueStatisticsInstance #{context}>"
+              end
+            end
+          end
         end
-        @instance_context
-      end
-      
-      def account_sid
-        @properties['account_sid']
-      end
-      
-      def cumulative
-        @properties['cumulative']
-      end
-      
-      def realtime
-        @properties['realtime']
-      end
-      
-      def task_queue_sid
-        @properties['task_queue_sid']
-      end
-      
-      def workspace_sid
-        @properties['workspace_sid']
-      end
-      
-      ##
-      # Fetch a TaskQueueStatisticsInstance
-      def fetch(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil)
-        @context.fetch(
-            friendly_name: nil,
-            minutes: nil,
-            start_date: nil,
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-        "<Twilio.Taskrouter.V1.TaskQueueStatisticsInstance #{context}>"
       end
     end
   end

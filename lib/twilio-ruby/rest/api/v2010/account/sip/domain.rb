@@ -6,399 +6,407 @@
 
 module Twilio
   module REST
-    class DomainList < ListResource
-      ##
-      # Initialize the DomainList
-      def initialize(version, account_sid: nil)
-        super(version)
-        
-        # Path Solution
-        @solution = {
-            account_sid: account_sid
-        }
-        @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains.json"
-      end
-      
-      ##
-      # Reads DomainInstance records from the API as a list.
-      def list(limit: nil, page_size: nil)
-        self.stream(
-            limit: limit,
-            page_size: page_size
-        ).entries
-      end
-      
-      def stream(limit: nil, page_size: nil)
-        limits = @version.read_limits(limit, page_size)
-        
-        page = self.page(
-            page_size: limits['page_size'],
-        )
-        
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
-      end
-      
-      def each
-        limits = @version.read_limits
-        
-        page = self.page(
-            page_size: limits['page_size'],
-        )
-        
-        @version.stream(page,
-                        limit: limits['limit'],
-                        page_limit: limits['page_limit']).each {|x| yield x}
-      end
-      
-      ##
-      # Retrieve a single page of DomainInstance records from the API.
-      def page(page_token: nil, page_number: nil, page_size: nil)
-        params = {
-            'PageToken' => page_token,
-            'Page' => page_number,
-            'PageSize' => page_size,
-        }
-        response = @version.page(
-            'GET',
-            @uri,
-            params
-        )
-        return DomainPage.new(
-            @version,
-            response,
-            account_sid: @solution['account_sid'],
-        )
-      end
-      
-      ##
-      # Create a new DomainInstance
-      def create(domain_name: nil, friendly_name: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, voice_status_callback_url: nil, voice_status_callback_method: nil)
-        data = {
-            'DomainName' => domain_name,
-            'FriendlyName' => friendly_name,
-            'VoiceUrl' => voice_url,
-            'VoiceMethod' => voice_method,
-            'VoiceFallbackUrl' => voice_fallback_url,
-            'VoiceFallbackMethod' => voice_fallback_method,
-            'VoiceStatusCallbackUrl' => voice_status_callback_url,
-            'VoiceStatusCallbackMethod' => voice_status_callback_method,
-        }
-        
-        payload = @version.create(
-            'POST',
-            @uri,
-            data: data
-        )
-        
-        return DomainInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-        )
-      end
-      
-      ##
-      # Constructs a DomainContext
-      def get(sid)
-        DomainContext.new(
-            @version,
-            account_sid: @solution[:account_sid],
-            sid: sid,
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '#<Twilio.Api.V2010.DomainList>'
-      end
-    end
-  
-    class DomainPage < Page
-      def initialize(version, response, account_sid: nil)
-        super(version, response)
-        
-        # Path Solution
-        @solution = {
-            'account_sid' => account_sid,
-        }
-      end
-      
-      def get_instance(payload)
-        return DomainInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '<Twilio.Api.V2010.DomainPage>'
-      end
-    end
-  
-    class DomainContext < InstanceContext
-      def initialize(version, account_sid, sid)
-        super(version)
-        
-        # Path Solution
-        @solution = {
-            account_sid: account_sid,
-            sid: sid,
-        }
-        @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:sid]}.json"
-        
-        # Dependents
-        @ip_access_control_list_mappings = nil
-        @credential_list_mappings = nil
-      end
-      
-      ##
-      # Fetch a DomainInstance
-      def fetch
-        params = {}
-        
-        payload = @version.fetch(
-            'GET',
-            @uri,
-            params,
-        )
-        
-        return DomainInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-            sid: @solution['sid'],
-        )
-      end
-      
-      ##
-      # Update the DomainInstance
-      def update(api_version: nil, friendly_name: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_status_callback_method: nil, voice_status_callback_url: nil, voice_url: nil)
-        data = {
-            'ApiVersion' => api_version,
-            'FriendlyName' => friendly_name,
-            'VoiceFallbackMethod' => voice_fallback_method,
-            'VoiceFallbackUrl' => voice_fallback_url,
-            'VoiceMethod' => voice_method,
-            'VoiceStatusCallbackMethod' => voice_status_callback_method,
-            'VoiceStatusCallbackUrl' => voice_status_callback_url,
-            'VoiceUrl' => voice_url,
-        }
-        
-        payload = @version.update(
-            'POST',
-            @uri,
-            data=data,
-        )
-        
-        return DomainInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-            sid: @solution['sid'],
-        )
-      end
-      
-      ##
-      # Deletes the DomainInstance
-      def delete
-        return @version.delete('delete', @uri)
-      end
-      
-      def ip_access_control_list_mappings(sid=:unset)
-        if sid != :unset
-          return IpAccessControlListMappingContext.new(
-              @version,
-              @solution[:sid],
-              @solution[:sid],
-              sid,
-          )
+    class Api < Domain
+      class V2010 < Version
+        class AccountContext < InstanceContext
+          class SipList < ListResource
+            class DomainList < ListResource
+              ##
+              # Initialize the DomainList
+              def initialize(version, account_sid: nil)
+                super(version)
+                
+                # Path Solution
+                @solution = {
+                    account_sid: account_sid
+                }
+                @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains.json"
+              end
+              
+              ##
+              # Reads DomainInstance records from the API as a list.
+              def list(limit: nil, page_size: nil)
+                self.stream(
+                    limit: limit,
+                    page_size: page_size
+                ).entries
+              end
+              
+              def stream(limit: nil, page_size: nil)
+                limits = @version.read_limits(limit, page_size)
+                
+                page = self.page(
+                    page_size: limits['page_size'],
+                )
+                
+                @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+              end
+              
+              def each
+                limits = @version.read_limits
+                
+                page = self.page(
+                    page_size: limits['page_size'],
+                )
+                
+                @version.stream(page,
+                                limit: limits['limit'],
+                                page_limit: limits['page_limit']).each {|x| yield x}
+              end
+              
+              ##
+              # Retrieve a single page of DomainInstance records from the API.
+              def page(page_token: nil, page_number: nil, page_size: nil)
+                params = {
+                    'PageToken' => page_token,
+                    'Page' => page_number,
+                    'PageSize' => page_size,
+                }
+                response = @version.page(
+                    'GET',
+                    @uri,
+                    params
+                )
+                return DomainPage.new(
+                    @version,
+                    response,
+                    account_sid: @solution['account_sid'],
+                )
+              end
+              
+              ##
+              # Create a new DomainInstance
+              def create(domain_name: nil, friendly_name: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, voice_status_callback_url: nil, voice_status_callback_method: nil)
+                data = {
+                    'DomainName' => domain_name,
+                    'FriendlyName' => friendly_name,
+                    'VoiceUrl' => voice_url,
+                    'VoiceMethod' => voice_method,
+                    'VoiceFallbackUrl' => voice_fallback_url,
+                    'VoiceFallbackMethod' => voice_fallback_method,
+                    'VoiceStatusCallbackUrl' => voice_status_callback_url,
+                    'VoiceStatusCallbackMethod' => voice_status_callback_method,
+                }
+                
+                payload = @version.create(
+                    'POST',
+                    @uri,
+                    data: data
+                )
+                
+                return DomainInstance.new(
+                    @version,
+                    payload,
+                    account_sid: @solution['account_sid'],
+                )
+              end
+              
+              ##
+              # Constructs a DomainContext
+              def get(sid)
+                DomainContext.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                    sid: sid,
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                '#<Twilio.Api.V2010.DomainList>'
+              end
+            end
+          
+            class DomainPage < Page
+              def initialize(version, response, account_sid: nil)
+                super(version, response)
+                
+                # Path Solution
+                @solution = {
+                    'account_sid' => account_sid,
+                }
+              end
+              
+              def get_instance(payload)
+                return DomainInstance.new(
+                    @version,
+                    payload,
+                    account_sid: @solution['account_sid'],
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                '<Twilio.Api.V2010.DomainPage>'
+              end
+            end
+          
+            class DomainContext < InstanceContext
+              def initialize(version, account_sid, sid)
+                super(version)
+                
+                # Path Solution
+                @solution = {
+                    account_sid: account_sid,
+                    sid: sid,
+                }
+                @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:sid]}.json"
+                
+                # Dependents
+                @ip_access_control_list_mappings = nil
+                @credential_list_mappings = nil
+              end
+              
+              ##
+              # Fetch a DomainInstance
+              def fetch
+                params = {}
+                
+                payload = @version.fetch(
+                    'GET',
+                    @uri,
+                    params,
+                )
+                
+                return DomainInstance.new(
+                    @version,
+                    payload,
+                    account_sid: @solution['account_sid'],
+                    sid: @solution['sid'],
+                )
+              end
+              
+              ##
+              # Update the DomainInstance
+              def update(api_version: nil, friendly_name: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_status_callback_method: nil, voice_status_callback_url: nil, voice_url: nil)
+                data = {
+                    'ApiVersion' => api_version,
+                    'FriendlyName' => friendly_name,
+                    'VoiceFallbackMethod' => voice_fallback_method,
+                    'VoiceFallbackUrl' => voice_fallback_url,
+                    'VoiceMethod' => voice_method,
+                    'VoiceStatusCallbackMethod' => voice_status_callback_method,
+                    'VoiceStatusCallbackUrl' => voice_status_callback_url,
+                    'VoiceUrl' => voice_url,
+                }
+                
+                payload = @version.update(
+                    'POST',
+                    @uri,
+                    data=data,
+                )
+                
+                return DomainInstance.new(
+                    @version,
+                    payload,
+                    account_sid: @solution['account_sid'],
+                    sid: @solution['sid'],
+                )
+              end
+              
+              ##
+              # Deletes the DomainInstance
+              def delete
+                return @version.delete('delete', @uri)
+              end
+              
+              def ip_access_control_list_mappings(sid=:unset)
+                if sid != :unset
+                  return IpAccessControlListMappingContext.new(
+                      @version,
+                      @solution[:account_sid],
+                      @solution[:domain_sid],
+                      sid,
+                  )
+                end
+                
+                unless @ip_access_control_list_mappings
+                  @ip_access_control_list_mappings = IpAccessControlListMappingList.new(
+                      @version,
+                      account_sid: @solution[:account_sid],
+                      domain_sid: @solution[:sid],
+                  )
+                end
+                
+                @ip_access_control_list_mappings
+              end
+              
+              def credential_list_mappings(sid=:unset)
+                if sid != :unset
+                  return CredentialListMappingContext.new(
+                      @version,
+                      @solution[:account_sid],
+                      @solution[:domain_sid],
+                      sid,
+                  )
+                end
+                
+                unless @credential_list_mappings
+                  @credential_list_mappings = CredentialListMappingList.new(
+                      @version,
+                      account_sid: @solution[:account_sid],
+                      domain_sid: @solution[:sid],
+                  )
+                end
+                
+                @credential_list_mappings
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                "#<Twilio.Api.V2010.DomainContext #{context}>"
+              end
+            end
+          
+            class DomainInstance < InstanceResource
+              def initialize(version, payload, account_sid: nil, sid: nil)
+                super(version)
+                
+                # Marshaled Properties
+                @properties = {
+                    'account_sid' => payload['account_sid'],
+                    'api_version' => payload['api_version'],
+                    'auth_type' => payload['auth_type'],
+                    'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
+                    'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
+                    'domain_name' => payload['domain_name'],
+                    'friendly_name' => payload['friendly_name'],
+                    'sid' => payload['sid'],
+                    'uri' => payload['uri'],
+                    'voice_fallback_method' => payload['voice_fallback_method'],
+                    'voice_fallback_url' => payload['voice_fallback_url'],
+                    'voice_method' => payload['voice_method'],
+                    'voice_status_callback_method' => payload['voice_status_callback_method'],
+                    'voice_status_callback_url' => payload['voice_status_callback_url'],
+                    'voice_url' => payload['voice_url'],
+                }
+                
+                # Context
+                @instance_context = nil
+                @params = {
+                    'account_sid' => account_sid,
+                    'sid' => sid || @properties['sid'],
+                }
+              end
+              
+              def context
+                unless @instance_context
+                  @instance_context = DomainContext.new(
+                      @version,
+                      @params['account_sid'],
+                      @params['sid'],
+                  )
+                end
+                @instance_context
+              end
+              
+              def account_sid
+                @properties['account_sid']
+              end
+              
+              def api_version
+                @properties['api_version']
+              end
+              
+              def auth_type
+                @properties['auth_type']
+              end
+              
+              def date_created
+                @properties['date_created']
+              end
+              
+              def date_updated
+                @properties['date_updated']
+              end
+              
+              def domain_name
+                @properties['domain_name']
+              end
+              
+              def friendly_name
+                @properties['friendly_name']
+              end
+              
+              def sid
+                @properties['sid']
+              end
+              
+              def uri
+                @properties['uri']
+              end
+              
+              def voice_fallback_method
+                @properties['voice_fallback_method']
+              end
+              
+              def voice_fallback_url
+                @properties['voice_fallback_url']
+              end
+              
+              def voice_method
+                @properties['voice_method']
+              end
+              
+              def voice_status_callback_method
+                @properties['voice_status_callback_method']
+              end
+              
+              def voice_status_callback_url
+                @properties['voice_status_callback_url']
+              end
+              
+              def voice_url
+                @properties['voice_url']
+              end
+              
+              ##
+              # Fetch a DomainInstance
+              def fetch
+                @context.fetch()
+              end
+              
+              ##
+              # Update the DomainInstance
+              def update(api_version: nil, friendly_name: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_status_callback_method: nil, voice_status_callback_url: nil, voice_url: nil)
+                @context.update(
+                    friendly_name: nil,
+                    voice_fallback_method: nil,
+                    voice_fallback_url: nil,
+                    voice_method: nil,
+                    voice_status_callback_method: nil,
+                    voice_status_callback_url: nil,
+                    voice_url: nil,
+                )
+              end
+              
+              ##
+              # Deletes the DomainInstance
+              def delete
+                @context.delete()
+              end
+              
+              def ip_access_control_list_mappings
+                @context.ip_access_control_list_mappings
+              end
+              
+              def credential_list_mappings
+                @context.credential_list_mappings
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.DomainInstance #{context}>"
+              end
+            end
+          end
         end
-        
-        unless @ip_access_control_list_mappings
-          @ip_access_control_list_mappings = IpAccessControlListMappingList.new(
-              @version,
-              account_sid: @solution[:account_sid],
-              domain_sid: @solution[:sid],
-          )
-        end
-        
-        @ip_access_control_list_mappings
-      end
-      
-      def credential_list_mappings(sid=:unset)
-        if sid != :unset
-          return CredentialListMappingContext.new(
-              @version,
-              @solution[:sid],
-              @solution[:sid],
-              sid,
-          )
-        end
-        
-        unless @credential_list_mappings
-          @credential_list_mappings = CredentialListMappingList.new(
-              @version,
-              account_sid: @solution[:account_sid],
-              domain_sid: @solution[:sid],
-          )
-        end
-        
-        @credential_list_mappings
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-        "#<Twilio.Api.V2010.DomainContext #{context}>"
-      end
-    end
-  
-    class DomainInstance < InstanceResource
-      def initialize(version, payload, account_sid: nil, sid: nil)
-        super(version)
-        
-        # Marshaled Properties
-        @properties = {
-            'account_sid' => payload['account_sid'],
-            'api_version' => payload['api_version'],
-            'auth_type' => payload['auth_type'],
-            'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
-            'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-            'domain_name' => payload['domain_name'],
-            'friendly_name' => payload['friendly_name'],
-            'sid' => payload['sid'],
-            'uri' => payload['uri'],
-            'voice_fallback_method' => payload['voice_fallback_method'],
-            'voice_fallback_url' => payload['voice_fallback_url'],
-            'voice_method' => payload['voice_method'],
-            'voice_status_callback_method' => payload['voice_status_callback_method'],
-            'voice_status_callback_url' => payload['voice_status_callback_url'],
-            'voice_url' => payload['voice_url'],
-        }
-        
-        # Context
-        @instance_context = nil
-        @params = {
-            'account_sid' => account_sid,
-            'sid' => sid || @properties['sid'],
-        }
-      end
-      
-      def context
-        unless @instance_context
-          @instance_context = DomainContext.new(
-              @version,
-              @params['account_sid'],
-              @params['sid'],
-          )
-        end
-        @instance_context
-      end
-      
-      def account_sid
-        @properties['account_sid']
-      end
-      
-      def api_version
-        @properties['api_version']
-      end
-      
-      def auth_type
-        @properties['auth_type']
-      end
-      
-      def date_created
-        @properties['date_created']
-      end
-      
-      def date_updated
-        @properties['date_updated']
-      end
-      
-      def domain_name
-        @properties['domain_name']
-      end
-      
-      def friendly_name
-        @properties['friendly_name']
-      end
-      
-      def sid
-        @properties['sid']
-      end
-      
-      def uri
-        @properties['uri']
-      end
-      
-      def voice_fallback_method
-        @properties['voice_fallback_method']
-      end
-      
-      def voice_fallback_url
-        @properties['voice_fallback_url']
-      end
-      
-      def voice_method
-        @properties['voice_method']
-      end
-      
-      def voice_status_callback_method
-        @properties['voice_status_callback_method']
-      end
-      
-      def voice_status_callback_url
-        @properties['voice_status_callback_url']
-      end
-      
-      def voice_url
-        @properties['voice_url']
-      end
-      
-      ##
-      # Fetch a DomainInstance
-      def fetch
-        @context.fetch()
-      end
-      
-      ##
-      # Update the DomainInstance
-      def update(api_version: nil, friendly_name: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_status_callback_method: nil, voice_status_callback_url: nil, voice_url: nil)
-        @context.update(
-            friendly_name: nil,
-            voice_fallback_method: nil,
-            voice_fallback_url: nil,
-            voice_method: nil,
-            voice_status_callback_method: nil,
-            voice_status_callback_url: nil,
-            voice_url: nil,
-        )
-      end
-      
-      ##
-      # Deletes the DomainInstance
-      def delete
-        @context.delete()
-      end
-      
-      def ip_access_control_list_mappings
-        @context.ip_access_control_list_mappings
-      end
-      
-      def credential_list_mappings
-        @context.credential_list_mappings
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-        "<Twilio.Api.V2010.DomainInstance #{context}>"
       end
     end
   end

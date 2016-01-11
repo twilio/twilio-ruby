@@ -6,152 +6,160 @@
 
 module Twilio
   module REST
-    class TaskQueuesStatisticsList < ListResource
-      ##
-      # Initialize the TaskQueuesStatisticsList
-      def initialize(version, workspace_sid: nil)
-        super(version)
-        
-        # Path Solution
-        @solution = {
-            workspace_sid: workspace_sid
-        }
-        @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues/Statistics"
-      end
-      
-      ##
-      # Reads TaskQueuesStatisticsInstance records from the API as a list.
-      def list(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil, limit: nil, page_size: nil)
-        self.stream(
-            end_date: end_date,
-            friendly_name: friendly_name,
-            minutes: minutes,
-            start_date: start_date,
-            limit: limit,
-            page_size: page_size
-        ).entries
-      end
-      
-      def stream(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil, limit: nil, page_size: nil)
-        limits = @version.read_limits(limit, page_size)
-        
-        page = self.page(
-            end_date: end_date,
-            friendly_name: friendly_name,
-            minutes: minutes,
-            start_date: start_date,
-            page_size: limits['page_size'],
-        )
-        
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
-      end
-      
-      def each
-        limits = @version.read_limits
-        
-        page = self.page(
-            page_size: limits['page_size'],
-        )
-        
-        @version.stream(page,
-                        limit: limits['limit'],
-                        page_limit: limits['page_limit']).each {|x| yield x}
-      end
-      
-      ##
-      # Retrieve a single page of TaskQueuesStatisticsInstance records from the API.
-      def page(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil, page_token: nil, page_number: nil, page_size: nil)
-        params = {
-            'EndDate' => Twilio.serialize_iso8601(end_date),
-            'FriendlyName' => friendly_name,
-            'Minutes' => minutes,
-            'StartDate' => Twilio.serialize_iso8601(start_date),
-            'PageToken' => page_token,
-            'Page' => page_number,
-            'PageSize' => page_size,
-        }
-        response = @version.page(
-            'GET',
-            @uri,
-            params
-        )
-        return TaskQueuesStatisticsPage.new(
-            @version,
-            response,
-            workspace_sid: @solution['workspace_sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '#<Twilio.Taskrouter.V1.TaskQueuesStatisticsList>'
-      end
-    end
-  
-    class TaskQueuesStatisticsPage < Page
-      def initialize(version, response, workspace_sid: nil)
-        super(version, response)
-        
-        # Path Solution
-        @solution = {
-            'workspace_sid' => workspace_sid,
-        }
-      end
-      
-      def get_instance(payload)
-        return TaskQueuesStatisticsInstance.new(
-            @version,
-            payload,
-            workspace_sid: @solution['workspace_sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '<Twilio.Taskrouter.V1.TaskQueuesStatisticsPage>'
-      end
-    end
-  
-    class TaskQueuesStatisticsInstance < InstanceResource
-      def initialize(version, payload, workspace_sid: nil)
-        super(version)
-        
-        # Marshaled Properties
-        @properties = {
-            'account_sid' => payload['account_sid'],
-            'cumulative' => payload['cumulative'],
-            'realtime' => payload['realtime'],
-            'task_queue_sid' => payload['task_queue_sid'],
-            'workspace_sid' => payload['workspace_sid'],
-        }
-      end
-      
-      def account_sid
-        @properties['account_sid']
-      end
-      
-      def cumulative
-        @properties['cumulative']
-      end
-      
-      def realtime
-        @properties['realtime']
-      end
-      
-      def task_queue_sid
-        @properties['task_queue_sid']
-      end
-      
-      def workspace_sid
-        @properties['workspace_sid']
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        "<Twilio.Taskrouter.V1.TaskQueuesStatisticsInstance>"
+    class Taskrouter < Domain
+      class V1 < Version
+        class WorkspaceContext < InstanceContext
+          class TaskQueueList < ListResource
+            class TaskQueuesStatisticsList < ListResource
+              ##
+              # Initialize the TaskQueuesStatisticsList
+              def initialize(version, workspace_sid: nil)
+                super(version)
+                
+                # Path Solution
+                @solution = {
+                    workspace_sid: workspace_sid
+                }
+                @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues/Statistics"
+              end
+              
+              ##
+              # Reads TaskQueuesStatisticsInstance records from the API as a list.
+              def list(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil, limit: nil, page_size: nil)
+                self.stream(
+                    end_date: end_date,
+                    friendly_name: friendly_name,
+                    minutes: minutes,
+                    start_date: start_date,
+                    limit: limit,
+                    page_size: page_size
+                ).entries
+              end
+              
+              def stream(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil, limit: nil, page_size: nil)
+                limits = @version.read_limits(limit, page_size)
+                
+                page = self.page(
+                    end_date: end_date,
+                    friendly_name: friendly_name,
+                    minutes: minutes,
+                    start_date: start_date,
+                    page_size: limits['page_size'],
+                )
+                
+                @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+              end
+              
+              def each
+                limits = @version.read_limits
+                
+                page = self.page(
+                    page_size: limits['page_size'],
+                )
+                
+                @version.stream(page,
+                                limit: limits['limit'],
+                                page_limit: limits['page_limit']).each {|x| yield x}
+              end
+              
+              ##
+              # Retrieve a single page of TaskQueuesStatisticsInstance records from the API.
+              def page(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil, page_token: nil, page_number: nil, page_size: nil)
+                params = {
+                    'EndDate' => Twilio.serialize_iso8601(end_date),
+                    'FriendlyName' => friendly_name,
+                    'Minutes' => minutes,
+                    'StartDate' => Twilio.serialize_iso8601(start_date),
+                    'PageToken' => page_token,
+                    'Page' => page_number,
+                    'PageSize' => page_size,
+                }
+                response = @version.page(
+                    'GET',
+                    @uri,
+                    params
+                )
+                return TaskQueuesStatisticsPage.new(
+                    @version,
+                    response,
+                    workspace_sid: @solution['workspace_sid'],
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                '#<Twilio.Taskrouter.V1.TaskQueuesStatisticsList>'
+              end
+            end
+          
+            class TaskQueuesStatisticsPage < Page
+              def initialize(version, response, workspace_sid: nil)
+                super(version, response)
+                
+                # Path Solution
+                @solution = {
+                    'workspace_sid' => workspace_sid,
+                }
+              end
+              
+              def get_instance(payload)
+                return TaskQueuesStatisticsInstance.new(
+                    @version,
+                    payload,
+                    workspace_sid: @solution['workspace_sid'],
+                )
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                '<Twilio.Taskrouter.V1.TaskQueuesStatisticsPage>'
+              end
+            end
+          
+            class TaskQueuesStatisticsInstance < InstanceResource
+              def initialize(version, payload, workspace_sid: nil)
+                super(version)
+                
+                # Marshaled Properties
+                @properties = {
+                    'account_sid' => payload['account_sid'],
+                    'cumulative' => payload['cumulative'],
+                    'realtime' => payload['realtime'],
+                    'task_queue_sid' => payload['task_queue_sid'],
+                    'workspace_sid' => payload['workspace_sid'],
+                }
+              end
+              
+              def account_sid
+                @properties['account_sid']
+              end
+              
+              def cumulative
+                @properties['cumulative']
+              end
+              
+              def realtime
+                @properties['realtime']
+              end
+              
+              def task_queue_sid
+                @properties['task_queue_sid']
+              end
+              
+              def workspace_sid
+                @properties['workspace_sid']
+              end
+              
+              ##
+              # Provide a user friendly representation
+              def to_s
+                "<Twilio.Taskrouter.V1.TaskQueuesStatisticsInstance>"
+              end
+            end
+          end
+        end
       end
     end
   end

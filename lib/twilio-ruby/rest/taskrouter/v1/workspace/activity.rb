@@ -6,290 +6,296 @@
 
 module Twilio
   module REST
-    class ActivityList < ListResource
-      ##
-      # Initialize the ActivityList
-      def initialize(version, workspace_sid: nil)
-        super(version)
+    class Taskrouter < Domain
+      class V1 < Version
+        class WorkspaceContext < InstanceContext
+          class ActivityList < ListResource
+            ##
+            # Initialize the ActivityList
+            def initialize(version, workspace_sid: nil)
+              super(version)
+              
+              # Path Solution
+              @solution = {
+                  workspace_sid: workspace_sid
+              }
+              @uri = "/Workspaces/#{@solution[:workspace_sid]}/Activities"
+            end
+            
+            ##
+            # Reads ActivityInstance records from the API as a list.
+            def list(friendly_name: nil, available: nil, limit: nil, page_size: nil)
+              self.stream(
+                  friendly_name: friendly_name,
+                  available: available,
+                  limit: limit,
+                  page_size: page_size
+              ).entries
+            end
+            
+            def stream(friendly_name: nil, available: nil, limit: nil, page_size: nil)
+              limits = @version.read_limits(limit, page_size)
+              
+              page = self.page(
+                  friendly_name: friendly_name,
+                  available: available,
+                  page_size: limits['page_size'],
+              )
+              
+              @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+            end
+            
+            def each
+              limits = @version.read_limits
+              
+              page = self.page(
+                  page_size: limits['page_size'],
+              )
+              
+              @version.stream(page,
+                              limit: limits['limit'],
+                              page_limit: limits['page_limit']).each {|x| yield x}
+            end
+            
+            ##
+            # Retrieve a single page of ActivityInstance records from the API.
+            def page(friendly_name: nil, available: nil, page_token: nil, page_number: nil, page_size: nil)
+              params = {
+                  'FriendlyName' => friendly_name,
+                  'Available' => available,
+                  'PageToken' => page_token,
+                  'Page' => page_number,
+                  'PageSize' => page_size,
+              }
+              response = @version.page(
+                  'GET',
+                  @uri,
+                  params
+              )
+              return ActivityPage.new(
+                  @version,
+                  response,
+                  workspace_sid: @solution['workspace_sid'],
+              )
+            end
+            
+            ##
+            # Create a new ActivityInstance
+            def create(friendly_name: nil, available: nil)
+              data = {
+                  'FriendlyName' => friendly_name,
+                  'Available' => available,
+              }
+              
+              payload = @version.create(
+                  'POST',
+                  @uri,
+                  data: data
+              )
+              
+              return ActivityInstance.new(
+                  @version,
+                  payload,
+                  workspace_sid: @solution['workspace_sid'],
+              )
+            end
+            
+            ##
+            # Constructs a ActivityContext
+            def get(sid)
+              ActivityContext.new(
+                  @version,
+                  workspace_sid: @solution[:workspace_sid],
+                  sid: sid,
+              )
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              '#<Twilio.Taskrouter.V1.ActivityList>'
+            end
+          end
         
-        # Path Solution
-        @solution = {
-            workspace_sid: workspace_sid
-        }
-        @uri = "/Workspaces/#{@solution[:workspace_sid]}/Activities"
-      end
-      
-      ##
-      # Reads ActivityInstance records from the API as a list.
-      def list(friendly_name: nil, available: nil, limit: nil, page_size: nil)
-        self.stream(
-            friendly_name: friendly_name,
-            available: available,
-            limit: limit,
-            page_size: page_size
-        ).entries
-      end
-      
-      def stream(friendly_name: nil, available: nil, limit: nil, page_size: nil)
-        limits = @version.read_limits(limit, page_size)
+          class ActivityPage < Page
+            def initialize(version, response, workspace_sid: nil)
+              super(version, response)
+              
+              # Path Solution
+              @solution = {
+                  'workspace_sid' => workspace_sid,
+              }
+            end
+            
+            def get_instance(payload)
+              return ActivityInstance.new(
+                  @version,
+                  payload,
+                  workspace_sid: @solution['workspace_sid'],
+              )
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              '<Twilio.Taskrouter.V1.ActivityPage>'
+            end
+          end
         
-        page = self.page(
-            friendly_name: friendly_name,
-            available: available,
-            page_size: limits['page_size'],
-        )
+          class ActivityContext < InstanceContext
+            def initialize(version, workspace_sid, sid)
+              super(version)
+              
+              # Path Solution
+              @solution = {
+                  workspace_sid: workspace_sid,
+                  sid: sid,
+              }
+              @uri = "/Workspaces/#{@solution[:workspace_sid]}/Activities/#{@solution[:sid]}"
+            end
+            
+            ##
+            # Fetch a ActivityInstance
+            def fetch
+              params = {}
+              
+              payload = @version.fetch(
+                  'GET',
+                  @uri,
+                  params,
+              )
+              
+              return ActivityInstance.new(
+                  @version,
+                  payload,
+                  workspace_sid: @solution['workspace_sid'],
+                  sid: @solution['sid'],
+              )
+            end
+            
+            ##
+            # Update the ActivityInstance
+            def update(friendly_name: nil)
+              data = {
+                  'FriendlyName' => friendly_name,
+              }
+              
+              payload = @version.update(
+                  'POST',
+                  @uri,
+                  data=data,
+              )
+              
+              return ActivityInstance.new(
+                  @version,
+                  payload,
+                  workspace_sid: @solution['workspace_sid'],
+                  sid: @solution['sid'],
+              )
+            end
+            
+            ##
+            # Deletes the ActivityInstance
+            def delete
+              return @version.delete('delete', @uri)
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Taskrouter.V1.ActivityContext #{context}>"
+            end
+          end
         
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
-      end
-      
-      def each
-        limits = @version.read_limits
-        
-        page = self.page(
-            page_size: limits['page_size'],
-        )
-        
-        @version.stream(page,
-                        limit: limits['limit'],
-                        page_limit: limits['page_limit']).each {|x| yield x}
-      end
-      
-      ##
-      # Retrieve a single page of ActivityInstance records from the API.
-      def page(friendly_name: nil, available: nil, page_token: nil, page_number: nil, page_size: nil)
-        params = {
-            'FriendlyName' => friendly_name,
-            'Available' => available,
-            'PageToken' => page_token,
-            'Page' => page_number,
-            'PageSize' => page_size,
-        }
-        response = @version.page(
-            'GET',
-            @uri,
-            params
-        )
-        return ActivityPage.new(
-            @version,
-            response,
-            workspace_sid: @solution['workspace_sid'],
-        )
-      end
-      
-      ##
-      # Create a new ActivityInstance
-      def create(friendly_name: nil, available: nil)
-        data = {
-            'FriendlyName' => friendly_name,
-            'Available' => available,
-        }
-        
-        payload = @version.create(
-            'POST',
-            @uri,
-            data: data
-        )
-        
-        return ActivityInstance.new(
-            @version,
-            payload,
-            workspace_sid: @solution['workspace_sid'],
-        )
-      end
-      
-      ##
-      # Constructs a ActivityContext
-      def get(sid)
-        ActivityContext.new(
-            @version,
-            workspace_sid: @solution[:workspace_sid],
-            sid: sid,
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '#<Twilio.Taskrouter.V1.ActivityList>'
-      end
-    end
-  
-    class ActivityPage < Page
-      def initialize(version, response, workspace_sid: nil)
-        super(version, response)
-        
-        # Path Solution
-        @solution = {
-            'workspace_sid' => workspace_sid,
-        }
-      end
-      
-      def get_instance(payload)
-        return ActivityInstance.new(
-            @version,
-            payload,
-            workspace_sid: @solution['workspace_sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '<Twilio.Taskrouter.V1.ActivityPage>'
-      end
-    end
-  
-    class ActivityContext < InstanceContext
-      def initialize(version, workspace_sid, sid)
-        super(version)
-        
-        # Path Solution
-        @solution = {
-            workspace_sid: workspace_sid,
-            sid: sid,
-        }
-        @uri = "/Workspaces/#{@solution[:workspace_sid]}/Activities/#{@solution[:sid]}"
-      end
-      
-      ##
-      # Fetch a ActivityInstance
-      def fetch
-        params = {}
-        
-        payload = @version.fetch(
-            'GET',
-            @uri,
-            params,
-        )
-        
-        return ActivityInstance.new(
-            @version,
-            payload,
-            workspace_sid: @solution['workspace_sid'],
-            sid: @solution['sid'],
-        )
-      end
-      
-      ##
-      # Update the ActivityInstance
-      def update(friendly_name: nil)
-        data = {
-            'FriendlyName' => friendly_name,
-        }
-        
-        payload = @version.update(
-            'POST',
-            @uri,
-            data=data,
-        )
-        
-        return ActivityInstance.new(
-            @version,
-            payload,
-            workspace_sid: @solution['workspace_sid'],
-            sid: @solution['sid'],
-        )
-      end
-      
-      ##
-      # Deletes the ActivityInstance
-      def delete
-        return @version.delete('delete', @uri)
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-        "#<Twilio.Taskrouter.V1.ActivityContext #{context}>"
-      end
-    end
-  
-    class ActivityInstance < InstanceResource
-      def initialize(version, payload, workspace_sid: nil, sid: nil)
-        super(version)
-        
-        # Marshaled Properties
-        @properties = {
-            'account_sid' => payload['account_sid'],
-            'available' => payload['available'],
-            'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-            'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
-            'friendly_name' => payload['friendly_name'],
-            'sid' => payload['sid'],
-            'workspace_sid' => payload['workspace_sid'],
-        }
-        
-        # Context
-        @instance_context = nil
-        @params = {
-            'workspace_sid' => workspace_sid,
-            'sid' => sid || @properties['sid'],
-        }
-      end
-      
-      def context
-        unless @instance_context
-          @instance_context = ActivityContext.new(
-              @version,
-              @params['workspace_sid'],
-              @params['sid'],
-          )
+          class ActivityInstance < InstanceResource
+            def initialize(version, payload, workspace_sid: nil, sid: nil)
+              super(version)
+              
+              # Marshaled Properties
+              @properties = {
+                  'account_sid' => payload['account_sid'],
+                  'available' => payload['available'],
+                  'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
+                  'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                  'friendly_name' => payload['friendly_name'],
+                  'sid' => payload['sid'],
+                  'workspace_sid' => payload['workspace_sid'],
+              }
+              
+              # Context
+              @instance_context = nil
+              @params = {
+                  'workspace_sid' => workspace_sid,
+                  'sid' => sid || @properties['sid'],
+              }
+            end
+            
+            def context
+              unless @instance_context
+                @instance_context = ActivityContext.new(
+                    @version,
+                    @params['workspace_sid'],
+                    @params['sid'],
+                )
+              end
+              @instance_context
+            end
+            
+            def account_sid
+              @properties['account_sid']
+            end
+            
+            def available
+              @properties['available']
+            end
+            
+            def date_created
+              @properties['date_created']
+            end
+            
+            def date_updated
+              @properties['date_updated']
+            end
+            
+            def friendly_name
+              @properties['friendly_name']
+            end
+            
+            def sid
+              @properties['sid']
+            end
+            
+            def workspace_sid
+              @properties['workspace_sid']
+            end
+            
+            ##
+            # Fetch a ActivityInstance
+            def fetch
+              @context.fetch()
+            end
+            
+            ##
+            # Update the ActivityInstance
+            def update(friendly_name: nil)
+              @context.update()
+            end
+            
+            ##
+            # Deletes the ActivityInstance
+            def delete
+              @context.delete()
+            end
+            
+            ##
+            # Provide a user friendly representation
+            def to_s
+              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Taskrouter.V1.ActivityInstance #{context}>"
+            end
+          end
         end
-        @instance_context
-      end
-      
-      def account_sid
-        @properties['account_sid']
-      end
-      
-      def available
-        @properties['available']
-      end
-      
-      def date_created
-        @properties['date_created']
-      end
-      
-      def date_updated
-        @properties['date_updated']
-      end
-      
-      def friendly_name
-        @properties['friendly_name']
-      end
-      
-      def sid
-        @properties['sid']
-      end
-      
-      def workspace_sid
-        @properties['workspace_sid']
-      end
-      
-      ##
-      # Fetch a ActivityInstance
-      def fetch
-        @context.fetch()
-      end
-      
-      ##
-      # Update the ActivityInstance
-      def update(friendly_name: nil)
-        @context.update()
-      end
-      
-      ##
-      # Deletes the ActivityInstance
-      def delete
-        @context.delete()
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-        "<Twilio.Taskrouter.V1.ActivityInstance #{context}>"
       end
     end
   end

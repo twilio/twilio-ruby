@@ -6,261 +6,271 @@
 
 module Twilio
   module REST
-    class IpAccessControlListMappingList < ListResource
-      ##
-      # Initialize the IpAccessControlListMappingList
-      def initialize(version, account_sid: nil, domain_sid: nil)
-        super(version)
-        
-        # Path Solution
-        @solution = {
-            account_sid: account_sid,
-            domain_sid: domain_sid
-        }
-        @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:domain_sid]}/IpAccessControlListMappings.json"
-      end
-      
-      ##
-      # Create a new IpAccessControlListMappingInstance
-      def create(ip_access_control_list_sid: nil)
-        data = {
-            'IpAccessControlListSid' => ip_access_control_list_sid,
-        }
-        
-        payload = @version.create(
-            'POST',
-            @uri,
-            data: data
-        )
-        
-        return IpAccessControlListMappingInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-            domain_sid: @solution['domain_sid'],
-        )
-      end
-      
-      ##
-      # Reads IpAccessControlListMappingInstance records from the API as a list.
-      def list(limit: nil, page_size: nil)
-        self.stream(
-            limit: limit,
-            page_size: page_size
-        ).entries
-      end
-      
-      def stream(limit: nil, page_size: nil)
-        limits = @version.read_limits(limit, page_size)
-        
-        page = self.page(
-            page_size: limits['page_size'],
-        )
-        
-        @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
-      end
-      
-      def each
-        limits = @version.read_limits
-        
-        page = self.page(
-            page_size: limits['page_size'],
-        )
-        
-        @version.stream(page,
-                        limit: limits['limit'],
-                        page_limit: limits['page_limit']).each {|x| yield x}
-      end
-      
-      ##
-      # Retrieve a single page of IpAccessControlListMappingInstance records from the API.
-      def page(page_token: nil, page_number: nil, page_size: nil)
-        params = {
-            'PageToken' => page_token,
-            'Page' => page_number,
-            'PageSize' => page_size,
-        }
-        response = @version.page(
-            'GET',
-            @uri,
-            params
-        )
-        return IpAccessControlListMappingPage.new(
-            @version,
-            response,
-            account_sid: @solution['account_sid'],
-            domain_sid: @solution['domain_sid'],
-        )
-      end
-      
-      ##
-      # Constructs a IpAccessControlListMappingContext
-      def get(sid)
-        IpAccessControlListMappingContext.new(
-            @version,
-            account_sid: @solution[:account_sid],
-            domain_sid: @solution[:domain_sid],
-            sid: sid,
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '#<Twilio.Api.V2010.IpAccessControlListMappingList>'
-      end
-    end
-  
-    class IpAccessControlListMappingPage < Page
-      def initialize(version, response, account_sid: nil, domain_sid: nil)
-        super(version, response)
-        
-        # Path Solution
-        @solution = {
-            'account_sid' => account_sid,
-            'domain_sid' => domain_sid,
-        }
-      end
-      
-      def get_instance(payload)
-        return IpAccessControlListMappingInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-            domain_sid: @solution['domain_sid'],
-        )
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        '<Twilio.Api.V2010.IpAccessControlListMappingPage>'
-      end
-    end
-  
-    class IpAccessControlListMappingContext < InstanceContext
-      def initialize(version, account_sid, domain_sid, sid)
-        super(version)
-        
-        # Path Solution
-        @solution = {
-            account_sid: account_sid,
-            domain_sid: domain_sid,
-            sid: sid,
-        }
-        @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:domain_sid]}/IpAccessControlListMappings/#{@solution[:sid]}.json"
-      end
-      
-      ##
-      # Fetch a IpAccessControlListMappingInstance
-      def fetch
-        params = {}
-        
-        payload = @version.fetch(
-            'GET',
-            @uri,
-            params,
-        )
-        
-        return IpAccessControlListMappingInstance.new(
-            @version,
-            payload,
-            account_sid: @solution['account_sid'],
-            domain_sid: @solution['domain_sid'],
-            sid: @solution['sid'],
-        )
-      end
-      
-      ##
-      # Deletes the IpAccessControlListMappingInstance
-      def delete
-        return @version.delete('delete', @uri)
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-        "#<Twilio.Api.V2010.IpAccessControlListMappingContext #{context}>"
-      end
-    end
-  
-    class IpAccessControlListMappingInstance < InstanceResource
-      def initialize(version, payload, account_sid: nil, domain_sid: nil, sid: nil)
-        super(version)
-        
-        # Marshaled Properties
-        @properties = {
-            'account_sid' => payload['account_sid'],
-            'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
-            'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-            'friendly_name' => payload['friendly_name'],
-            'sid' => payload['sid'],
-            'uri' => payload['uri'],
-        }
-        
-        # Context
-        @instance_context = nil
-        @params = {
-            'account_sid' => account_sid,
-            'domain_sid' => domain_sid,
-            'sid' => sid || @properties['sid'],
-        }
-      end
-      
-      def context
-        unless @instance_context
-          @instance_context = IpAccessControlListMappingContext.new(
-              @version,
-              @params['account_sid'],
-              @params['domain_sid'],
-              @params['sid'],
-          )
+    class Api < Domain
+      class V2010 < Version
+        class AccountContext < InstanceContext
+          class SipList < ListResource
+            class DomainContext < InstanceContext
+              class IpAccessControlListMappingList < ListResource
+                ##
+                # Initialize the IpAccessControlListMappingList
+                def initialize(version, account_sid: nil, domain_sid: nil)
+                  super(version)
+                  
+                  # Path Solution
+                  @solution = {
+                      account_sid: account_sid,
+                      domain_sid: domain_sid
+                  }
+                  @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:domain_sid]}/IpAccessControlListMappings.json"
+                end
+                
+                ##
+                # Create a new IpAccessControlListMappingInstance
+                def create(ip_access_control_list_sid: nil)
+                  data = {
+                      'IpAccessControlListSid' => ip_access_control_list_sid,
+                  }
+                  
+                  payload = @version.create(
+                      'POST',
+                      @uri,
+                      data: data
+                  )
+                  
+                  return IpAccessControlListMappingInstance.new(
+                      @version,
+                      payload,
+                      account_sid: @solution['account_sid'],
+                      domain_sid: @solution['domain_sid'],
+                  )
+                end
+                
+                ##
+                # Reads IpAccessControlListMappingInstance records from the API as a list.
+                def list(limit: nil, page_size: nil)
+                  self.stream(
+                      limit: limit,
+                      page_size: page_size
+                  ).entries
+                end
+                
+                def stream(limit: nil, page_size: nil)
+                  limits = @version.read_limits(limit, page_size)
+                  
+                  page = self.page(
+                      page_size: limits['page_size'],
+                  )
+                  
+                  @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+                end
+                
+                def each
+                  limits = @version.read_limits
+                  
+                  page = self.page(
+                      page_size: limits['page_size'],
+                  )
+                  
+                  @version.stream(page,
+                                  limit: limits['limit'],
+                                  page_limit: limits['page_limit']).each {|x| yield x}
+                end
+                
+                ##
+                # Retrieve a single page of IpAccessControlListMappingInstance records from the API.
+                def page(page_token: nil, page_number: nil, page_size: nil)
+                  params = {
+                      'PageToken' => page_token,
+                      'Page' => page_number,
+                      'PageSize' => page_size,
+                  }
+                  response = @version.page(
+                      'GET',
+                      @uri,
+                      params
+                  )
+                  return IpAccessControlListMappingPage.new(
+                      @version,
+                      response,
+                      account_sid: @solution['account_sid'],
+                      domain_sid: @solution['domain_sid'],
+                  )
+                end
+                
+                ##
+                # Constructs a IpAccessControlListMappingContext
+                def get(sid)
+                  IpAccessControlListMappingContext.new(
+                      @version,
+                      account_sid: @solution[:account_sid],
+                      domain_sid: @solution[:domain_sid],
+                      sid: sid,
+                  )
+                end
+                
+                ##
+                # Provide a user friendly representation
+                def to_s
+                  '#<Twilio.Api.V2010.IpAccessControlListMappingList>'
+                end
+              end
+            
+              class IpAccessControlListMappingPage < Page
+                def initialize(version, response, account_sid: nil, domain_sid: nil)
+                  super(version, response)
+                  
+                  # Path Solution
+                  @solution = {
+                      'account_sid' => account_sid,
+                      'domain_sid' => domain_sid,
+                  }
+                end
+                
+                def get_instance(payload)
+                  return IpAccessControlListMappingInstance.new(
+                      @version,
+                      payload,
+                      account_sid: @solution['account_sid'],
+                      domain_sid: @solution['domain_sid'],
+                  )
+                end
+                
+                ##
+                # Provide a user friendly representation
+                def to_s
+                  '<Twilio.Api.V2010.IpAccessControlListMappingPage>'
+                end
+              end
+            
+              class IpAccessControlListMappingContext < InstanceContext
+                def initialize(version, account_sid, domain_sid, sid)
+                  super(version)
+                  
+                  # Path Solution
+                  @solution = {
+                      account_sid: account_sid,
+                      domain_sid: domain_sid,
+                      sid: sid,
+                  }
+                  @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:domain_sid]}/IpAccessControlListMappings/#{@solution[:sid]}.json"
+                end
+                
+                ##
+                # Fetch a IpAccessControlListMappingInstance
+                def fetch
+                  params = {}
+                  
+                  payload = @version.fetch(
+                      'GET',
+                      @uri,
+                      params,
+                  )
+                  
+                  return IpAccessControlListMappingInstance.new(
+                      @version,
+                      payload,
+                      account_sid: @solution['account_sid'],
+                      domain_sid: @solution['domain_sid'],
+                      sid: @solution['sid'],
+                  )
+                end
+                
+                ##
+                # Deletes the IpAccessControlListMappingInstance
+                def delete
+                  return @version.delete('delete', @uri)
+                end
+                
+                ##
+                # Provide a user friendly representation
+                def to_s
+                  context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                  "#<Twilio.Api.V2010.IpAccessControlListMappingContext #{context}>"
+                end
+              end
+            
+              class IpAccessControlListMappingInstance < InstanceResource
+                def initialize(version, payload, account_sid: nil, domain_sid: nil, sid: nil)
+                  super(version)
+                  
+                  # Marshaled Properties
+                  @properties = {
+                      'account_sid' => payload['account_sid'],
+                      'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
+                      'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
+                      'friendly_name' => payload['friendly_name'],
+                      'sid' => payload['sid'],
+                      'uri' => payload['uri'],
+                  }
+                  
+                  # Context
+                  @instance_context = nil
+                  @params = {
+                      'account_sid' => account_sid,
+                      'domain_sid' => domain_sid,
+                      'sid' => sid || @properties['sid'],
+                  }
+                end
+                
+                def context
+                  unless @instance_context
+                    @instance_context = IpAccessControlListMappingContext.new(
+                        @version,
+                        @params['account_sid'],
+                        @params['domain_sid'],
+                        @params['sid'],
+                    )
+                  end
+                  @instance_context
+                end
+                
+                def account_sid
+                  @properties['account_sid']
+                end
+                
+                def date_created
+                  @properties['date_created']
+                end
+                
+                def date_updated
+                  @properties['date_updated']
+                end
+                
+                def friendly_name
+                  @properties['friendly_name']
+                end
+                
+                def sid
+                  @properties['sid']
+                end
+                
+                def uri
+                  @properties['uri']
+                end
+                
+                ##
+                # Fetch a IpAccessControlListMappingInstance
+                def fetch
+                  @context.fetch()
+                end
+                
+                ##
+                # Deletes the IpAccessControlListMappingInstance
+                def delete
+                  @context.delete()
+                end
+                
+                ##
+                # Provide a user friendly representation
+                def to_s
+                  context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                  "<Twilio.Api.V2010.IpAccessControlListMappingInstance #{context}>"
+                end
+              end
+            end
+          end
         end
-        @instance_context
-      end
-      
-      def account_sid
-        @properties['account_sid']
-      end
-      
-      def date_created
-        @properties['date_created']
-      end
-      
-      def date_updated
-        @properties['date_updated']
-      end
-      
-      def friendly_name
-        @properties['friendly_name']
-      end
-      
-      def sid
-        @properties['sid']
-      end
-      
-      def uri
-        @properties['uri']
-      end
-      
-      ##
-      # Fetch a IpAccessControlListMappingInstance
-      def fetch
-        @context.fetch()
-      end
-      
-      ##
-      # Deletes the IpAccessControlListMappingInstance
-      def delete
-        @context.delete()
-      end
-      
-      ##
-      # Provide a user friendly representation
-      def to_s
-        context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-        "<Twilio.Api.V2010.IpAccessControlListMappingInstance #{context}>"
       end
     end
   end
