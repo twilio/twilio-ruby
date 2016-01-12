@@ -126,19 +126,28 @@ module Twilio
             ##
             # Access the local
             def local
-              @local ||= LocalList.new(@version, @solution)
+              @local ||= LocalList.new(
+                  @version,
+                  owner_account_sid: @solution[:owner_account_sid],
+              )
             end
             
             ##
             # Access the mobile
             def mobile
-              @mobile ||= MobileList.new(@version, @solution)
+              @mobile ||= MobileList.new(
+                  @version,
+                  owner_account_sid: @solution[:owner_account_sid],
+              )
             end
             
             ##
             # Access the toll_free
             def toll_free
-              @toll_free ||= TollFreeList.new(@version, @solution)
+              @toll_free ||= TollFreeList.new(
+                  @version,
+                  owner_account_sid: @solution[:owner_account_sid],
+              )
             end
             
             ##

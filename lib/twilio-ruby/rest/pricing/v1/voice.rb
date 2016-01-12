@@ -32,7 +32,9 @@ module Twilio
               )
             end
             
-            @numbers ||= NumberList.new(@version, @solution)
+              @numbers ||= NumberList.new(
+                  @version,
+              )
           end
           
           ##
@@ -45,7 +47,9 @@ module Twilio
               )
             end
             
-            @countries ||= CountryList.new(@version, @solution)
+              @countries ||= CountryList.new(
+                  @version,
+              )
           end
           
           ##

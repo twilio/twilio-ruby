@@ -28,7 +28,10 @@ module Twilio
             ##
             # Access the records
             def records
-              @records ||= RecordList.new(@version, @solution)
+              @records ||= RecordList.new(
+                  @version,
+                  account_sid: @solution[:account_sid],
+              )
             end
             
             ##
@@ -42,7 +45,10 @@ module Twilio
                 )
               end
               
-              @triggers ||= TriggerList.new(@version, @solution)
+                @triggers ||= TriggerList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
             end
             
             ##

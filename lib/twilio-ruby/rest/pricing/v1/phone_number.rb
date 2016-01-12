@@ -31,7 +31,9 @@ module Twilio
               )
             end
             
-            @countries ||= CountryList.new(@version, @solution)
+              @countries ||= CountryList.new(
+                  @version,
+              )
           end
           
           ##

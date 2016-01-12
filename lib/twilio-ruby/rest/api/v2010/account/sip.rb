@@ -37,7 +37,10 @@ module Twilio
                 )
               end
               
-              @domains ||= DomainList.new(@version, @solution)
+                @domains ||= DomainList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
             end
             
             ##
@@ -51,7 +54,10 @@ module Twilio
                 )
               end
               
-              @ip_access_control_lists ||= IpAccessControlListList.new(@version, @solution)
+                @ip_access_control_lists ||= IpAccessControlListList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
             end
             
             ##
@@ -65,7 +71,10 @@ module Twilio
                 )
               end
               
-              @credential_lists ||= CredentialListList.new(@version, @solution)
+                @credential_lists ||= CredentialListList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
             end
             
             ##

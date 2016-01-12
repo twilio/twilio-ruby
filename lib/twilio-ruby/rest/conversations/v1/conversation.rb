@@ -25,13 +25,17 @@ module Twilio
           ##
           # Access the in_progress
           def in_progress
-            @in_progress ||= InProgressList.new(@version, @solution)
+            @in_progress ||= InProgressList.new(
+                @version,
+            )
           end
           
           ##
           # Access the completed
           def completed
-            @completed ||= CompletedList.new(@version, @solution)
+            @completed ||= CompletedList.new(
+                @version,
+            )
           end
           
           ##

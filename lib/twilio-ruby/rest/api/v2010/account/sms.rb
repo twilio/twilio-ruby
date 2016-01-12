@@ -36,7 +36,10 @@ module Twilio
                 )
               end
               
-              @messages ||= SmsMessageList.new(@version, @solution)
+                @messages ||= SmsMessageList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
             end
             
             ##
@@ -50,7 +53,10 @@ module Twilio
                 )
               end
               
-              @short_codes ||= ShortCodeList.new(@version, @solution)
+                @short_codes ||= ShortCodeList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
             end
             
             ##

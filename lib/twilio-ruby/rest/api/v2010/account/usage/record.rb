@@ -108,49 +108,73 @@ module Twilio
               ##
               # Access the all_time
               def all_time
-                @all_time ||= AllTimeList.new(@version, @solution)
+                @all_time ||= AllTimeList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
               end
               
               ##
               # Access the daily
               def daily
-                @daily ||= DailyList.new(@version, @solution)
+                @daily ||= DailyList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
               end
               
               ##
               # Access the last_month
               def last_month
-                @last_month ||= LastMonthList.new(@version, @solution)
+                @last_month ||= LastMonthList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
               end
               
               ##
               # Access the monthly
               def monthly
-                @monthly ||= MonthlyList.new(@version, @solution)
+                @monthly ||= MonthlyList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
               end
               
               ##
               # Access the this_month
               def this_month
-                @this_month ||= ThisMonthList.new(@version, @solution)
+                @this_month ||= ThisMonthList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
               end
               
               ##
               # Access the today
               def today
-                @today ||= TodayList.new(@version, @solution)
+                @today ||= TodayList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
               end
               
               ##
               # Access the yearly
               def yearly
-                @yearly ||= YearlyList.new(@version, @solution)
+                @yearly ||= YearlyList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
               end
               
               ##
               # Access the yesterday
               def yesterday
-                @yesterday ||= YesterdayList.new(@version, @solution)
+                @yesterday ||= YesterdayList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
               end
               
               ##

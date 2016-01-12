@@ -149,7 +149,10 @@ module Twilio
                 )
               end
               
-              @feedback_summaries ||= FeedbackSummaryList.new(@version, @solution)
+                @feedback_summaries ||= FeedbackSummaryList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                )
             end
             
             ##
