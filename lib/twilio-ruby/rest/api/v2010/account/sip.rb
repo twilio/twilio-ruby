@@ -28,19 +28,43 @@ module Twilio
             
             ##
             # Access the domains
-            def domains
+            def domains(sid=:unset)
+              if sid != :unset
+                return DomainContext.new(
+                    @version,
+                    @solution[:account_sid],
+                    sid,
+                )
+              end
+              
               @domains ||= DomainList.new(@version, @solution)
             end
             
             ##
             # Access the ip_access_control_lists
-            def ip_access_control_lists
+            def ip_access_control_lists(sid=:unset)
+              if sid != :unset
+                return IpAccessControlListContext.new(
+                    @version,
+                    @solution[:account_sid],
+                    sid,
+                )
+              end
+              
               @ip_access_control_lists ||= IpAccessControlListList.new(@version, @solution)
             end
             
             ##
             # Access the credential_lists
-            def credential_lists
+            def credential_lists(sid=:unset)
+              if sid != :unset
+                return CredentialListContext.new(
+                    @version,
+                    @solution[:account_sid],
+                    sid,
+                )
+              end
+              
               @credential_lists ||= CredentialListList.new(@version, @solution)
             end
             

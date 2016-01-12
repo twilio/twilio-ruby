@@ -193,6 +193,24 @@ describe 'TaskQueue' do
   end
 
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                           .task_queues.create(friendly_name: "friendly_name", reservation_activity_sid: "WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", assignment_activity_sid: "WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'FriendlyName' => "friendly_name",
+        'ReservationActivitySid' => "WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        'AssignmentActivitySid' => "WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/TaskQueues',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives create responses" do

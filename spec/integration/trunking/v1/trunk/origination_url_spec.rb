@@ -78,6 +78,26 @@ describe 'OriginationUrl' do
   end
 
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                         .origination_urls.create(weight: 1, priority: 1, enabled: true, friendly_name: "friendly_name", sip_url: "https://example.com")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'Weight' => 1,
+        'Priority' => 1,
+        'Enabled' => true,
+        'FriendlyName' => "friendly_name",
+        'SipUrl' => "https://example.com",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OriginationUrls',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives create responses" do

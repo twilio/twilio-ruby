@@ -8,5 +8,21 @@ require 'spec_helper.rb'
 
 describe 'ValidationRequest' do
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .validation_requests.create(phone_number: "+987654321")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'PhoneNumber' => "+987654321",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OutgoingCallerIds.json',
+        data: values,
+    ))).to eq(true)
   end
 end

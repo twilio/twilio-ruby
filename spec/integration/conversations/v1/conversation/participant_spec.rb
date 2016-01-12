@@ -87,6 +87,23 @@ describe 'Participant' do
   end
 
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.conversations.v1.conversations("CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                              .participants.create(to: "+123456789", from: "+987654321")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'To' => "+123456789",
+        'From' => "+987654321",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://conversations.twilio.com/v1/Conversations/CVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives create responses" do

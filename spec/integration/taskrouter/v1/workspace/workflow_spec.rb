@@ -205,6 +205,24 @@ describe 'Workflow' do
   end
 
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                           .workflows.create(friendly_name: "friendly_name", configuration: "configuration", assignment_callback_url: "/example")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'FriendlyName' => "friendly_name",
+        'Configuration' => "configuration",
+        'AssignmentCallbackUrl' => "/example",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Workflows',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives create responses" do

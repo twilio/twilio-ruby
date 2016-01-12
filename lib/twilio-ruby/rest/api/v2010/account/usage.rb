@@ -33,7 +33,15 @@ module Twilio
             
             ##
             # Access the triggers
-            def triggers
+            def triggers(sid=:unset)
+              if sid != :unset
+                return TriggerContext.new(
+                    @version,
+                    @solution[:account_sid],
+                    sid,
+                )
+              end
+              
               @triggers ||= TriggerList.new(@version, @solution)
             end
             

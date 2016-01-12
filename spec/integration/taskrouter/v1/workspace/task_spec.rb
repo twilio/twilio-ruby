@@ -211,6 +211,23 @@ describe 'Task' do
   end
 
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                           .tasks.create(attributes: "attributes", workflow_sid: "WFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'Attributes' => "attributes",
+        'WorkflowSid' => "WFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives create responses" do

@@ -8,6 +8,27 @@ require 'spec_helper.rb'
 
 describe 'Address' do
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .addresses.create(customer_name: "customer_name", street: "street", city: "city", region: "region", postal_code: "postal_code", iso_country: "US")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'CustomerName' => "customer_name",
+        'Street' => "street",
+        'City' => "city",
+        'Region' => "region",
+        'PostalCode' => "postal_code",
+        'IsoCountry' => "US",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Addresses.json',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives create responses" do

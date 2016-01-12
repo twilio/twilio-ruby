@@ -23,7 +23,14 @@ module Twilio
           
           ##
           # Access the countries
-          def countries
+          def countries(iso_country=:unset)
+            if iso_country != :unset
+              return CountryContext.new(
+                  @version,
+                  iso_country,
+              )
+            end
+            
             @countries ||= CountryList.new(@version, @solution)
           end
           

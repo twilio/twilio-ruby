@@ -140,7 +140,15 @@ module Twilio
             
             ##
             # Access the feedback_summaries
-            def feedback_summaries
+            def feedback_summaries(sid=:unset)
+              if sid != :unset
+                return FeedbackSummaryContext.new(
+                    @version,
+                    @solution[:account_sid],
+                    sid,
+                )
+              end
+              
               @feedback_summaries ||= FeedbackSummaryList.new(@version, @solution)
             end
             

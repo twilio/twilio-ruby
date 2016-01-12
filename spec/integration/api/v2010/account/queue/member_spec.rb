@@ -46,6 +46,24 @@ describe 'Member' do
   end
 
   it "can update" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .queues("QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .members("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(url: "https://example.com", method: "GET")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'Url' => "https://example.com",
+        'Method' => "GET",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queues/QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives update responses" do

@@ -8,6 +8,24 @@ require 'spec_helper.rb'
 
 describe 'FeedbackSummary' do
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .calls \
+                       .feedback_summaries.create(start_date: Date.new(2008, 1, 2), end_date: Date.new(2008, 1, 2))
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'StartDate' => Twilio.serialize_iso8601(Date.new(2008, 1, 2)),
+        'EndDate' => Twilio.serialize_iso8601(Date.new(2008, 1, 2)),
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/FeedbackSummary.json',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives create responses" do
@@ -18,7 +36,7 @@ describe 'FeedbackSummary' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "call_count": 10200,
           "call_feedback_count": 729,
-          "end_date": "2014-01-31",
+          "end_date": "Tue, 31 Aug 2010 00:00:00 +0000",
           "include_subaccounts": false,
           "issues": [
               {
@@ -31,7 +49,7 @@ describe 'FeedbackSummary' do
           "quality_score_median": 4,
           "quality_score_standard_deviation": 1,
           "sid": "FSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "start_date": "2014-01-01",
+          "start_date": "Tue, 31 Aug 2010 00:00:00 +0000",
           "status": "completed",
           "date_created": "Tue, 31 Aug 2010 20:36:28 +0000",
           "date_updated": "Tue, 31 Aug 2010 20:36:44 +0000"
@@ -41,7 +59,7 @@ describe 'FeedbackSummary' do
     
     actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                               .calls \
-                              .feedback_summaries.create(start_date: "2008-01-02", end_date: "2008-01-02")
+                              .feedback_summaries.create(start_date: Date.new(2008, 1, 2), end_date: Date.new(2008, 1, 2))
     
     expect(actual).to_not eq(nil)
   end

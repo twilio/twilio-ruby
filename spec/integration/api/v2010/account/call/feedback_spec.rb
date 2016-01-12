@@ -8,6 +8,23 @@ require 'spec_helper.rb'
 
 describe 'Feedback' do
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .feedback().create(quality_score: 1)
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'QualityScore' => 1,
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Feedback.json',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives create responses" do
@@ -78,6 +95,23 @@ describe 'Feedback' do
   end
 
   it "can update" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .feedback().update(quality_score: 1)
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'QualityScore' => 1,
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Feedback.json',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives update responses" do

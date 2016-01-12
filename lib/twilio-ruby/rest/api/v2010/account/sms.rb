@@ -27,13 +27,29 @@ module Twilio
             
             ##
             # Access the messages
-            def messages
+            def messages(sid=:unset)
+              if sid != :unset
+                return SmsMessageContext.new(
+                    @version,
+                    @solution[:account_sid],
+                    sid,
+                )
+              end
+              
               @messages ||= SmsMessageList.new(@version, @solution)
             end
             
             ##
             # Access the short_codes
-            def short_codes
+            def short_codes(sid=:unset)
+              if sid != :unset
+                return ShortCodeContext.new(
+                    @version,
+                    @solution[:account_sid],
+                    sid,
+                )
+              end
+              
               @short_codes ||= ShortCodeList.new(@version, @solution)
             end
             

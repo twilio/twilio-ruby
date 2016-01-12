@@ -74,6 +74,22 @@ describe 'CredentialList' do
   end
 
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                         .credentials_lists.create(credential_list_sid: "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'CredentialListSid' => "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialLists',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives create responses" do

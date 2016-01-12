@@ -74,6 +74,22 @@ describe 'IpAccessControlList' do
   end
 
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                         .ip_access_control_lists.create(ip_access_control_list_sid: "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'IpAccessControlListSid' => "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlLists',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives create responses" do

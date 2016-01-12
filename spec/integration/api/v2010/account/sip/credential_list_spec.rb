@@ -83,6 +83,23 @@ describe 'CredentialList' do
   end
 
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .sip \
+                       .credential_lists.create(friendly_name: "friendly_name")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'FriendlyName' => "friendly_name",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists.json',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives create responses" do
@@ -153,6 +170,23 @@ describe 'CredentialList' do
   end
 
   it "can update" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .sip \
+                       .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(friendly_name: "friendly_name")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'FriendlyName' => "friendly_name",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives update responses" do

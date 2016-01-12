@@ -93,6 +93,23 @@ describe 'IpAccessControlList' do
   end
 
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .sip \
+                       .ip_access_control_lists.create(friendly_name: "friendly_name")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'FriendlyName' => "friendly_name",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/IpAccessControlLists.json',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives create responses" do
@@ -163,6 +180,23 @@ describe 'IpAccessControlList' do
   end
 
   it "can update" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .sip \
+                       .ip_access_control_lists("ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(friendly_name: "friendly_name")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'FriendlyName' => "friendly_name",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/IpAccessControlLists/ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives update responses" do

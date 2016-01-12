@@ -24,13 +24,27 @@ module Twilio
           
           ##
           # Access the numbers
-          def numbers
+          def numbers(number=:unset)
+            if number != :unset
+              return NumberContext.new(
+                  @version,
+                  number,
+              )
+            end
+            
             @numbers ||= NumberList.new(@version, @solution)
           end
           
           ##
           # Access the countries
-          def countries
+          def countries(iso_country=:unset)
+            if iso_country != :unset
+              return CountryContext.new(
+                  @version,
+                  iso_country,
+              )
+            end
+            
             @countries ||= CountryList.new(@version, @solution)
           end
           

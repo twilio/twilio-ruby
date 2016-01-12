@@ -47,6 +47,22 @@ describe 'Activity' do
   end
 
   it "can update" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                           .activities("WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(friendly_name: "friendly_name")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'FriendlyName' => "friendly_name",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Activities/WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives update responses" do
@@ -180,6 +196,23 @@ describe 'Activity' do
   end
 
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                           .activities.create(friendly_name: "friendly_name", available: true)
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'FriendlyName' => "friendly_name",
+        'Available' => true,
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Activities',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives create responses" do

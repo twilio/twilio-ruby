@@ -143,6 +143,23 @@ describe 'Reservation' do
   end
 
   it "can update" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                           .tasks("WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                           .reservations("WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(reservation_status: "reservation_status")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'ReservationStatus' => "reservation_status",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Reservations/WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives update responses" do

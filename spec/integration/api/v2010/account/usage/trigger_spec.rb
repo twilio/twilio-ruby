@@ -136,6 +136,25 @@ describe 'Trigger' do
   end
 
   it "can create" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .usage \
+                       .triggers.create(callback_url: "https://example.com", trigger_value: "trigger_value", usage_category: "calleridlookups")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'CallbackUrl' => "https://example.com",
+        'TriggerValue' => "trigger_value",
+        'UsageCategory' => "calleridlookups",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Usage/Triggers.json',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives create responses" do

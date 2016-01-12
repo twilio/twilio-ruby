@@ -50,6 +50,23 @@ describe 'Participant' do
   end
 
   it "can update" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .conferences("CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .participants("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(muted: true)
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'Muted' => true,
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Conferences/CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        data: values,
+    ))).to eq(true)
   end
 
   it "receives update responses" do
