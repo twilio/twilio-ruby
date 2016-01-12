@@ -13,7 +13,7 @@ module Twilio
 
   def self.deserialize_iso8601(date)
     unless date.nil?
-      Time.iso8601(date)
+      Time.parse(date)
     end
   end
 end
