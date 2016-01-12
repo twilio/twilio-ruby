@@ -36,7 +36,7 @@ describe 'FeedbackSummary' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "call_count": 10200,
           "call_feedback_count": 729,
-          "end_date": "Tue, 31 Aug 2010 00:00:00 +0000",
+          "end_date": "2011-01-01",
           "include_subaccounts": false,
           "issues": [
               {
@@ -49,7 +49,7 @@ describe 'FeedbackSummary' do
           "quality_score_median": 4,
           "quality_score_standard_deviation": 1,
           "sid": "FSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "start_date": "Tue, 31 Aug 2010 00:00:00 +0000",
+          "start_date": "2011-01-01",
           "status": "completed",
           "date_created": "Tue, 31 Aug 2010 20:36:28 +0000",
           "date_updated": "Tue, 31 Aug 2010 20:36:44 +0000"
@@ -89,7 +89,7 @@ describe 'FeedbackSummary' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "call_count": 10200,
           "call_feedback_count": 729,
-          "end_date": "Tue, 31 Aug 2010 00:00:00 +0000",
+          "end_date": "2011-01-01",
           "include_subaccounts": false,
           "issues": [
               {
@@ -102,7 +102,7 @@ describe 'FeedbackSummary' do
           "quality_score_median": 4,
           "quality_score_standard_deviation": 1,
           "sid": "FSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "start_date": "Tue, 31 Aug 2010 00:00:00 +0000",
+          "start_date": "2011-01-01",
           "status": "completed",
           "date_created": "Tue, 31 Aug 2010 20:36:28 +0000",
           "date_updated": "Tue, 31 Aug 2010 20:36:44 +0000"
