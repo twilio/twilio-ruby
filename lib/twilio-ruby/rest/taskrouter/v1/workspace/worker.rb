@@ -122,6 +122,11 @@ module Twilio
             ##
             # Access the statistics
             def statistics
+              return WorkersStatisticsContext.new(
+                  @version,
+                  @solution[:workspace_sid],
+              )
+              
               @statistics ||= WorkersStatisticsList.new(
                   @version,
                   workspace_sid: @solution[:workspace_sid],
