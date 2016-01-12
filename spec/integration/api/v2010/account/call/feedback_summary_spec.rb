@@ -89,7 +89,7 @@ describe 'FeedbackSummary' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "call_count": 10200,
           "call_feedback_count": 729,
-          "end_date": "2014-01-31",
+          "end_date": "Tue, 31 Aug 2010 00:00:00 +0000",
           "include_subaccounts": false,
           "issues": [
               {
@@ -102,7 +102,7 @@ describe 'FeedbackSummary' do
           "quality_score_median": 4,
           "quality_score_standard_deviation": 1,
           "sid": "FSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "start_date": "2014-01-01",
+          "start_date": "Tue, 31 Aug 2010 00:00:00 +0000",
           "status": "completed",
           "date_created": "Tue, 31 Aug 2010 20:36:28 +0000",
           "date_updated": "Tue, 31 Aug 2010 20:36:44 +0000"
