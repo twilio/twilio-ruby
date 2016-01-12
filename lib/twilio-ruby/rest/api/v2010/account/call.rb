@@ -255,7 +255,7 @@ module Twilio
               payload = @version.update(
                   'POST',
                   @uri,
-                  data=data,
+                  data: data,
               )
               
               return CallInstance.new(
@@ -271,7 +271,7 @@ module Twilio
                 return RecordingContext.new(
                     @version,
                     @solution[:account_sid],
-                    @solution[:call_sid],
+                    @solution[:sid],
                     sid,
                 )
               end
@@ -292,7 +292,7 @@ module Twilio
                 return NotificationContext.new(
                     @version,
                     @solution[:account_sid],
-                    @solution[:call_sid],
+                    @solution[:sid],
                     sid,
                 )
               end
@@ -312,7 +312,7 @@ module Twilio
               return FeedbackContext.new(
                   @version,
                   @solution[:account_sid],
-                  @solution[:call_sid],
+                  @solution[:sid],
               )
             end
             

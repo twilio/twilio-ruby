@@ -180,7 +180,7 @@ module Twilio
                 payload = @version.update(
                     'POST',
                     @uri,
-                    data=data,
+                    data: data,
                 )
                 
                 return IpAccessControlListInstance.new(
@@ -202,7 +202,7 @@ module Twilio
                   return IpAddressContext.new(
                       @version,
                       @solution[:account_sid],
-                      @solution[:ip_access_control_list_sid],
+                      @solution[:sid],
                       sid,
                   )
                 end

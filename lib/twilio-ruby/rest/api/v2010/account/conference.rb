@@ -178,7 +178,7 @@ module Twilio
                 return ParticipantContext.new(
                     @version,
                     @solution[:account_sid],
-                    @solution[:conference_sid],
+                    @solution[:sid],
                     call_sid,
                 )
               end

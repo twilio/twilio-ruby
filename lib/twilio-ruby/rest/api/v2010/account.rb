@@ -194,7 +194,7 @@ module Twilio
             payload = @version.update(
                 'POST',
                 @uri,
-                data=data,
+                data: data,
             )
             
             return AccountInstance.new(
@@ -208,7 +208,7 @@ module Twilio
             if sid != :unset
               return AddressContext.new(
                   @version,
-                  @solution[:account_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -227,7 +227,7 @@ module Twilio
             if sid != :unset
               return ApplicationContext.new(
                   @version,
-                  @solution[:account_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -246,7 +246,7 @@ module Twilio
             if connect_app_sid != :unset
               return AuthorizedConnectAppContext.new(
                   @version,
-                  @solution[:account_sid],
+                  @solution[:sid],
                   connect_app_sid,
               )
             end
@@ -265,7 +265,7 @@ module Twilio
             if country_code != :unset
               return AvailablePhoneNumberCountryContext.new(
                   @version,
-                  @solution[:account_sid],
+                  @solution[:sid],
                   country_code,
               )
             end
@@ -284,7 +284,7 @@ module Twilio
             if sid != :unset
               return CallContext.new(
                   @version,
-                  @solution[:account_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -303,7 +303,7 @@ module Twilio
             if sid != :unset
               return ConferenceContext.new(
                   @version,
-                  @solution[:account_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -322,7 +322,7 @@ module Twilio
             if sid != :unset
               return ConnectAppContext.new(
                   @version,
-                  @solution[:account_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -341,7 +341,7 @@ module Twilio
             if sid != :unset
               return IncomingPhoneNumberContext.new(
                   @version,
-                  @solution[:owner_account_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -360,7 +360,7 @@ module Twilio
             if sid != :unset
               return MessageContext.new(
                   @version,
-                  @solution[:account_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -379,7 +379,7 @@ module Twilio
             if sid != :unset
               return NotificationContext.new(
                   @version,
-                  @solution[:account_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -398,7 +398,7 @@ module Twilio
             if sid != :unset
               return OutgoingCallerIdContext.new(
                   @version,
-                  @solution[:account_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -417,7 +417,7 @@ module Twilio
             if sid != :unset
               return QueueContext.new(
                   @version,
-                  @solution[:account_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -436,7 +436,7 @@ module Twilio
             if sid != :unset
               return RecordingContext.new(
                   @version,
-                  @solution[:account_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -454,7 +454,7 @@ module Twilio
           def sandbox
             return SandboxContext.new(
                 @version,
-                @solution[:account_sid],
+                @solution[:sid],
             )
           end
           
@@ -495,7 +495,7 @@ module Twilio
             if sid != :unset
               return TranscriptionContext.new(
                   @version,
-                  @solution[:account_sid],
+                  @solution[:sid],
                   sid,
               )
             end

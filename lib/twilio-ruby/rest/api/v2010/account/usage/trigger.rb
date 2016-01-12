@@ -194,7 +194,7 @@ module Twilio
                 payload = @version.update(
                     'POST',
                     @uri,
-                    data=data,
+                    data: data,
                 )
                 
                 return TriggerInstance.new(

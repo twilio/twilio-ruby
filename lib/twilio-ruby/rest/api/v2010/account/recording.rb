@@ -169,7 +169,7 @@ module Twilio
                 return TranscriptionContext.new(
                     @version,
                     @solution[:account_sid],
-                    @solution[:recording_sid],
+                    @solution[:sid],
                     sid,
                 )
               end

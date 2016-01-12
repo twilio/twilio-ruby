@@ -195,7 +195,7 @@ module Twilio
                 payload = @version.update(
                     'POST',
                     @uri,
-                    data=data,
+                    data: data,
                 )
                 
                 return DomainInstance.new(
@@ -217,7 +217,7 @@ module Twilio
                   return IpAccessControlListMappingContext.new(
                       @version,
                       @solution[:account_sid],
-                      @solution[:domain_sid],
+                      @solution[:sid],
                       sid,
                   )
                 end
@@ -238,7 +238,7 @@ module Twilio
                   return CredentialListMappingContext.new(
                       @version,
                       @solution[:account_sid],
-                      @solution[:domain_sid],
+                      @solution[:sid],
                       sid,
                   )
                 end

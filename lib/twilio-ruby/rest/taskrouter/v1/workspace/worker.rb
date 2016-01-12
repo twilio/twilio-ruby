@@ -216,7 +216,7 @@ module Twilio
               payload = @version.update(
                   'POST',
                   @uri,
-                  data=data,
+                  data: data,
               )
               
               return WorkerInstance.new(
@@ -237,7 +237,7 @@ module Twilio
               return WorkerStatisticsContext.new(
                   @version,
                   @solution[:workspace_sid],
-                  @solution[:worker_sid],
+                  @solution[:sid],
               )
             end
             

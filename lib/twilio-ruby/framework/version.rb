@@ -78,7 +78,7 @@ module Twilio
         response.body
       end
 
-      def update(method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
+      def update(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = self.request(
           method,
           uri,

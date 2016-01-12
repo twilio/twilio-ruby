@@ -182,7 +182,7 @@ module Twilio
             payload = @version.update(
                 'POST',
                 @uri,
-                data=data,
+                data: data,
             )
             
             return WorkspaceInstance.new(
@@ -202,7 +202,7 @@ module Twilio
             if sid != :unset
               return ActivityContext.new(
                   @version,
-                  @solution[:workspace_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -221,7 +221,7 @@ module Twilio
             if sid != :unset
               return EventContext.new(
                   @version,
-                  @solution[:workspace_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -240,7 +240,7 @@ module Twilio
             if sid != :unset
               return TaskContext.new(
                   @version,
-                  @solution[:workspace_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -259,7 +259,7 @@ module Twilio
             if sid != :unset
               return TaskQueueContext.new(
                   @version,
-                  @solution[:workspace_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -278,7 +278,7 @@ module Twilio
             if sid != :unset
               return WorkerContext.new(
                   @version,
-                  @solution[:workspace_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -297,7 +297,7 @@ module Twilio
             if sid != :unset
               return WorkflowContext.new(
                   @version,
-                  @solution[:workspace_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -315,7 +315,7 @@ module Twilio
           def statistics
             return WorkspaceStatisticsContext.new(
                 @version,
-                @solution[:workspace_sid],
+                @solution[:sid],
             )
           end
           

@@ -205,7 +205,7 @@ module Twilio
               payload = @version.update(
                   'POST',
                   @uri,
-                  data=data,
+                  data: data,
               )
               
               return MessageInstance.new(
@@ -221,7 +221,7 @@ module Twilio
                 return MediaContext.new(
                     @version,
                     @solution[:account_sid],
-                    @solution[:message_sid],
+                    @solution[:sid],
                     sid,
                 )
               end

@@ -181,7 +181,7 @@ module Twilio
               payload = @version.update(
                   'POST',
                   @uri,
-                  data=data,
+                  data: data,
               )
               
               return QueueInstance.new(
@@ -203,7 +203,7 @@ module Twilio
                 return MemberContext.new(
                     @version,
                     @solution[:account_sid],
-                    @solution[:queue_sid],
+                    @solution[:sid],
                     call_sid,
                 )
               end

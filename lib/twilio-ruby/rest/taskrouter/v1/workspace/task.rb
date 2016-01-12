@@ -203,7 +203,7 @@ module Twilio
               payload = @version.update(
                   'POST',
                   @uri,
-                  data=data,
+                  data: data,
               )
               
               return TaskInstance.new(
@@ -225,7 +225,7 @@ module Twilio
                 return ReservationContext.new(
                     @version,
                     @solution[:workspace_sid],
-                    @solution[:task_sid],
+                    @solution[:sid],
                     sid,
                 )
               end

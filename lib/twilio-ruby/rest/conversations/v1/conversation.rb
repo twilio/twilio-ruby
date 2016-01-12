@@ -112,7 +112,7 @@ module Twilio
             if sid != :unset
               return ParticipantContext.new(
                   @version,
-                  @solution[:conversation_sid],
+                  @solution[:sid],
                   sid,
               )
             end

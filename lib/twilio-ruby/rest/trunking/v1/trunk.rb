@@ -187,7 +187,7 @@ module Twilio
             payload = @version.update(
                 'POST',
                 @uri,
-                data=data,
+                data: data,
             )
             
             return TrunkInstance.new(
@@ -201,7 +201,7 @@ module Twilio
             if sid != :unset
               return OriginationUrlContext.new(
                   @version,
-                  @solution[:trunk_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -220,7 +220,7 @@ module Twilio
             if sid != :unset
               return CredentialListContext.new(
                   @version,
-                  @solution[:trunk_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -239,7 +239,7 @@ module Twilio
             if sid != :unset
               return IpAccessControlListContext.new(
                   @version,
-                  @solution[:trunk_sid],
+                  @solution[:sid],
                   sid,
               )
             end
@@ -258,7 +258,7 @@ module Twilio
             if sid != :unset
               return PhoneNumberContext.new(
                   @version,
-                  @solution[:trunk_sid],
+                  @solution[:sid],
                   sid,
               )
             end

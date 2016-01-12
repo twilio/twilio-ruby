@@ -180,7 +180,7 @@ module Twilio
                 payload = @version.update(
                     'POST',
                     @uri,
-                    data=data,
+                    data: data,
                 )
                 
                 return CredentialListInstance.new(
@@ -202,7 +202,7 @@ module Twilio
                   return CredentialContext.new(
                       @version,
                       @solution[:account_sid],
-                      @solution[:credential_list_sid],
+                      @solution[:sid],
                       sid,
                   )
                 end

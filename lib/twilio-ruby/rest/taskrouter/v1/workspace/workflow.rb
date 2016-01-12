@@ -190,7 +190,7 @@ module Twilio
               payload = @version.update(
                   'POST',
                   @uri,
-                  data=data,
+                  data: data,
               )
               
               return WorkflowInstance.new(
@@ -211,7 +211,7 @@ module Twilio
               return WorkflowStatisticsContext.new(
                   @version,
                   @solution[:workspace_sid],
-                  @solution[:workflow_sid],
+                  @solution[:sid],
               )
             end
             
