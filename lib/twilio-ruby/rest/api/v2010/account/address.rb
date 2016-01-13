@@ -71,10 +71,10 @@ module Twilio
             # @param String iso_country: The iso_country
             # @param Integer limit: Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will use
-            #                       the default value of 50 records.  If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+            #  the default value of 50 records.  If no page_size is                      defined
+            #  but a limit is defined, stream() will attempt to read                      the
+            #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             
             # @return Array Array of up to limit results
             def list(customer_name: nil, friendly_name: nil, iso_country: nil, limit: nil, page_size: nil)
@@ -94,12 +94,12 @@ module Twilio
             # @param String customer_name: The customer_name
             # @param String friendly_name: The friendly_name
             # @param String iso_country: The iso_country
-            # @param Integer limit: Upper limit for the number of records to return. stream()
-            #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will use
-            #                       the default value of 50 records.  If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            #  guarantees to never return more than limit.                  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+            #  the default value of 50 records.                      If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to                      read the
+            #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             
             # @return Enumerable Enumerable that will yield up to limit results
             def stream(customer_name: nil, friendly_name: nil, iso_country: nil, limit: nil, page_size: nil)
@@ -122,10 +122,10 @@ module Twilio
             # @param String customer_name: The customer_name
             # @param String friendly_name: The friendly_name
             # @param String iso_country: The iso_country
-            # @param Integer limit: Upper limit for the number of records to return. stream()
-            #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will use
-            #                       the default value of 50 records.  If no page_size is defined
+            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            #  guarantees to never return more than limit.                  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+            #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to read the
             #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each

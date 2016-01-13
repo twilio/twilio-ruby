@@ -41,10 +41,10 @@ module Twilio
             # @param String workflow_sid: The workflow_sid
             # @param Integer limit: Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will use
-            #                       the default value of 50 records.  If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+            #  the default value of 50 records.  If no page_size is                      defined
+            #  but a limit is defined, stream() will attempt to read                      the
+            #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             
             # @return Array Array of up to limit results
             def list(end_date: nil, event_type: nil, minutes: nil, reservation_sid: nil, start_date: nil, task_queue_sid: nil, task_sid: nil, worker_sid: nil, workflow_sid: nil, limit: nil, page_size: nil)
@@ -76,12 +76,12 @@ module Twilio
             # @param String task_sid: The task_sid
             # @param String worker_sid: The worker_sid
             # @param String workflow_sid: The workflow_sid
-            # @param Integer limit: Upper limit for the number of records to return. stream()
-            #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will use
-            #                       the default value of 50 records.  If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            #  guarantees to never return more than limit.                  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+            #  the default value of 50 records.                      If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to                      read the
+            #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             
             # @return Enumerable Enumerable that will yield up to limit results
             def stream(end_date: nil, event_type: nil, minutes: nil, reservation_sid: nil, start_date: nil, task_queue_sid: nil, task_sid: nil, worker_sid: nil, workflow_sid: nil, limit: nil, page_size: nil)
@@ -116,10 +116,10 @@ module Twilio
             # @param String task_sid: The task_sid
             # @param String worker_sid: The worker_sid
             # @param String workflow_sid: The workflow_sid
-            # @param Integer limit: Upper limit for the number of records to return. stream()
-            #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will use
-            #                       the default value of 50 records.  If no page_size is defined
+            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            #  guarantees to never return more than limit.                  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+            #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to read the
             #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each

@@ -40,10 +40,10 @@ module Twilio
             # @param conference.Status status: The status of the conference
             # @param Integer limit: Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will use
-            #                       the default value of 50 records.  If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+            #  the default value of 50 records.  If no page_size is                      defined
+            #  but a limit is defined, stream() will attempt to read                      the
+            #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             
             # @return Array Array of up to limit results
             def list(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, limit: nil, page_size: nil)
@@ -73,12 +73,12 @@ module Twilio
             # @param Time date_updated_after: Filter by date updated
             # @param String friendly_name: Filter by friendly name
             # @param conference.Status status: The status of the conference
-            # @param Integer limit: Upper limit for the number of records to return. stream()
-            #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will use
-            #                       the default value of 50 records.  If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            #  guarantees to never return more than limit.                  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+            #  the default value of 50 records.                      If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to                      read the
+            #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             
             # @return Enumerable Enumerable that will yield up to limit results
             def stream(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, limit: nil, page_size: nil)
@@ -111,10 +111,10 @@ module Twilio
             # @param Time date_updated_after: Filter by date updated
             # @param String friendly_name: Filter by friendly name
             # @param conference.Status status: The status of the conference
-            # @param Integer limit: Upper limit for the number of records to return. stream()
-            #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will use
-            #                       the default value of 50 records.  If no page_size is defined
+            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            #  guarantees to never return more than limit.                  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+            #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to read the
             #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each

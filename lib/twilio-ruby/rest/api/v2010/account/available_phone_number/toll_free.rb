@@ -44,10 +44,10 @@ module Twilio
               # @param Boolean beta: The beta
               # @param Integer limit: Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when not set will use
-              #                       the default value of 50 records.  If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
+              # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+              #  the default value of 50 records.  If no page_size is                      defined
+              #  but a limit is defined, stream() will attempt to read                      the
+              #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               
               # @return Array Array of up to limit results
               def list(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, limit: nil, page_size: nil)
@@ -79,12 +79,12 @@ module Twilio
               # @param Boolean exclude_local_address_required: The exclude_local_address_required
               # @param Boolean exclude_foreign_address_required: The exclude_foreign_address_required
               # @param Boolean beta: The beta
-              # @param Integer limit: Upper limit for the number of records to return. stream()
-              #                   guarantees to never return more than limit.  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when not set will use
-              #                       the default value of 50 records.  If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
+              # @param Integer limit: Upper limit for the number of records to return.                  stream()
+              #  guarantees to never return more than limit.                  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+              #  the default value of 50 records.                      If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to                      read the
+              #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               
               # @return Enumerable Enumerable that will yield up to limit results
               def stream(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, limit: nil, page_size: nil)
@@ -119,10 +119,10 @@ module Twilio
               # @param Boolean exclude_local_address_required: The exclude_local_address_required
               # @param Boolean exclude_foreign_address_required: The exclude_foreign_address_required
               # @param Boolean beta: The beta
-              # @param Integer limit: Upper limit for the number of records to return. stream()
-              #                   guarantees to never return more than limit.  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when not set will use
-              #                       the default value of 50 records.  If no page_size is defined
+              # @param Integer limit: Upper limit for the number of records to return.                  stream()
+              #  guarantees to never return more than limit.                  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+              #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to read the
               #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
