@@ -13,6 +13,11 @@ module Twilio
             class ParticipantList < ListResource
               ##
               # Initialize the ParticipantList
+              # @param Version version: Version that contains the resource
+              # @param account_sid: The unique sid that identifies this account
+              # @param conference_sid: A string that uniquely identifies this conference
+              
+              # @return ParticipantList ParticipantList
               def initialize(version, account_sid: nil, conference_sid: nil)
                 super(version)
                 
@@ -25,7 +30,18 @@ module Twilio
               end
               
               ##
-              # Reads ParticipantInstance records from the API as a list.
+              # Lists ParticipantInstance records from the API as a list.
+              # Unlike stream(), this operation is eager and will load `limit` records into
+              # memory before returning.
+              # @param Boolean muted: Filter by muted participants
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
+              
+              # @return Array Array of up to limit results
               def list(muted: nil, limit: nil, page_size: nil)
                 self.stream(
                     muted: muted,
@@ -34,6 +50,19 @@ module Twilio
                 ).entries
               end
               
+              ##
+              # Streams ParticipantInstance records from the API as an Enumerable.
+              # This operation lazily loads records as efficiently as possible until the limit
+              # is reached.
+              # @param Boolean muted: Filter by muted participants
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
+              
+              # @return Enumerable Enumerable that will yield up to limit results
               def stream(muted: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
@@ -45,6 +74,17 @@ module Twilio
                 @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
               end
               
+              ##
+              # When passed a block, yields ParticipantInstance records from the API.
+              # This operation lazily loads records as efficiently as possible until the limit
+              # is reached.
+              # @param Boolean muted: Filter by muted participants
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
                 
@@ -59,6 +99,13 @@ module Twilio
               
               ##
               # Retrieve a single page of ParticipantInstance records from the API.
+              # Request is executed immediately.
+              # @param Boolean muted: Filter by muted participants
+              # @param String page_token: PageToken provided by the API
+              # @param Integer page_number: Page Number, this value is simply for client state
+              # @param Integer page_size: Number of records to return, defaults to 50
+              
+              # @return Page Page of ParticipantInstance
               def page(muted: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
                     'Muted' => muted,
@@ -81,6 +128,9 @@ module Twilio
               
               ##
               # Constructs a ParticipantContext
+              # @param call_sid: The call_sid
+              
+              # @return ParticipantContext ParticipantContext
               def get(call_sid)
                 ParticipantContext.new(
                     @version,
@@ -98,6 +148,14 @@ module Twilio
             end
           
             class ParticipantPage < Page
+              ##
+              # Initialize the ParticipantPage
+              # @param Version version: Version that contains the resource
+              # @param Response response: Response from the API
+              # @param account_sid: The unique sid that identifies this account
+              # @param conference_sid: A string that uniquely identifies this conference
+              
+              # @return ParticipantPage ParticipantPage
               def initialize(version, response, account_sid: nil, conference_sid: nil)
                 super(version, response)
                 
@@ -108,6 +166,11 @@ module Twilio
                 }
               end
               
+              ##
+              # Build an instance of ParticipantInstance
+              # @param Hash payload: Payload response from the API
+              
+              # @return ParticipantInstance ParticipantInstance
               def get_instance(payload)
                 return ParticipantInstance.new(
                     @version,
@@ -125,6 +188,14 @@ module Twilio
             end
           
             class ParticipantContext < InstanceContext
+              ##
+              # Initialize the ParticipantContext
+              # @param Version version: Version that contains the resource
+              # @param account_sid: The account_sid
+              # @param conference_sid: The string that uniquely identifies this conference
+              # @param call_sid: The call_sid
+              
+              # @return ParticipantContext ParticipantContext
               def initialize(version, account_sid, conference_sid, call_sid)
                 super(version)
                 
@@ -139,6 +210,7 @@ module Twilio
               
               ##
               # Fetch a ParticipantInstance
+              # @return ParticipantInstance Fetched ParticipantInstance
               def fetch
                 params = {}
                 
@@ -159,6 +231,9 @@ module Twilio
               
               ##
               # Update the ParticipantInstance
+              # @param Boolean muted: Indicates if the participant should be muted
+              
+              # @return ParticipantInstance Updated ParticipantInstance
               def update(muted: nil)
                 data = {
                     'Muted' => muted,
@@ -181,6 +256,7 @@ module Twilio
               
               ##
               # Deletes the ParticipantInstance
+              # @return Boolean true if delete succeeds, true otherwise
               def delete
                 return @version.delete('delete', @uri)
               end
@@ -194,6 +270,9 @@ module Twilio
             end
           
             class ParticipantInstance < InstanceResource
+              ##
+              # Initialize the ParticipantInstance
+              # @return ParticipantInstance ParticipantInstance
               def initialize(version, payload, account_sid: nil, conference_sid: nil, call_sid: nil)
                 super(version)
                 
@@ -219,6 +298,10 @@ module Twilio
                 }
               end
               
+              ##
+              # Generate an instance context for the instance, the context is capable of
+              # performing various actions.  All instance actions are proxied to the context
+              # @return ParticipantContext ParticipantContext for this ParticipantInstance
               def context
                 unless @instance_context
                   @instance_context = ParticipantContext.new(
@@ -269,18 +352,23 @@ module Twilio
               
               ##
               # Fetch a ParticipantInstance
+              # @return ParticipantInstance Fetched ParticipantInstance
               def fetch
                 @context.fetch()
               end
               
               ##
               # Update the ParticipantInstance
+              # @param Boolean muted: Indicates if the participant should be muted
+              
+              # @return ParticipantInstance Updated ParticipantInstance
               def update(muted: nil)
                 @context.update()
               end
               
               ##
               # Deletes the ParticipantInstance
+              # @return Boolean true if delete succeeds, true otherwise
               def delete
                 @context.delete()
               end

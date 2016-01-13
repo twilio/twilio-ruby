@@ -12,6 +12,10 @@ module Twilio
           class ParticipantList < ListResource
             ##
             # Initialize the ParticipantList
+            # @param Version version: Version that contains the resource
+            # @param conversation_sid: The conversation_sid
+            
+            # @return ParticipantList ParticipantList
             def initialize(version, conversation_sid: nil)
               super(version)
               
@@ -23,7 +27,17 @@ module Twilio
             end
             
             ##
-            # Reads ParticipantInstance records from the API as a list.
+            # Lists ParticipantInstance records from the API as a list.
+            # Unlike stream(), this operation is eager and will load `limit` records into
+            # memory before returning.
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            
+            # @return Array Array of up to limit results
             def list(limit: nil, page_size: nil)
               self.stream(
                   limit: limit,
@@ -31,6 +45,18 @@ module Twilio
               ).entries
             end
             
+            ##
+            # Streams ParticipantInstance records from the API as an Enumerable.
+            # This operation lazily loads records as efficiently as possible until the limit
+            # is reached.
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            
+            # @return Enumerable Enumerable that will yield up to limit results
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
@@ -41,6 +67,16 @@ module Twilio
               @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
             end
             
+            ##
+            # When passed a block, yields ParticipantInstance records from the API.
+            # This operation lazily loads records as efficiently as possible until the limit
+            # is reached.
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
               
@@ -55,6 +91,12 @@ module Twilio
             
             ##
             # Retrieve a single page of ParticipantInstance records from the API.
+            # Request is executed immediately.
+            # @param String page_token: PageToken provided by the API
+            # @param Integer page_number: Page Number, this value is simply for client state
+            # @param Integer page_size: Number of records to return, defaults to 50
+            
+            # @return Page Page of ParticipantInstance
             def page(page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'PageToken' => page_token,
@@ -74,7 +116,12 @@ module Twilio
             end
             
             ##
-            # Create a new ParticipantInstance
+            # Retrieve a single page of ParticipantInstance records from the API.
+            # Request is executed immediately.
+            # @param String to: The to
+            # @param String from: The from
+            
+            # @return ParticipantInstance Newly created ParticipantInstance
             def create(to: nil, from: nil)
               data = {
                   'To' => to,
@@ -96,6 +143,9 @@ module Twilio
             
             ##
             # Constructs a ParticipantContext
+            # @param sid: The sid
+            
+            # @return ParticipantContext ParticipantContext
             def get(sid)
               ParticipantContext.new(
                   @version,
@@ -112,6 +162,13 @@ module Twilio
           end
         
           class ParticipantPage < Page
+            ##
+            # Initialize the ParticipantPage
+            # @param Version version: Version that contains the resource
+            # @param Response response: Response from the API
+            # @param conversation_sid: The conversation_sid
+            
+            # @return ParticipantPage ParticipantPage
             def initialize(version, response, conversation_sid: nil)
               super(version, response)
               
@@ -121,6 +178,11 @@ module Twilio
               }
             end
             
+            ##
+            # Build an instance of ParticipantInstance
+            # @param Hash payload: Payload response from the API
+            
+            # @return ParticipantInstance ParticipantInstance
             def get_instance(payload)
               return ParticipantInstance.new(
                   @version,
@@ -137,6 +199,13 @@ module Twilio
           end
         
           class ParticipantContext < InstanceContext
+            ##
+            # Initialize the ParticipantContext
+            # @param Version version: Version that contains the resource
+            # @param conversation_sid: The conversation_sid
+            # @param sid: The sid
+            
+            # @return ParticipantContext ParticipantContext
             def initialize(version, conversation_sid, sid)
               super(version)
               
@@ -150,6 +219,7 @@ module Twilio
             
             ##
             # Fetch a ParticipantInstance
+            # @return ParticipantInstance Fetched ParticipantInstance
             def fetch
               params = {}
               
@@ -176,6 +246,9 @@ module Twilio
           end
         
           class ParticipantInstance < InstanceResource
+            ##
+            # Initialize the ParticipantInstance
+            # @return ParticipantInstance ParticipantInstance
             def initialize(version, payload, conversation_sid: nil, sid: nil)
               super(version)
               
@@ -201,6 +274,10 @@ module Twilio
               }
             end
             
+            ##
+            # Generate an instance context for the instance, the context is capable of
+            # performing various actions.  All instance actions are proxied to the context
+            # @return ParticipantContext ParticipantContext for this ParticipantInstance
             def context
               unless @instance_context
                 @instance_context = ParticipantContext.new(
@@ -254,6 +331,7 @@ module Twilio
             
             ##
             # Fetch a ParticipantInstance
+            # @return ParticipantInstance Fetched ParticipantInstance
             def fetch
               @context.fetch()
             end

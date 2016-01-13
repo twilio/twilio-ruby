@@ -12,6 +12,10 @@ module Twilio
           class WorkflowList < ListResource
             ##
             # Initialize the WorkflowList
+            # @param Version version: Version that contains the resource
+            # @param workspace_sid: The workspace_sid
+            
+            # @return WorkflowList WorkflowList
             def initialize(version, workspace_sid: nil)
               super(version)
               
@@ -23,7 +27,18 @@ module Twilio
             end
             
             ##
-            # Reads WorkflowInstance records from the API as a list.
+            # Lists WorkflowInstance records from the API as a list.
+            # Unlike stream(), this operation is eager and will load `limit` records into
+            # memory before returning.
+            # @param String friendly_name: The friendly_name
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            
+            # @return Array Array of up to limit results
             def list(friendly_name: nil, limit: nil, page_size: nil)
               self.stream(
                   friendly_name: friendly_name,
@@ -32,6 +47,19 @@ module Twilio
               ).entries
             end
             
+            ##
+            # Streams WorkflowInstance records from the API as an Enumerable.
+            # This operation lazily loads records as efficiently as possible until the limit
+            # is reached.
+            # @param String friendly_name: The friendly_name
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            
+            # @return Enumerable Enumerable that will yield up to limit results
             def stream(friendly_name: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
@@ -43,6 +71,17 @@ module Twilio
               @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
             end
             
+            ##
+            # When passed a block, yields WorkflowInstance records from the API.
+            # This operation lazily loads records as efficiently as possible until the limit
+            # is reached.
+            # @param String friendly_name: The friendly_name
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
               
@@ -57,6 +96,13 @@ module Twilio
             
             ##
             # Retrieve a single page of WorkflowInstance records from the API.
+            # Request is executed immediately.
+            # @param String friendly_name: The friendly_name
+            # @param String page_token: PageToken provided by the API
+            # @param Integer page_number: Page Number, this value is simply for client state
+            # @param Integer page_size: Number of records to return, defaults to 50
+            
+            # @return Page Page of WorkflowInstance
             def page(friendly_name: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'FriendlyName' => friendly_name,
@@ -77,7 +123,15 @@ module Twilio
             end
             
             ##
-            # Create a new WorkflowInstance
+            # Retrieve a single page of WorkflowInstance records from the API.
+            # Request is executed immediately.
+            # @param String friendly_name: The friendly_name
+            # @param String configuration: The configuration
+            # @param String assignment_callback_url: The assignment_callback_url
+            # @param String fallback_assignment_callback_url: The fallback_assignment_callback_url
+            # @param String task_reservation_timeout: The task_reservation_timeout
+            
+            # @return WorkflowInstance Newly created WorkflowInstance
             def create(friendly_name: nil, configuration: nil, assignment_callback_url: nil, fallback_assignment_callback_url: nil, task_reservation_timeout: nil)
               data = {
                   'FriendlyName' => friendly_name,
@@ -102,6 +156,9 @@ module Twilio
             
             ##
             # Constructs a WorkflowContext
+            # @param sid: The sid
+            
+            # @return WorkflowContext WorkflowContext
             def get(sid)
               WorkflowContext.new(
                   @version,
@@ -118,6 +175,13 @@ module Twilio
           end
         
           class WorkflowPage < Page
+            ##
+            # Initialize the WorkflowPage
+            # @param Version version: Version that contains the resource
+            # @param Response response: Response from the API
+            # @param workspace_sid: The workspace_sid
+            
+            # @return WorkflowPage WorkflowPage
             def initialize(version, response, workspace_sid: nil)
               super(version, response)
               
@@ -127,6 +191,11 @@ module Twilio
               }
             end
             
+            ##
+            # Build an instance of WorkflowInstance
+            # @param Hash payload: Payload response from the API
+            
+            # @return WorkflowInstance WorkflowInstance
             def get_instance(payload)
               return WorkflowInstance.new(
                   @version,
@@ -143,6 +212,13 @@ module Twilio
           end
         
           class WorkflowContext < InstanceContext
+            ##
+            # Initialize the WorkflowContext
+            # @param Version version: Version that contains the resource
+            # @param workspace_sid: The workspace_sid
+            # @param sid: The sid
+            
+            # @return WorkflowContext WorkflowContext
             def initialize(version, workspace_sid, sid)
               super(version)
               
@@ -159,6 +235,7 @@ module Twilio
             
             ##
             # Fetch a WorkflowInstance
+            # @return WorkflowInstance Fetched WorkflowInstance
             def fetch
               params = {}
               
@@ -178,6 +255,13 @@ module Twilio
             
             ##
             # Update the WorkflowInstance
+            # @param String friendly_name: The friendly_name
+            # @param String assignment_callback_url: The assignment_callback_url
+            # @param String fallback_assignment_callback_url: The fallback_assignment_callback_url
+            # @param String configuration: The configuration
+            # @param String task_reservation_timeout: The task_reservation_timeout
+            
+            # @return WorkflowInstance Updated WorkflowInstance
             def update(friendly_name: nil, assignment_callback_url: nil, fallback_assignment_callback_url: nil, configuration: nil, task_reservation_timeout: nil)
               data = {
                   'FriendlyName' => friendly_name,
@@ -203,10 +287,14 @@ module Twilio
             
             ##
             # Deletes the WorkflowInstance
+            # @return Boolean true if delete succeeds, true otherwise
             def delete
               return @version.delete('delete', @uri)
             end
             
+            ##
+            # Access the statistics
+            # @return WorkflowStatisticsList WorkflowStatisticsList
             def statistics
               return WorkflowStatisticsContext.new(
                   @version,
@@ -224,6 +312,9 @@ module Twilio
           end
         
           class WorkflowInstance < InstanceResource
+            ##
+            # Initialize the WorkflowInstance
+            # @return WorkflowInstance WorkflowInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
               super(version)
               
@@ -250,6 +341,10 @@ module Twilio
               }
             end
             
+            ##
+            # Generate an instance context for the instance, the context is capable of
+            # performing various actions.  All instance actions are proxied to the context
+            # @return WorkflowContext WorkflowContext for this WorkflowInstance
             def context
               unless @instance_context
                 @instance_context = WorkflowContext.new(
@@ -307,12 +402,20 @@ module Twilio
             
             ##
             # Fetch a WorkflowInstance
+            # @return WorkflowInstance Fetched WorkflowInstance
             def fetch
               @context.fetch()
             end
             
             ##
             # Update the WorkflowInstance
+            # @param String friendly_name: The friendly_name
+            # @param String assignment_callback_url: The assignment_callback_url
+            # @param String fallback_assignment_callback_url: The fallback_assignment_callback_url
+            # @param String configuration: The configuration
+            # @param String task_reservation_timeout: The task_reservation_timeout
+            
+            # @return WorkflowInstance Updated WorkflowInstance
             def update(friendly_name: nil, assignment_callback_url: nil, fallback_assignment_callback_url: nil, configuration: nil, task_reservation_timeout: nil)
               @context.update(
                   assignment_callback_url: nil,
@@ -324,10 +427,14 @@ module Twilio
             
             ##
             # Deletes the WorkflowInstance
+            # @return Boolean true if delete succeeds, true otherwise
             def delete
               @context.delete()
             end
             
+            ##
+            # Access the statistics
+            # @return statistics statistics
             def statistics
               @context.statistics
             end

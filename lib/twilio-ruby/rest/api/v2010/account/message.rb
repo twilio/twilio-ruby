@@ -12,6 +12,10 @@ module Twilio
           class MessageList < ListResource
             ##
             # Initialize the MessageList
+            # @param Version version: Version that contains the resource
+            # @param account_sid: The unique sid that identifies this account
+            
+            # @return MessageList MessageList
             def initialize(version, account_sid: nil)
               super(version)
               
@@ -23,7 +27,16 @@ module Twilio
             end
             
             ##
-            # Create a new MessageInstance
+            # Retrieve a single page of MessageInstance records from the API.
+            # Request is executed immediately.
+            # @param String to: The phone number to receive the message
+            # @param String from: The phone number that initiated the message
+            # @param String status_callback: URL Twilio will request when the status changes
+            # @param String application_sid: The application to use for callbacks
+            # @param String body: The body
+            # @param String media_url: The media_url
+            
+            # @return MessageInstance Newly created MessageInstance
             def create(to: nil, from: nil, status_callback: nil, application_sid: nil, body: nil, media_url: nil)
               data = {
                   'To' => to,
@@ -48,7 +61,22 @@ module Twilio
             end
             
             ##
-            # Reads MessageInstance records from the API as a list.
+            # Lists MessageInstance records from the API as a list.
+            # Unlike stream(), this operation is eager and will load `limit` records into
+            # memory before returning.
+            # @param String to: Filter by messages to this number
+            # @param String from: Filter by from number
+            # @param Time date_sent_before: Filter by date sent
+            # @param Time date_sent: Filter by date sent
+            # @param Time date_sent_after: Filter by date sent
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            
+            # @return Array Array of up to limit results
             def list(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, limit: nil, page_size: nil)
               self.stream(
                   to: to,
@@ -61,6 +89,23 @@ module Twilio
               ).entries
             end
             
+            ##
+            # Streams MessageInstance records from the API as an Enumerable.
+            # This operation lazily loads records as efficiently as possible until the limit
+            # is reached.
+            # @param String to: Filter by messages to this number
+            # @param String from: Filter by from number
+            # @param Time date_sent_before: Filter by date sent
+            # @param Time date_sent: Filter by date sent
+            # @param Time date_sent_after: Filter by date sent
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            
+            # @return Enumerable Enumerable that will yield up to limit results
             def stream(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
@@ -76,6 +121,21 @@ module Twilio
               @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
             end
             
+            ##
+            # When passed a block, yields MessageInstance records from the API.
+            # This operation lazily loads records as efficiently as possible until the limit
+            # is reached.
+            # @param String to: Filter by messages to this number
+            # @param String from: Filter by from number
+            # @param Time date_sent_before: Filter by date sent
+            # @param Time date_sent: Filter by date sent
+            # @param Time date_sent_after: Filter by date sent
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
               
@@ -90,6 +150,17 @@ module Twilio
             
             ##
             # Retrieve a single page of MessageInstance records from the API.
+            # Request is executed immediately.
+            # @param String to: Filter by messages to this number
+            # @param String from: Filter by from number
+            # @param Time date_sent_before: Filter by date sent
+            # @param Time date_sent: Filter by date sent
+            # @param Time date_sent_after: Filter by date sent
+            # @param String page_token: PageToken provided by the API
+            # @param Integer page_number: Page Number, this value is simply for client state
+            # @param Integer page_size: Number of records to return, defaults to 50
+            
+            # @return Page Page of MessageInstance
             def page(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'To' => to,
@@ -115,6 +186,9 @@ module Twilio
             
             ##
             # Constructs a MessageContext
+            # @param sid: Fetch by unique message Sid
+            
+            # @return MessageContext MessageContext
             def get(sid)
               MessageContext.new(
                   @version,
@@ -131,6 +205,13 @@ module Twilio
           end
         
           class MessagePage < Page
+            ##
+            # Initialize the MessagePage
+            # @param Version version: Version that contains the resource
+            # @param Response response: Response from the API
+            # @param account_sid: The unique sid that identifies this account
+            
+            # @return MessagePage MessagePage
             def initialize(version, response, account_sid: nil)
               super(version, response)
               
@@ -140,6 +221,11 @@ module Twilio
               }
             end
             
+            ##
+            # Build an instance of MessageInstance
+            # @param Hash payload: Payload response from the API
+            
+            # @return MessageInstance MessageInstance
             def get_instance(payload)
               return MessageInstance.new(
                   @version,
@@ -156,6 +242,13 @@ module Twilio
           end
         
           class MessageContext < InstanceContext
+            ##
+            # Initialize the MessageContext
+            # @param Version version: Version that contains the resource
+            # @param account_sid: The account_sid
+            # @param sid: Fetch by unique message Sid
+            
+            # @return MessageContext MessageContext
             def initialize(version, account_sid, sid)
               super(version)
               
@@ -172,12 +265,14 @@ module Twilio
             
             ##
             # Deletes the MessageInstance
+            # @return Boolean true if delete succeeds, true otherwise
             def delete
               return @version.delete('delete', @uri)
             end
             
             ##
             # Fetch a MessageInstance
+            # @return MessageInstance Fetched MessageInstance
             def fetch
               params = {}
               
@@ -197,6 +292,9 @@ module Twilio
             
             ##
             # Update the MessageInstance
+            # @param String body: The body
+            
+            # @return MessageInstance Updated MessageInstance
             def update(body: nil)
               data = {
                   'Body' => body,
@@ -216,6 +314,9 @@ module Twilio
               )
             end
             
+            ##
+            # Access the media
+            # @return MediaList MediaList
             def media(sid=:unset)
               if sid != :unset
                 return MediaContext.new(
@@ -246,6 +347,9 @@ module Twilio
           end
         
           class MessageInstance < InstanceResource
+            ##
+            # Initialize the MessageInstance
+            # @return MessageInstance MessageInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
               
@@ -280,6 +384,10 @@ module Twilio
               }
             end
             
+            ##
+            # Generate an instance context for the instance, the context is capable of
+            # performing various actions.  All instance actions are proxied to the context
+            # @return MessageContext MessageContext for this MessageInstance
             def context
               unless @instance_context
                 @instance_context = MessageContext.new(
@@ -369,22 +477,30 @@ module Twilio
             
             ##
             # Deletes the MessageInstance
+            # @return Boolean true if delete succeeds, true otherwise
             def delete
               @context.delete()
             end
             
             ##
             # Fetch a MessageInstance
+            # @return MessageInstance Fetched MessageInstance
             def fetch
               @context.fetch()
             end
             
             ##
             # Update the MessageInstance
+            # @param String body: The body
+            
+            # @return MessageInstance Updated MessageInstance
             def update(body: nil)
               @context.update()
             end
             
+            ##
+            # Access the media
+            # @return media media
             def media
               @context.media
             end

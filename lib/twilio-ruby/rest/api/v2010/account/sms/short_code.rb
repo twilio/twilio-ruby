@@ -13,6 +13,10 @@ module Twilio
             class ShortCodeList < ListResource
               ##
               # Initialize the ShortCodeList
+              # @param Version version: Version that contains the resource
+              # @param account_sid: A 34 character string that uniquely identifies this resource.
+              
+              # @return ShortCodeList ShortCodeList
               def initialize(version, account_sid: nil)
                 super(version)
                 
@@ -24,7 +28,19 @@ module Twilio
               end
               
               ##
-              # Reads ShortCodeInstance records from the API as a list.
+              # Lists ShortCodeInstance records from the API as a list.
+              # Unlike stream(), this operation is eager and will load `limit` records into
+              # memory before returning.
+              # @param String friendly_name: Filter by friendly name
+              # @param String short_code: Filter by ShortCode
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
+              
+              # @return Array Array of up to limit results
               def list(friendly_name: nil, short_code: nil, limit: nil, page_size: nil)
                 self.stream(
                     friendly_name: friendly_name,
@@ -34,6 +50,20 @@ module Twilio
                 ).entries
               end
               
+              ##
+              # Streams ShortCodeInstance records from the API as an Enumerable.
+              # This operation lazily loads records as efficiently as possible until the limit
+              # is reached.
+              # @param String friendly_name: Filter by friendly name
+              # @param String short_code: Filter by ShortCode
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
+              
+              # @return Enumerable Enumerable that will yield up to limit results
               def stream(friendly_name: nil, short_code: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
@@ -46,6 +76,18 @@ module Twilio
                 @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
               end
               
+              ##
+              # When passed a block, yields ShortCodeInstance records from the API.
+              # This operation lazily loads records as efficiently as possible until the limit
+              # is reached.
+              # @param String friendly_name: Filter by friendly name
+              # @param String short_code: Filter by ShortCode
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
                 
@@ -60,6 +102,14 @@ module Twilio
               
               ##
               # Retrieve a single page of ShortCodeInstance records from the API.
+              # Request is executed immediately.
+              # @param String friendly_name: Filter by friendly name
+              # @param String short_code: Filter by ShortCode
+              # @param String page_token: PageToken provided by the API
+              # @param Integer page_number: Page Number, this value is simply for client state
+              # @param Integer page_size: Number of records to return, defaults to 50
+              
+              # @return Page Page of ShortCodeInstance
               def page(friendly_name: nil, short_code: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
                     'FriendlyName' => friendly_name,
@@ -82,6 +132,9 @@ module Twilio
               
               ##
               # Constructs a ShortCodeContext
+              # @param sid: Fetch by unique short-code Sid
+              
+              # @return ShortCodeContext ShortCodeContext
               def get(sid)
                 ShortCodeContext.new(
                     @version,
@@ -98,6 +151,13 @@ module Twilio
             end
           
             class ShortCodePage < Page
+              ##
+              # Initialize the ShortCodePage
+              # @param Version version: Version that contains the resource
+              # @param Response response: Response from the API
+              # @param account_sid: A 34 character string that uniquely identifies this resource.
+              
+              # @return ShortCodePage ShortCodePage
               def initialize(version, response, account_sid: nil)
                 super(version, response)
                 
@@ -107,6 +167,11 @@ module Twilio
                 }
               end
               
+              ##
+              # Build an instance of ShortCodeInstance
+              # @param Hash payload: Payload response from the API
+              
+              # @return ShortCodeInstance ShortCodeInstance
               def get_instance(payload)
                 return ShortCodeInstance.new(
                     @version,
@@ -123,6 +188,13 @@ module Twilio
             end
           
             class ShortCodeContext < InstanceContext
+              ##
+              # Initialize the ShortCodeContext
+              # @param Version version: Version that contains the resource
+              # @param account_sid: The account_sid
+              # @param sid: Fetch by unique short-code Sid
+              
+              # @return ShortCodeContext ShortCodeContext
               def initialize(version, account_sid, sid)
                 super(version)
                 
@@ -136,6 +208,7 @@ module Twilio
               
               ##
               # Fetch a ShortCodeInstance
+              # @return ShortCodeInstance Fetched ShortCodeInstance
               def fetch
                 params = {}
                 
@@ -155,6 +228,14 @@ module Twilio
               
               ##
               # Update the ShortCodeInstance
+              # @param String friendly_name: A human readable description of this resource
+              # @param String api_version: The API version to use
+              # @param String sms_url: URL Twilio will request when receiving an SMS
+              # @param String sms_method: HTTP method to use when requesting the sms url
+              # @param String sms_fallback_url: URL Twilio will request if an error occurs in executing TwiML
+              # @param String sms_fallback_method: HTTP method Twilio will use with sms fallback url
+              
+              # @return ShortCodeInstance Updated ShortCodeInstance
               def update(friendly_name: nil, api_version: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil)
                 data = {
                     'FriendlyName' => friendly_name,
@@ -188,6 +269,9 @@ module Twilio
             end
           
             class ShortCodeInstance < InstanceResource
+              ##
+              # Initialize the ShortCodeInstance
+              # @return ShortCodeInstance ShortCodeInstance
               def initialize(version, payload, account_sid: nil, sid: nil)
                 super(version)
                 
@@ -215,6 +299,10 @@ module Twilio
                 }
               end
               
+              ##
+              # Generate an instance context for the instance, the context is capable of
+              # performing various actions.  All instance actions are proxied to the context
+              # @return ShortCodeContext ShortCodeContext for this ShortCodeInstance
               def context
                 unless @instance_context
                   @instance_context = ShortCodeContext.new(
@@ -276,12 +364,21 @@ module Twilio
               
               ##
               # Fetch a ShortCodeInstance
+              # @return ShortCodeInstance Fetched ShortCodeInstance
               def fetch
                 @context.fetch()
               end
               
               ##
               # Update the ShortCodeInstance
+              # @param String friendly_name: A human readable description of this resource
+              # @param String api_version: The API version to use
+              # @param String sms_url: URL Twilio will request when receiving an SMS
+              # @param String sms_method: HTTP method to use when requesting the sms url
+              # @param String sms_fallback_url: URL Twilio will request if an error occurs in executing TwiML
+              # @param String sms_fallback_method: HTTP method Twilio will use with sms fallback url
+              
+              # @return ShortCodeInstance Updated ShortCodeInstance
               def update(friendly_name: nil, api_version: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil)
                 @context.update(
                     api_version: nil,

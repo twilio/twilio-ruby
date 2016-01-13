@@ -12,6 +12,10 @@ module Twilio
           class UsageList < ListResource
             ##
             # Initialize the UsageList
+            # @param Version version: Version that contains the resource
+            # @param account_sid: A 34 character string that uniquely identifies this resource.
+            
+            # @return UsageList UsageList
             def initialize(version, account_sid: nil)
               super(version)
               
@@ -27,6 +31,7 @@ module Twilio
             
             ##
             # Access the records
+            # @return RecordList RecordList
             def records
               @records ||= RecordList.new(
                   @version,
@@ -36,6 +41,7 @@ module Twilio
             
             ##
             # Access the triggers
+            # @return TriggerList TriggerList
             def triggers(sid=:unset)
               if sid != :unset
                 return TriggerContext.new(
@@ -59,6 +65,13 @@ module Twilio
           end
         
           class UsagePage < Page
+            ##
+            # Initialize the UsagePage
+            # @param Version version: Version that contains the resource
+            # @param Response response: Response from the API
+            # @param account_sid: A 34 character string that uniquely identifies this resource.
+            
+            # @return UsagePage UsagePage
             def initialize(version, response, account_sid: nil)
               super(version, response)
               
@@ -68,6 +81,11 @@ module Twilio
               }
             end
             
+            ##
+            # Build an instance of UsageInstance
+            # @param Hash payload: Payload response from the API
+            
+            # @return UsageInstance UsageInstance
             def get_instance(payload)
               return UsageInstance.new(
                   @version,
@@ -84,6 +102,9 @@ module Twilio
           end
         
           class UsageInstance < InstanceResource
+            ##
+            # Initialize the UsageInstance
+            # @return UsageInstance UsageInstance
             def initialize(version, payload, account_sid: nil)
               super(version)
             end

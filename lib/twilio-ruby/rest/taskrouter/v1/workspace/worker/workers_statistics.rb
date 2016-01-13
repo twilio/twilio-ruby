@@ -13,6 +13,10 @@ module Twilio
             class WorkersStatisticsList < ListResource
               ##
               # Initialize the WorkersStatisticsList
+              # @param Version version: Version that contains the resource
+              # @param workspace_sid: The workspace_sid
+              
+              # @return WorkersStatisticsList WorkersStatisticsList
               def initialize(version, workspace_sid: nil)
                 super(version)
                 
@@ -24,6 +28,7 @@ module Twilio
               
               ##
               # Constructs a WorkersStatisticsContext
+              # @return WorkersStatisticsContext WorkersStatisticsContext
               def get
                 WorkersStatisticsContext.new(
                     @version,
@@ -39,6 +44,13 @@ module Twilio
             end
           
             class WorkersStatisticsPage < Page
+              ##
+              # Initialize the WorkersStatisticsPage
+              # @param Version version: Version that contains the resource
+              # @param Response response: Response from the API
+              # @param workspace_sid: The workspace_sid
+              
+              # @return WorkersStatisticsPage WorkersStatisticsPage
               def initialize(version, response, workspace_sid: nil)
                 super(version, response)
                 
@@ -48,6 +60,11 @@ module Twilio
                 }
               end
               
+              ##
+              # Build an instance of WorkersStatisticsInstance
+              # @param Hash payload: Payload response from the API
+              
+              # @return WorkersStatisticsInstance WorkersStatisticsInstance
               def get_instance(payload)
                 return WorkersStatisticsInstance.new(
                     @version,
@@ -64,6 +81,12 @@ module Twilio
             end
           
             class WorkersStatisticsContext < InstanceContext
+              ##
+              # Initialize the WorkersStatisticsContext
+              # @param Version version: Version that contains the resource
+              # @param workspace_sid: The workspace_sid
+              
+              # @return WorkersStatisticsContext WorkersStatisticsContext
               def initialize(version, workspace_sid)
                 super(version)
                 
@@ -76,6 +99,14 @@ module Twilio
               
               ##
               # Fetch a WorkersStatisticsInstance
+              # @param String minutes: The minutes
+              # @param Time start_date: The start_date
+              # @param Time end_date: The end_date
+              # @param String task_queue_sid: The task_queue_sid
+              # @param String task_queue_name: The task_queue_name
+              # @param String friendly_name: The friendly_name
+              
+              # @return WorkersStatisticsInstance Fetched WorkersStatisticsInstance
               def fetch(minutes: nil, start_date: nil, end_date: nil, task_queue_sid: nil, task_queue_name: nil, friendly_name: nil)
                 params = {
                     'Minutes' => minutes,
@@ -108,6 +139,9 @@ module Twilio
             end
           
             class WorkersStatisticsInstance < InstanceResource
+              ##
+              # Initialize the WorkersStatisticsInstance
+              # @return WorkersStatisticsInstance WorkersStatisticsInstance
               def initialize(version, payload, workspace_sid: nil)
                 super(version)
                 
@@ -126,6 +160,10 @@ module Twilio
                 }
               end
               
+              ##
+              # Generate an instance context for the instance, the context is capable of
+              # performing various actions.  All instance actions are proxied to the context
+              # @return WorkersStatisticsContext WorkersStatisticsContext for this WorkersStatisticsInstance
               def context
                 unless @instance_context
                   @instance_context = WorkersStatisticsContext.new(
@@ -154,6 +192,14 @@ module Twilio
               
               ##
               # Fetch a WorkersStatisticsInstance
+              # @param String minutes: The minutes
+              # @param Time start_date: The start_date
+              # @param Time end_date: The end_date
+              # @param String task_queue_sid: The task_queue_sid
+              # @param String task_queue_name: The task_queue_name
+              # @param String friendly_name: The friendly_name
+              
+              # @return WorkersStatisticsInstance Fetched WorkersStatisticsInstance
               def fetch(minutes: nil, start_date: nil, end_date: nil, task_queue_sid: nil, task_queue_name: nil, friendly_name: nil)
                 @context.fetch(
                     start_date: nil,

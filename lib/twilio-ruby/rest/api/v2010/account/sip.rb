@@ -12,6 +12,10 @@ module Twilio
           class SipList < ListResource
             ##
             # Initialize the SipList
+            # @param Version version: Version that contains the resource
+            # @param account_sid: A 34 character string that uniquely identifies this resource.
+            
+            # @return SipList SipList
             def initialize(version, account_sid: nil)
               super(version)
               
@@ -28,6 +32,7 @@ module Twilio
             
             ##
             # Access the domains
+            # @return DomainList DomainList
             def domains(sid=:unset)
               if sid != :unset
                 return DomainContext.new(
@@ -45,6 +50,7 @@ module Twilio
             
             ##
             # Access the ip_access_control_lists
+            # @return IpAccessControlListList IpAccessControlListList
             def ip_access_control_lists(sid=:unset)
               if sid != :unset
                 return IpAccessControlListContext.new(
@@ -62,6 +68,7 @@ module Twilio
             
             ##
             # Access the credential_lists
+            # @return CredentialListList CredentialListList
             def credential_lists(sid=:unset)
               if sid != :unset
                 return CredentialListContext.new(
@@ -85,6 +92,13 @@ module Twilio
           end
         
           class SipPage < Page
+            ##
+            # Initialize the SipPage
+            # @param Version version: Version that contains the resource
+            # @param Response response: Response from the API
+            # @param account_sid: A 34 character string that uniquely identifies this resource.
+            
+            # @return SipPage SipPage
             def initialize(version, response, account_sid: nil)
               super(version, response)
               
@@ -94,6 +108,11 @@ module Twilio
               }
             end
             
+            ##
+            # Build an instance of SipInstance
+            # @param Hash payload: Payload response from the API
+            
+            # @return SipInstance SipInstance
             def get_instance(payload)
               return SipInstance.new(
                   @version,
@@ -110,6 +129,9 @@ module Twilio
           end
         
           class SipInstance < InstanceResource
+            ##
+            # Initialize the SipInstance
+            # @return SipInstance SipInstance
             def initialize(version, payload, account_sid: nil)
               super(version)
             end

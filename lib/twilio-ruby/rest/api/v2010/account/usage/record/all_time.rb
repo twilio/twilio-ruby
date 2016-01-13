@@ -14,6 +14,10 @@ module Twilio
               class AllTimeList < ListResource
                 ##
                 # Initialize the AllTimeList
+                # @param Version version: Version that contains the resource
+                # @param account_sid: A 34 character string that uniquely identifies this resource.
+                
+                # @return AllTimeList AllTimeList
                 def initialize(version, account_sid: nil)
                   super(version)
                   
@@ -25,7 +29,17 @@ module Twilio
                 end
                 
                 ##
-                # Reads AllTimeInstance records from the API as a list.
+                # Lists AllTimeInstance records from the API as a list.
+                # Unlike stream(), this operation is eager and will load `limit` records into
+                # memory before returning.
+                # @param Integer limit: Upper limit for the number of records to return. stream()
+                #                   guarantees to never return more than limit.  Default is no limit
+                # @param Integer page_size: Number of records to fetch per request, when not set will use
+                #                       the default value of 50 records.  If no page_size is defined
+                #                       but a limit is defined, stream() will attempt to read the
+                #                       limit with the most efficient page size, i.e. min(limit, 1000)
+                
+                # @return Array Array of up to limit results
                 def list(limit: nil, page_size: nil)
                   self.stream(
                       limit: limit,
@@ -33,6 +47,18 @@ module Twilio
                   ).entries
                 end
                 
+                ##
+                # Streams AllTimeInstance records from the API as an Enumerable.
+                # This operation lazily loads records as efficiently as possible until the limit
+                # is reached.
+                # @param Integer limit: Upper limit for the number of records to return. stream()
+                #                   guarantees to never return more than limit.  Default is no limit
+                # @param Integer page_size: Number of records to fetch per request, when not set will use
+                #                       the default value of 50 records.  If no page_size is defined
+                #                       but a limit is defined, stream() will attempt to read the
+                #                       limit with the most efficient page size, i.e. min(limit, 1000)
+                
+                # @return Enumerable Enumerable that will yield up to limit results
                 def stream(limit: nil, page_size: nil)
                   limits = @version.read_limits(limit, page_size)
                   
@@ -43,6 +69,16 @@ module Twilio
                   @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
                 end
                 
+                ##
+                # When passed a block, yields AllTimeInstance records from the API.
+                # This operation lazily loads records as efficiently as possible until the limit
+                # is reached.
+                # @param Integer limit: Upper limit for the number of records to return. stream()
+                #                   guarantees to never return more than limit.  Default is no limit
+                # @param Integer page_size: Number of records to fetch per request, when not set will use
+                #                       the default value of 50 records.  If no page_size is defined
+                #                       but a limit is defined, stream() will attempt to read the
+                #                       limit with the most efficient page size, i.e. min(limit, 1000)
                 def each
                   limits = @version.read_limits
                   
@@ -57,6 +93,12 @@ module Twilio
                 
                 ##
                 # Retrieve a single page of AllTimeInstance records from the API.
+                # Request is executed immediately.
+                # @param String page_token: PageToken provided by the API
+                # @param Integer page_number: Page Number, this value is simply for client state
+                # @param Integer page_size: Number of records to return, defaults to 50
+                
+                # @return Page Page of AllTimeInstance
                 def page(page_token: nil, page_number: nil, page_size: nil)
                   params = {
                       'PageToken' => page_token,
@@ -83,6 +125,13 @@ module Twilio
               end
             
               class AllTimePage < Page
+                ##
+                # Initialize the AllTimePage
+                # @param Version version: Version that contains the resource
+                # @param Response response: Response from the API
+                # @param account_sid: A 34 character string that uniquely identifies this resource.
+                
+                # @return AllTimePage AllTimePage
                 def initialize(version, response, account_sid: nil)
                   super(version, response)
                   
@@ -92,6 +141,11 @@ module Twilio
                   }
                 end
                 
+                ##
+                # Build an instance of AllTimeInstance
+                # @param Hash payload: Payload response from the API
+                
+                # @return AllTimeInstance AllTimeInstance
                 def get_instance(payload)
                   return AllTimeInstance.new(
                       @version,
@@ -108,6 +162,9 @@ module Twilio
               end
             
               class AllTimeInstance < InstanceResource
+                ##
+                # Initialize the AllTimeInstance
+                # @return AllTimeInstance AllTimeInstance
                 def initialize(version, payload, account_sid: nil)
                   super(version)
                   

@@ -11,6 +11,9 @@ module Twilio
         class WorkspaceList < ListResource
           ##
           # Initialize the WorkspaceList
+          # @param Version version: Version that contains the resource
+          
+          # @return WorkspaceList WorkspaceList
           def initialize(version)
             super(version)
             
@@ -20,7 +23,18 @@ module Twilio
           end
           
           ##
-          # Reads WorkspaceInstance records from the API as a list.
+          # Lists WorkspaceInstance records from the API as a list.
+          # Unlike stream(), this operation is eager and will load `limit` records into
+          # memory before returning.
+          # @param String friendly_name: The friendly_name
+          # @param Integer limit: Upper limit for the number of records to return. stream()
+          #                   guarantees to never return more than limit.  Default is no limit
+          # @param Integer page_size: Number of records to fetch per request, when not set will use
+          #                       the default value of 50 records.  If no page_size is defined
+          #                       but a limit is defined, stream() will attempt to read the
+          #                       limit with the most efficient page size, i.e. min(limit, 1000)
+          
+          # @return Array Array of up to limit results
           def list(friendly_name: nil, limit: nil, page_size: nil)
             self.stream(
                 friendly_name: friendly_name,
@@ -29,6 +43,19 @@ module Twilio
             ).entries
           end
           
+          ##
+          # Streams WorkspaceInstance records from the API as an Enumerable.
+          # This operation lazily loads records as efficiently as possible until the limit
+          # is reached.
+          # @param String friendly_name: The friendly_name
+          # @param Integer limit: Upper limit for the number of records to return. stream()
+          #                   guarantees to never return more than limit.  Default is no limit
+          # @param Integer page_size: Number of records to fetch per request, when not set will use
+          #                       the default value of 50 records.  If no page_size is defined
+          #                       but a limit is defined, stream() will attempt to read the
+          #                       limit with the most efficient page size, i.e. min(limit, 1000)
+          
+          # @return Enumerable Enumerable that will yield up to limit results
           def stream(friendly_name: nil, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
             
@@ -40,6 +67,17 @@ module Twilio
             @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
           end
           
+          ##
+          # When passed a block, yields WorkspaceInstance records from the API.
+          # This operation lazily loads records as efficiently as possible until the limit
+          # is reached.
+          # @param String friendly_name: The friendly_name
+          # @param Integer limit: Upper limit for the number of records to return. stream()
+          #                   guarantees to never return more than limit.  Default is no limit
+          # @param Integer page_size: Number of records to fetch per request, when not set will use
+          #                       the default value of 50 records.  If no page_size is defined
+          #                       but a limit is defined, stream() will attempt to read the
+          #                       limit with the most efficient page size, i.e. min(limit, 1000)
           def each
             limits = @version.read_limits
             
@@ -54,6 +92,13 @@ module Twilio
           
           ##
           # Retrieve a single page of WorkspaceInstance records from the API.
+          # Request is executed immediately.
+          # @param String friendly_name: The friendly_name
+          # @param String page_token: PageToken provided by the API
+          # @param Integer page_number: Page Number, this value is simply for client state
+          # @param Integer page_size: Number of records to return, defaults to 50
+          
+          # @return Page Page of WorkspaceInstance
           def page(friendly_name: nil, page_token: nil, page_number: nil, page_size: nil)
             params = {
                 'FriendlyName' => friendly_name,
@@ -73,7 +118,13 @@ module Twilio
           end
           
           ##
-          # Create a new WorkspaceInstance
+          # Retrieve a single page of WorkspaceInstance records from the API.
+          # Request is executed immediately.
+          # @param String friendly_name: The friendly_name
+          # @param String event_callback_url: The event_callback_url
+          # @param String template: The template
+          
+          # @return WorkspaceInstance Newly created WorkspaceInstance
           def create(friendly_name: nil, event_callback_url: nil, template: nil)
             data = {
                 'FriendlyName' => friendly_name,
@@ -95,6 +146,9 @@ module Twilio
           
           ##
           # Constructs a WorkspaceContext
+          # @param sid: The sid
+          
+          # @return WorkspaceContext WorkspaceContext
           def get(sid)
             WorkspaceContext.new(
                 @version,
@@ -110,6 +164,12 @@ module Twilio
         end
       
         class WorkspacePage < Page
+          ##
+          # Initialize the WorkspacePage
+          # @param Version version: Version that contains the resource
+          # @param Response response: Response from the API
+          
+          # @return WorkspacePage WorkspacePage
           def initialize(version, response)
             super(version, response)
             
@@ -117,6 +177,11 @@ module Twilio
             @solution = {}
           end
           
+          ##
+          # Build an instance of WorkspaceInstance
+          # @param Hash payload: Payload response from the API
+          
+          # @return WorkspaceInstance WorkspaceInstance
           def get_instance(payload)
             return WorkspaceInstance.new(
                 @version,
@@ -132,6 +197,12 @@ module Twilio
         end
       
         class WorkspaceContext < InstanceContext
+          ##
+          # Initialize the WorkspaceContext
+          # @param Version version: Version that contains the resource
+          # @param sid: The sid
+          
+          # @return WorkspaceContext WorkspaceContext
           def initialize(version, sid)
             super(version)
             
@@ -153,6 +224,7 @@ module Twilio
           
           ##
           # Fetch a WorkspaceInstance
+          # @return WorkspaceInstance Fetched WorkspaceInstance
           def fetch
             params = {}
             
@@ -171,6 +243,12 @@ module Twilio
           
           ##
           # Update the WorkspaceInstance
+          # @param String default_activity_sid: The default_activity_sid
+          # @param String event_callback_url: The event_callback_url
+          # @param String friendly_name: The friendly_name
+          # @param String timeout_activity_sid: The timeout_activity_sid
+          
+          # @return WorkspaceInstance Updated WorkspaceInstance
           def update(default_activity_sid: nil, event_callback_url: nil, friendly_name: nil, timeout_activity_sid: nil)
             data = {
                 'DefaultActivitySid' => default_activity_sid,
@@ -194,10 +272,14 @@ module Twilio
           
           ##
           # Deletes the WorkspaceInstance
+          # @return Boolean true if delete succeeds, true otherwise
           def delete
             return @version.delete('delete', @uri)
           end
           
+          ##
+          # Access the activities
+          # @return ActivityList ActivityList
           def activities(sid=:unset)
             if sid != :unset
               return ActivityContext.new(
@@ -217,6 +299,9 @@ module Twilio
             @activities
           end
           
+          ##
+          # Access the events
+          # @return EventList EventList
           def events(sid=:unset)
             if sid != :unset
               return EventContext.new(
@@ -236,6 +321,9 @@ module Twilio
             @events
           end
           
+          ##
+          # Access the tasks
+          # @return TaskList TaskList
           def tasks(sid=:unset)
             if sid != :unset
               return TaskContext.new(
@@ -255,6 +343,9 @@ module Twilio
             @tasks
           end
           
+          ##
+          # Access the task_queues
+          # @return TaskQueueList TaskQueueList
           def task_queues(sid=:unset)
             if sid != :unset
               return TaskQueueContext.new(
@@ -274,6 +365,9 @@ module Twilio
             @task_queues
           end
           
+          ##
+          # Access the workers
+          # @return WorkerList WorkerList
           def workers(sid=:unset)
             if sid != :unset
               return WorkerContext.new(
@@ -293,6 +387,9 @@ module Twilio
             @workers
           end
           
+          ##
+          # Access the workflows
+          # @return WorkflowList WorkflowList
           def workflows(sid=:unset)
             if sid != :unset
               return WorkflowContext.new(
@@ -312,6 +409,9 @@ module Twilio
             @workflows
           end
           
+          ##
+          # Access the statistics
+          # @return WorkspaceStatisticsList WorkspaceStatisticsList
           def statistics
             return WorkspaceStatisticsContext.new(
                 @version,
@@ -328,6 +428,9 @@ module Twilio
         end
       
         class WorkspaceInstance < InstanceResource
+          ##
+          # Initialize the WorkspaceInstance
+          # @return WorkspaceInstance WorkspaceInstance
           def initialize(version, payload, sid: nil)
             super(version)
             
@@ -352,6 +455,10 @@ module Twilio
             }
           end
           
+          ##
+          # Generate an instance context for the instance, the context is capable of
+          # performing various actions.  All instance actions are proxied to the context
+          # @return WorkspaceContext WorkspaceContext for this WorkspaceInstance
           def context
             unless @instance_context
               @instance_context = WorkspaceContext.new(
@@ -404,12 +511,19 @@ module Twilio
           
           ##
           # Fetch a WorkspaceInstance
+          # @return WorkspaceInstance Fetched WorkspaceInstance
           def fetch
             @context.fetch()
           end
           
           ##
           # Update the WorkspaceInstance
+          # @param String default_activity_sid: The default_activity_sid
+          # @param String event_callback_url: The event_callback_url
+          # @param String friendly_name: The friendly_name
+          # @param String timeout_activity_sid: The timeout_activity_sid
+          
+          # @return WorkspaceInstance Updated WorkspaceInstance
           def update(default_activity_sid: nil, event_callback_url: nil, friendly_name: nil, timeout_activity_sid: nil)
             @context.update(
                 event_callback_url: nil,
@@ -420,34 +534,56 @@ module Twilio
           
           ##
           # Deletes the WorkspaceInstance
+          # @return Boolean true if delete succeeds, true otherwise
           def delete
             @context.delete()
           end
           
+          ##
+          # Access the activities
+          # @return activities activities
           def activities
             @context.activities
           end
           
+          ##
+          # Access the events
+          # @return events events
           def events
             @context.events
           end
           
+          ##
+          # Access the tasks
+          # @return tasks tasks
           def tasks
             @context.tasks
           end
           
+          ##
+          # Access the task_queues
+          # @return task_queues task_queues
           def task_queues
             @context.task_queues
           end
           
+          ##
+          # Access the workers
+          # @return workers workers
           def workers
             @context.workers
           end
           
+          ##
+          # Access the workflows
+          # @return workflows workflows
           def workflows
             @context.workflows
           end
           
+          ##
+          # Access the statistics
+          # @return statistics statistics
           def statistics
             @context.statistics
           end

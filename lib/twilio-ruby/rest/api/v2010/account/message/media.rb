@@ -13,6 +13,11 @@ module Twilio
             class MediaList < ListResource
               ##
               # Initialize the MediaList
+              # @param Version version: Version that contains the resource
+              # @param account_sid: The unique sid that identifies this account
+              # @param message_sid: A string that uniquely identifies this message
+              
+              # @return MediaList MediaList
               def initialize(version, account_sid: nil, message_sid: nil)
                 super(version)
                 
@@ -25,7 +30,20 @@ module Twilio
               end
               
               ##
-              # Reads MediaInstance records from the API as a list.
+              # Lists MediaInstance records from the API as a list.
+              # Unlike stream(), this operation is eager and will load `limit` records into
+              # memory before returning.
+              # @param Time date_created_before: Filter by date created
+              # @param Time date_created: Filter by date created
+              # @param Time date_created_after: Filter by date created
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
+              
+              # @return Array Array of up to limit results
               def list(date_created_before: nil, date_created: nil, date_created_after: nil, limit: nil, page_size: nil)
                 self.stream(
                     date_created_before: date_created_before,
@@ -36,6 +54,21 @@ module Twilio
                 ).entries
               end
               
+              ##
+              # Streams MediaInstance records from the API as an Enumerable.
+              # This operation lazily loads records as efficiently as possible until the limit
+              # is reached.
+              # @param Time date_created_before: Filter by date created
+              # @param Time date_created: Filter by date created
+              # @param Time date_created_after: Filter by date created
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
+              
+              # @return Enumerable Enumerable that will yield up to limit results
               def stream(date_created_before: nil, date_created: nil, date_created_after: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
@@ -49,6 +82,19 @@ module Twilio
                 @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
               end
               
+              ##
+              # When passed a block, yields MediaInstance records from the API.
+              # This operation lazily loads records as efficiently as possible until the limit
+              # is reached.
+              # @param Time date_created_before: Filter by date created
+              # @param Time date_created: Filter by date created
+              # @param Time date_created_after: Filter by date created
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
                 
@@ -63,6 +109,15 @@ module Twilio
               
               ##
               # Retrieve a single page of MediaInstance records from the API.
+              # Request is executed immediately.
+              # @param Time date_created_before: Filter by date created
+              # @param Time date_created: Filter by date created
+              # @param Time date_created_after: Filter by date created
+              # @param String page_token: PageToken provided by the API
+              # @param Integer page_number: Page Number, this value is simply for client state
+              # @param Integer page_size: Number of records to return, defaults to 50
+              
+              # @return Page Page of MediaInstance
               def page(date_created_before: nil, date_created: nil, date_created_after: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
                     'DateCreated<' => Twilio.serialize_iso8601(date_created_before),
@@ -87,6 +142,9 @@ module Twilio
               
               ##
               # Constructs a MediaContext
+              # @param sid: Fetch by unique media Sid
+              
+              # @return MediaContext MediaContext
               def get(sid)
                 MediaContext.new(
                     @version,
@@ -104,6 +162,14 @@ module Twilio
             end
           
             class MediaPage < Page
+              ##
+              # Initialize the MediaPage
+              # @param Version version: Version that contains the resource
+              # @param Response response: Response from the API
+              # @param account_sid: The unique sid that identifies this account
+              # @param message_sid: A string that uniquely identifies this message
+              
+              # @return MediaPage MediaPage
               def initialize(version, response, account_sid: nil, message_sid: nil)
                 super(version, response)
                 
@@ -114,6 +180,11 @@ module Twilio
                 }
               end
               
+              ##
+              # Build an instance of MediaInstance
+              # @param Hash payload: Payload response from the API
+              
+              # @return MediaInstance MediaInstance
               def get_instance(payload)
                 return MediaInstance.new(
                     @version,
@@ -131,6 +202,14 @@ module Twilio
             end
           
             class MediaContext < InstanceContext
+              ##
+              # Initialize the MediaContext
+              # @param Version version: Version that contains the resource
+              # @param account_sid: The account_sid
+              # @param message_sid: The message_sid
+              # @param sid: Fetch by unique media Sid
+              
+              # @return MediaContext MediaContext
               def initialize(version, account_sid, message_sid, sid)
                 super(version)
                 
@@ -145,12 +224,14 @@ module Twilio
               
               ##
               # Deletes the MediaInstance
+              # @return Boolean true if delete succeeds, true otherwise
               def delete
                 return @version.delete('delete', @uri)
               end
               
               ##
               # Fetch a MediaInstance
+              # @return MediaInstance Fetched MediaInstance
               def fetch
                 params = {}
                 
@@ -178,6 +259,9 @@ module Twilio
             end
           
             class MediaInstance < InstanceResource
+              ##
+              # Initialize the MediaInstance
+              # @return MediaInstance MediaInstance
               def initialize(version, payload, account_sid: nil, message_sid: nil, sid: nil)
                 super(version)
                 
@@ -201,6 +285,10 @@ module Twilio
                 }
               end
               
+              ##
+              # Generate an instance context for the instance, the context is capable of
+              # performing various actions.  All instance actions are proxied to the context
+              # @return MediaContext MediaContext for this MediaInstance
               def context
                 unless @instance_context
                   @instance_context = MediaContext.new(
@@ -243,12 +331,14 @@ module Twilio
               
               ##
               # Deletes the MediaInstance
+              # @return Boolean true if delete succeeds, true otherwise
               def delete
                 @context.delete()
               end
               
               ##
               # Fetch a MediaInstance
+              # @return MediaInstance Fetched MediaInstance
               def fetch
                 @context.fetch()
               end

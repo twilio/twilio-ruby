@@ -11,6 +11,9 @@ module Twilio
         class PhoneNumberList < ListResource
           ##
           # Initialize the PhoneNumberList
+          # @param Version version: Version that contains the resource
+          
+          # @return PhoneNumberList PhoneNumberList
           def initialize(version)
             super(version)
             
@@ -20,6 +23,9 @@ module Twilio
           
           ##
           # Constructs a PhoneNumberContext
+          # @param phone_number: The phone_number
+          
+          # @return PhoneNumberContext PhoneNumberContext
           def get(phone_number)
             PhoneNumberContext.new(
                 @version,
@@ -35,6 +41,12 @@ module Twilio
         end
       
         class PhoneNumberPage < Page
+          ##
+          # Initialize the PhoneNumberPage
+          # @param Version version: Version that contains the resource
+          # @param Response response: Response from the API
+          
+          # @return PhoneNumberPage PhoneNumberPage
           def initialize(version, response)
             super(version, response)
             
@@ -42,6 +54,11 @@ module Twilio
             @solution = {}
           end
           
+          ##
+          # Build an instance of PhoneNumberInstance
+          # @param Hash payload: Payload response from the API
+          
+          # @return PhoneNumberInstance PhoneNumberInstance
           def get_instance(payload)
             return PhoneNumberInstance.new(
                 @version,
@@ -57,6 +74,12 @@ module Twilio
         end
       
         class PhoneNumberContext < InstanceContext
+          ##
+          # Initialize the PhoneNumberContext
+          # @param Version version: Version that contains the resource
+          # @param phone_number: The phone_number
+          
+          # @return PhoneNumberContext PhoneNumberContext
           def initialize(version, phone_number)
             super(version)
             
@@ -69,6 +92,10 @@ module Twilio
           
           ##
           # Fetch a PhoneNumberInstance
+          # @param String country_code: The country_code
+          # @param String type: The type
+          
+          # @return PhoneNumberInstance Fetched PhoneNumberInstance
           def fetch(country_code: nil, type: nil)
             params = {
                 'CountryCode' => country_code,
@@ -97,6 +124,9 @@ module Twilio
         end
       
         class PhoneNumberInstance < InstanceResource
+          ##
+          # Initialize the PhoneNumberInstance
+          # @return PhoneNumberInstance PhoneNumberInstance
           def initialize(version, payload, phone_number: nil)
             super(version)
             
@@ -115,6 +145,10 @@ module Twilio
             }
           end
           
+          ##
+          # Generate an instance context for the instance, the context is capable of
+          # performing various actions.  All instance actions are proxied to the context
+          # @return PhoneNumberContext PhoneNumberContext for this PhoneNumberInstance
           def context
             unless @instance_context
               @instance_context = PhoneNumberContext.new(
@@ -143,6 +177,10 @@ module Twilio
           
           ##
           # Fetch a PhoneNumberInstance
+          # @param String country_code: The country_code
+          # @param String type: The type
+          
+          # @return PhoneNumberInstance Fetched PhoneNumberInstance
           def fetch(country_code: nil, type: nil)
             @context.fetch(
                 type: nil,

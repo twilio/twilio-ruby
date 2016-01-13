@@ -11,6 +11,9 @@ module Twilio
         class AlertList < ListResource
           ##
           # Initialize the AlertList
+          # @param Version version: Version that contains the resource
+          
+          # @return AlertList AlertList
           def initialize(version)
             super(version)
             
@@ -20,7 +23,24 @@ module Twilio
           end
           
           ##
-          # Reads AlertInstance records from the API as a list.
+          # Lists AlertInstance records from the API as a list.
+          # Unlike stream(), this operation is eager and will load `limit` records into
+          # memory before returning.
+          # @param String log_level: The log_level
+          # @param Time start_date_before: The start_date
+          # @param Time start_date: The start_date
+          # @param Time start_date_after: The start_date
+          # @param Time end_date_before: The end_date
+          # @param Time end_date: The end_date
+          # @param Time end_date_after: The end_date
+          # @param Integer limit: Upper limit for the number of records to return. stream()
+          #                   guarantees to never return more than limit.  Default is no limit
+          # @param Integer page_size: Number of records to fetch per request, when not set will use
+          #                       the default value of 50 records.  If no page_size is defined
+          #                       but a limit is defined, stream() will attempt to read the
+          #                       limit with the most efficient page size, i.e. min(limit, 1000)
+          
+          # @return Array Array of up to limit results
           def list(log_level: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, limit: nil, page_size: nil)
             self.stream(
                 log_level: log_level,
@@ -35,6 +55,25 @@ module Twilio
             ).entries
           end
           
+          ##
+          # Streams AlertInstance records from the API as an Enumerable.
+          # This operation lazily loads records as efficiently as possible until the limit
+          # is reached.
+          # @param String log_level: The log_level
+          # @param Time start_date_before: The start_date
+          # @param Time start_date: The start_date
+          # @param Time start_date_after: The start_date
+          # @param Time end_date_before: The end_date
+          # @param Time end_date: The end_date
+          # @param Time end_date_after: The end_date
+          # @param Integer limit: Upper limit for the number of records to return. stream()
+          #                   guarantees to never return more than limit.  Default is no limit
+          # @param Integer page_size: Number of records to fetch per request, when not set will use
+          #                       the default value of 50 records.  If no page_size is defined
+          #                       but a limit is defined, stream() will attempt to read the
+          #                       limit with the most efficient page size, i.e. min(limit, 1000)
+          
+          # @return Enumerable Enumerable that will yield up to limit results
           def stream(log_level: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
             
@@ -52,6 +91,23 @@ module Twilio
             @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
           end
           
+          ##
+          # When passed a block, yields AlertInstance records from the API.
+          # This operation lazily loads records as efficiently as possible until the limit
+          # is reached.
+          # @param String log_level: The log_level
+          # @param Time start_date_before: The start_date
+          # @param Time start_date: The start_date
+          # @param Time start_date_after: The start_date
+          # @param Time end_date_before: The end_date
+          # @param Time end_date: The end_date
+          # @param Time end_date_after: The end_date
+          # @param Integer limit: Upper limit for the number of records to return. stream()
+          #                   guarantees to never return more than limit.  Default is no limit
+          # @param Integer page_size: Number of records to fetch per request, when not set will use
+          #                       the default value of 50 records.  If no page_size is defined
+          #                       but a limit is defined, stream() will attempt to read the
+          #                       limit with the most efficient page size, i.e. min(limit, 1000)
           def each
             limits = @version.read_limits
             
@@ -66,6 +122,19 @@ module Twilio
           
           ##
           # Retrieve a single page of AlertInstance records from the API.
+          # Request is executed immediately.
+          # @param String log_level: The log_level
+          # @param Time start_date_before: The start_date
+          # @param Time start_date: The start_date
+          # @param Time start_date_after: The start_date
+          # @param Time end_date_before: The end_date
+          # @param Time end_date: The end_date
+          # @param Time end_date_after: The end_date
+          # @param String page_token: PageToken provided by the API
+          # @param Integer page_number: Page Number, this value is simply for client state
+          # @param Integer page_size: Number of records to return, defaults to 50
+          
+          # @return Page Page of AlertInstance
           def page(log_level: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, page_token: nil, page_number: nil, page_size: nil)
             params = {
                 'LogLevel' => log_level,
@@ -92,6 +161,9 @@ module Twilio
           
           ##
           # Constructs a AlertContext
+          # @param sid: The sid
+          
+          # @return AlertContext AlertContext
           def get(sid)
             AlertContext.new(
                 @version,
@@ -107,6 +179,12 @@ module Twilio
         end
       
         class AlertPage < Page
+          ##
+          # Initialize the AlertPage
+          # @param Version version: Version that contains the resource
+          # @param Response response: Response from the API
+          
+          # @return AlertPage AlertPage
           def initialize(version, response)
             super(version, response)
             
@@ -114,6 +192,11 @@ module Twilio
             @solution = {}
           end
           
+          ##
+          # Build an instance of AlertInstance
+          # @param Hash payload: Payload response from the API
+          
+          # @return AlertInstance AlertInstance
           def get_instance(payload)
             return AlertInstance.new(
                 @version,
@@ -129,6 +212,12 @@ module Twilio
         end
       
         class AlertContext < InstanceContext
+          ##
+          # Initialize the AlertContext
+          # @param Version version: Version that contains the resource
+          # @param sid: The sid
+          
+          # @return AlertContext AlertContext
           def initialize(version, sid)
             super(version)
             
@@ -141,6 +230,7 @@ module Twilio
           
           ##
           # Fetch a AlertInstance
+          # @return AlertInstance Fetched AlertInstance
           def fetch
             params = {}
             
@@ -159,6 +249,7 @@ module Twilio
           
           ##
           # Deletes the AlertInstance
+          # @return Boolean true if delete succeeds, true otherwise
           def delete
             return @version.delete('delete', @uri)
           end
@@ -172,6 +263,9 @@ module Twilio
         end
       
         class AlertInstance < InstanceResource
+          ##
+          # Initialize the AlertInstance
+          # @return AlertInstance AlertInstance
           def initialize(version, payload, sid: nil)
             super(version)
             
@@ -203,6 +297,10 @@ module Twilio
             }
           end
           
+          ##
+          # Generate an instance context for the instance, the context is capable of
+          # performing various actions.  All instance actions are proxied to the context
+          # @return AlertContext AlertContext for this AlertInstance
           def context
             unless @instance_context
               @instance_context = AlertContext.new(
@@ -283,12 +381,14 @@ module Twilio
           
           ##
           # Fetch a AlertInstance
+          # @return AlertInstance Fetched AlertInstance
           def fetch
             @context.fetch()
           end
           
           ##
           # Deletes the AlertInstance
+          # @return Boolean true if delete succeeds, true otherwise
           def delete
             @context.delete()
           end

@@ -13,6 +13,10 @@ module Twilio
             class LocalList < ListResource
               ##
               # Initialize the LocalList
+              # @param Version version: Version that contains the resource
+              # @param owner_account_sid: A 34 character string that uniquely identifies this resource.
+              
+              # @return LocalList LocalList
               def initialize(version, owner_account_sid: nil)
                 super(version)
                 
@@ -24,7 +28,20 @@ module Twilio
               end
               
               ##
-              # Reads LocalInstance records from the API as a list.
+              # Lists LocalInstance records from the API as a list.
+              # Unlike stream(), this operation is eager and will load `limit` records into
+              # memory before returning.
+              # @param Boolean beta: The beta
+              # @param String friendly_name: The friendly_name
+              # @param String phone_number: The phone_number
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
+              
+              # @return Array Array of up to limit results
               def list(beta: nil, friendly_name: nil, phone_number: nil, limit: nil, page_size: nil)
                 self.stream(
                     beta: beta,
@@ -35,6 +52,21 @@ module Twilio
                 ).entries
               end
               
+              ##
+              # Streams LocalInstance records from the API as an Enumerable.
+              # This operation lazily loads records as efficiently as possible until the limit
+              # is reached.
+              # @param Boolean beta: The beta
+              # @param String friendly_name: The friendly_name
+              # @param String phone_number: The phone_number
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
+              
+              # @return Enumerable Enumerable that will yield up to limit results
               def stream(beta: nil, friendly_name: nil, phone_number: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
@@ -48,6 +80,19 @@ module Twilio
                 @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
               end
               
+              ##
+              # When passed a block, yields LocalInstance records from the API.
+              # This operation lazily loads records as efficiently as possible until the limit
+              # is reached.
+              # @param Boolean beta: The beta
+              # @param String friendly_name: The friendly_name
+              # @param String phone_number: The phone_number
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
                 
@@ -62,6 +107,15 @@ module Twilio
               
               ##
               # Retrieve a single page of LocalInstance records from the API.
+              # Request is executed immediately.
+              # @param Boolean beta: The beta
+              # @param String friendly_name: The friendly_name
+              # @param String phone_number: The phone_number
+              # @param String page_token: PageToken provided by the API
+              # @param Integer page_number: Page Number, this value is simply for client state
+              # @param Integer page_size: Number of records to return, defaults to 50
+              
+              # @return Page Page of LocalInstance
               def page(beta: nil, friendly_name: nil, phone_number: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
                     'Beta' => beta,
@@ -84,7 +138,26 @@ module Twilio
               end
               
               ##
-              # Create a new LocalInstance
+              # Retrieve a single page of LocalInstance records from the API.
+              # Request is executed immediately.
+              # @param String phone_number: The phone_number
+              # @param String api_version: The api_version
+              # @param String friendly_name: The friendly_name
+              # @param String sms_application_sid: The sms_application_sid
+              # @param String sms_fallback_method: The sms_fallback_method
+              # @param String sms_fallback_url: The sms_fallback_url
+              # @param String sms_method: The sms_method
+              # @param String sms_url: The sms_url
+              # @param String status_callback: The status_callback
+              # @param String status_callback_method: The status_callback_method
+              # @param String voice_application_sid: The voice_application_sid
+              # @param Boolean voice_caller_id_lookup: The voice_caller_id_lookup
+              # @param String voice_fallback_method: The voice_fallback_method
+              # @param String voice_fallback_url: The voice_fallback_url
+              # @param String voice_method: The voice_method
+              # @param String voice_url: The voice_url
+              
+              # @return LocalInstance Newly created LocalInstance
               def create(phone_number: nil, api_version: nil, friendly_name: nil, sms_application_sid: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, status_callback: nil, status_callback_method: nil, voice_application_sid: nil, voice_caller_id_lookup: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil)
                 data = {
                     'PhoneNumber' => phone_number,
@@ -126,6 +199,13 @@ module Twilio
             end
           
             class LocalPage < Page
+              ##
+              # Initialize the LocalPage
+              # @param Version version: Version that contains the resource
+              # @param Response response: Response from the API
+              # @param owner_account_sid: A 34 character string that uniquely identifies this resource.
+              
+              # @return LocalPage LocalPage
               def initialize(version, response, owner_account_sid: nil)
                 super(version, response)
                 
@@ -135,6 +215,11 @@ module Twilio
                 }
               end
               
+              ##
+              # Build an instance of LocalInstance
+              # @param Hash payload: Payload response from the API
+              
+              # @return LocalInstance LocalInstance
               def get_instance(payload)
                 return LocalInstance.new(
                     @version,
@@ -151,6 +236,9 @@ module Twilio
             end
           
             class LocalInstance < InstanceResource
+              ##
+              # Initialize the LocalInstance
+              # @return LocalInstance LocalInstance
               def initialize(version, payload, owner_account_sid: nil)
                 super(version)
                 

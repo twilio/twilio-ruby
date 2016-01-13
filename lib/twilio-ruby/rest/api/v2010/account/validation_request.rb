@@ -12,6 +12,10 @@ module Twilio
           class ValidationRequestList < ListResource
             ##
             # Initialize the ValidationRequestList
+            # @param Version version: Version that contains the resource
+            # @param account_sid: The account_sid
+            
+            # @return ValidationRequestList ValidationRequestList
             def initialize(version, account_sid: nil)
               super(version)
               
@@ -23,7 +27,16 @@ module Twilio
             end
             
             ##
-            # Create a new ValidationRequestInstance
+            # Retrieve a single page of ValidationRequestInstance records from the API.
+            # Request is executed immediately.
+            # @param String phone_number: The phone_number
+            # @param String friendly_name: The friendly_name
+            # @param String call_delay: The call_delay
+            # @param String extension: The extension
+            # @param String status_callback: The status_callback
+            # @param String status_callback_method: The status_callback_method
+            
+            # @return ValidationRequestInstance Newly created ValidationRequestInstance
             def create(phone_number: nil, friendly_name: nil, call_delay: nil, extension: nil, status_callback: nil, status_callback_method: nil)
               data = {
                   'PhoneNumber' => phone_number,
@@ -55,6 +68,13 @@ module Twilio
           end
         
           class ValidationRequestPage < Page
+            ##
+            # Initialize the ValidationRequestPage
+            # @param Version version: Version that contains the resource
+            # @param Response response: Response from the API
+            # @param account_sid: The account_sid
+            
+            # @return ValidationRequestPage ValidationRequestPage
             def initialize(version, response, account_sid: nil)
               super(version, response)
               
@@ -64,6 +84,11 @@ module Twilio
               }
             end
             
+            ##
+            # Build an instance of ValidationRequestInstance
+            # @param Hash payload: Payload response from the API
+            
+            # @return ValidationRequestInstance ValidationRequestInstance
             def get_instance(payload)
               return ValidationRequestInstance.new(
                   @version,
@@ -80,6 +105,9 @@ module Twilio
           end
         
           class ValidationRequestInstance < InstanceResource
+            ##
+            # Initialize the ValidationRequestInstance
+            # @return ValidationRequestInstance ValidationRequestInstance
             def initialize(version, payload, account_sid: nil)
               super(version)
               

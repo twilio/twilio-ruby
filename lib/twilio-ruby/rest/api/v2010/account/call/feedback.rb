@@ -13,6 +13,11 @@ module Twilio
             class FeedbackList < ListResource
               ##
               # Initialize the FeedbackList
+              # @param Version version: Version that contains the resource
+              # @param account_sid: The account_sid
+              # @param call_sid: A 34 character string that uniquely identifies this resource.
+              
+              # @return FeedbackList FeedbackList
               def initialize(version, account_sid: nil, call_sid: nil)
                 super(version)
                 
@@ -25,6 +30,7 @@ module Twilio
               
               ##
               # Constructs a FeedbackContext
+              # @return FeedbackContext FeedbackContext
               def get
                 FeedbackContext.new(
                     @version,
@@ -41,6 +47,14 @@ module Twilio
             end
           
             class FeedbackPage < Page
+              ##
+              # Initialize the FeedbackPage
+              # @param Version version: Version that contains the resource
+              # @param Response response: Response from the API
+              # @param account_sid: The account_sid
+              # @param call_sid: A 34 character string that uniquely identifies this resource.
+              
+              # @return FeedbackPage FeedbackPage
               def initialize(version, response, account_sid: nil, call_sid: nil)
                 super(version, response)
                 
@@ -51,6 +65,11 @@ module Twilio
                 }
               end
               
+              ##
+              # Build an instance of FeedbackInstance
+              # @param Hash payload: Payload response from the API
+              
+              # @return FeedbackInstance FeedbackInstance
               def get_instance(payload)
                 return FeedbackInstance.new(
                     @version,
@@ -68,6 +87,13 @@ module Twilio
             end
           
             class FeedbackContext < InstanceContext
+              ##
+              # Initialize the FeedbackContext
+              # @param Version version: Version that contains the resource
+              # @param account_sid: The account_sid
+              # @param call_sid: The call sid that uniquely identifies the call
+              
+              # @return FeedbackContext FeedbackContext
               def initialize(version, account_sid, call_sid)
                 super(version)
                 
@@ -80,7 +106,12 @@ module Twilio
               end
               
               ##
-              # Create a new FeedbackInstance
+              # Retrieve a single page of FeedbackInstance records from the API.
+              # Request is executed immediately.
+              # @param String quality_score: The quality_score
+              # @param feedback.Issues issue: The issue
+              
+              # @return FeedbackInstance Newly created FeedbackInstance
               def create(quality_score: nil, issue: nil)
                 data = {
                     'QualityScore' => quality_score,
@@ -103,6 +134,7 @@ module Twilio
               
               ##
               # Fetch a FeedbackInstance
+              # @return FeedbackInstance Fetched FeedbackInstance
               def fetch
                 params = {}
                 
@@ -122,6 +154,10 @@ module Twilio
               
               ##
               # Update the FeedbackInstance
+              # @param String quality_score: An integer from 1 to 5
+              # @param feedback.Issues issue: Issues experienced during the call
+              
+              # @return FeedbackInstance Updated FeedbackInstance
               def update(quality_score: nil, issue: nil)
                 data = {
                     'QualityScore' => quality_score,
@@ -151,6 +187,9 @@ module Twilio
             end
           
             class FeedbackInstance < InstanceResource
+              ##
+              # Initialize the FeedbackInstance
+              # @return FeedbackInstance FeedbackInstance
               def initialize(version, payload, account_sid: nil, call_sid: nil)
                 super(version)
                 
@@ -172,6 +211,10 @@ module Twilio
                 }
               end
               
+              ##
+              # Generate an instance context for the instance, the context is capable of
+              # performing various actions.  All instance actions are proxied to the context
+              # @return FeedbackContext FeedbackContext for this FeedbackInstance
               def context
                 unless @instance_context
                   @instance_context = FeedbackContext.new(
@@ -208,7 +251,12 @@ module Twilio
               end
               
               ##
-              # Create a new FeedbackInstance
+              # Retrieve a single page of FeedbackInstance records from the API.
+              # Request is executed immediately.
+              # @param String quality_score: The quality_score
+              # @param feedback.Issues issue: The issue
+              
+              # @return FeedbackInstance Newly created FeedbackInstance
               def create(quality_score: nil, issue: nil)
                 @context.create(
                     issue: nil,
@@ -217,12 +265,17 @@ module Twilio
               
               ##
               # Fetch a FeedbackInstance
+              # @return FeedbackInstance Fetched FeedbackInstance
               def fetch
                 @context.fetch()
               end
               
               ##
               # Update the FeedbackInstance
+              # @param String quality_score: An integer from 1 to 5
+              # @param feedback.Issues issue: Issues experienced during the call
+              
+              # @return FeedbackInstance Updated FeedbackInstance
               def update(quality_score: nil, issue: nil)
                 @context.update(
                     issue: nil,

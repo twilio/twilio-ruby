@@ -13,6 +13,11 @@ module Twilio
             class TollFreeList < ListResource
               ##
               # Initialize the TollFreeList
+              # @param Version version: Version that contains the resource
+              # @param account_sid: A 34 character string that uniquely identifies this resource.
+              # @param country_code: The country_code
+              
+              # @return TollFreeList TollFreeList
               def initialize(version, account_sid: nil, country_code: nil)
                 super(version)
                 
@@ -25,7 +30,26 @@ module Twilio
               end
               
               ##
-              # Reads TollFreeInstance records from the API as a list.
+              # Lists TollFreeInstance records from the API as a list.
+              # Unlike stream(), this operation is eager and will load `limit` records into
+              # memory before returning.
+              # @param String area_code: The area_code
+              # @param String contains: The contains
+              # @param Boolean sms_enabled: The sms_enabled
+              # @param Boolean mms_enabled: The mms_enabled
+              # @param Boolean voice_enabled: The voice_enabled
+              # @param Boolean exclude_all_address_required: The exclude_all_address_required
+              # @param Boolean exclude_local_address_required: The exclude_local_address_required
+              # @param Boolean exclude_foreign_address_required: The exclude_foreign_address_required
+              # @param Boolean beta: The beta
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
+              
+              # @return Array Array of up to limit results
               def list(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, limit: nil, page_size: nil)
                 self.stream(
                     area_code: area_code,
@@ -42,6 +66,27 @@ module Twilio
                 ).entries
               end
               
+              ##
+              # Streams TollFreeInstance records from the API as an Enumerable.
+              # This operation lazily loads records as efficiently as possible until the limit
+              # is reached.
+              # @param String area_code: The area_code
+              # @param String contains: The contains
+              # @param Boolean sms_enabled: The sms_enabled
+              # @param Boolean mms_enabled: The mms_enabled
+              # @param Boolean voice_enabled: The voice_enabled
+              # @param Boolean exclude_all_address_required: The exclude_all_address_required
+              # @param Boolean exclude_local_address_required: The exclude_local_address_required
+              # @param Boolean exclude_foreign_address_required: The exclude_foreign_address_required
+              # @param Boolean beta: The beta
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
+              
+              # @return Enumerable Enumerable that will yield up to limit results
               def stream(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
@@ -61,6 +106,25 @@ module Twilio
                 @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
               end
               
+              ##
+              # When passed a block, yields TollFreeInstance records from the API.
+              # This operation lazily loads records as efficiently as possible until the limit
+              # is reached.
+              # @param String area_code: The area_code
+              # @param String contains: The contains
+              # @param Boolean sms_enabled: The sms_enabled
+              # @param Boolean mms_enabled: The mms_enabled
+              # @param Boolean voice_enabled: The voice_enabled
+              # @param Boolean exclude_all_address_required: The exclude_all_address_required
+              # @param Boolean exclude_local_address_required: The exclude_local_address_required
+              # @param Boolean exclude_foreign_address_required: The exclude_foreign_address_required
+              # @param Boolean beta: The beta
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
                 
@@ -75,6 +139,21 @@ module Twilio
               
               ##
               # Retrieve a single page of TollFreeInstance records from the API.
+              # Request is executed immediately.
+              # @param String area_code: The area_code
+              # @param String contains: The contains
+              # @param Boolean sms_enabled: The sms_enabled
+              # @param Boolean mms_enabled: The mms_enabled
+              # @param Boolean voice_enabled: The voice_enabled
+              # @param Boolean exclude_all_address_required: The exclude_all_address_required
+              # @param Boolean exclude_local_address_required: The exclude_local_address_required
+              # @param Boolean exclude_foreign_address_required: The exclude_foreign_address_required
+              # @param Boolean beta: The beta
+              # @param String page_token: PageToken provided by the API
+              # @param Integer page_number: Page Number, this value is simply for client state
+              # @param Integer page_size: Number of records to return, defaults to 50
+              
+              # @return Page Page of TollFreeInstance
               def page(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
                     'AreaCode' => area_code,
@@ -111,6 +190,14 @@ module Twilio
             end
           
             class TollFreePage < Page
+              ##
+              # Initialize the TollFreePage
+              # @param Version version: Version that contains the resource
+              # @param Response response: Response from the API
+              # @param account_sid: A 34 character string that uniquely identifies this resource.
+              # @param country_code: The country_code
+              
+              # @return TollFreePage TollFreePage
               def initialize(version, response, account_sid: nil, country_code: nil)
                 super(version, response)
                 
@@ -121,6 +208,11 @@ module Twilio
                 }
               end
               
+              ##
+              # Build an instance of TollFreeInstance
+              # @param Hash payload: Payload response from the API
+              
+              # @return TollFreeInstance TollFreeInstance
               def get_instance(payload)
                 return TollFreeInstance.new(
                     @version,
@@ -138,6 +230,9 @@ module Twilio
             end
           
             class TollFreeInstance < InstanceResource
+              ##
+              # Initialize the TollFreeInstance
+              # @return TollFreeInstance TollFreeInstance
               def initialize(version, payload, account_sid: nil, country_code: nil)
                 super(version)
                 

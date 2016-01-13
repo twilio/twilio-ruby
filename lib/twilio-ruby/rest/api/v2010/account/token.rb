@@ -12,6 +12,10 @@ module Twilio
           class TokenList < ListResource
             ##
             # Initialize the TokenList
+            # @param Version version: Version that contains the resource
+            # @param account_sid: The unique sid that identifies this account
+            
+            # @return TokenList TokenList
             def initialize(version, account_sid: nil)
               super(version)
               
@@ -23,7 +27,11 @@ module Twilio
             end
             
             ##
-            # Create a new TokenInstance
+            # Retrieve a single page of TokenInstance records from the API.
+            # Request is executed immediately.
+            # @param String ttl: The duration in seconds the credentials are valid
+            
+            # @return TokenInstance Newly created TokenInstance
             def create(ttl: nil)
               data = {
                   'Ttl' => ttl,
@@ -50,6 +58,13 @@ module Twilio
           end
         
           class TokenPage < Page
+            ##
+            # Initialize the TokenPage
+            # @param Version version: Version that contains the resource
+            # @param Response response: Response from the API
+            # @param account_sid: The unique sid that identifies this account
+            
+            # @return TokenPage TokenPage
             def initialize(version, response, account_sid: nil)
               super(version, response)
               
@@ -59,6 +74,11 @@ module Twilio
               }
             end
             
+            ##
+            # Build an instance of TokenInstance
+            # @param Hash payload: Payload response from the API
+            
+            # @return TokenInstance TokenInstance
             def get_instance(payload)
               return TokenInstance.new(
                   @version,
@@ -75,6 +95,9 @@ module Twilio
           end
         
           class TokenInstance < InstanceResource
+            ##
+            # Initialize the TokenInstance
+            # @return TokenInstance TokenInstance
             def initialize(version, payload, account_sid: nil)
               super(version)
               

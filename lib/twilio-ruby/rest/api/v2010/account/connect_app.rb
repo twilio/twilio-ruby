@@ -12,6 +12,10 @@ module Twilio
           class ConnectAppList < ListResource
             ##
             # Initialize the ConnectAppList
+            # @param Version version: Version that contains the resource
+            # @param account_sid: The unique sid that identifies this account
+            
+            # @return ConnectAppList ConnectAppList
             def initialize(version, account_sid: nil)
               super(version)
               
@@ -23,7 +27,17 @@ module Twilio
             end
             
             ##
-            # Reads ConnectAppInstance records from the API as a list.
+            # Lists ConnectAppInstance records from the API as a list.
+            # Unlike stream(), this operation is eager and will load `limit` records into
+            # memory before returning.
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            
+            # @return Array Array of up to limit results
             def list(limit: nil, page_size: nil)
               self.stream(
                   limit: limit,
@@ -31,6 +45,18 @@ module Twilio
               ).entries
             end
             
+            ##
+            # Streams ConnectAppInstance records from the API as an Enumerable.
+            # This operation lazily loads records as efficiently as possible until the limit
+            # is reached.
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            
+            # @return Enumerable Enumerable that will yield up to limit results
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
@@ -41,6 +67,16 @@ module Twilio
               @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
             end
             
+            ##
+            # When passed a block, yields ConnectAppInstance records from the API.
+            # This operation lazily loads records as efficiently as possible until the limit
+            # is reached.
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
               
@@ -55,6 +91,12 @@ module Twilio
             
             ##
             # Retrieve a single page of ConnectAppInstance records from the API.
+            # Request is executed immediately.
+            # @param String page_token: PageToken provided by the API
+            # @param Integer page_number: Page Number, this value is simply for client state
+            # @param Integer page_size: Number of records to return, defaults to 50
+            
+            # @return Page Page of ConnectAppInstance
             def page(page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'PageToken' => page_token,
@@ -75,6 +117,9 @@ module Twilio
             
             ##
             # Constructs a ConnectAppContext
+            # @param sid: Fetch by unique connect-app Sid
+            
+            # @return ConnectAppContext ConnectAppContext
             def get(sid)
               ConnectAppContext.new(
                   @version,
@@ -91,6 +136,13 @@ module Twilio
           end
         
           class ConnectAppPage < Page
+            ##
+            # Initialize the ConnectAppPage
+            # @param Version version: Version that contains the resource
+            # @param Response response: Response from the API
+            # @param account_sid: The unique sid that identifies this account
+            
+            # @return ConnectAppPage ConnectAppPage
             def initialize(version, response, account_sid: nil)
               super(version, response)
               
@@ -100,6 +152,11 @@ module Twilio
               }
             end
             
+            ##
+            # Build an instance of ConnectAppInstance
+            # @param Hash payload: Payload response from the API
+            
+            # @return ConnectAppInstance ConnectAppInstance
             def get_instance(payload)
               return ConnectAppInstance.new(
                   @version,
@@ -116,6 +173,13 @@ module Twilio
           end
         
           class ConnectAppContext < InstanceContext
+            ##
+            # Initialize the ConnectAppContext
+            # @param Version version: Version that contains the resource
+            # @param account_sid: The account_sid
+            # @param sid: Fetch by unique connect-app Sid
+            
+            # @return ConnectAppContext ConnectAppContext
             def initialize(version, account_sid, sid)
               super(version)
               
@@ -129,6 +193,7 @@ module Twilio
             
             ##
             # Fetch a ConnectAppInstance
+            # @return ConnectAppInstance Fetched ConnectAppInstance
             def fetch
               params = {}
               
@@ -148,6 +213,16 @@ module Twilio
             
             ##
             # Update the ConnectAppInstance
+            # @param String authorize_redirect_url: URIL Twilio sends requests when users authorize
+            # @param String company_name: The company name set for this Connect App.
+            # @param String deauthorize_callback_method: HTTP method Twilio WIll use making requests to the url
+            # @param String deauthorize_callback_url: URL Twilio will send a request when a user de-authorizes this app
+            # @param String description: A more detailed human readable description
+            # @param String friendly_name: A human readable name for the Connect App.
+            # @param String homepage_url: The URL users can obtain more information
+            # @param connect_app.Permission permissions: The set of permissions that your ConnectApp requests.
+            
+            # @return ConnectAppInstance Updated ConnectAppInstance
             def update(authorize_redirect_url: nil, company_name: nil, deauthorize_callback_method: nil, deauthorize_callback_url: nil, description: nil, friendly_name: nil, homepage_url: nil, permissions: nil)
               data = {
                   'AuthorizeRedirectUrl' => authorize_redirect_url,
@@ -183,6 +258,9 @@ module Twilio
           end
         
           class ConnectAppInstance < InstanceResource
+            ##
+            # Initialize the ConnectAppInstance
+            # @return ConnectAppInstance ConnectAppInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
               
@@ -209,6 +287,10 @@ module Twilio
               }
             end
             
+            ##
+            # Generate an instance context for the instance, the context is capable of
+            # performing various actions.  All instance actions are proxied to the context
+            # @return ConnectAppContext ConnectAppContext for this ConnectAppInstance
             def context
               unless @instance_context
                 @instance_context = ConnectAppContext.new(
@@ -266,12 +348,23 @@ module Twilio
             
             ##
             # Fetch a ConnectAppInstance
+            # @return ConnectAppInstance Fetched ConnectAppInstance
             def fetch
               @context.fetch()
             end
             
             ##
             # Update the ConnectAppInstance
+            # @param String authorize_redirect_url: URIL Twilio sends requests when users authorize
+            # @param String company_name: The company name set for this Connect App.
+            # @param String deauthorize_callback_method: HTTP method Twilio WIll use making requests to the url
+            # @param String deauthorize_callback_url: URL Twilio will send a request when a user de-authorizes this app
+            # @param String description: A more detailed human readable description
+            # @param String friendly_name: A human readable name for the Connect App.
+            # @param String homepage_url: The URL users can obtain more information
+            # @param connect_app.Permission permissions: The set of permissions that your ConnectApp requests.
+            
+            # @return ConnectAppInstance Updated ConnectAppInstance
             def update(authorize_redirect_url: nil, company_name: nil, deauthorize_callback_method: nil, deauthorize_callback_url: nil, description: nil, friendly_name: nil, homepage_url: nil, permissions: nil)
               @context.update(
                   company_name: nil,

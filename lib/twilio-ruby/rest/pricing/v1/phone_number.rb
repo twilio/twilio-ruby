@@ -11,6 +11,9 @@ module Twilio
         class PhoneNumberList < ListResource
           ##
           # Initialize the PhoneNumberList
+          # @param Version version: Version that contains the resource
+          
+          # @return PhoneNumberList PhoneNumberList
           def initialize(version)
             super(version)
             
@@ -23,6 +26,7 @@ module Twilio
           
           ##
           # Access the countries
+          # @return CountryList CountryList
           def countries(iso_country=:unset)
             if iso_country != :unset
               return CountryContext.new(
@@ -44,6 +48,12 @@ module Twilio
         end
       
         class PhoneNumberPage < Page
+          ##
+          # Initialize the PhoneNumberPage
+          # @param Version version: Version that contains the resource
+          # @param Response response: Response from the API
+          
+          # @return PhoneNumberPage PhoneNumberPage
           def initialize(version, response)
             super(version, response)
             
@@ -51,6 +61,11 @@ module Twilio
             @solution = {}
           end
           
+          ##
+          # Build an instance of PhoneNumberInstance
+          # @param Hash payload: Payload response from the API
+          
+          # @return PhoneNumberInstance PhoneNumberInstance
           def get_instance(payload)
             return PhoneNumberInstance.new(
                 @version,
@@ -66,6 +81,9 @@ module Twilio
         end
       
         class PhoneNumberInstance < InstanceResource
+          ##
+          # Initialize the PhoneNumberInstance
+          # @return PhoneNumberInstance PhoneNumberInstance
           def initialize(version, payload)
             super(version)
             

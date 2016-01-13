@@ -13,6 +13,10 @@ module Twilio
             class CredentialListList < ListResource
               ##
               # Initialize the CredentialListList
+              # @param Version version: Version that contains the resource
+              # @param account_sid: A 34 character string that uniquely identifies this resource.
+              
+              # @return CredentialListList CredentialListList
               def initialize(version, account_sid: nil)
                 super(version)
                 
@@ -24,7 +28,17 @@ module Twilio
               end
               
               ##
-              # Reads CredentialListInstance records from the API as a list.
+              # Lists CredentialListInstance records from the API as a list.
+              # Unlike stream(), this operation is eager and will load `limit` records into
+              # memory before returning.
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
+              
+              # @return Array Array of up to limit results
               def list(limit: nil, page_size: nil)
                 self.stream(
                     limit: limit,
@@ -32,6 +46,18 @@ module Twilio
                 ).entries
               end
               
+              ##
+              # Streams CredentialListInstance records from the API as an Enumerable.
+              # This operation lazily loads records as efficiently as possible until the limit
+              # is reached.
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
+              
+              # @return Enumerable Enumerable that will yield up to limit results
               def stream(limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
@@ -42,6 +68,16 @@ module Twilio
                 @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
               end
               
+              ##
+              # When passed a block, yields CredentialListInstance records from the API.
+              # This operation lazily loads records as efficiently as possible until the limit
+              # is reached.
+              # @param Integer limit: Upper limit for the number of records to return. stream()
+              #                   guarantees to never return more than limit.  Default is no limit
+              # @param Integer page_size: Number of records to fetch per request, when not set will use
+              #                       the default value of 50 records.  If no page_size is defined
+              #                       but a limit is defined, stream() will attempt to read the
+              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
                 
@@ -56,6 +92,12 @@ module Twilio
               
               ##
               # Retrieve a single page of CredentialListInstance records from the API.
+              # Request is executed immediately.
+              # @param String page_token: PageToken provided by the API
+              # @param Integer page_number: Page Number, this value is simply for client state
+              # @param Integer page_size: Number of records to return, defaults to 50
+              
+              # @return Page Page of CredentialListInstance
               def page(page_token: nil, page_number: nil, page_size: nil)
                 params = {
                     'PageToken' => page_token,
@@ -75,7 +117,11 @@ module Twilio
               end
               
               ##
-              # Create a new CredentialListInstance
+              # Retrieve a single page of CredentialListInstance records from the API.
+              # Request is executed immediately.
+              # @param String friendly_name: The friendly_name
+              
+              # @return CredentialListInstance Newly created CredentialListInstance
               def create(friendly_name: nil)
                 data = {
                     'FriendlyName' => friendly_name,
@@ -96,6 +142,9 @@ module Twilio
               
               ##
               # Constructs a CredentialListContext
+              # @param sid: Fetch by unique credential Sid
+              
+              # @return CredentialListContext CredentialListContext
               def get(sid)
                 CredentialListContext.new(
                     @version,
@@ -112,6 +161,13 @@ module Twilio
             end
           
             class CredentialListPage < Page
+              ##
+              # Initialize the CredentialListPage
+              # @param Version version: Version that contains the resource
+              # @param Response response: Response from the API
+              # @param account_sid: A 34 character string that uniquely identifies this resource.
+              
+              # @return CredentialListPage CredentialListPage
               def initialize(version, response, account_sid: nil)
                 super(version, response)
                 
@@ -121,6 +177,11 @@ module Twilio
                 }
               end
               
+              ##
+              # Build an instance of CredentialListInstance
+              # @param Hash payload: Payload response from the API
+              
+              # @return CredentialListInstance CredentialListInstance
               def get_instance(payload)
                 return CredentialListInstance.new(
                     @version,
@@ -137,6 +198,13 @@ module Twilio
             end
           
             class CredentialListContext < InstanceContext
+              ##
+              # Initialize the CredentialListContext
+              # @param Version version: Version that contains the resource
+              # @param account_sid: The account_sid
+              # @param sid: Fetch by unique credential Sid
+              
+              # @return CredentialListContext CredentialListContext
               def initialize(version, account_sid, sid)
                 super(version)
                 
@@ -153,6 +221,7 @@ module Twilio
               
               ##
               # Fetch a CredentialListInstance
+              # @return CredentialListInstance Fetched CredentialListInstance
               def fetch
                 params = {}
                 
@@ -172,6 +241,9 @@ module Twilio
               
               ##
               # Update the CredentialListInstance
+              # @param String friendly_name: The friendly_name
+              
+              # @return CredentialListInstance Updated CredentialListInstance
               def update(friendly_name: nil)
                 data = {
                     'FriendlyName' => friendly_name,
@@ -193,10 +265,14 @@ module Twilio
               
               ##
               # Deletes the CredentialListInstance
+              # @return Boolean true if delete succeeds, true otherwise
               def delete
                 return @version.delete('delete', @uri)
               end
               
+              ##
+              # Access the credentials
+              # @return CredentialList CredentialList
               def credentials(sid=:unset)
                 if sid != :unset
                   return CredentialContext.new(
@@ -227,6 +303,9 @@ module Twilio
             end
           
             class CredentialListInstance < InstanceResource
+              ##
+              # Initialize the CredentialListInstance
+              # @return CredentialListInstance CredentialListInstance
               def initialize(version, payload, account_sid: nil, sid: nil)
                 super(version)
                 
@@ -249,6 +328,10 @@ module Twilio
                 }
               end
               
+              ##
+              # Generate an instance context for the instance, the context is capable of
+              # performing various actions.  All instance actions are proxied to the context
+              # @return CredentialListContext CredentialListContext for this CredentialListInstance
               def context
                 unless @instance_context
                   @instance_context = CredentialListContext.new(
@@ -290,22 +373,30 @@ module Twilio
               
               ##
               # Fetch a CredentialListInstance
+              # @return CredentialListInstance Fetched CredentialListInstance
               def fetch
                 @context.fetch()
               end
               
               ##
               # Update the CredentialListInstance
+              # @param String friendly_name: The friendly_name
+              
+              # @return CredentialListInstance Updated CredentialListInstance
               def update(friendly_name: nil)
                 @context.update()
               end
               
               ##
               # Deletes the CredentialListInstance
+              # @return Boolean true if delete succeeds, true otherwise
               def delete
                 @context.delete()
               end
               
+              ##
+              # Access the credentials
+              # @return credentials credentials
               def credentials
                 @context.credentials
               end

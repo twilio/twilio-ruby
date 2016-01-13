@@ -13,6 +13,11 @@ module Twilio
             class WorkerStatisticsList < ListResource
               ##
               # Initialize the WorkerStatisticsList
+              # @param Version version: Version that contains the resource
+              # @param workspace_sid: The workspace_sid
+              # @param worker_sid: The worker_sid
+              
+              # @return WorkerStatisticsList WorkerStatisticsList
               def initialize(version, workspace_sid: nil, worker_sid: nil)
                 super(version)
                 
@@ -25,6 +30,7 @@ module Twilio
               
               ##
               # Constructs a WorkerStatisticsContext
+              # @return WorkerStatisticsContext WorkerStatisticsContext
               def get
                 WorkerStatisticsContext.new(
                     @version,
@@ -41,6 +47,14 @@ module Twilio
             end
           
             class WorkerStatisticsPage < Page
+              ##
+              # Initialize the WorkerStatisticsPage
+              # @param Version version: Version that contains the resource
+              # @param Response response: Response from the API
+              # @param workspace_sid: The workspace_sid
+              # @param worker_sid: The worker_sid
+              
+              # @return WorkerStatisticsPage WorkerStatisticsPage
               def initialize(version, response, workspace_sid: nil, worker_sid: nil)
                 super(version, response)
                 
@@ -51,6 +65,11 @@ module Twilio
                 }
               end
               
+              ##
+              # Build an instance of WorkerStatisticsInstance
+              # @param Hash payload: Payload response from the API
+              
+              # @return WorkerStatisticsInstance WorkerStatisticsInstance
               def get_instance(payload)
                 return WorkerStatisticsInstance.new(
                     @version,
@@ -68,6 +87,13 @@ module Twilio
             end
           
             class WorkerStatisticsContext < InstanceContext
+              ##
+              # Initialize the WorkerStatisticsContext
+              # @param Version version: Version that contains the resource
+              # @param workspace_sid: The workspace_sid
+              # @param worker_sid: The worker_sid
+              
+              # @return WorkerStatisticsContext WorkerStatisticsContext
               def initialize(version, workspace_sid, worker_sid)
                 super(version)
                 
@@ -81,6 +107,11 @@ module Twilio
               
               ##
               # Fetch a WorkerStatisticsInstance
+              # @param String minutes: The minutes
+              # @param Time start_date: The start_date
+              # @param Time end_date: The end_date
+              
+              # @return WorkerStatisticsInstance Fetched WorkerStatisticsInstance
               def fetch(minutes: nil, start_date: nil, end_date: nil)
                 params = {
                     'Minutes' => minutes,
@@ -111,6 +142,9 @@ module Twilio
             end
           
             class WorkerStatisticsInstance < InstanceResource
+              ##
+              # Initialize the WorkerStatisticsInstance
+              # @return WorkerStatisticsInstance WorkerStatisticsInstance
               def initialize(version, payload, workspace_sid: nil, worker_sid: nil)
                 super(version)
                 
@@ -130,6 +164,10 @@ module Twilio
                 }
               end
               
+              ##
+              # Generate an instance context for the instance, the context is capable of
+              # performing various actions.  All instance actions are proxied to the context
+              # @return WorkerStatisticsContext WorkerStatisticsContext for this WorkerStatisticsInstance
               def context
                 unless @instance_context
                   @instance_context = WorkerStatisticsContext.new(
@@ -159,6 +197,11 @@ module Twilio
               
               ##
               # Fetch a WorkerStatisticsInstance
+              # @param String minutes: The minutes
+              # @param Time start_date: The start_date
+              # @param Time end_date: The end_date
+              
+              # @return WorkerStatisticsInstance Fetched WorkerStatisticsInstance
               def fetch(minutes: nil, start_date: nil, end_date: nil)
                 @context.fetch(
                     start_date: nil,

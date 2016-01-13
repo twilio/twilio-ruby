@@ -11,6 +11,9 @@ module Twilio
         class VoiceList < ListResource
           ##
           # Initialize the VoiceList
+          # @param Version version: Version that contains the resource
+          
+          # @return VoiceList VoiceList
           def initialize(version)
             super(version)
             
@@ -24,6 +27,7 @@ module Twilio
           
           ##
           # Access the numbers
+          # @return NumberList NumberList
           def numbers(number=:unset)
             if number != :unset
               return NumberContext.new(
@@ -39,6 +43,7 @@ module Twilio
           
           ##
           # Access the countries
+          # @return CountryList CountryList
           def countries(iso_country=:unset)
             if iso_country != :unset
               return CountryContext.new(
@@ -60,6 +65,12 @@ module Twilio
         end
       
         class VoicePage < Page
+          ##
+          # Initialize the VoicePage
+          # @param Version version: Version that contains the resource
+          # @param Response response: Response from the API
+          
+          # @return VoicePage VoicePage
           def initialize(version, response)
             super(version, response)
             
@@ -67,6 +78,11 @@ module Twilio
             @solution = {}
           end
           
+          ##
+          # Build an instance of VoiceInstance
+          # @param Hash payload: Payload response from the API
+          
+          # @return VoiceInstance VoiceInstance
           def get_instance(payload)
             return VoiceInstance.new(
                 @version,
@@ -82,6 +98,9 @@ module Twilio
         end
       
         class VoiceInstance < InstanceResource
+          ##
+          # Initialize the VoiceInstance
+          # @return VoiceInstance VoiceInstance
           def initialize(version, payload)
             super(version)
             

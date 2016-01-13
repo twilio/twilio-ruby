@@ -12,6 +12,10 @@ module Twilio
           class SmsList < ListResource
             ##
             # Initialize the SmsList
+            # @param Version version: Version that contains the resource
+            # @param account_sid: A 34 character string that uniquely identifies this resource.
+            
+            # @return SmsList SmsList
             def initialize(version, account_sid: nil)
               super(version)
               
@@ -27,6 +31,7 @@ module Twilio
             
             ##
             # Access the messages
+            # @return SmsMessageList SmsMessageList
             def messages(sid=:unset)
               if sid != :unset
                 return SmsMessageContext.new(
@@ -44,6 +49,7 @@ module Twilio
             
             ##
             # Access the short_codes
+            # @return ShortCodeList ShortCodeList
             def short_codes(sid=:unset)
               if sid != :unset
                 return ShortCodeContext.new(
@@ -67,6 +73,13 @@ module Twilio
           end
         
           class SmsPage < Page
+            ##
+            # Initialize the SmsPage
+            # @param Version version: Version that contains the resource
+            # @param Response response: Response from the API
+            # @param account_sid: A 34 character string that uniquely identifies this resource.
+            
+            # @return SmsPage SmsPage
             def initialize(version, response, account_sid: nil)
               super(version, response)
               
@@ -76,6 +89,11 @@ module Twilio
               }
             end
             
+            ##
+            # Build an instance of SmsInstance
+            # @param Hash payload: Payload response from the API
+            
+            # @return SmsInstance SmsInstance
             def get_instance(payload)
               return SmsInstance.new(
                   @version,
@@ -92,6 +110,9 @@ module Twilio
           end
         
           class SmsInstance < InstanceResource
+            ##
+            # Initialize the SmsInstance
+            # @return SmsInstance SmsInstance
             def initialize(version, payload, account_sid: nil)
               super(version)
             end

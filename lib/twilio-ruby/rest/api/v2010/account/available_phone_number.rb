@@ -12,6 +12,10 @@ module Twilio
           class AvailablePhoneNumberCountryList < ListResource
             ##
             # Initialize the AvailablePhoneNumberCountryList
+            # @param Version version: Version that contains the resource
+            # @param account_sid: A 34 character string that uniquely identifies this resource.
+            
+            # @return AvailablePhoneNumberCountryList AvailablePhoneNumberCountryList
             def initialize(version, account_sid: nil)
               super(version)
               
@@ -23,7 +27,17 @@ module Twilio
             end
             
             ##
-            # Reads AvailablePhoneNumberCountryInstance records from the API as a list.
+            # Lists AvailablePhoneNumberCountryInstance records from the API as a list.
+            # Unlike stream(), this operation is eager and will load `limit` records into
+            # memory before returning.
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            
+            # @return Array Array of up to limit results
             def list(limit: nil, page_size: nil)
               self.stream(
                   limit: limit,
@@ -31,6 +45,18 @@ module Twilio
               ).entries
             end
             
+            ##
+            # Streams AvailablePhoneNumberCountryInstance records from the API as an Enumerable.
+            # This operation lazily loads records as efficiently as possible until the limit
+            # is reached.
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            
+            # @return Enumerable Enumerable that will yield up to limit results
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
@@ -41,6 +67,16 @@ module Twilio
               @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
             end
             
+            ##
+            # When passed a block, yields AvailablePhoneNumberCountryInstance records from the API.
+            # This operation lazily loads records as efficiently as possible until the limit
+            # is reached.
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
               
@@ -55,6 +91,12 @@ module Twilio
             
             ##
             # Retrieve a single page of AvailablePhoneNumberCountryInstance records from the API.
+            # Request is executed immediately.
+            # @param String page_token: PageToken provided by the API
+            # @param Integer page_number: Page Number, this value is simply for client state
+            # @param Integer page_size: Number of records to return, defaults to 50
+            
+            # @return Page Page of AvailablePhoneNumberCountryInstance
             def page(page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'PageToken' => page_token,
@@ -75,6 +117,9 @@ module Twilio
             
             ##
             # Constructs a AvailablePhoneNumberCountryContext
+            # @param country_code: The country_code
+            
+            # @return AvailablePhoneNumberCountryContext AvailablePhoneNumberCountryContext
             def get(country_code)
               AvailablePhoneNumberCountryContext.new(
                   @version,
@@ -91,6 +136,13 @@ module Twilio
           end
         
           class AvailablePhoneNumberCountryPage < Page
+            ##
+            # Initialize the AvailablePhoneNumberCountryPage
+            # @param Version version: Version that contains the resource
+            # @param Response response: Response from the API
+            # @param account_sid: A 34 character string that uniquely identifies this resource.
+            
+            # @return AvailablePhoneNumberCountryPage AvailablePhoneNumberCountryPage
             def initialize(version, response, account_sid: nil)
               super(version, response)
               
@@ -100,6 +152,11 @@ module Twilio
               }
             end
             
+            ##
+            # Build an instance of AvailablePhoneNumberCountryInstance
+            # @param Hash payload: Payload response from the API
+            
+            # @return AvailablePhoneNumberCountryInstance AvailablePhoneNumberCountryInstance
             def get_instance(payload)
               return AvailablePhoneNumberCountryInstance.new(
                   @version,
@@ -116,6 +173,13 @@ module Twilio
           end
         
           class AvailablePhoneNumberCountryContext < InstanceContext
+            ##
+            # Initialize the AvailablePhoneNumberCountryContext
+            # @param Version version: Version that contains the resource
+            # @param account_sid: The account_sid
+            # @param country_code: The country_code
+            
+            # @return AvailablePhoneNumberCountryContext AvailablePhoneNumberCountryContext
             def initialize(version, account_sid, country_code)
               super(version)
               
@@ -134,6 +198,7 @@ module Twilio
             
             ##
             # Fetch a AvailablePhoneNumberCountryInstance
+            # @return AvailablePhoneNumberCountryInstance Fetched AvailablePhoneNumberCountryInstance
             def fetch
               params = {}
               
@@ -151,6 +216,9 @@ module Twilio
               )
             end
             
+            ##
+            # Access the local
+            # @return LocalList LocalList
             def local
               unless @local
                 @local = LocalList.new(
@@ -163,6 +231,9 @@ module Twilio
               @local
             end
             
+            ##
+            # Access the toll_free
+            # @return TollFreeList TollFreeList
             def toll_free
               unless @toll_free
                 @toll_free = TollFreeList.new(
@@ -175,6 +246,9 @@ module Twilio
               @toll_free
             end
             
+            ##
+            # Access the mobile
+            # @return MobileList MobileList
             def mobile
               unless @mobile
                 @mobile = MobileList.new(
@@ -196,6 +270,9 @@ module Twilio
           end
         
           class AvailablePhoneNumberCountryInstance < InstanceResource
+            ##
+            # Initialize the AvailablePhoneNumberCountryInstance
+            # @return AvailablePhoneNumberCountryInstance AvailablePhoneNumberCountryInstance
             def initialize(version, payload, account_sid: nil, country_code: nil)
               super(version)
               
@@ -216,6 +293,10 @@ module Twilio
               }
             end
             
+            ##
+            # Generate an instance context for the instance, the context is capable of
+            # performing various actions.  All instance actions are proxied to the context
+            # @return AvailablePhoneNumberCountryContext AvailablePhoneNumberCountryContext for this AvailablePhoneNumberCountryInstance
             def context
               unless @instance_context
                 @instance_context = AvailablePhoneNumberCountryContext.new(
@@ -249,18 +330,28 @@ module Twilio
             
             ##
             # Fetch a AvailablePhoneNumberCountryInstance
+            # @return AvailablePhoneNumberCountryInstance Fetched AvailablePhoneNumberCountryInstance
             def fetch
               @context.fetch()
             end
             
+            ##
+            # Access the local
+            # @return local local
             def local
               @context.local
             end
             
+            ##
+            # Access the toll_free
+            # @return toll_free toll_free
             def toll_free
               @context.toll_free
             end
             
+            ##
+            # Access the mobile
+            # @return mobile mobile
             def mobile
               @context.mobile
             end

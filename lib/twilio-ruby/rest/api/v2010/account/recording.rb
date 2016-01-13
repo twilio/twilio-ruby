@@ -12,6 +12,10 @@ module Twilio
           class RecordingList < ListResource
             ##
             # Initialize the RecordingList
+            # @param Version version: Version that contains the resource
+            # @param account_sid: The unique sid that identifies this account
+            
+            # @return RecordingList RecordingList
             def initialize(version, account_sid: nil)
               super(version)
               
@@ -23,7 +27,20 @@ module Twilio
             end
             
             ##
-            # Reads RecordingInstance records from the API as a list.
+            # Lists RecordingInstance records from the API as a list.
+            # Unlike stream(), this operation is eager and will load `limit` records into
+            # memory before returning.
+            # @param Time date_created_before: Filter by date created
+            # @param Time date_created: Filter by date created
+            # @param Time date_created_after: Filter by date created
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            
+            # @return Array Array of up to limit results
             def list(date_created_before: nil, date_created: nil, date_created_after: nil, limit: nil, page_size: nil)
               self.stream(
                   date_created_before: date_created_before,
@@ -34,6 +51,21 @@ module Twilio
               ).entries
             end
             
+            ##
+            # Streams RecordingInstance records from the API as an Enumerable.
+            # This operation lazily loads records as efficiently as possible until the limit
+            # is reached.
+            # @param Time date_created_before: Filter by date created
+            # @param Time date_created: Filter by date created
+            # @param Time date_created_after: Filter by date created
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
+            
+            # @return Enumerable Enumerable that will yield up to limit results
             def stream(date_created_before: nil, date_created: nil, date_created_after: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
@@ -47,6 +79,19 @@ module Twilio
               @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
             end
             
+            ##
+            # When passed a block, yields RecordingInstance records from the API.
+            # This operation lazily loads records as efficiently as possible until the limit
+            # is reached.
+            # @param Time date_created_before: Filter by date created
+            # @param Time date_created: Filter by date created
+            # @param Time date_created_after: Filter by date created
+            # @param Integer limit: Upper limit for the number of records to return. stream()
+            #                   guarantees to never return more than limit.  Default is no limit
+            # @param Integer page_size: Number of records to fetch per request, when not set will use
+            #                       the default value of 50 records.  If no page_size is defined
+            #                       but a limit is defined, stream() will attempt to read the
+            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
               
@@ -61,6 +106,15 @@ module Twilio
             
             ##
             # Retrieve a single page of RecordingInstance records from the API.
+            # Request is executed immediately.
+            # @param Time date_created_before: Filter by date created
+            # @param Time date_created: Filter by date created
+            # @param Time date_created_after: Filter by date created
+            # @param String page_token: PageToken provided by the API
+            # @param Integer page_number: Page Number, this value is simply for client state
+            # @param Integer page_size: Number of records to return, defaults to 50
+            
+            # @return Page Page of RecordingInstance
             def page(date_created_before: nil, date_created: nil, date_created_after: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'DateCreated<' => Twilio.serialize_iso8601(date_created_before),
@@ -84,6 +138,9 @@ module Twilio
             
             ##
             # Constructs a RecordingContext
+            # @param sid: Fetch by unique recording Sid
+            
+            # @return RecordingContext RecordingContext
             def get(sid)
               RecordingContext.new(
                   @version,
@@ -100,6 +157,13 @@ module Twilio
           end
         
           class RecordingPage < Page
+            ##
+            # Initialize the RecordingPage
+            # @param Version version: Version that contains the resource
+            # @param Response response: Response from the API
+            # @param account_sid: The unique sid that identifies this account
+            
+            # @return RecordingPage RecordingPage
             def initialize(version, response, account_sid: nil)
               super(version, response)
               
@@ -109,6 +173,11 @@ module Twilio
               }
             end
             
+            ##
+            # Build an instance of RecordingInstance
+            # @param Hash payload: Payload response from the API
+            
+            # @return RecordingInstance RecordingInstance
             def get_instance(payload)
               return RecordingInstance.new(
                   @version,
@@ -125,6 +194,13 @@ module Twilio
           end
         
           class RecordingContext < InstanceContext
+            ##
+            # Initialize the RecordingContext
+            # @param Version version: Version that contains the resource
+            # @param account_sid: The account_sid
+            # @param sid: Fetch by unique recording Sid
+            
+            # @return RecordingContext RecordingContext
             def initialize(version, account_sid, sid)
               super(version)
               
@@ -141,6 +217,7 @@ module Twilio
             
             ##
             # Fetch a RecordingInstance
+            # @return RecordingInstance Fetched RecordingInstance
             def fetch
               params = {}
               
@@ -160,10 +237,14 @@ module Twilio
             
             ##
             # Deletes the RecordingInstance
+            # @return Boolean true if delete succeeds, true otherwise
             def delete
               return @version.delete('delete', @uri)
             end
             
+            ##
+            # Access the transcriptions
+            # @return TranscriptionList TranscriptionList
             def transcriptions(sid=:unset)
               if sid != :unset
                 return TranscriptionContext.new(
@@ -194,6 +275,9 @@ module Twilio
           end
         
           class RecordingInstance < InstanceResource
+            ##
+            # Initialize the RecordingInstance
+            # @return RecordingInstance RecordingInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
               
@@ -217,6 +301,10 @@ module Twilio
               }
             end
             
+            ##
+            # Generate an instance context for the instance, the context is capable of
+            # performing various actions.  All instance actions are proxied to the context
+            # @return RecordingContext RecordingContext for this RecordingInstance
             def context
               unless @instance_context
                 @instance_context = RecordingContext.new(
@@ -262,16 +350,21 @@ module Twilio
             
             ##
             # Fetch a RecordingInstance
+            # @return RecordingInstance Fetched RecordingInstance
             def fetch
               @context.fetch()
             end
             
             ##
             # Deletes the RecordingInstance
+            # @return Boolean true if delete succeeds, true otherwise
             def delete
               @context.delete()
             end
             
+            ##
+            # Access the transcriptions
+            # @return transcriptions transcriptions
             def transcriptions
               @context.transcriptions
             end
