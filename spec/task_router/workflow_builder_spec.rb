@@ -70,41 +70,41 @@ describe Twilio::TaskRouter::WorkflowConfiguration do
       json = config.to_json
 
       expected = "{
-				\"task_routing\":{
-				  \"filters\":[
-					 {
-						\"expression\":\"type=='sales'\",
-						\"targets\":[
-						   {
-							  \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\"
-						   }
-						],
-						\"friendly_name\":\"Sales\"
-					 },
-					 {
-						\"expression\":\"type=='marketing'\",
-						\"targets\":[
-						   {
-							  \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\"
-						   }
-						],
-						\"friendly_name\":\"Marketing\"
-					 },
-					 {
-						\"expression\":\"type=='support'\",
-						\"targets\":[
-						   {
-							  \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\"
-						   }
-						],
-						\"friendly_name\":\"Support\"
-					 }
-				  ],
-				  \"default_filter\":{
-					 \"queue\":\"WQ6d29383312b24bd898a8df32779fc043\"
-				  }
-				}
-			}"
+        \"task_routing\":{
+          \"filters\":[
+           {
+            \"expression\":\"type=='sales'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\"
+               }
+            ],
+            \"friendly_name\":\"Sales\"
+           },
+           {
+            \"expression\":\"type=='marketing'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\"
+               }
+            ],
+            \"friendly_name\":\"Marketing\"
+           },
+           {
+            \"expression\":\"type=='support'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\"
+               }
+            ],
+            \"friendly_name\":\"Support\"
+           }
+          ],
+          \"default_filter\":{
+           \"queue\":\"WQ6d29383312b24bd898a8df32779fc043\"
+          }
+        }
+      }"
 
       expected = JSON.parse(expected).to_json
 
@@ -137,123 +137,120 @@ describe Twilio::TaskRouter::WorkflowConfiguration do
       json = config.to_json
 
       expected = "{
-				\"task_routing\":{
-				  \"filters\":[
-					 {
-						\"expression\":\"type=='sales'\",
-						\"targets\":[
-						   {
-							  \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
-							  \"priority\": 5,
-							  \"timeout\": 30
-						   },
-						   {
-							  \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
-							  \"priority\": 10
-						   }
-						],
-						\"friendly_name\":\"Sales\"
-					 },
-					 {
-						\"expression\":\"type=='marketing'\",
-						\"targets\":[
-						   {
-							  \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
-							  \"priority\": 1,
-							  \"timeout\": 120
-						   },
-						   {
-							  \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
-							  \"priority\": 3
-						   }
-						],
-						\"friendly_name\":\"Marketing\"
-					 },
-					 {
-						\"expression\":\"type=='support'\",
-						\"targets\":[
-						   {
-							  \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
-							  \"priority\": 10,
-							  \"timeout\": 30
-						   },
-						   {
-							  \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
-							  \"priority\": 15
-						   }
-						],
-						\"friendly_name\":\"Support\"
-					 }
-				  ],
-				  \"default_filter\":{
-					 \"queue\":\"WQ6d29383312b24bd898a8df32779fc043\"
-				  }
-				}
-			}";
+        \"task_routing\":{
+          \"filters\":[
+           {
+            \"expression\":\"type=='sales'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
+                \"priority\": 5,
+                \"timeout\": 30
+               },
+               {
+                \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
+                \"priority\": 10
+               }
+            ],
+            \"friendly_name\":\"Sales\"
+           },
+           {
+            \"expression\":\"type=='marketing'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
+                \"priority\": 1,
+                \"timeout\": 120
+               },
+               {
+                \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
+                \"priority\": 3
+               }
+            ],
+            \"friendly_name\":\"Marketing\"
+           },
+           {
+            \"expression\":\"type=='support'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
+                \"priority\": 10,
+                \"timeout\": 30
+               },
+               {
+                \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
+                \"priority\": 15
+               }
+            ],
+            \"friendly_name\":\"Support\"
+           }
+          ],
+          \"default_filter\":{
+           \"queue\":\"WQ6d29383312b24bd898a8df32779fc043\"
+          }
+        }
+      }";
 
-      # replace all new tabs, new lines and spaces
-      expected = expected.gsub /\t/, ''
-      expected = expected.gsub /\n/, ''
-      expected = expected.gsub /\s+/, ''
+      expected = JSON.parse(expected).to_json
 
       expect(expected).to eq(json)
     end
 
     it 'should be able to parse the workflow' do
       json = "{
-				\"task_routing\":{
-				  \"filters\":[
-					 {
-						\"expression\":\"type=='sales'\",
-						\"targets\":[
-						   {
-							  \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
-							  \"priority\": 5,
-							  \"timeout\": 30
-						   },
-						   {
-							  \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
-							  \"priority\": 10
-						   }
-						],
-						\"friendly_name\":\"Sales\"
-					 },
-					 {
-						\"expression\":\"type=='marketing'\",
-						\"targets\":[
-						   {
-							  \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
-							  \"priority\": 1,
-							  \"timeout\": 120
-						   },
-						   {
-							  \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
-							  \"priority\": 3
-						   }
-						],
-						\"friendly_name\":\"Marketing\"
-					 },
-					 {
-						\"expression\":\"type=='support'\",
-						\"targets\":[
-						   {
-							  \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
-							  \"priority\": 10,
-							  \"timeout\": 30
-						   },
-						   {
-							  \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
-							  \"priority\": 15
-						   }
-						],
-						\"friendly_name\":\"Support\"
-					 }
-				  ],
-				  \"default_filter\":{
-					 \"queue\":\"WQ6d29383312b24bd898a8df32779fc043\"
-				  }
-				}
-			}"
+        \"task_routing\":{
+          \"filters\":[
+           {
+            \"expression\":\"type=='sales'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
+                \"priority\": 5,
+                \"timeout\": 30
+               },
+               {
+                \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
+                \"priority\": 10
+               }
+            ],
+            \"friendly_name\":\"Sales\"
+           },
+           {
+            \"expression\":\"type=='marketing'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
+                \"priority\": 1,
+                \"timeout\": 120
+               },
+               {
+                \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
+                \"priority\": 3
+               }
+            ],
+            \"friendly_name\":\"Marketing\"
+           },
+           {
+            \"expression\":\"type=='support'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
+                \"priority\": 10,
+                \"timeout\": 30
+               },
+               {
+                \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
+                \"priority\": 15
+               }
+            ],
+            \"friendly_name\":\"Support\"
+           }
+          ],
+          \"default_filter\":{
+           \"queue\":\"WQ6d29383312b24bd898a8df32779fc043\"
+          }
+        }
+      }"
 
       config = Twilio::TaskRouter::WorkflowConfiguration.parse_json(json)
 
@@ -292,59 +289,59 @@ describe Twilio::TaskRouter::WorkflowConfiguration do
 
     it 'should be able to parse the workflow with filter friendly name' do
       json = "{
-				\"task_routing\":{
-				  \"filters\":[
-					 {
-						\"expression\":\"type=='sales'\",
-						\"targets\":[
-						   {
-							  \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
-							  \"priority\": 5,
-							  \"timeout\": 30
-						   },
-						   {
-							  \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
-							  \"priority\": 10
-						   }
-						],
-						\"filter_friendly_name\":\"Sales\"
-					 },
-					 {
-						\"expression\":\"type=='marketing'\",
-						\"targets\":[
-						   {
-							  \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
-							  \"priority\": 1,
-							  \"timeout\": 120
-						   },
-						   {
-							  \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
-							  \"priority\": 3
-						   }
-						],
-						\"filter_friendly_name\":\"Marketing\"
-					 },
-					 {
-						\"expression\":\"type=='support'\",
-						\"targets\":[
-						   {
-							  \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
-							  \"priority\": 10,
-							  \"timeout\": 30
-						   },
-						   {
-							  \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
-							  \"priority\": 15
-						   }
-						],
-						\"filter_friendly_name\":\"Support\"
-					 }
-				  ],
-				  \"default_filter\":{
-					 \"queue\":\"WQ6d29383312b24bd898a8df32779fc043\"
-				  }
-				}
-			}"
+        \"task_routing\":{
+          \"filters\":[
+           {
+            \"expression\":\"type=='sales'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
+                \"priority\": 5,
+                \"timeout\": 30
+               },
+               {
+                \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
+                \"priority\": 10
+               }
+            ],
+            \"filter_friendly_name\":\"Sales\"
+           },
+           {
+            \"expression\":\"type=='marketing'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
+                \"priority\": 1,
+                \"timeout\": 120
+               },
+               {
+                \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
+                \"priority\": 3
+               }
+            ],
+            \"filter_friendly_name\":\"Marketing\"
+           },
+           {
+            \"expression\":\"type=='support'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
+                \"priority\": 10,
+                \"timeout\": 30
+               },
+               {
+                \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
+                \"priority\": 15
+               }
+            ],
+            \"filter_friendly_name\":\"Support\"
+           }
+          ],
+          \"default_filter\":{
+           \"queue\":\"WQ6d29383312b24bd898a8df32779fc043\"
+          }
+        }
+      }"
 
       config = Twilio::TaskRouter::WorkflowConfiguration.parse_json(json)
 
@@ -379,6 +376,126 @@ describe Twilio::TaskRouter::WorkflowConfiguration do
       expect(config.rules[2].targets[1].priority).to eq(15)
       # default filter
       expect(config.default_target.queue).to eq("WQ6d29383312b24bd898a8df32779fc043")
+    end
+
+    it 'should be able to parse the workflow with filter friendly name and marshall as friendly name' do
+      json = "{
+        \"task_routing\":{
+          \"filters\":[
+           {
+            \"expression\":\"type=='sales'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
+                \"priority\": 5,
+                \"timeout\": 30
+               },
+               {
+                \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
+                \"priority\": 10
+               }
+            ],
+            \"filter_friendly_name\":\"Sales\"
+           },
+           {
+            \"expression\":\"type=='marketing'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
+                \"priority\": 1,
+                \"timeout\": 120
+               },
+               {
+                \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
+                \"priority\": 3
+               }
+            ],
+            \"filter_friendly_name\":\"Marketing\"
+           },
+           {
+            \"expression\":\"type=='support'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
+                \"priority\": 10,
+                \"timeout\": 30
+               },
+               {
+                \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
+                \"priority\": 15
+               }
+            ],
+            \"filter_friendly_name\":\"Support\"
+           }
+          ],
+          \"default_filter\":{
+           \"queue\":\"WQ6d29383312b24bd898a8df32779fc043\"
+          }
+        }
+      }"
+
+      config = Twilio::TaskRouter::WorkflowConfiguration.parse_json(json)
+
+      newJSON = config.to_json
+
+      expected = "{
+        \"task_routing\":{
+          \"filters\":[
+           {
+            \"expression\":\"type=='sales'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
+                \"priority\": 5,
+                \"timeout\": 30
+               },
+               {
+                \"queue\":\"WQf6724bd5005b30eeb6ea990c3e59e536\",
+                \"priority\": 10
+               }
+            ],
+            \"friendly_name\":\"Sales\"
+           },
+           {
+            \"expression\":\"type=='marketing'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
+                \"priority\": 1,
+                \"timeout\": 120
+               },
+               {
+                \"queue\":\"WQ8c62f84b61ccfa6a333757cd508f0aae\",
+                \"priority\": 3
+               }
+            ],
+            \"friendly_name\":\"Marketing\"
+           },
+           {
+            \"expression\":\"type=='support'\",
+            \"targets\":[
+               {
+                \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
+                \"priority\": 10,
+                \"timeout\": 30
+               },
+               {
+                \"queue\":\"WQ5940dc0da87eaf6e3321d62041d4403b\",
+                \"priority\": 15
+               }
+            ],
+            \"friendly_name\":\"Support\"
+           }
+          ],
+          \"default_filter\":{
+           \"queue\":\"WQ6d29383312b24bd898a8df32779fc043\"
+          }
+        }
+      }"
+
+      expected = JSON.parse(expected).to_json
+
+      expect(expected).to eq(newJSON)
     end
   end
 end
