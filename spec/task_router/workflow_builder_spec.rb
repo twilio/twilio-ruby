@@ -106,10 +106,7 @@ describe Twilio::TaskRouter::WorkflowConfiguration do
 				}
 			}"
 
-      # replace all new tabs, new lines and spaces
-      expected = expected.gsub /\t/, ''
-      expected = expected.gsub /\n/, ''
-      expected = expected.gsub /\s+/, ''
+      expected = JSON.parse(expected).to_json
 
       expect(expected).to eq(json)
     end
