@@ -11,9 +11,9 @@ module Twilio
         class PhoneNumberList < ListResource
           ##
           # Initialize the PhoneNumberList
-          # @param Version version: Version that contains the resource
+          # @param [Version] version Version that contains the resource
           
-          # @return PhoneNumberList PhoneNumberList
+          # @return [PhoneNumberList] PhoneNumberList
           def initialize(version)
             super(version)
             
@@ -26,7 +26,9 @@ module Twilio
           
           ##
           # Access the countries
-          # @return CountryList CountryList
+          # @param [String] iso_country The iso_country
+          
+          # @return [CountryList] CountryList
           def countries(iso_country=:unset)
             if iso_country != :unset
               return CountryContext.new(
@@ -50,10 +52,10 @@ module Twilio
         class PhoneNumberPage < Page
           ##
           # Initialize the PhoneNumberPage
-          # @param Version version: Version that contains the resource
-          # @param Response response: Response from the API
+          # @param [Version] version Version that contains the resource
+          # @param [Response] response Response from the API
           
-          # @return PhoneNumberPage PhoneNumberPage
+          # @return [PhoneNumberPage] PhoneNumberPage
           def initialize(version, response)
             super(version, response)
             
@@ -63,9 +65,9 @@ module Twilio
           
           ##
           # Build an instance of PhoneNumberInstance
-          # @param Hash payload: Payload response from the API
+          # @param [Hash] payload Payload response from the API
           
-          # @return PhoneNumberInstance PhoneNumberInstance
+          # @return [PhoneNumberInstance] PhoneNumberInstance
           def get_instance(payload)
             return PhoneNumberInstance.new(
                 @version,
@@ -83,7 +85,10 @@ module Twilio
         class PhoneNumberInstance < InstanceResource
           ##
           # Initialize the PhoneNumberInstance
-          # @return PhoneNumberInstance PhoneNumberInstance
+          # @param [Version] version Version that contains the resource
+          # @param [Hash] payload payload that contains response from Twilio
+          
+          # @return [PhoneNumberInstance] PhoneNumberInstance
           def initialize(version, payload)
             super(version)
             

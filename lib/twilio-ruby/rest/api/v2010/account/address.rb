@@ -12,10 +12,10 @@ module Twilio
           class AddressList < ListResource
             ##
             # Initialize the AddressList
-            # @param Version version: Version that contains the resource
-            # @param account_sid: The account_sid
+            # @param [Version] version Version that contains the resource
+            # @param [String] account_sid The account_sid
             
-            # @return AddressList AddressList
+            # @return [AddressList] AddressList
             def initialize(version, account_sid: nil)
               super(version)
               
@@ -29,15 +29,15 @@ module Twilio
             ##
             # Retrieve a single page of AddressInstance records from the API.
             # Request is executed immediately.
-            # @param String customer_name: The customer_name
-            # @param String street: The street
-            # @param String city: The city
-            # @param String region: The region
-            # @param String postal_code: The postal_code
-            # @param String iso_country: The iso_country
-            # @param String friendly_name: The friendly_name
+            # @param [String] customer_name The customer_name
+            # @param [String] street The street
+            # @param [String] city The city
+            # @param [String] region The region
+            # @param [String] postal_code The postal_code
+            # @param [String] iso_country The iso_country
+            # @param [String] friendly_name The friendly_name
             
-            # @return AddressInstance Newly created AddressInstance
+            # @return [AddressInstance] Newly created AddressInstance
             def create(customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil, iso_country: nil, friendly_name: nil)
               data = {
                   'CustomerName' => customer_name,
@@ -66,17 +66,17 @@ module Twilio
             # Lists AddressInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param String customer_name: The customer_name
-            # @param String friendly_name: The friendly_name
-            # @param String iso_country: The iso_country
-            # @param Integer limit: Upper limit for the number of records to return. stream()
+            # @param [String] customer_name The customer_name
+            # @param [String] friendly_name The friendly_name
+            # @param [String] iso_country The iso_country
+            # @param [Integer] limit Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+            # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             
-            # @return Array Array of up to limit results
+            # @return [Array] Array of up to limit results
             def list(customer_name: nil, friendly_name: nil, iso_country: nil, limit: nil, page_size: nil)
               self.stream(
                   customer_name: customer_name,
@@ -91,17 +91,17 @@ module Twilio
             # Streams AddressInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param String customer_name: The customer_name
-            # @param String friendly_name: The friendly_name
-            # @param String iso_country: The iso_country
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [String] customer_name The customer_name
+            # @param [String] friendly_name The friendly_name
+            # @param [String] iso_country The iso_country
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             
-            # @return Enumerable Enumerable that will yield up to limit results
+            # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(customer_name: nil, friendly_name: nil, iso_country: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
@@ -119,12 +119,12 @@ module Twilio
             # When passed a block, yields AddressInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param String customer_name: The customer_name
-            # @param String friendly_name: The friendly_name
-            # @param String iso_country: The iso_country
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [String] customer_name The customer_name
+            # @param [String] friendly_name The friendly_name
+            # @param [String] iso_country The iso_country
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to read the
             #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -143,14 +143,14 @@ module Twilio
             ##
             # Retrieve a single page of AddressInstance records from the API.
             # Request is executed immediately.
-            # @param String customer_name: The customer_name
-            # @param String friendly_name: The friendly_name
-            # @param String iso_country: The iso_country
-            # @param String page_token: PageToken provided by the API
-            # @param Integer page_number: Page Number, this value is simply for client state
-            # @param Integer page_size: Number of records to return, defaults to 50
+            # @param [String] customer_name The customer_name
+            # @param [String] friendly_name The friendly_name
+            # @param [String] iso_country The iso_country
+            # @param [String] page_token PageToken provided by the API
+            # @param [Integer] page_number Page Number, this value is simply for client state
+            # @param [Integer] page_size Number of records to return, defaults to 50
             
-            # @return Page Page of AddressInstance
+            # @return [Page] Page of AddressInstance
             def page(customer_name: nil, friendly_name: nil, iso_country: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'CustomerName' => customer_name,
@@ -174,9 +174,9 @@ module Twilio
             
             ##
             # Constructs a AddressContext
-            # @param sid: The sid
+            # @param [String] sid The sid
             
-            # @return AddressContext AddressContext
+            # @return [AddressContext] AddressContext
             def get(sid)
               AddressContext.new(
                   @version,
@@ -195,11 +195,11 @@ module Twilio
           class AddressPage < Page
             ##
             # Initialize the AddressPage
-            # @param Version version: Version that contains the resource
-            # @param Response response: Response from the API
-            # @param account_sid: The account_sid
+            # @param [Version] version Version that contains the resource
+            # @param [Response] response Response from the API
+            # @param [String] account_sid The account_sid
             
-            # @return AddressPage AddressPage
+            # @return [AddressPage] AddressPage
             def initialize(version, response, account_sid: nil)
               super(version, response)
               
@@ -211,9 +211,9 @@ module Twilio
             
             ##
             # Build an instance of AddressInstance
-            # @param Hash payload: Payload response from the API
+            # @param [Hash] payload Payload response from the API
             
-            # @return AddressInstance AddressInstance
+            # @return [AddressInstance] AddressInstance
             def get_instance(payload)
               return AddressInstance.new(
                   @version,
@@ -232,11 +232,11 @@ module Twilio
           class AddressContext < InstanceContext
             ##
             # Initialize the AddressContext
-            # @param Version version: Version that contains the resource
-            # @param account_sid: The account_sid
-            # @param sid: The sid
+            # @param [Version] version Version that contains the resource
+            # @param [String] account_sid The account_sid
+            # @param [String] sid The sid
             
-            # @return AddressContext AddressContext
+            # @return [AddressContext] AddressContext
             def initialize(version, account_sid, sid)
               super(version)
               
@@ -253,14 +253,14 @@ module Twilio
             
             ##
             # Deletes the AddressInstance
-            # @return Boolean true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               return @version.delete('delete', @uri)
             end
             
             ##
             # Fetch a AddressInstance
-            # @return AddressInstance Fetched AddressInstance
+            # @return [AddressInstance] Fetched AddressInstance
             def fetch
               params = {}
               
@@ -280,14 +280,14 @@ module Twilio
             
             ##
             # Update the AddressInstance
-            # @param String friendly_name: The friendly_name
-            # @param String customer_name: The customer_name
-            # @param String street: The street
-            # @param String city: The city
-            # @param String region: The region
-            # @param String postal_code: The postal_code
+            # @param [String] friendly_name The friendly_name
+            # @param [String] customer_name The customer_name
+            # @param [String] street The street
+            # @param [String] city The city
+            # @param [String] region The region
+            # @param [String] postal_code The postal_code
             
-            # @return AddressInstance Updated AddressInstance
+            # @return [AddressInstance] Updated AddressInstance
             def update(friendly_name: nil, customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil)
               data = {
                   'FriendlyName' => friendly_name,
@@ -314,7 +314,7 @@ module Twilio
             
             ##
             # Access the dependent_phone_numbers
-            # @return DependentPhoneNumberList DependentPhoneNumberList
+            # @return [DependentPhoneNumberList] DependentPhoneNumberList
             def dependent_phone_numbers
               unless @dependent_phone_numbers
                 @dependent_phone_numbers = DependentPhoneNumberList.new(
@@ -338,7 +338,12 @@ module Twilio
           class AddressInstance < InstanceResource
             ##
             # Initialize the AddressInstance
-            # @return AddressInstance AddressInstance
+            # @param [Version] version Version that contains the resource
+            # @param [Hash] payload payload that contains response from Twilio
+            # @param [String] account_sid The account_sid
+            # @param [String] sid The sid
+            
+            # @return [AddressInstance] AddressInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
               
@@ -369,7 +374,9 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return AddressContext AddressContext for this AddressInstance
+            # @param [Version] version Version that contains the resource
+            
+            # @return [AddressContext] AddressContext for this AddressInstance
             def context
               unless @instance_context
                 @instance_context = AddressContext.new(
@@ -431,28 +438,28 @@ module Twilio
             
             ##
             # Deletes the AddressInstance
-            # @return Boolean true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               @context.delete()
             end
             
             ##
             # Fetch a AddressInstance
-            # @return AddressInstance Fetched AddressInstance
+            # @return [AddressInstance] Fetched AddressInstance
             def fetch
               @context.fetch()
             end
             
             ##
             # Update the AddressInstance
-            # @param String friendly_name: The friendly_name
-            # @param String customer_name: The customer_name
-            # @param String street: The street
-            # @param String city: The city
-            # @param String region: The region
-            # @param String postal_code: The postal_code
+            # @param [String] friendly_name The friendly_name
+            # @param [String] customer_name The customer_name
+            # @param [String] street The street
+            # @param [String] city The city
+            # @param [String] region The region
+            # @param [String] postal_code The postal_code
             
-            # @return AddressInstance Updated AddressInstance
+            # @return [AddressInstance] Updated AddressInstance
             def update(friendly_name: nil, customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil)
               @context.update(
                   customer_name: nil,
@@ -465,7 +472,7 @@ module Twilio
             
             ##
             # Access the dependent_phone_numbers
-            # @return dependent_phone_numbers dependent_phone_numbers
+            # @return [dependent_phone_numbers] dependent_phone_numbers
             def dependent_phone_numbers
               @context.dependent_phone_numbers
             end

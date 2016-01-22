@@ -11,13 +11,13 @@ A module for using the Twilio REST API and generating valid [TwiML](http://www.t
 To install using [Bundler][bundler] grab the latest stable version:
 
 ```ruby
-gem 'twilio-ruby', '~> 4.1.0'
+gem 'twilio-ruby', '~> 5.0.0.rc1'
 ```
 
 To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
 
 ```bash
-gem install twilio-ruby
+gem install twilio-ruby -v 5.0.0.rc1
 ```
 
 To build and install the development branch yourself from the latest source:
@@ -33,7 +33,6 @@ make install
 ### Setup Work
 
 ``` ruby
-require 'rubygems' # not necessary with ruby 1.9 but included for completeness
 require 'twilio-ruby'
 
 # put your own credentials here
@@ -74,34 +73,11 @@ end
 )
 ```
 
-### Do Some Stuff With Calls
-
-``` ruby
-# make a new outgoing call
-@call = @client.calls.create(
-  from: '+14159341234',
-  to: '+18004567890',
-  url: 'http://example.com/call-handler'
-)
-
-# hangup a ringing call, but don't touch it if it's connected
-@call.cancel
-
-# if you have the call sid, you can fetch a call object via:
-@call = @client.calls.get('CA386025c9bf5d6052a1d1ea42b4d16662')
-
-# redirect an in-progress call
-@call.redirect_to('http://example.com/call-redirect')
-
-# hangup a call, no matter whether it is ringing or connected
-@call.hangup
-```
-
 ### List Calls after a certain time
 
 ``` ruby
 # list calls made or received on or after May 13, 2013
-@client.calls.list("start_time>" => "2013-05-13") # Notice we omit the "=" in the "start_time>=" parameter because it is automatically added
+@client.calls.list(start_time_before: Date.new(2013,5,13))
 ```
 
 ### Buy a Phone Number

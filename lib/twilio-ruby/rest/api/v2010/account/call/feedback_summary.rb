@@ -13,10 +13,11 @@ module Twilio
             class FeedbackSummaryList < ListResource
               ##
               # Initialize the FeedbackSummaryList
-              # @param Version version: Version that contains the resource
-              # @param account_sid: The unique id of the Account responsible for creating this Call
+              # @param [Version] version Version that contains the resource
+              # @param [String] account_sid The unique id of the Account responsible for
+              #   creating this Call
               
-              # @return FeedbackSummaryList FeedbackSummaryList
+              # @return [FeedbackSummaryList] FeedbackSummaryList
               def initialize(version, account_sid: nil)
                 super(version)
                 
@@ -30,13 +31,13 @@ module Twilio
               ##
               # Retrieve a single page of FeedbackSummaryInstance records from the API.
               # Request is executed immediately.
-              # @param Date start_date: The start_date
-              # @param Date end_date: The end_date
-              # @param Boolean include_subaccounts: The include_subaccounts
-              # @param String status_callback: The status_callback
-              # @param String status_callback_method: The status_callback_method
+              # @param [Date] start_date The start_date
+              # @param [Date] end_date The end_date
+              # @param [Boolean] include_subaccounts The include_subaccounts
+              # @param [String] status_callback The status_callback
+              # @param [String] status_callback_method The status_callback_method
               
-              # @return FeedbackSummaryInstance Newly created FeedbackSummaryInstance
+              # @return [FeedbackSummaryInstance] Newly created FeedbackSummaryInstance
               def create(start_date: nil, end_date: nil, include_subaccounts: nil, status_callback: nil, status_callback_method: nil)
                 data = {
                     'StartDate' => Twilio.serialize_iso8601(start_date),
@@ -61,9 +62,9 @@ module Twilio
               
               ##
               # Constructs a FeedbackSummaryContext
-              # @param sid: The sid
+              # @param [String] sid The sid
               
-              # @return FeedbackSummaryContext FeedbackSummaryContext
+              # @return [FeedbackSummaryContext] FeedbackSummaryContext
               def get(sid)
                 FeedbackSummaryContext.new(
                     @version,
@@ -82,11 +83,12 @@ module Twilio
             class FeedbackSummaryPage < Page
               ##
               # Initialize the FeedbackSummaryPage
-              # @param Version version: Version that contains the resource
-              # @param Response response: Response from the API
-              # @param account_sid: The unique id of the Account responsible for creating this Call
+              # @param [Version] version Version that contains the resource
+              # @param [Response] response Response from the API
+              # @param [String] account_sid The unique id of the Account responsible for
+              #   creating this Call
               
-              # @return FeedbackSummaryPage FeedbackSummaryPage
+              # @return [FeedbackSummaryPage] FeedbackSummaryPage
               def initialize(version, response, account_sid: nil)
                 super(version, response)
                 
@@ -98,9 +100,9 @@ module Twilio
               
               ##
               # Build an instance of FeedbackSummaryInstance
-              # @param Hash payload: Payload response from the API
+              # @param [Hash] payload Payload response from the API
               
-              # @return FeedbackSummaryInstance FeedbackSummaryInstance
+              # @return [FeedbackSummaryInstance] FeedbackSummaryInstance
               def get_instance(payload)
                 return FeedbackSummaryInstance.new(
                     @version,
@@ -119,11 +121,11 @@ module Twilio
             class FeedbackSummaryContext < InstanceContext
               ##
               # Initialize the FeedbackSummaryContext
-              # @param Version version: Version that contains the resource
-              # @param account_sid: The account_sid
-              # @param sid: The sid
+              # @param [Version] version Version that contains the resource
+              # @param [String] account_sid The account_sid
+              # @param [String] sid The sid
               
-              # @return FeedbackSummaryContext FeedbackSummaryContext
+              # @return [FeedbackSummaryContext] FeedbackSummaryContext
               def initialize(version, account_sid, sid)
                 super(version)
                 
@@ -137,7 +139,7 @@ module Twilio
               
               ##
               # Fetch a FeedbackSummaryInstance
-              # @return FeedbackSummaryInstance Fetched FeedbackSummaryInstance
+              # @return [FeedbackSummaryInstance] Fetched FeedbackSummaryInstance
               def fetch
                 params = {}
                 
@@ -157,7 +159,7 @@ module Twilio
               
               ##
               # Deletes the FeedbackSummaryInstance
-              # @return Boolean true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, true otherwise
               def delete
                 return @version.delete('delete', @uri)
               end
@@ -173,7 +175,13 @@ module Twilio
             class FeedbackSummaryInstance < InstanceResource
               ##
               # Initialize the FeedbackSummaryInstance
-              # @return FeedbackSummaryInstance FeedbackSummaryInstance
+              # @param [Version] version Version that contains the resource
+              # @param [Hash] payload payload that contains response from Twilio
+              # @param [String] account_sid The unique id of the Account responsible for
+              #   creating this Call
+              # @param [String] sid The sid
+              
+              # @return [FeedbackSummaryInstance] FeedbackSummaryInstance
               def initialize(version, payload, account_sid: nil, sid: nil)
                 super(version)
                 
@@ -206,7 +214,9 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @return FeedbackSummaryContext FeedbackSummaryContext for this FeedbackSummaryInstance
+              # @param [Version] version Version that contains the resource
+              
+              # @return [FeedbackSummaryContext] FeedbackSummaryContext for this FeedbackSummaryInstance
               def context
                 unless @instance_context
                   @instance_context = FeedbackSummaryContext.new(
@@ -276,14 +286,14 @@ module Twilio
               
               ##
               # Fetch a FeedbackSummaryInstance
-              # @return FeedbackSummaryInstance Fetched FeedbackSummaryInstance
+              # @return [FeedbackSummaryInstance] Fetched FeedbackSummaryInstance
               def fetch
                 @context.fetch()
               end
               
               ##
               # Deletes the FeedbackSummaryInstance
-              # @return Boolean true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, true otherwise
               def delete
                 @context.delete()
               end

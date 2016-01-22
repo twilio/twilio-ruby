@@ -12,10 +12,10 @@ module Twilio
           class TaskQueueList < ListResource
             ##
             # Initialize the TaskQueueList
-            # @param Version version: Version that contains the resource
-            # @param workspace_sid: The workspace_sid
+            # @param [Version] version Version that contains the resource
+            # @param [String] workspace_sid The workspace_sid
             
-            # @return TaskQueueList TaskQueueList
+            # @return [TaskQueueList] TaskQueueList
             def initialize(version, workspace_sid: nil)
               super(version)
               
@@ -33,16 +33,16 @@ module Twilio
             # Lists TaskQueueInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param String friendly_name: The friendly_name
-            # @param String evaluate_worker_attributes: The evaluate_worker_attributes
-            # @param Integer limit: Upper limit for the number of records to return. stream()
+            # @param [String] friendly_name The friendly_name
+            # @param [String] evaluate_worker_attributes The evaluate_worker_attributes
+            # @param [Integer] limit Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+            # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             
-            # @return Array Array of up to limit results
+            # @return [Array] Array of up to limit results
             def list(friendly_name: nil, evaluate_worker_attributes: nil, limit: nil, page_size: nil)
               self.stream(
                   friendly_name: friendly_name,
@@ -56,16 +56,16 @@ module Twilio
             # Streams TaskQueueInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param String friendly_name: The friendly_name
-            # @param String evaluate_worker_attributes: The evaluate_worker_attributes
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [String] friendly_name The friendly_name
+            # @param [String] evaluate_worker_attributes The evaluate_worker_attributes
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             
-            # @return Enumerable Enumerable that will yield up to limit results
+            # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(friendly_name: nil, evaluate_worker_attributes: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
@@ -82,11 +82,11 @@ module Twilio
             # When passed a block, yields TaskQueueInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param String friendly_name: The friendly_name
-            # @param String evaluate_worker_attributes: The evaluate_worker_attributes
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [String] friendly_name The friendly_name
+            # @param [String] evaluate_worker_attributes The evaluate_worker_attributes
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to read the
             #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -105,13 +105,13 @@ module Twilio
             ##
             # Retrieve a single page of TaskQueueInstance records from the API.
             # Request is executed immediately.
-            # @param String friendly_name: The friendly_name
-            # @param String evaluate_worker_attributes: The evaluate_worker_attributes
-            # @param String page_token: PageToken provided by the API
-            # @param Integer page_number: Page Number, this value is simply for client state
-            # @param Integer page_size: Number of records to return, defaults to 50
+            # @param [String] friendly_name The friendly_name
+            # @param [String] evaluate_worker_attributes The evaluate_worker_attributes
+            # @param [String] page_token PageToken provided by the API
+            # @param [Integer] page_number Page Number, this value is simply for client state
+            # @param [Integer] page_size Number of records to return, defaults to 50
             
-            # @return Page Page of TaskQueueInstance
+            # @return [Page] Page of TaskQueueInstance
             def page(friendly_name: nil, evaluate_worker_attributes: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'FriendlyName' => friendly_name,
@@ -135,13 +135,13 @@ module Twilio
             ##
             # Retrieve a single page of TaskQueueInstance records from the API.
             # Request is executed immediately.
-            # @param String friendly_name: The friendly_name
-            # @param String reservation_activity_sid: The reservation_activity_sid
-            # @param String assignment_activity_sid: The assignment_activity_sid
-            # @param String target_workers: The target_workers
-            # @param String max_reserved_workers: The max_reserved_workers
+            # @param [String] friendly_name The friendly_name
+            # @param [String] reservation_activity_sid The reservation_activity_sid
+            # @param [String] assignment_activity_sid The assignment_activity_sid
+            # @param [String] target_workers The target_workers
+            # @param [String] max_reserved_workers The max_reserved_workers
             
-            # @return TaskQueueInstance Newly created TaskQueueInstance
+            # @return [TaskQueueInstance] Newly created TaskQueueInstance
             def create(friendly_name: nil, reservation_activity_sid: nil, assignment_activity_sid: nil, target_workers: nil, max_reserved_workers: nil)
               data = {
                   'FriendlyName' => friendly_name,
@@ -166,7 +166,7 @@ module Twilio
             
             ##
             # Access the statistics
-            # @return TaskQueuesStatisticsList TaskQueuesStatisticsList
+            # @return [TaskQueuesStatisticsList] TaskQueuesStatisticsList
             def statistics
               @statistics ||= TaskQueuesStatisticsList.new(
                   @version,
@@ -176,9 +176,9 @@ module Twilio
             
             ##
             # Constructs a TaskQueueContext
-            # @param sid: The sid
+            # @param [String] sid The sid
             
-            # @return TaskQueueContext TaskQueueContext
+            # @return [TaskQueueContext] TaskQueueContext
             def get(sid)
               TaskQueueContext.new(
                   @version,
@@ -197,11 +197,11 @@ module Twilio
           class TaskQueuePage < Page
             ##
             # Initialize the TaskQueuePage
-            # @param Version version: Version that contains the resource
-            # @param Response response: Response from the API
-            # @param workspace_sid: The workspace_sid
+            # @param [Version] version Version that contains the resource
+            # @param [Response] response Response from the API
+            # @param [String] workspace_sid The workspace_sid
             
-            # @return TaskQueuePage TaskQueuePage
+            # @return [TaskQueuePage] TaskQueuePage
             def initialize(version, response, workspace_sid: nil)
               super(version, response)
               
@@ -213,9 +213,9 @@ module Twilio
             
             ##
             # Build an instance of TaskQueueInstance
-            # @param Hash payload: Payload response from the API
+            # @param [Hash] payload Payload response from the API
             
-            # @return TaskQueueInstance TaskQueueInstance
+            # @return [TaskQueueInstance] TaskQueueInstance
             def get_instance(payload)
               return TaskQueueInstance.new(
                   @version,
@@ -234,11 +234,11 @@ module Twilio
           class TaskQueueContext < InstanceContext
             ##
             # Initialize the TaskQueueContext
-            # @param Version version: Version that contains the resource
-            # @param workspace_sid: The workspace_sid
-            # @param sid: The sid
+            # @param [Version] version Version that contains the resource
+            # @param [String] workspace_sid The workspace_sid
+            # @param [String] sid The sid
             
-            # @return TaskQueueContext TaskQueueContext
+            # @return [TaskQueueContext] TaskQueueContext
             def initialize(version, workspace_sid, sid)
               super(version)
               
@@ -255,7 +255,7 @@ module Twilio
             
             ##
             # Fetch a TaskQueueInstance
-            # @return TaskQueueInstance Fetched TaskQueueInstance
+            # @return [TaskQueueInstance] Fetched TaskQueueInstance
             def fetch
               params = {}
               
@@ -275,13 +275,13 @@ module Twilio
             
             ##
             # Update the TaskQueueInstance
-            # @param String friendly_name: The friendly_name
-            # @param String target_workers: The target_workers
-            # @param String reservation_activity_sid: The reservation_activity_sid
-            # @param String assignment_activity_sid: The assignment_activity_sid
-            # @param String max_reserved_workers: The max_reserved_workers
+            # @param [String] friendly_name The friendly_name
+            # @param [String] target_workers The target_workers
+            # @param [String] reservation_activity_sid The reservation_activity_sid
+            # @param [String] assignment_activity_sid The assignment_activity_sid
+            # @param [String] max_reserved_workers The max_reserved_workers
             
-            # @return TaskQueueInstance Updated TaskQueueInstance
+            # @return [TaskQueueInstance] Updated TaskQueueInstance
             def update(friendly_name: nil, target_workers: nil, reservation_activity_sid: nil, assignment_activity_sid: nil, max_reserved_workers: nil)
               data = {
                   'FriendlyName' => friendly_name,
@@ -307,14 +307,14 @@ module Twilio
             
             ##
             # Deletes the TaskQueueInstance
-            # @return Boolean true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               return @version.delete('delete', @uri)
             end
             
             ##
             # Access the statistics
-            # @return TaskQueueStatisticsList TaskQueueStatisticsList
+            # @return [TaskQueueStatisticsList] TaskQueueStatisticsList
             def statistics
               return TaskQueueStatisticsContext.new(
                   @version,
@@ -334,7 +334,12 @@ module Twilio
           class TaskQueueInstance < InstanceResource
             ##
             # Initialize the TaskQueueInstance
-            # @return TaskQueueInstance TaskQueueInstance
+            # @param [Version] version Version that contains the resource
+            # @param [Hash] payload payload that contains response from Twilio
+            # @param [String] workspace_sid The workspace_sid
+            # @param [String] sid The sid
+            
+            # @return [TaskQueueInstance] TaskQueueInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
               super(version)
               
@@ -366,7 +371,9 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return TaskQueueContext TaskQueueContext for this TaskQueueInstance
+            # @param [Version] version Version that contains the resource
+            
+            # @return [TaskQueueContext] TaskQueueContext for this TaskQueueInstance
             def context
               unless @instance_context
                 @instance_context = TaskQueueContext.new(
@@ -432,20 +439,20 @@ module Twilio
             
             ##
             # Fetch a TaskQueueInstance
-            # @return TaskQueueInstance Fetched TaskQueueInstance
+            # @return [TaskQueueInstance] Fetched TaskQueueInstance
             def fetch
               @context.fetch()
             end
             
             ##
             # Update the TaskQueueInstance
-            # @param String friendly_name: The friendly_name
-            # @param String target_workers: The target_workers
-            # @param String reservation_activity_sid: The reservation_activity_sid
-            # @param String assignment_activity_sid: The assignment_activity_sid
-            # @param String max_reserved_workers: The max_reserved_workers
+            # @param [String] friendly_name The friendly_name
+            # @param [String] target_workers The target_workers
+            # @param [String] reservation_activity_sid The reservation_activity_sid
+            # @param [String] assignment_activity_sid The assignment_activity_sid
+            # @param [String] max_reserved_workers The max_reserved_workers
             
-            # @return TaskQueueInstance Updated TaskQueueInstance
+            # @return [TaskQueueInstance] Updated TaskQueueInstance
             def update(friendly_name: nil, target_workers: nil, reservation_activity_sid: nil, assignment_activity_sid: nil, max_reserved_workers: nil)
               @context.update(
                   target_workers: nil,
@@ -457,14 +464,14 @@ module Twilio
             
             ##
             # Deletes the TaskQueueInstance
-            # @return Boolean true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               @context.delete()
             end
             
             ##
             # Access the statistics
-            # @return statistics statistics
+            # @return [statistics] statistics
             def statistics
               @context.statistics
             end

@@ -13,10 +13,11 @@ module Twilio
             class SmsMessageList < ListResource
               ##
               # Initialize the SmsMessageList
-              # @param Version version: Version that contains the resource
-              # @param account_sid: A 34 character string that uniquely identifies this resource.
+              # @param [Version] version Version that contains the resource
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
               
-              # @return SmsMessageList SmsMessageList
+              # @return [SmsMessageList] SmsMessageList
               def initialize(version, account_sid: nil)
                 super(version)
                 
@@ -30,14 +31,14 @@ module Twilio
               ##
               # Retrieve a single page of SmsMessageInstance records from the API.
               # Request is executed immediately.
-              # @param String to: The to
-              # @param String from: The from
-              # @param String status_callback: The status_callback
-              # @param String application_sid: The application_sid
-              # @param String body: The body
-              # @param String media_url: The media_url
+              # @param [String] to The to
+              # @param [String] from The from
+              # @param [String] status_callback The status_callback
+              # @param [String] application_sid The application_sid
+              # @param [String] body The body
+              # @param [String] media_url The media_url
               
-              # @return SmsMessageInstance Newly created SmsMessageInstance
+              # @return [SmsMessageInstance] Newly created SmsMessageInstance
               def create(to: nil, from: nil, status_callback: nil, application_sid: nil, body: nil, media_url: nil)
                 data = {
                     'To' => to,
@@ -65,19 +66,19 @@ module Twilio
               # Lists SmsMessageInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param String to: The to
-              # @param String from: The from
-              # @param Time date_sent_before: The date_sent
-              # @param Time date_sent: The date_sent
-              # @param Time date_sent_after: The date_sent
-              # @param Integer limit: Upper limit for the number of records to return. stream()
+              # @param [String] to The to
+              # @param [String] from The from
+              # @param [Time] date_sent_before The date_sent
+              # @param [Time] date_sent The date_sent
+              # @param [Time] date_sent_after: The date_sent
+              # @param [Integer] limit Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+              # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
               #  the default value of 50 records.  If no page_size is                      defined
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               
-              # @return Array Array of up to limit results
+              # @return [Array] Array of up to limit results
               def list(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, limit: nil, page_size: nil)
                 self.stream(
                     to: to,
@@ -94,19 +95,19 @@ module Twilio
               # Streams SmsMessageInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param String to: The to
-              # @param String from: The from
-              # @param Time date_sent_before: The date_sent
-              # @param Time date_sent: The date_sent
-              # @param Time date_sent_after: The date_sent
-              # @param Integer limit: Upper limit for the number of records to return.                  stream()
+              # @param [String] to The to
+              # @param [String] from The from
+              # @param [Time] date_sent_before The date_sent
+              # @param [Time] date_sent The date_sent
+              # @param [Time] date_sent_after: The date_sent
+              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+              # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               
-              # @return Enumerable Enumerable that will yield up to limit results
+              # @return [Enumerable] Enumerable that will yield up to limit results
               def stream(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
@@ -126,14 +127,14 @@ module Twilio
               # When passed a block, yields SmsMessageInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param String to: The to
-              # @param String from: The from
-              # @param Time date_sent_before: The date_sent
-              # @param Time date_sent: The date_sent
-              # @param Time date_sent_after: The date_sent
-              # @param Integer limit: Upper limit for the number of records to return.                  stream()
+              # @param [String] to The to
+              # @param [String] from The from
+              # @param [Time] date_sent_before The date_sent
+              # @param [Time] date_sent The date_sent
+              # @param [Time] date_sent_after: The date_sent
+              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to read the
               #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -152,16 +153,16 @@ module Twilio
               ##
               # Retrieve a single page of SmsMessageInstance records from the API.
               # Request is executed immediately.
-              # @param String to: The to
-              # @param String from: The from
-              # @param Time date_sent_before: The date_sent
-              # @param Time date_sent: The date_sent
-              # @param Time date_sent_after: The date_sent
-              # @param String page_token: PageToken provided by the API
-              # @param Integer page_number: Page Number, this value is simply for client state
-              # @param Integer page_size: Number of records to return, defaults to 50
+              # @param [String] to The to
+              # @param [String] from The from
+              # @param [Time] date_sent_before The date_sent
+              # @param [Time] date_sent The date_sent
+              # @param [Time] date_sent_after: The date_sent
+              # @param [String] page_token PageToken provided by the API
+              # @param [Integer] page_number Page Number, this value is simply for client state
+              # @param [Integer] page_size Number of records to return, defaults to 50
               
-              # @return Page Page of SmsMessageInstance
+              # @return [Page] Page of SmsMessageInstance
               def page(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
                     'To' => to,
@@ -187,9 +188,9 @@ module Twilio
               
               ##
               # Constructs a SmsMessageContext
-              # @param sid: The sid
+              # @param [String] sid The sid
               
-              # @return SmsMessageContext SmsMessageContext
+              # @return [SmsMessageContext] SmsMessageContext
               def get(sid)
                 SmsMessageContext.new(
                     @version,
@@ -208,11 +209,12 @@ module Twilio
             class SmsMessagePage < Page
               ##
               # Initialize the SmsMessagePage
-              # @param Version version: Version that contains the resource
-              # @param Response response: Response from the API
-              # @param account_sid: A 34 character string that uniquely identifies this resource.
+              # @param [Version] version Version that contains the resource
+              # @param [Response] response Response from the API
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
               
-              # @return SmsMessagePage SmsMessagePage
+              # @return [SmsMessagePage] SmsMessagePage
               def initialize(version, response, account_sid: nil)
                 super(version, response)
                 
@@ -224,9 +226,9 @@ module Twilio
               
               ##
               # Build an instance of SmsMessageInstance
-              # @param Hash payload: Payload response from the API
+              # @param [Hash] payload Payload response from the API
               
-              # @return SmsMessageInstance SmsMessageInstance
+              # @return [SmsMessageInstance] SmsMessageInstance
               def get_instance(payload)
                 return SmsMessageInstance.new(
                     @version,
@@ -245,11 +247,11 @@ module Twilio
             class SmsMessageContext < InstanceContext
               ##
               # Initialize the SmsMessageContext
-              # @param Version version: Version that contains the resource
-              # @param account_sid: The account_sid
-              # @param sid: The sid
+              # @param [Version] version Version that contains the resource
+              # @param [String] account_sid The account_sid
+              # @param [String] sid The sid
               
-              # @return SmsMessageContext SmsMessageContext
+              # @return [SmsMessageContext] SmsMessageContext
               def initialize(version, account_sid, sid)
                 super(version)
                 
@@ -263,14 +265,14 @@ module Twilio
               
               ##
               # Deletes the SmsMessageInstance
-              # @return Boolean true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, true otherwise
               def delete
                 return @version.delete('delete', @uri)
               end
               
               ##
               # Fetch a SmsMessageInstance
-              # @return SmsMessageInstance Fetched SmsMessageInstance
+              # @return [SmsMessageInstance] Fetched SmsMessageInstance
               def fetch
                 params = {}
                 
@@ -290,9 +292,9 @@ module Twilio
               
               ##
               # Update the SmsMessageInstance
-              # @param String body: The body
+              # @param [String] body The body
               
-              # @return SmsMessageInstance Updated SmsMessageInstance
+              # @return [SmsMessageInstance] Updated SmsMessageInstance
               def update(body: nil)
                 data = {
                     'Body' => body,
@@ -323,7 +325,13 @@ module Twilio
             class SmsMessageInstance < InstanceResource
               ##
               # Initialize the SmsMessageInstance
-              # @return SmsMessageInstance SmsMessageInstance
+              # @param [Version] version Version that contains the resource
+              # @param [Hash] payload payload that contains response from Twilio
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
+              # @param [String] sid The sid
+              
+              # @return [SmsMessageInstance] SmsMessageInstance
               def initialize(version, payload, account_sid: nil, sid: nil)
                 super(version)
                 
@@ -356,7 +364,9 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @return SmsMessageContext SmsMessageContext for this SmsMessageInstance
+              # @param [Version] version Version that contains the resource
+              
+              # @return [SmsMessageContext] SmsMessageContext for this SmsMessageInstance
               def context
                 unless @instance_context
                   @instance_context = SmsMessageContext.new(
@@ -426,23 +436,23 @@ module Twilio
               
               ##
               # Deletes the SmsMessageInstance
-              # @return Boolean true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, true otherwise
               def delete
                 @context.delete()
               end
               
               ##
               # Fetch a SmsMessageInstance
-              # @return SmsMessageInstance Fetched SmsMessageInstance
+              # @return [SmsMessageInstance] Fetched SmsMessageInstance
               def fetch
                 @context.fetch()
               end
               
               ##
               # Update the SmsMessageInstance
-              # @param String body: The body
+              # @param [String] body The body
               
-              # @return SmsMessageInstance Updated SmsMessageInstance
+              # @return [SmsMessageInstance] Updated SmsMessageInstance
               def update(body: nil)
                 @context.update()
               end

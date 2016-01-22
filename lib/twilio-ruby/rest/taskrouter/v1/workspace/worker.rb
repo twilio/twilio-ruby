@@ -12,10 +12,10 @@ module Twilio
           class WorkerList < ListResource
             ##
             # Initialize the WorkerList
-            # @param Version version: Version that contains the resource
-            # @param workspace_sid: The workspace_sid
+            # @param [Version] version Version that contains the resource
+            # @param [String] workspace_sid The workspace_sid
             
-            # @return WorkerList WorkerList
+            # @return [WorkerList] WorkerList
             def initialize(version, workspace_sid: nil)
               super(version)
               
@@ -33,21 +33,21 @@ module Twilio
             # Lists WorkerInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param String activity_name: The activity_name
-            # @param String activity_sid: The activity_sid
-            # @param String available: The available
-            # @param String friendly_name: The friendly_name
-            # @param String target_workers_expression: The target_workers_expression
-            # @param String task_queue_name: The task_queue_name
-            # @param String task_queue_sid: The task_queue_sid
-            # @param Integer limit: Upper limit for the number of records to return. stream()
+            # @param [String] activity_name The activity_name
+            # @param [String] activity_sid The activity_sid
+            # @param [String] available The available
+            # @param [String] friendly_name The friendly_name
+            # @param [String] target_workers_expression The target_workers_expression
+            # @param [String] task_queue_name The task_queue_name
+            # @param [String] task_queue_sid The task_queue_sid
+            # @param [Integer] limit Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+            # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             
-            # @return Array Array of up to limit results
+            # @return [Array] Array of up to limit results
             def list(activity_name: nil, activity_sid: nil, available: nil, friendly_name: nil, target_workers_expression: nil, task_queue_name: nil, task_queue_sid: nil, limit: nil, page_size: nil)
               self.stream(
                   activity_name: activity_name,
@@ -66,21 +66,21 @@ module Twilio
             # Streams WorkerInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param String activity_name: The activity_name
-            # @param String activity_sid: The activity_sid
-            # @param String available: The available
-            # @param String friendly_name: The friendly_name
-            # @param String target_workers_expression: The target_workers_expression
-            # @param String task_queue_name: The task_queue_name
-            # @param String task_queue_sid: The task_queue_sid
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [String] activity_name The activity_name
+            # @param [String] activity_sid The activity_sid
+            # @param [String] available The available
+            # @param [String] friendly_name The friendly_name
+            # @param [String] target_workers_expression The target_workers_expression
+            # @param [String] task_queue_name The task_queue_name
+            # @param [String] task_queue_sid The task_queue_sid
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             
-            # @return Enumerable Enumerable that will yield up to limit results
+            # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(activity_name: nil, activity_sid: nil, available: nil, friendly_name: nil, target_workers_expression: nil, task_queue_name: nil, task_queue_sid: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
@@ -102,16 +102,16 @@ module Twilio
             # When passed a block, yields WorkerInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param String activity_name: The activity_name
-            # @param String activity_sid: The activity_sid
-            # @param String available: The available
-            # @param String friendly_name: The friendly_name
-            # @param String target_workers_expression: The target_workers_expression
-            # @param String task_queue_name: The task_queue_name
-            # @param String task_queue_sid: The task_queue_sid
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [String] activity_name The activity_name
+            # @param [String] activity_sid The activity_sid
+            # @param [String] available The available
+            # @param [String] friendly_name The friendly_name
+            # @param [String] target_workers_expression The target_workers_expression
+            # @param [String] task_queue_name The task_queue_name
+            # @param [String] task_queue_sid The task_queue_sid
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to read the
             #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -130,18 +130,18 @@ module Twilio
             ##
             # Retrieve a single page of WorkerInstance records from the API.
             # Request is executed immediately.
-            # @param String activity_name: The activity_name
-            # @param String activity_sid: The activity_sid
-            # @param String available: The available
-            # @param String friendly_name: The friendly_name
-            # @param String target_workers_expression: The target_workers_expression
-            # @param String task_queue_name: The task_queue_name
-            # @param String task_queue_sid: The task_queue_sid
-            # @param String page_token: PageToken provided by the API
-            # @param Integer page_number: Page Number, this value is simply for client state
-            # @param Integer page_size: Number of records to return, defaults to 50
+            # @param [String] activity_name The activity_name
+            # @param [String] activity_sid The activity_sid
+            # @param [String] available The available
+            # @param [String] friendly_name The friendly_name
+            # @param [String] target_workers_expression The target_workers_expression
+            # @param [String] task_queue_name The task_queue_name
+            # @param [String] task_queue_sid The task_queue_sid
+            # @param [String] page_token PageToken provided by the API
+            # @param [Integer] page_number Page Number, this value is simply for client state
+            # @param [Integer] page_size Number of records to return, defaults to 50
             
-            # @return Page Page of WorkerInstance
+            # @return [Page] Page of WorkerInstance
             def page(activity_name: nil, activity_sid: nil, available: nil, friendly_name: nil, target_workers_expression: nil, task_queue_name: nil, task_queue_sid: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'ActivityName' => activity_name,
@@ -170,11 +170,11 @@ module Twilio
             ##
             # Retrieve a single page of WorkerInstance records from the API.
             # Request is executed immediately.
-            # @param String friendly_name: The friendly_name
-            # @param String activity_sid: The activity_sid
-            # @param String attributes: The attributes
+            # @param [String] friendly_name The friendly_name
+            # @param [String] activity_sid The activity_sid
+            # @param [String] attributes The attributes
             
-            # @return WorkerInstance Newly created WorkerInstance
+            # @return [WorkerInstance] Newly created WorkerInstance
             def create(friendly_name: nil, activity_sid: nil, attributes: nil)
               data = {
                   'FriendlyName' => friendly_name,
@@ -197,7 +197,7 @@ module Twilio
             
             ##
             # Access the statistics
-            # @return WorkersStatisticsList WorkersStatisticsList
+            # @return [WorkersStatisticsList] WorkersStatisticsList
             def statistics
               return WorkersStatisticsContext.new(
                   @version,
@@ -212,9 +212,9 @@ module Twilio
             
             ##
             # Constructs a WorkerContext
-            # @param sid: The sid
+            # @param [String] sid The sid
             
-            # @return WorkerContext WorkerContext
+            # @return [WorkerContext] WorkerContext
             def get(sid)
               WorkerContext.new(
                   @version,
@@ -233,11 +233,11 @@ module Twilio
           class WorkerPage < Page
             ##
             # Initialize the WorkerPage
-            # @param Version version: Version that contains the resource
-            # @param Response response: Response from the API
-            # @param workspace_sid: The workspace_sid
+            # @param [Version] version Version that contains the resource
+            # @param [Response] response Response from the API
+            # @param [String] workspace_sid The workspace_sid
             
-            # @return WorkerPage WorkerPage
+            # @return [WorkerPage] WorkerPage
             def initialize(version, response, workspace_sid: nil)
               super(version, response)
               
@@ -249,9 +249,9 @@ module Twilio
             
             ##
             # Build an instance of WorkerInstance
-            # @param Hash payload: Payload response from the API
+            # @param [Hash] payload Payload response from the API
             
-            # @return WorkerInstance WorkerInstance
+            # @return [WorkerInstance] WorkerInstance
             def get_instance(payload)
               return WorkerInstance.new(
                   @version,
@@ -270,11 +270,11 @@ module Twilio
           class WorkerContext < InstanceContext
             ##
             # Initialize the WorkerContext
-            # @param Version version: Version that contains the resource
-            # @param workspace_sid: The workspace_sid
-            # @param sid: The sid
+            # @param [Version] version Version that contains the resource
+            # @param [String] workspace_sid The workspace_sid
+            # @param [String] sid The sid
             
-            # @return WorkerContext WorkerContext
+            # @return [WorkerContext] WorkerContext
             def initialize(version, workspace_sid, sid)
               super(version)
               
@@ -291,7 +291,7 @@ module Twilio
             
             ##
             # Fetch a WorkerInstance
-            # @return WorkerInstance Fetched WorkerInstance
+            # @return [WorkerInstance] Fetched WorkerInstance
             def fetch
               params = {}
               
@@ -311,11 +311,11 @@ module Twilio
             
             ##
             # Update the WorkerInstance
-            # @param String activity_sid: The activity_sid
-            # @param String attributes: The attributes
-            # @param String friendly_name: The friendly_name
+            # @param [String] activity_sid The activity_sid
+            # @param [String] attributes The attributes
+            # @param [String] friendly_name The friendly_name
             
-            # @return WorkerInstance Updated WorkerInstance
+            # @return [WorkerInstance] Updated WorkerInstance
             def update(activity_sid: nil, attributes: nil, friendly_name: nil)
               data = {
                   'ActivitySid' => activity_sid,
@@ -339,14 +339,14 @@ module Twilio
             
             ##
             # Deletes the WorkerInstance
-            # @return Boolean true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               return @version.delete('delete', @uri)
             end
             
             ##
             # Access the statistics
-            # @return WorkerStatisticsList WorkerStatisticsList
+            # @return [WorkerStatisticsList] WorkerStatisticsList
             def statistics
               return WorkerStatisticsContext.new(
                   @version,
@@ -366,7 +366,12 @@ module Twilio
           class WorkerInstance < InstanceResource
             ##
             # Initialize the WorkerInstance
-            # @return WorkerInstance WorkerInstance
+            # @param [Version] version Version that contains the resource
+            # @param [Hash] payload payload that contains response from Twilio
+            # @param [String] workspace_sid The workspace_sid
+            # @param [String] sid The sid
+            
+            # @return [WorkerInstance] WorkerInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
               super(version)
               
@@ -396,7 +401,9 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return WorkerContext WorkerContext for this WorkerInstance
+            # @param [Version] version Version that contains the resource
+            
+            # @return [WorkerContext] WorkerContext for this WorkerInstance
             def context
               unless @instance_context
                 @instance_context = WorkerContext.new(
@@ -454,18 +461,18 @@ module Twilio
             
             ##
             # Fetch a WorkerInstance
-            # @return WorkerInstance Fetched WorkerInstance
+            # @return [WorkerInstance] Fetched WorkerInstance
             def fetch
               @context.fetch()
             end
             
             ##
             # Update the WorkerInstance
-            # @param String activity_sid: The activity_sid
-            # @param String attributes: The attributes
-            # @param String friendly_name: The friendly_name
+            # @param [String] activity_sid The activity_sid
+            # @param [String] attributes The attributes
+            # @param [String] friendly_name The friendly_name
             
-            # @return WorkerInstance Updated WorkerInstance
+            # @return [WorkerInstance] Updated WorkerInstance
             def update(activity_sid: nil, attributes: nil, friendly_name: nil)
               @context.update(
                   attributes: nil,
@@ -475,14 +482,14 @@ module Twilio
             
             ##
             # Deletes the WorkerInstance
-            # @return Boolean true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               @context.delete()
             end
             
             ##
             # Access the statistics
-            # @return statistics statistics
+            # @return [statistics] statistics
             def statistics
               @context.statistics
             end

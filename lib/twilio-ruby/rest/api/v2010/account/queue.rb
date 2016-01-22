@@ -12,10 +12,10 @@ module Twilio
           class QueueList < ListResource
             ##
             # Initialize the QueueList
-            # @param Version version: Version that contains the resource
-            # @param account_sid: The account_sid
+            # @param [Version] version Version that contains the resource
+            # @param [String] account_sid The account_sid
             
-            # @return QueueList QueueList
+            # @return [QueueList] QueueList
             def initialize(version, account_sid: nil)
               super(version)
               
@@ -30,14 +30,14 @@ module Twilio
             # Lists QueueInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param Integer limit: Upper limit for the number of records to return. stream()
+            # @param [Integer] limit Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+            # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             
-            # @return Array Array of up to limit results
+            # @return [Array] Array of up to limit results
             def list(limit: nil, page_size: nil)
               self.stream(
                   limit: limit,
@@ -49,14 +49,14 @@ module Twilio
             # Streams QueueInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             
-            # @return Enumerable Enumerable that will yield up to limit results
+            # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
@@ -71,9 +71,9 @@ module Twilio
             # When passed a block, yields QueueInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to read the
             #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -92,11 +92,11 @@ module Twilio
             ##
             # Retrieve a single page of QueueInstance records from the API.
             # Request is executed immediately.
-            # @param String page_token: PageToken provided by the API
-            # @param Integer page_number: Page Number, this value is simply for client state
-            # @param Integer page_size: Number of records to return, defaults to 50
+            # @param [String] page_token PageToken provided by the API
+            # @param [Integer] page_number Page Number, this value is simply for client state
+            # @param [Integer] page_size Number of records to return, defaults to 50
             
-            # @return Page Page of QueueInstance
+            # @return [Page] Page of QueueInstance
             def page(page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'PageToken' => page_token,
@@ -118,10 +118,11 @@ module Twilio
             ##
             # Retrieve a single page of QueueInstance records from the API.
             # Request is executed immediately.
-            # @param String friendly_name: A user-provided string that identifies this queue.
-            # @param String max_size: The max number of calls allowed in the queue
+            # @param [String] friendly_name A user-provided string that identifies this queue.
+            # @param [String] max_size The upper limit of calls allowed to be in the queue.
+            #   The default is 100. The maximum is 1000.
             
-            # @return QueueInstance Newly created QueueInstance
+            # @return [QueueInstance] Newly created QueueInstance
             def create(friendly_name: nil, max_size: nil)
               data = {
                   'FriendlyName' => friendly_name,
@@ -143,9 +144,9 @@ module Twilio
             
             ##
             # Constructs a QueueContext
-            # @param sid: Fetch by unique queue Sid
+            # @param [String] sid The queue Sid that uniquely identifies this resource
             
-            # @return QueueContext QueueContext
+            # @return [QueueContext] QueueContext
             def get(sid)
               QueueContext.new(
                   @version,
@@ -164,11 +165,11 @@ module Twilio
           class QueuePage < Page
             ##
             # Initialize the QueuePage
-            # @param Version version: Version that contains the resource
-            # @param Response response: Response from the API
-            # @param account_sid: The account_sid
+            # @param [Version] version Version that contains the resource
+            # @param [Response] response Response from the API
+            # @param [String] account_sid The account_sid
             
-            # @return QueuePage QueuePage
+            # @return [QueuePage] QueuePage
             def initialize(version, response, account_sid: nil)
               super(version, response)
               
@@ -180,9 +181,9 @@ module Twilio
             
             ##
             # Build an instance of QueueInstance
-            # @param Hash payload: Payload response from the API
+            # @param [Hash] payload Payload response from the API
             
-            # @return QueueInstance QueueInstance
+            # @return [QueueInstance] QueueInstance
             def get_instance(payload)
               return QueueInstance.new(
                   @version,
@@ -201,11 +202,11 @@ module Twilio
           class QueueContext < InstanceContext
             ##
             # Initialize the QueueContext
-            # @param Version version: Version that contains the resource
-            # @param account_sid: The account_sid
-            # @param sid: Fetch by unique queue Sid
+            # @param [Version] version Version that contains the resource
+            # @param [String] account_sid The account_sid
+            # @param [String] sid The queue Sid that uniquely identifies this resource
             
-            # @return QueueContext QueueContext
+            # @return [QueueContext] QueueContext
             def initialize(version, account_sid, sid)
               super(version)
               
@@ -222,7 +223,7 @@ module Twilio
             
             ##
             # Fetch a QueueInstance
-            # @return QueueInstance Fetched QueueInstance
+            # @return [QueueInstance] Fetched QueueInstance
             def fetch
               params = {}
               
@@ -242,10 +243,11 @@ module Twilio
             
             ##
             # Update the QueueInstance
-            # @param String friendly_name: A human readable description of the queue
-            # @param String max_size: The max number of members allowed in the queue
+            # @param [String] friendly_name A human readable description of the queue
+            # @param [String] max_size The maximum number of members that can be in the queue
+            #   at a time
             
-            # @return QueueInstance Updated QueueInstance
+            # @return [QueueInstance] Updated QueueInstance
             def update(friendly_name: nil, max_size: nil)
               data = {
                   'FriendlyName' => friendly_name,
@@ -268,14 +270,14 @@ module Twilio
             
             ##
             # Deletes the QueueInstance
-            # @return Boolean true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               return @version.delete('delete', @uri)
             end
             
             ##
             # Access the members
-            # @return MemberList MemberList
+            # @return [MemberList] MemberList
             def members(call_sid=:unset)
               if call_sid != :unset
                 return MemberContext.new(
@@ -308,7 +310,12 @@ module Twilio
           class QueueInstance < InstanceResource
             ##
             # Initialize the QueueInstance
-            # @return QueueInstance QueueInstance
+            # @param [Version] version Version that contains the resource
+            # @param [Hash] payload payload that contains response from Twilio
+            # @param [String] account_sid The account_sid
+            # @param [String] sid The queue Sid that uniquely identifies this resource
+            
+            # @return [QueueInstance] QueueInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
               
@@ -336,7 +343,9 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return QueueContext QueueContext for this QueueInstance
+            # @param [Version] version Version that contains the resource
+            
+            # @return [QueueContext] QueueContext for this QueueInstance
             def context
               unless @instance_context
                 @instance_context = QueueContext.new(
@@ -386,17 +395,18 @@ module Twilio
             
             ##
             # Fetch a QueueInstance
-            # @return QueueInstance Fetched QueueInstance
+            # @return [QueueInstance] Fetched QueueInstance
             def fetch
               @context.fetch()
             end
             
             ##
             # Update the QueueInstance
-            # @param String friendly_name: A human readable description of the queue
-            # @param String max_size: The max number of members allowed in the queue
+            # @param [String] friendly_name A human readable description of the queue
+            # @param [String] max_size The maximum number of members that can be in the queue
+            #   at a time
             
-            # @return QueueInstance Updated QueueInstance
+            # @return [QueueInstance] Updated QueueInstance
             def update(friendly_name: nil, max_size: nil)
               @context.update(
                   max_size: nil,
@@ -405,14 +415,14 @@ module Twilio
             
             ##
             # Deletes the QueueInstance
-            # @return Boolean true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               @context.delete()
             end
             
             ##
             # Access the members
-            # @return members members
+            # @return [members] members
             def members
               @context.members
             end

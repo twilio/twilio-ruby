@@ -14,11 +14,12 @@ module Twilio
               class IpAccessControlListMappingList < ListResource
                 ##
                 # Initialize the IpAccessControlListMappingList
-                # @param Version version: Version that contains the resource
-                # @param account_sid: The account_sid
-                # @param domain_sid: A string that uniquely identifies the SIP Domain
+                # @param [Version] version Version that contains the resource
+                # @param [String] account_sid The account_sid
+                # @param [String] domain_sid A 34 character string that uniquely identifies the
+                #   SIP domain in Twilio
                 
-                # @return IpAccessControlListMappingList IpAccessControlListMappingList
+                # @return [IpAccessControlListMappingList] IpAccessControlListMappingList
                 def initialize(version, account_sid: nil, domain_sid: nil)
                   super(version)
                   
@@ -33,9 +34,9 @@ module Twilio
                 ##
                 # Retrieve a single page of IpAccessControlListMappingInstance records from the API.
                 # Request is executed immediately.
-                # @param String ip_access_control_list_sid: The ip_access_control_list_sid
+                # @param [String] ip_access_control_list_sid The ip_access_control_list_sid
                 
-                # @return IpAccessControlListMappingInstance Newly created IpAccessControlListMappingInstance
+                # @return [IpAccessControlListMappingInstance] Newly created IpAccessControlListMappingInstance
                 def create(ip_access_control_list_sid: nil)
                   data = {
                       'IpAccessControlListSid' => ip_access_control_list_sid,
@@ -59,14 +60,14 @@ module Twilio
                 # Lists IpAccessControlListMappingInstance records from the API as a list.
                 # Unlike stream(), this operation is eager and will load `limit` records into
                 # memory before returning.
-                # @param Integer limit: Upper limit for the number of records to return. stream()
+                # @param [Integer] limit Upper limit for the number of records to return. stream()
                 #                   guarantees to never return more than limit.  Default is no limit
-                # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+                # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
                 #  the default value of 50 records.  If no page_size is                      defined
                 #  but a limit is defined, stream() will attempt to read                      the
                 #  limit with the most efficient page size,                      i.e. min(limit, 1000)
                 
-                # @return Array Array of up to limit results
+                # @return [Array] Array of up to limit results
                 def list(limit: nil, page_size: nil)
                   self.stream(
                       limit: limit,
@@ -78,14 +79,14 @@ module Twilio
                 # Streams IpAccessControlListMappingInstance records from the API as an Enumerable.
                 # This operation lazily loads records as efficiently as possible until the limit
                 # is reached.
-                # @param Integer limit: Upper limit for the number of records to return.                  stream()
+                # @param [Integer] limit Upper limit for the number of records to return.                  stream()
                 #  guarantees to never return more than limit.                  Default is no limit
-                # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+                # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
                 #  the default value of 50 records.                      If no page_size is defined
                 #                       but a limit is defined, stream() will attempt to                      read the
                 #  limit with the most efficient page size,                       i.e. min(limit, 1000)
                 
-                # @return Enumerable Enumerable that will yield up to limit results
+                # @return [Enumerable] Enumerable that will yield up to limit results
                 def stream(limit: nil, page_size: nil)
                   limits = @version.read_limits(limit, page_size)
                   
@@ -100,9 +101,9 @@ module Twilio
                 # When passed a block, yields IpAccessControlListMappingInstance records from the API.
                 # This operation lazily loads records as efficiently as possible until the limit
                 # is reached.
-                # @param Integer limit: Upper limit for the number of records to return.                  stream()
+                # @param [Integer] limit Upper limit for the number of records to return.                  stream()
                 #  guarantees to never return more than limit.                  Default is no limit
-                # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+                # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
                 #  the default value of 50 records.                      If no page_size is defined
                 #                       but a limit is defined, stream() will attempt to read the
                 #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -121,11 +122,11 @@ module Twilio
                 ##
                 # Retrieve a single page of IpAccessControlListMappingInstance records from the API.
                 # Request is executed immediately.
-                # @param String page_token: PageToken provided by the API
-                # @param Integer page_number: Page Number, this value is simply for client state
-                # @param Integer page_size: Number of records to return, defaults to 50
+                # @param [String] page_token PageToken provided by the API
+                # @param [Integer] page_number Page Number, this value is simply for client state
+                # @param [Integer] page_size Number of records to return, defaults to 50
                 
-                # @return Page Page of IpAccessControlListMappingInstance
+                # @return [Page] Page of IpAccessControlListMappingInstance
                 def page(page_token: nil, page_number: nil, page_size: nil)
                   params = {
                       'PageToken' => page_token,
@@ -147,9 +148,9 @@ module Twilio
                 
                 ##
                 # Constructs a IpAccessControlListMappingContext
-                # @param sid: The sid
+                # @param [String] sid The sid
                 
-                # @return IpAccessControlListMappingContext IpAccessControlListMappingContext
+                # @return [IpAccessControlListMappingContext] IpAccessControlListMappingContext
                 def get(sid)
                   IpAccessControlListMappingContext.new(
                       @version,
@@ -169,12 +170,13 @@ module Twilio
               class IpAccessControlListMappingPage < Page
                 ##
                 # Initialize the IpAccessControlListMappingPage
-                # @param Version version: Version that contains the resource
-                # @param Response response: Response from the API
-                # @param account_sid: The account_sid
-                # @param domain_sid: A string that uniquely identifies the SIP Domain
+                # @param [Version] version Version that contains the resource
+                # @param [Response] response Response from the API
+                # @param [String] account_sid The account_sid
+                # @param [String] domain_sid A 34 character string that uniquely identifies the
+                #   SIP domain in Twilio
                 
-                # @return IpAccessControlListMappingPage IpAccessControlListMappingPage
+                # @return [IpAccessControlListMappingPage] IpAccessControlListMappingPage
                 def initialize(version, response, account_sid: nil, domain_sid: nil)
                   super(version, response)
                   
@@ -187,9 +189,9 @@ module Twilio
                 
                 ##
                 # Build an instance of IpAccessControlListMappingInstance
-                # @param Hash payload: Payload response from the API
+                # @param [Hash] payload Payload response from the API
                 
-                # @return IpAccessControlListMappingInstance IpAccessControlListMappingInstance
+                # @return [IpAccessControlListMappingInstance] IpAccessControlListMappingInstance
                 def get_instance(payload)
                   return IpAccessControlListMappingInstance.new(
                       @version,
@@ -209,12 +211,12 @@ module Twilio
               class IpAccessControlListMappingContext < InstanceContext
                 ##
                 # Initialize the IpAccessControlListMappingContext
-                # @param Version version: Version that contains the resource
-                # @param account_sid: The account_sid
-                # @param domain_sid: The domain_sid
-                # @param sid: The sid
+                # @param [Version] version Version that contains the resource
+                # @param [String] account_sid The account_sid
+                # @param [String] domain_sid The domain_sid
+                # @param [String] sid The sid
                 
-                # @return IpAccessControlListMappingContext IpAccessControlListMappingContext
+                # @return [IpAccessControlListMappingContext] IpAccessControlListMappingContext
                 def initialize(version, account_sid, domain_sid, sid)
                   super(version)
                   
@@ -229,7 +231,7 @@ module Twilio
                 
                 ##
                 # Fetch a IpAccessControlListMappingInstance
-                # @return IpAccessControlListMappingInstance Fetched IpAccessControlListMappingInstance
+                # @return [IpAccessControlListMappingInstance] Fetched IpAccessControlListMappingInstance
                 def fetch
                   params = {}
                   
@@ -250,7 +252,7 @@ module Twilio
                 
                 ##
                 # Deletes the IpAccessControlListMappingInstance
-                # @return Boolean true if delete succeeds, true otherwise
+                # @return [Boolean] true if delete succeeds, true otherwise
                 def delete
                   return @version.delete('delete', @uri)
                 end
@@ -266,7 +268,14 @@ module Twilio
               class IpAccessControlListMappingInstance < InstanceResource
                 ##
                 # Initialize the IpAccessControlListMappingInstance
-                # @return IpAccessControlListMappingInstance IpAccessControlListMappingInstance
+                # @param [Version] version Version that contains the resource
+                # @param [Hash] payload payload that contains response from Twilio
+                # @param [String] account_sid The account_sid
+                # @param [String] domain_sid A 34 character string that uniquely identifies the
+                #   SIP domain in Twilio
+                # @param [String] sid The sid
+                
+                # @return [IpAccessControlListMappingInstance] IpAccessControlListMappingInstance
                 def initialize(version, payload, account_sid: nil, domain_sid: nil, sid: nil)
                   super(version)
                   
@@ -292,7 +301,9 @@ module Twilio
                 ##
                 # Generate an instance context for the instance, the context is capable of
                 # performing various actions.  All instance actions are proxied to the context
-                # @return IpAccessControlListMappingContext IpAccessControlListMappingContext for this IpAccessControlListMappingInstance
+                # @param [Version] version Version that contains the resource
+                
+                # @return [IpAccessControlListMappingContext] IpAccessControlListMappingContext for this IpAccessControlListMappingInstance
                 def context
                   unless @instance_context
                     @instance_context = IpAccessControlListMappingContext.new(
@@ -331,14 +342,14 @@ module Twilio
                 
                 ##
                 # Fetch a IpAccessControlListMappingInstance
-                # @return IpAccessControlListMappingInstance Fetched IpAccessControlListMappingInstance
+                # @return [IpAccessControlListMappingInstance] Fetched IpAccessControlListMappingInstance
                 def fetch
                   @context.fetch()
                 end
                 
                 ##
                 # Deletes the IpAccessControlListMappingInstance
-                # @return Boolean true if delete succeeds, true otherwise
+                # @return [Boolean] true if delete succeeds, true otherwise
                 def delete
                   @context.delete()
                 end

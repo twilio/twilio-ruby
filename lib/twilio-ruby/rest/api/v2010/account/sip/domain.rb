@@ -13,10 +13,11 @@ module Twilio
             class DomainList < ListResource
               ##
               # Initialize the DomainList
-              # @param Version version: Version that contains the resource
-              # @param account_sid: A 34 character string that uniquely identifies this resource.
+              # @param [Version] version Version that contains the resource
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
               
-              # @return DomainList DomainList
+              # @return [DomainList] DomainList
               def initialize(version, account_sid: nil)
                 super(version)
                 
@@ -31,14 +32,14 @@ module Twilio
               # Lists DomainInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param Integer limit: Upper limit for the number of records to return. stream()
+              # @param [Integer] limit Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+              # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
               #  the default value of 50 records.  If no page_size is                      defined
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               
-              # @return Array Array of up to limit results
+              # @return [Array] Array of up to limit results
               def list(limit: nil, page_size: nil)
                 self.stream(
                     limit: limit,
@@ -50,14 +51,14 @@ module Twilio
               # Streams DomainInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param Integer limit: Upper limit for the number of records to return.                  stream()
+              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+              # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               
-              # @return Enumerable Enumerable that will yield up to limit results
+              # @return [Enumerable] Enumerable that will yield up to limit results
               def stream(limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
@@ -72,9 +73,9 @@ module Twilio
               # When passed a block, yields DomainInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param Integer limit: Upper limit for the number of records to return.                  stream()
+              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to read the
               #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -93,11 +94,11 @@ module Twilio
               ##
               # Retrieve a single page of DomainInstance records from the API.
               # Request is executed immediately.
-              # @param String page_token: PageToken provided by the API
-              # @param Integer page_number: Page Number, this value is simply for client state
-              # @param Integer page_size: Number of records to return, defaults to 50
+              # @param [String] page_token PageToken provided by the API
+              # @param [Integer] page_number Page Number, this value is simply for client state
+              # @param [Integer] page_size Number of records to return, defaults to 50
               
-              # @return Page Page of DomainInstance
+              # @return [Page] Page of DomainInstance
               def page(page_token: nil, page_number: nil, page_size: nil)
                 params = {
                     'PageToken' => page_token,
@@ -119,16 +120,22 @@ module Twilio
               ##
               # Retrieve a single page of DomainInstance records from the API.
               # Request is executed immediately.
-              # @param String domain_name: The unique address on Twilio to route SIP traffic
-              # @param String friendly_name: A user-specified, human-readable name for the trigger.
-              # @param String voice_url: URL Twilio will request when receiving a call
-              # @param String voice_method: HTTP method to use with voice_url
-              # @param String voice_fallback_url: URL Twilio will request if an error occurs in executing TwiML
-              # @param String voice_fallback_method: HTTP method used with voice_fallback_url
-              # @param String voice_status_callback_url: URL that Twilio will request with status updates
-              # @param String voice_status_callback_method: The voice_status_callback_method
+              # @param [String] domain_name The unique address you reserve on Twilio to which
+              #   you route your SIP traffic
+              # @param [String] friendly_name A user-specified, human-readable name for the
+              #   trigger.
+              # @param [String] voice_url The URL Twilio will request when this domain receives
+              #   a call
+              # @param [String] voice_method The HTTP method to use with the voice_url
+              # @param [String] voice_fallback_url The URL that Twilio will use if an error
+              #   occurs retrieving or executing the TwiML requested by VoiceUrl
+              # @param [String] voice_fallback_method The HTTP method Twilio will use when
+              #   requesting the VoiceFallbackUrl
+              # @param [String] voice_status_callback_url The URL that Twilio will request to
+              #   pass status parameters
+              # @param [String] voice_status_callback_method The voice_status_callback_method
               
-              # @return DomainInstance Newly created DomainInstance
+              # @return [DomainInstance] Newly created DomainInstance
               def create(domain_name: nil, friendly_name: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, voice_status_callback_url: nil, voice_status_callback_method: nil)
                 data = {
                     'DomainName' => domain_name,
@@ -156,9 +163,9 @@ module Twilio
               
               ##
               # Constructs a DomainContext
-              # @param sid: Fetch by unique Domain Sid
+              # @param [String] sid The domain sid that uniquely identifies the resource
               
-              # @return DomainContext DomainContext
+              # @return [DomainContext] DomainContext
               def get(sid)
                 DomainContext.new(
                     @version,
@@ -177,11 +184,12 @@ module Twilio
             class DomainPage < Page
               ##
               # Initialize the DomainPage
-              # @param Version version: Version that contains the resource
-              # @param Response response: Response from the API
-              # @param account_sid: A 34 character string that uniquely identifies this resource.
+              # @param [Version] version Version that contains the resource
+              # @param [Response] response Response from the API
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
               
-              # @return DomainPage DomainPage
+              # @return [DomainPage] DomainPage
               def initialize(version, response, account_sid: nil)
                 super(version, response)
                 
@@ -193,9 +201,9 @@ module Twilio
               
               ##
               # Build an instance of DomainInstance
-              # @param Hash payload: Payload response from the API
+              # @param [Hash] payload Payload response from the API
               
-              # @return DomainInstance DomainInstance
+              # @return [DomainInstance] DomainInstance
               def get_instance(payload)
                 return DomainInstance.new(
                     @version,
@@ -214,11 +222,11 @@ module Twilio
             class DomainContext < InstanceContext
               ##
               # Initialize the DomainContext
-              # @param Version version: Version that contains the resource
-              # @param account_sid: The account_sid
-              # @param sid: Fetch by unique Domain Sid
+              # @param [Version] version Version that contains the resource
+              # @param [String] account_sid The account_sid
+              # @param [String] sid The domain sid that uniquely identifies the resource
               
-              # @return DomainContext DomainContext
+              # @return [DomainContext] DomainContext
               def initialize(version, account_sid, sid)
                 super(version)
                 
@@ -236,7 +244,7 @@ module Twilio
               
               ##
               # Fetch a DomainInstance
-              # @return DomainInstance Fetched DomainInstance
+              # @return [DomainInstance] Fetched DomainInstance
               def fetch
                 params = {}
                 
@@ -256,16 +264,17 @@ module Twilio
               
               ##
               # Update the DomainInstance
-              # @param String api_version: The api_version
-              # @param String friendly_name: A user-specified, human-readable name for the trigger.
-              # @param String voice_fallback_method: The voice_fallback_method
-              # @param String voice_fallback_url: The voice_fallback_url
-              # @param String voice_method: HTTP method to use with voice_url
-              # @param String voice_status_callback_method: The voice_status_callback_method
-              # @param String voice_status_callback_url: The voice_status_callback_url
-              # @param String voice_url: The voice_url
+              # @param [String] api_version The api_version
+              # @param [String] friendly_name A user-specified, human-readable name for the
+              #   trigger.
+              # @param [String] voice_fallback_method The voice_fallback_method
+              # @param [String] voice_fallback_url The voice_fallback_url
+              # @param [String] voice_method The HTTP method to use with the voice_url
+              # @param [String] voice_status_callback_method The voice_status_callback_method
+              # @param [String] voice_status_callback_url The voice_status_callback_url
+              # @param [String] voice_url The voice_url
               
-              # @return DomainInstance Updated DomainInstance
+              # @return [DomainInstance] Updated DomainInstance
               def update(api_version: nil, friendly_name: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_status_callback_method: nil, voice_status_callback_url: nil, voice_url: nil)
                 data = {
                     'ApiVersion' => api_version,
@@ -294,14 +303,14 @@ module Twilio
               
               ##
               # Deletes the DomainInstance
-              # @return Boolean true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, true otherwise
               def delete
                 return @version.delete('delete', @uri)
               end
               
               ##
               # Access the ip_access_control_list_mappings
-              # @return IpAccessControlListMappingList IpAccessControlListMappingList
+              # @return [IpAccessControlListMappingList] IpAccessControlListMappingList
               def ip_access_control_list_mappings(sid=:unset)
                 if sid != :unset
                   return IpAccessControlListMappingContext.new(
@@ -325,7 +334,7 @@ module Twilio
               
               ##
               # Access the credential_list_mappings
-              # @return CredentialListMappingList CredentialListMappingList
+              # @return [CredentialListMappingList] CredentialListMappingList
               def credential_list_mappings(sid=:unset)
                 if sid != :unset
                   return CredentialListMappingContext.new(
@@ -358,7 +367,13 @@ module Twilio
             class DomainInstance < InstanceResource
               ##
               # Initialize the DomainInstance
-              # @return DomainInstance DomainInstance
+              # @param [Version] version Version that contains the resource
+              # @param [Hash] payload payload that contains response from Twilio
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
+              # @param [String] sid The domain sid that uniquely identifies the resource
+              
+              # @return [DomainInstance] DomainInstance
               def initialize(version, payload, account_sid: nil, sid: nil)
                 super(version)
                 
@@ -392,7 +407,9 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @return DomainContext DomainContext for this DomainInstance
+              # @param [Version] version Version that contains the resource
+              
+              # @return [DomainContext] DomainContext for this DomainInstance
               def context
                 unless @instance_context
                   @instance_context = DomainContext.new(
@@ -466,23 +483,24 @@ module Twilio
               
               ##
               # Fetch a DomainInstance
-              # @return DomainInstance Fetched DomainInstance
+              # @return [DomainInstance] Fetched DomainInstance
               def fetch
                 @context.fetch()
               end
               
               ##
               # Update the DomainInstance
-              # @param String api_version: The api_version
-              # @param String friendly_name: A user-specified, human-readable name for the trigger.
-              # @param String voice_fallback_method: The voice_fallback_method
-              # @param String voice_fallback_url: The voice_fallback_url
-              # @param String voice_method: HTTP method to use with voice_url
-              # @param String voice_status_callback_method: The voice_status_callback_method
-              # @param String voice_status_callback_url: The voice_status_callback_url
-              # @param String voice_url: The voice_url
+              # @param [String] api_version The api_version
+              # @param [String] friendly_name A user-specified, human-readable name for the
+              #   trigger.
+              # @param [String] voice_fallback_method The voice_fallback_method
+              # @param [String] voice_fallback_url The voice_fallback_url
+              # @param [String] voice_method The HTTP method to use with the voice_url
+              # @param [String] voice_status_callback_method The voice_status_callback_method
+              # @param [String] voice_status_callback_url The voice_status_callback_url
+              # @param [String] voice_url The voice_url
               
-              # @return DomainInstance Updated DomainInstance
+              # @return [DomainInstance] Updated DomainInstance
               def update(api_version: nil, friendly_name: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_status_callback_method: nil, voice_status_callback_url: nil, voice_url: nil)
                 @context.update(
                     friendly_name: nil,
@@ -497,21 +515,21 @@ module Twilio
               
               ##
               # Deletes the DomainInstance
-              # @return Boolean true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, true otherwise
               def delete
                 @context.delete()
               end
               
               ##
               # Access the ip_access_control_list_mappings
-              # @return ip_access_control_list_mappings ip_access_control_list_mappings
+              # @return [ip_access_control_list_mappings] ip_access_control_list_mappings
               def ip_access_control_list_mappings
                 @context.ip_access_control_list_mappings
               end
               
               ##
               # Access the credential_list_mappings
-              # @return credential_list_mappings credential_list_mappings
+              # @return [credential_list_mappings] credential_list_mappings
               def credential_list_mappings
                 @context.credential_list_mappings
               end

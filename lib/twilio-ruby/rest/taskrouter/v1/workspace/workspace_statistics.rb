@@ -12,10 +12,10 @@ module Twilio
           class WorkspaceStatisticsList < ListResource
             ##
             # Initialize the WorkspaceStatisticsList
-            # @param Version version: Version that contains the resource
-            # @param workspace_sid: The workspace_sid
+            # @param [Version] version Version that contains the resource
+            # @param [String] workspace_sid The workspace_sid
             
-            # @return WorkspaceStatisticsList WorkspaceStatisticsList
+            # @return [WorkspaceStatisticsList] WorkspaceStatisticsList
             def initialize(version, workspace_sid: nil)
               super(version)
               
@@ -27,7 +27,7 @@ module Twilio
             
             ##
             # Constructs a WorkspaceStatisticsContext
-            # @return WorkspaceStatisticsContext WorkspaceStatisticsContext
+            # @return [WorkspaceStatisticsContext] WorkspaceStatisticsContext
             def get
               WorkspaceStatisticsContext.new(
                   @version,
@@ -45,11 +45,11 @@ module Twilio
           class WorkspaceStatisticsPage < Page
             ##
             # Initialize the WorkspaceStatisticsPage
-            # @param Version version: Version that contains the resource
-            # @param Response response: Response from the API
-            # @param workspace_sid: The workspace_sid
+            # @param [Version] version Version that contains the resource
+            # @param [Response] response Response from the API
+            # @param [String] workspace_sid The workspace_sid
             
-            # @return WorkspaceStatisticsPage WorkspaceStatisticsPage
+            # @return [WorkspaceStatisticsPage] WorkspaceStatisticsPage
             def initialize(version, response, workspace_sid: nil)
               super(version, response)
               
@@ -61,9 +61,9 @@ module Twilio
             
             ##
             # Build an instance of WorkspaceStatisticsInstance
-            # @param Hash payload: Payload response from the API
+            # @param [Hash] payload Payload response from the API
             
-            # @return WorkspaceStatisticsInstance WorkspaceStatisticsInstance
+            # @return [WorkspaceStatisticsInstance] WorkspaceStatisticsInstance
             def get_instance(payload)
               return WorkspaceStatisticsInstance.new(
                   @version,
@@ -82,10 +82,10 @@ module Twilio
           class WorkspaceStatisticsContext < InstanceContext
             ##
             # Initialize the WorkspaceStatisticsContext
-            # @param Version version: Version that contains the resource
-            # @param workspace_sid: The workspace_sid
+            # @param [Version] version Version that contains the resource
+            # @param [String] workspace_sid The workspace_sid
             
-            # @return WorkspaceStatisticsContext WorkspaceStatisticsContext
+            # @return [WorkspaceStatisticsContext] WorkspaceStatisticsContext
             def initialize(version, workspace_sid)
               super(version)
               
@@ -98,15 +98,15 @@ module Twilio
             
             ##
             # Fetch a WorkspaceStatisticsInstance
-            # @param String minutes: The minutes
-            # @param Time start_date_before: The start_date
-            # @param Time start_date: The start_date
-            # @param Time start_date_after: The start_date
-            # @param Time end_date_before: The end_date
-            # @param Time end_date: The end_date
-            # @param Time end_date_after: The end_date
+            # @param [String] minutes The minutes
+            # @param [Time] start_date_before The start_date
+            # @param [Time] start_date The start_date
+            # @param [Time] start_date_after: The start_date
+            # @param [Time] end_date_before The end_date
+            # @param [Time] end_date The end_date
+            # @param [Time] end_date_after: The end_date
             
-            # @return WorkspaceStatisticsInstance Fetched WorkspaceStatisticsInstance
+            # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
             def fetch(minutes: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil)
               params = {
                   'Minutes' => minutes,
@@ -142,7 +142,11 @@ module Twilio
           class WorkspaceStatisticsInstance < InstanceResource
             ##
             # Initialize the WorkspaceStatisticsInstance
-            # @return WorkspaceStatisticsInstance WorkspaceStatisticsInstance
+            # @param [Version] version Version that contains the resource
+            # @param [Hash] payload payload that contains response from Twilio
+            # @param [String] workspace_sid The workspace_sid
+            
+            # @return [WorkspaceStatisticsInstance] WorkspaceStatisticsInstance
             def initialize(version, payload, workspace_sid: nil)
               super(version)
               
@@ -164,7 +168,9 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return WorkspaceStatisticsContext WorkspaceStatisticsContext for this WorkspaceStatisticsInstance
+            # @param [Version] version Version that contains the resource
+            
+            # @return [WorkspaceStatisticsContext] WorkspaceStatisticsContext for this WorkspaceStatisticsInstance
             def context
               unless @instance_context
                 @instance_context = WorkspaceStatisticsContext.new(
@@ -193,15 +199,15 @@ module Twilio
             
             ##
             # Fetch a WorkspaceStatisticsInstance
-            # @param String minutes: The minutes
-            # @param Time start_date_before: The start_date
-            # @param Time start_date: The start_date
-            # @param Time start_date_after: The start_date
-            # @param Time end_date_before: The end_date
-            # @param Time end_date: The end_date
-            # @param Time end_date_after: The end_date
+            # @param [String] minutes The minutes
+            # @param [Time] start_date_before The start_date
+            # @param [Time] start_date The start_date
+            # @param [Time] start_date_after: The start_date
+            # @param [Time] end_date_before The end_date
+            # @param [Time] end_date The end_date
+            # @param [Time] end_date_after: The end_date
             
-            # @return WorkspaceStatisticsInstance Fetched WorkspaceStatisticsInstance
+            # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
             def fetch(minutes: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil)
               @context.fetch(
                   start_date_before: nil,

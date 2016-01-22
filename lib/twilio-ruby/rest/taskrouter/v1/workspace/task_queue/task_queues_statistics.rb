@@ -13,10 +13,10 @@ module Twilio
             class TaskQueuesStatisticsList < ListResource
               ##
               # Initialize the TaskQueuesStatisticsList
-              # @param Version version: Version that contains the resource
-              # @param workspace_sid: The workspace_sid
+              # @param [Version] version Version that contains the resource
+              # @param [String] workspace_sid The workspace_sid
               
-              # @return TaskQueuesStatisticsList TaskQueuesStatisticsList
+              # @return [TaskQueuesStatisticsList] TaskQueuesStatisticsList
               def initialize(version, workspace_sid: nil)
                 super(version)
                 
@@ -31,18 +31,18 @@ module Twilio
               # Lists TaskQueuesStatisticsInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param Time end_date: The end_date
-              # @param String friendly_name: The friendly_name
-              # @param String minutes: The minutes
-              # @param Time start_date: The start_date
-              # @param Integer limit: Upper limit for the number of records to return. stream()
+              # @param [Time] end_date The end_date
+              # @param [String] friendly_name The friendly_name
+              # @param [String] minutes The minutes
+              # @param [Time] start_date The start_date
+              # @param [Integer] limit Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+              # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
               #  the default value of 50 records.  If no page_size is                      defined
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               
-              # @return Array Array of up to limit results
+              # @return [Array] Array of up to limit results
               def list(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil, limit: nil, page_size: nil)
                 self.stream(
                     end_date: end_date,
@@ -58,18 +58,18 @@ module Twilio
               # Streams TaskQueuesStatisticsInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param Time end_date: The end_date
-              # @param String friendly_name: The friendly_name
-              # @param String minutes: The minutes
-              # @param Time start_date: The start_date
-              # @param Integer limit: Upper limit for the number of records to return.                  stream()
+              # @param [Time] end_date The end_date
+              # @param [String] friendly_name The friendly_name
+              # @param [String] minutes The minutes
+              # @param [Time] start_date The start_date
+              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+              # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               
-              # @return Enumerable Enumerable that will yield up to limit results
+              # @return [Enumerable] Enumerable that will yield up to limit results
               def stream(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
@@ -88,13 +88,13 @@ module Twilio
               # When passed a block, yields TaskQueuesStatisticsInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param Time end_date: The end_date
-              # @param String friendly_name: The friendly_name
-              # @param String minutes: The minutes
-              # @param Time start_date: The start_date
-              # @param Integer limit: Upper limit for the number of records to return.                  stream()
+              # @param [Time] end_date The end_date
+              # @param [String] friendly_name The friendly_name
+              # @param [String] minutes The minutes
+              # @param [Time] start_date The start_date
+              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to read the
               #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -113,15 +113,15 @@ module Twilio
               ##
               # Retrieve a single page of TaskQueuesStatisticsInstance records from the API.
               # Request is executed immediately.
-              # @param Time end_date: The end_date
-              # @param String friendly_name: The friendly_name
-              # @param String minutes: The minutes
-              # @param Time start_date: The start_date
-              # @param String page_token: PageToken provided by the API
-              # @param Integer page_number: Page Number, this value is simply for client state
-              # @param Integer page_size: Number of records to return, defaults to 50
+              # @param [Time] end_date The end_date
+              # @param [String] friendly_name The friendly_name
+              # @param [String] minutes The minutes
+              # @param [Time] start_date The start_date
+              # @param [String] page_token PageToken provided by the API
+              # @param [Integer] page_number Page Number, this value is simply for client state
+              # @param [Integer] page_size Number of records to return, defaults to 50
               
-              # @return Page Page of TaskQueuesStatisticsInstance
+              # @return [Page] Page of TaskQueuesStatisticsInstance
               def page(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
                     'EndDate' => Twilio.serialize_iso8601(end_date),
@@ -154,11 +154,11 @@ module Twilio
             class TaskQueuesStatisticsPage < Page
               ##
               # Initialize the TaskQueuesStatisticsPage
-              # @param Version version: Version that contains the resource
-              # @param Response response: Response from the API
-              # @param workspace_sid: The workspace_sid
+              # @param [Version] version Version that contains the resource
+              # @param [Response] response Response from the API
+              # @param [String] workspace_sid The workspace_sid
               
-              # @return TaskQueuesStatisticsPage TaskQueuesStatisticsPage
+              # @return [TaskQueuesStatisticsPage] TaskQueuesStatisticsPage
               def initialize(version, response, workspace_sid: nil)
                 super(version, response)
                 
@@ -170,9 +170,9 @@ module Twilio
               
               ##
               # Build an instance of TaskQueuesStatisticsInstance
-              # @param Hash payload: Payload response from the API
+              # @param [Hash] payload Payload response from the API
               
-              # @return TaskQueuesStatisticsInstance TaskQueuesStatisticsInstance
+              # @return [TaskQueuesStatisticsInstance] TaskQueuesStatisticsInstance
               def get_instance(payload)
                 return TaskQueuesStatisticsInstance.new(
                     @version,
@@ -191,7 +191,11 @@ module Twilio
             class TaskQueuesStatisticsInstance < InstanceResource
               ##
               # Initialize the TaskQueuesStatisticsInstance
-              # @return TaskQueuesStatisticsInstance TaskQueuesStatisticsInstance
+              # @param [Version] version Version that contains the resource
+              # @param [Hash] payload payload that contains response from Twilio
+              # @param [String] workspace_sid The workspace_sid
+              
+              # @return [TaskQueuesStatisticsInstance] TaskQueuesStatisticsInstance
               def initialize(version, payload, workspace_sid: nil)
                 super(version)
                 

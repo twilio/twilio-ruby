@@ -13,11 +13,12 @@ module Twilio
             class LocalList < ListResource
               ##
               # Initialize the LocalList
-              # @param Version version: Version that contains the resource
-              # @param account_sid: A 34 character string that uniquely identifies this resource.
-              # @param country_code: The country_code
+              # @param [Version] version Version that contains the resource
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
+              # @param [String] country_code The country_code
               
-              # @return LocalList LocalList
+              # @return [LocalList] LocalList
               def initialize(version, account_sid: nil, country_code: nil)
                 super(version)
                 
@@ -33,23 +34,25 @@ module Twilio
               # Lists LocalInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param String area_code: The area_code
-              # @param String contains: The contains
-              # @param Boolean sms_enabled: The sms_enabled
-              # @param Boolean mms_enabled: The mms_enabled
-              # @param Boolean voice_enabled: The voice_enabled
-              # @param Boolean exclude_all_address_required: The exclude_all_address_required
-              # @param Boolean exclude_local_address_required: The exclude_local_address_required
-              # @param Boolean exclude_foreign_address_required: The exclude_foreign_address_required
-              # @param Boolean beta: The beta
-              # @param Integer limit: Upper limit for the number of records to return. stream()
+              # @param [String] area_code The area_code
+              # @param [String] contains The contains
+              # @param [Boolean] sms_enabled The sms_enabled
+              # @param [Boolean] mms_enabled The mms_enabled
+              # @param [Boolean] voice_enabled The voice_enabled
+              # @param [Boolean] exclude_all_address_required The exclude_all_address_required
+              # @param [Boolean] exclude_local_address_required The
+              #   exclude_local_address_required
+              # @param [Boolean] exclude_foreign_address_required The
+              #   exclude_foreign_address_required
+              # @param [Boolean] beta The beta
+              # @param [Integer] limit Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+              # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
               #  the default value of 50 records.  If no page_size is                      defined
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               
-              # @return Array Array of up to limit results
+              # @return [Array] Array of up to limit results
               def list(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, limit: nil, page_size: nil)
                 self.stream(
                     area_code: area_code,
@@ -70,23 +73,25 @@ module Twilio
               # Streams LocalInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param String area_code: The area_code
-              # @param String contains: The contains
-              # @param Boolean sms_enabled: The sms_enabled
-              # @param Boolean mms_enabled: The mms_enabled
-              # @param Boolean voice_enabled: The voice_enabled
-              # @param Boolean exclude_all_address_required: The exclude_all_address_required
-              # @param Boolean exclude_local_address_required: The exclude_local_address_required
-              # @param Boolean exclude_foreign_address_required: The exclude_foreign_address_required
-              # @param Boolean beta: The beta
-              # @param Integer limit: Upper limit for the number of records to return.                  stream()
+              # @param [String] area_code The area_code
+              # @param [String] contains The contains
+              # @param [Boolean] sms_enabled The sms_enabled
+              # @param [Boolean] mms_enabled The mms_enabled
+              # @param [Boolean] voice_enabled The voice_enabled
+              # @param [Boolean] exclude_all_address_required The exclude_all_address_required
+              # @param [Boolean] exclude_local_address_required The
+              #   exclude_local_address_required
+              # @param [Boolean] exclude_foreign_address_required The
+              #   exclude_foreign_address_required
+              # @param [Boolean] beta The beta
+              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+              # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               
-              # @return Enumerable Enumerable that will yield up to limit results
+              # @return [Enumerable] Enumerable that will yield up to limit results
               def stream(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
@@ -110,18 +115,20 @@ module Twilio
               # When passed a block, yields LocalInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param String area_code: The area_code
-              # @param String contains: The contains
-              # @param Boolean sms_enabled: The sms_enabled
-              # @param Boolean mms_enabled: The mms_enabled
-              # @param Boolean voice_enabled: The voice_enabled
-              # @param Boolean exclude_all_address_required: The exclude_all_address_required
-              # @param Boolean exclude_local_address_required: The exclude_local_address_required
-              # @param Boolean exclude_foreign_address_required: The exclude_foreign_address_required
-              # @param Boolean beta: The beta
-              # @param Integer limit: Upper limit for the number of records to return.                  stream()
+              # @param [String] area_code The area_code
+              # @param [String] contains The contains
+              # @param [Boolean] sms_enabled The sms_enabled
+              # @param [Boolean] mms_enabled The mms_enabled
+              # @param [Boolean] voice_enabled The voice_enabled
+              # @param [Boolean] exclude_all_address_required The exclude_all_address_required
+              # @param [Boolean] exclude_local_address_required The
+              #   exclude_local_address_required
+              # @param [Boolean] exclude_foreign_address_required The
+              #   exclude_foreign_address_required
+              # @param [Boolean] beta The beta
+              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to read the
               #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -140,20 +147,22 @@ module Twilio
               ##
               # Retrieve a single page of LocalInstance records from the API.
               # Request is executed immediately.
-              # @param String area_code: The area_code
-              # @param String contains: The contains
-              # @param Boolean sms_enabled: The sms_enabled
-              # @param Boolean mms_enabled: The mms_enabled
-              # @param Boolean voice_enabled: The voice_enabled
-              # @param Boolean exclude_all_address_required: The exclude_all_address_required
-              # @param Boolean exclude_local_address_required: The exclude_local_address_required
-              # @param Boolean exclude_foreign_address_required: The exclude_foreign_address_required
-              # @param Boolean beta: The beta
-              # @param String page_token: PageToken provided by the API
-              # @param Integer page_number: Page Number, this value is simply for client state
-              # @param Integer page_size: Number of records to return, defaults to 50
+              # @param [String] area_code The area_code
+              # @param [String] contains The contains
+              # @param [Boolean] sms_enabled The sms_enabled
+              # @param [Boolean] mms_enabled The mms_enabled
+              # @param [Boolean] voice_enabled The voice_enabled
+              # @param [Boolean] exclude_all_address_required The exclude_all_address_required
+              # @param [Boolean] exclude_local_address_required The
+              #   exclude_local_address_required
+              # @param [Boolean] exclude_foreign_address_required The
+              #   exclude_foreign_address_required
+              # @param [Boolean] beta The beta
+              # @param [String] page_token PageToken provided by the API
+              # @param [Integer] page_number Page Number, this value is simply for client state
+              # @param [Integer] page_size Number of records to return, defaults to 50
               
-              # @return Page Page of LocalInstance
+              # @return [Page] Page of LocalInstance
               def page(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
                     'AreaCode' => area_code,
@@ -192,12 +201,13 @@ module Twilio
             class LocalPage < Page
               ##
               # Initialize the LocalPage
-              # @param Version version: Version that contains the resource
-              # @param Response response: Response from the API
-              # @param account_sid: A 34 character string that uniquely identifies this resource.
-              # @param country_code: The country_code
+              # @param [Version] version Version that contains the resource
+              # @param [Response] response Response from the API
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
+              # @param [String] country_code The country_code
               
-              # @return LocalPage LocalPage
+              # @return [LocalPage] LocalPage
               def initialize(version, response, account_sid: nil, country_code: nil)
                 super(version, response)
                 
@@ -210,9 +220,9 @@ module Twilio
               
               ##
               # Build an instance of LocalInstance
-              # @param Hash payload: Payload response from the API
+              # @param [Hash] payload Payload response from the API
               
-              # @return LocalInstance LocalInstance
+              # @return [LocalInstance] LocalInstance
               def get_instance(payload)
                 return LocalInstance.new(
                     @version,
@@ -232,7 +242,13 @@ module Twilio
             class LocalInstance < InstanceResource
               ##
               # Initialize the LocalInstance
-              # @return LocalInstance LocalInstance
+              # @param [Version] version Version that contains the resource
+              # @param [Hash] payload payload that contains response from Twilio
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
+              # @param [String] country_code The country_code
+              
+              # @return [LocalInstance] LocalInstance
               def initialize(version, payload, account_sid: nil, country_code: nil)
                 super(version)
                 

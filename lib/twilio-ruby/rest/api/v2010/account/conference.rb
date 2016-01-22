@@ -12,10 +12,11 @@ module Twilio
           class ConferenceList < ListResource
             ##
             # Initialize the ConferenceList
-            # @param Version version: Version that contains the resource
-            # @param account_sid: The unique sid that identifies this account
+            # @param [Version] version Version that contains the resource
+            # @param [String] account_sid The unique id of the Account] responsible for
+            #   creating this conference.
             
-            # @return ConferenceList ConferenceList
+            # @return [ConferenceList] ConferenceList
             def initialize(version, account_sid: nil)
               super(version)
               
@@ -30,22 +31,24 @@ module Twilio
             # Lists ConferenceInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param Time date_created_before: Filter by date created
-            # @param Time date_created: Filter by date created
-            # @param Time date_created_after: Filter by date created
-            # @param Time date_updated_before: Filter by date updated
-            # @param Time date_updated: Filter by date updated
-            # @param Time date_updated_after: Filter by date updated
-            # @param String friendly_name: Filter by friendly name
-            # @param conference.Status status: The status of the conference
-            # @param Integer limit: Upper limit for the number of records to return. stream()
+            # @param [Time] date_created_before Filter by date created
+            # @param [Time] date_created Filter by date created
+            # @param [Time] date_created_after: Filter by date created
+            # @param [Time] date_updated_before Filter by date updated
+            # @param [Time] date_updated Filter by date updated
+            # @param [Time] date_updated_after: Filter by date updated
+            # @param [String] friendly_name Only show results who's friendly name exactly
+            #   matches the string
+            # @param [conference.Status] status A string representing the status of the
+            #   conference. May be `init`, `in-progress`, or `completed`.
+            # @param [Integer] limit Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+            # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             
-            # @return Array Array of up to limit results
+            # @return [Array] Array of up to limit results
             def list(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, limit: nil, page_size: nil)
               self.stream(
                   date_created_before: date_created_before,
@@ -65,22 +68,24 @@ module Twilio
             # Streams ConferenceInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param Time date_created_before: Filter by date created
-            # @param Time date_created: Filter by date created
-            # @param Time date_created_after: Filter by date created
-            # @param Time date_updated_before: Filter by date updated
-            # @param Time date_updated: Filter by date updated
-            # @param Time date_updated_after: Filter by date updated
-            # @param String friendly_name: Filter by friendly name
-            # @param conference.Status status: The status of the conference
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [Time] date_created_before Filter by date created
+            # @param [Time] date_created Filter by date created
+            # @param [Time] date_created_after: Filter by date created
+            # @param [Time] date_updated_before Filter by date updated
+            # @param [Time] date_updated Filter by date updated
+            # @param [Time] date_updated_after: Filter by date updated
+            # @param [String] friendly_name Only show results who's friendly name exactly
+            #   matches the string
+            # @param [conference.Status] status A string representing the status of the
+            #   conference. May be `init`, `in-progress`, or `completed`.
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             
-            # @return Enumerable Enumerable that will yield up to limit results
+            # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
@@ -103,17 +108,19 @@ module Twilio
             # When passed a block, yields ConferenceInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param Time date_created_before: Filter by date created
-            # @param Time date_created: Filter by date created
-            # @param Time date_created_after: Filter by date created
-            # @param Time date_updated_before: Filter by date updated
-            # @param Time date_updated: Filter by date updated
-            # @param Time date_updated_after: Filter by date updated
-            # @param String friendly_name: Filter by friendly name
-            # @param conference.Status status: The status of the conference
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [Time] date_created_before Filter by date created
+            # @param [Time] date_created Filter by date created
+            # @param [Time] date_created_after: Filter by date created
+            # @param [Time] date_updated_before Filter by date updated
+            # @param [Time] date_updated Filter by date updated
+            # @param [Time] date_updated_after: Filter by date updated
+            # @param [String] friendly_name Only show results who's friendly name exactly
+            #   matches the string
+            # @param [conference.Status] status A string representing the status of the
+            #   conference. May be `init`, `in-progress`, or `completed`.
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to read the
             #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -132,19 +139,21 @@ module Twilio
             ##
             # Retrieve a single page of ConferenceInstance records from the API.
             # Request is executed immediately.
-            # @param Time date_created_before: Filter by date created
-            # @param Time date_created: Filter by date created
-            # @param Time date_created_after: Filter by date created
-            # @param Time date_updated_before: Filter by date updated
-            # @param Time date_updated: Filter by date updated
-            # @param Time date_updated_after: Filter by date updated
-            # @param String friendly_name: Filter by friendly name
-            # @param conference.Status status: The status of the conference
-            # @param String page_token: PageToken provided by the API
-            # @param Integer page_number: Page Number, this value is simply for client state
-            # @param Integer page_size: Number of records to return, defaults to 50
+            # @param [Time] date_created_before Filter by date created
+            # @param [Time] date_created Filter by date created
+            # @param [Time] date_created_after: Filter by date created
+            # @param [Time] date_updated_before Filter by date updated
+            # @param [Time] date_updated Filter by date updated
+            # @param [Time] date_updated_after: Filter by date updated
+            # @param [String] friendly_name Only show results who's friendly name exactly
+            #   matches the string
+            # @param [conference.Status] status A string representing the status of the
+            #   conference. May be `init`, `in-progress`, or `completed`.
+            # @param [String] page_token PageToken provided by the API
+            # @param [Integer] page_number Page Number, this value is simply for client state
+            # @param [Integer] page_size Number of records to return, defaults to 50
             
-            # @return Page Page of ConferenceInstance
+            # @return [Page] Page of ConferenceInstance
             def page(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'DateCreated<' => Twilio.serialize_iso8601(date_created_before),
@@ -173,9 +182,9 @@ module Twilio
             
             ##
             # Constructs a ConferenceContext
-            # @param sid: Fetch by unique conference Sid
+            # @param [String] sid The conference Sid that uniquely identifies this resource
             
-            # @return ConferenceContext ConferenceContext
+            # @return [ConferenceContext] ConferenceContext
             def get(sid)
               ConferenceContext.new(
                   @version,
@@ -194,11 +203,12 @@ module Twilio
           class ConferencePage < Page
             ##
             # Initialize the ConferencePage
-            # @param Version version: Version that contains the resource
-            # @param Response response: Response from the API
-            # @param account_sid: The unique sid that identifies this account
+            # @param [Version] version Version that contains the resource
+            # @param [Response] response Response from the API
+            # @param [String] account_sid The unique id of the Account] responsible for
+            #   creating this conference.
             
-            # @return ConferencePage ConferencePage
+            # @return [ConferencePage] ConferencePage
             def initialize(version, response, account_sid: nil)
               super(version, response)
               
@@ -210,9 +220,9 @@ module Twilio
             
             ##
             # Build an instance of ConferenceInstance
-            # @param Hash payload: Payload response from the API
+            # @param [Hash] payload Payload response from the API
             
-            # @return ConferenceInstance ConferenceInstance
+            # @return [ConferenceInstance] ConferenceInstance
             def get_instance(payload)
               return ConferenceInstance.new(
                   @version,
@@ -231,11 +241,11 @@ module Twilio
           class ConferenceContext < InstanceContext
             ##
             # Initialize the ConferenceContext
-            # @param Version version: Version that contains the resource
-            # @param account_sid: The account_sid
-            # @param sid: Fetch by unique conference Sid
+            # @param [Version] version Version that contains the resource
+            # @param [String] account_sid The account_sid
+            # @param [String] sid The conference Sid that uniquely identifies this resource
             
-            # @return ConferenceContext ConferenceContext
+            # @return [ConferenceContext] ConferenceContext
             def initialize(version, account_sid, sid)
               super(version)
               
@@ -252,7 +262,7 @@ module Twilio
             
             ##
             # Fetch a ConferenceInstance
-            # @return ConferenceInstance Fetched ConferenceInstance
+            # @return [ConferenceInstance] Fetched ConferenceInstance
             def fetch
               params = {}
               
@@ -272,7 +282,7 @@ module Twilio
             
             ##
             # Access the participants
-            # @return ParticipantList ParticipantList
+            # @return [ParticipantList] ParticipantList
             def participants(call_sid=:unset)
               if call_sid != :unset
                 return ParticipantContext.new(
@@ -305,7 +315,13 @@ module Twilio
           class ConferenceInstance < InstanceResource
             ##
             # Initialize the ConferenceInstance
-            # @return ConferenceInstance ConferenceInstance
+            # @param [Version] version Version that contains the resource
+            # @param [Hash] payload payload that contains response from Twilio
+            # @param [String] account_sid The unique id of the Account] responsible for
+            #   creating this conference.
+            # @param [String] sid The conference Sid that uniquely identifies this resource
+            
+            # @return [ConferenceInstance] ConferenceInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
               
@@ -332,7 +348,9 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return ConferenceContext ConferenceContext for this ConferenceInstance
+            # @param [Version] version Version that contains the resource
+            
+            # @return [ConferenceContext] ConferenceContext for this ConferenceInstance
             def context
               unless @instance_context
                 @instance_context = ConferenceContext.new(
@@ -378,14 +396,14 @@ module Twilio
             
             ##
             # Fetch a ConferenceInstance
-            # @return ConferenceInstance Fetched ConferenceInstance
+            # @return [ConferenceInstance] Fetched ConferenceInstance
             def fetch
               @context.fetch()
             end
             
             ##
             # Access the participants
-            # @return participants participants
+            # @return [participants] participants
             def participants
               @context.participants
             end

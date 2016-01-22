@@ -13,10 +13,11 @@ module Twilio
             class RecordList < ListResource
               ##
               # Initialize the RecordList
-              # @param Version version: Version that contains the resource
-              # @param account_sid: A 34 character string that uniquely identifies this resource.
+              # @param [Version] version Version that contains the resource
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
               
-              # @return RecordList RecordList
+              # @return [RecordList] RecordList
               def initialize(version, account_sid: nil)
                 super(version)
                 
@@ -41,21 +42,21 @@ module Twilio
               # Lists RecordInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param yesterday.Category category: Only include usage of a given category
-              # @param Time start_date_before: Filter by start date
-              # @param Time start_date: Filter by start date
-              # @param Time start_date_after: Filter by start date
-              # @param Time end_date_before: Filter by end date
-              # @param Time end_date: Filter by end date
-              # @param Time end_date_after: Filter by end date
-              # @param Integer limit: Upper limit for the number of records to return. stream()
+              # @param [yesterday.Category] category Only include usage of a given category
+              # @param [Time] start_date_before Filter by start date
+              # @param [Time] start_date Filter by start date
+              # @param [Time] start_date_after: Filter by start date
+              # @param [Time] end_date_before Filter by end date
+              # @param [Time] end_date Filter by end date
+              # @param [Time] end_date_after: Filter by end date
+              # @param [Integer] limit Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+              # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
               #  the default value of 50 records.  If no page_size is                      defined
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               
-              # @return Array Array of up to limit results
+              # @return [Array] Array of up to limit results
               def list(category: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, limit: nil, page_size: nil)
                 self.stream(
                     category: category,
@@ -74,21 +75,21 @@ module Twilio
               # Streams RecordInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param yesterday.Category category: Only include usage of a given category
-              # @param Time start_date_before: Filter by start date
-              # @param Time start_date: Filter by start date
-              # @param Time start_date_after: Filter by start date
-              # @param Time end_date_before: Filter by end date
-              # @param Time end_date: Filter by end date
-              # @param Time end_date_after: Filter by end date
-              # @param Integer limit: Upper limit for the number of records to return.                  stream()
+              # @param [yesterday.Category] category Only include usage of a given category
+              # @param [Time] start_date_before Filter by start date
+              # @param [Time] start_date Filter by start date
+              # @param [Time] start_date_after: Filter by start date
+              # @param [Time] end_date_before Filter by end date
+              # @param [Time] end_date Filter by end date
+              # @param [Time] end_date_after: Filter by end date
+              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+              # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               
-              # @return Enumerable Enumerable that will yield up to limit results
+              # @return [Enumerable] Enumerable that will yield up to limit results
               def stream(category: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
@@ -110,16 +111,16 @@ module Twilio
               # When passed a block, yields RecordInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param yesterday.Category category: Only include usage of a given category
-              # @param Time start_date_before: Filter by start date
-              # @param Time start_date: Filter by start date
-              # @param Time start_date_after: Filter by start date
-              # @param Time end_date_before: Filter by end date
-              # @param Time end_date: Filter by end date
-              # @param Time end_date_after: Filter by end date
-              # @param Integer limit: Upper limit for the number of records to return.                  stream()
+              # @param [yesterday.Category] category Only include usage of a given category
+              # @param [Time] start_date_before Filter by start date
+              # @param [Time] start_date Filter by start date
+              # @param [Time] start_date_after: Filter by start date
+              # @param [Time] end_date_before Filter by end date
+              # @param [Time] end_date Filter by end date
+              # @param [Time] end_date_after: Filter by end date
+              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to read the
               #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -138,18 +139,18 @@ module Twilio
               ##
               # Retrieve a single page of RecordInstance records from the API.
               # Request is executed immediately.
-              # @param yesterday.Category category: Only include usage of a given category
-              # @param Time start_date_before: Filter by start date
-              # @param Time start_date: Filter by start date
-              # @param Time start_date_after: Filter by start date
-              # @param Time end_date_before: Filter by end date
-              # @param Time end_date: Filter by end date
-              # @param Time end_date_after: Filter by end date
-              # @param String page_token: PageToken provided by the API
-              # @param Integer page_number: Page Number, this value is simply for client state
-              # @param Integer page_size: Number of records to return, defaults to 50
+              # @param [yesterday.Category] category Only include usage of a given category
+              # @param [Time] start_date_before Filter by start date
+              # @param [Time] start_date Filter by start date
+              # @param [Time] start_date_after: Filter by start date
+              # @param [Time] end_date_before Filter by end date
+              # @param [Time] end_date Filter by end date
+              # @param [Time] end_date_after: Filter by end date
+              # @param [String] page_token PageToken provided by the API
+              # @param [Integer] page_number Page Number, this value is simply for client state
+              # @param [Integer] page_size Number of records to return, defaults to 50
               
-              # @return Page Page of RecordInstance
+              # @return [Page] Page of RecordInstance
               def page(category: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
                     'Category' => category,
@@ -177,7 +178,7 @@ module Twilio
               
               ##
               # Access the all_time
-              # @return AllTimeList AllTimeList
+              # @return [AllTimeList] AllTimeList
               def all_time
                 @all_time ||= AllTimeList.new(
                     @version,
@@ -187,7 +188,7 @@ module Twilio
               
               ##
               # Access the daily
-              # @return DailyList DailyList
+              # @return [DailyList] DailyList
               def daily
                 @daily ||= DailyList.new(
                     @version,
@@ -197,7 +198,7 @@ module Twilio
               
               ##
               # Access the last_month
-              # @return LastMonthList LastMonthList
+              # @return [LastMonthList] LastMonthList
               def last_month
                 @last_month ||= LastMonthList.new(
                     @version,
@@ -207,7 +208,7 @@ module Twilio
               
               ##
               # Access the monthly
-              # @return MonthlyList MonthlyList
+              # @return [MonthlyList] MonthlyList
               def monthly
                 @monthly ||= MonthlyList.new(
                     @version,
@@ -217,7 +218,7 @@ module Twilio
               
               ##
               # Access the this_month
-              # @return ThisMonthList ThisMonthList
+              # @return [ThisMonthList] ThisMonthList
               def this_month
                 @this_month ||= ThisMonthList.new(
                     @version,
@@ -227,7 +228,7 @@ module Twilio
               
               ##
               # Access the today
-              # @return TodayList TodayList
+              # @return [TodayList] TodayList
               def today
                 @today ||= TodayList.new(
                     @version,
@@ -237,7 +238,7 @@ module Twilio
               
               ##
               # Access the yearly
-              # @return YearlyList YearlyList
+              # @return [YearlyList] YearlyList
               def yearly
                 @yearly ||= YearlyList.new(
                     @version,
@@ -247,7 +248,7 @@ module Twilio
               
               ##
               # Access the yesterday
-              # @return YesterdayList YesterdayList
+              # @return [YesterdayList] YesterdayList
               def yesterday
                 @yesterday ||= YesterdayList.new(
                     @version,
@@ -265,11 +266,12 @@ module Twilio
             class RecordPage < Page
               ##
               # Initialize the RecordPage
-              # @param Version version: Version that contains the resource
-              # @param Response response: Response from the API
-              # @param account_sid: A 34 character string that uniquely identifies this resource.
+              # @param [Version] version Version that contains the resource
+              # @param [Response] response Response from the API
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
               
-              # @return RecordPage RecordPage
+              # @return [RecordPage] RecordPage
               def initialize(version, response, account_sid: nil)
                 super(version, response)
                 
@@ -281,9 +283,9 @@ module Twilio
               
               ##
               # Build an instance of RecordInstance
-              # @param Hash payload: Payload response from the API
+              # @param [Hash] payload Payload response from the API
               
-              # @return RecordInstance RecordInstance
+              # @return [RecordInstance] RecordInstance
               def get_instance(payload)
                 return RecordInstance.new(
                     @version,
@@ -302,7 +304,12 @@ module Twilio
             class RecordInstance < InstanceResource
               ##
               # Initialize the RecordInstance
-              # @return RecordInstance RecordInstance
+              # @param [Version] version Version that contains the resource
+              # @param [Hash] payload payload that contains response from Twilio
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
+              
+              # @return [RecordInstance] RecordInstance
               def initialize(version, payload, account_sid: nil)
                 super(version)
                 

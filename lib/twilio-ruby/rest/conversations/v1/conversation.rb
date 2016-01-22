@@ -11,9 +11,9 @@ module Twilio
         class ConversationList < ListResource
           ##
           # Initialize the ConversationList
-          # @param Version version: Version that contains the resource
+          # @param [Version] version Version that contains the resource
           
-          # @return ConversationList ConversationList
+          # @return [ConversationList] ConversationList
           def initialize(version)
             super(version)
             
@@ -27,7 +27,7 @@ module Twilio
           
           ##
           # Access the in_progress
-          # @return InProgressList InProgressList
+          # @return [InProgressList] InProgressList
           def in_progress
             @in_progress ||= InProgressList.new(
                 @version,
@@ -36,7 +36,7 @@ module Twilio
           
           ##
           # Access the completed
-          # @return CompletedList CompletedList
+          # @return [CompletedList] CompletedList
           def completed
             @completed ||= CompletedList.new(
                 @version,
@@ -45,9 +45,9 @@ module Twilio
           
           ##
           # Constructs a ConversationContext
-          # @param sid: The sid
+          # @param [String] sid The sid
           
-          # @return ConversationContext ConversationContext
+          # @return [ConversationContext] ConversationContext
           def get(sid)
             ConversationContext.new(
                 @version,
@@ -65,10 +65,10 @@ module Twilio
         class ConversationPage < Page
           ##
           # Initialize the ConversationPage
-          # @param Version version: Version that contains the resource
-          # @param Response response: Response from the API
+          # @param [Version] version Version that contains the resource
+          # @param [Response] response Response from the API
           
-          # @return ConversationPage ConversationPage
+          # @return [ConversationPage] ConversationPage
           def initialize(version, response)
             super(version, response)
             
@@ -78,9 +78,9 @@ module Twilio
           
           ##
           # Build an instance of ConversationInstance
-          # @param Hash payload: Payload response from the API
+          # @param [Hash] payload Payload response from the API
           
-          # @return ConversationInstance ConversationInstance
+          # @return [ConversationInstance] ConversationInstance
           def get_instance(payload)
             return ConversationInstance.new(
                 @version,
@@ -98,10 +98,10 @@ module Twilio
         class ConversationContext < InstanceContext
           ##
           # Initialize the ConversationContext
-          # @param Version version: Version that contains the resource
-          # @param sid: The sid
+          # @param [Version] version Version that contains the resource
+          # @param [String] sid The sid
           
-          # @return ConversationContext ConversationContext
+          # @return [ConversationContext] ConversationContext
           def initialize(version, sid)
             super(version)
             
@@ -117,7 +117,7 @@ module Twilio
           
           ##
           # Fetch a ConversationInstance
-          # @return ConversationInstance Fetched ConversationInstance
+          # @return [ConversationInstance] Fetched ConversationInstance
           def fetch
             params = {}
             
@@ -136,7 +136,7 @@ module Twilio
           
           ##
           # Access the participants
-          # @return ParticipantList ParticipantList
+          # @return [ParticipantList] ParticipantList
           def participants(sid=:unset)
             if sid != :unset
               return ParticipantContext.new(
@@ -167,7 +167,11 @@ module Twilio
         class ConversationInstance < InstanceResource
           ##
           # Initialize the ConversationInstance
-          # @return ConversationInstance ConversationInstance
+          # @param [Version] version Version that contains the resource
+          # @param [Hash] payload payload that contains response from Twilio
+          # @param [String] sid The sid
+          
+          # @return [ConversationInstance] ConversationInstance
           def initialize(version, payload, sid: nil)
             super(version)
             
@@ -193,7 +197,9 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return ConversationContext ConversationContext for this ConversationInstance
+          # @param [Version] version Version that contains the resource
+          
+          # @return [ConversationContext] ConversationContext for this ConversationInstance
           def context
             unless @instance_context
               @instance_context = ConversationContext.new(
@@ -238,14 +244,14 @@ module Twilio
           
           ##
           # Fetch a ConversationInstance
-          # @return ConversationInstance Fetched ConversationInstance
+          # @return [ConversationInstance] Fetched ConversationInstance
           def fetch
             @context.fetch()
           end
           
           ##
           # Access the participants
-          # @return participants participants
+          # @return [participants] participants
           def participants
             @context.participants
           end

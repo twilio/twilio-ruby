@@ -12,10 +12,11 @@ module Twilio
           class ApplicationList < ListResource
             ##
             # Initialize the ApplicationList
-            # @param Version version: Version that contains the resource
-            # @param account_sid: A string that uniquely identifies this resource
+            # @param [Version] version Version that contains the resource
+            # @param [String] account_sid The unique id of the Account that created this
+            #   application.
             
-            # @return ApplicationList ApplicationList
+            # @return [ApplicationList] ApplicationList
             def initialize(version, account_sid: nil)
               super(version)
               
@@ -29,23 +30,41 @@ module Twilio
             ##
             # Retrieve a single page of ApplicationInstance records from the API.
             # Request is executed immediately.
-            # @param String friendly_name: Human readable description of this resource
-            # @param String api_version: The API version to use
-            # @param String voice_url: URL Twilio will make requests to when relieving a call
-            # @param String voice_method: HTTP method to use with the URL
-            # @param String voice_fallback_url: Fallback URL
-            # @param String voice_fallback_method: HTTP method to use with the fallback url
-            # @param String status_callback: URL to hit with status updates
-            # @param String status_callback_method: HTTP method to use with the status callback
-            # @param Boolean voice_caller_id_lookup: True or False
-            # @param String sms_url: URL Twilio will request when receiving an SMS
-            # @param String sms_method: HTTP method to use with sms_url
-            # @param String sms_fallback_url: Fallback URL if there's an error parsing TwiML
-            # @param String sms_fallback_method: HTTP method to use with sms_fallback_method
-            # @param String sms_status_callback: URL Twilio with request with status updates
-            # @param String message_status_callback: URL to make requests to with status updates
+            # @param [String] friendly_name A human readable descriptive text for this
+            #   resource, up to 64 characters long.
+            # @param [String] api_version Requests to this application will start a new TwiML
+            #   session with this API version.
+            # @param [String] voice_url The URL Twilio will request when a phone number
+            #   assigned to this application receives a call.
+            # @param [String] voice_method The HTTP method Twilio will use when requesting the
+            #   above `Url`. Either `GET` or `POST`.
+            # @param [String] voice_fallback_url The URL that Twilio will request if an error
+            #   occurs retrieving or executing the TwiML requested by `Url`.
+            # @param [String] voice_fallback_method The HTTP method Twilio will use when
+            #   requesting the `VoiceFallbackUrl`. Either `GET` or `POST`.
+            # @param [String] status_callback The URL that Twilio will request to pass status
+            #   parameters (such as call ended) to your application.
+            # @param [String] status_callback_method The HTTP method Twilio will use to make
+            #   requests to the `StatusCallback` URL. Either `GET` or `POST`.
+            # @param [Boolean] voice_caller_id_lookup Look up the caller's caller-ID name from
+            #   the CNAM database (additional charges apply). Either `true` or `false`.
+            # @param [String] sms_url The URL Twilio will request when a phone number assigned
+            #   to this application receives an incoming SMS message.
+            # @param [String] sms_method The HTTP method Twilio will use when making requests
+            #   to the `SmsUrl`. Either `GET` or `POST`.
+            # @param [String] sms_fallback_url The URL that Twilio will request if an error
+            #   occurs retrieving or executing the TwiML from `SmsUrl`.
+            # @param [String] sms_fallback_method The HTTP method Twilio will use when
+            #   requesting the above URL. Either `GET` or `POST`.
+            # @param [String] sms_status_callback The URL that Twilio will `POST` to when a
+            #   message is sent via the `/SMS/Messages` endpoint if you specify the `Sid` of
+            #   this application on an outgoing SMS request.
+            # @param [String] message_status_callback Twilio will make a `POST` request to
+            #   this URL to pass status parameters (such as sent or failed) to your application
+            #   if you use the `/Messages` endpoint to send the message and specify this
+            #   application's `Sid` as the `ApplicationSid` on an outgoing SMS request.
             
-            # @return ApplicationInstance Newly created ApplicationInstance
+            # @return [ApplicationInstance] Newly created ApplicationInstance
             def create(friendly_name: nil, api_version: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, status_callback: nil, status_callback_method: nil, voice_caller_id_lookup: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil, sms_status_callback: nil, message_status_callback: nil)
               data = {
                   'FriendlyName' => friendly_name,
@@ -82,15 +101,16 @@ module Twilio
             # Lists ApplicationInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param String friendly_name: Filter by friendly name
-            # @param Integer limit: Upper limit for the number of records to return. stream()
+            # @param [String] friendly_name Only return application resources with friendly
+            #   names that match exactly with this name
+            # @param [Integer] limit Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+            # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             
-            # @return Array Array of up to limit results
+            # @return [Array] Array of up to limit results
             def list(friendly_name: nil, limit: nil, page_size: nil)
               self.stream(
                   friendly_name: friendly_name,
@@ -103,15 +123,16 @@ module Twilio
             # Streams ApplicationInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param String friendly_name: Filter by friendly name
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [String] friendly_name Only return application resources with friendly
+            #   names that match exactly with this name
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             
-            # @return Enumerable Enumerable that will yield up to limit results
+            # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(friendly_name: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
@@ -127,10 +148,11 @@ module Twilio
             # When passed a block, yields ApplicationInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param String friendly_name: Filter by friendly name
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [String] friendly_name Only return application resources with friendly
+            #   names that match exactly with this name
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to read the
             #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -149,12 +171,13 @@ module Twilio
             ##
             # Retrieve a single page of ApplicationInstance records from the API.
             # Request is executed immediately.
-            # @param String friendly_name: Filter by friendly name
-            # @param String page_token: PageToken provided by the API
-            # @param Integer page_number: Page Number, this value is simply for client state
-            # @param Integer page_size: Number of records to return, defaults to 50
+            # @param [String] friendly_name Only return application resources with friendly
+            #   names that match exactly with this name
+            # @param [String] page_token PageToken provided by the API
+            # @param [Integer] page_number Page Number, this value is simply for client state
+            # @param [Integer] page_size Number of records to return, defaults to 50
             
-            # @return Page Page of ApplicationInstance
+            # @return [Page] Page of ApplicationInstance
             def page(friendly_name: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'FriendlyName' => friendly_name,
@@ -176,9 +199,10 @@ module Twilio
             
             ##
             # Constructs a ApplicationContext
-            # @param sid: Fetch by unique Application Sid
+            # @param [String] sid The application Sid that that uniquely identifies this
+            #   resource
             
-            # @return ApplicationContext ApplicationContext
+            # @return [ApplicationContext] ApplicationContext
             def get(sid)
               ApplicationContext.new(
                   @version,
@@ -197,11 +221,12 @@ module Twilio
           class ApplicationPage < Page
             ##
             # Initialize the ApplicationPage
-            # @param Version version: Version that contains the resource
-            # @param Response response: Response from the API
-            # @param account_sid: A string that uniquely identifies this resource
+            # @param [Version] version Version that contains the resource
+            # @param [Response] response Response from the API
+            # @param [String] account_sid The unique id of the Account that created this
+            #   application.
             
-            # @return ApplicationPage ApplicationPage
+            # @return [ApplicationPage] ApplicationPage
             def initialize(version, response, account_sid: nil)
               super(version, response)
               
@@ -213,9 +238,9 @@ module Twilio
             
             ##
             # Build an instance of ApplicationInstance
-            # @param Hash payload: Payload response from the API
+            # @param [Hash] payload Payload response from the API
             
-            # @return ApplicationInstance ApplicationInstance
+            # @return [ApplicationInstance] ApplicationInstance
             def get_instance(payload)
               return ApplicationInstance.new(
                   @version,
@@ -234,11 +259,12 @@ module Twilio
           class ApplicationContext < InstanceContext
             ##
             # Initialize the ApplicationContext
-            # @param Version version: Version that contains the resource
-            # @param account_sid: The account_sid
-            # @param sid: Fetch by unique Application Sid
+            # @param [Version] version Version that contains the resource
+            # @param [String] account_sid The account_sid
+            # @param [String] sid The application Sid that that uniquely identifies this
+            #   resource
             
-            # @return ApplicationContext ApplicationContext
+            # @return [ApplicationContext] ApplicationContext
             def initialize(version, account_sid, sid)
               super(version)
               
@@ -252,14 +278,14 @@ module Twilio
             
             ##
             # Deletes the ApplicationInstance
-            # @return Boolean true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               return @version.delete('delete', @uri)
             end
             
             ##
             # Fetch a ApplicationInstance
-            # @return ApplicationInstance Fetched ApplicationInstance
+            # @return [ApplicationInstance] Fetched ApplicationInstance
             def fetch
               params = {}
               
@@ -279,23 +305,41 @@ module Twilio
             
             ##
             # Update the ApplicationInstance
-            # @param String friendly_name: Human readable description of this resource
-            # @param String api_version: The API version to use
-            # @param String voice_url: URL Twilio will make requests to when relieving a call
-            # @param String voice_method: HTTP method to use with the URL
-            # @param String voice_fallback_url: Fallback URL
-            # @param String voice_fallback_method: HTTP method to use with the fallback url
-            # @param String status_callback: URL to hit with status updates
-            # @param String status_callback_method: HTTP method to use with the status callback
-            # @param Boolean voice_caller_id_lookup: True or False
-            # @param String sms_url: URL Twilio will request when receiving an SMS
-            # @param String sms_method: HTTP method to use with sms_url
-            # @param String sms_fallback_url: Fallback URL if there's an error parsing TwiML
-            # @param String sms_fallback_method: HTTP method to use with sms_fallback_method
-            # @param String sms_status_callback: URL Twilio with request with status updates
-            # @param String message_status_callback: URL to make requests to with status updates
+            # @param [String] friendly_name A human readable descriptive text for this
+            #   resource, up to 64 characters long.
+            # @param [String] api_version Requests to this application will start a new TwiML
+            #   session with this API version.
+            # @param [String] voice_url The URL Twilio will request when a phone number
+            #   assigned to this application receives a call.
+            # @param [String] voice_method The HTTP method Twilio will use when requesting the
+            #   above `Url`. Either `GET` or `POST`.
+            # @param [String] voice_fallback_url The URL that Twilio will request if an error
+            #   occurs retrieving or executing the TwiML requested by `Url`.
+            # @param [String] voice_fallback_method The HTTP method Twilio will use when
+            #   requesting the `VoiceFallbackUrl`. Either `GET` or `POST`.
+            # @param [String] status_callback The URL that Twilio will request to pass status
+            #   parameters (such as call ended) to your application.
+            # @param [String] status_callback_method The HTTP method Twilio will use to make
+            #   requests to the `StatusCallback` URL. Either `GET` or `POST`.
+            # @param [Boolean] voice_caller_id_lookup Look up the caller's caller-ID name from
+            #   the CNAM database (additional charges apply). Either `true` or `false`.
+            # @param [String] sms_url The URL Twilio will request when a phone number assigned
+            #   to this application receives an incoming SMS message.
+            # @param [String] sms_method The HTTP method Twilio will use when making requests
+            #   to the `SmsUrl`. Either `GET` or `POST`.
+            # @param [String] sms_fallback_url The URL that Twilio will request if an error
+            #   occurs retrieving or executing the TwiML from `SmsUrl`.
+            # @param [String] sms_fallback_method The HTTP method Twilio will use when
+            #   requesting the above URL. Either `GET` or `POST`.
+            # @param [String] sms_status_callback The URL that Twilio will `POST` to when a
+            #   message is sent via the `/SMS/Messages` endpoint if you specify the `Sid` of
+            #   this application on an outgoing SMS request.
+            # @param [String] message_status_callback Twilio will make a `POST` request to
+            #   this URL to pass status parameters (such as sent or failed) to your application
+            #   if you use the `/Messages` endpoint to send the message and specify this
+            #   application's `Sid` as the `ApplicationSid` on an outgoing SMS request.
             
-            # @return ApplicationInstance Updated ApplicationInstance
+            # @return [ApplicationInstance] Updated ApplicationInstance
             def update(friendly_name: nil, api_version: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, status_callback: nil, status_callback_method: nil, voice_caller_id_lookup: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil, sms_status_callback: nil, message_status_callback: nil)
               data = {
                   'FriendlyName' => friendly_name,
@@ -340,7 +384,14 @@ module Twilio
           class ApplicationInstance < InstanceResource
             ##
             # Initialize the ApplicationInstance
-            # @return ApplicationInstance ApplicationInstance
+            # @param [Version] version Version that contains the resource
+            # @param [Hash] payload payload that contains response from Twilio
+            # @param [String] account_sid The unique id of the Account that created this
+            #   application.
+            # @param [String] sid The application Sid that that uniquely identifies this
+            #   resource
+            
+            # @return [ApplicationInstance] ApplicationInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
               
@@ -379,7 +430,9 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return ApplicationContext ApplicationContext for this ApplicationInstance
+            # @param [Version] version Version that contains the resource
+            
+            # @return [ApplicationContext] ApplicationContext for this ApplicationInstance
             def context
               unless @instance_context
                 @instance_context = ApplicationContext.new(
@@ -473,37 +526,55 @@ module Twilio
             
             ##
             # Deletes the ApplicationInstance
-            # @return Boolean true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               @context.delete()
             end
             
             ##
             # Fetch a ApplicationInstance
-            # @return ApplicationInstance Fetched ApplicationInstance
+            # @return [ApplicationInstance] Fetched ApplicationInstance
             def fetch
               @context.fetch()
             end
             
             ##
             # Update the ApplicationInstance
-            # @param String friendly_name: Human readable description of this resource
-            # @param String api_version: The API version to use
-            # @param String voice_url: URL Twilio will make requests to when relieving a call
-            # @param String voice_method: HTTP method to use with the URL
-            # @param String voice_fallback_url: Fallback URL
-            # @param String voice_fallback_method: HTTP method to use with the fallback url
-            # @param String status_callback: URL to hit with status updates
-            # @param String status_callback_method: HTTP method to use with the status callback
-            # @param Boolean voice_caller_id_lookup: True or False
-            # @param String sms_url: URL Twilio will request when receiving an SMS
-            # @param String sms_method: HTTP method to use with sms_url
-            # @param String sms_fallback_url: Fallback URL if there's an error parsing TwiML
-            # @param String sms_fallback_method: HTTP method to use with sms_fallback_method
-            # @param String sms_status_callback: URL Twilio with request with status updates
-            # @param String message_status_callback: URL to make requests to with status updates
+            # @param [String] friendly_name A human readable descriptive text for this
+            #   resource, up to 64 characters long.
+            # @param [String] api_version Requests to this application will start a new TwiML
+            #   session with this API version.
+            # @param [String] voice_url The URL Twilio will request when a phone number
+            #   assigned to this application receives a call.
+            # @param [String] voice_method The HTTP method Twilio will use when requesting the
+            #   above `Url`. Either `GET` or `POST`.
+            # @param [String] voice_fallback_url The URL that Twilio will request if an error
+            #   occurs retrieving or executing the TwiML requested by `Url`.
+            # @param [String] voice_fallback_method The HTTP method Twilio will use when
+            #   requesting the `VoiceFallbackUrl`. Either `GET` or `POST`.
+            # @param [String] status_callback The URL that Twilio will request to pass status
+            #   parameters (such as call ended) to your application.
+            # @param [String] status_callback_method The HTTP method Twilio will use to make
+            #   requests to the `StatusCallback` URL. Either `GET` or `POST`.
+            # @param [Boolean] voice_caller_id_lookup Look up the caller's caller-ID name from
+            #   the CNAM database (additional charges apply). Either `true` or `false`.
+            # @param [String] sms_url The URL Twilio will request when a phone number assigned
+            #   to this application receives an incoming SMS message.
+            # @param [String] sms_method The HTTP method Twilio will use when making requests
+            #   to the `SmsUrl`. Either `GET` or `POST`.
+            # @param [String] sms_fallback_url The URL that Twilio will request if an error
+            #   occurs retrieving or executing the TwiML from `SmsUrl`.
+            # @param [String] sms_fallback_method The HTTP method Twilio will use when
+            #   requesting the above URL. Either `GET` or `POST`.
+            # @param [String] sms_status_callback The URL that Twilio will `POST` to when a
+            #   message is sent via the `/SMS/Messages` endpoint if you specify the `Sid` of
+            #   this application on an outgoing SMS request.
+            # @param [String] message_status_callback Twilio will make a `POST` request to
+            #   this URL to pass status parameters (such as sent or failed) to your application
+            #   if you use the `/Messages` endpoint to send the message and specify this
+            #   application's `Sid` as the `ApplicationSid` on an outgoing SMS request.
             
-            # @return ApplicationInstance Updated ApplicationInstance
+            # @return [ApplicationInstance] Updated ApplicationInstance
             def update(friendly_name: nil, api_version: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, status_callback: nil, status_callback_method: nil, voice_caller_id_lookup: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil, sms_status_callback: nil, message_status_callback: nil)
               @context.update(
                   api_version: nil,

@@ -14,10 +14,11 @@ module Twilio
               class YearlyList < ListResource
                 ##
                 # Initialize the YearlyList
-                # @param Version version: Version that contains the resource
-                # @param account_sid: A 34 character string that uniquely identifies this resource.
+                # @param [Version] version Version that contains the resource
+                # @param [String] account_sid A 34 character string that uniquely identifies this
+                #   resource.
                 
-                # @return YearlyList YearlyList
+                # @return [YearlyList] YearlyList
                 def initialize(version, account_sid: nil)
                   super(version)
                   
@@ -32,14 +33,14 @@ module Twilio
                 # Lists YearlyInstance records from the API as a list.
                 # Unlike stream(), this operation is eager and will load `limit` records into
                 # memory before returning.
-                # @param Integer limit: Upper limit for the number of records to return. stream()
+                # @param [Integer] limit Upper limit for the number of records to return. stream()
                 #                   guarantees to never return more than limit.  Default is no limit
-                # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+                # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
                 #  the default value of 50 records.  If no page_size is                      defined
                 #  but a limit is defined, stream() will attempt to read                      the
                 #  limit with the most efficient page size,                      i.e. min(limit, 1000)
                 
-                # @return Array Array of up to limit results
+                # @return [Array] Array of up to limit results
                 def list(limit: nil, page_size: nil)
                   self.stream(
                       limit: limit,
@@ -51,14 +52,14 @@ module Twilio
                 # Streams YearlyInstance records from the API as an Enumerable.
                 # This operation lazily loads records as efficiently as possible until the limit
                 # is reached.
-                # @param Integer limit: Upper limit for the number of records to return.                  stream()
+                # @param [Integer] limit Upper limit for the number of records to return.                  stream()
                 #  guarantees to never return more than limit.                  Default is no limit
-                # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+                # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
                 #  the default value of 50 records.                      If no page_size is defined
                 #                       but a limit is defined, stream() will attempt to                      read the
                 #  limit with the most efficient page size,                       i.e. min(limit, 1000)
                 
-                # @return Enumerable Enumerable that will yield up to limit results
+                # @return [Enumerable] Enumerable that will yield up to limit results
                 def stream(limit: nil, page_size: nil)
                   limits = @version.read_limits(limit, page_size)
                   
@@ -73,9 +74,9 @@ module Twilio
                 # When passed a block, yields YearlyInstance records from the API.
                 # This operation lazily loads records as efficiently as possible until the limit
                 # is reached.
-                # @param Integer limit: Upper limit for the number of records to return.                  stream()
+                # @param [Integer] limit Upper limit for the number of records to return.                  stream()
                 #  guarantees to never return more than limit.                  Default is no limit
-                # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+                # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
                 #  the default value of 50 records.                      If no page_size is defined
                 #                       but a limit is defined, stream() will attempt to read the
                 #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -94,11 +95,11 @@ module Twilio
                 ##
                 # Retrieve a single page of YearlyInstance records from the API.
                 # Request is executed immediately.
-                # @param String page_token: PageToken provided by the API
-                # @param Integer page_number: Page Number, this value is simply for client state
-                # @param Integer page_size: Number of records to return, defaults to 50
+                # @param [String] page_token PageToken provided by the API
+                # @param [Integer] page_number Page Number, this value is simply for client state
+                # @param [Integer] page_size Number of records to return, defaults to 50
                 
-                # @return Page Page of YearlyInstance
+                # @return [Page] Page of YearlyInstance
                 def page(page_token: nil, page_number: nil, page_size: nil)
                   params = {
                       'PageToken' => page_token,
@@ -127,11 +128,12 @@ module Twilio
               class YearlyPage < Page
                 ##
                 # Initialize the YearlyPage
-                # @param Version version: Version that contains the resource
-                # @param Response response: Response from the API
-                # @param account_sid: A 34 character string that uniquely identifies this resource.
+                # @param [Version] version Version that contains the resource
+                # @param [Response] response Response from the API
+                # @param [String] account_sid A 34 character string that uniquely identifies this
+                #   resource.
                 
-                # @return YearlyPage YearlyPage
+                # @return [YearlyPage] YearlyPage
                 def initialize(version, response, account_sid: nil)
                   super(version, response)
                   
@@ -143,9 +145,9 @@ module Twilio
                 
                 ##
                 # Build an instance of YearlyInstance
-                # @param Hash payload: Payload response from the API
+                # @param [Hash] payload Payload response from the API
                 
-                # @return YearlyInstance YearlyInstance
+                # @return [YearlyInstance] YearlyInstance
                 def get_instance(payload)
                   return YearlyInstance.new(
                       @version,
@@ -164,7 +166,12 @@ module Twilio
               class YearlyInstance < InstanceResource
                 ##
                 # Initialize the YearlyInstance
-                # @return YearlyInstance YearlyInstance
+                # @param [Version] version Version that contains the resource
+                # @param [Hash] payload payload that contains response from Twilio
+                # @param [String] account_sid A 34 character string that uniquely identifies this
+                #   resource.
+                
+                # @return [YearlyInstance] YearlyInstance
                 def initialize(version, payload, account_sid: nil)
                   super(version)
                   

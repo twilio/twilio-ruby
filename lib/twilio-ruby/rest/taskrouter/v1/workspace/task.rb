@@ -12,10 +12,10 @@ module Twilio
           class TaskList < ListResource
             ##
             # Initialize the TaskList
-            # @param Version version: Version that contains the resource
-            # @param workspace_sid: The workspace_sid
+            # @param [Version] version Version that contains the resource
+            # @param [String] workspace_sid The workspace_sid
             
-            # @return TaskList TaskList
+            # @return [TaskList] TaskList
             def initialize(version, workspace_sid: nil)
               super(version)
               
@@ -30,20 +30,20 @@ module Twilio
             # Lists TaskInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param String priority: The priority
-            # @param task.Status assignment_status: The assignment_status
-            # @param String workflow_sid: The workflow_sid
-            # @param String workflow_name: The workflow_name
-            # @param String task_queue_sid: The task_queue_sid
-            # @param String task_queue_name: The task_queue_name
-            # @param Integer limit: Upper limit for the number of records to return. stream()
+            # @param [String] priority The priority
+            # @param [task.Status] assignment_status The assignment_status
+            # @param [String] workflow_sid The workflow_sid
+            # @param [String] workflow_name The workflow_name
+            # @param [String] task_queue_sid The task_queue_sid
+            # @param [String] task_queue_name The task_queue_name
+            # @param [Integer] limit Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+            # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             
-            # @return Array Array of up to limit results
+            # @return [Array] Array of up to limit results
             def list(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, limit: nil, page_size: nil)
               self.stream(
                   priority: priority,
@@ -61,20 +61,20 @@ module Twilio
             # Streams TaskInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param String priority: The priority
-            # @param task.Status assignment_status: The assignment_status
-            # @param String workflow_sid: The workflow_sid
-            # @param String workflow_name: The workflow_name
-            # @param String task_queue_sid: The task_queue_sid
-            # @param String task_queue_name: The task_queue_name
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [String] priority The priority
+            # @param [task.Status] assignment_status The assignment_status
+            # @param [String] workflow_sid The workflow_sid
+            # @param [String] workflow_name The workflow_name
+            # @param [String] task_queue_sid The task_queue_sid
+            # @param [String] task_queue_name The task_queue_name
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             
-            # @return Enumerable Enumerable that will yield up to limit results
+            # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
@@ -95,15 +95,15 @@ module Twilio
             # When passed a block, yields TaskInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param String priority: The priority
-            # @param task.Status assignment_status: The assignment_status
-            # @param String workflow_sid: The workflow_sid
-            # @param String workflow_name: The workflow_name
-            # @param String task_queue_sid: The task_queue_sid
-            # @param String task_queue_name: The task_queue_name
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [String] priority The priority
+            # @param [task.Status] assignment_status The assignment_status
+            # @param [String] workflow_sid The workflow_sid
+            # @param [String] workflow_name The workflow_name
+            # @param [String] task_queue_sid The task_queue_sid
+            # @param [String] task_queue_name The task_queue_name
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to read the
             #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -122,17 +122,17 @@ module Twilio
             ##
             # Retrieve a single page of TaskInstance records from the API.
             # Request is executed immediately.
-            # @param String priority: The priority
-            # @param task.Status assignment_status: The assignment_status
-            # @param String workflow_sid: The workflow_sid
-            # @param String workflow_name: The workflow_name
-            # @param String task_queue_sid: The task_queue_sid
-            # @param String task_queue_name: The task_queue_name
-            # @param String page_token: PageToken provided by the API
-            # @param Integer page_number: Page Number, this value is simply for client state
-            # @param Integer page_size: Number of records to return, defaults to 50
+            # @param [String] priority The priority
+            # @param [task.Status] assignment_status The assignment_status
+            # @param [String] workflow_sid The workflow_sid
+            # @param [String] workflow_name The workflow_name
+            # @param [String] task_queue_sid The task_queue_sid
+            # @param [String] task_queue_name The task_queue_name
+            # @param [String] page_token PageToken provided by the API
+            # @param [Integer] page_number Page Number, this value is simply for client state
+            # @param [Integer] page_size Number of records to return, defaults to 50
             
-            # @return Page Page of TaskInstance
+            # @return [Page] Page of TaskInstance
             def page(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'Priority' => priority,
@@ -160,12 +160,12 @@ module Twilio
             ##
             # Retrieve a single page of TaskInstance records from the API.
             # Request is executed immediately.
-            # @param String attributes: The attributes
-            # @param String workflow_sid: The workflow_sid
-            # @param String timeout: The timeout
-            # @param String priority: The priority
+            # @param [String] attributes The attributes
+            # @param [String] workflow_sid The workflow_sid
+            # @param [String] timeout The timeout
+            # @param [String] priority The priority
             
-            # @return TaskInstance Newly created TaskInstance
+            # @return [TaskInstance] Newly created TaskInstance
             def create(attributes: nil, workflow_sid: nil, timeout: nil, priority: nil)
               data = {
                   'Attributes' => attributes,
@@ -189,9 +189,9 @@ module Twilio
             
             ##
             # Constructs a TaskContext
-            # @param sid: The sid
+            # @param [String] sid The sid
             
-            # @return TaskContext TaskContext
+            # @return [TaskContext] TaskContext
             def get(sid)
               TaskContext.new(
                   @version,
@@ -210,11 +210,11 @@ module Twilio
           class TaskPage < Page
             ##
             # Initialize the TaskPage
-            # @param Version version: Version that contains the resource
-            # @param Response response: Response from the API
-            # @param workspace_sid: The workspace_sid
+            # @param [Version] version Version that contains the resource
+            # @param [Response] response Response from the API
+            # @param [String] workspace_sid The workspace_sid
             
-            # @return TaskPage TaskPage
+            # @return [TaskPage] TaskPage
             def initialize(version, response, workspace_sid: nil)
               super(version, response)
               
@@ -226,9 +226,9 @@ module Twilio
             
             ##
             # Build an instance of TaskInstance
-            # @param Hash payload: Payload response from the API
+            # @param [Hash] payload Payload response from the API
             
-            # @return TaskInstance TaskInstance
+            # @return [TaskInstance] TaskInstance
             def get_instance(payload)
               return TaskInstance.new(
                   @version,
@@ -247,11 +247,11 @@ module Twilio
           class TaskContext < InstanceContext
             ##
             # Initialize the TaskContext
-            # @param Version version: Version that contains the resource
-            # @param workspace_sid: The workspace_sid
-            # @param sid: The sid
+            # @param [Version] version Version that contains the resource
+            # @param [String] workspace_sid The workspace_sid
+            # @param [String] sid The sid
             
-            # @return TaskContext TaskContext
+            # @return [TaskContext] TaskContext
             def initialize(version, workspace_sid, sid)
               super(version)
               
@@ -268,7 +268,7 @@ module Twilio
             
             ##
             # Fetch a TaskInstance
-            # @return TaskInstance Fetched TaskInstance
+            # @return [TaskInstance] Fetched TaskInstance
             def fetch
               params = {}
               
@@ -288,12 +288,12 @@ module Twilio
             
             ##
             # Update the TaskInstance
-            # @param String attributes: The attributes
-            # @param task.Status assignment_status: The assignment_status
-            # @param String reason: The reason
-            # @param String priority: The priority
+            # @param [String] attributes The attributes
+            # @param [task.Status] assignment_status The assignment_status
+            # @param [String] reason The reason
+            # @param [String] priority The priority
             
-            # @return TaskInstance Updated TaskInstance
+            # @return [TaskInstance] Updated TaskInstance
             def update(attributes: nil, assignment_status: nil, reason: nil, priority: nil)
               data = {
                   'Attributes' => attributes,
@@ -318,14 +318,14 @@ module Twilio
             
             ##
             # Deletes the TaskInstance
-            # @return Boolean true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               return @version.delete('delete', @uri)
             end
             
             ##
             # Access the reservations
-            # @return ReservationList ReservationList
+            # @return [ReservationList] ReservationList
             def reservations(sid=:unset)
               if sid != :unset
                 return ReservationContext.new(
@@ -358,7 +358,12 @@ module Twilio
           class TaskInstance < InstanceResource
             ##
             # Initialize the TaskInstance
-            # @return TaskInstance TaskInstance
+            # @param [Version] version Version that contains the resource
+            # @param [Hash] payload payload that contains response from Twilio
+            # @param [String] workspace_sid The workspace_sid
+            # @param [String] sid The sid
+            
+            # @return [TaskInstance] TaskInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
               super(version)
               
@@ -390,7 +395,9 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return TaskContext TaskContext for this TaskInstance
+            # @param [Version] version Version that contains the resource
+            
+            # @return [TaskContext] TaskContext for this TaskInstance
             def context
               unless @instance_context
                 @instance_context = TaskContext.new(
@@ -456,19 +463,19 @@ module Twilio
             
             ##
             # Fetch a TaskInstance
-            # @return TaskInstance Fetched TaskInstance
+            # @return [TaskInstance] Fetched TaskInstance
             def fetch
               @context.fetch()
             end
             
             ##
             # Update the TaskInstance
-            # @param String attributes: The attributes
-            # @param task.Status assignment_status: The assignment_status
-            # @param String reason: The reason
-            # @param String priority: The priority
+            # @param [String] attributes The attributes
+            # @param [task.Status] assignment_status The assignment_status
+            # @param [String] reason The reason
+            # @param [String] priority The priority
             
-            # @return TaskInstance Updated TaskInstance
+            # @return [TaskInstance] Updated TaskInstance
             def update(attributes: nil, assignment_status: nil, reason: nil, priority: nil)
               @context.update(
                   assignment_status: nil,
@@ -479,14 +486,14 @@ module Twilio
             
             ##
             # Deletes the TaskInstance
-            # @return Boolean true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               @context.delete()
             end
             
             ##
             # Access the reservations
-            # @return reservations reservations
+            # @return [reservations] reservations
             def reservations
               @context.reservations
             end

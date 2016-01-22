@@ -13,10 +13,11 @@ module Twilio
             class TriggerList < ListResource
               ##
               # Initialize the TriggerList
-              # @param Version version: Version that contains the resource
-              # @param account_sid: A 34 character string that uniquely identifies this resource.
+              # @param [Version] version Version that contains the resource
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
               
-              # @return TriggerList TriggerList
+              # @return [TriggerList] TriggerList
               def initialize(version, account_sid: nil)
                 super(version)
                 
@@ -30,15 +31,24 @@ module Twilio
               ##
               # Retrieve a single page of TriggerInstance records from the API.
               # Request is executed immediately.
-              # @param String callback_url: URL Twilio will request when the trigger fires
-              # @param String trigger_value: the value at which the trigger will fire
-              # @param trigger.UsageCategory usage_category: The usage category the trigger watches
-              # @param String callback_method: HTTP method to use with callback_url
-              # @param String friendly_name: A user-specified, human-readable name for the trigger.
-              # @param trigger.Recurring recurring: How this trigger recurs
-              # @param trigger.TriggerField trigger_by: The field in the UsageRecord that fires the trigger
+              # @param [String] callback_url Twilio will make a request to this url when the
+              #   trigger fires.
+              # @param [String] trigger_value The value at which the trigger will fire.  Must be
+              #   a positive numeric value.
+              # @param [trigger.UsageCategory] usage_category The usage category the trigger
+              #   watches
+              # @param [String] callback_method The HTTP method Twilio will use when making a
+              #   request to the CallbackUrl.  GET or POST.
+              # @param [String] friendly_name A user-specified, human-readable name for the
+              #   trigger.
+              # @param [trigger.Recurring] recurring How this trigger recurs. Empty for
+              #   non-recurring triggers. One of `daily`, `monthly`, or `yearly` for recurring
+              #   triggers.  A trigger will only fire once during each recurring period. 
+              #   Recurring periods are in GMT.
+              # @param [trigger.TriggerField] trigger_by The field in the UsageRecord that fires
+              #   the trigger. One of `count`, `usage`, or `price`
               
-              # @return TriggerInstance Newly created TriggerInstance
+              # @return [TriggerInstance] Newly created TriggerInstance
               def create(callback_url: nil, trigger_value: nil, usage_category: nil, callback_method: nil, friendly_name: nil, recurring: nil, trigger_by: nil)
                 data = {
                     'CallbackUrl' => callback_url,
@@ -67,17 +77,20 @@ module Twilio
               # Lists TriggerInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param trigger.Recurring recurring: Filter by recurring
-              # @param trigger.TriggerField trigger_by: Filter by trigger by
-              # @param trigger.UsageCategory usage_category: Filter by Usage Category
-              # @param Integer limit: Upper limit for the number of records to return. stream()
+              # @param [trigger.Recurring] recurring Only show UsageTriggers that count over
+              #   this interval. One of daily, monthly, or yearly
+              # @param [trigger.TriggerField] trigger_by Only show UsageTriggers that trigger by
+              #   this field in the UsagRecord
+              # @param [trigger.UsageCategory] usage_category Only show UsageTriggers that watch
+              #   this usage category
+              # @param [Integer] limit Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+              # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
               #  the default value of 50 records.  If no page_size is                      defined
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               
-              # @return Array Array of up to limit results
+              # @return [Array] Array of up to limit results
               def list(recurring: nil, trigger_by: nil, usage_category: nil, limit: nil, page_size: nil)
                 self.stream(
                     recurring: recurring,
@@ -92,17 +105,20 @@ module Twilio
               # Streams TriggerInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param trigger.Recurring recurring: Filter by recurring
-              # @param trigger.TriggerField trigger_by: Filter by trigger by
-              # @param trigger.UsageCategory usage_category: Filter by Usage Category
-              # @param Integer limit: Upper limit for the number of records to return.                  stream()
+              # @param [trigger.Recurring] recurring Only show UsageTriggers that count over
+              #   this interval. One of daily, monthly, or yearly
+              # @param [trigger.TriggerField] trigger_by Only show UsageTriggers that trigger by
+              #   this field in the UsagRecord
+              # @param [trigger.UsageCategory] usage_category Only show UsageTriggers that watch
+              #   this usage category
+              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+              # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               
-              # @return Enumerable Enumerable that will yield up to limit results
+              # @return [Enumerable] Enumerable that will yield up to limit results
               def stream(recurring: nil, trigger_by: nil, usage_category: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
@@ -120,12 +136,15 @@ module Twilio
               # When passed a block, yields TriggerInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param trigger.Recurring recurring: Filter by recurring
-              # @param trigger.TriggerField trigger_by: Filter by trigger by
-              # @param trigger.UsageCategory usage_category: Filter by Usage Category
-              # @param Integer limit: Upper limit for the number of records to return.                  stream()
+              # @param [trigger.Recurring] recurring Only show UsageTriggers that count over
+              #   this interval. One of daily, monthly, or yearly
+              # @param [trigger.TriggerField] trigger_by Only show UsageTriggers that trigger by
+              #   this field in the UsagRecord
+              # @param [trigger.UsageCategory] usage_category Only show UsageTriggers that watch
+              #   this usage category
+              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
-              # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to read the
               #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -144,14 +163,17 @@ module Twilio
               ##
               # Retrieve a single page of TriggerInstance records from the API.
               # Request is executed immediately.
-              # @param trigger.Recurring recurring: Filter by recurring
-              # @param trigger.TriggerField trigger_by: Filter by trigger by
-              # @param trigger.UsageCategory usage_category: Filter by Usage Category
-              # @param String page_token: PageToken provided by the API
-              # @param Integer page_number: Page Number, this value is simply for client state
-              # @param Integer page_size: Number of records to return, defaults to 50
+              # @param [trigger.Recurring] recurring Only show UsageTriggers that count over
+              #   this interval. One of daily, monthly, or yearly
+              # @param [trigger.TriggerField] trigger_by Only show UsageTriggers that trigger by
+              #   this field in the UsagRecord
+              # @param [trigger.UsageCategory] usage_category Only show UsageTriggers that watch
+              #   this usage category
+              # @param [String] page_token PageToken provided by the API
+              # @param [Integer] page_number Page Number, this value is simply for client state
+              # @param [Integer] page_size Number of records to return, defaults to 50
               
-              # @return Page Page of TriggerInstance
+              # @return [Page] Page of TriggerInstance
               def page(recurring: nil, trigger_by: nil, usage_category: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
                     'Recurring' => recurring,
@@ -175,9 +197,9 @@ module Twilio
               
               ##
               # Constructs a TriggerContext
-              # @param sid: Fetch by unique usage-trigger Sid
+              # @param [String] sid The usage-trigger Sid that uniquely identifies this resource
               
-              # @return TriggerContext TriggerContext
+              # @return [TriggerContext] TriggerContext
               def get(sid)
                 TriggerContext.new(
                     @version,
@@ -196,11 +218,12 @@ module Twilio
             class TriggerPage < Page
               ##
               # Initialize the TriggerPage
-              # @param Version version: Version that contains the resource
-              # @param Response response: Response from the API
-              # @param account_sid: A 34 character string that uniquely identifies this resource.
+              # @param [Version] version Version that contains the resource
+              # @param [Response] response Response from the API
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
               
-              # @return TriggerPage TriggerPage
+              # @return [TriggerPage] TriggerPage
               def initialize(version, response, account_sid: nil)
                 super(version, response)
                 
@@ -212,9 +235,9 @@ module Twilio
               
               ##
               # Build an instance of TriggerInstance
-              # @param Hash payload: Payload response from the API
+              # @param [Hash] payload Payload response from the API
               
-              # @return TriggerInstance TriggerInstance
+              # @return [TriggerInstance] TriggerInstance
               def get_instance(payload)
                 return TriggerInstance.new(
                     @version,
@@ -233,11 +256,11 @@ module Twilio
             class TriggerContext < InstanceContext
               ##
               # Initialize the TriggerContext
-              # @param Version version: Version that contains the resource
-              # @param account_sid: The account_sid
-              # @param sid: Fetch by unique usage-trigger Sid
+              # @param [Version] version Version that contains the resource
+              # @param [String] account_sid The account_sid
+              # @param [String] sid The usage-trigger Sid that uniquely identifies this resource
               
-              # @return TriggerContext TriggerContext
+              # @return [TriggerContext] TriggerContext
               def initialize(version, account_sid, sid)
                 super(version)
                 
@@ -251,7 +274,7 @@ module Twilio
               
               ##
               # Fetch a TriggerInstance
-              # @return TriggerInstance Fetched TriggerInstance
+              # @return [TriggerInstance] Fetched TriggerInstance
               def fetch
                 params = {}
                 
@@ -271,11 +294,14 @@ module Twilio
               
               ##
               # Update the TriggerInstance
-              # @param String callback_method: HTTP method to use with callback_url
-              # @param String callback_url: URL Twilio will request when the trigger fires
-              # @param String friendly_name: A user-specified, human-readable name for the trigger.
+              # @param [String] callback_method The HTTP method Twilio will use when making a
+              #   request to the CallbackUrl.  GET or POST.
+              # @param [String] callback_url Twilio will make a request to this url when the
+              #   trigger fires.
+              # @param [String] friendly_name A user-specified, human-readable name for the
+              #   trigger.
               
-              # @return TriggerInstance Updated TriggerInstance
+              # @return [TriggerInstance] Updated TriggerInstance
               def update(callback_method: nil, callback_url: nil, friendly_name: nil)
                 data = {
                     'CallbackMethod' => callback_method,
@@ -299,7 +325,7 @@ module Twilio
               
               ##
               # Deletes the TriggerInstance
-              # @return Boolean true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, true otherwise
               def delete
                 return @version.delete('delete', @uri)
               end
@@ -315,7 +341,13 @@ module Twilio
             class TriggerInstance < InstanceResource
               ##
               # Initialize the TriggerInstance
-              # @return TriggerInstance TriggerInstance
+              # @param [Version] version Version that contains the resource
+              # @param [Hash] payload payload that contains response from Twilio
+              # @param [String] account_sid A 34 character string that uniquely identifies this
+              #   resource.
+              # @param [String] sid The usage-trigger Sid that uniquely identifies this resource
+              
+              # @return [TriggerInstance] TriggerInstance
               def initialize(version, payload, account_sid: nil, sid: nil)
                 super(version)
                 
@@ -350,7 +382,9 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @return TriggerContext TriggerContext for this TriggerInstance
+              # @param [Version] version Version that contains the resource
+              
+              # @return [TriggerContext] TriggerContext for this TriggerInstance
               def context
                 unless @instance_context
                   @instance_context = TriggerContext.new(
@@ -428,18 +462,21 @@ module Twilio
               
               ##
               # Fetch a TriggerInstance
-              # @return TriggerInstance Fetched TriggerInstance
+              # @return [TriggerInstance] Fetched TriggerInstance
               def fetch
                 @context.fetch()
               end
               
               ##
               # Update the TriggerInstance
-              # @param String callback_method: HTTP method to use with callback_url
-              # @param String callback_url: URL Twilio will request when the trigger fires
-              # @param String friendly_name: A user-specified, human-readable name for the trigger.
+              # @param [String] callback_method The HTTP method Twilio will use when making a
+              #   request to the CallbackUrl.  GET or POST.
+              # @param [String] callback_url Twilio will make a request to this url when the
+              #   trigger fires.
+              # @param [String] friendly_name A user-specified, human-readable name for the
+              #   trigger.
               
-              # @return TriggerInstance Updated TriggerInstance
+              # @return [TriggerInstance] Updated TriggerInstance
               def update(callback_method: nil, callback_url: nil, friendly_name: nil)
                 @context.update(
                     callback_url: nil,
@@ -449,7 +486,7 @@ module Twilio
               
               ##
               # Deletes the TriggerInstance
-              # @return Boolean true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, true otherwise
               def delete
                 @context.delete()
               end

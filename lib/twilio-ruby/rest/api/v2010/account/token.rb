@@ -12,10 +12,11 @@ module Twilio
           class TokenList < ListResource
             ##
             # Initialize the TokenList
-            # @param Version version: Version that contains the resource
-            # @param account_sid: The unique sid that identifies this account
+            # @param [Version] version Version that contains the resource
+            # @param [String] account_sid The unique id of the Account that created this
+            #   Token.
             
-            # @return TokenList TokenList
+            # @return [TokenList] TokenList
             def initialize(version, account_sid: nil)
               super(version)
               
@@ -29,9 +30,10 @@ module Twilio
             ##
             # Retrieve a single page of TokenInstance records from the API.
             # Request is executed immediately.
-            # @param String ttl: The duration in seconds the credentials are valid
+            # @param [String] ttl The duration in seconds for which the generated credentials
+            #   are valid
             
-            # @return TokenInstance Newly created TokenInstance
+            # @return [TokenInstance] Newly created TokenInstance
             def create(ttl: nil)
               data = {
                   'Ttl' => ttl,
@@ -60,11 +62,12 @@ module Twilio
           class TokenPage < Page
             ##
             # Initialize the TokenPage
-            # @param Version version: Version that contains the resource
-            # @param Response response: Response from the API
-            # @param account_sid: The unique sid that identifies this account
+            # @param [Version] version Version that contains the resource
+            # @param [Response] response Response from the API
+            # @param [String] account_sid The unique id of the Account that created this
+            #   Token.
             
-            # @return TokenPage TokenPage
+            # @return [TokenPage] TokenPage
             def initialize(version, response, account_sid: nil)
               super(version, response)
               
@@ -76,9 +79,9 @@ module Twilio
             
             ##
             # Build an instance of TokenInstance
-            # @param Hash payload: Payload response from the API
+            # @param [Hash] payload Payload response from the API
             
-            # @return TokenInstance TokenInstance
+            # @return [TokenInstance] TokenInstance
             def get_instance(payload)
               return TokenInstance.new(
                   @version,
@@ -97,7 +100,12 @@ module Twilio
           class TokenInstance < InstanceResource
             ##
             # Initialize the TokenInstance
-            # @return TokenInstance TokenInstance
+            # @param [Version] version Version that contains the resource
+            # @param [Hash] payload payload that contains response from Twilio
+            # @param [String] account_sid The unique id of the Account that created this
+            #   Token.
+            
+            # @return [TokenInstance] TokenInstance
             def initialize(version, payload, account_sid: nil)
               super(version)
               

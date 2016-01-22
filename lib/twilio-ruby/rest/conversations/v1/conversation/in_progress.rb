@@ -12,9 +12,9 @@ module Twilio
           class InProgressList < ListResource
             ##
             # Initialize the InProgressList
-            # @param Version version: Version that contains the resource
+            # @param [Version] version Version that contains the resource
             
-            # @return InProgressList InProgressList
+            # @return [InProgressList] InProgressList
             def initialize(version)
               super(version)
               
@@ -27,14 +27,14 @@ module Twilio
             # Lists InProgressInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param Integer limit: Upper limit for the number of records to return. stream()
+            # @param [Integer] limit Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when not set will                      use
+            # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             
-            # @return Array Array of up to limit results
+            # @return [Array] Array of up to limit results
             def list(limit: nil, page_size: nil)
               self.stream(
                   limit: limit,
@@ -46,14 +46,14 @@ module Twilio
             # Streams InProgressInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                      not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             
-            # @return Enumerable Enumerable that will yield up to limit results
+            # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
@@ -68,9 +68,9 @@ module Twilio
             # When passed a block, yields InProgressInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param Integer limit: Upper limit for the number of records to return.                  stream()
+            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
-            # @param Integer page_size: Number of records to fetch per request, when                       not set will use
+            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to read the
             #                       limit with the most efficient page size, i.e. min(limit, 1000)
@@ -89,11 +89,11 @@ module Twilio
             ##
             # Retrieve a single page of InProgressInstance records from the API.
             # Request is executed immediately.
-            # @param String page_token: PageToken provided by the API
-            # @param Integer page_number: Page Number, this value is simply for client state
-            # @param Integer page_size: Number of records to return, defaults to 50
+            # @param [String] page_token PageToken provided by the API
+            # @param [Integer] page_number Page Number, this value is simply for client state
+            # @param [Integer] page_size Number of records to return, defaults to 50
             
-            # @return Page Page of InProgressInstance
+            # @return [Page] Page of InProgressInstance
             def page(page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'PageToken' => page_token,
@@ -121,10 +121,10 @@ module Twilio
           class InProgressPage < Page
             ##
             # Initialize the InProgressPage
-            # @param Version version: Version that contains the resource
-            # @param Response response: Response from the API
+            # @param [Version] version Version that contains the resource
+            # @param [Response] response Response from the API
             
-            # @return InProgressPage InProgressPage
+            # @return [InProgressPage] InProgressPage
             def initialize(version, response)
               super(version, response)
               
@@ -134,9 +134,9 @@ module Twilio
             
             ##
             # Build an instance of InProgressInstance
-            # @param Hash payload: Payload response from the API
+            # @param [Hash] payload Payload response from the API
             
-            # @return InProgressInstance InProgressInstance
+            # @return [InProgressInstance] InProgressInstance
             def get_instance(payload)
               return InProgressInstance.new(
                   @version,
@@ -154,7 +154,10 @@ module Twilio
           class InProgressInstance < InstanceResource
             ##
             # Initialize the InProgressInstance
-            # @return InProgressInstance InProgressInstance
+            # @param [Version] version Version that contains the resource
+            # @param [Hash] payload payload that contains response from Twilio
+            
+            # @return [InProgressInstance] InProgressInstance
             def initialize(version, payload)
               super(version)
               
@@ -205,7 +208,7 @@ module Twilio
             
             ##
             # Access the participants
-            # @return participants participants
+            # @return [participants] participants
             def participants
               @context.participants
             end

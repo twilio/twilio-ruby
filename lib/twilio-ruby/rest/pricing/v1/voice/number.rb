@@ -12,9 +12,9 @@ module Twilio
           class NumberList < ListResource
             ##
             # Initialize the NumberList
-            # @param Version version: Version that contains the resource
+            # @param [Version] version Version that contains the resource
             
-            # @return NumberList NumberList
+            # @return [NumberList] NumberList
             def initialize(version)
               super(version)
               
@@ -24,9 +24,9 @@ module Twilio
             
             ##
             # Constructs a NumberContext
-            # @param number: The number
+            # @param [String] number The number
             
-            # @return NumberContext NumberContext
+            # @return [NumberContext] NumberContext
             def get(number)
               NumberContext.new(
                   @version,
@@ -44,10 +44,10 @@ module Twilio
           class NumberPage < Page
             ##
             # Initialize the NumberPage
-            # @param Version version: Version that contains the resource
-            # @param Response response: Response from the API
+            # @param [Version] version Version that contains the resource
+            # @param [Response] response Response from the API
             
-            # @return NumberPage NumberPage
+            # @return [NumberPage] NumberPage
             def initialize(version, response)
               super(version, response)
               
@@ -57,9 +57,9 @@ module Twilio
             
             ##
             # Build an instance of NumberInstance
-            # @param Hash payload: Payload response from the API
+            # @param [Hash] payload Payload response from the API
             
-            # @return NumberInstance NumberInstance
+            # @return [NumberInstance] NumberInstance
             def get_instance(payload)
               return NumberInstance.new(
                   @version,
@@ -77,10 +77,10 @@ module Twilio
           class NumberContext < InstanceContext
             ##
             # Initialize the NumberContext
-            # @param Version version: Version that contains the resource
-            # @param number: The number
+            # @param [Version] version Version that contains the resource
+            # @param [String] number The number
             
-            # @return NumberContext NumberContext
+            # @return [NumberContext] NumberContext
             def initialize(version, number)
               super(version)
               
@@ -93,7 +93,7 @@ module Twilio
             
             ##
             # Fetch a NumberInstance
-            # @return NumberInstance Fetched NumberInstance
+            # @return [NumberInstance] Fetched NumberInstance
             def fetch
               params = {}
               
@@ -121,7 +121,11 @@ module Twilio
           class NumberInstance < InstanceResource
             ##
             # Initialize the NumberInstance
-            # @return NumberInstance NumberInstance
+            # @param [Version] version Version that contains the resource
+            # @param [Hash] payload payload that contains response from Twilio
+            # @param [String] number The number
+            
+            # @return [NumberInstance] NumberInstance
             def initialize(version, payload, number: nil)
               super(version)
               
@@ -146,7 +150,9 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return NumberContext NumberContext for this NumberInstance
+            # @param [Version] version Version that contains the resource
+            
+            # @return [NumberContext] NumberContext for this NumberInstance
             def context
               unless @instance_context
                 @instance_context = NumberContext.new(
@@ -187,7 +193,7 @@ module Twilio
             
             ##
             # Fetch a NumberInstance
-            # @return NumberInstance Fetched NumberInstance
+            # @return [NumberInstance] Fetched NumberInstance
             def fetch
               @context.fetch()
             end
