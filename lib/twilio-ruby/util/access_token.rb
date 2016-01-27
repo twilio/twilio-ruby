@@ -1,6 +1,13 @@
 module Twilio
   module Util
     class AccessToken
+      attr_accessor :account_sid,
+                    :signing_key_id,
+                    :secret,
+                    :ttl,
+                    :identity,
+                    :nbf
+
       def initialize(account_sid, signing_key_id, secret, ttl=3600, identity=nil, nbf=nil)
         @account_sid = account_sid
         @signing_key_sid = signing_key_id
@@ -36,10 +43,8 @@ module Twilio
             'exp' => now + @ttl,
             'grants' => grants
         }
-        
-        if @nbf
-          payload['nbf'] = @nbf.to_i
-        end
+
+        payload['nbf'] = @nbf unless @nbf.nil?
 
         JWT.encode payload, @secret, algorithm, headers
       end
@@ -84,10 +89,10 @@ module Twilio
           if @endpoint_id
             payload['endpoint_id'] = @endpoint_id
           end
-          if @role_sid
+          if @deployment_role_sid
             payload['deployment_role_sid'] = @deployment_role_sid
           end
-          if @credential_sid
+          if @push_credential_sid
             payload['push_credential_sid'] = @push_credential_sid
           end
 
