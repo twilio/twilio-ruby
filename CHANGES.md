@@ -1,12 +1,47 @@
 twilio-ruby changelog
 =====================
 
-Version 4.9.0.edge
+Version 4.9.0
+-------------
+
+Release December 17, 2015
+
+- Release ip messaging
+
+Version 4.8.0
 -------------
 
 Release December 8, 2015
 
 - Make nbf optional
+
+Version 4.7.0
+-------------
+
+Release December 3, 2015
+
+- Add access tokens
+
+Version 4.6.2
+-------------
+
+Release November 19, 2015
+
+- Fix Pricing Messages
+
+Version 4.6.1
+-------------
+
+Release November 10, 2015
+
+- Fix TrunkingClient references
+
+Version 4.6.0
+-------------
+
+Release October 28, 2015
+
+- Add /Keys endpoint
 
 Version 4.4.0
 -------------

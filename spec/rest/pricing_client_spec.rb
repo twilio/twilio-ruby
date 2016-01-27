@@ -42,4 +42,19 @@ describe Twilio::REST::PricingClient do
       '/v1/PhoneNumbers/Countries'
     )
   end
+
+  it 'should set up a messaging resources object' do
+    expect(@client).to respond_to(:messaging)
+    expect(@client.messaging.instance_variable_get('@path')).to eq(
+      '/v1/Messaging'
+    )
+  end
+
+  it 'should set up the country list resource on messaging' do
+    messaging = @client.messaging
+    expect(messaging).to respond_to(:countries)
+    expect(messaging.countries.instance_variable_get('@path')).to eq(
+      '/v1/Messaging/Countries'
+    )
+  end
 end

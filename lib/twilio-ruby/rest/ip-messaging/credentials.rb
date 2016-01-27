@@ -12,9 +12,6 @@ module Twilio
         def initialize(path, client, params={})
           super
           @submodule = :IpMessaging
-          resource :channels,
-                   :users,
-                   :roles
         end
       end
     end
