@@ -1,12 +1,7 @@
 module Twilio
   module REST
     module IpMessaging
-      class Services < NextGenListResource
-        def initialize(path, client)
-          @path, @client = path, client
-          @submodule = :IpMessaging
-        end
-      end
+      class Services < NextGenListResource; end
 
       class Service < InstanceResource
         def initialize(path, client, params={})
