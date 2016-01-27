@@ -10,7 +10,7 @@ module Twilio
           'Countries' => 'Country',
           'Feedback' => 'FeedbackInstance',
           'IpAddresses' => 'IpAddress',
-          'Media' => 'MediaInstance',
+          'Media' => 'MediaInstance'
         }
         @path, @client = path, client
         resource_name = self.class.name.split('::')[-1]
@@ -46,7 +46,8 @@ module Twilio
         raise "Can't get a resource list without a REST Client" unless @client
         response = @client.get @path, params, full_path
         resources = response[@list_key]
-        path = full_path ? @path.split('.')[0] : @path
+        path = @frozen_path ? @frozen_path : @path
+        path = full_path ? path.split('.')[0] : path
         resource_list = resources.map do |resource|
           @instance_class.new "#{path}/#{resource[@instance_id_key]}", @client,
             resource
@@ -80,7 +81,7 @@ module Twilio
       # attribute of the returned instance resource object, such as
       # its #date_created or #voice_url attributes.
       def get(sid)
-        @instance_class.new "#{@path}/#{sid}", @client
+        @instance_class.new "#{@frozen_path || @path}/#{sid}", @client
       end
       alias :find :get # for the ActiveRecord lovers
 

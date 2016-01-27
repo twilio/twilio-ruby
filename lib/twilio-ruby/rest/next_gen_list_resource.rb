@@ -4,11 +4,12 @@ module Twilio
       def list(params={}, full_path=false)
         raise "Can't get a resource list without a REST Client" unless @client
         response = @client.get @path, params, full_path
-        list_key = response['meta']['key']
+        list_key = response['meta']['key'] if response['meta']
         raise "Couldn't find a list key in response meta" unless list_key
         resources = response[list_key]
+        path = @frozen_path ? @frozen_path : @path
         resource_list = resources.map do |resource|
-          @instance_class.new "#{@path}/#{resource[@instance_id_key]}", @client,
+          @instance_class.new "#{path}/#{resource[@instance_id_key]}", @client,
                               resource
         end
         client, list_class = @client, self.class
