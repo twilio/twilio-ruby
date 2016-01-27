@@ -28,7 +28,16 @@ cd twilio-ruby
 make install
 ```
 
-## Getting Started With REST
+### Migration from 4.x
+[Upgrade Guide][upgrade]
+
+## Documentation
+[Here][documentation]
+
+## Feedback
+During the Release Candidate period of this library, please leave all feedback and issues in the [Github Issues][issues] for `twilio-ruby`.
+
+## Getting Started
 
 ### Setup Work
 
@@ -52,46 +61,24 @@ end
 @client = Twilio::REST::Client.new
 ```
 
+### Make a Call
+
+``` ruby
+@client.api.account.calls.create(
+  from: '+14159341234',
+  to: '+16105557069',
+  url: 'http://example.com'
+)
+```
+
 ### Send an SMS
 
 ``` ruby
-@client.messages.create(
+@client.api.account.messages.create(
   from: '+14159341234',
   to: '+16105557069',
   body: 'Hey there!'
 )
-```
-
-### Send an MMS
-
-``` ruby
-@client.messages.create(
-  from: '+14159341234',
-  to: '+16105557069',
-  body: 'Hey there!',
-  media_url: 'http://example.com/smileyface.jpg'
-)
-```
-
-### List Calls after a certain time
-
-``` ruby
-# list calls made or received on or after May 13, 2013
-@client.calls.list(start_time_before: Date.new(2013,5,13))
-```
-
-### Buy a Phone Number
-
-``` ruby
-# print some available numbers
-@numbers = @client.available_phone_numbers.get('US').local.list(
-  contains: 'AWESOME'
-)
-@numbers.each {|num| puts num.phone_number}
-
-# buy the first one
-@number = @numbers[0].phone_number
-@client.incoming_phone_numbers.create(phone_number: @number)
 ```
 
 ## Getting Started With Client Capability Tokens
@@ -164,7 +151,6 @@ implementations:
 - Ruby 2.2.0
 - Ruby 2.1.0
 - Ruby 2.0.0
-- Ruby 1.9.3
 - [JRuby][jruby]
 - [Rubinius][rubinius]
 
@@ -174,16 +160,11 @@ If you need help installing or using the library, please contact Twilio Support 
 
 If you've instead found a bug in the library or would like new features added, go ahead and open issues or pull requests against this repo!
 
-## More Information
-
-There are more detailed examples in the included [examples][examples]
-directory. Also for thoose upgrading, the [upgrade guide][upgrade] is available in the [twilio-ruby github wiki][wiki].
 
 [capability]: https://github.com/twilio/twilio-ruby/wiki/Capability
 [builder]: http://builder.rubyforge.org/
 [examples]: https://github.com/twilio/twilio-ruby/blob/master/examples
 [documentation]: http://twilio-ruby.readthedocs.org/en/latest
-[upgrade]: https://github.com/twilio/twilio-ruby/wiki/UpgradeGuide
 [wiki]: https://github.com/twilio/twilio-ruby/wiki
 [bundler]: http://bundler.io
 [rubygems]: http://rubygems.org
@@ -192,3 +173,5 @@ directory. Also for thoose upgrading, the [upgrade guide][upgrade] is available 
 [codeclimate]: https://codeclimate.com/github/twilio/twilio-ruby
 [jruby]: http://www.jruby.org
 [rubinius]: http://rubini.us
+[upgrade]: https://github.com/twilio/twilio-ruby/wiki/Ruby-Version-5.x-Upgrade-Guide
+[issues]: https://github.com/twilio/twilio-ruby/issues
