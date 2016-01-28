@@ -1,10 +1,18 @@
 twilio-ruby changelog
 =====================
 
+Version 4.10.0
+-------------
+
+Released January 28, 2016:
+
+- Add support for filter_friendly_name in WorkflowConfig
+- Load reservations by default in TaskRouter
+
 Version 4.9.1
 -------------
 
-Release January 28, 2015
+Release January 28, 2016
 
 - Fix ip messaging first person grant
 
