@@ -109,11 +109,7 @@ module Twilio
                   @uri,
                   params
               )
-              return ConnectAppPage.new(
-                  @version,
-                  response,
-                  account_sid: @solution['account_sid'],
-              )
+              return ConnectAppPage.new(@version, response, @solution)
             end
             
             ##
@@ -141,17 +137,16 @@ module Twilio
             # Initialize the ConnectAppPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
+            # @param [Hash] solution Path solution for the resource
             # @param [String] account_sid The unique id of the Account that created this
             #   ConnectApp.
             
             # @return [ConnectAppPage] ConnectAppPage
-            def initialize(version, response, account_sid: nil)
+            def initialize(version, response, solution)
               super(version, response)
               
               # Path Solution
-              @solution = {
-                  'account_sid' => account_sid,
-              }
+              @solution = solution
             end
             
             ##

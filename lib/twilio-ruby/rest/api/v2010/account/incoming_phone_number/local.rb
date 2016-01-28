@@ -131,11 +131,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return LocalPage.new(
-                    @version,
-                    response,
-                    owner_account_sid: @solution['owner_account_sid'],
-                )
+                return LocalPage.new(@version, response, @solution)
               end
               
               ##
@@ -204,17 +200,16 @@ module Twilio
               # Initialize the LocalPage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
+              # @param [Hash] solution Path solution for the resource
               # @param [String] owner_account_sid A 34 character string that uniquely identifies
               #   this resource.
               
               # @return [LocalPage] LocalPage
-              def initialize(version, response, owner_account_sid: nil)
+              def initialize(version, response, solution)
                 super(version, response)
                 
                 # Path Solution
-                @solution = {
-                    'owner_account_sid' => owner_account_sid,
-                }
+                @solution = solution
               end
               
               ##

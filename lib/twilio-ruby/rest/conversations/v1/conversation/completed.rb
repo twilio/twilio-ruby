@@ -105,10 +105,7 @@ module Twilio
                   @uri,
                   params
               )
-              return CompletedPage.new(
-                  @version,
-                  response,
-              )
+              return CompletedPage.new(@version, response, @solution)
             end
             
             ##
@@ -123,13 +120,14 @@ module Twilio
             # Initialize the CompletedPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
+            # @param [Hash] solution Path solution for the resource
             
             # @return [CompletedPage] CompletedPage
-            def initialize(version, response)
+            def initialize(version, response, solution)
               super(version, response)
               
               # Path Solution
-              @solution = {}
+              @solution = solution
             end
             
             ##

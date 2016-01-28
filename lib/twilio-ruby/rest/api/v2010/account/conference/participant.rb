@@ -120,12 +120,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return ParticipantPage.new(
-                    @version,
-                    response,
-                    account_sid: @solution['account_sid'],
-                    conference_sid: @solution['conference_sid'],
-                )
+                return ParticipantPage.new(@version, response, @solution)
               end
               
               ##
@@ -154,20 +149,18 @@ module Twilio
               # Initialize the ParticipantPage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
+              # @param [Hash] solution Path solution for the resource
               # @param [String] account_sid The unique id of the Account that created this
               #   conference
               # @param [String] conference_sid A 34 character string that identifies the
               #   conference this participant is in
               
               # @return [ParticipantPage] ParticipantPage
-              def initialize(version, response, account_sid: nil, conference_sid: nil)
+              def initialize(version, response, solution)
                 super(version, response)
                 
                 # Path Solution
-                @solution = {
-                    'account_sid' => account_sid,
-                    'conference_sid' => conference_sid,
-                }
+                @solution = solution
               end
               
               ##

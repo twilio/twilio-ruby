@@ -11,7 +11,7 @@ module Twilio
       end
 
       def absolute_url(uri)
-        "#{@base_url.chomp('/')}/#{uri.chomp('/')}"
+        "#{@base_url.chomp('/')}/#{uri.chomp('/').gsub(/^\//, '')}"
       end
 
       def request(method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)

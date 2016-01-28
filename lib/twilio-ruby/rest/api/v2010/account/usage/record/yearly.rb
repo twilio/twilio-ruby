@@ -111,11 +111,7 @@ module Twilio
                       @uri,
                       params
                   )
-                  return YearlyPage.new(
-                      @version,
-                      response,
-                      account_sid: @solution['account_sid'],
-                  )
+                  return YearlyPage.new(@version, response, @solution)
                 end
                 
                 ##
@@ -130,17 +126,16 @@ module Twilio
                 # Initialize the YearlyPage
                 # @param [Version] version Version that contains the resource
                 # @param [Response] response Response from the API
+                # @param [Hash] solution Path solution for the resource
                 # @param [String] account_sid A 34 character string that uniquely identifies this
                 #   resource.
                 
                 # @return [YearlyPage] YearlyPage
-                def initialize(version, response, account_sid: nil)
+                def initialize(version, response, solution)
                   super(version, response)
                   
                   # Path Solution
-                  @solution = {
-                      'account_sid' => account_sid,
-                  }
+                  @solution = solution
                 end
                 
                 ##

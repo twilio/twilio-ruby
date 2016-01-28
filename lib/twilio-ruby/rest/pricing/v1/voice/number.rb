@@ -46,13 +46,14 @@ module Twilio
             # Initialize the NumberPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
+            # @param [Hash] solution Path solution for the resource
             
             # @return [NumberPage] NumberPage
-            def initialize(version, response)
+            def initialize(version, response, solution)
               super(version, response)
               
               # Path Solution
-              @solution = {}
+              @solution = solution
             end
             
             ##

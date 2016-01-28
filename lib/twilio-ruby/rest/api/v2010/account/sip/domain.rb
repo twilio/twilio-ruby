@@ -110,11 +110,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return DomainPage.new(
-                    @version,
-                    response,
-                    account_sid: @solution['account_sid'],
-                )
+                return DomainPage.new(@version, response, @solution)
               end
               
               ##
@@ -186,17 +182,16 @@ module Twilio
               # Initialize the DomainPage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
+              # @param [Hash] solution Path solution for the resource
               # @param [String] account_sid A 34 character string that uniquely identifies this
               #   resource.
               
               # @return [DomainPage] DomainPage
-              def initialize(version, response, account_sid: nil)
+              def initialize(version, response, solution)
                 super(version, response)
                 
                 # Path Solution
-                @solution = {
-                    'account_sid' => account_sid,
-                }
+                @solution = solution
               end
               
               ##

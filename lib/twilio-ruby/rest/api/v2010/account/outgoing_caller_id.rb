@@ -131,11 +131,7 @@ module Twilio
                   @uri,
                   params
               )
-              return OutgoingCallerIdPage.new(
-                  @version,
-                  response,
-                  account_sid: @solution['account_sid'],
-              )
+              return OutgoingCallerIdPage.new(@version, response, @solution)
             end
             
             ##
@@ -164,17 +160,16 @@ module Twilio
             # Initialize the OutgoingCallerIdPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
+            # @param [Hash] solution Path solution for the resource
             # @param [String] account_sid The unique id of the Account responsible for this
             #   Caller Id.
             
             # @return [OutgoingCallerIdPage] OutgoingCallerIdPage
-            def initialize(version, response, account_sid: nil)
+            def initialize(version, response, solution)
               super(version, response)
               
               # Path Solution
-              @solution = {
-                  'account_sid' => account_sid,
-              }
+              @solution = solution
             end
             
             ##

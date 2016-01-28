@@ -51,18 +51,16 @@ module Twilio
               # Initialize the TaskQueueStatisticsPage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
+              # @param [Hash] solution Path solution for the resource
               # @param [String] workspace_sid The workspace_sid
               # @param [String] task_queue_sid The task_queue_sid
               
               # @return [TaskQueueStatisticsPage] TaskQueueStatisticsPage
-              def initialize(version, response, workspace_sid: nil, task_queue_sid: nil)
+              def initialize(version, response, solution)
                 super(version, response)
                 
                 # Path Solution
-                @solution = {
-                    'workspace_sid' => workspace_sid,
-                    'task_queue_sid' => task_queue_sid,
-                }
+                @solution = solution
               end
               
               ##

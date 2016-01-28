@@ -8,12 +8,12 @@ module Twilio
   module REST
     class Pricing < Domain
       class V1 < Version
-        class PhoneNumberList < ListResource
+        class MessagingList < ListResource
           ##
-          # Initialize the PhoneNumberList
+          # Initialize the MessagingList
           # @param [Version] version Version that contains the resource
           
-          # @return [PhoneNumberList] PhoneNumberList
+          # @return [MessagingList] MessagingList
           def initialize(version)
             super(version)
             
@@ -45,18 +45,18 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Pricing.V1.PhoneNumberList>'
+            '#<Twilio.Pricing.V1.MessagingList>'
           end
         end
       
-        class PhoneNumberPage < Page
+        class MessagingPage < Page
           ##
-          # Initialize the PhoneNumberPage
+          # Initialize the MessagingPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
           
-          # @return [PhoneNumberPage] PhoneNumberPage
+          # @return [MessagingPage] MessagingPage
           def initialize(version, response, solution)
             super(version, response)
             
@@ -65,12 +65,12 @@ module Twilio
           end
           
           ##
-          # Build an instance of PhoneNumberInstance
+          # Build an instance of MessagingInstance
           # @param [Hash] payload Payload response from the API
           
-          # @return [PhoneNumberInstance] PhoneNumberInstance
+          # @return [MessagingInstance] MessagingInstance
           def get_instance(payload)
-            return PhoneNumberInstance.new(
+            return MessagingInstance.new(
                 @version,
                 payload,
             )
@@ -79,17 +79,17 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Pricing.V1.PhoneNumberPage>'
+            '<Twilio.Pricing.V1.MessagingPage>'
           end
         end
       
-        class PhoneNumberInstance < InstanceResource
+        class MessagingInstance < InstanceResource
           ##
-          # Initialize the PhoneNumberInstance
+          # Initialize the MessagingInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
           
-          # @return [PhoneNumberInstance] PhoneNumberInstance
+          # @return [MessagingInstance] MessagingInstance
           def initialize(version, payload)
             super(version)
             
@@ -116,7 +116,7 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            "<Twilio.Pricing.V1.PhoneNumberInstance>"
+            "<Twilio.Pricing.V1.MessagingInstance>"
           end
         end
       end

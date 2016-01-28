@@ -85,17 +85,16 @@ module Twilio
               # Initialize the FeedbackSummaryPage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
+              # @param [Hash] solution Path solution for the resource
               # @param [String] account_sid The unique id of the Account responsible for
               #   creating this Call
               
               # @return [FeedbackSummaryPage] FeedbackSummaryPage
-              def initialize(version, response, account_sid: nil)
+              def initialize(version, response, solution)
                 super(version, response)
                 
                 # Path Solution
-                @solution = {
-                    'account_sid' => account_sid,
-                }
+                @solution = solution
               end
               
               ##

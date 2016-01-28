@@ -112,12 +112,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return MemberPage.new(
-                    @version,
-                    response,
-                    account_sid: @solution['account_sid'],
-                    queue_sid: @solution['queue_sid'],
-                )
+                return MemberPage.new(@version, response, @solution)
               end
               
               ##
@@ -146,19 +141,17 @@ module Twilio
               # Initialize the MemberPage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
+              # @param [Hash] solution Path solution for the resource
               # @param [String] account_sid The account_sid
               # @param [String] queue_sid A 34 character string that uniquely identifies this
               #   queue.
               
               # @return [MemberPage] MemberPage
-              def initialize(version, response, account_sid: nil, queue_sid: nil)
+              def initialize(version, response, solution)
                 super(version, response)
                 
                 # Path Solution
-                @solution = {
-                    'account_sid' => account_sid,
-                    'queue_sid' => queue_sid,
-                }
+                @solution = solution
               end
               
               ##

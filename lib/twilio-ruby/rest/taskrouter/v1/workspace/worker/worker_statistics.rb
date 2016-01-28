@@ -51,18 +51,16 @@ module Twilio
               # Initialize the WorkerStatisticsPage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
+              # @param [Hash] solution Path solution for the resource
               # @param [String] workspace_sid The workspace_sid
               # @param [String] worker_sid The worker_sid
               
               # @return [WorkerStatisticsPage] WorkerStatisticsPage
-              def initialize(version, response, workspace_sid: nil, worker_sid: nil)
+              def initialize(version, response, solution)
                 super(version, response)
                 
                 # Path Solution
-                @solution = {
-                    'workspace_sid' => workspace_sid,
-                    'worker_sid' => worker_sid,
-                }
+                @solution = solution
               end
               
               ##

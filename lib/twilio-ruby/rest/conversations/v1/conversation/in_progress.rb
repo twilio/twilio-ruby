@@ -105,10 +105,7 @@ module Twilio
                   @uri,
                   params
               )
-              return InProgressPage.new(
-                  @version,
-                  response,
-              )
+              return InProgressPage.new(@version, response, @solution)
             end
             
             ##
@@ -123,13 +120,14 @@ module Twilio
             # Initialize the InProgressPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
+            # @param [Hash] solution Path solution for the resource
             
             # @return [InProgressPage] InProgressPage
-            def initialize(version, response)
+            def initialize(version, response, solution)
               super(version, response)
               
               # Path Solution
-              @solution = {}
+              @solution = solution
             end
             
             ##

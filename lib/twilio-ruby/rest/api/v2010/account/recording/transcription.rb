@@ -111,12 +111,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return TranscriptionPage.new(
-                    @version,
-                    response,
-                    account_sid: @solution['account_sid'],
-                    recording_sid: @solution['recording_sid'],
-                )
+                return TranscriptionPage.new(@version, response, @solution)
               end
               
               ##
@@ -145,18 +140,16 @@ module Twilio
               # Initialize the TranscriptionPage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
+              # @param [Hash] solution Path solution for the resource
               # @param [String] account_sid The account_sid
               # @param [String] recording_sid The recording_sid
               
               # @return [TranscriptionPage] TranscriptionPage
-              def initialize(version, response, account_sid: nil, recording_sid: nil)
+              def initialize(version, response, solution)
                 super(version, response)
                 
                 # Path Solution
-                @solution = {
-                    'account_sid' => account_sid,
-                    'recording_sid' => recording_sid,
-                }
+                @solution = solution
               end
               
               ##

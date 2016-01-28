@@ -1,46 +1,44 @@
-require 'uri'
+require 'faraday'
 
 module Twilio
   module HTTP
     class Client
+      attr_accessor :adapter
+
       def initialize(proxy_addr=nil, proxy_port=nil, proxy_user=nil, proxy_pass=nil, ssl_ca_file=nil)
         @proxy_addr = proxy_addr
         @proxy_port = proxy_port
         @proxy_user = proxy_user
         @proxy_pass = proxy_pass
         @ssl_ca_file = ssl_ca_file
+        @adapter = Faraday.default_adapter
       end
 
       def request(host, port, method, url, params={}, data={}, headers={}, auth=nil, timeout=nil)
-        connection_class = Net::HTTP::Proxy @proxy_addr,
-                                            @proxy_port,
-                                            @proxy_user,
-                                            @proxy_pass
+        puts host
+        puts url
+        @connection = Faraday.new(url: host + ":" + port.to_s, ssl: {verify: true}) do |f|
+          f.request :url_encoded
+          f.adapter @adapter
+          f.headers = headers
+          f.basic_auth(auth[0], auth[1])
+          if @proxy_addr
+            f.proxy "#{@proxy_user}:#{@proxy_pass}@#{@proxy_addr}:#{@proxy_port}"
+          end
+          f.options.open_timeout = timeout
+          f.options.timeout = timeout
+        end
 
-        @connection = connection_class.new host, port
-        @connection.use_ssl = true
-        @connection.verify_mode = OpenSSL::SSL::VERIFY_PEER
-        @connection.ca_file = @ssl_ca_file
-        @connection.open_timeout = timeout
-        @connection.read_timeout = timeout
+        response = @connection.send(method.downcase.to_sym, url, method == 'GET' ? params : data)
 
-        method = method.to_s.upcase
-        method_class = Net::HTTP.const_get method.to_s.capitalize
-        url = "#{url}?#{URI.encode(params.join('&'))}" if method == 'GET' && !params.empty?
-        request = method_class.new(url, headers)
-        request.basic_auth(auth[0], auth[1])
-        request.form_data = data if ['POST', 'PUT'].include?(method)
-
-        @last_request = request
-        response = @connection.request request
         @last_response = response
         if response.body and !response.body.empty?
           object = response.body
-        elsif response.kind_of? Net::HTTPBadRequest
+        elsif response.status == 400
           object = { message: 'Bad request', code: 400 }.to_json
         end
 
-        TwilioResponse.new(response.code.to_i, object)
+        TwilioResponse.new(response.status, object)
       end
     end
 

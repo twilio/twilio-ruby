@@ -140,11 +140,7 @@ module Twilio
                   @uri,
                   params
               )
-              return OriginationUrlPage.new(
-                  @version,
-                  response,
-                  trunk_sid: @solution['trunk_sid'],
-              )
+              return OriginationUrlPage.new(@version, response, @solution)
             end
             
             ##
@@ -172,16 +168,15 @@ module Twilio
             # Initialize the OriginationUrlPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
+            # @param [Hash] solution Path solution for the resource
             # @param [String] trunk_sid The trunk_sid
             
             # @return [OriginationUrlPage] OriginationUrlPage
-            def initialize(version, response, trunk_sid: nil)
+            def initialize(version, response, solution)
               super(version, response)
               
               # Path Solution
-              @solution = {
-                  'trunk_sid' => trunk_sid,
-              }
+              @solution = solution
             end
             
             ##

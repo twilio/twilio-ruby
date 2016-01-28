@@ -3,6 +3,8 @@ module Twilio
     class Version
       MAX_PAGE_SIZE = 1000
 
+      attr_accessor :domain
+
       class RecordStream
         include Enumerable
 
@@ -42,7 +44,7 @@ module Twilio
       end
 
       def relative_uri(uri)
-        "#{@version.chomp('/')}#{uri.chomp('/')}"
+        "#{@version.chomp('/').gsub(/^\//, '')}/#{uri.chomp('/').gsub(/^\//, '')}"
       end
 
       def request(method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)

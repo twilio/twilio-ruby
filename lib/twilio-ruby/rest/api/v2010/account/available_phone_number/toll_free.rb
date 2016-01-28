@@ -183,12 +183,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return TollFreePage.new(
-                    @version,
-                    response,
-                    account_sid: @solution['account_sid'],
-                    country_code: @solution['country_code'],
-                )
+                return TollFreePage.new(@version, response, @solution)
               end
               
               ##
@@ -203,19 +198,17 @@ module Twilio
               # Initialize the TollFreePage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
+              # @param [Hash] solution Path solution for the resource
               # @param [String] account_sid A 34 character string that uniquely identifies this
               #   resource.
               # @param [String] country_code The country_code
               
               # @return [TollFreePage] TollFreePage
-              def initialize(version, response, account_sid: nil, country_code: nil)
+              def initialize(version, response, solution)
                 super(version, response)
                 
                 # Path Solution
-                @solution = {
-                    'account_sid' => account_sid,
-                    'country_code' => country_code,
-                }
+                @solution = solution
               end
               
               ##

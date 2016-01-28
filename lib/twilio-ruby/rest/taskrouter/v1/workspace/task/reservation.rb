@@ -111,12 +111,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return ReservationPage.new(
-                    @version,
-                    response,
-                    workspace_sid: @solution['workspace_sid'],
-                    task_sid: @solution['task_sid'],
-                )
+                return ReservationPage.new(@version, response, @solution)
               end
               
               ##
@@ -145,18 +140,16 @@ module Twilio
               # Initialize the ReservationPage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
+              # @param [Hash] solution Path solution for the resource
               # @param [String] workspace_sid The workspace_sid
               # @param [String] task_sid The task_sid
               
               # @return [ReservationPage] ReservationPage
-              def initialize(version, response, workspace_sid: nil, task_sid: nil)
+              def initialize(version, response, solution)
                 super(version, response)
                 
                 # Path Solution
-                @solution = {
-                    'workspace_sid' => workspace_sid,
-                    'task_sid' => task_sid,
-                }
+                @solution = solution
               end
               
               ##

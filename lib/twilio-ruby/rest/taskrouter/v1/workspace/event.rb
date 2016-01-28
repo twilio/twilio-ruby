@@ -171,11 +171,7 @@ module Twilio
                   @uri,
                   params
               )
-              return EventPage.new(
-                  @version,
-                  response,
-                  workspace_sid: @solution['workspace_sid'],
-              )
+              return EventPage.new(@version, response, @solution)
             end
             
             ##
@@ -203,16 +199,15 @@ module Twilio
             # Initialize the EventPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
+            # @param [Hash] solution Path solution for the resource
             # @param [String] workspace_sid The sid
             
             # @return [EventPage] EventPage
-            def initialize(version, response, workspace_sid: nil)
+            def initialize(version, response, solution)
               super(version, response)
               
               # Path Solution
-              @solution = {
-                  'workspace_sid' => workspace_sid,
-              }
+              @solution = solution
             end
             
             ##

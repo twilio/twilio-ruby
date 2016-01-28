@@ -138,12 +138,7 @@ module Twilio
                       @uri,
                       params
                   )
-                  return CredentialListMappingPage.new(
-                      @version,
-                      response,
-                      account_sid: @solution['account_sid'],
-                      domain_sid: @solution['domain_sid'],
-                  )
+                  return CredentialListMappingPage.new(@version, response, @solution)
                 end
                 
                 ##
@@ -172,19 +167,17 @@ module Twilio
                 # Initialize the CredentialListMappingPage
                 # @param [Version] version Version that contains the resource
                 # @param [Response] response Response from the API
+                # @param [Hash] solution Path solution for the resource
                 # @param [String] account_sid The account_sid
                 # @param [String] domain_sid A 34 character string that uniquely identifies the
                 #   SIP domain in Twilio
                 
                 # @return [CredentialListMappingPage] CredentialListMappingPage
-                def initialize(version, response, account_sid: nil, domain_sid: nil)
+                def initialize(version, response, solution)
                   super(version, response)
                   
                   # Path Solution
-                  @solution = {
-                      'account_sid' => account_sid,
-                      'domain_sid' => domain_sid,
-                  }
+                  @solution = solution
                 end
                 
                 ##

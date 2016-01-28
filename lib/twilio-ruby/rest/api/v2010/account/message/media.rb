@@ -134,12 +134,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return MediaPage.new(
-                    @version,
-                    response,
-                    account_sid: @solution['account_sid'],
-                    message_sid: @solution['message_sid'],
-                )
+                return MediaPage.new(@version, response, @solution)
               end
               
               ##
@@ -168,20 +163,18 @@ module Twilio
               # Initialize the MediaPage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
+              # @param [Hash] solution Path solution for the resource
               # @param [String] account_sid The unique id of the Account responsible for this
               #   media.
               # @param [String] message_sid A 34 character string that uniquely identifies this
               #   resource.
               
               # @return [MediaPage] MediaPage
-              def initialize(version, response, account_sid: nil, message_sid: nil)
+              def initialize(version, response, solution)
                 super(version, response)
                 
                 # Path Solution
-                @solution = {
-                    'account_sid' => account_sid,
-                    'message_sid' => message_sid,
-                }
+                @solution = solution
               end
               
               ##

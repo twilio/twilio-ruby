@@ -6,29 +6,25 @@
 
 module Twilio
   module REST
-    class Api < Domain
-      class V2010 < Version
-        class AccountContext < InstanceContext
-          class AvailablePhoneNumberCountryList < ListResource
+    class Pricing < Domain
+      class V1 < Version
+        class MessagingList < ListResource
+          class CountryList < ListResource
             ##
-            # Initialize the AvailablePhoneNumberCountryList
+            # Initialize the CountryList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid A 34 character string that uniquely identifies this
-            #   resource.
             
-            # @return [AvailablePhoneNumberCountryList] AvailablePhoneNumberCountryList
-            def initialize(version, account_sid: nil)
+            # @return [CountryList] CountryList
+            def initialize(version)
               super(version)
               
               # Path Solution
-              @solution = {
-                  account_sid: account_sid
-              }
-              @uri = "/Accounts/#{@solution[:account_sid]}/AvailablePhoneNumbers.json"
+              @solution = {}
+              @uri = "/Messaging/Countries"
             end
             
             ##
-            # Lists AvailablePhoneNumberCountryInstance records from the API as a list.
+            # Lists CountryInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -47,7 +43,7 @@ module Twilio
             end
             
             ##
-            # Streams AvailablePhoneNumberCountryInstance records from the API as an Enumerable.
+            # Streams CountryInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
@@ -69,7 +65,7 @@ module Twilio
             end
             
             ##
-            # When passed a block, yields AvailablePhoneNumberCountryInstance records from the API.
+            # When passed a block, yields CountryInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
@@ -91,13 +87,13 @@ module Twilio
             end
             
             ##
-            # Retrieve a single page of AvailablePhoneNumberCountryInstance records from the API.
+            # Retrieve a single page of CountryInstance records from the API.
             # Request is executed immediately.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             
-            # @return [Page] Page of AvailablePhoneNumberCountryInstance
+            # @return [Page] Page of CountryInstance
             def page(page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'PageToken' => page_token,
@@ -109,39 +105,36 @@ module Twilio
                   @uri,
                   params
               )
-              return AvailablePhoneNumberCountryPage.new(@version, response, @solution)
+              return CountryPage.new(@version, response, @solution)
             end
             
             ##
-            # Constructs a AvailablePhoneNumberCountryContext
-            # @param [String] country_code The country_code
+            # Constructs a CountryContext
+            # @param [String] iso_country The iso_country
             
-            # @return [AvailablePhoneNumberCountryContext] AvailablePhoneNumberCountryContext
-            def get(country_code)
-              AvailablePhoneNumberCountryContext.new(
+            # @return [CountryContext] CountryContext
+            def get(iso_country)
+              CountryContext.new(
                   @version,
-                  account_sid: @solution[:account_sid],
-                  country_code: country_code,
+                  iso_country: iso_country,
               )
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              '#<Twilio.Api.V2010.AvailablePhoneNumberCountryList>'
+              '#<Twilio.Pricing.V1.CountryList>'
             end
           end
         
-          class AvailablePhoneNumberCountryPage < Page
+          class CountryPage < Page
             ##
-            # Initialize the AvailablePhoneNumberCountryPage
+            # Initialize the CountryPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] account_sid A 34 character string that uniquely identifies this
-            #   resource.
             
-            # @return [AvailablePhoneNumberCountryPage] AvailablePhoneNumberCountryPage
+            # @return [CountryPage] CountryPage
             def initialize(version, response, solution)
               super(version, response)
               
@@ -150,52 +143,44 @@ module Twilio
             end
             
             ##
-            # Build an instance of AvailablePhoneNumberCountryInstance
+            # Build an instance of CountryInstance
             # @param [Hash] payload Payload response from the API
             
-            # @return [AvailablePhoneNumberCountryInstance] AvailablePhoneNumberCountryInstance
+            # @return [CountryInstance] CountryInstance
             def get_instance(payload)
-              return AvailablePhoneNumberCountryInstance.new(
+              return CountryInstance.new(
                   @version,
                   payload,
-                  account_sid: @solution['account_sid'],
               )
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              '<Twilio.Api.V2010.AvailablePhoneNumberCountryPage>'
+              '<Twilio.Pricing.V1.CountryPage>'
             end
           end
         
-          class AvailablePhoneNumberCountryContext < InstanceContext
+          class CountryContext < InstanceContext
             ##
-            # Initialize the AvailablePhoneNumberCountryContext
+            # Initialize the CountryContext
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The account_sid
-            # @param [String] country_code The country_code
+            # @param [String] iso_country The iso_country
             
-            # @return [AvailablePhoneNumberCountryContext] AvailablePhoneNumberCountryContext
-            def initialize(version, account_sid, country_code)
+            # @return [CountryContext] CountryContext
+            def initialize(version, iso_country)
               super(version)
               
               # Path Solution
               @solution = {
-                  account_sid: account_sid,
-                  country_code: country_code,
+                  iso_country: iso_country,
               }
-              @uri = "/Accounts/#{@solution[:account_sid]}/AvailablePhoneNumbers/#{@solution[:country_code]}.json"
-              
-              # Dependents
-              @local = nil
-              @toll_free = nil
-              @mobile = nil
+              @uri = "/Messaging/Countries/#{@solution[:iso_country]}"
             end
             
             ##
-            # Fetch a AvailablePhoneNumberCountryInstance
-            # @return [AvailablePhoneNumberCountryInstance] Fetched AvailablePhoneNumberCountryInstance
+            # Fetch a CountryInstance
+            # @return [CountryInstance] Fetched CountryInstance
             def fetch
               params = {}
               
@@ -205,94 +190,46 @@ module Twilio
                   params,
               )
               
-              return AvailablePhoneNumberCountryInstance.new(
+              return CountryInstance.new(
                   @version,
                   payload,
-                  account_sid: @solution['account_sid'],
-                  country_code: @solution['country_code'],
+                  iso_country: @solution['iso_country'],
               )
-            end
-            
-            ##
-            # Access the local
-            # @return [LocalList] LocalList
-            def local
-              unless @local
-                @local = LocalList.new(
-                    @version,
-                    country_code: @solution[:country_code],
-                    account_sid: @solution[:account_sid],
-                )
-              end
-              
-              @local
-            end
-            
-            ##
-            # Access the toll_free
-            # @return [TollFreeList] TollFreeList
-            def toll_free
-              unless @toll_free
-                @toll_free = TollFreeList.new(
-                    @version,
-                    country_code: @solution[:country_code],
-                    account_sid: @solution[:account_sid],
-                )
-              end
-              
-              @toll_free
-            end
-            
-            ##
-            # Access the mobile
-            # @return [MobileList] MobileList
-            def mobile
-              unless @mobile
-                @mobile = MobileList.new(
-                    @version,
-                    country_code: @solution[:country_code],
-                    account_sid: @solution[:account_sid],
-                )
-              end
-              
-              @mobile
             end
             
             ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Api.V2010.AvailablePhoneNumberCountryContext #{context}>"
+              "#<Twilio.Pricing.V1.CountryContext #{context}>"
             end
           end
         
-          class AvailablePhoneNumberCountryInstance < InstanceResource
+          class CountryInstance < InstanceResource
             ##
-            # Initialize the AvailablePhoneNumberCountryInstance
+            # Initialize the CountryInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid A 34 character string that uniquely identifies this
-            #   resource.
-            # @param [String] country_code The country_code
+            # @param [String] iso_country The iso_country
             
-            # @return [AvailablePhoneNumberCountryInstance] AvailablePhoneNumberCountryInstance
-            def initialize(version, payload, account_sid: nil, country_code: nil)
+            # @return [CountryInstance] CountryInstance
+            def initialize(version, payload, iso_country: nil)
               super(version)
               
               # Marshaled Properties
               @properties = {
-                  'country_code' => payload['country_code'],
                   'country' => payload['country'],
-                  'uri' => payload['uri'],
-                  'beta' => payload['beta'],
-                  'subresource_uris' => payload['subresource_uris'],
+                  'iso_country' => payload['iso_country'],
+                  'url' => payload['url'],
+                  'outbound_sms_prices' => payload['outbound_sms_prices'],
+                  'inbound_sms_prices' => payload['inbound_sms_prices'],
+                  'price_unit' => payload['price_unit'],
               }
               
               # Context
               @instance_context = nil
               @params = {
-                  'account_sid' => account_sid,
-                  'country_code' => country_code || @properties['country_code'],
+                  'iso_country' => iso_country || @properties['iso_country'],
               }
             end
             
@@ -301,71 +238,53 @@ module Twilio
             # performing various actions.  All instance actions are proxied to the context
             # @param [Version] version Version that contains the resource
             
-            # @return [AvailablePhoneNumberCountryContext] AvailablePhoneNumberCountryContext for this AvailablePhoneNumberCountryInstance
+            # @return [CountryContext] CountryContext for this CountryInstance
             def context
               unless @instance_context
-                @instance_context = AvailablePhoneNumberCountryContext.new(
+                @instance_context = CountryContext.new(
                     @version,
-                    @params['account_sid'],
-                    @params['country_code'],
+                    @params['iso_country'],
                 )
               end
               @instance_context
-            end
-            
-            def country_code
-              @properties['country_code']
             end
             
             def country
               @properties['country']
             end
             
-            def uri
-              @properties['uri']
+            def iso_country
+              @properties['iso_country']
             end
             
-            def beta
-              @properties['beta']
+            def outbound_sms_prices
+              @properties['outbound_sms_prices']
             end
             
-            def subresource_uris
-              @properties['subresource_uris']
+            def inbound_sms_prices
+              @properties['inbound_sms_prices']
+            end
+            
+            def price_unit
+              @properties['price_unit']
+            end
+            
+            def url
+              @properties['url']
             end
             
             ##
-            # Fetch a AvailablePhoneNumberCountryInstance
-            # @return [AvailablePhoneNumberCountryInstance] Fetched AvailablePhoneNumberCountryInstance
+            # Fetch a CountryInstance
+            # @return [CountryInstance] Fetched CountryInstance
             def fetch
               @context.fetch()
-            end
-            
-            ##
-            # Access the local
-            # @return [local] local
-            def local
-              @context.local
-            end
-            
-            ##
-            # Access the toll_free
-            # @return [toll_free] toll_free
-            def toll_free
-              @context.toll_free
-            end
-            
-            ##
-            # Access the mobile
-            # @return [mobile] mobile
-            def mobile
-              @context.mobile
             end
             
             ##
             # Provide a user friendly representation
             def to_s
               context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Api.V2010.AvailablePhoneNumberCountryInstance #{context}>"
+              "<Twilio.Pricing.V1.CountryInstance #{context}>"
             end
           end
         end

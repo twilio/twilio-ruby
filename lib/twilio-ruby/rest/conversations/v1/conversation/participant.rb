@@ -108,11 +108,7 @@ module Twilio
                   @uri,
                   params
               )
-              return ParticipantPage.new(
-                  @version,
-                  response,
-                  conversation_sid: @solution['conversation_sid'],
-              )
+              return ParticipantPage.new(@version, response, @solution)
             end
             
             ##
@@ -166,16 +162,15 @@ module Twilio
             # Initialize the ParticipantPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
+            # @param [Hash] solution Path solution for the resource
             # @param [String] conversation_sid The conversation_sid
             
             # @return [ParticipantPage] ParticipantPage
-            def initialize(version, response, conversation_sid: nil)
+            def initialize(version, response, solution)
               super(version, response)
               
               # Path Solution
-              @solution = {
-                  'conversation_sid' => conversation_sid,
-              }
+              @solution = solution
             end
             
             ##

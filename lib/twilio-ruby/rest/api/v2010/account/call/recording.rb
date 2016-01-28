@@ -132,12 +132,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return RecordingPage.new(
-                    @version,
-                    response,
-                    account_sid: @solution['account_sid'],
-                    call_sid: @solution['call_sid'],
-                )
+                return RecordingPage.new(@version, response, @solution)
               end
               
               ##
@@ -166,18 +161,16 @@ module Twilio
               # Initialize the RecordingPage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
+              # @param [Hash] solution Path solution for the resource
               # @param [String] account_sid The account_sid
               # @param [String] call_sid The call_sid
               
               # @return [RecordingPage] RecordingPage
-              def initialize(version, response, account_sid: nil, call_sid: nil)
+              def initialize(version, response, solution)
                 super(version, response)
                 
                 # Path Solution
-                @solution = {
-                    'account_sid' => account_sid,
-                    'call_sid' => call_sid,
-                }
+                @solution = solution
               end
               
               ##

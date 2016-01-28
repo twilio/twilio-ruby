@@ -112,12 +112,7 @@ module Twilio
                       @uri,
                       params
                   )
-                  return IpAddressPage.new(
-                      @version,
-                      response,
-                      account_sid: @solution['account_sid'],
-                      ip_access_control_list_sid: @solution['ip_access_control_list_sid'],
-                  )
+                  return IpAddressPage.new(@version, response, @solution)
                 end
                 
                 ##
@@ -173,18 +168,16 @@ module Twilio
                 # Initialize the IpAddressPage
                 # @param [Version] version Version that contains the resource
                 # @param [Response] response Response from the API
+                # @param [Hash] solution Path solution for the resource
                 # @param [String] account_sid The account_sid
                 # @param [String] ip_access_control_list_sid The ip_access_control_list_sid
                 
                 # @return [IpAddressPage] IpAddressPage
-                def initialize(version, response, account_sid: nil, ip_access_control_list_sid: nil)
+                def initialize(version, response, solution)
                   super(version, response)
                   
                   # Path Solution
-                  @solution = {
-                      'account_sid' => account_sid,
-                      'ip_access_control_list_sid' => ip_access_control_list_sid,
-                  }
+                  @solution = solution
                 end
                 
                 ##

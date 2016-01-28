@@ -131,11 +131,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return MobilePage.new(
-                    @version,
-                    response,
-                    owner_account_sid: @solution['owner_account_sid'],
-                )
+                return MobilePage.new(@version, response, @solution)
               end
               
               ##
@@ -204,17 +200,16 @@ module Twilio
               # Initialize the MobilePage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
+              # @param [Hash] solution Path solution for the resource
               # @param [String] owner_account_sid A 34 character string that uniquely identifies
               #   this resource.
               
               # @return [MobilePage] MobilePage
-              def initialize(version, response, owner_account_sid: nil)
+              def initialize(version, response, solution)
                 super(version, response)
                 
                 # Path Solution
-                @solution = {
-                    'owner_account_sid' => owner_account_sid,
-                }
+                @solution = solution
               end
               
               ##

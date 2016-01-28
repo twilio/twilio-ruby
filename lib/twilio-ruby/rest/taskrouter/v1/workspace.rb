@@ -111,10 +111,7 @@ module Twilio
                 @uri,
                 params
             )
-            return WorkspacePage.new(
-                @version,
-                response,
-            )
+            return WorkspacePage.new(@version, response, @solution)
           end
           
           ##
@@ -168,13 +165,14 @@ module Twilio
           # Initialize the WorkspacePage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
+          # @param [Hash] solution Path solution for the resource
           
           # @return [WorkspacePage] WorkspacePage
-          def initialize(version, response)
+          def initialize(version, response, solution)
             super(version, response)
             
             # Path Solution
-            @solution = {}
+            @solution = solution
           end
           
           ##

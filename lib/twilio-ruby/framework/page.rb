@@ -50,9 +50,9 @@ module Twilio
 
       def previous_page_url
         if @payload['meta'] && @payload['meta']['previous_page_url']
-          return @payload['meta']['previous_page_url']
+          return URI.parse(@payload['meta']['previous_page_url']).path
         elsif @payload['previous_page_uri']
-          return @version.domain.absolute_url(@payload['previous_page_uri'])
+          return @payload['previous_page_uri']
         end
 
         nil
@@ -60,9 +60,9 @@ module Twilio
 
       def next_page_url
         if @payload['meta'] && @payload['meta']['next_page_url']
-          return @payload['meta']['next_page_url']
+          return URI.parse(@payload['meta']['next_page_url']).path
         elsif @payload['next_page_uri']
-          return @version.domain.absolute_url(@payload['next_page_uri'])
+          return @payload['next_page_uri']
         end
 
         nil
@@ -75,7 +75,7 @@ module Twilio
       def previous_page
         return nil unless self.previous_page_url
 
-        response = @version.domain.client.request('GET', self.previous_page_url)
+        response = @version.domain.request('GET', self.previous_page_url)
 
         self.class.new(@version, response, @solution)
       end
@@ -83,7 +83,7 @@ module Twilio
       def next_page
         return nil unless self.next_page_url
 
-        response = @version.domain.client.request('GET', self.next_page_url)
+        response = @version.domain.request('GET', self.next_page_url)
 
         self.class.new(@version, response, @solution)
       end

@@ -45,13 +45,14 @@ module Twilio
           # Initialize the PhoneNumberPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
+          # @param [Hash] solution Path solution for the resource
           
           # @return [PhoneNumberPage] PhoneNumberPage
-          def initialize(version, response)
+          def initialize(version, response, solution)
             super(version, response)
             
             # Path Solution
-            @solution = {}
+            @solution = solution
           end
           
           ##

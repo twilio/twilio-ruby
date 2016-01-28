@@ -139,12 +139,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return NotificationPage.new(
-                    @version,
-                    response,
-                    account_sid: @solution['account_sid'],
-                    call_sid: @solution['call_sid'],
-                )
+                return NotificationPage.new(@version, response, @solution)
               end
               
               ##
@@ -173,18 +168,16 @@ module Twilio
               # Initialize the NotificationPage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
+              # @param [Hash] solution Path solution for the resource
               # @param [String] account_sid The account_sid
               # @param [String] call_sid The call_sid
               
               # @return [NotificationPage] NotificationPage
-              def initialize(version, response, account_sid: nil, call_sid: nil)
+              def initialize(version, response, solution)
                 super(version, response)
                 
                 # Path Solution
-                @solution = {
-                    'account_sid' => account_sid,
-                    'call_sid' => call_sid,
-                }
+                @solution = solution
               end
               
               ##

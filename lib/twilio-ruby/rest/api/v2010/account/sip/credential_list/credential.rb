@@ -112,12 +112,7 @@ module Twilio
                       @uri,
                       params
                   )
-                  return CredentialPage.new(
-                      @version,
-                      response,
-                      account_sid: @solution['account_sid'],
-                      credential_list_sid: @solution['credential_list_sid'],
-                  )
+                  return CredentialPage.new(@version, response, @solution)
                 end
                 
                 ##
@@ -173,18 +168,16 @@ module Twilio
                 # Initialize the CredentialPage
                 # @param [Version] version Version that contains the resource
                 # @param [Response] response Response from the API
+                # @param [Hash] solution Path solution for the resource
                 # @param [String] account_sid The account_sid
                 # @param [String] credential_list_sid The credential_list_sid
                 
                 # @return [CredentialPage] CredentialPage
-                def initialize(version, response, account_sid: nil, credential_list_sid: nil)
+                def initialize(version, response, solution)
                   super(version, response)
                   
                   # Path Solution
-                  @solution = {
-                      'account_sid' => account_sid,
-                      'credential_list_sid' => credential_list_sid,
-                  }
+                  @solution = solution
                 end
                 
                 ##
