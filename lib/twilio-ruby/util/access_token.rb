@@ -43,6 +43,7 @@ module Twilio
             'exp' => now + @ttl,
             'grants' => grants
         }
+
         payload['nbf'] = @nbf unless @nbf.nil?
 
         JWT.encode payload, @secret, algorithm, headers
@@ -88,10 +89,10 @@ module Twilio
           if @endpoint_id
             payload['endpoint_id'] = @endpoint_id
           end
-          if @role_sid
+          if @deployment_role_sid
             payload['deployment_role_sid'] = @deployment_role_sid
           end
-          if @credential_sid
+          if @push_credential_sid
             payload['push_credential_sid'] = @push_credential_sid
           end
 

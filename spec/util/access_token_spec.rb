@@ -14,6 +14,7 @@ describe Twilio::Util::AccessToken do
     expect(payload['exp']).to be >= Time.now.to_i
     expect(payload['jti']).not_to be_nil
     expect(payload['jti']).to start_with payload['iss']
+    expect(payload['nbf']).to be_nil
     expect(payload['grants']).not_to be_nil
     expect(payload['grants'].count).to eq(0)
   end
@@ -62,7 +63,13 @@ describe Twilio::Util::AccessToken do
 
   it 'should be able to add endpoint grants' do
     scat = Twilio::Util::AccessToken.new 'AC123', 'SK123','secret'
-    scat.add_grant(Twilio::Util::AccessToken::IpMessagingGrant.new)
+
+    grant = Twilio::Util::AccessToken::IpMessagingGrant.new
+    grant.push_credential_sid = 'CR123'
+    grant.deployment_role_sid = 'DR123'
+    grant.service_sid = 'IS123'
+    grant.endpoint_id = 'EP123'
+    scat.add_grant(grant)   
 
     token = scat.to_s
     expect(token).not_to be_nil
@@ -77,6 +84,10 @@ describe Twilio::Util::AccessToken do
     expect(payload['grants']).not_to be_nil
     expect(payload['grants'].count).to eq(1)
     expect(payload['grants']['ip_messaging']).not_to be_nil
+    expect(payload['grants']['ip_messaging']['service_sid']).to eq('IS123')
+    expect(payload['grants']['ip_messaging']['endpoint_id']).to eq('EP123')
+    expect(payload['grants']['ip_messaging']['push_credential_sid']).to eq('CR123')
+    expect(payload['grants']['ip_messaging']['deployment_role_sid']).to eq('DR123')
   end
 
   it 'should add rest grants' do
