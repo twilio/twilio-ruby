@@ -13,8 +13,17 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @messaging = nil
           @phone_numbers = nil
           @voice = nil
+        end
+        
+        def messaging(sid=:unset)
+          if sid == :unset
+            @messaging ||= MessagingList.new self
+          else
+            MessagingContext.new(self, sid)
+          end
         end
         
         def phone_numbers(sid=:unset)

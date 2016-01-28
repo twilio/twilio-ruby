@@ -40,8 +40,8 @@ describe 'AvailablePhoneNumberCountry' do
               }
           ],
           "end": 1,
-          "first_page_uri": null,
-          "last_page_uri": null,
+          "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/AvailablePhoneNumbers/DK.json?PageSize=50&Page=0",
+          "last_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/AvailablePhoneNumbers/DK.json?PageSize=50&Page=0",
           "next_page_uri": null,
           "num_pages": 1,
           "page": 0,

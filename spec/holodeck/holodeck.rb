@@ -56,8 +56,6 @@ class Holodeck
   end
 
   def has_request?(request)
-    # puts request
-    puts @requests
     @requests.include?(request)
   end
 end
