@@ -1,12 +1,12 @@
 twilio-ruby changelog
 =====================
 
-Version 4.9.1-edge
+Version 4.9.1
 -------------
 
-Release December 17, 2015
+Release January 28, 2016
 
-- Fix ip-messaging grant issue
+- Fix ip messaging first person grant
 
 Version 4.9.0
 -------------
