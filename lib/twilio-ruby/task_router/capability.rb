@@ -136,8 +136,11 @@ module Twilio
           @activityUrl = @baseUrl + "/Activities"
           allow(@activityUrl, "GET")
 
-          @reservationsUrl = @baseUrl + "/Tasks/**"
-          allow(@reservationsUrl, "GET")
+          @tasksUrl = @baseUrl + "/Tasks/**"
+          allow(@tasksUrl, "GET")
+
+          @workerReservationsUrl = @resourceUrl + "/Reservations/**"
+          allow(@workerReservationsUrl, "GET")
 
         elsif(@channel_id[0..1] == 'WQ')
           @resourceUrl = @baseUrl + "/TaskQueues/" + @channel_id
@@ -171,11 +174,13 @@ module Twilio
 
       def initialize(account_sid, auth_token, workspace_sid, worker_sid)
         super(account_sid, auth_token, workspace_sid, worker_sid)
-        @reservationsUrl = @baseUrl + "/Tasks/**"
+        @tasksUrl = @baseUrl + "/Tasks/**"
         @activityUrl = @baseUrl + "/Activities"
+        @workerReservationsUrl = @resourceUrl + "/Reservations/**"
 
         allow(@activityUrl, "GET")
-        allow(@reservationsUrl, "GET")
+        allow(@tasksUrl, "GET")
+        allow(@workerReservationsUrl, "GET")
       end
 
       def allow_activity_updates
@@ -183,7 +188,8 @@ module Twilio
       end
 
       def allow_reservation_updates
-        allow(@reservationsUrl, "POST", nil, nil)
+        allow(@tasksUrl, "POST", nil, nil)
+        allow(@workerReservationsUrl, "POST", nil, nil)
       end
 
       protected
