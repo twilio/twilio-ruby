@@ -81,6 +81,13 @@ end
 )
 ```
 
+### Customizing your HTTP Client
+twilio-ruby uses [Faraday](https://github.com/lostisland/faraday) to make HTTP requests. You can tell Twilio::REST::Client to use any of the Faraday adapters like so:
+
+```ruby
+@client.http_client.adapter = :typhoeus
+```
+
 ## Getting Started With Client Capability Tokens
 
 If you just need to generate a Capability Token for use with Twilio Client, you
