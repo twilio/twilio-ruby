@@ -37,84 +37,84 @@ module Twilio
           @account = value
         end
         
-        def addresses
-          self.account.addresses
+        def addresses(sid=:unset)
+          self.account.addresses(sid)
         end
         
-        def applications
-          self.account.applications
+        def applications(sid=:unset)
+          self.account.applications(sid)
         end
         
-        def authorized_connect_apps
-          self.account.authorized_connect_apps
+        def authorized_connect_apps(connect_app_sid=:unset)
+          self.account.authorized_connect_apps(connect_app_sid)
         end
         
-        def available_phone_numbers
-          self.account.available_phone_numbers
+        def available_phone_numbers(country_code=:unset)
+          self.account.available_phone_numbers(country_code)
         end
         
-        def calls
-          self.account.calls
+        def calls(sid=:unset)
+          self.account.calls(sid)
         end
         
-        def conferences
-          self.account.conferences
+        def conferences(sid=:unset)
+          self.account.conferences(sid)
         end
         
-        def connect_apps
-          self.account.connect_apps
+        def connect_apps(sid=:unset)
+          self.account.connect_apps(sid)
         end
         
-        def incoming_phone_numbers
-          self.account.incoming_phone_numbers
+        def incoming_phone_numbers(sid=:unset)
+          self.account.incoming_phone_numbers(sid)
         end
         
-        def messages
-          self.account.messages
+        def messages(sid=:unset)
+          self.account.messages(sid)
         end
         
-        def notifications
-          self.account.notifications
+        def notifications(sid=:unset)
+          self.account.notifications(sid)
         end
         
-        def outgoing_caller_ids
-          self.account.outgoing_caller_ids
+        def outgoing_caller_ids(sid=:unset)
+          self.account.outgoing_caller_ids(sid)
         end
         
-        def queues
-          self.account.queues
+        def queues(sid=:unset)
+          self.account.queues(sid)
         end
         
-        def recordings
-          self.account.recordings
+        def recordings(sid=:unset)
+          self.account.recordings(sid)
         end
         
         def sandbox
-          self.account.sandbox
+          self.account.sandbox()
         end
         
         def sip
-          self.account.sip
+          self.account.sip()
         end
         
         def sms
-          self.account.sms
+          self.account.sms()
         end
         
         def tokens
-          self.account.tokens
+          self.account.tokens()
         end
         
-        def transcriptions
-          self.account.transcriptions
+        def transcriptions(sid=:unset)
+          self.account.transcriptions(sid)
         end
         
         def usage
-          self.account.usage
+          self.account.usage()
         end
         
         def validation_requests
-          self.account.validation_requests
+          self.account.validation_requests()
         end
         
         ##
