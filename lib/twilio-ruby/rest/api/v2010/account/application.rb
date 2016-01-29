@@ -572,20 +572,20 @@ module Twilio
             # @return [ApplicationInstance] Updated ApplicationInstance
             def update(friendly_name: nil, api_version: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, status_callback: nil, status_callback_method: nil, voice_caller_id_lookup: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil, sms_status_callback: nil, message_status_callback: nil)
               @context.update(
-                  api_version: nil,
-                  voice_url: nil,
-                  voice_method: nil,
-                  voice_fallback_url: nil,
-                  voice_fallback_method: nil,
-                  status_callback: nil,
-                  status_callback_method: nil,
-                  voice_caller_id_lookup: nil,
-                  sms_url: nil,
-                  sms_method: nil,
-                  sms_fallback_url: nil,
-                  sms_fallback_method: nil,
-                  sms_status_callback: nil,
-                  message_status_callback: nil,
+                  api_version: api_version,
+                  voice_url: voice_url,
+                  voice_method: voice_method,
+                  voice_fallback_url: voice_fallback_url,
+                  voice_fallback_method: voice_fallback_method,
+                  status_callback: status_callback,
+                  status_callback_method: status_callback_method,
+                  voice_caller_id_lookup: voice_caller_id_lookup,
+                  sms_url: sms_url,
+                  sms_method: sms_method,
+                  sms_fallback_url: sms_fallback_url,
+                  sms_fallback_method: sms_fallback_method,
+                  sms_status_callback: sms_status_callback,
+                  message_status_callback: message_status_callback,
               )
             end
             

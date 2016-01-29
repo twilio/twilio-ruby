@@ -505,11 +505,11 @@ module Twilio
           # @return [TrunkInstance] Updated TrunkInstance
           def update(friendly_name: nil, domain_name: nil, disaster_recovery_url: nil, disaster_recovery_method: nil, recording: nil, secure: nil)
             @context.update(
-                domain_name: nil,
-                disaster_recovery_url: nil,
-                disaster_recovery_method: nil,
-                recording: nil,
-                secure: nil,
+                domain_name: domain_name,
+                disaster_recovery_url: disaster_recovery_url,
+                disaster_recovery_method: disaster_recovery_method,
+                recording: recording,
+                secure: secure,
             )
           end
           

@@ -209,12 +209,12 @@ module Twilio
             # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
             def fetch(minutes: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil)
               @context.fetch(
-                  start_date_before: nil,
-                  start_date: nil,
-                  start_date_after: nil,
-                  end_date_before: nil,
-                  end_date: nil,
-                  end_date_after: nil,
+                  start_date_before: start_date_before,
+                  start_date: start_date,
+                  start_date_after: start_date_after,
+                  end_date_before: end_date_before,
+                  end_date: end_date,
+                  end_date_after: end_date_after,
               )
             end
             

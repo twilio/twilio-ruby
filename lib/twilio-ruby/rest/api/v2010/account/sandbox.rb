@@ -282,11 +282,11 @@ module Twilio
             # @return [SandboxInstance] Updated SandboxInstance
             def update(voice_url: nil, voice_method: nil, sms_url: nil, sms_method: nil, status_callback: nil, status_callback_method: nil)
               @context.update(
-                  voice_method: nil,
-                  sms_url: nil,
-                  sms_method: nil,
-                  status_callback: nil,
-                  status_callback_method: nil,
+                  voice_method: voice_method,
+                  sms_url: sms_url,
+                  sms_method: sms_method,
+                  status_callback: status_callback,
+                  status_callback_method: status_callback_method,
               )
             end
             

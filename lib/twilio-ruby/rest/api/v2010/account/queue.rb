@@ -404,7 +404,7 @@ module Twilio
             # @return [QueueInstance] Updated QueueInstance
             def update(friendly_name: nil, max_size: nil)
               @context.update(
-                  max_size: nil,
+                  max_size: max_size,
               )
             end
             

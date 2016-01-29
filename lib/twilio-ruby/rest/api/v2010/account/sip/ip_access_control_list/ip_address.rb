@@ -384,7 +384,7 @@ module Twilio
                 # @return [IpAddressInstance] Updated IpAddressInstance
                 def update(ip_address: nil, friendly_name: nil)
                   @context.update(
-                      friendly_name: nil,
+                      friendly_name: friendly_name,
                   )
                 end
                 

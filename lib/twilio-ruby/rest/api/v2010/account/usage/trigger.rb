@@ -474,8 +474,8 @@ module Twilio
               # @return [TriggerInstance] Updated TriggerInstance
               def update(callback_method: nil, callback_url: nil, friendly_name: nil)
                 @context.update(
-                    callback_url: nil,
-                    friendly_name: nil,
+                    callback_url: callback_url,
+                    friendly_name: friendly_name,
                 )
               end
               

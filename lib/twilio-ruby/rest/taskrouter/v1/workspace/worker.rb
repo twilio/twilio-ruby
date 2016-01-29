@@ -470,8 +470,8 @@ module Twilio
             # @return [WorkerInstance] Updated WorkerInstance
             def update(activity_sid: nil, attributes: nil, friendly_name: nil)
               @context.update(
-                  attributes: nil,
-                  friendly_name: nil,
+                  attributes: attributes,
+                  friendly_name: friendly_name,
               )
             end
             

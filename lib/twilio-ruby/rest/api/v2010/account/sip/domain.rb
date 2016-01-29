@@ -498,13 +498,13 @@ module Twilio
               # @return [DomainInstance] Updated DomainInstance
               def update(api_version: nil, friendly_name: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_status_callback_method: nil, voice_status_callback_url: nil, voice_url: nil)
                 @context.update(
-                    friendly_name: nil,
-                    voice_fallback_method: nil,
-                    voice_fallback_url: nil,
-                    voice_method: nil,
-                    voice_status_callback_method: nil,
-                    voice_status_callback_url: nil,
-                    voice_url: nil,
+                    friendly_name: friendly_name,
+                    voice_fallback_method: voice_fallback_method,
+                    voice_fallback_url: voice_fallback_url,
+                    voice_method: voice_method,
+                    voice_status_callback_method: voice_status_callback_method,
+                    voice_status_callback_url: voice_status_callback_url,
+                    voice_url: voice_url,
                 )
               end
               

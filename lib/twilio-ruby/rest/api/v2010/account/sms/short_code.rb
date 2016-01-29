@@ -408,11 +408,11 @@ module Twilio
               # @return [ShortCodeInstance] Updated ShortCodeInstance
               def update(friendly_name: nil, api_version: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil)
                 @context.update(
-                    api_version: nil,
-                    sms_url: nil,
-                    sms_method: nil,
-                    sms_fallback_url: nil,
-                    sms_fallback_method: nil,
+                    api_version: api_version,
+                    sms_url: sms_url,
+                    sms_method: sms_method,
+                    sms_fallback_url: sms_fallback_url,
+                    sms_fallback_method: sms_fallback_method,
                 )
               end
               

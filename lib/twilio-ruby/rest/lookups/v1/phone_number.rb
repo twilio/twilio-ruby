@@ -190,7 +190,7 @@ module Twilio
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
           def fetch(country_code: nil, type: nil)
             @context.fetch(
-                type: nil,
+                type: type,
             )
           end
           

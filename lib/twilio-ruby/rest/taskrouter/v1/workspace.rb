@@ -530,9 +530,9 @@ module Twilio
           # @return [WorkspaceInstance] Updated WorkspaceInstance
           def update(default_activity_sid: nil, event_callback_url: nil, friendly_name: nil, timeout_activity_sid: nil)
             @context.update(
-                event_callback_url: nil,
-                friendly_name: nil,
-                timeout_activity_sid: nil,
+                event_callback_url: event_callback_url,
+                friendly_name: friendly_name,
+                timeout_activity_sid: timeout_activity_sid,
             )
           end
           

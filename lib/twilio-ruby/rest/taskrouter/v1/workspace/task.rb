@@ -473,9 +473,9 @@ module Twilio
             # @return [TaskInstance] Updated TaskInstance
             def update(attributes: nil, assignment_status: nil, reason: nil, priority: nil)
               @context.update(
-                  assignment_status: nil,
-                  reason: nil,
-                  priority: nil,
+                  assignment_status: assignment_status,
+                  reason: reason,
+                  priority: priority,
               )
             end
             

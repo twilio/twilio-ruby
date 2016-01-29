@@ -217,9 +217,9 @@ module Twilio
               # @return [TaskQueueStatisticsInstance] Fetched TaskQueueStatisticsInstance
               def fetch(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil)
                 @context.fetch(
-                    friendly_name: nil,
-                    minutes: nil,
-                    start_date: nil,
+                    friendly_name: friendly_name,
+                    minutes: minutes,
+                    start_date: start_date,
                 )
               end
               

@@ -209,8 +209,8 @@ module Twilio
               # @return [WorkerStatisticsInstance] Fetched WorkerStatisticsInstance
               def fetch(minutes: nil, start_date: nil, end_date: nil)
                 @context.fetch(
-                    start_date: nil,
-                    end_date: nil,
+                    start_date: start_date,
+                    end_date: end_date,
                 )
               end
               

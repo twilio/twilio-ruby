@@ -458,9 +458,9 @@ module Twilio
             # @return [ChannelInstance] Updated ChannelInstance
             def update(friendly_name: nil, unique_name: nil, attributes: nil, type: nil)
               @context.update(
-                  unique_name: nil,
-                  attributes: nil,
-                  type: nil,
+                  unique_name: unique_name,
+                  attributes: attributes,
+                  type: type,
               )
             end
             

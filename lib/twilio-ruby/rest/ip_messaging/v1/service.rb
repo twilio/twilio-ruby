@@ -480,13 +480,13 @@ module Twilio
           # @return [ServiceInstance] Updated ServiceInstance
           def update(friendly_name: nil, default_service_role_sid: nil, default_channel_role_sid: nil, default_channel_creator_role_sid: nil, read_status_enabled: nil, typing_indicator_timeout: nil, consumption_report_interval: nil, webhooks: nil)
             @context.update(
-                default_service_role_sid: nil,
-                default_channel_role_sid: nil,
-                default_channel_creator_role_sid: nil,
-                read_status_enabled: nil,
-                typing_indicator_timeout: nil,
-                consumption_report_interval: nil,
-                webhooks: nil,
+                default_service_role_sid: default_service_role_sid,
+                default_channel_role_sid: default_channel_role_sid,
+                default_channel_creator_role_sid: default_channel_creator_role_sid,
+                read_status_enabled: read_status_enabled,
+                typing_indicator_timeout: typing_indicator_timeout,
+                consumption_report_interval: consumption_report_interval,
+                webhooks: webhooks,
             )
           end
           

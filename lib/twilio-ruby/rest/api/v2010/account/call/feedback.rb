@@ -268,7 +268,7 @@ module Twilio
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(quality_score: nil, issue: nil)
                 @context.create(
-                    issue: nil,
+                    issue: issue,
                 )
               end
               
@@ -288,7 +288,7 @@ module Twilio
               # @return [FeedbackInstance] Updated FeedbackInstance
               def update(quality_score: nil, issue: nil)
                 @context.update(
-                    issue: nil,
+                    issue: issue,
                 )
               end
               

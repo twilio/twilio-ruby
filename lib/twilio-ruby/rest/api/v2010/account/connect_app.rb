@@ -386,13 +386,13 @@ module Twilio
             # @return [ConnectAppInstance] Updated ConnectAppInstance
             def update(authorize_redirect_url: nil, company_name: nil, deauthorize_callback_method: nil, deauthorize_callback_url: nil, description: nil, friendly_name: nil, homepage_url: nil, permissions: nil)
               @context.update(
-                  company_name: nil,
-                  deauthorize_callback_method: nil,
-                  deauthorize_callback_url: nil,
-                  description: nil,
-                  friendly_name: nil,
-                  homepage_url: nil,
-                  permissions: nil,
+                  company_name: company_name,
+                  deauthorize_callback_method: deauthorize_callback_method,
+                  deauthorize_callback_url: deauthorize_callback_url,
+                  description: description,
+                  friendly_name: friendly_name,
+                  homepage_url: homepage_url,
+                  permissions: permissions,
               )
             end
             

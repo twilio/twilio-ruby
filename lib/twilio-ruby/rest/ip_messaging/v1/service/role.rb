@@ -383,7 +383,7 @@ module Twilio
             # @return [RoleInstance] Updated RoleInstance
             def update(friendly_name: nil, permission: nil)
               @context.update(
-                  permission: nil,
+                  permission: permission,
               )
             end
             

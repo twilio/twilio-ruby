@@ -707,12 +707,12 @@ module Twilio
             # @return [CallInstance] Updated CallInstance
             def update(url: nil, method: nil, status: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, status_callback_method: nil)
               @context.update(
-                  method: nil,
-                  status: nil,
-                  fallback_url: nil,
-                  fallback_method: nil,
-                  status_callback: nil,
-                  status_callback_method: nil,
+                  method: method,
+                  status: status,
+                  fallback_url: fallback_url,
+                  fallback_method: fallback_method,
+                  status_callback: status_callback,
+                  status_callback_method: status_callback_method,
               )
             end
             

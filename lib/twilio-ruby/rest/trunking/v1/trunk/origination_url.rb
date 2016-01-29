@@ -406,10 +406,10 @@ module Twilio
             # @return [OriginationUrlInstance] Updated OriginationUrlInstance
             def update(weight: nil, priority: nil, enabled: nil, friendly_name: nil, sip_url: nil)
               @context.update(
-                  priority: nil,
-                  enabled: nil,
-                  friendly_name: nil,
-                  sip_url: nil,
+                  priority: priority,
+                  enabled: enabled,
+                  friendly_name: friendly_name,
+                  sip_url: sip_url,
               )
             end
             

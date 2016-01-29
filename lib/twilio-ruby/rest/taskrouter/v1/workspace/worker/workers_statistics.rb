@@ -207,11 +207,11 @@ module Twilio
               # @return [WorkersStatisticsInstance] Fetched WorkersStatisticsInstance
               def fetch(minutes: nil, start_date: nil, end_date: nil, task_queue_sid: nil, task_queue_name: nil, friendly_name: nil)
                 @context.fetch(
-                    start_date: nil,
-                    end_date: nil,
-                    task_queue_sid: nil,
-                    task_queue_name: nil,
-                    friendly_name: nil,
+                    start_date: start_date,
+                    end_date: end_date,
+                    task_queue_sid: task_queue_sid,
+                    task_queue_name: task_queue_name,
+                    friendly_name: friendly_name,
                 )
               end
               

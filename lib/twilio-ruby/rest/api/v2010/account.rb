@@ -791,7 +791,7 @@ module Twilio
           # @return [AccountInstance] Updated AccountInstance
           def update(friendly_name: nil, status: nil)
             @context.update(
-                status: nil,
+                status: status,
             )
           end
           

@@ -337,7 +337,7 @@ module Twilio
               # @return [MemberInstance] Updated MemberInstance
               def update(url: nil, method: nil)
                 @context.update(
-                    method: nil,
+                    method: method,
                 )
               end
               

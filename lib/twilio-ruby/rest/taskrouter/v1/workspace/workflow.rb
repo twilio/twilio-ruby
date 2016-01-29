@@ -423,10 +423,10 @@ module Twilio
             # @return [WorkflowInstance] Updated WorkflowInstance
             def update(friendly_name: nil, assignment_callback_url: nil, fallback_assignment_callback_url: nil, configuration: nil, task_reservation_timeout: nil)
               @context.update(
-                  assignment_callback_url: nil,
-                  fallback_assignment_callback_url: nil,
-                  configuration: nil,
-                  task_reservation_timeout: nil,
+                  assignment_callback_url: assignment_callback_url,
+                  fallback_assignment_callback_url: fallback_assignment_callback_url,
+                  configuration: configuration,
+                  task_reservation_timeout: task_reservation_timeout,
               )
             end
             

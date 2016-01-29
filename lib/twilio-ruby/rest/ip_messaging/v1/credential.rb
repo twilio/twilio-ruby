@@ -374,11 +374,11 @@ module Twilio
           # @return [CredentialInstance] Updated CredentialInstance
           def update(friendly_name: nil, type: nil, certificate: nil, private_key: nil, sandbox: nil, api_key: nil)
             @context.update(
-                type: nil,
-                certificate: nil,
-                private_key: nil,
-                sandbox: nil,
-                api_key: nil,
+                type: type,
+                certificate: certificate,
+                private_key: private_key,
+                sandbox: sandbox,
+                api_key: api_key,
             )
           end
           

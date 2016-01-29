@@ -457,11 +457,11 @@ module Twilio
             # @return [AddressInstance] Updated AddressInstance
             def update(friendly_name: nil, customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil)
               @context.update(
-                  customer_name: nil,
-                  street: nil,
-                  city: nil,
-                  region: nil,
-                  postal_code: nil,
+                  customer_name: customer_name,
+                  street: street,
+                  city: city,
+                  region: region,
+                  postal_code: postal_code,
               )
             end
             

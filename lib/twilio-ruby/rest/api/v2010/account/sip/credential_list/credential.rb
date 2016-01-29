@@ -379,7 +379,7 @@ module Twilio
                 # @return [CredentialInstance] Updated CredentialInstance
                 def update(username: nil, password: nil)
                   @context.update(
-                      password: nil,
+                      password: password,
                   )
                 end
                 

@@ -450,10 +450,10 @@ module Twilio
             # @return [TaskQueueInstance] Updated TaskQueueInstance
             def update(friendly_name: nil, target_workers: nil, reservation_activity_sid: nil, assignment_activity_sid: nil, max_reserved_workers: nil)
               @context.update(
-                  target_workers: nil,
-                  reservation_activity_sid: nil,
-                  assignment_activity_sid: nil,
-                  max_reserved_workers: nil,
+                  target_workers: target_workers,
+                  reservation_activity_sid: reservation_activity_sid,
+                  assignment_activity_sid: assignment_activity_sid,
+                  max_reserved_workers: max_reserved_workers,
               )
             end
             

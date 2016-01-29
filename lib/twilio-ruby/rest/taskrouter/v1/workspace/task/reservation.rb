@@ -354,7 +354,7 @@ module Twilio
               # @return [ReservationInstance] Updated ReservationInstance
               def update(reservation_status: nil, worker_activity_sid: nil)
                 @context.update(
-                    worker_activity_sid: nil,
+                    worker_activity_sid: worker_activity_sid,
                 )
               end
               

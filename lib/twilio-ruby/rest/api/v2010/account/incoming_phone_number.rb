@@ -654,21 +654,21 @@ module Twilio
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
             def update(account_sid: nil, api_version: nil, friendly_name: nil, sms_application_sid: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, status_callback: nil, status_callback_method: nil, voice_application_sid: nil, voice_caller_id_lookup: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil)
               @context.update(
-                  api_version: nil,
-                  friendly_name: nil,
-                  sms_application_sid: nil,
-                  sms_fallback_method: nil,
-                  sms_fallback_url: nil,
-                  sms_method: nil,
-                  sms_url: nil,
-                  status_callback: nil,
-                  status_callback_method: nil,
-                  voice_application_sid: nil,
-                  voice_caller_id_lookup: nil,
-                  voice_fallback_method: nil,
-                  voice_fallback_url: nil,
-                  voice_method: nil,
-                  voice_url: nil,
+                  api_version: api_version,
+                  friendly_name: friendly_name,
+                  sms_application_sid: sms_application_sid,
+                  sms_fallback_method: sms_fallback_method,
+                  sms_fallback_url: sms_fallback_url,
+                  sms_method: sms_method,
+                  sms_url: sms_url,
+                  status_callback: status_callback,
+                  status_callback_method: status_callback_method,
+                  voice_application_sid: voice_application_sid,
+                  voice_caller_id_lookup: voice_caller_id_lookup,
+                  voice_fallback_method: voice_fallback_method,
+                  voice_fallback_url: voice_fallback_url,
+                  voice_method: voice_method,
+                  voice_url: voice_url,
               )
             end
             
