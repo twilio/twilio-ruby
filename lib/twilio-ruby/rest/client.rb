@@ -22,6 +22,7 @@ module Twilio
         # Domains
         @api = nil
         @conversations = nil
+        @ip_messaging = nil
         @lookups = nil
         @monitor = nil
         @pricing = nil
@@ -71,6 +72,12 @@ module Twilio
       # Access the Conversations Twilio Domain
       def conversations
         @conversations ||= Conversations.new self
+      end
+      
+      ##
+      # Access the IpMessaging Twilio Domain
+      def ip_messaging
+        @ip_messaging ||= IpMessaging.new self
       end
       
       ##
