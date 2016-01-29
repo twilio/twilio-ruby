@@ -171,7 +171,7 @@ If you've instead found a bug in the library or would like new features added, g
 [capability]: https://github.com/twilio/twilio-ruby/wiki/Capability
 [builder]: http://builder.rubyforge.org/
 [examples]: https://github.com/twilio/twilio-ruby/blob/master/examples
-[documentation]: http://twilio-ruby.readthedocs.org/en/latest
+[documentation]: http://twilio.github.io/twilio-ruby
 [wiki]: https://github.com/twilio/twilio-ruby/wiki
 [bundler]: http://bundler.io
 [rubygems]: http://rubygems.org
