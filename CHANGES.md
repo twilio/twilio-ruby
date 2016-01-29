@@ -1,6 +1,17 @@
 twilio-ruby changelog
 =====================
 
+Version 5.0.0
+-------------
+
+- First class paging support
+- Streaming auto-paging functionality
+- Separation between strict paging and streaming, with network-efficient defaults
+- Fully configurable and swappable HTTP Client interfaces
+- Normalization of mounts -> endpoints relations, with first-class unified support for subdomains and multi-version support
+- Fixed URL pathing of subresources, preventing edge case errors with path building via mounting
+- Proper serialization/deserialization of types (integers, dates, etc.) 
+
 Version 4.2.0
 -------------
 
