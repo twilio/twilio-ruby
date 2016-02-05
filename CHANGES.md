@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 4.11.0
+-------------
+
+Released January 28, 2016:
+
+- Add support for alternative auth (eg. Keys)
+
 Version 4.10.0
 -------------
 
