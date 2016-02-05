@@ -26,8 +26,9 @@ module Twilio
         options[:host] ||= self.class.host
         @config = Twilio::Util::ClientConfig.new options
 
-        @account_sid = args[0] || Twilio.account_sid
+        @username = args[0] || Twilio.account_sid
         @auth_token = args[1] || Twilio.auth_token
+        @account_sid = (args.size > 2 && args[2].is_a?(String) ? args[2] : args[0]) || Twilio.account_sid
         if @account_sid.nil? || @auth_token.nil?
           raise ArgumentError, 'Account SID and auth token are required'
         end
@@ -49,7 +50,7 @@ module Twilio
           # build the full path unless already given
           path = build_full_path(path, params, method) unless args[1]
           request = method_class.new(path, HTTP_HEADERS)
-          request.basic_auth(@account_sid, @auth_token)
+          request.basic_auth(@username, @auth_token)
           request.form_data = params if [:post, :put].include?(method)
           connect_and_send(request)
         end
