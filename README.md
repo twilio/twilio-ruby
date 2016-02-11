@@ -43,10 +43,37 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 # set up a client to talk to the Twilio REST API
 @client = Twilio::REST::Client.new account_sid, auth_token
 
+
 # alternatively, you can preconfigure the client like so
 Twilio.configure do |config|
   config.account_sid = account_sid
   config.auth_token = auth_token
+end
+
+# and then you can create a new client without parameters
+@client = Twilio::REST::Client.new
+```
+
+### Setup Work Using an API Key
+
+``` ruby
+require 'rubygems' # not necessary with ruby 1.9 but included for completeness
+require 'twilio-ruby'
+
+# put your own credentials here
+account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy' # Use the auth_token of the API Key
+username = 'SKzzzzzzzzzzzzzzzzzzzzzzzzzzzz' # Use the key_sid of the API Key
+
+# set up a client to talk to the Twilio REST API
+# Note: The username is first and the account_sid is last
+@client = Twilio::REST::Client.new username, auth_token, account_sid
+
+# alternatively, you can preconfigure the client like so
+Twilio.configure do |config|
+  config.account_sid = account_sid
+  config.auth_token = auth_token
+  config.username = username
 end
 
 # and then you can create a new client without parameters

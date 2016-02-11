@@ -22,6 +22,7 @@ A huge thanks to all of our contributors:
 - Joël Franusic
 - K Gautam Pai
 - Karl Freeman
+- Kelley Reynolds
 - Kevin Burke
 - Kyle Conroy
 - Leo Adamek
