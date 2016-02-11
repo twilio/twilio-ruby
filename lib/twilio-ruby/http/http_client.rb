@@ -15,8 +15,6 @@ module Twilio
       end
 
       def request(host, port, method, url, params={}, data={}, headers={}, auth=nil, timeout=nil)
-        puts host
-        puts url
         @connection = Faraday.new(url: host + ":" + port.to_s, ssl: {verify: true}) do |f|
           f.request :url_encoded
           f.adapter @adapter
