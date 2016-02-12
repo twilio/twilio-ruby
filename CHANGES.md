@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 4.11.1
+-------------
+
+Released February 12, 2016:
+
+- Add missing Keys mount to Account
+
 Version 4.11.0
 -------------
 
