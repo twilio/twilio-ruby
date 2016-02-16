@@ -50,7 +50,7 @@ module Twilio
 
       def previous_page_url
         if @payload['meta'] && @payload['meta']['previous_page_url']
-          return URI.parse(@payload['meta']['previous_page_url']).path
+          return URI.parse(@payload['meta']['previous_page_url']).request_uri
         elsif @payload['previous_page_uri']
           return @payload['previous_page_uri']
         end
@@ -60,7 +60,7 @@ module Twilio
 
       def next_page_url
         if @payload['meta'] && @payload['meta']['next_page_url']
-          return URI.parse(@payload['meta']['next_page_url']).path
+          return URI.parse(@payload['meta']['next_page_url']).request_uri
         elsif @payload['next_page_uri']
           return @payload['next_page_uri']
         end
