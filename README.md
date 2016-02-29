@@ -263,3 +263,11 @@ directory. Also for those upgrading, the [upgrade guide][upgrade] is available i
 [codeclimate]: https://codeclimate.com/github/twilio/twilio-ruby
 [jruby]: http://www.jruby.org
 [rubinius]: http://rubini.us
+
+## Contributing
+
+Fork the repository, and clone.
+  Install gem dependencies (`bundle install`) and run tests (`bundle exec rspec spec/`).
+  Make changes.
+  Add test(s) to cover the changes.
+  Run tests again before committing.
