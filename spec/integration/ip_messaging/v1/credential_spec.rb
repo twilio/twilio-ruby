@@ -22,6 +22,65 @@ describe 'Credential' do
     ))).to eq(true)
   end
 
+  it "receives read_full responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        200,
+      %q[
+      {
+          "credentials": [
+              {
+                  "sid": "CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "friendly_name": "Test slow create",
+                  "type": "apn",
+                  "sandbox": "False",
+                  "date_created": "2015-10-07T17:50:01Z",
+                  "date_updated": "2015-10-07T17:50:01Z",
+                  "url": "https://ip-messaging.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+          ],
+          "meta": {
+              "page": 0,
+              "page_size": 1,
+              "first_page_url": "https://ip-messaging.twilio.com/v1/Credentials?PageSize=1&Page=0",
+              "previous_page_url": null,
+              "url": "https://ip-messaging.twilio.com/v1/Credentials?PageSize=1&Page=0",
+              "next_page_url": "https://ip-messaging.twilio.com/v1/Credentials?PageSize=1&Page=1&PageToken=PTMDAwMTQ0NDI0MDIwMTE3MjoxOjE%3D",
+              "key": "credentials"
+          }
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.credentials.list()
+    
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives read_empty responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        200,
+      %q[
+      {
+          "credentials": [],
+          "meta": {
+              "page": 0,
+              "page_size": 1,
+              "first_page_url": "https://ip-messaging.twilio.com/v1/Credentials?PageSize=1&Page=0",
+              "previous_page_url": null,
+              "url": "https://ip-messaging.twilio.com/v1/Credentials?PageSize=1&Page=0",
+              "next_page_url": null,
+              "key": "credentials"
+          }
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.credentials.list()
+    
+    expect(actual).to_not eq(nil)
+  end
+
   it "can create" do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
@@ -41,6 +100,28 @@ describe 'Credential' do
     ))).to eq(true)
   end
 
+  it "receives create responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        201,
+      %q[
+      {
+          "sid": "CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "friendly_name": "Test slow create",
+          "type": "apn",
+          "sandbox": "False",
+          "date_created": "2015-10-07T17:50:01Z",
+          "date_updated": "2015-10-07T17:50:01Z",
+          "url": "https://ip-messaging.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.credentials.create(friendly_name: "friendly_name", type: "gcm")
+    
+    expect(actual).to_not eq(nil)
+  end
+
   it "can fetch" do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
@@ -54,6 +135,28 @@ describe 'Credential' do
         method: 'get',
         url: 'https://ip-messaging.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     ))).to eq(true)
+  end
+
+  it "receives fetch responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        200,
+      %q[
+      {
+          "sid": "CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "friendly_name": "Test slow create",
+          "type": "apn",
+          "sandbox": "False",
+          "date_created": "2015-10-07T17:50:01Z",
+          "date_updated": "2015-10-07T17:50:01Z",
+          "url": "https://ip-messaging.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    
+    expect(actual).to_not eq(nil)
   end
 
   it "can update" do
@@ -75,6 +178,28 @@ describe 'Credential' do
     ))).to eq(true)
   end
 
+  it "receives update responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        200,
+      %q[
+      {
+          "sid": "CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "friendly_name": "Test slow create",
+          "type": "apn",
+          "sandbox": "False",
+          "date_created": "2015-10-07T17:50:01Z",
+          "date_updated": "2015-10-07T17:50:01Z",
+          "url": "https://ip-messaging.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(friendly_name: "friendly_name", type: "gcm")
+    
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
@@ -88,5 +213,16 @@ describe 'Credential' do
         method: 'delete',
         url: 'https://ip-messaging.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     ))).to eq(true)
+  end
+
+  it "receives delete responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        204,
+      nil,
+    ))
+    
+    actual = @client.ip_messaging.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    
+    expect(actual).to eq(true)
   end
 end

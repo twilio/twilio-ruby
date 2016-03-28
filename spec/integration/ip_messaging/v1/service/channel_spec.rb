@@ -23,6 +23,36 @@ describe 'Channel' do
     ))).to eq(true)
   end
 
+  it "receives fetch responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        200,
+      %q[
+      {
+          "sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "friendly_name": "d816d8da-51c0-44e1-928a-44822f49bc95",
+          "unique_name": "c64ad6b0-0090-4cfc-b574-b1ce5208ac0b",
+          "attributes": null,
+          "type": "public",
+          "date_created": "2015-12-16T22:18:37Z",
+          "date_updated": "2015-12-16T22:18:37Z",
+          "created_by": "system",
+          "url": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "members": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members",
+              "messages": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages"
+          }
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                                    .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
@@ -34,9 +64,21 @@ describe 'Channel' do
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
-        method: 'get',
+        method: 'delete',
         url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     ))).to eq(true)
+  end
+
+  it "receives delete responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        204,
+      nil,
+    ))
+    
+    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                                    .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    
+    expect(actual).to eq(true)
   end
 
   it "can create" do
@@ -59,6 +101,36 @@ describe 'Channel' do
     ))).to eq(true)
   end
 
+  it "receives create responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        201,
+      %q[
+      {
+          "sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "friendly_name": "d816d8da-51c0-44e1-928a-44822f49bc95",
+          "unique_name": "c64ad6b0-0090-4cfc-b574-b1ce5208ac0b",
+          "attributes": null,
+          "type": "public",
+          "date_created": "2015-12-16T22:18:37Z",
+          "date_updated": "2015-12-16T22:18:37Z",
+          "created_by": "system",
+          "url": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "members": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members",
+              "messages": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages"
+          }
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                                    .channels.create(friendly_name: "friendly_name", unique_name: "unique_name")
+    
+    expect(actual).to_not eq(nil)
+  end
+
   it "can read" do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
@@ -75,6 +147,74 @@ describe 'Channel' do
     ))).to eq(true)
   end
 
+  it "receives read_full responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        200,
+      %q[
+      {
+          "channels": [
+              {
+                  "sid": "CHc12e6f1419b244fe8da312bc2cdebebc",
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "service_sid": "IS034e4a0c83f94e10a2ab4a3c19a16a86",
+                  "friendly_name": "d816d8da-51c0-44e1-928a-44822f49bc95",
+                  "unique_name": "c64ad6b0-0090-4cfc-b574-b1ce5208ac0b",
+                  "attributes": null,
+                  "type": "public",
+                  "date_created": "2015-12-16T22:18:37Z",
+                  "date_updated": "2015-12-16T22:18:37Z",
+                  "created_by": "system",
+                  "url": "https://ip-messaging.twilio.com/v1/Services/IS034e4a0c83f94e10a2ab4a3c19a16a86/Channels/CHc12e6f1419b244fe8da312bc2cdebebc",
+                  "links": {
+                      "members": "https://ip-messaging.twilio.com/v1/Services/IS034e4a0c83f94e10a2ab4a3c19a16a86/Channels/CHc12e6f1419b244fe8da312bc2cdebebc/Members",
+                      "messages": "https://ip-messaging.twilio.com/v1/Services/IS034e4a0c83f94e10a2ab4a3c19a16a86/Channels/CHc12e6f1419b244fe8da312bc2cdebebc/Messages"
+                  }
+              }
+          ],
+          "meta": {
+              "page": 0,
+              "page_size": 1,
+              "first_page_url": "https://ip-messaging.twilio.com/v1/Services/IS034e4a0c83f94e10a2ab4a3c19a16a86/Channels?PageSize=1&Page=0",
+              "previous_page_url": null,
+              "url": "https://ip-messaging.twilio.com/v1/Services/IS034e4a0c83f94e10a2ab4a3c19a16a86/Channels?PageSize=1&Page=0",
+              "next_page_url": null,
+              "key": "channels"
+          }
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                                    .channels.list()
+    
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives read_empty responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        200,
+      %q[
+      {
+          "channels": [],
+          "meta": {
+              "page": 0,
+              "page_size": 1,
+              "first_page_url": "https://ip-messaging.twilio.com/v1/Services/IS034e4a0c83f94e10a2ab4a3c19a16a86/Channels?PageSize=1&Page=0",
+              "previous_page_url": null,
+              "url": "https://ip-messaging.twilio.com/v1/Services/IS034e4a0c83f94e10a2ab4a3c19a16a86/Channels?PageSize=1&Page=0",
+              "next_page_url": null,
+              "key": "channels"
+          }
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                                    .channels.list()
+    
+    expect(actual).to_not eq(nil)
+  end
+
   it "can update" do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
@@ -89,5 +229,35 @@ describe 'Channel' do
         method: 'post',
         url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     ))).to eq(true)
+  end
+
+  it "receives update responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        200,
+      %q[
+      {
+          "sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "friendly_name": "d816d8da-51c0-44e1-928a-44822f49bc95",
+          "unique_name": "c64ad6b0-0090-4cfc-b574-b1ce5208ac0b",
+          "attributes": null,
+          "type": "public",
+          "date_created": "2015-12-16T22:18:37Z",
+          "date_updated": "2015-12-16T22:18:37Z",
+          "created_by": "system",
+          "url": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "members": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members",
+              "messages": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages"
+          }
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                                    .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    
+    expect(actual).to_not eq(nil)
   end
 end

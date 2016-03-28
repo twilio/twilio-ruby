@@ -6,16 +6,16 @@
 
 module Twilio
   module REST
-    class IpMessaging < Domain
+    class Notifications < Domain
       class V1 < Version
         class ServiceContext < InstanceContext
-          class RoleList < ListResource
+          class BindingList < ListResource
             ##
-            # Initialize the RoleList
+            # Initialize the BindingList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The service_sid
             
-            # @return [RoleList] RoleList
+            # @return [BindingList] BindingList
             def initialize(version, service_sid: nil)
               super(version)
               
@@ -23,22 +23,28 @@ module Twilio
               @solution = {
                   service_sid: service_sid
               }
-              @uri = "/Services/#{@solution[:service_sid]}/Roles"
+              @uri = "/Services/#{@solution[:service_sid]}/Bindings"
             end
             
             ##
-            # Retrieve a single page of RoleInstance records from the API.
+            # Retrieve a single page of BindingInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name The friendly_name
-            # @param [role.RoleType] type The type
-            # @param [String] permission The permission
+            # @param [String] endpoint The endpoint
+            # @param [String] identity The identity
+            # @param [binding.BindingType] binding_type The binding_type
+            # @param [String] address The address
+            # @param [String] tag The tag
+            # @param [String] notification_protocol_version The notification_protocol_version
             
-            # @return [RoleInstance] Newly created RoleInstance
-            def create(friendly_name: nil, type: nil, permission: nil)
+            # @return [BindingInstance] Newly created BindingInstance
+            def create(endpoint: nil, identity: nil, binding_type: nil, address: nil, tag: nil, notification_protocol_version: nil)
               data = {
-                  'FriendlyName' => friendly_name,
-                  'Type' => type,
-                  'Permission' => permission,
+                  'Endpoint' => endpoint,
+                  'Identity' => identity,
+                  'BindingType' => binding_type,
+                  'Address' => address,
+                  'Tag' => tag,
+                  'NotificationProtocolVersion' => notification_protocol_version,
               }
               
               payload = @version.create(
@@ -47,7 +53,7 @@ module Twilio
                   data: data
               )
               
-              return RoleInstance.new(
+              return BindingInstance.new(
                   @version,
                   payload,
                   service_sid: @solution['service_sid'],
@@ -55,9 +61,17 @@ module Twilio
             end
             
             ##
-            # Lists RoleInstance records from the API as a list.
+            # Lists BindingInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
+            # @param [Time] start_date_before The start_date
+            # @param [Time] start_date The start_date
+            # @param [Time] start_date_after: The start_date
+            # @param [Time] end_date_before The end_date
+            # @param [Time] end_date The end_date
+            # @param [Time] end_date_after: The end_date
+            # @param [String] identity The identity
+            # @param [String] tag The tag
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -66,17 +80,33 @@ module Twilio
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             
             # @return [Array] Array of up to limit results
-            def list(limit: nil, page_size: nil)
+            def list(start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, identity: nil, tag: nil, limit: nil, page_size: nil)
               self.stream(
+                  start_date_before: start_date_before,
+                  start_date: start_date,
+                  start_date_after: start_date_after,
+                  end_date_before: end_date_before,
+                  end_date: end_date,
+                  end_date_after: end_date_after,
+                  identity: identity,
+                  tag: tag,
                   limit: limit,
                   page_size: page_size
               ).entries
             end
             
             ##
-            # Streams RoleInstance records from the API as an Enumerable.
+            # Streams BindingInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
+            # @param [Time] start_date_before The start_date
+            # @param [Time] start_date The start_date
+            # @param [Time] start_date_after: The start_date
+            # @param [Time] end_date_before The end_date
+            # @param [Time] end_date The end_date
+            # @param [Time] end_date_after: The end_date
+            # @param [String] identity The identity
+            # @param [String] tag The tag
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -85,10 +115,18 @@ module Twilio
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(limit: nil, page_size: nil)
+            def stream(start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, identity: nil, tag: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
               page = self.page(
+                  start_date_before: start_date_before,
+                  start_date: start_date,
+                  start_date_after: start_date_after,
+                  end_date_before: end_date_before,
+                  end_date: end_date,
+                  end_date_after: end_date_after,
+                  identity: identity,
+                  tag: tag,
                   page_size: limits['page_size'],
               )
               
@@ -96,9 +134,17 @@ module Twilio
             end
             
             ##
-            # When passed a block, yields RoleInstance records from the API.
+            # When passed a block, yields BindingInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
+            # @param [Time] start_date_before The start_date
+            # @param [Time] start_date The start_date
+            # @param [Time] start_date_after: The start_date
+            # @param [Time] end_date_before The end_date
+            # @param [Time] end_date The end_date
+            # @param [Time] end_date_after: The end_date
+            # @param [String] identity The identity
+            # @param [String] tag The tag
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
@@ -118,15 +164,31 @@ module Twilio
             end
             
             ##
-            # Retrieve a single page of RoleInstance records from the API.
+            # Retrieve a single page of BindingInstance records from the API.
             # Request is executed immediately.
+            # @param [Time] start_date_before The start_date
+            # @param [Time] start_date The start_date
+            # @param [Time] start_date_after: The start_date
+            # @param [Time] end_date_before The end_date
+            # @param [Time] end_date The end_date
+            # @param [Time] end_date_after: The end_date
+            # @param [String] identity The identity
+            # @param [String] tag The tag
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             
-            # @return [Page] Page of RoleInstance
-            def page(page_token: nil, page_number: nil, page_size: nil)
+            # @return [Page] Page of BindingInstance
+            def page(start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, identity: nil, tag: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
+                  'StartDate<' => Twilio.serialize_iso8601(start_date_before),
+                  'StartDate' => Twilio.serialize_iso8601(start_date),
+                  'StartDate>' => Twilio.serialize_iso8601(start_date_after),
+                  'EndDate<' => Twilio.serialize_iso8601(end_date_before),
+                  'EndDate' => Twilio.serialize_iso8601(end_date),
+                  'EndDate>' => Twilio.serialize_iso8601(end_date_after),
+                  'Identity' => identity,
+                  'Tag' => tag,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
@@ -136,16 +198,16 @@ module Twilio
                   @uri,
                   params
               )
-              return RolePage.new(@version, response, @solution)
+              return BindingPage.new(@version, response, @solution)
             end
             
             ##
-            # Constructs a RoleContext
+            # Constructs a BindingContext
             # @param [String] sid The sid
             
-            # @return [RoleContext] RoleContext
+            # @return [BindingContext] BindingContext
             def get(sid)
-              RoleContext.new(
+              BindingContext.new(
                   @version,
                   service_sid: @solution[:service_sid],
                   sid: sid,
@@ -155,19 +217,19 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              '#<Twilio.IpMessaging.V1.RoleList>'
+              '#<Twilio.Notifications.V1.BindingList>'
             end
           end
         
-          class RolePage < Page
+          class BindingPage < Page
             ##
-            # Initialize the RolePage
+            # Initialize the BindingPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
             # @param [String] service_sid The service_sid
             
-            # @return [RolePage] RolePage
+            # @return [BindingPage] BindingPage
             def initialize(version, response, solution)
               super(version, response)
               
@@ -176,12 +238,12 @@ module Twilio
             end
             
             ##
-            # Build an instance of RoleInstance
+            # Build an instance of BindingInstance
             # @param [Hash] payload Payload response from the API
             
-            # @return [RoleInstance] RoleInstance
+            # @return [BindingInstance] BindingInstance
             def get_instance(payload)
-              return RoleInstance.new(
+              return BindingInstance.new(
                   @version,
                   payload,
                   service_sid: @solution['service_sid'],
@@ -191,18 +253,18 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              '<Twilio.IpMessaging.V1.RolePage>'
+              '<Twilio.Notifications.V1.BindingPage>'
             end
           end
         
-          class RoleContext < InstanceContext
+          class BindingContext < InstanceContext
             ##
-            # Initialize the RoleContext
+            # Initialize the BindingContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The service_sid
             # @param [String] sid The sid
             
-            # @return [RoleContext] RoleContext
+            # @return [BindingContext] BindingContext
             def initialize(version, service_sid, sid)
               super(version)
               
@@ -211,12 +273,12 @@ module Twilio
                   service_sid: service_sid,
                   sid: sid,
               }
-              @uri = "/Services/#{@solution[:service_sid]}/Roles/#{@solution[:sid]}"
+              @uri = "/Services/#{@solution[:service_sid]}/Bindings/#{@solution[:sid]}"
             end
             
             ##
-            # Fetch a RoleInstance
-            # @return [RoleInstance] Fetched RoleInstance
+            # Fetch a BindingInstance
+            # @return [BindingInstance] Fetched BindingInstance
             def fetch
               params = {}
               
@@ -226,7 +288,7 @@ module Twilio
                   params,
               )
               
-              return RoleInstance.new(
+              return BindingInstance.new(
                   @version,
                   payload,
                   service_sid: @solution['service_sid'],
@@ -235,55 +297,29 @@ module Twilio
             end
             
             ##
-            # Deletes the RoleInstance
+            # Deletes the BindingInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               return @version.delete('delete', @uri)
             end
             
             ##
-            # Update the RoleInstance
-            # @param [String] friendly_name The friendly_name
-            # @param [String] permission The permission
-            
-            # @return [RoleInstance] Updated RoleInstance
-            def update(friendly_name: nil, permission: nil)
-              data = {
-                  'FriendlyName' => friendly_name,
-                  'Permission' => permission,
-              }
-              
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
-              
-              return RoleInstance.new(
-                  @version,
-                  payload,
-                  service_sid: @solution['service_sid'],
-                  sid: @solution['sid'],
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.IpMessaging.V1.RoleContext #{context}>"
+              "#<Twilio.Notifications.V1.BindingContext #{context}>"
             end
           end
         
-          class RoleInstance < InstanceResource
+          class BindingInstance < InstanceResource
             ##
-            # Initialize the RoleInstance
+            # Initialize the BindingInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The service_sid
             # @param [String] sid The sid
             
-            # @return [RoleInstance] RoleInstance
+            # @return [BindingInstance] BindingInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
               
@@ -292,11 +328,14 @@ module Twilio
                   'sid' => payload['sid'],
                   'account_sid' => payload['account_sid'],
                   'service_sid' => payload['service_sid'],
-                  'friendly_name' => payload['friendly_name'],
-                  'type' => payload['type'],
-                  'permissions' => payload['permissions'],
                   'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                  'notification_protocol_version' => payload['notification_protocol_version'],
+                  'endpoint' => payload['endpoint'],
+                  'identity' => payload['identity'],
+                  'binding_type' => payload['binding_type'],
+                  'address' => payload['address'],
+                  'tags' => payload['tags'],
                   'url' => payload['url'],
               }
               
@@ -313,10 +352,10 @@ module Twilio
             # performing various actions.  All instance actions are proxied to the context
             # @param [Version] version Version that contains the resource
             
-            # @return [RoleContext] RoleContext for this RoleInstance
+            # @return [BindingContext] BindingContext for this BindingInstance
             def context
               unless @instance_context
-                @instance_context = RoleContext.new(
+                @instance_context = BindingContext.new(
                     @version,
                     @params['service_sid'],
                     @params['sid'],
@@ -337,18 +376,6 @@ module Twilio
               @properties['service_sid']
             end
             
-            def friendly_name
-              @properties['friendly_name']
-            end
-            
-            def type
-              @properties['type']
-            end
-            
-            def permissions
-              @properties['permissions']
-            end
-            
             def date_created
               @properties['date_created']
             end
@@ -357,41 +384,53 @@ module Twilio
               @properties['date_updated']
             end
             
+            def notification_protocol_version
+              @properties['notification_protocol_version']
+            end
+            
+            def endpoint
+              @properties['endpoint']
+            end
+            
+            def identity
+              @properties['identity']
+            end
+            
+            def binding_type
+              @properties['binding_type']
+            end
+            
+            def address
+              @properties['address']
+            end
+            
+            def tags
+              @properties['tags']
+            end
+            
             def url
               @properties['url']
             end
             
             ##
-            # Fetch a RoleInstance
-            # @return [RoleInstance] Fetched RoleInstance
+            # Fetch a BindingInstance
+            # @return [BindingInstance] Fetched BindingInstance
             def fetch
               @context.fetch()
             end
             
             ##
-            # Deletes the RoleInstance
+            # Deletes the BindingInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               @context.delete()
             end
             
             ##
-            # Update the RoleInstance
-            # @param [String] friendly_name The friendly_name
-            # @param [String] permission The permission
-            
-            # @return [RoleInstance] Updated RoleInstance
-            def update(friendly_name: nil, permission: nil)
-              @context.update(
-                  permission: permission,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.IpMessaging.V1.RoleInstance #{context}>"
+              "<Twilio.Notifications.V1.BindingInstance #{context}>"
             end
           end
         end

@@ -4,6 +4,15 @@ twilio-ruby changelog
 Version 5.0.0
 -------------
 
+Release March 28, 2016
+
+- Add notifications.twilio.com subdomain
+
+Version 5.0.0
+-------------
+
+Release January 29, 2016
+
 - First class paging support
 - Streaming auto-paging functionality
 - Separation between strict paging and streaming, with network-efficient defaults

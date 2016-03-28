@@ -205,13 +205,6 @@ module Twilio
             end
             
             ##
-            # Access the participants
-            # @return [participants] participants
-            def participants
-              @context.participants
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               "<Twilio.Conversations.V1.CompletedInstance>"

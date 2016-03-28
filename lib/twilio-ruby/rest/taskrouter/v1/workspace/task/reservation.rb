@@ -33,6 +33,9 @@ module Twilio
               # Lists ReservationInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
+              # @param [String] status The status
+              # @param [String] assignment_status The assignment_status
+              # @param [String] reservation_status The reservation_status
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -41,8 +44,11 @@ module Twilio
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               
               # @return [Array] Array of up to limit results
-              def list(limit: nil, page_size: nil)
+              def list(status: nil, assignment_status: nil, reservation_status: nil, limit: nil, page_size: nil)
                 self.stream(
+                    status: status,
+                    assignment_status: assignment_status,
+                    reservation_status: reservation_status,
                     limit: limit,
                     page_size: page_size
                 ).entries
@@ -52,6 +58,9 @@ module Twilio
               # Streams ReservationInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
+              # @param [String] status The status
+              # @param [String] assignment_status The assignment_status
+              # @param [String] reservation_status The reservation_status
               # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -60,10 +69,13 @@ module Twilio
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(limit: nil, page_size: nil)
+              def stream(status: nil, assignment_status: nil, reservation_status: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
                 page = self.page(
+                    status: status,
+                    assignment_status: assignment_status,
+                    reservation_status: reservation_status,
                     page_size: limits['page_size'],
                 )
                 
@@ -74,6 +86,9 @@ module Twilio
               # When passed a block, yields ReservationInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
+              # @param [String] status The status
+              # @param [String] assignment_status The assignment_status
+              # @param [String] reservation_status The reservation_status
               # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
@@ -95,13 +110,19 @@ module Twilio
               ##
               # Retrieve a single page of ReservationInstance records from the API.
               # Request is executed immediately.
+              # @param [String] status The status
+              # @param [String] assignment_status The assignment_status
+              # @param [String] reservation_status The reservation_status
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               
               # @return [Page] Page of ReservationInstance
-              def page(page_token: nil, page_number: nil, page_size: nil)
+              def page(status: nil, assignment_status: nil, reservation_status: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
+                    'Status' => status,
+                    'AssignmentStatus' => assignment_status,
+                    'ReservationStatus' => reservation_status,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
@@ -219,12 +240,47 @@ module Twilio
               # Update the ReservationInstance
               # @param [String] reservation_status The reservation_status
               # @param [String] worker_activity_sid The worker_activity_sid
+              # @param [String] instruction The instruction
+              # @param [String] dequeue_post_work_activity_sid The
+              #   dequeue_post_work_activity_sid
+              # @param [String] dequeue_from The dequeue_from
+              # @param [String] dequeue_record The dequeue_record
+              # @param [String] dequeue_timeout The dequeue_timeout
+              # @param [String] dequeue_to The dequeue_to
+              # @param [String] dequeue_status_callback_url The dequeue_status_callback_url
+              # @param [String] call_from The call_from
+              # @param [String] call_record The call_record
+              # @param [String] call_timeout The call_timeout
+              # @param [String] call_to The call_to
+              # @param [String] call_url The call_url
+              # @param [String] call_status_callback_url The call_status_callback_url
+              # @param [Boolean] call_accept The call_accept
+              # @param [String] redirect_call_sid The redirect_call_sid
+              # @param [Boolean] redirect_accept The redirect_accept
+              # @param [String] redirect_url The redirect_url
               
               # @return [ReservationInstance] Updated ReservationInstance
-              def update(reservation_status: nil, worker_activity_sid: nil)
+              def update(reservation_status: nil, worker_activity_sid: nil, instruction: nil, dequeue_post_work_activity_sid: nil, dequeue_from: nil, dequeue_record: nil, dequeue_timeout: nil, dequeue_to: nil, dequeue_status_callback_url: nil, call_from: nil, call_record: nil, call_timeout: nil, call_to: nil, call_url: nil, call_status_callback_url: nil, call_accept: nil, redirect_call_sid: nil, redirect_accept: nil, redirect_url: nil)
                 data = {
                     'ReservationStatus' => reservation_status,
                     'WorkerActivitySid' => worker_activity_sid,
+                    'Instruction' => instruction,
+                    'DequeuePostWorkActivitySid' => dequeue_post_work_activity_sid,
+                    'DequeueFrom' => dequeue_from,
+                    'DequeueRecord' => dequeue_record,
+                    'DequeueTimeout' => dequeue_timeout,
+                    'DequeueTo' => dequeue_to,
+                    'DequeueStatusCallbackUrl' => dequeue_status_callback_url,
+                    'CallFrom' => call_from,
+                    'CallRecord' => call_record,
+                    'CallTimeout' => call_timeout,
+                    'CallTo' => call_to,
+                    'CallUrl' => call_url,
+                    'CallStatusCallbackUrl' => call_status_callback_url,
+                    'CallAccept' => call_accept,
+                    'RedirectCallSid' => redirect_call_sid,
+                    'RedirectAccept' => redirect_accept,
+                    'RedirectUrl' => redirect_url,
                 }
                 
                 payload = @version.update(
@@ -350,11 +406,46 @@ module Twilio
               # Update the ReservationInstance
               # @param [String] reservation_status The reservation_status
               # @param [String] worker_activity_sid The worker_activity_sid
+              # @param [String] instruction The instruction
+              # @param [String] dequeue_post_work_activity_sid The
+              #   dequeue_post_work_activity_sid
+              # @param [String] dequeue_from The dequeue_from
+              # @param [String] dequeue_record The dequeue_record
+              # @param [String] dequeue_timeout The dequeue_timeout
+              # @param [String] dequeue_to The dequeue_to
+              # @param [String] dequeue_status_callback_url The dequeue_status_callback_url
+              # @param [String] call_from The call_from
+              # @param [String] call_record The call_record
+              # @param [String] call_timeout The call_timeout
+              # @param [String] call_to The call_to
+              # @param [String] call_url The call_url
+              # @param [String] call_status_callback_url The call_status_callback_url
+              # @param [Boolean] call_accept The call_accept
+              # @param [String] redirect_call_sid The redirect_call_sid
+              # @param [Boolean] redirect_accept The redirect_accept
+              # @param [String] redirect_url The redirect_url
               
               # @return [ReservationInstance] Updated ReservationInstance
-              def update(reservation_status: nil, worker_activity_sid: nil)
+              def update(reservation_status: nil, worker_activity_sid: nil, instruction: nil, dequeue_post_work_activity_sid: nil, dequeue_from: nil, dequeue_record: nil, dequeue_timeout: nil, dequeue_to: nil, dequeue_status_callback_url: nil, call_from: nil, call_record: nil, call_timeout: nil, call_to: nil, call_url: nil, call_status_callback_url: nil, call_accept: nil, redirect_call_sid: nil, redirect_accept: nil, redirect_url: nil)
                 @context.update(
                     worker_activity_sid: worker_activity_sid,
+                    instruction: instruction,
+                    dequeue_post_work_activity_sid: dequeue_post_work_activity_sid,
+                    dequeue_from: dequeue_from,
+                    dequeue_record: dequeue_record,
+                    dequeue_timeout: dequeue_timeout,
+                    dequeue_to: dequeue_to,
+                    dequeue_status_callback_url: dequeue_status_callback_url,
+                    call_from: call_from,
+                    call_record: call_record,
+                    call_timeout: call_timeout,
+                    call_to: call_to,
+                    call_url: call_url,
+                    call_status_callback_url: call_status_callback_url,
+                    call_accept: call_accept,
+                    redirect_call_sid: redirect_call_sid,
+                    redirect_accept: redirect_accept,
+                    redirect_url: redirect_url,
                 )
               end
               

@@ -244,7 +244,7 @@ module Twilio
             # Deletes the ChannelInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('get', @uri)
+              return @version.delete('delete', @uri)
             end
             
             ##

@@ -25,6 +25,7 @@ module Twilio
         @ip_messaging = nil
         @lookups = nil
         @monitor = nil
+        @notifications = nil
         @pricing = nil
         @taskrouter = nil
         @trunking = nil
@@ -93,6 +94,12 @@ module Twilio
       end
       
       ##
+      # Access the Notifications Twilio Domain
+      def notifications
+        @notifications ||= Notifications.new self
+      end
+      
+      ##
       # Access the Pricing Twilio Domain
       def pricing
         @pricing ||= Pricing.new self
@@ -152,10 +159,6 @@ module Twilio
       
       def messages
         return self.account.messages
-      end
-      
-      def notifications
-        return self.account.notifications
       end
       
       def outgoing_caller_ids

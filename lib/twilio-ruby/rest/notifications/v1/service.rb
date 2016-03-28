@@ -6,7 +6,7 @@
 
 module Twilio
   module REST
-    class IpMessaging < Domain
+    class Notifications < Domain
       class V1 < Version
         class ServiceList < ListResource
           ##
@@ -26,11 +26,21 @@ module Twilio
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
           # @param [String] friendly_name The friendly_name
+          # @param [String] apn_credential_sid The apn_credential_sid
+          # @param [String] gcm_credential_sid The gcm_credential_sid
+          # @param [String] default_apn_notification_protocol_version The
+          #   default_apn_notification_protocol_version
+          # @param [String] default_gcm_notification_protocol_version The
+          #   default_gcm_notification_protocol_version
           
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil)
+          def create(friendly_name: nil, apn_credential_sid: nil, gcm_credential_sid: nil, default_apn_notification_protocol_version: nil, default_gcm_notification_protocol_version: nil)
             data = {
                 'FriendlyName' => friendly_name,
+                'ApnCredentialSid' => apn_credential_sid,
+                'GcmCredentialSid' => gcm_credential_sid,
+                'DefaultApnNotificationProtocolVersion' => default_apn_notification_protocol_version,
+                'DefaultGcmNotificationProtocolVersion' => default_gcm_notification_protocol_version,
             }
             
             payload = @version.create(
@@ -49,6 +59,7 @@ module Twilio
           # Lists ServiceInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
+          # @param [String] friendly_name The friendly_name
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #                   guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -57,8 +68,9 @@ module Twilio
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           
           # @return [Array] Array of up to limit results
-          def list(limit: nil, page_size: nil)
+          def list(friendly_name: nil, limit: nil, page_size: nil)
             self.stream(
+                friendly_name: friendly_name,
                 limit: limit,
                 page_size: page_size
             ).entries
@@ -68,6 +80,7 @@ module Twilio
           # Streams ServiceInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
+          # @param [String] friendly_name The friendly_name
           # @param [Integer] limit Upper limit for the number of records to return.                  stream()
           #  guarantees to never return more than limit.                  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -76,10 +89,11 @@ module Twilio
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(limit: nil, page_size: nil)
+          def stream(friendly_name: nil, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
             
             page = self.page(
+                friendly_name: friendly_name,
                 page_size: limits['page_size'],
             )
             
@@ -90,6 +104,7 @@ module Twilio
           # When passed a block, yields ServiceInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
+          # @param [String] friendly_name The friendly_name
           # @param [Integer] limit Upper limit for the number of records to return.                  stream()
           #  guarantees to never return more than limit.                  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
@@ -111,13 +126,15 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
+          # @param [String] friendly_name The friendly_name
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           
           # @return [Page] Page of ServiceInstance
-          def page(page_token: nil, page_number: nil, page_size: nil)
+          def page(friendly_name: nil, page_token: nil, page_number: nil, page_size: nil)
             params = {
+                'FriendlyName' => friendly_name,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
@@ -145,7 +162,7 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.IpMessaging.V1.ServiceList>'
+            '#<Twilio.Notifications.V1.ServiceList>'
           end
         end
       
@@ -179,7 +196,7 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.IpMessaging.V1.ServicePage>'
+            '<Twilio.Notifications.V1.ServicePage>'
           end
         end
       
@@ -200,9 +217,15 @@ module Twilio
             @uri = "/Services/#{@solution[:sid]}"
             
             # Dependents
-            @channels = nil
-            @roles = nil
-            @users = nil
+            @bindings = nil
+            @notifications = nil
+          end
+          
+          ##
+          # Deletes the ServiceInstance
+          # @return [Boolean] true if delete succeeds, true otherwise
+          def delete
+            return @version.delete('delete', @uri)
           end
           
           ##
@@ -225,35 +248,23 @@ module Twilio
           end
           
           ##
-          # Deletes the ServiceInstance
-          # @return [Boolean] true if delete succeeds, true otherwise
-          def delete
-            return @version.delete('delete', @uri)
-          end
-          
-          ##
           # Update the ServiceInstance
           # @param [String] friendly_name The friendly_name
-          # @param [String] default_service_role_sid The default_service_role_sid
-          # @param [String] default_channel_role_sid The default_channel_role_sid
-          # @param [String] default_channel_creator_role_sid The
-          #   default_channel_creator_role_sid
-          # @param [Boolean] read_status_enabled The read_status_enabled
-          # @param [String] typing_indicator_timeout The typing_indicator_timeout
-          # @param [String] consumption_report_interval The consumption_report_interval
-          # @param [String] webhooks The webhooks
+          # @param [String] apn_credential_sid The apn_credential_sid
+          # @param [String] gcm_credential_sid The gcm_credential_sid
+          # @param [String] default_apn_notification_protocol_version The
+          #   default_apn_notification_protocol_version
+          # @param [String] default_gcm_notification_protocol_version The
+          #   default_gcm_notification_protocol_version
           
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: nil, default_service_role_sid: nil, default_channel_role_sid: nil, default_channel_creator_role_sid: nil, read_status_enabled: nil, typing_indicator_timeout: nil, consumption_report_interval: nil, webhooks: nil)
+          def update(friendly_name: nil, apn_credential_sid: nil, gcm_credential_sid: nil, default_apn_notification_protocol_version: nil, default_gcm_notification_protocol_version: nil)
             data = {
                 'FriendlyName' => friendly_name,
-                'DefaultServiceRoleSid' => default_service_role_sid,
-                'DefaultChannelRoleSid' => default_channel_role_sid,
-                'DefaultChannelCreatorRoleSid' => default_channel_creator_role_sid,
-                'ReadStatusEnabled' => read_status_enabled,
-                'TypingIndicatorTimeout' => typing_indicator_timeout,
-                'ConsumptionReportInterval' => consumption_report_interval,
-                'Webhooks' => webhooks,
+                'ApnCredentialSid' => apn_credential_sid,
+                'GcmCredentialSid' => gcm_credential_sid,
+                'DefaultApnNotificationProtocolVersion' => default_apn_notification_protocol_version,
+                'DefaultGcmNotificationProtocolVersion' => default_gcm_notification_protocol_version,
             }
             
             payload = @version.update(
@@ -270,76 +281,46 @@ module Twilio
           end
           
           ##
-          # Access the channels
-          # @return [ChannelList] ChannelList
-          def channels(sid=:unset)
+          # Access the bindings
+          # @return [BindingList] BindingList
+          def bindings(sid=:unset)
             if sid != :unset
-              return ChannelContext.new(
+              return BindingContext.new(
                   @version,
                   @solution[:sid],
                   sid,
               )
             end
             
-            unless @channels
-              @channels = ChannelList.new(
+            unless @bindings
+              @bindings = BindingList.new(
                   @version,
                   service_sid: @solution[:sid],
               )
             end
             
-            @channels
+            @bindings
           end
           
           ##
-          # Access the roles
-          # @return [RoleList] RoleList
-          def roles(sid=:unset)
-            if sid != :unset
-              return RoleContext.new(
-                  @version,
-                  @solution[:sid],
-                  sid,
-              )
-            end
-            
-            unless @roles
-              @roles = RoleList.new(
+          # Access the notifications
+          # @return [NotificationList] NotificationList
+          def notifications
+            unless @notifications
+              @notifications = NotificationList.new(
                   @version,
                   service_sid: @solution[:sid],
               )
             end
             
-            @roles
-          end
-          
-          ##
-          # Access the users
-          # @return [UserList] UserList
-          def users(sid=:unset)
-            if sid != :unset
-              return UserContext.new(
-                  @version,
-                  @solution[:sid],
-                  sid,
-              )
-            end
-            
-            unless @users
-              @users = UserList.new(
-                  @version,
-                  service_sid: @solution[:sid],
-              )
-            end
-            
-            @users
+            @notifications
           end
           
           ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.IpMessaging.V1.ServiceContext #{context}>"
+            "#<Twilio.Notifications.V1.ServiceContext #{context}>"
           end
         end
       
@@ -361,13 +342,10 @@ module Twilio
                 'friendly_name' => payload['friendly_name'],
                 'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
-                'default_service_role_sid' => payload['default_service_role_sid'],
-                'default_channel_role_sid' => payload['default_channel_role_sid'],
-                'default_channel_creator_role_sid' => payload['default_channel_creator_role_sid'],
-                'read_status_enabled' => payload['read_status_enabled'],
-                'typing_indicator_timeout' => payload['typing_indicator_timeout'].to_i,
-                'consumption_report_interval' => payload['consumption_report_interval'].to_i,
-                'webhooks' => payload['webhooks'],
+                'apn_credential_sid' => payload['apn_credential_sid'],
+                'gcm_credential_sid' => payload['gcm_credential_sid'],
+                'default_apn_notification_protocol_version' => payload['default_apn_notification_protocol_version'],
+                'default_gcm_notification_protocol_version' => payload['default_gcm_notification_protocol_version'],
                 'url' => payload['url'],
                 'links' => payload['links'],
             }
@@ -415,32 +393,20 @@ module Twilio
             @properties['date_updated']
           end
           
-          def default_service_role_sid
-            @properties['default_service_role_sid']
+          def apn_credential_sid
+            @properties['apn_credential_sid']
           end
           
-          def default_channel_role_sid
-            @properties['default_channel_role_sid']
+          def gcm_credential_sid
+            @properties['gcm_credential_sid']
           end
           
-          def default_channel_creator_role_sid
-            @properties['default_channel_creator_role_sid']
+          def default_apn_notification_protocol_version
+            @properties['default_apn_notification_protocol_version']
           end
           
-          def read_status_enabled
-            @properties['read_status_enabled']
-          end
-          
-          def typing_indicator_timeout
-            @properties['typing_indicator_timeout']
-          end
-          
-          def consumption_report_interval
-            @properties['consumption_report_interval']
-          end
-          
-          def webhooks
-            @properties['webhooks']
+          def default_gcm_notification_protocol_version
+            @properties['default_gcm_notification_protocol_version']
           end
           
           def url
@@ -452,13 +418,6 @@ module Twilio
           end
           
           ##
-          # Fetch a ServiceInstance
-          # @return [ServiceInstance] Fetched ServiceInstance
-          def fetch
-            @context.fetch()
-          end
-          
-          ##
           # Deletes the ServiceInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
@@ -466,56 +425,51 @@ module Twilio
           end
           
           ##
+          # Fetch a ServiceInstance
+          # @return [ServiceInstance] Fetched ServiceInstance
+          def fetch
+            @context.fetch()
+          end
+          
+          ##
           # Update the ServiceInstance
           # @param [String] friendly_name The friendly_name
-          # @param [String] default_service_role_sid The default_service_role_sid
-          # @param [String] default_channel_role_sid The default_channel_role_sid
-          # @param [String] default_channel_creator_role_sid The
-          #   default_channel_creator_role_sid
-          # @param [Boolean] read_status_enabled The read_status_enabled
-          # @param [String] typing_indicator_timeout The typing_indicator_timeout
-          # @param [String] consumption_report_interval The consumption_report_interval
-          # @param [String] webhooks The webhooks
+          # @param [String] apn_credential_sid The apn_credential_sid
+          # @param [String] gcm_credential_sid The gcm_credential_sid
+          # @param [String] default_apn_notification_protocol_version The
+          #   default_apn_notification_protocol_version
+          # @param [String] default_gcm_notification_protocol_version The
+          #   default_gcm_notification_protocol_version
           
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: nil, default_service_role_sid: nil, default_channel_role_sid: nil, default_channel_creator_role_sid: nil, read_status_enabled: nil, typing_indicator_timeout: nil, consumption_report_interval: nil, webhooks: nil)
+          def update(friendly_name: nil, apn_credential_sid: nil, gcm_credential_sid: nil, default_apn_notification_protocol_version: nil, default_gcm_notification_protocol_version: nil)
             @context.update(
-                default_service_role_sid: default_service_role_sid,
-                default_channel_role_sid: default_channel_role_sid,
-                default_channel_creator_role_sid: default_channel_creator_role_sid,
-                read_status_enabled: read_status_enabled,
-                typing_indicator_timeout: typing_indicator_timeout,
-                consumption_report_interval: consumption_report_interval,
-                webhooks: webhooks,
+                apn_credential_sid: apn_credential_sid,
+                gcm_credential_sid: gcm_credential_sid,
+                default_apn_notification_protocol_version: default_apn_notification_protocol_version,
+                default_gcm_notification_protocol_version: default_gcm_notification_protocol_version,
             )
           end
           
           ##
-          # Access the channels
-          # @return [channels] channels
-          def channels
-            @context.channels
+          # Access the bindings
+          # @return [bindings] bindings
+          def bindings
+            @context.bindings
           end
           
           ##
-          # Access the roles
-          # @return [roles] roles
-          def roles
-            @context.roles
-          end
-          
-          ##
-          # Access the users
-          # @return [users] users
-          def users
-            @context.users
+          # Access the notifications
+          # @return [notifications] notifications
+          def notifications
+            @context.notifications
           end
           
           ##
           # Provide a user friendly representation
           def to_s
             context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.IpMessaging.V1.ServiceInstance #{context}>"
+            "<Twilio.Notifications.V1.ServiceInstance #{context}>"
           end
         end
       end

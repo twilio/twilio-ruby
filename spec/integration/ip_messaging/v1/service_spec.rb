@@ -22,6 +22,38 @@ describe 'Service' do
     ))).to eq(true)
   end
 
+  it "receives fetch responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        200,
+      %q[
+      {
+          "sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "friendly_name": "216d4a5b-654a-4b60-acea-cf4e42604fb3",
+          "date_created": "2015-12-16T17:53:05Z",
+          "date_updated": "2015-12-16T17:53:05Z",
+          "default_service_role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "default_channel_role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "default_channel_creator_role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "read_status_enabled": true,
+          "typing_indicator_timeout": 5,
+          "consumption_report_interval": 10,
+          "webhooks": {},
+          "url": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "channels": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels",
+              "roles": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Roles",
+              "users": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users"
+          }
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
@@ -32,9 +64,20 @@ describe 'Service' do
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
-        method: 'get',
+        method: 'delete',
         url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     ))).to eq(true)
+  end
+
+  it "receives delete responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        204,
+      nil,
+    ))
+    
+    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    
+    expect(actual).to eq(true)
   end
 
   it "can create" do
@@ -55,6 +98,38 @@ describe 'Service' do
     ))).to eq(true)
   end
 
+  it "receives create responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        201,
+      %q[
+      {
+          "sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "friendly_name": "216d4a5b-654a-4b60-acea-cf4e42604fb3",
+          "date_created": "2015-12-16T17:53:05Z",
+          "date_updated": "2015-12-16T17:53:05Z",
+          "default_service_role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "default_channel_role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "default_channel_creator_role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "read_status_enabled": true,
+          "typing_indicator_timeout": 5,
+          "consumption_report_interval": 10,
+          "webhooks": {},
+          "url": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "channels": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels",
+              "roles": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Roles",
+              "users": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users"
+          }
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.services.create(friendly_name: "friendly_name")
+    
+    expect(actual).to_not eq(nil)
+  end
+
   it "can read" do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
@@ -70,6 +145,75 @@ describe 'Service' do
     ))).to eq(true)
   end
 
+  it "receives read_full responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        200,
+      %q[
+      {
+          "meta": {
+              "page": 0,
+              "page_size": 1,
+              "first_page_url": "https://ip-messaging.twilio.com/v1/Services?PageSize=1&Page=0",
+              "previous_page_url": null,
+              "url": "https://ip-messaging.twilio.com/v1/Services?PageSize=1&Page=0",
+              "next_page_url": null,
+              "key": "services"
+          },
+          "services": [
+              {
+                  "sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "friendly_name": "216d4a5b-654a-4b60-acea-cf4e42604fb3",
+                  "date_created": "2015-12-16T17:53:05Z",
+                  "date_updated": "2015-12-16T17:53:05Z",
+                  "default_service_role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "default_channel_role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "default_channel_creator_role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "read_status_enabled": true,
+                  "typing_indicator_timeout": 5,
+                  "consumption_report_interval": 10,
+                  "webhooks": {},
+                  "url": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "links": {
+                      "channels": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels",
+                      "roles": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Roles",
+                      "users": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users"
+                  }
+              }
+          ]
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.services.list()
+    
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives read_empty responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        200,
+      %q[
+      {
+          "meta": {
+              "page": 0,
+              "page_size": 50,
+              "first_page_url": "https://ip-messaging.twilio.com/v1/Services?PageSize=50&Page=0",
+              "previous_page_url": null,
+              "url": "https://ip-messaging.twilio.com/v1/Services?PageSize=50&Page=0",
+              "next_page_url": null,
+              "key": "services"
+          },
+          "services": []
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.services.list()
+    
+    expect(actual).to_not eq(nil)
+  end
+
   it "can update" do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
@@ -83,5 +227,37 @@ describe 'Service' do
         method: 'post',
         url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     ))).to eq(true)
+  end
+
+  it "receives update responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        200,
+      %q[
+      {
+          "sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "friendly_name": "216d4a5b-654a-4b60-acea-cf4e42604fb3",
+          "date_created": "2015-12-16T17:53:05Z",
+          "date_updated": "2015-12-16T17:53:05Z",
+          "default_service_role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "default_channel_role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "default_channel_creator_role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "read_status_enabled": true,
+          "typing_indicator_timeout": 5,
+          "consumption_report_interval": 10,
+          "webhooks": {},
+          "url": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "channels": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels",
+              "roles": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Roles",
+              "users": "https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users"
+          }
+      }
+      ]
+    ))
+    
+    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    
+    expect(actual).to_not eq(nil)
   end
 end
