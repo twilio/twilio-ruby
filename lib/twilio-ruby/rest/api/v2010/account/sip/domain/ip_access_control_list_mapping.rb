@@ -142,20 +142,6 @@ module Twilio
                 end
                 
                 ##
-                # Constructs a IpAccessControlListMappingContext
-                # @param [String] sid The sid
-                
-                # @return [IpAccessControlListMappingContext] IpAccessControlListMappingContext
-                def get(sid)
-                  IpAccessControlListMappingContext.new(
-                      @version,
-                      account_sid: @solution[:account_sid],
-                      domain_sid: @solution[:domain_sid],
-                      sid: sid,
-                  )
-                end
-                
-                ##
                 # Provide a user friendly representation
                 def to_s
                   '#<Twilio.Api.V2010.IpAccessControlListMappingList>'

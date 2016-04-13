@@ -124,20 +124,6 @@ module Twilio
               end
               
               ##
-              # Constructs a ParticipantContext
-              # @param [String] call_sid The call_sid
-              
-              # @return [ParticipantContext] ParticipantContext
-              def get(call_sid)
-                ParticipantContext.new(
-                    @version,
-                    account_sid: @solution[:account_sid],
-                    conference_sid: @solution[:conference_sid],
-                    call_sid: call_sid,
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Api.V2010.ParticipantList>'

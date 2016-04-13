@@ -143,20 +143,6 @@ module Twilio
                 end
                 
                 ##
-                # Constructs a IpAddressContext
-                # @param [String] sid The sid
-                
-                # @return [IpAddressContext] IpAddressContext
-                def get(sid)
-                  IpAddressContext.new(
-                      @version,
-                      account_sid: @solution[:account_sid],
-                      ip_access_control_list_sid: @solution[:ip_access_control_list_sid],
-                      sid: sid,
-                  )
-                end
-                
-                ##
                 # Provide a user friendly representation
                 def to_s
                   '#<Twilio.Api.V2010.IpAddressList>'

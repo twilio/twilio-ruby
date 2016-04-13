@@ -136,19 +136,6 @@ module Twilio
               end
               
               ##
-              # Constructs a ShortCodeContext
-              # @param [String] sid The short-code Sid that uniquely identifies this resource
-              
-              # @return [ShortCodeContext] ShortCodeContext
-              def get(sid)
-                ShortCodeContext.new(
-                    @version,
-                    account_sid: @solution[:account_sid],
-                    sid: sid,
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Api.V2010.ShortCodeList>'

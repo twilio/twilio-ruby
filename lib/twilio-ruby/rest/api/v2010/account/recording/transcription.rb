@@ -115,20 +115,6 @@ module Twilio
               end
               
               ##
-              # Constructs a TranscriptionContext
-              # @param [String] sid The sid
-              
-              # @return [TranscriptionContext] TranscriptionContext
-              def get(sid)
-                TranscriptionContext.new(
-                    @version,
-                    account_sid: @solution[:account_sid],
-                    recording_sid: @solution[:recording_sid],
-                    sid: sid,
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Api.V2010.TranscriptionList>'

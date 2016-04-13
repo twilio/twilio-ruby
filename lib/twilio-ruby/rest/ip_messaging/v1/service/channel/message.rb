@@ -142,20 +142,6 @@ module Twilio
               end
               
               ##
-              # Constructs a MessageContext
-              # @param [String] sid The sid
-              
-              # @return [MessageContext] MessageContext
-              def get(sid)
-                MessageContext.new(
-                    @version,
-                    service_sid: @solution[:service_sid],
-                    channel_sid: @solution[:channel_sid],
-                    sid: sid,
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.IpMessaging.V1.MessageList>'

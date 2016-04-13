@@ -30,17 +30,6 @@ module Twilio
               end
               
               ##
-              # Constructs a FeedbackContext
-              # @return [FeedbackContext] FeedbackContext
-              def get
-                FeedbackContext.new(
-                    @version,
-                    account_sid: @solution[:account_sid],
-                    call_sid: @solution[:call_sid],
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Api.V2010.FeedbackList>'

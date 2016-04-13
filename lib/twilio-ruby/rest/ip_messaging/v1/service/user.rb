@@ -138,19 +138,6 @@ module Twilio
             end
             
             ##
-            # Constructs a UserContext
-            # @param [String] sid The sid
-            
-            # @return [UserContext] UserContext
-            def get(sid)
-              UserContext.new(
-                  @version,
-                  service_sid: @solution[:service_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.IpMessaging.V1.UserList>'

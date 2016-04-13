@@ -186,19 +186,6 @@ module Twilio
             end
             
             ##
-            # Constructs a MessageContext
-            # @param [String] sid The message Sid that uniquely identifies this resource
-            
-            # @return [MessageContext] MessageContext
-            def get(sid)
-              MessageContext.new(
-                  @version,
-                  account_sid: @solution[:account_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Api.V2010.MessageList>'

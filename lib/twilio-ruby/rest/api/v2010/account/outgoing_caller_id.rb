@@ -135,20 +135,6 @@ module Twilio
             end
             
             ##
-            # Constructs a OutgoingCallerIdContext
-            # @param [String] sid The outgoing-caller-id Sid that uniquely identifies this
-            #   resource
-            
-            # @return [OutgoingCallerIdContext] OutgoingCallerIdContext
-            def get(sid)
-              OutgoingCallerIdContext.new(
-                  @version,
-                  account_sid: @solution[:account_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Api.V2010.OutgoingCallerIdList>'

@@ -141,18 +141,6 @@ module Twilio
           end
           
           ##
-          # Constructs a CredentialContext
-          # @param [String] sid The sid
-          
-          # @return [CredentialContext] CredentialContext
-          def get(sid)
-            CredentialContext.new(
-                @version,
-                sid: sid,
-            )
-          end
-          
-          ##
           # Provide a user friendly representation
           def to_s
             '#<Twilio.IpMessaging.V1.CredentialList>'

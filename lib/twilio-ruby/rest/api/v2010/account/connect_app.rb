@@ -113,19 +113,6 @@ module Twilio
             end
             
             ##
-            # Constructs a ConnectAppContext
-            # @param [String] sid The connect-app Sid that uniquely identifies this resource
-            
-            # @return [ConnectAppContext] ConnectAppContext
-            def get(sid)
-              ConnectAppContext.new(
-                  @version,
-                  account_sid: @solution[:account_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Api.V2010.ConnectAppList>'

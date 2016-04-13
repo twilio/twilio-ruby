@@ -157,18 +157,6 @@ module Twilio
           end
           
           ##
-          # Constructs a AlertContext
-          # @param [String] sid The sid
-          
-          # @return [AlertContext] AlertContext
-          def get(sid)
-            AlertContext.new(
-                @version,
-                sid: sid,
-            )
-          end
-          
-          ##
           # Provide a user friendly representation
           def to_s
             '#<Twilio.Monitor.V1.AlertList>'

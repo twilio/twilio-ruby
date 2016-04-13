@@ -26,16 +26,6 @@ module Twilio
             end
             
             ##
-            # Constructs a WorkspaceStatisticsContext
-            # @return [WorkspaceStatisticsContext] WorkspaceStatisticsContext
-            def get
-              WorkspaceStatisticsContext.new(
-                  @version,
-                  workspace_sid: @solution[:workspace_sid],
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Taskrouter.V1.WorkspaceStatisticsList>'

@@ -109,18 +109,6 @@ module Twilio
             end
             
             ##
-            # Constructs a CountryContext
-            # @param [String] iso_country The iso_country
-            
-            # @return [CountryContext] CountryContext
-            def get(iso_country)
-              CountryContext.new(
-                  @version,
-                  iso_country: iso_country,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Pricing.V1.CountryList>'

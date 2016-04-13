@@ -143,20 +143,6 @@ module Twilio
               end
               
               ##
-              # Constructs a NotificationContext
-              # @param [String] sid The sid
-              
-              # @return [NotificationContext] NotificationContext
-              def get(sid)
-                NotificationContext.new(
-                    @version,
-                    account_sid: @solution[:account_sid],
-                    call_sid: @solution[:call_sid],
-                    sid: sid,
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Api.V2010.NotificationList>'

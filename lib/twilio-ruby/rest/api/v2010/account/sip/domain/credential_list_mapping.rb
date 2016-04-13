@@ -142,20 +142,6 @@ module Twilio
                 end
                 
                 ##
-                # Constructs a CredentialListMappingContext
-                # @param [String] sid The sid
-                
-                # @return [CredentialListMappingContext] CredentialListMappingContext
-                def get(sid)
-                  CredentialListMappingContext.new(
-                      @version,
-                      account_sid: @solution[:account_sid],
-                      domain_sid: @solution[:domain_sid],
-                      sid: sid,
-                  )
-                end
-                
-                ##
                 # Provide a user friendly representation
                 def to_s
                   '#<Twilio.Api.V2010.CredentialListMappingList>'

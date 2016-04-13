@@ -44,18 +44,6 @@ module Twilio
           end
           
           ##
-          # Constructs a ConversationContext
-          # @param [String] sid The sid
-          
-          # @return [ConversationContext] ConversationContext
-          def get(sid)
-            ConversationContext.new(
-                @version,
-                sid: sid,
-            )
-          end
-          
-          ##
           # Provide a user friendly representation
           def to_s
             '#<Twilio.Conversations.V1.ConversationList>'

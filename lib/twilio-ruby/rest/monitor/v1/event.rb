@@ -178,18 +178,6 @@ module Twilio
           end
           
           ##
-          # Constructs a EventContext
-          # @param [String] sid The sid
-          
-          # @return [EventContext] EventContext
-          def get(sid)
-            EventContext.new(
-                @version,
-                sid: sid,
-            )
-          end
-          
-          ##
           # Provide a user friendly representation
           def to_s
             '#<Twilio.Monitor.V1.EventList>'

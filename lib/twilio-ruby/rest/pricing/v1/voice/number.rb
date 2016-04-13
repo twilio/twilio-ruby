@@ -23,18 +23,6 @@ module Twilio
             end
             
             ##
-            # Constructs a NumberContext
-            # @param [String] number The number
-            
-            # @return [NumberContext] NumberContext
-            def get(number)
-              NumberContext.new(
-                  @version,
-                  number: number,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Pricing.V1.NumberList>'

@@ -138,20 +138,6 @@ module Twilio
               end
               
               ##
-              # Constructs a MediaContext
-              # @param [String] sid The media Sid that uniquely identifies this resource
-              
-              # @return [MediaContext] MediaContext
-              def get(sid)
-                MediaContext.new(
-                    @version,
-                    account_sid: @solution[:account_sid],
-                    message_sid: @solution[:message_sid],
-                    sid: sid,
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Api.V2010.MediaList>'

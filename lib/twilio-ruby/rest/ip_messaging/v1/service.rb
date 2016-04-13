@@ -131,18 +131,6 @@ module Twilio
           end
           
           ##
-          # Constructs a ServiceContext
-          # @param [String] sid The sid
-          
-          # @return [ServiceContext] ServiceContext
-          def get(sid)
-            ServiceContext.new(
-                @version,
-                sid: sid,
-            )
-          end
-          
-          ##
           # Provide a user friendly representation
           def to_s
             '#<Twilio.IpMessaging.V1.ServiceList>'

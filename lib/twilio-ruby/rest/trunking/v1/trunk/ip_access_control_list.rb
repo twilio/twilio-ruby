@@ -136,19 +136,6 @@ module Twilio
             end
             
             ##
-            # Constructs a IpAccessControlListContext
-            # @param [String] sid The sid
-            
-            # @return [IpAccessControlListContext] IpAccessControlListContext
-            def get(sid)
-              IpAccessControlListContext.new(
-                  @version,
-                  trunk_sid: @solution[:trunk_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Trunking.V1.IpAccessControlListList>'

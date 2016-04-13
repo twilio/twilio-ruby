@@ -177,19 +177,6 @@ module Twilio
             end
             
             ##
-            # Constructs a ConferenceContext
-            # @param [String] sid The conference Sid that uniquely identifies this resource
-            
-            # @return [ConferenceContext] ConferenceContext
-            def get(sid)
-              ConferenceContext.new(
-                  @version,
-                  account_sid: @solution[:account_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Api.V2010.ConferenceList>'

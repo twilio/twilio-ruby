@@ -139,20 +139,6 @@ module Twilio
               end
               
               ##
-              # Constructs a IpAccessControlListContext
-              # @param [String] sid The ip-access-control-list Sid that uniquely identifies this
-              #   resource
-              
-              # @return [IpAccessControlListContext] IpAccessControlListContext
-              def get(sid)
-                IpAccessControlListContext.new(
-                    @version,
-                    account_sid: @solution[:account_sid],
-                    sid: sid,
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Api.V2010.IpAccessControlListList>'

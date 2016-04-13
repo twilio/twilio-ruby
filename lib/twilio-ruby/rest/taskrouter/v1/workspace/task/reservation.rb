@@ -136,20 +136,6 @@ module Twilio
               end
               
               ##
-              # Constructs a ReservationContext
-              # @param [String] sid The sid
-              
-              # @return [ReservationContext] ReservationContext
-              def get(sid)
-                ReservationContext.new(
-                    @version,
-                    workspace_sid: @solution[:workspace_sid],
-                    task_sid: @solution[:task_sid],
-                    sid: sid,
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Taskrouter.V1.ReservationList>'

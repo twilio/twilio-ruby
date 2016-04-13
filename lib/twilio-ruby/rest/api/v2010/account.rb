@@ -150,19 +150,6 @@ module Twilio
           end
           
           ##
-          # Constructs a AccountContext
-          # @param [String] sid The Account Sid that uniquely identifies the account to
-          #   fetch
-          
-          # @return [AccountContext] AccountContext
-          def get(sid)
-            AccountContext.new(
-                @version,
-                sid: sid,
-            )
-          end
-          
-          ##
           # Provide a user friendly representation
           def to_s
             '#<Twilio.Api.V2010.AccountList>'

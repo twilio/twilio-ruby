@@ -113,19 +113,6 @@ module Twilio
             end
             
             ##
-            # Constructs a AvailablePhoneNumberCountryContext
-            # @param [String] country_code The country_code
-            
-            # @return [AvailablePhoneNumberCountryContext] AvailablePhoneNumberCountryContext
-            def get(country_code)
-              AvailablePhoneNumberCountryContext.new(
-                  @version,
-                  account_sid: @solution[:account_sid],
-                  country_code: country_code,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Api.V2010.AvailablePhoneNumberCountryList>'

@@ -140,19 +140,6 @@ module Twilio
             end
             
             ##
-            # Constructs a RoleContext
-            # @param [String] sid The sid
-            
-            # @return [RoleContext] RoleContext
-            def get(sid)
-              RoleContext.new(
-                  @version,
-                  service_sid: @solution[:service_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.IpMessaging.V1.RoleList>'

@@ -61,19 +61,6 @@ module Twilio
               end
               
               ##
-              # Constructs a FeedbackSummaryContext
-              # @param [String] sid The sid
-              
-              # @return [FeedbackSummaryContext] FeedbackSummaryContext
-              def get(sid)
-                FeedbackSummaryContext.new(
-                    @version,
-                    account_sid: @solution[:account_sid],
-                    sid: sid,
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Api.V2010.FeedbackSummaryList>'

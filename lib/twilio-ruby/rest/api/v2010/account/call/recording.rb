@@ -136,20 +136,6 @@ module Twilio
               end
               
               ##
-              # Constructs a RecordingContext
-              # @param [String] sid The sid
-              
-              # @return [RecordingContext] RecordingContext
-              def get(sid)
-                RecordingContext.new(
-                    @version,
-                    account_sid: @solution[:account_sid],
-                    call_sid: @solution[:call_sid],
-                    sid: sid,
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Api.V2010.RecordingList>'

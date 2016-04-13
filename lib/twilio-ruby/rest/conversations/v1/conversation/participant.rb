@@ -138,19 +138,6 @@ module Twilio
             end
             
             ##
-            # Constructs a ParticipantContext
-            # @param [String] sid The sid
-            
-            # @return [ParticipantContext] ParticipantContext
-            def get(sid)
-              ParticipantContext.new(
-                  @version,
-                  conversation_sid: @solution[:conversation_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Conversations.V1.ParticipantList>'

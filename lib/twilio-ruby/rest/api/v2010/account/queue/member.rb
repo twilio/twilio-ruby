@@ -116,20 +116,6 @@ module Twilio
               end
               
               ##
-              # Constructs a MemberContext
-              # @param [String] call_sid The call_sid
-              
-              # @return [MemberContext] MemberContext
-              def get(call_sid)
-                MemberContext.new(
-                    @version,
-                    account_sid: @solution[:account_sid],
-                    queue_sid: @solution[:queue_sid],
-                    call_sid: call_sid,
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Api.V2010.MemberList>'

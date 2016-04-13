@@ -139,19 +139,6 @@ module Twilio
             end
             
             ##
-            # Constructs a QueueContext
-            # @param [String] sid The queue Sid that uniquely identifies this resource
-            
-            # @return [QueueContext] QueueContext
-            def get(sid)
-              QueueContext.new(
-                  @version,
-                  account_sid: @solution[:account_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Api.V2010.QueueList>'

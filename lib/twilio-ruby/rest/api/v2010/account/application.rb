@@ -194,20 +194,6 @@ module Twilio
             end
             
             ##
-            # Constructs a ApplicationContext
-            # @param [String] sid The application Sid that that uniquely identifies this
-            #   resource
-            
-            # @return [ApplicationContext] ApplicationContext
-            def get(sid)
-              ApplicationContext.new(
-                  @version,
-                  account_sid: @solution[:account_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Api.V2010.ApplicationList>'

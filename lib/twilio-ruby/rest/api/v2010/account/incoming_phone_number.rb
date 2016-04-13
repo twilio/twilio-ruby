@@ -257,20 +257,6 @@ module Twilio
             end
             
             ##
-            # Constructs a IncomingPhoneNumberContext
-            # @param [String] sid The incoming-phone-number Sid that uniquely identifies this
-            #   resource
-            
-            # @return [IncomingPhoneNumberContext] IncomingPhoneNumberContext
-            def get(sid)
-              IncomingPhoneNumberContext.new(
-                  @version,
-                  owner_account_sid: @solution[:owner_account_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Api.V2010.IncomingPhoneNumberList>'

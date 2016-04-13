@@ -158,19 +158,6 @@ module Twilio
               end
               
               ##
-              # Constructs a DomainContext
-              # @param [String] sid The domain sid that uniquely identifies the resource
-              
-              # @return [DomainContext] DomainContext
-              def get(sid)
-                DomainContext.new(
-                    @version,
-                    account_sid: @solution[:account_sid],
-                    sid: sid,
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Api.V2010.DomainList>'

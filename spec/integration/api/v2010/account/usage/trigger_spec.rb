@@ -141,13 +141,13 @@ describe 'Trigger' do
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .usage \
-                       .triggers.create(callback_url: "https://example.com", trigger_value: "trigger_value", usage_category: "calleridlookups")
+                       .triggers.create(callback_url: "https://example.com", trigger_value: "trigger_value", usage_category: "authy-authentications")
     }.to raise_exception(Twilio::REST::TwilioException)
     
     values = {
         'CallbackUrl' => "https://example.com",
         'TriggerValue' => "trigger_value",
-        'UsageCategory' => "calleridlookups",
+        'UsageCategory' => "authy-authentications",
     }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -184,7 +184,7 @@ describe 'Trigger' do
     
     actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                               .usage \
-                              .triggers.create(callback_url: "https://example.com", trigger_value: "trigger_value", usage_category: "calleridlookups")
+                              .triggers.create(callback_url: "https://example.com", trigger_value: "trigger_value", usage_category: "authy-authentications")
     
     expect(actual).to_not eq(nil)
   end

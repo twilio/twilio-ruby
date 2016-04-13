@@ -144,19 +144,6 @@ module Twilio
             end
             
             ##
-            # Constructs a OriginationUrlContext
-            # @param [String] sid The sid
-            
-            # @return [OriginationUrlContext] OriginationUrlContext
-            def get(sid)
-              OriginationUrlContext.new(
-                  @version,
-                  trunk_sid: @solution[:trunk_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Trunking.V1.OriginationUrlList>'

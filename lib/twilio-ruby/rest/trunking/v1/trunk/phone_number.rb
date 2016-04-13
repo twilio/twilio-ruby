@@ -136,19 +136,6 @@ module Twilio
             end
             
             ##
-            # Constructs a PhoneNumberContext
-            # @param [String] sid The sid
-            
-            # @return [PhoneNumberContext] PhoneNumberContext
-            def get(sid)
-              PhoneNumberContext.new(
-                  @version,
-                  trunk_sid: @solution[:trunk_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Trunking.V1.PhoneNumberList>'

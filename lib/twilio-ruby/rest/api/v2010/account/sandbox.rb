@@ -26,16 +26,6 @@ module Twilio
             end
             
             ##
-            # Constructs a SandboxContext
-            # @return [SandboxContext] SandboxContext
-            def get
-              SandboxContext.new(
-                  @version,
-                  account_sid: @solution[:account_sid],
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Api.V2010.SandboxList>'

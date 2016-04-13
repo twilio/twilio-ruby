@@ -141,18 +141,6 @@ module Twilio
           end
           
           ##
-          # Constructs a TrunkContext
-          # @param [String] sid The sid
-          
-          # @return [TrunkContext] TrunkContext
-          def get(sid)
-            TrunkContext.new(
-                @version,
-                sid: sid,
-            )
-          end
-          
-          ##
           # Provide a user friendly representation
           def to_s
             '#<Twilio.Trunking.V1.TrunkList>'

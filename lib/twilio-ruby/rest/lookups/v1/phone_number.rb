@@ -22,18 +22,6 @@ module Twilio
           end
           
           ##
-          # Constructs a PhoneNumberContext
-          # @param [String] phone_number The phone_number
-          
-          # @return [PhoneNumberContext] PhoneNumberContext
-          def get(phone_number)
-            PhoneNumberContext.new(
-                @version,
-                phone_number: phone_number,
-            )
-          end
-          
-          ##
           # Provide a user friendly representation
           def to_s
             '#<Twilio.Lookups.V1.PhoneNumberList>'

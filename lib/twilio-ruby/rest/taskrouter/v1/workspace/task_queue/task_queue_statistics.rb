@@ -29,17 +29,6 @@ module Twilio
               end
               
               ##
-              # Constructs a TaskQueueStatisticsContext
-              # @return [TaskQueueStatisticsContext] TaskQueueStatisticsContext
-              def get
-                TaskQueueStatisticsContext.new(
-                    @version,
-                    workspace_sid: @solution[:workspace_sid],
-                    task_queue_sid: @solution[:task_queue_sid],
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Taskrouter.V1.TaskQueueStatisticsList>'

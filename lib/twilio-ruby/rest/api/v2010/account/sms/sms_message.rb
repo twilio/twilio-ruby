@@ -183,19 +183,6 @@ module Twilio
               end
               
               ##
-              # Constructs a SmsMessageContext
-              # @param [String] sid The sid
-              
-              # @return [SmsMessageContext] SmsMessageContext
-              def get(sid)
-                SmsMessageContext.new(
-                    @version,
-                    account_sid: @solution[:account_sid],
-                    sid: sid,
-                )
-              end
-              
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Api.V2010.SmsMessageList>'

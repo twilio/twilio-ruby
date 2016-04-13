@@ -207,19 +207,6 @@ module Twilio
             end
             
             ##
-            # Constructs a WorkerContext
-            # @param [String] sid The sid
-            
-            # @return [WorkerContext] WorkerContext
-            def get(sid)
-              WorkerContext.new(
-                  @version,
-                  workspace_sid: @solution[:workspace_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Taskrouter.V1.WorkerList>'

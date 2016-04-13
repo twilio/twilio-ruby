@@ -113,19 +113,6 @@ module Twilio
             end
             
             ##
-            # Constructs a AuthorizedConnectAppContext
-            # @param [String] connect_app_sid The connect_app_sid
-            
-            # @return [AuthorizedConnectAppContext] AuthorizedConnectAppContext
-            def get(connect_app_sid)
-              AuthorizedConnectAppContext.new(
-                  @version,
-                  account_sid: @solution[:account_sid],
-                  connect_app_sid: connect_app_sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Api.V2010.AuthorizedConnectAppList>'

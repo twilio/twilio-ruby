@@ -285,19 +285,6 @@ module Twilio
             end
             
             ##
-            # Constructs a CallContext
-            # @param [String] sid The Call Sid that uniquely identifies the Call to fetch
-            
-            # @return [CallContext] CallContext
-            def get(sid)
-              CallContext.new(
-                  @version,
-                  account_sid: @solution[:account_sid],
-                  sid: sid,
-              )
-            end
-            
-            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Api.V2010.CallList>'
