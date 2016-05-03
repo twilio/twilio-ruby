@@ -7,7 +7,9 @@
 module ActionController
   class Parameters < Hash
     def to_unsafe_h
-      self.to_h
+      # Creates a new Hash using the values of this hash. We could use `to_h`
+      # Once Ruby 1.9.3 is dropped from CI.
+      Hash[self]
     end
 
     def sort
