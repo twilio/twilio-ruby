@@ -6,7 +6,6 @@ require 'openssl'
 require 'base64'
 require 'forwardable'
 require 'jwt'
-require 'active_support/all'
 
 require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
 require 'rack/twilio_webhook_authentication'
