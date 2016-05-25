@@ -43,7 +43,7 @@ describe UtilClass do
     expect(util.detwilify(twilified)).to eq(untwilified)
   end
 
-  it 'should convert an array of pairs to parameter names' do
+  it 'should convert an array of pairs to Twilio-style names' do
     untwilified = [[ :sms_url, 'someUrl' ], [ :voice_fallback_url, 'anotherUrl' ], [ :statusCallback, 'yetAnotherUrl' ]]
     twilified = [[:SmsUrl, "someUrl"], [:VoiceFallbackUrl, "anotherUrl"], [:StatusCallback, "yetAnotherUrl"]]
     expect(util.twilify(untwilified)).to eq(twilified)

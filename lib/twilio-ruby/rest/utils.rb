@@ -13,8 +13,7 @@ module Twilio
 
       def detwilify(something)
         return key_map(something, :detwilify) if something.is_a? Hash
-        return array_map(something, :detwilify)
-          .map { |p| [p.first.to_sym, p.last ] } if something.is_a?(Array)
+        return array_map(something, :detwilify) if something.is_a?(Array)
         string = something.to_s
         string = string[0,1].downcase + string[1..-1]
         string.gsub(/[A-Z][a-z]*/) { |s| "_#{s.downcase}" }
