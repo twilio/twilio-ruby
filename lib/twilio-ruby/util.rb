@@ -1,7 +1,16 @@
 module Twilio
   module Util
     def url_encode(hash)
-      hash.to_a.map {|p| p.map {|e| CGI.escape get_string(e)}.join '='}.join '&'
+      normalized_parameters = hash.inject([]) do |memo, (key, value)|
+        key = CGI.escape(get_string(key))
+        if value.is_a?(Array)
+          value.each { |arg| memo << [key, CGI.escape(get_string(arg))] }
+        else
+          memo << [key, CGI.escape(get_string(value))]
+        end
+        memo
+      end
+      normalized_parameters.map { |pair| pair.join("=") }.join("&")
     end
 
     def get_string(obj)
