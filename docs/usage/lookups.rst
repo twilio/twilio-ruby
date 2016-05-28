@@ -60,3 +60,25 @@ The Lookups API can be used to find out more information about the carrier for t
     response = @lookups_client.phone_numbers.get("+12316851234", type: "carrier")
     response.carrier
     # => {"mobile_country_code"=>nil, "mobile_network_code"=>nil, "name"=>"Charter Fiberlink, LLC", "type"=>"landline", "error_code"=>nil}
+
+Caller Name
+-----------
+
+You can also use the Lookups API to query the Caller ID Name (CNAM) database that lists many US numbers. This time, pass the type "caller-name" to the request.
+
+.. code-block:: ruby
+
+    response = @lookups_client.phone_numbers.get("+14157012311", type: "caller-name")
+    response.caller_name
+    # => {"caller_name"=>"SAN FRANCISCO TRANSIT - BUS LI", "caller_type"=>"BUSINESS", "error_code"=>nil}
+
+Multiple Types of Lookups
+-------------------------
+
+You can use the Lookups API to check both caller name and carrier information in one API call. Just pass the types you want to look up as an array.
+
+    response = @lookups_client.phone_numbers.get("+14157012311", type: ["caller-name", "carrier"])
+    response.caller_name
+    # => {"caller_name"=>"SAN FRANCISCO TRANSIT - BUS LI", "caller_type"=>"BUSINESS", "error_code"=>nil}
+    response.carrier
+    # => {"mobile_country_code"=>nil, "mobile_network_code"=>nil, "name"=>"Pacific Bell", "type"=>"landline", "error_code"=>nil}
