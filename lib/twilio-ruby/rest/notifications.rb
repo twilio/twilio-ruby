@@ -26,6 +26,10 @@ module Twilio
         @v1 ||= V1.new self
       end
       
+      def credentials
+        self.v1.credentials
+      end
+      
       def services
         self.v1.services
       end

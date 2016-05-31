@@ -21,11 +21,11 @@ module Twilio
         
         # Domains
         @api = nil
-        @conversations = nil
         @ip_messaging = nil
         @lookups = nil
         @monitor = nil
         @notifications = nil
+        @preview = nil
         @pricing = nil
         @taskrouter = nil
         @trunking = nil
@@ -70,12 +70,6 @@ module Twilio
       end
       
       ##
-      # Access the Conversations Twilio Domain
-      def conversations
-        @conversations ||= Conversations.new self
-      end
-      
-      ##
       # Access the IpMessaging Twilio Domain
       def ip_messaging
         @ip_messaging ||= IpMessaging.new self
@@ -97,6 +91,12 @@ module Twilio
       # Access the Notifications Twilio Domain
       def notifications
         @notifications ||= Notifications.new self
+      end
+      
+      ##
+      # Access the Preview Twilio Domain
+      def preview
+        @preview ||= Preview.new self
       end
       
       ##

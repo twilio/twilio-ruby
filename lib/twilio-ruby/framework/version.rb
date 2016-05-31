@@ -73,7 +73,7 @@ module Twilio
           timeout
         )
 
-        if response.status_code != 200
+        if response.status_code < 200 || response.status_code >= 300
           raise Twilio::REST::TwilioException.new('Unable to fetch record')
         end
 
@@ -91,7 +91,7 @@ module Twilio
           timeout
         )
 
-        if response.status_code != 200
+        if response.status_code < 200 || response.status_code >= 300
           raise TwilioException.new('Unable to update record')
         end
 
@@ -109,7 +109,7 @@ module Twilio
           timeout
         )
 
-        if 500 <= response.status_code && response.status_code < 600
+        if response.status_code < 200 || response.status_code >= 300
           raise TwilioException.new('Unable to delete record')
         end
 
@@ -158,7 +158,7 @@ module Twilio
                     auth,
                     timeout)
 
-        unless [200, 201].include?(response.status_code)
+        if response.status_code < 200 || response.status_code >= 300
           raise TwilioException.new("[#{response.status_code}] Unable to create record\n#{response.body}")
         end
 

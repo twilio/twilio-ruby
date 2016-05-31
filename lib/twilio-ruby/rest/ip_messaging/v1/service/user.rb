@@ -280,7 +280,6 @@ module Twilio
                   'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
                   'url' => payload['url'],
-                  'links' => payload['links'],
               }
               
               # Context
@@ -338,10 +337,6 @@ module Twilio
             
             def url
               @properties['url']
-            end
-            
-            def links
-              @properties['links']
             end
             
             ##

@@ -154,7 +154,7 @@ describe 'Binding' do
               "first_page_url": "https://notifications.stage.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings?PageSize=1&Page=0",
               "previous_page_url": null,
               "url": "https://notifications.stage.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings?PageSize=1&Page=0",
-              "next_page_url": "https://notifications.stage.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings?PageSize=1&Page=1&PageToken=PABSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "next_page_url": null,
               "key": "bindings"
           },
           "bindings": [
@@ -194,7 +194,7 @@ describe 'Binding' do
               "first_page_url": "https://notifications.stage.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings?PageSize=1&Page=0",
               "previous_page_url": null,
               "url": "https://notifications.stage.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings?PageSize=1&Page=0",
-              "next_page_url": "https://notifications.stage.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings?PageSize=1&Page=1&PageToken=PABSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "next_page_url": null,
               "key": "bindings"
           },
           "bindings": []

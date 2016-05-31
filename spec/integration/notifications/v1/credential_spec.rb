@@ -11,14 +11,14 @@ describe 'Credential' do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
     expect {
-      @client.ip_messaging.v1.credentials.list()
+      @client.notifications.v1.credentials.list()
     }.to raise_exception(Twilio::REST::TwilioException)
     
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://ip-messaging.twilio.com/v1/Credentials',
+        url: 'https://notifications.twilio.com/v1/Credentials',
     ))).to eq(true)
   end
 
@@ -36,15 +36,15 @@ describe 'Credential' do
                   "sandbox": "False",
                   "date_created": "2015-10-07T17:50:01Z",
                   "date_updated": "2015-10-07T17:50:01Z",
-                  "url": "https://ip-messaging.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  "url": "https://notifications.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
           ],
           "meta": {
               "page": 0,
               "page_size": 1,
-              "first_page_url": "https://ip-messaging.twilio.com/v1/Credentials?PageSize=1&Page=0",
+              "first_page_url": "https://notifications.twilio.com/v1/Credentials?PageSize=1&Page=0",
               "previous_page_url": null,
-              "url": "https://ip-messaging.twilio.com/v1/Credentials?PageSize=1&Page=0",
+              "url": "https://notifications.twilio.com/v1/Credentials?PageSize=1&Page=0",
               "next_page_url": null,
               "key": "credentials"
           }
@@ -52,7 +52,7 @@ describe 'Credential' do
       ]
     ))
     
-    actual = @client.ip_messaging.v1.credentials.list()
+    actual = @client.notifications.v1.credentials.list()
     
     expect(actual).to_not eq(nil)
   end
@@ -66,9 +66,9 @@ describe 'Credential' do
           "meta": {
               "page": 0,
               "page_size": 1,
-              "first_page_url": "https://ip-messaging.twilio.com/v1/Credentials?PageSize=1&Page=0",
+              "first_page_url": "https://notifications.twilio.com/v1/Credentials?PageSize=1&Page=0",
               "previous_page_url": null,
-              "url": "https://ip-messaging.twilio.com/v1/Credentials?PageSize=1&Page=0",
+              "url": "https://notifications.twilio.com/v1/Credentials?PageSize=1&Page=0",
               "next_page_url": null,
               "key": "credentials"
           }
@@ -76,7 +76,7 @@ describe 'Credential' do
       ]
     ))
     
-    actual = @client.ip_messaging.v1.credentials.list()
+    actual = @client.notifications.v1.credentials.list()
     
     expect(actual).to_not eq(nil)
   end
@@ -85,7 +85,7 @@ describe 'Credential' do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
     expect {
-      @client.ip_messaging.v1.credentials.create(friendly_name: "friendly_name", type: "gcm")
+      @client.notifications.v1.credentials.create(friendly_name: "friendly_name", type: "gcm")
     }.to raise_exception(Twilio::REST::TwilioException)
     
     values = {
@@ -95,7 +95,7 @@ describe 'Credential' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://ip-messaging.twilio.com/v1/Credentials',
+        url: 'https://notifications.twilio.com/v1/Credentials',
         data: values,
     ))).to eq(true)
   end
@@ -112,12 +112,12 @@ describe 'Credential' do
           "sandbox": "False",
           "date_created": "2015-10-07T17:50:01Z",
           "date_updated": "2015-10-07T17:50:01Z",
-          "url": "https://ip-messaging.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://notifications.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
     ))
     
-    actual = @client.ip_messaging.v1.credentials.create(friendly_name: "friendly_name", type: "gcm")
+    actual = @client.notifications.v1.credentials.create(friendly_name: "friendly_name", type: "gcm")
     
     expect(actual).to_not eq(nil)
   end
@@ -126,14 +126,14 @@ describe 'Credential' do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
     expect {
-      @client.ip_messaging.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.notifications.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
     }.to raise_exception(Twilio::REST::TwilioException)
     
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://ip-messaging.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://notifications.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     ))).to eq(true)
   end
 
@@ -149,12 +149,12 @@ describe 'Credential' do
           "sandbox": "False",
           "date_created": "2015-10-07T17:50:01Z",
           "date_updated": "2015-10-07T17:50:01Z",
-          "url": "https://ip-messaging.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://notifications.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
     ))
     
-    actual = @client.ip_messaging.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.notifications.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
     
     expect(actual).to_not eq(nil)
   end
@@ -163,7 +163,7 @@ describe 'Credential' do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
     expect {
-      @client.ip_messaging.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(friendly_name: "friendly_name", type: "gcm")
+      @client.notifications.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(friendly_name: "friendly_name", type: "gcm")
     }.to raise_exception(Twilio::REST::TwilioException)
     
     values = {
@@ -173,7 +173,7 @@ describe 'Credential' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://ip-messaging.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://notifications.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         data: values,
     ))).to eq(true)
   end
@@ -190,12 +190,12 @@ describe 'Credential' do
           "sandbox": "False",
           "date_created": "2015-10-07T17:50:01Z",
           "date_updated": "2015-10-07T17:50:01Z",
-          "url": "https://ip-messaging.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://notifications.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
     ))
     
-    actual = @client.ip_messaging.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(friendly_name: "friendly_name", type: "gcm")
+    actual = @client.notifications.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(friendly_name: "friendly_name", type: "gcm")
     
     expect(actual).to_not eq(nil)
   end
@@ -204,14 +204,14 @@ describe 'Credential' do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
     expect {
-      @client.ip_messaging.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.notifications.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
     }.to raise_exception(Twilio::REST::TwilioException)
     
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://ip-messaging.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://notifications.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     ))).to eq(true)
   end
 
@@ -221,7 +221,7 @@ describe 'Credential' do
       nil,
     ))
     
-    actual = @client.ip_messaging.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.notifications.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
     
     expect(actual).to eq(true)
   end

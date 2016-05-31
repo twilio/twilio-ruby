@@ -13,7 +13,16 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @credentials = nil
           @services = nil
+        end
+        
+        def credentials(sid=:unset)
+          if sid == :unset
+            @credentials ||= CredentialList.new self
+          else
+            CredentialContext.new(self, sid)
+          end
         end
         
         def services(sid=:unset)
