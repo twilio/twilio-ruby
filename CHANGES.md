@@ -1,7 +1,14 @@
 twilio-ruby changelog
 =====================
 
-Version 5.0.0
+Version 5.0.0-rc5
+-------------
+
+Release May 31, 2016
+
+- Add preview.twilio.com/wireless support
+
+Version 5.0.0-rc4
 -------------
 
 Release March 28, 2016
