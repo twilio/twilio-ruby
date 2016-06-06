@@ -12,6 +12,9 @@ module Twilio
         @proxy_pass = proxy_pass
         @ssl_ca_file = ssl_ca_file
         @adapter = Faraday.default_adapter
+
+        # Set default params encoder
+        Faraday::Utils.default_params_encoder = Faraday::FlatParamsEncoder
       end
 
       def request(host, port, method, url, params={}, data={}, headers={}, auth=nil, timeout=nil)

@@ -11,7 +11,7 @@ describe 'Usage' do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
     expect {
-      @client.preview.wireless.devices("sid") \
+      @client.preview.wireless.devices("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                               .usage().fetch()
     }.to raise_exception(Twilio::REST::TwilioException)
     
@@ -19,7 +19,7 @@ describe 'Usage' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/wireless/Devices/sid/Usage',
+        url: 'https://preview.twilio.com/wireless/Devices/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Usage',
     ))).to eq(true)
   end
 end

@@ -15,7 +15,8 @@ module Twilio
         @base_url = 'https://preview.twilio.com'
         @host = 'preview.twilio.com'
         @port = 443
-
+        
+        # Versions
         @wireless = nil
       end
 

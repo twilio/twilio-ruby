@@ -83,14 +83,18 @@ module Twilio
           # Fetch a PhoneNumberInstance
           # @param [String] country_code The country_code
           # @param [String] type The type
+          # @param [String] add_ons The add_ons
+          # @param [String] add_ons_data The add_ons_data
           
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
-          def fetch(country_code: nil, type: nil)
+          def fetch(country_code: nil, type: nil, add_ons: nil, add_ons_data: nil)
             params = {
                 'CountryCode' => country_code,
                 'Type' => type,
+                'AddOns' => add_ons,
             }
             
+            params.merge!(Twilio.prefixed_collapsible_map(add_ons_data, 'AddOns'))
             payload = @version.fetch(
                 'GET',
                 @uri,
@@ -129,6 +133,7 @@ module Twilio
                 'phone_number' => payload['phone_number'],
                 'national_format' => payload['national_format'],
                 'carrier' => payload['carrier'],
+                'add_ons' => payload['add_ons'],
             }
             
             # Context
@@ -170,15 +175,23 @@ module Twilio
             @properties['carrier']
           end
           
+          def add_ons
+            @properties['add_ons']
+          end
+          
           ##
           # Fetch a PhoneNumberInstance
           # @param [String] country_code The country_code
           # @param [String] type The type
+          # @param [String] add_ons The add_ons
+          # @param [String] add_ons_data The add_ons_data
           
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
-          def fetch(country_code: nil, type: nil)
+          def fetch(country_code: nil, type: nil, add_ons: nil, add_ons_data: nil)
             @context.fetch(
                 type: type,
+                add_ons: add_ons,
+                add_ons_data: add_ons_data,
             )
           end
           
