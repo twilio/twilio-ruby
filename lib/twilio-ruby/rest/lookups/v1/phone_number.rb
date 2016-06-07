@@ -84,7 +84,7 @@ module Twilio
           # @param [String] country_code The country_code
           # @param [String] type The type
           # @param [String] add_ons The add_ons
-          # @param [String] add_ons_data The add_ons_data
+          # @param [Hash] add_ons_data The add_ons_data
           
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
           def fetch(country_code: nil, type: nil, add_ons: nil, add_ons_data: nil)
@@ -184,7 +184,7 @@ module Twilio
           # @param [String] country_code The country_code
           # @param [String] type The type
           # @param [String] add_ons The add_ons
-          # @param [String] add_ons_data The add_ons_data
+          # @param [Hash] add_ons_data The add_ons_data
           
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
           def fetch(country_code: nil, type: nil, add_ons: nil, add_ons_data: nil)
