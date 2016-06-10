@@ -19,7 +19,7 @@ module Twilio
         # Versions
         @wireless = nil
       end
-
+      
       ##
       # Version wireless of preview
       def wireless

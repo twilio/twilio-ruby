@@ -248,6 +248,7 @@ module Twilio
               
               # Dependents
               @media = nil
+              @feedback = nil
             end
             
             ##
@@ -323,6 +324,21 @@ module Twilio
               end
               
               @media
+            end
+            
+            ##
+            # Access the feedback
+            # @return [FeedbackList] FeedbackList
+            def feedback
+              unless @feedback
+                @feedback = FeedbackList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                    message_sid: @solution[:sid],
+                )
+              end
+              
+              @feedback
             end
             
             ##
@@ -497,6 +513,13 @@ module Twilio
             # @return [media] media
             def media
               @context.media
+            end
+            
+            ##
+            # Access the feedback
+            # @return [feedback] feedback
+            def feedback
+              @context.feedback
             end
             
             ##
