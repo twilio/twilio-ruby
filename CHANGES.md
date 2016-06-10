@@ -1,6 +1,14 @@
 twilio-ruby changelog
 =====================
 
+Version 5.0.0-rc7
+-------------
+
+Release June 9, 2016
+
+- Add messaging feedback support
+
+
 Version 5.0.0-rc5
 -------------
 
