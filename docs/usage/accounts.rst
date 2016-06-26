@@ -45,7 +45,7 @@ Subaccounts are easy to make.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @subaccount = @client.accounts.create(name: "My Awesome SubAccount")
+    @subaccount = @client.accounts.create(friendly_name: "My Awesome SubAccount")
 
 
 Managing Subaccounts
