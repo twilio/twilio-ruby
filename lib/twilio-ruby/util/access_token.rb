@@ -101,6 +101,37 @@ module Twilio
 
       end
 
+      class SyncGrant
+        attr_accessor :service_sid,
+                      :endpoint_id,
+                      :deployment_role_sid,
+                      :push_credential_sid
+
+        def key
+          'data_sync'
+        end
+
+        def payload
+          payload = {}
+          if @service_sid
+            payload['service_sid'] = @service_sid
+          end
+          if @endpoint_id
+            payload['endpoint_id'] = @endpoint_id
+          end
+          if @deployment_role_sid
+            payload['deployment_role_sid'] = @deployment_role_sid
+          end
+          if @push_credential_sid
+            payload['push_credential_sid'] = @push_credential_sid
+          end
+
+          payload
+        end
+
+      end
+
+
     end
   end
 end
