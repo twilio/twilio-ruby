@@ -90,10 +90,15 @@ describe Twilio::Util::AccessToken do
     expect(payload['grants']['ip_messaging']['deployment_role_sid']).to eq('DR123')
   end
 
-  it 'should add rest grants' do
+  it 'should be able to add Sync grants' do
     scat = Twilio::Util::AccessToken.new 'AC123', 'SK123','secret'
-    scat.add_grant(Twilio::Util::AccessToken::ConversationsGrant.new)
-    scat.add_grant(Twilio::Util::AccessToken::IpMessagingGrant.new)
+
+    grant = Twilio::Util::AccessToken::SyncGrant.new
+    grant.push_credential_sid = 'CR123'
+    grant.deployment_role_sid = 'DR123'
+    grant.service_sid = 'IS123'
+    grant.endpoint_id = 'EP123'
+    scat.add_grant(grant)
 
     token = scat.to_s
     expect(token).not_to be_nil
@@ -106,9 +111,35 @@ describe Twilio::Util::AccessToken do
     expect(payload['jti']).not_to be_nil
     expect(payload['jti']).to start_with payload['iss']
     expect(payload['grants']).not_to be_nil
-    expect(payload['grants'].count).to eq(2)
+    expect(payload['grants'].count).to eq(1)
+    expect(payload['grants']['data_sync']).not_to be_nil
+    expect(payload['grants']['data_sync']['service_sid']).to eq('IS123')
+    expect(payload['grants']['data_sync']['endpoint_id']).to eq('EP123')
+    expect(payload['grants']['data_sync']['push_credential_sid']).to eq('CR123')
+    expect(payload['grants']['data_sync']['deployment_role_sid']).to eq('DR123')
+  end
+
+  it 'should add rest grants' do
+    scat = Twilio::Util::AccessToken.new 'AC123', 'SK123','secret'
+    scat.add_grant(Twilio::Util::AccessToken::ConversationsGrant.new)
+    scat.add_grant(Twilio::Util::AccessToken::IpMessagingGrant.new)
+    scat.add_grant(Twilio::Util::AccessToken::SyncGrant.new)
+
+    token = scat.to_s
+    expect(token).not_to be_nil
+    payload, header = JWT.decode token, 'secret'
+
+    expect(payload['iss']).to eq('SK123')
+    expect(payload['sub']).to eq('AC123')
+    expect(payload['exp']).not_to be_nil
+    expect(payload['exp']).to be >= Time.now.to_i
+    expect(payload['jti']).not_to be_nil
+    expect(payload['jti']).to start_with payload['iss']
+    expect(payload['grants']).not_to be_nil
+    expect(payload['grants'].count).to eq(3)
     expect(payload['grants']['rtc']).not_to be_nil
     expect(payload['grants']['ip_messaging']).not_to be_nil
+    expect(payload['grants']['data_sync']).not_to be_nil
   end
 
 end
