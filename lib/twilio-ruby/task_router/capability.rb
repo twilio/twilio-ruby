@@ -141,6 +141,9 @@ module Twilio
 
           @workerReservationsUrl = @resourceUrl + "/Reservations/**"
           allow(@workerReservationsUrl, "GET")
+          
+          @workerChannelsUrl = @resourceUrl + "/Channels/**"
+          allow(@workerChannelsUrl, "GET")
 
         elsif(@channel_id[0..1] == 'WQ')
           @resourceUrl = @baseUrl + "/TaskQueues/" + @channel_id
@@ -177,10 +180,12 @@ module Twilio
         @tasksUrl = @baseUrl + "/Tasks/**"
         @activityUrl = @baseUrl + "/Activities"
         @workerReservationsUrl = @resourceUrl + "/Reservations/**"
+        @workerChannelsUrl = @resourceUrl + "/Channels/**"
 
         allow(@activityUrl, "GET")
         allow(@tasksUrl, "GET")
         allow(@workerReservationsUrl, "GET")
+        allow(@workerChannelsUrl, "GET")
       end
 
       def allow_activity_updates
