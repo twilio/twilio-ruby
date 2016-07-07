@@ -32,7 +32,7 @@ module Twilio
             # @param [String] identity The identity
             # @param [String] tag The tag
             # @param [String] body The body
-            # @param [String] priority The priority
+            # @param [notification.Priority] priority The priority
             # @param [String] ttl The ttl
             # @param [String] title The title
             # @param [String] sound The sound
@@ -40,9 +40,10 @@ module Twilio
             # @param [String] data The data
             # @param [String] apn The apn
             # @param [String] gcm The gcm
+            # @param [String] facebook_messenger The facebook_messenger
             
             # @return [NotificationInstance] Newly created NotificationInstance
-            def create(identity: nil, tag: nil, body: nil, priority: nil, ttl: nil, title: nil, sound: nil, action: nil, data: nil, apn: nil, gcm: nil)
+            def create(identity: nil, tag: nil, body: nil, priority: nil, ttl: nil, title: nil, sound: nil, action: nil, data: nil, apn: nil, gcm: nil, facebook_messenger: nil)
               data = {
                   'Identity' => identity,
                   'Tag' => tag,
@@ -55,6 +56,7 @@ module Twilio
                   'Data' => data,
                   'Apn' => apn,
                   'Gcm' => gcm,
+                  'FacebookMessenger' => facebook_messenger,
               }
               
               payload = @version.create(
@@ -141,6 +143,7 @@ module Twilio
                   'data' => payload['data'],
                   'apn' => payload['apn'],
                   'gcm' => payload['gcm'],
+                  'facebook_messenger' => payload['facebook_messenger'],
               }
             end
             
@@ -202,6 +205,10 @@ module Twilio
             
             def gcm
               @properties['gcm']
+            end
+            
+            def facebook_messenger
+              @properties['facebook_messenger']
             end
             
             ##

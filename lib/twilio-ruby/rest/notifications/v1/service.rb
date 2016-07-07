@@ -28,17 +28,21 @@ module Twilio
           # @param [String] friendly_name The friendly_name
           # @param [String] apn_credential_sid The apn_credential_sid
           # @param [String] gcm_credential_sid The gcm_credential_sid
+          # @param [String] messaging_service_sid The messaging_service_sid
+          # @param [String] facebook_messenger_page_id The facebook_messenger_page_id
           # @param [String] default_apn_notification_protocol_version The
           #   default_apn_notification_protocol_version
           # @param [String] default_gcm_notification_protocol_version The
           #   default_gcm_notification_protocol_version
           
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil, apn_credential_sid: nil, gcm_credential_sid: nil, default_apn_notification_protocol_version: nil, default_gcm_notification_protocol_version: nil)
+          def create(friendly_name: nil, apn_credential_sid: nil, gcm_credential_sid: nil, messaging_service_sid: nil, facebook_messenger_page_id: nil, default_apn_notification_protocol_version: nil, default_gcm_notification_protocol_version: nil)
             data = {
                 'FriendlyName' => friendly_name,
                 'ApnCredentialSid' => apn_credential_sid,
                 'GcmCredentialSid' => gcm_credential_sid,
+                'MessagingServiceSid' => messaging_service_sid,
+                'FacebookMessengerPageId' => facebook_messenger_page_id,
                 'DefaultApnNotificationProtocolVersion' => default_apn_notification_protocol_version,
                 'DefaultGcmNotificationProtocolVersion' => default_gcm_notification_protocol_version,
             }
@@ -240,17 +244,21 @@ module Twilio
           # @param [String] friendly_name The friendly_name
           # @param [String] apn_credential_sid The apn_credential_sid
           # @param [String] gcm_credential_sid The gcm_credential_sid
+          # @param [String] messaging_service_sid The messaging_service_sid
+          # @param [String] facebook_messenger_page_id The facebook_messenger_page_id
           # @param [String] default_apn_notification_protocol_version The
           #   default_apn_notification_protocol_version
           # @param [String] default_gcm_notification_protocol_version The
           #   default_gcm_notification_protocol_version
           
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: nil, apn_credential_sid: nil, gcm_credential_sid: nil, default_apn_notification_protocol_version: nil, default_gcm_notification_protocol_version: nil)
+          def update(friendly_name: nil, apn_credential_sid: nil, gcm_credential_sid: nil, messaging_service_sid: nil, facebook_messenger_page_id: nil, default_apn_notification_protocol_version: nil, default_gcm_notification_protocol_version: nil)
             data = {
                 'FriendlyName' => friendly_name,
                 'ApnCredentialSid' => apn_credential_sid,
                 'GcmCredentialSid' => gcm_credential_sid,
+                'MessagingServiceSid' => messaging_service_sid,
+                'FacebookMessengerPageId' => facebook_messenger_page_id,
                 'DefaultApnNotificationProtocolVersion' => default_apn_notification_protocol_version,
                 'DefaultGcmNotificationProtocolVersion' => default_gcm_notification_protocol_version,
             }
@@ -332,6 +340,8 @@ module Twilio
                 'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
                 'apn_credential_sid' => payload['apn_credential_sid'],
                 'gcm_credential_sid' => payload['gcm_credential_sid'],
+                'messaging_service_sid' => payload['messaging_service_sid'],
+                'facebook_messenger_page_id' => payload['facebook_messenger_page_id'],
                 'default_apn_notification_protocol_version' => payload['default_apn_notification_protocol_version'],
                 'default_gcm_notification_protocol_version' => payload['default_gcm_notification_protocol_version'],
                 'url' => payload['url'],
@@ -389,6 +399,14 @@ module Twilio
             @properties['gcm_credential_sid']
           end
           
+          def messaging_service_sid
+            @properties['messaging_service_sid']
+          end
+          
+          def facebook_messenger_page_id
+            @properties['facebook_messenger_page_id']
+          end
+          
           def default_apn_notification_protocol_version
             @properties['default_apn_notification_protocol_version']
           end
@@ -424,16 +442,20 @@ module Twilio
           # @param [String] friendly_name The friendly_name
           # @param [String] apn_credential_sid The apn_credential_sid
           # @param [String] gcm_credential_sid The gcm_credential_sid
+          # @param [String] messaging_service_sid The messaging_service_sid
+          # @param [String] facebook_messenger_page_id The facebook_messenger_page_id
           # @param [String] default_apn_notification_protocol_version The
           #   default_apn_notification_protocol_version
           # @param [String] default_gcm_notification_protocol_version The
           #   default_gcm_notification_protocol_version
           
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: nil, apn_credential_sid: nil, gcm_credential_sid: nil, default_apn_notification_protocol_version: nil, default_gcm_notification_protocol_version: nil)
+          def update(friendly_name: nil, apn_credential_sid: nil, gcm_credential_sid: nil, messaging_service_sid: nil, facebook_messenger_page_id: nil, default_apn_notification_protocol_version: nil, default_gcm_notification_protocol_version: nil)
             @context.update(
                 apn_credential_sid: apn_credential_sid,
                 gcm_credential_sid: gcm_credential_sid,
+                messaging_service_sid: messaging_service_sid,
+                facebook_messenger_page_id: facebook_messenger_page_id,
                 default_apn_notification_protocol_version: default_apn_notification_protocol_version,
                 default_gcm_notification_protocol_version: default_gcm_notification_protocol_version,
             )
