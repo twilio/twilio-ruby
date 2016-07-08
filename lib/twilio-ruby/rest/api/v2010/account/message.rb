@@ -38,12 +38,12 @@ module Twilio
             # @param [String] application_sid Twilio the POST MessageSid as well as
             #   MessageStatus to the URL in the MessageStatusCallback property of this
             #   Application
-            # @param [Boolean] provide_feeback The provide_feeback
+            # @param [Boolean] provide_feedback The provide_feedback
             # @param [String] body The body
             # @param [String] media_url The media_url
             
             # @return [MessageInstance] Newly created MessageInstance
-            def create(to: nil, from: nil, status_callback: nil, application_sid: nil, provide_feeback: nil, body: nil, media_url: nil)
+            def create(to: nil, from: nil, status_callback: nil, application_sid: nil, provide_feedback: nil, body: nil, media_url: nil)
               data = {
                   'To' => to,
                   'From' => from,
@@ -51,7 +51,7 @@ module Twilio
                   'MediaUrl' => media_url,
                   'StatusCallback' => status_callback,
                   'ApplicationSid' => application_sid,
-                  'ProvideFeeback' => provide_feeback,
+                  'ProvideFeedback' => provide_feedback,
               }
               
               payload = @version.create(
