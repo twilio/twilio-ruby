@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 5.0.0-rc8
+-------------
+
+Release July 8, 2016
+
+- Add SMS and Facebook Messenger for Notify
+
 Version 5.0.0-rc7
 -------------
 
