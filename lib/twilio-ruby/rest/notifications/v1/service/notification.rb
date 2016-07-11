@@ -40,10 +40,11 @@ module Twilio
             # @param [String] data The data
             # @param [String] apn The apn
             # @param [String] gcm The gcm
+            # @param [String] sms The sms
             # @param [String] facebook_messenger The facebook_messenger
             
             # @return [NotificationInstance] Newly created NotificationInstance
-            def create(identity: nil, tag: nil, body: nil, priority: nil, ttl: nil, title: nil, sound: nil, action: nil, data: nil, apn: nil, gcm: nil, facebook_messenger: nil)
+            def create(identity: nil, tag: nil, body: nil, priority: nil, ttl: nil, title: nil, sound: nil, action: nil, data: nil, apn: nil, gcm: nil, sms: nil, facebook_messenger: nil)
               data = {
                   'Identity' => identity,
                   'Tag' => tag,
@@ -56,6 +57,7 @@ module Twilio
                   'Data' => data,
                   'Apn' => apn,
                   'Gcm' => gcm,
+                  'Sms' => sms,
                   'FacebookMessenger' => facebook_messenger,
               }
               
