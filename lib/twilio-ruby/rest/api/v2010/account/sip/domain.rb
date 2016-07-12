@@ -120,6 +120,8 @@ module Twilio
               #   you route your SIP traffic
               # @param [String] friendly_name A user-specified, human-readable name for the
               #   trigger.
+              # @param [String] auth_type The types of authentication you have mapped to your
+              #   domain
               # @param [String] voice_url The URL Twilio will request when this domain receives
               #   a call
               # @param [String] voice_method The HTTP method to use with the voice_url
@@ -132,10 +134,11 @@ module Twilio
               # @param [String] voice_status_callback_method The voice_status_callback_method
               
               # @return [DomainInstance] Newly created DomainInstance
-              def create(domain_name: nil, friendly_name: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, voice_status_callback_url: nil, voice_status_callback_method: nil)
+              def create(domain_name: nil, friendly_name: nil, auth_type: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, voice_status_callback_url: nil, voice_status_callback_method: nil)
                 data = {
                     'DomainName' => domain_name,
                     'FriendlyName' => friendly_name,
+                    'AuthType' => auth_type,
                     'VoiceUrl' => voice_url,
                     'VoiceMethod' => voice_method,
                     'VoiceFallbackUrl' => voice_fallback_url,
@@ -246,7 +249,7 @@ module Twilio
               
               ##
               # Update the DomainInstance
-              # @param [String] api_version The api_version
+              # @param [String] auth_type The auth_type
               # @param [String] friendly_name A user-specified, human-readable name for the
               #   trigger.
               # @param [String] voice_fallback_method The voice_fallback_method
@@ -257,9 +260,9 @@ module Twilio
               # @param [String] voice_url The voice_url
               
               # @return [DomainInstance] Updated DomainInstance
-              def update(api_version: nil, friendly_name: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_status_callback_method: nil, voice_status_callback_url: nil, voice_url: nil)
+              def update(auth_type: nil, friendly_name: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_status_callback_method: nil, voice_status_callback_url: nil, voice_url: nil)
                 data = {
-                    'ApiVersion' => api_version,
+                    'AuthType' => auth_type,
                     'FriendlyName' => friendly_name,
                     'VoiceFallbackMethod' => voice_fallback_method,
                     'VoiceFallbackUrl' => voice_fallback_url,
@@ -472,7 +475,7 @@ module Twilio
               
               ##
               # Update the DomainInstance
-              # @param [String] api_version The api_version
+              # @param [String] auth_type The auth_type
               # @param [String] friendly_name A user-specified, human-readable name for the
               #   trigger.
               # @param [String] voice_fallback_method The voice_fallback_method
@@ -483,7 +486,7 @@ module Twilio
               # @param [String] voice_url The voice_url
               
               # @return [DomainInstance] Updated DomainInstance
-              def update(api_version: nil, friendly_name: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_status_callback_method: nil, voice_status_callback_url: nil, voice_url: nil)
+              def update(auth_type: nil, friendly_name: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_status_callback_method: nil, voice_status_callback_url: nil, voice_url: nil)
                 @context.update(
                     friendly_name: friendly_name,
                     voice_fallback_method: voice_fallback_method,

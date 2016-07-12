@@ -157,8 +157,20 @@ module Twilio
         return self.account.incoming_phone_numbers
       end
       
+      def keys
+        return self.account.keys
+      end
+      
       def messages
         return self.account.messages
+      end
+      
+      def new_keys
+        return self.account.new_keys
+      end
+      
+      def new_signing_keys
+        return self.account.new_signing_keys
       end
       
       def outgoing_caller_ids
@@ -175,6 +187,10 @@ module Twilio
       
       def sandbox
         return self.account.sandbox
+      end
+      
+      def signing_keys
+        return self.account.signing_keys
       end
       
       def sip

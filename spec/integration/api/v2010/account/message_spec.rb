@@ -12,12 +12,11 @@ describe 'Message' do
     
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .messages.create(to: "+123456789", from: "+987654321")
+                       .messages.create(to: "+123456789")
     }.to raise_exception(Twilio::REST::TwilioException)
     
     values = {
         'To' => "+123456789",
-        'From' => "+987654321",
     }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -58,7 +57,7 @@ describe 'Message' do
     ))
     
     actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .messages.create(to: "+123456789", from: "+987654321")
+                              .messages.create(to: "+123456789")
     
     expect(actual).to_not eq(nil)
   end

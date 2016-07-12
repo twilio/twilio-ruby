@@ -145,6 +145,7 @@ module Twilio
                   'data' => payload['data'],
                   'apn' => payload['apn'],
                   'gcm' => payload['gcm'],
+                  'sms' => payload['sms'],
                   'facebook_messenger' => payload['facebook_messenger'],
               }
             end
@@ -207,6 +208,10 @@ module Twilio
             
             def gcm
               @properties['gcm']
+            end
+            
+            def sms
+              @properties['sms']
             end
             
             def facebook_messenger

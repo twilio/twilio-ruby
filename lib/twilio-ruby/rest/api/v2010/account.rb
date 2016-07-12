@@ -216,12 +216,16 @@ module Twilio
             @conferences = nil
             @connect_apps = nil
             @incoming_phone_numbers = nil
+            @keys = nil
             @messages = nil
+            @new_keys = nil
+            @new_signing_keys = nil
             @notifications = nil
             @outgoing_caller_ids = nil
             @queues = nil
             @recordings = nil
             @sandbox = nil
+            @signing_keys = nil
             @sip = nil
             @sms = nil
             @tokens = nil
@@ -453,6 +457,28 @@ module Twilio
           end
           
           ##
+          # Access the keys
+          # @return [KeyList] KeyList
+          def keys(sid=:unset)
+            if sid != :unset
+              return KeyContext.new(
+                  @version,
+                  @solution[:sid],
+                  sid,
+              )
+            end
+            
+            unless @keys
+              @keys = KeyList.new(
+                  @version,
+                  account_sid: @solution[:sid],
+              )
+            end
+            
+            @keys
+          end
+          
+          ##
           # Access the messages
           # @return [MessageList] MessageList
           def messages(sid=:unset)
@@ -472,6 +498,34 @@ module Twilio
             end
             
             @messages
+          end
+          
+          ##
+          # Access the new_keys
+          # @return [NewKeyList] NewKeyList
+          def new_keys
+            unless @new_keys
+              @new_keys = NewKeyList.new(
+                  @version,
+                  account_sid: @solution[:sid],
+              )
+            end
+            
+            @new_keys
+          end
+          
+          ##
+          # Access the new_signing_keys
+          # @return [NewSigningKeyList] NewSigningKeyList
+          def new_signing_keys
+            unless @new_signing_keys
+              @new_signing_keys = NewSigningKeyList.new(
+                  @version,
+                  account_sid: @solution[:sid],
+              )
+            end
+            
+            @new_signing_keys
           end
           
           ##
@@ -570,6 +624,28 @@ module Twilio
                 @version,
                 @solution[:sid],
             )
+          end
+          
+          ##
+          # Access the signing_keys
+          # @return [SigningKeyList] SigningKeyList
+          def signing_keys(sid=:unset)
+            if sid != :unset
+              return SigningKeyContext.new(
+                  @version,
+                  @solution[:sid],
+                  sid,
+              )
+            end
+            
+            unless @signing_keys
+              @signing_keys = SigningKeyList.new(
+                  @version,
+                  account_sid: @solution[:sid],
+              )
+            end
+            
+            @signing_keys
           end
           
           ##
@@ -839,10 +915,31 @@ module Twilio
           end
           
           ##
+          # Access the keys
+          # @return [keys] keys
+          def keys
+            @context.keys
+          end
+          
+          ##
           # Access the messages
           # @return [messages] messages
           def messages
             @context.messages
+          end
+          
+          ##
+          # Access the new_keys
+          # @return [new_keys] new_keys
+          def new_keys
+            @context.new_keys
+          end
+          
+          ##
+          # Access the new_signing_keys
+          # @return [new_signing_keys] new_signing_keys
+          def new_signing_keys
+            @context.new_signing_keys
           end
           
           ##
@@ -878,6 +975,13 @@ module Twilio
           # @return [sandbox] sandbox
           def sandbox
             @context.sandbox
+          end
+          
+          ##
+          # Access the signing_keys
+          # @return [signing_keys] signing_keys
+          def signing_keys
+            @context.signing_keys
           end
           
           ##

@@ -68,8 +68,20 @@ module Twilio
         self.account.incoming_phone_numbers(sid)
       end
       
+      def keys(sid=:unset)
+        self.account.keys(sid)
+      end
+      
       def messages(sid=:unset)
         self.account.messages(sid)
+      end
+      
+      def new_keys
+        self.account.new_keys()
+      end
+      
+      def new_signing_keys
+        self.account.new_signing_keys()
       end
       
       def notifications(sid=:unset)
@@ -90,6 +102,10 @@ module Twilio
       
       def sandbox
         self.account.sandbox()
+      end
+      
+      def signing_keys(sid=:unset)
+        self.account.signing_keys(sid)
       end
       
       def sip

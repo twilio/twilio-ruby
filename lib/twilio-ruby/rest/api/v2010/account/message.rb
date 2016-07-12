@@ -31,26 +31,30 @@ module Twilio
             # Request is executed immediately.
             # @param [String] to The destination phone number. Format with a '+' and country
             #   code
-            # @param [String] from A Twilio phone number or alphanumeric sender ID enabled for
-            #   the type of message you wish to send.
             # @param [String] status_callback The URL that Twilio will POST to each time your
             #   message status changes
             # @param [String] application_sid Twilio the POST MessageSid as well as
             #   MessageStatus to the URL in the MessageStatusCallback property of this
             #   Application
+            # @param [String] max_price The max_price
             # @param [Boolean] provide_feedback The provide_feedback
             # @param [String] body The body
             # @param [String] media_url The media_url
+            # @param [String] from A Twilio phone number or alphanumeric sender ID enabled for
+            #   the type of message you wish to send.
+            # @param [String] messaging_service_sid The messaging_service_sid
             
             # @return [MessageInstance] Newly created MessageInstance
-            def create(to: nil, from: nil, status_callback: nil, application_sid: nil, provide_feedback: nil, body: nil, media_url: nil)
+            def create(to: nil, status_callback: nil, application_sid: nil, max_price: nil, provide_feedback: nil, body: nil, media_url: nil, from: nil, messaging_service_sid: nil)
               data = {
                   'To' => to,
-                  'From' => from,
                   'Body' => body,
                   'MediaUrl' => media_url,
+                  'From' => from,
+                  'MessagingServiceSid' => messaging_service_sid,
                   'StatusCallback' => status_callback,
                   'ApplicationSid' => application_sid,
+                  'MaxPrice' => max_price,
                   'ProvideFeedback' => provide_feedback,
               }
               

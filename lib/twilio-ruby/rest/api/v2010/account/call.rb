@@ -67,6 +67,8 @@ module Twilio
             # @param [Boolean] record Set this parameter to true to record the entirety of a
             #   phone call. The RecordingUrl will be sent to the StatusCallback URL. Defaults to
             #   false.
+            # @param [String] sip_auth_username The sip_auth_username
+            # @param [String] sip_auth_password The sip_auth_password
             # @param [String] url The fully qualified URL that should be consulted when the
             #   call connects. Just like when you set a URL on a phone number for handling
             #   inbound calls.
@@ -75,7 +77,7 @@ module Twilio
             #   ignore all of the voice URLs passed and use the URLs set on the application.
             
             # @return [CallInstance] Newly created CallInstance
-            def create(to: nil, from: nil, method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, status_callback_method: nil, send_digits: nil, if_machine: nil, timeout: nil, record: nil, url: nil, application_sid: nil)
+            def create(to: nil, from: nil, method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, status_callback_method: nil, send_digits: nil, if_machine: nil, timeout: nil, record: nil, sip_auth_username: nil, sip_auth_password: nil, url: nil, application_sid: nil)
               data = {
                   'To' => to,
                   'From' => from,
@@ -90,6 +92,8 @@ module Twilio
                   'IfMachine' => if_machine,
                   'Timeout' => timeout,
                   'Record' => record,
+                  'SipAuthUsername' => sip_auth_username,
+                  'SipAuthPassword' => sip_auth_password,
               }
               
               payload = @version.create(
