@@ -1,70 +1,137 @@
 module Twilio
   module Util
     class AccessToken
-      def initialize(signing_key_id, account_sid, secret, ttl=3600)
-        @signing_key_sid = signing_key_id
+      attr_accessor :account_sid,
+                    :signing_key_id,
+                    :secret,
+                    :ttl,
+                    :identity,
+                    :nbf
+
+      def initialize(account_sid, signing_key_id, secret, ttl=3600, identity=nil, nbf=nil)
         @account_sid = account_sid
+        @signing_key_sid = signing_key_id
         @secret = secret
         @ttl = ttl
+        @identity = identity
+        @nbf = nbf
         @grants = []
       end
 
-      def add_grant(resource, actions=Action::ALL)
-        actions = [*actions]
-        @grants.push({"res" => resource, "act" => actions})
-        self
+      def add_grant(grant)
+        @grants.push(grant)
       end
 
-      def add_endpoint_grant(endpoint, actions=[Action::Client::LISTEN, Action::Client::INVITE])
-        resource = "sip:#{endpoint}@#{@account_sid}.endpoint.twilio.com"
-        add_grant resource, actions
-      end
-
-      def add_rest_grant(uri, actions=Action::ALL)
-        uri = uri[1..-1] if uri[0] == '/'
-        resource = "https://api.twilio.com/2010-04-01/Accounts/#{@account_sid}/#{uri}"
-        add_grant resource, actions
-      end
-
-      def enable_nts()
-        add_rest_grant('/Tokens', Action::HTTP::POST)
-      end
-
-      def as_jwt()
+      def to_jwt(algorithm='HS256')
         now = Time.now.to_i - 1
         headers = {
-            'cty' => 'twilio-sat;v=1'
+            'cty' => 'twilio-fpa;v=1',
+            'typ' => 'JWT'
         }
+
+        grants = {}
+        if @identity
+          grants['identity'] = @identity
+        end
+
+        @grants.each { |grant| grants[grant.key] = grant.payload }
+
         payload = {
             'jti' => "#{@signing_key_sid}-#{now}",
             'iss' => @signing_key_sid,
             'sub' => @account_sid,
-            'nbf' => now,
             'exp' => now + @ttl,
-            'grants' => @grants
+            'grants' => grants
         }
-        JWT.encode payload, @secret, 'HS256', headers
+
+        payload['nbf'] = @nbf unless @nbf.nil?
+
+        JWT.encode payload, @secret, algorithm, headers
       end
 
       def to_s
-        as_jwt
-      end
-    end
-
-    class Action
-      ALL='*'
-
-      class HTTP
-        DELETE='DELETE'
-        GET='GET'
-        POST='POST'
-        PUT='PUT'
+        to_jwt
       end
 
-      class Client
-        LISTEN='listen'
-        INVITE='invite'
+      class ConversationsGrant
+        attr_accessor :configuration_profile_sid
+
+        def key
+          'rtc'
+        end
+
+        def payload
+          payload = {}
+          if @configuration_profile_sid
+            payload['configuration_profile_sid'] = @configuration_profile_sid
+          end
+
+          payload
+        end
+
       end
+
+      class IpMessagingGrant
+        attr_accessor :service_sid,
+                      :endpoint_id,
+                      :deployment_role_sid,
+                      :push_credential_sid
+
+        def key
+          'ip_messaging'
+        end
+
+        def payload
+          payload = {}
+          if @service_sid
+            payload['service_sid'] = @service_sid
+          end
+          if @endpoint_id
+            payload['endpoint_id'] = @endpoint_id
+          end
+          if @deployment_role_sid
+            payload['deployment_role_sid'] = @deployment_role_sid
+          end
+          if @push_credential_sid
+            payload['push_credential_sid'] = @push_credential_sid
+          end
+
+          payload
+        end
+
+      end
+
+      class SyncGrant
+        attr_accessor :service_sid,
+                      :endpoint_id,
+                      :deployment_role_sid,
+                      :push_credential_sid
+
+        def key
+          'data_sync'
+        end
+
+        def payload
+          payload = {}
+          if @service_sid
+            payload['service_sid'] = @service_sid
+          end
+          if @endpoint_id
+            payload['endpoint_id'] = @endpoint_id
+          end
+          if @deployment_role_sid
+            payload['deployment_role_sid'] = @deployment_role_sid
+          end
+          if @push_credential_sid
+            payload['push_credential_sid'] = @push_credential_sid
+          end
+
+          payload
+        end
+
+      end
+
+
     end
   end
 end
