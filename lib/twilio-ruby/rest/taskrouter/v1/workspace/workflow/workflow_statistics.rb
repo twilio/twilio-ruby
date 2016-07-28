@@ -16,7 +16,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] workspace_sid The workspace_sid
               # @param [String] workflow_sid The workflow_sid
-              
               # @return [WorkflowStatisticsList] WorkflowStatisticsList
               def initialize(version, workspace_sid: nil, workflow_sid: nil)
                 super(version)
@@ -43,7 +42,6 @@ module Twilio
               # @param [Hash] solution Path solution for the resource
               # @param [String] workspace_sid The workspace_sid
               # @param [String] workflow_sid The workflow_sid
-              
               # @return [WorkflowStatisticsPage] WorkflowStatisticsPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -55,7 +53,6 @@ module Twilio
               ##
               # Build an instance of WorkflowStatisticsInstance
               # @param [Hash] payload Payload response from the API
-              
               # @return [WorkflowStatisticsInstance] WorkflowStatisticsInstance
               def get_instance(payload)
                 return WorkflowStatisticsInstance.new(
@@ -79,7 +76,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] workspace_sid The workspace_sid
               # @param [String] workflow_sid The workflow_sid
-              
               # @return [WorkflowStatisticsContext] WorkflowStatisticsContext
               def initialize(version, workspace_sid, workflow_sid)
                 super(version)
@@ -97,7 +93,6 @@ module Twilio
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
               # @param [Time] end_date The end_date
-              
               # @return [WorkflowStatisticsInstance] Fetched WorkflowStatisticsInstance
               def fetch(minutes: nil, start_date: nil, end_date: nil)
                 params = {
@@ -135,7 +130,6 @@ module Twilio
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] workspace_sid The workspace_sid
               # @param [String] workflow_sid The workflow_sid
-              
               # @return [WorkflowStatisticsInstance] WorkflowStatisticsInstance
               def initialize(version, payload, workspace_sid: nil, workflow_sid: nil)
                 super(version)
@@ -161,7 +155,6 @@ module Twilio
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
               # @param [Version] version Version that contains the resource
-              
               # @return [WorkflowStatisticsContext] WorkflowStatisticsContext for this WorkflowStatisticsInstance
               def context
                 unless @instance_context
@@ -199,7 +192,6 @@ module Twilio
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
               # @param [Time] end_date The end_date
-              
               # @return [WorkflowStatisticsInstance] Fetched WorkflowStatisticsInstance
               def fetch(minutes: nil, start_date: nil, end_date: nil)
                 context.fetch(

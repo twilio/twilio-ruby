@@ -15,7 +15,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
-            
             # @return [UsageList] UsageList
             def initialize(version, account_sid: nil)
               super(version)
@@ -43,7 +42,6 @@ module Twilio
             ##
             # Access the triggers
             # @param [String] sid The usage-trigger Sid that uniquely identifies this resource
-            
             # @return [TriggerList] TriggerList
             def triggers(sid=:unset)
               if sid != :unset
@@ -75,7 +73,6 @@ module Twilio
             # @param [Hash] solution Path solution for the resource
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
-            
             # @return [UsagePage] UsagePage
             def initialize(version, response, solution)
               super(version, response)
@@ -87,7 +84,6 @@ module Twilio
             ##
             # Build an instance of UsageInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [UsageInstance] UsageInstance
             def get_instance(payload)
               return UsageInstance.new(
@@ -111,7 +107,6 @@ module Twilio
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
-            
             # @return [UsageInstance] UsageInstance
             def initialize(version, payload, account_sid: nil)
               super(version)

@@ -12,7 +12,6 @@ module Twilio
           ##
           # Initialize the CommandList
           # @param [Version] version Version that contains the resource
-          
           # @return [CommandList] CommandList
           def initialize(version)
             super(version)
@@ -35,7 +34,6 @@ module Twilio
           #  the default value of 50 records.  If no page_size is                      defined
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-          
           # @return [Array] Array of up to limit results
           def list(device: nil, status: nil, direction: nil, limit: nil, page_size: nil)
             self.stream(
@@ -60,7 +58,6 @@ module Twilio
           #  the default value of 50 records.                      If no page_size is defined
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-          
           # @return [Enumerable] Enumerable that will yield up to limit results
           def stream(device: nil, status: nil, direction: nil, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
@@ -109,7 +106,6 @@ module Twilio
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          
           # @return [Page] Page of CommandInstance
           def page(device: nil, status: nil, direction: nil, page_token: nil, page_number: nil, page_size: nil)
             params = {
@@ -135,7 +131,6 @@ module Twilio
           # @param [String] command The command
           # @param [String] callback_method The callback_method
           # @param [String] callback_url The callback_url
-          
           # @return [CommandInstance] Newly created CommandInstance
           def create(device: nil, command: nil, callback_method: nil, callback_url: nil)
             data = {
@@ -170,7 +165,6 @@ module Twilio
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          
           # @return [CommandPage] CommandPage
           def initialize(version, response, solution)
             super(version, response)
@@ -182,7 +176,6 @@ module Twilio
           ##
           # Build an instance of CommandInstance
           # @param [Hash] payload Payload response from the API
-          
           # @return [CommandInstance] CommandInstance
           def get_instance(payload)
             return CommandInstance.new(
@@ -203,7 +196,6 @@ module Twilio
           # Initialize the CommandContext
           # @param [Version] version Version that contains the resource
           # @param [String] sid The sid
-          
           # @return [CommandContext] CommandContext
           def initialize(version, sid)
             super(version)
@@ -248,7 +240,6 @@ module Twilio
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
           # @param [String] sid The sid
-          
           # @return [CommandInstance] CommandInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -277,7 +268,6 @@ module Twilio
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
           # @param [Version] version Version that contains the resource
-          
           # @return [CommandContext] CommandContext for this CommandInstance
           def context
             unless @instance_context

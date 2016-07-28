@@ -18,7 +18,6 @@ module Twilio
                 # @param [String] account_sid The account_sid
                 # @param [String] domain_sid A 34 character string that uniquely identifies the
                 #   SIP domain in Twilio
-                
                 # @return [CredentialListMappingList] CredentialListMappingList
                 def initialize(version, account_sid: nil, domain_sid: nil)
                   super(version)
@@ -35,7 +34,6 @@ module Twilio
                 # Retrieve a single page of CredentialListMappingInstance records from the API.
                 # Request is executed immediately.
                 # @param [String] credential_list_sid The credential_list_sid
-                
                 # @return [CredentialListMappingInstance] Newly created CredentialListMappingInstance
                 def create(credential_list_sid: nil)
                   data = {
@@ -66,7 +64,6 @@ module Twilio
                 #  the default value of 50 records.  If no page_size is                      defined
                 #  but a limit is defined, stream() will attempt to read                      the
                 #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-                
                 # @return [Array] Array of up to limit results
                 def list(limit: nil, page_size: nil)
                   self.stream(
@@ -85,7 +82,6 @@ module Twilio
                 #  the default value of 50 records.                      If no page_size is defined
                 #                       but a limit is defined, stream() will attempt to                      read the
                 #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-                
                 # @return [Enumerable] Enumerable that will yield up to limit results
                 def stream(limit: nil, page_size: nil)
                   limits = @version.read_limits(limit, page_size)
@@ -125,7 +121,6 @@ module Twilio
                 # @param [String] page_token PageToken provided by the API
                 # @param [Integer] page_number Page Number, this value is simply for client state
                 # @param [Integer] page_size Number of records to return, defaults to 50
-                
                 # @return [Page] Page of CredentialListMappingInstance
                 def page(page_token: nil, page_number: nil, page_size: nil)
                   params = {
@@ -157,7 +152,6 @@ module Twilio
                 # @param [String] account_sid The account_sid
                 # @param [String] domain_sid A 34 character string that uniquely identifies the
                 #   SIP domain in Twilio
-                
                 # @return [CredentialListMappingPage] CredentialListMappingPage
                 def initialize(version, response, solution)
                   super(version, response)
@@ -169,7 +163,6 @@ module Twilio
                 ##
                 # Build an instance of CredentialListMappingInstance
                 # @param [Hash] payload Payload response from the API
-                
                 # @return [CredentialListMappingInstance] CredentialListMappingInstance
                 def get_instance(payload)
                   return CredentialListMappingInstance.new(
@@ -194,7 +187,6 @@ module Twilio
                 # @param [String] account_sid The account_sid
                 # @param [String] domain_sid The domain_sid
                 # @param [String] sid The sid
-                
                 # @return [CredentialListMappingContext] CredentialListMappingContext
                 def initialize(version, account_sid, domain_sid, sid)
                   super(version)
@@ -253,7 +245,6 @@ module Twilio
                 # @param [String] domain_sid A 34 character string that uniquely identifies the
                 #   SIP domain in Twilio
                 # @param [String] sid The sid
-                
                 # @return [CredentialListMappingInstance] CredentialListMappingInstance
                 def initialize(version, payload, account_sid: nil, domain_sid: nil, sid: nil)
                   super(version)
@@ -281,7 +272,6 @@ module Twilio
                 # Generate an instance context for the instance, the context is capable of
                 # performing various actions.  All instance actions are proxied to the context
                 # @param [Version] version Version that contains the resource
-                
                 # @return [CredentialListMappingContext] CredentialListMappingContext for this CredentialListMappingInstance
                 def context
                   unless @instance_context

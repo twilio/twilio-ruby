@@ -16,7 +16,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] workspace_sid The workspace_sid
               # @param [String] task_sid The task_sid
-              
               # @return [ReservationList] ReservationList
               def initialize(version, workspace_sid: nil, task_sid: nil)
                 super(version)
@@ -42,7 +41,6 @@ module Twilio
               #  the default value of 50 records.  If no page_size is                      defined
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-              
               # @return [Array] Array of up to limit results
               def list(status: nil, assignment_status: nil, reservation_status: nil, limit: nil, page_size: nil)
                 self.stream(
@@ -67,7 +65,6 @@ module Twilio
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-              
               # @return [Enumerable] Enumerable that will yield up to limit results
               def stream(status: nil, assignment_status: nil, reservation_status: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
@@ -116,7 +113,6 @@ module Twilio
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
-              
               # @return [Page] Page of ReservationInstance
               def page(status: nil, assignment_status: nil, reservation_status: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
@@ -150,7 +146,6 @@ module Twilio
               # @param [Hash] solution Path solution for the resource
               # @param [String] workspace_sid The workspace_sid
               # @param [String] task_sid The task_sid
-              
               # @return [ReservationPage] ReservationPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -162,7 +157,6 @@ module Twilio
               ##
               # Build an instance of ReservationInstance
               # @param [Hash] payload Payload response from the API
-              
               # @return [ReservationInstance] ReservationInstance
               def get_instance(payload)
                 return ReservationInstance.new(
@@ -187,7 +181,6 @@ module Twilio
               # @param [String] workspace_sid The workspace_sid
               # @param [String] task_sid The task_sid
               # @param [String] sid The sid
-              
               # @return [ReservationContext] ReservationContext
               def initialize(version, workspace_sid, task_sid, sid)
                 super(version)
@@ -244,7 +237,6 @@ module Twilio
               # @param [String] redirect_call_sid The redirect_call_sid
               # @param [Boolean] redirect_accept The redirect_accept
               # @param [String] redirect_url The redirect_url
-              
               # @return [ReservationInstance] Updated ReservationInstance
               def update(reservation_status: nil, worker_activity_sid: nil, instruction: nil, dequeue_post_work_activity_sid: nil, dequeue_from: nil, dequeue_record: nil, dequeue_timeout: nil, dequeue_to: nil, dequeue_status_callback_url: nil, call_from: nil, call_record: nil, call_timeout: nil, call_to: nil, call_url: nil, call_status_callback_url: nil, call_accept: nil, redirect_call_sid: nil, redirect_accept: nil, redirect_url: nil)
                 data = {
@@ -300,7 +292,6 @@ module Twilio
               # @param [String] workspace_sid The workspace_sid
               # @param [String] task_sid The task_sid
               # @param [String] sid The sid
-              
               # @return [ReservationInstance] ReservationInstance
               def initialize(version, payload, workspace_sid: nil, task_sid: nil, sid: nil)
                 super(version)
@@ -331,7 +322,6 @@ module Twilio
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
               # @param [Version] version Version that contains the resource
-              
               # @return [ReservationContext] ReservationContext for this ReservationInstance
               def context
                 unless @instance_context
@@ -410,7 +400,6 @@ module Twilio
               # @param [String] redirect_call_sid The redirect_call_sid
               # @param [Boolean] redirect_accept The redirect_accept
               # @param [String] redirect_url The redirect_url
-              
               # @return [ReservationInstance] Updated ReservationInstance
               def update(reservation_status: nil, worker_activity_sid: nil, instruction: nil, dequeue_post_work_activity_sid: nil, dequeue_from: nil, dequeue_record: nil, dequeue_timeout: nil, dequeue_to: nil, dequeue_status_callback_url: nil, call_from: nil, call_record: nil, call_timeout: nil, call_to: nil, call_url: nil, call_status_callback_url: nil, call_accept: nil, redirect_call_sid: nil, redirect_accept: nil, redirect_url: nil)
                 context.update(

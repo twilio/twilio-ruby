@@ -15,7 +15,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The unique id of the Account that created this
             #   application.
-            
             # @return [ApplicationList] ApplicationList
             def initialize(version, account_sid: nil)
               super(version)
@@ -63,7 +62,6 @@ module Twilio
             #   this URL to pass status parameters (such as sent or failed) to your application
             #   if you use the `/Messages` endpoint to send the message and specify this
             #   application's `Sid` as the `ApplicationSid` on an outgoing SMS request.
-            
             # @return [ApplicationInstance] Newly created ApplicationInstance
             def create(friendly_name: nil, api_version: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, status_callback: nil, status_callback_method: nil, voice_caller_id_lookup: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil, sms_status_callback: nil, message_status_callback: nil)
               data = {
@@ -109,7 +107,6 @@ module Twilio
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-            
             # @return [Array] Array of up to limit results
             def list(friendly_name: nil, limit: nil, page_size: nil)
               self.stream(
@@ -131,7 +128,6 @@ module Twilio
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-            
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(friendly_name: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
@@ -176,7 +172,6 @@ module Twilio
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            
             # @return [Page] Page of ApplicationInstance
             def page(friendly_name: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
@@ -208,7 +203,6 @@ module Twilio
             # @param [Hash] solution Path solution for the resource
             # @param [String] account_sid The unique id of the Account that created this
             #   application.
-            
             # @return [ApplicationPage] ApplicationPage
             def initialize(version, response, solution)
               super(version, response)
@@ -220,7 +214,6 @@ module Twilio
             ##
             # Build an instance of ApplicationInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [ApplicationInstance] ApplicationInstance
             def get_instance(payload)
               return ApplicationInstance.new(
@@ -244,7 +237,6 @@ module Twilio
             # @param [String] account_sid The account_sid
             # @param [String] sid The application Sid that that uniquely identifies this
             #   resource
-            
             # @return [ApplicationContext] ApplicationContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -319,7 +311,6 @@ module Twilio
             #   this URL to pass status parameters (such as sent or failed) to your application
             #   if you use the `/Messages` endpoint to send the message and specify this
             #   application's `Sid` as the `ApplicationSid` on an outgoing SMS request.
-            
             # @return [ApplicationInstance] Updated ApplicationInstance
             def update(friendly_name: nil, api_version: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, status_callback: nil, status_callback_method: nil, voice_caller_id_lookup: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil, sms_status_callback: nil, message_status_callback: nil)
               data = {
@@ -371,7 +362,6 @@ module Twilio
             #   application.
             # @param [String] sid The application Sid that that uniquely identifies this
             #   resource
-            
             # @return [ApplicationInstance] ApplicationInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
@@ -412,7 +402,6 @@ module Twilio
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
             # @param [Version] version Version that contains the resource
-            
             # @return [ApplicationContext] ApplicationContext for this ApplicationInstance
             def context
               unless @instance_context
@@ -554,7 +543,6 @@ module Twilio
             #   this URL to pass status parameters (such as sent or failed) to your application
             #   if you use the `/Messages` endpoint to send the message and specify this
             #   application's `Sid` as the `ApplicationSid` on an outgoing SMS request.
-            
             # @return [ApplicationInstance] Updated ApplicationInstance
             def update(friendly_name: nil, api_version: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, status_callback: nil, status_callback_method: nil, voice_caller_id_lookup: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil, sms_status_callback: nil, message_status_callback: nil)
               context.update(

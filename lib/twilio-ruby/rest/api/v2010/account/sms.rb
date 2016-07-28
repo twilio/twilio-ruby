@@ -15,7 +15,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
-            
             # @return [SmsList] SmsList
             def initialize(version, account_sid: nil)
               super(version)
@@ -33,7 +32,6 @@ module Twilio
             ##
             # Access the messages
             # @param [String] sid The sid
-            
             # @return [SmsMessageList] SmsMessageList
             def messages(sid=:unset)
               if sid != :unset
@@ -53,7 +51,6 @@ module Twilio
             ##
             # Access the short_codes
             # @param [String] sid The short-code Sid that uniquely identifies this resource
-            
             # @return [ShortCodeList] ShortCodeList
             def short_codes(sid=:unset)
               if sid != :unset
@@ -85,7 +82,6 @@ module Twilio
             # @param [Hash] solution Path solution for the resource
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
-            
             # @return [SmsPage] SmsPage
             def initialize(version, response, solution)
               super(version, response)
@@ -97,7 +93,6 @@ module Twilio
             ##
             # Build an instance of SmsInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [SmsInstance] SmsInstance
             def get_instance(payload)
               return SmsInstance.new(
@@ -121,7 +116,6 @@ module Twilio
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
-            
             # @return [SmsInstance] SmsInstance
             def initialize(version, payload, account_sid: nil)
               super(version)

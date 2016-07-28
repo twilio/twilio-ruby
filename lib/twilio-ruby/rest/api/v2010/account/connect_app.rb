@@ -15,7 +15,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The unique id of the Account that created this
             #   ConnectApp.
-            
             # @return [ConnectAppList] ConnectAppList
             def initialize(version, account_sid: nil)
               super(version)
@@ -37,7 +36,6 @@ module Twilio
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-            
             # @return [Array] Array of up to limit results
             def list(limit: nil, page_size: nil)
               self.stream(
@@ -56,7 +54,6 @@ module Twilio
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-            
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
@@ -96,7 +93,6 @@ module Twilio
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            
             # @return [Page] Page of ConnectAppInstance
             def page(page_token: nil, page_number: nil, page_size: nil)
               params = {
@@ -127,7 +123,6 @@ module Twilio
             # @param [Hash] solution Path solution for the resource
             # @param [String] account_sid The unique id of the Account that created this
             #   ConnectApp.
-            
             # @return [ConnectAppPage] ConnectAppPage
             def initialize(version, response, solution)
               super(version, response)
@@ -139,7 +134,6 @@ module Twilio
             ##
             # Build an instance of ConnectAppInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [ConnectAppInstance] ConnectAppInstance
             def get_instance(payload)
               return ConnectAppInstance.new(
@@ -162,7 +156,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The account_sid
             # @param [String] sid The connect-app Sid that uniquely identifies this resource
-            
             # @return [ConnectAppContext] ConnectAppContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -212,7 +205,6 @@ module Twilio
             #   information about this Connect App.
             # @param [connect_app.Permission] permissions The set of permissions that your
             #   ConnectApp requests.
-            
             # @return [ConnectAppInstance] Updated ConnectAppInstance
             def update(authorize_redirect_url: nil, company_name: nil, deauthorize_callback_method: nil, deauthorize_callback_url: nil, description: nil, friendly_name: nil, homepage_url: nil, permissions: nil)
               data = {
@@ -256,7 +248,6 @@ module Twilio
             # @param [String] account_sid The unique id of the Account that created this
             #   ConnectApp.
             # @param [String] sid The connect-app Sid that uniquely identifies this resource
-            
             # @return [ConnectAppInstance] ConnectAppInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
@@ -288,7 +279,6 @@ module Twilio
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
             # @param [Version] version Version that contains the resource
-            
             # @return [ConnectAppContext] ConnectAppContext for this ConnectAppInstance
             def context
               unless @instance_context
@@ -369,7 +359,6 @@ module Twilio
             #   information about this Connect App.
             # @param [connect_app.Permission] permissions The set of permissions that your
             #   ConnectApp requests.
-            
             # @return [ConnectAppInstance] Updated ConnectAppInstance
             def update(authorize_redirect_url: nil, company_name: nil, deauthorize_callback_method: nil, deauthorize_callback_url: nil, description: nil, friendly_name: nil, homepage_url: nil, permissions: nil)
               context.update(

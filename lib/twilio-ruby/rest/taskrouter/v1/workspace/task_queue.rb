@@ -14,7 +14,6 @@ module Twilio
             # Initialize the TaskQueueList
             # @param [Version] version Version that contains the resource
             # @param [String] workspace_sid The workspace_sid
-            
             # @return [TaskQueueList] TaskQueueList
             def initialize(version, workspace_sid: nil)
               super(version)
@@ -41,7 +40,6 @@ module Twilio
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-            
             # @return [Array] Array of up to limit results
             def list(friendly_name: nil, evaluate_worker_attributes: nil, limit: nil, page_size: nil)
               self.stream(
@@ -64,7 +62,6 @@ module Twilio
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-            
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(friendly_name: nil, evaluate_worker_attributes: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
@@ -110,7 +107,6 @@ module Twilio
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            
             # @return [Page] Page of TaskQueueInstance
             def page(friendly_name: nil, evaluate_worker_attributes: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
@@ -136,7 +132,6 @@ module Twilio
             # @param [String] assignment_activity_sid The assignment_activity_sid
             # @param [String] target_workers The target_workers
             # @param [String] max_reserved_workers The max_reserved_workers
-            
             # @return [TaskQueueInstance] Newly created TaskQueueInstance
             def create(friendly_name: nil, reservation_activity_sid: nil, assignment_activity_sid: nil, target_workers: nil, max_reserved_workers: nil)
               data = {
@@ -184,7 +179,6 @@ module Twilio
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
             # @param [String] workspace_sid The workspace_sid
-            
             # @return [TaskQueuePage] TaskQueuePage
             def initialize(version, response, solution)
               super(version, response)
@@ -196,7 +190,6 @@ module Twilio
             ##
             # Build an instance of TaskQueueInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [TaskQueueInstance] TaskQueueInstance
             def get_instance(payload)
               return TaskQueueInstance.new(
@@ -219,7 +212,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] workspace_sid The workspace_sid
             # @param [String] sid The sid
-            
             # @return [TaskQueueContext] TaskQueueContext
             def initialize(version, workspace_sid, sid)
               super(version)
@@ -262,7 +254,6 @@ module Twilio
             # @param [String] reservation_activity_sid The reservation_activity_sid
             # @param [String] assignment_activity_sid The assignment_activity_sid
             # @param [String] max_reserved_workers The max_reserved_workers
-            
             # @return [TaskQueueInstance] Updated TaskQueueInstance
             def update(friendly_name: nil, target_workers: nil, reservation_activity_sid: nil, assignment_activity_sid: nil, max_reserved_workers: nil)
               data = {
@@ -320,7 +311,6 @@ module Twilio
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] workspace_sid The workspace_sid
             # @param [String] sid The sid
-            
             # @return [TaskQueueInstance] TaskQueueInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
               super(version)
@@ -354,7 +344,6 @@ module Twilio
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
             # @param [Version] version Version that contains the resource
-            
             # @return [TaskQueueContext] TaskQueueContext for this TaskQueueInstance
             def context
               unless @instance_context
@@ -433,7 +422,6 @@ module Twilio
             # @param [String] reservation_activity_sid The reservation_activity_sid
             # @param [String] assignment_activity_sid The assignment_activity_sid
             # @param [String] max_reserved_workers The max_reserved_workers
-            
             # @return [TaskQueueInstance] Updated TaskQueueInstance
             def update(friendly_name: nil, target_workers: nil, reservation_activity_sid: nil, assignment_activity_sid: nil, max_reserved_workers: nil)
               context.update(

@@ -14,7 +14,6 @@ module Twilio
             # Initialize the NotificationList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The service_sid
-            
             # @return [NotificationList] NotificationList
             def initialize(version, service_sid: nil)
               super(version)
@@ -42,7 +41,6 @@ module Twilio
             # @param [String] gcm The gcm
             # @param [String] sms The sms
             # @param [Hash] facebook_messenger The facebook_messenger
-            
             # @return [NotificationInstance] Newly created NotificationInstance
             def create(identity: nil, tag: nil, body: nil, priority: nil, ttl: nil, title: nil, sound: nil, action: nil, data: nil, apn: nil, gcm: nil, sms: nil, facebook_messenger: nil)
               data = {
@@ -88,7 +86,6 @@ module Twilio
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
             # @param [String] service_sid The service_sid
-            
             # @return [NotificationPage] NotificationPage
             def initialize(version, response, solution)
               super(version, response)
@@ -100,7 +97,6 @@ module Twilio
             ##
             # Build an instance of NotificationInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [NotificationInstance] NotificationInstance
             def get_instance(payload)
               return NotificationInstance.new(
@@ -123,7 +119,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The service_sid
-            
             # @return [NotificationInstance] NotificationInstance
             def initialize(version, payload, service_sid: nil)
               super(version)

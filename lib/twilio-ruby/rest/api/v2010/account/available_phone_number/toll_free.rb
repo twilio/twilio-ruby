@@ -17,7 +17,6 @@ module Twilio
               # @param [String] account_sid A 34 character string that uniquely identifies this
               #   resource.
               # @param [String] country_code The country_code
-              
               # @return [TollFreeList] TollFreeList
               def initialize(version, account_sid: nil, country_code: nil)
                 super(version)
@@ -51,7 +50,6 @@ module Twilio
               #  the default value of 50 records.  If no page_size is                      defined
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-              
               # @return [Array] Array of up to limit results
               def list(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, limit: nil, page_size: nil)
                 self.stream(
@@ -90,7 +88,6 @@ module Twilio
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-              
               # @return [Enumerable] Enumerable that will yield up to limit results
               def stream(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
@@ -161,7 +158,6 @@ module Twilio
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
-              
               # @return [Page] Page of TollFreeInstance
               def page(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
@@ -202,7 +198,6 @@ module Twilio
               # @param [String] account_sid A 34 character string that uniquely identifies this
               #   resource.
               # @param [String] country_code The country_code
-              
               # @return [TollFreePage] TollFreePage
               def initialize(version, response, solution)
                 super(version, response)
@@ -214,7 +209,6 @@ module Twilio
               ##
               # Build an instance of TollFreeInstance
               # @param [Hash] payload Payload response from the API
-              
               # @return [TollFreeInstance] TollFreeInstance
               def get_instance(payload)
                 return TollFreeInstance.new(
@@ -240,7 +234,6 @@ module Twilio
               # @param [String] account_sid A 34 character string that uniquely identifies this
               #   resource.
               # @param [String] country_code The country_code
-              
               # @return [TollFreeInstance] TollFreeInstance
               def initialize(version, payload, account_sid: nil, country_code: nil)
                 super(version)

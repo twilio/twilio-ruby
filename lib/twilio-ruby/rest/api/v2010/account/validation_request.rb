@@ -14,7 +14,6 @@ module Twilio
             # Initialize the ValidationRequestList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The account_sid
-            
             # @return [ValidationRequestList] ValidationRequestList
             def initialize(version, account_sid: nil)
               super(version)
@@ -35,7 +34,6 @@ module Twilio
             # @param [String] extension The extension
             # @param [String] status_callback The status_callback
             # @param [String] status_callback_method The status_callback_method
-            
             # @return [ValidationRequestInstance] Newly created ValidationRequestInstance
             def create(phone_number: nil, friendly_name: nil, call_delay: nil, extension: nil, status_callback: nil, status_callback_method: nil)
               data = {
@@ -74,7 +72,6 @@ module Twilio
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
             # @param [String] account_sid The account_sid
-            
             # @return [ValidationRequestPage] ValidationRequestPage
             def initialize(version, response, solution)
               super(version, response)
@@ -86,7 +83,6 @@ module Twilio
             ##
             # Build an instance of ValidationRequestInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [ValidationRequestInstance] ValidationRequestInstance
             def get_instance(payload)
               return ValidationRequestInstance.new(
@@ -109,7 +105,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The account_sid
-            
             # @return [ValidationRequestInstance] ValidationRequestInstance
             def initialize(version, payload, account_sid: nil)
               super(version)

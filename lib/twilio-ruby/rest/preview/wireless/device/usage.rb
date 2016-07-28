@@ -14,7 +14,6 @@ module Twilio
             # Initialize the UsageList
             # @param [Version] version Version that contains the resource
             # @param [String] device_sid The device_sid
-            
             # @return [UsageList] UsageList
             def initialize(version, device_sid: nil)
               super(version)
@@ -39,7 +38,6 @@ module Twilio
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
             # @param [String] device_sid The device_sid
-            
             # @return [UsagePage] UsagePage
             def initialize(version, response, solution)
               super(version, response)
@@ -51,7 +49,6 @@ module Twilio
             ##
             # Build an instance of UsageInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [UsageInstance] UsageInstance
             def get_instance(payload)
               return UsageInstance.new(
@@ -73,7 +70,6 @@ module Twilio
             # Initialize the UsageContext
             # @param [Version] version Version that contains the resource
             # @param [String] device_sid The device_sid
-            
             # @return [UsageContext] UsageContext
             def initialize(version, device_sid)
               super(version)
@@ -89,7 +85,6 @@ module Twilio
             # Fetch a UsageInstance
             # @param [String] end_ The end
             # @param [String] start The start
-            
             # @return [UsageInstance] Fetched UsageInstance
             def fetch(end_: nil, start: nil)
               params = {
@@ -124,7 +119,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] device_sid The device_sid
-            
             # @return [UsageInstance] UsageInstance
             def initialize(version, payload, device_sid: nil)
               super(version)
@@ -153,7 +147,6 @@ module Twilio
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
             # @param [Version] version Version that contains the resource
-            
             # @return [UsageContext] UsageContext for this UsageInstance
             def context
               unless @instance_context
@@ -205,7 +198,6 @@ module Twilio
             # Fetch a UsageInstance
             # @param [String] end_ The end
             # @param [String] start The start
-            
             # @return [UsageInstance] Fetched UsageInstance
             def fetch(end_: nil, start: nil)
               context.fetch(

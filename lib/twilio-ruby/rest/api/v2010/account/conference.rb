@@ -15,7 +15,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The unique id of the Account] responsible for
             #   creating this conference.
-            
             # @return [ConferenceList] ConferenceList
             def initialize(version, account_sid: nil)
               super(version)
@@ -47,7 +46,6 @@ module Twilio
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-            
             # @return [Array] Array of up to limit results
             def list(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, limit: nil, page_size: nil)
               self.stream(
@@ -84,7 +82,6 @@ module Twilio
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-            
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
@@ -152,7 +149,6 @@ module Twilio
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            
             # @return [Page] Page of ConferenceInstance
             def page(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
@@ -191,7 +187,6 @@ module Twilio
             # @param [Hash] solution Path solution for the resource
             # @param [String] account_sid The unique id of the Account] responsible for
             #   creating this conference.
-            
             # @return [ConferencePage] ConferencePage
             def initialize(version, response, solution)
               super(version, response)
@@ -203,7 +198,6 @@ module Twilio
             ##
             # Build an instance of ConferenceInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [ConferenceInstance] ConferenceInstance
             def get_instance(payload)
               return ConferenceInstance.new(
@@ -226,7 +220,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The account_sid
             # @param [String] sid The conference Sid that uniquely identifies this resource
-            
             # @return [ConferenceContext] ConferenceContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -302,7 +295,6 @@ module Twilio
             # @param [String] account_sid The unique id of the Account] responsible for
             #   creating this conference.
             # @param [String] sid The conference Sid that uniquely identifies this resource
-            
             # @return [ConferenceInstance] ConferenceInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
@@ -331,7 +323,6 @@ module Twilio
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
             # @param [Version] version Version that contains the resource
-            
             # @return [ConferenceContext] ConferenceContext for this ConferenceInstance
             def context
               unless @instance_context

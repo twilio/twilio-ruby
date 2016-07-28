@@ -17,7 +17,6 @@ module Twilio
               # @param [String] account_sid The account_sid
               # @param [String] call_sid A 34 character string that uniquely identifies this
               #   resource.
-              
               # @return [FeedbackList] FeedbackList
               def initialize(version, account_sid: nil, call_sid: nil)
                 super(version)
@@ -45,7 +44,6 @@ module Twilio
               # @param [String] account_sid The account_sid
               # @param [String] call_sid A 34 character string that uniquely identifies this
               #   resource.
-              
               # @return [FeedbackPage] FeedbackPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -57,7 +55,6 @@ module Twilio
               ##
               # Build an instance of FeedbackInstance
               # @param [Hash] payload Payload response from the API
-              
               # @return [FeedbackInstance] FeedbackInstance
               def get_instance(payload)
                 return FeedbackInstance.new(
@@ -81,7 +78,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The account_sid
               # @param [String] call_sid The call sid that uniquely identifies the call
-              
               # @return [FeedbackContext] FeedbackContext
               def initialize(version, account_sid, call_sid)
                 super(version)
@@ -99,7 +95,6 @@ module Twilio
               # Request is executed immediately.
               # @param [String] quality_score The quality_score
               # @param [feedback.Issues] issue The issue
-              
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(quality_score: nil, issue: nil)
                 data = {
@@ -146,7 +141,6 @@ module Twilio
               # @param [String] quality_score An integer from 1 to 5 quality score
               # @param [feedback.Issues] issue One or more of the issues experienced during the
               #   call
-              
               # @return [FeedbackInstance] Updated FeedbackInstance
               def update(quality_score: nil, issue: nil)
                 data = {
@@ -184,7 +178,6 @@ module Twilio
               # @param [String] account_sid The account_sid
               # @param [String] call_sid A 34 character string that uniquely identifies this
               #   resource.
-              
               # @return [FeedbackInstance] FeedbackInstance
               def initialize(version, payload, account_sid: nil, call_sid: nil)
                 super(version)
@@ -211,7 +204,6 @@ module Twilio
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
               # @param [Version] version Version that contains the resource
-              
               # @return [FeedbackContext] FeedbackContext for this FeedbackInstance
               def context
                 unless @instance_context
@@ -253,7 +245,6 @@ module Twilio
               # Request is executed immediately.
               # @param [String] quality_score The quality_score
               # @param [feedback.Issues] issue The issue
-              
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(quality_score: nil, issue: nil)
                 context.create(
@@ -274,7 +265,6 @@ module Twilio
               # @param [String] quality_score An integer from 1 to 5 quality score
               # @param [feedback.Issues] issue One or more of the issues experienced during the
               #   call
-              
               # @return [FeedbackInstance] Updated FeedbackInstance
               def update(quality_score: nil, issue: nil)
                 context.update(

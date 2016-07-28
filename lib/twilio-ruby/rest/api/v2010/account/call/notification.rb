@@ -16,7 +16,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The account_sid
               # @param [String] call_sid The call_sid
-              
               # @return [NotificationList] NotificationList
               def initialize(version, account_sid: nil, call_sid: nil)
                 super(version)
@@ -43,7 +42,6 @@ module Twilio
               #  the default value of 50 records.  If no page_size is                      defined
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-              
               # @return [Array] Array of up to limit results
               def list(log: nil, message_date_before: nil, message_date: nil, message_date_after: nil, limit: nil, page_size: nil)
                 self.stream(
@@ -70,7 +68,6 @@ module Twilio
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-              
               # @return [Enumerable] Enumerable that will yield up to limit results
               def stream(log: nil, message_date_before: nil, message_date: nil, message_date_after: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
@@ -122,7 +119,6 @@ module Twilio
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
-              
               # @return [Page] Page of NotificationInstance
               def page(log: nil, message_date_before: nil, message_date: nil, message_date_after: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
@@ -157,7 +153,6 @@ module Twilio
               # @param [Hash] solution Path solution for the resource
               # @param [String] account_sid The account_sid
               # @param [String] call_sid The call_sid
-              
               # @return [NotificationPage] NotificationPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -169,7 +164,6 @@ module Twilio
               ##
               # Build an instance of NotificationInstance
               # @param [Hash] payload Payload response from the API
-              
               # @return [NotificationInstance] NotificationInstance
               def get_instance(payload)
                 return NotificationInstance.new(
@@ -194,7 +188,6 @@ module Twilio
               # @param [String] account_sid The account_sid
               # @param [String] call_sid The call_sid
               # @param [String] sid The sid
-              
               # @return [NotificationContext] NotificationContext
               def initialize(version, account_sid, call_sid, sid)
                 super(version)
@@ -252,7 +245,6 @@ module Twilio
               # @param [String] account_sid The account_sid
               # @param [String] call_sid The call_sid
               # @param [String] sid The sid
-              
               # @return [NotificationInstance] NotificationInstance
               def initialize(version, payload, account_sid: nil, call_sid: nil, sid: nil)
                 super(version)
@@ -291,7 +283,6 @@ module Twilio
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
               # @param [Version] version Version that contains the resource
-              
               # @return [NotificationContext] NotificationContext for this NotificationInstance
               def context
                 unless @instance_context

@@ -16,7 +16,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The unique id of the Account responsible for
               #   creating this Call
-              
               # @return [FeedbackSummaryList] FeedbackSummaryList
               def initialize(version, account_sid: nil)
                 super(version)
@@ -36,7 +35,6 @@ module Twilio
               # @param [Boolean] include_subaccounts The include_subaccounts
               # @param [String] status_callback The status_callback
               # @param [String] status_callback_method The status_callback_method
-              
               # @return [FeedbackSummaryInstance] Newly created FeedbackSummaryInstance
               def create(start_date: nil, end_date: nil, include_subaccounts: nil, status_callback: nil, status_callback_method: nil)
                 data = {
@@ -75,7 +73,6 @@ module Twilio
               # @param [Hash] solution Path solution for the resource
               # @param [String] account_sid The unique id of the Account responsible for
               #   creating this Call
-              
               # @return [FeedbackSummaryPage] FeedbackSummaryPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -87,7 +84,6 @@ module Twilio
               ##
               # Build an instance of FeedbackSummaryInstance
               # @param [Hash] payload Payload response from the API
-              
               # @return [FeedbackSummaryInstance] FeedbackSummaryInstance
               def get_instance(payload)
                 return FeedbackSummaryInstance.new(
@@ -110,7 +106,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The account_sid
               # @param [String] sid The sid
-              
               # @return [FeedbackSummaryContext] FeedbackSummaryContext
               def initialize(version, account_sid, sid)
                 super(version)
@@ -166,7 +161,6 @@ module Twilio
               # @param [String] account_sid The unique id of the Account responsible for
               #   creating this Call
               # @param [String] sid The sid
-              
               # @return [FeedbackSummaryInstance] FeedbackSummaryInstance
               def initialize(version, payload, account_sid: nil, sid: nil)
                 super(version)
@@ -201,7 +195,6 @@ module Twilio
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
               # @param [Version] version Version that contains the resource
-              
               # @return [FeedbackSummaryContext] FeedbackSummaryContext for this FeedbackSummaryInstance
               def context
                 unless @instance_context

@@ -14,7 +14,6 @@ module Twilio
             # Initialize the WorkflowList
             # @param [Version] version Version that contains the resource
             # @param [String] workspace_sid The workspace_sid
-            
             # @return [WorkflowList] WorkflowList
             def initialize(version, workspace_sid: nil)
               super(version)
@@ -37,7 +36,6 @@ module Twilio
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-            
             # @return [Array] Array of up to limit results
             def list(friendly_name: nil, limit: nil, page_size: nil)
               self.stream(
@@ -58,7 +56,6 @@ module Twilio
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-            
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(friendly_name: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
@@ -101,7 +98,6 @@ module Twilio
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            
             # @return [Page] Page of WorkflowInstance
             def page(friendly_name: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
@@ -127,7 +123,6 @@ module Twilio
             # @param [String] fallback_assignment_callback_url The
             #   fallback_assignment_callback_url
             # @param [String] task_reservation_timeout The task_reservation_timeout
-            
             # @return [WorkflowInstance] Newly created WorkflowInstance
             def create(friendly_name: nil, configuration: nil, assignment_callback_url: nil, fallback_assignment_callback_url: nil, task_reservation_timeout: nil)
               data = {
@@ -165,7 +160,6 @@ module Twilio
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
             # @param [String] workspace_sid The workspace_sid
-            
             # @return [WorkflowPage] WorkflowPage
             def initialize(version, response, solution)
               super(version, response)
@@ -177,7 +171,6 @@ module Twilio
             ##
             # Build an instance of WorkflowInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [WorkflowInstance] WorkflowInstance
             def get_instance(payload)
               return WorkflowInstance.new(
@@ -200,7 +193,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] workspace_sid The workspace_sid
             # @param [String] sid The sid
-            
             # @return [WorkflowContext] WorkflowContext
             def initialize(version, workspace_sid, sid)
               super(version)
@@ -244,7 +236,6 @@ module Twilio
             #   fallback_assignment_callback_url
             # @param [String] configuration The configuration
             # @param [String] task_reservation_timeout The task_reservation_timeout
-            
             # @return [WorkflowInstance] Updated WorkflowInstance
             def update(friendly_name: nil, assignment_callback_url: nil, fallback_assignment_callback_url: nil, configuration: nil, task_reservation_timeout: nil)
               data = {
@@ -302,7 +293,6 @@ module Twilio
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] workspace_sid The workspace_sid
             # @param [String] sid The sid
-            
             # @return [WorkflowInstance] WorkflowInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
               super(version)
@@ -334,7 +324,6 @@ module Twilio
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
             # @param [Version] version Version that contains the resource
-            
             # @return [WorkflowContext] WorkflowContext for this WorkflowInstance
             def context
               unless @instance_context
@@ -406,7 +395,6 @@ module Twilio
             #   fallback_assignment_callback_url
             # @param [String] configuration The configuration
             # @param [String] task_reservation_timeout The task_reservation_timeout
-            
             # @return [WorkflowInstance] Updated WorkflowInstance
             def update(friendly_name: nil, assignment_callback_url: nil, fallback_assignment_callback_url: nil, configuration: nil, task_reservation_timeout: nil)
               context.update(

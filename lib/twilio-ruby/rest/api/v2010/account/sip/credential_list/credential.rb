@@ -17,7 +17,6 @@ module Twilio
                 # @param [Version] version Version that contains the resource
                 # @param [String] account_sid The account_sid
                 # @param [String] credential_list_sid The credential_list_sid
-                
                 # @return [CredentialList] CredentialList
                 def initialize(version, account_sid: nil, credential_list_sid: nil)
                   super(version)
@@ -40,7 +39,6 @@ module Twilio
                 #  the default value of 50 records.  If no page_size is                      defined
                 #  but a limit is defined, stream() will attempt to read                      the
                 #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-                
                 # @return [Array] Array of up to limit results
                 def list(limit: nil, page_size: nil)
                   self.stream(
@@ -59,7 +57,6 @@ module Twilio
                 #  the default value of 50 records.                      If no page_size is defined
                 #                       but a limit is defined, stream() will attempt to                      read the
                 #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-                
                 # @return [Enumerable] Enumerable that will yield up to limit results
                 def stream(limit: nil, page_size: nil)
                   limits = @version.read_limits(limit, page_size)
@@ -99,7 +96,6 @@ module Twilio
                 # @param [String] page_token PageToken provided by the API
                 # @param [Integer] page_number Page Number, this value is simply for client state
                 # @param [Integer] page_size Number of records to return, defaults to 50
-                
                 # @return [Page] Page of CredentialInstance
                 def page(page_token: nil, page_number: nil, page_size: nil)
                   params = {
@@ -120,7 +116,6 @@ module Twilio
                 # Request is executed immediately.
                 # @param [String] username The username
                 # @param [String] password The password
-                
                 # @return [CredentialInstance] Newly created CredentialInstance
                 def create(username: nil, password: nil)
                   data = {
@@ -157,7 +152,6 @@ module Twilio
                 # @param [Hash] solution Path solution for the resource
                 # @param [String] account_sid The account_sid
                 # @param [String] credential_list_sid The credential_list_sid
-                
                 # @return [CredentialPage] CredentialPage
                 def initialize(version, response, solution)
                   super(version, response)
@@ -169,7 +163,6 @@ module Twilio
                 ##
                 # Build an instance of CredentialInstance
                 # @param [Hash] payload Payload response from the API
-                
                 # @return [CredentialInstance] CredentialInstance
                 def get_instance(payload)
                   return CredentialInstance.new(
@@ -194,7 +187,6 @@ module Twilio
                 # @param [String] account_sid The account_sid
                 # @param [String] credential_list_sid The credential_list_sid
                 # @param [String] sid The sid
-                
                 # @return [CredentialContext] CredentialContext
                 def initialize(version, account_sid, credential_list_sid, sid)
                   super(version)
@@ -233,7 +225,6 @@ module Twilio
                 # Update the CredentialInstance
                 # @param [String] username The username
                 # @param [String] password The password
-                
                 # @return [CredentialInstance] Updated CredentialInstance
                 def update(username: nil, password: nil)
                   data = {
@@ -279,7 +270,6 @@ module Twilio
                 # @param [String] account_sid The account_sid
                 # @param [String] credential_list_sid The credential_list_sid
                 # @param [String] sid The sid
-                
                 # @return [CredentialInstance] CredentialInstance
                 def initialize(version, payload, account_sid: nil, credential_list_sid: nil, sid: nil)
                   super(version)
@@ -308,7 +298,6 @@ module Twilio
                 # Generate an instance context for the instance, the context is capable of
                 # performing various actions.  All instance actions are proxied to the context
                 # @param [Version] version Version that contains the resource
-                
                 # @return [CredentialContext] CredentialContext for this CredentialInstance
                 def context
                   unless @instance_context
@@ -361,7 +350,6 @@ module Twilio
                 # Update the CredentialInstance
                 # @param [String] username The username
                 # @param [String] password The password
-                
                 # @return [CredentialInstance] Updated CredentialInstance
                 def update(username: nil, password: nil)
                   context.update(

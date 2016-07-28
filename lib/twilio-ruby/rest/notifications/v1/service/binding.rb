@@ -14,7 +14,6 @@ module Twilio
             # Initialize the BindingList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The service_sid
-            
             # @return [BindingList] BindingList
             def initialize(version, service_sid: nil)
               super(version)
@@ -35,7 +34,6 @@ module Twilio
             # @param [String] address The address
             # @param [String] tag The tag
             # @param [String] notification_protocol_version The notification_protocol_version
-            
             # @return [BindingInstance] Newly created BindingInstance
             def create(endpoint: nil, identity: nil, binding_type: nil, address: nil, tag: nil, notification_protocol_version: nil)
               data = {
@@ -78,7 +76,6 @@ module Twilio
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-            
             # @return [Array] Array of up to limit results
             def list(start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, identity: nil, tag: nil, limit: nil, page_size: nil)
               self.stream(
@@ -113,7 +110,6 @@ module Twilio
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-            
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, identity: nil, tag: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
@@ -177,7 +173,6 @@ module Twilio
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            
             # @return [Page] Page of BindingInstance
             def page(start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, identity: nil, tag: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
@@ -215,7 +210,6 @@ module Twilio
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
             # @param [String] service_sid The service_sid
-            
             # @return [BindingPage] BindingPage
             def initialize(version, response, solution)
               super(version, response)
@@ -227,7 +221,6 @@ module Twilio
             ##
             # Build an instance of BindingInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [BindingInstance] BindingInstance
             def get_instance(payload)
               return BindingInstance.new(
@@ -250,7 +243,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The service_sid
             # @param [String] sid The sid
-            
             # @return [BindingContext] BindingContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -305,7 +297,6 @@ module Twilio
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The service_sid
             # @param [String] sid The sid
-            
             # @return [BindingInstance] BindingInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -338,7 +329,6 @@ module Twilio
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
             # @param [Version] version Version that contains the resource
-            
             # @return [BindingContext] BindingContext for this BindingInstance
             def context
               unless @instance_context

@@ -14,7 +14,6 @@ module Twilio
             # Initialize the CredentialListList
             # @param [Version] version Version that contains the resource
             # @param [String] trunk_sid The trunk_sid
-            
             # @return [CredentialListList] CredentialListList
             def initialize(version, trunk_sid: nil)
               super(version)
@@ -30,7 +29,6 @@ module Twilio
             # Retrieve a single page of CredentialListInstance records from the API.
             # Request is executed immediately.
             # @param [String] credential_list_sid The credential_list_sid
-            
             # @return [CredentialListInstance] Newly created CredentialListInstance
             def create(credential_list_sid: nil)
               data = {
@@ -60,7 +58,6 @@ module Twilio
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-            
             # @return [Array] Array of up to limit results
             def list(limit: nil, page_size: nil)
               self.stream(
@@ -79,7 +76,6 @@ module Twilio
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-            
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
@@ -119,7 +115,6 @@ module Twilio
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            
             # @return [Page] Page of CredentialListInstance
             def page(page_token: nil, page_number: nil, page_size: nil)
               params = {
@@ -149,7 +144,6 @@ module Twilio
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
             # @param [String] trunk_sid The trunk_sid
-            
             # @return [CredentialListPage] CredentialListPage
             def initialize(version, response, solution)
               super(version, response)
@@ -161,7 +155,6 @@ module Twilio
             ##
             # Build an instance of CredentialListInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [CredentialListInstance] CredentialListInstance
             def get_instance(payload)
               return CredentialListInstance.new(
@@ -184,7 +177,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] trunk_sid The trunk_sid
             # @param [String] sid The sid
-            
             # @return [CredentialListContext] CredentialListContext
             def initialize(version, trunk_sid, sid)
               super(version)
@@ -239,7 +231,6 @@ module Twilio
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] trunk_sid The trunk_sid
             # @param [String] sid The sid
-            
             # @return [CredentialListInstance] CredentialListInstance
             def initialize(version, payload, trunk_sid: nil, sid: nil)
               super(version)
@@ -267,7 +258,6 @@ module Twilio
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
             # @param [Version] version Version that contains the resource
-            
             # @return [CredentialListContext] CredentialListContext for this CredentialListInstance
             def context
               unless @instance_context

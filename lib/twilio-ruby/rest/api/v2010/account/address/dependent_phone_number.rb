@@ -16,7 +16,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The account_sid
               # @param [String] address_sid The sid
-              
               # @return [DependentPhoneNumberList] DependentPhoneNumberList
               def initialize(version, account_sid: nil, address_sid: nil)
                 super(version)
@@ -39,7 +38,6 @@ module Twilio
               #  the default value of 50 records.  If no page_size is                      defined
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-              
               # @return [Array] Array of up to limit results
               def list(limit: nil, page_size: nil)
                 self.stream(
@@ -58,7 +56,6 @@ module Twilio
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-              
               # @return [Enumerable] Enumerable that will yield up to limit results
               def stream(limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
@@ -98,7 +95,6 @@ module Twilio
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
-              
               # @return [Page] Page of DependentPhoneNumberInstance
               def page(page_token: nil, page_number: nil, page_size: nil)
                 params = {
@@ -129,7 +125,6 @@ module Twilio
               # @param [Hash] solution Path solution for the resource
               # @param [String] account_sid The account_sid
               # @param [String] address_sid The sid
-              
               # @return [DependentPhoneNumberPage] DependentPhoneNumberPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -141,7 +136,6 @@ module Twilio
               ##
               # Build an instance of DependentPhoneNumberInstance
               # @param [Hash] payload Payload response from the API
-              
               # @return [DependentPhoneNumberInstance] DependentPhoneNumberInstance
               def get_instance(payload)
                 return DependentPhoneNumberInstance.new(
@@ -166,7 +160,6 @@ module Twilio
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The account_sid
               # @param [String] address_sid The sid
-              
               # @return [DependentPhoneNumberInstance] DependentPhoneNumberInstance
               def initialize(version, payload, account_sid: nil, address_sid: nil)
                 super(version)

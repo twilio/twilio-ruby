@@ -16,7 +16,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] workspace_sid The workspace_sid
               # @param [String] task_queue_sid The task_queue_sid
-              
               # @return [TaskQueueStatisticsList] TaskQueueStatisticsList
               def initialize(version, workspace_sid: nil, task_queue_sid: nil)
                 super(version)
@@ -43,7 +42,6 @@ module Twilio
               # @param [Hash] solution Path solution for the resource
               # @param [String] workspace_sid The workspace_sid
               # @param [String] task_queue_sid The task_queue_sid
-              
               # @return [TaskQueueStatisticsPage] TaskQueueStatisticsPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -55,7 +53,6 @@ module Twilio
               ##
               # Build an instance of TaskQueueStatisticsInstance
               # @param [Hash] payload Payload response from the API
-              
               # @return [TaskQueueStatisticsInstance] TaskQueueStatisticsInstance
               def get_instance(payload)
                 return TaskQueueStatisticsInstance.new(
@@ -79,7 +76,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] workspace_sid The workspace_sid
               # @param [String] task_queue_sid The task_queue_sid
-              
               # @return [TaskQueueStatisticsContext] TaskQueueStatisticsContext
               def initialize(version, workspace_sid, task_queue_sid)
                 super(version)
@@ -98,7 +94,6 @@ module Twilio
               # @param [String] friendly_name The friendly_name
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
-              
               # @return [TaskQueueStatisticsInstance] Fetched TaskQueueStatisticsInstance
               def fetch(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil)
                 params = {
@@ -137,7 +132,6 @@ module Twilio
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] workspace_sid The workspace_sid
               # @param [String] task_queue_sid The task_queue_sid
-              
               # @return [TaskQueueStatisticsInstance] TaskQueueStatisticsInstance
               def initialize(version, payload, workspace_sid: nil, task_queue_sid: nil)
                 super(version)
@@ -163,7 +157,6 @@ module Twilio
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
               # @param [Version] version Version that contains the resource
-              
               # @return [TaskQueueStatisticsContext] TaskQueueStatisticsContext for this TaskQueueStatisticsInstance
               def context
                 unless @instance_context
@@ -202,7 +195,6 @@ module Twilio
               # @param [String] friendly_name The friendly_name
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
-              
               # @return [TaskQueueStatisticsInstance] Fetched TaskQueueStatisticsInstance
               def fetch(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil)
                 context.fetch(

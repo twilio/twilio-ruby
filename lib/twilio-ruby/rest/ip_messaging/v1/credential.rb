@@ -12,7 +12,6 @@ module Twilio
           ##
           # Initialize the CredentialList
           # @param [Version] version Version that contains the resource
-          
           # @return [CredentialList] CredentialList
           def initialize(version)
             super(version)
@@ -32,7 +31,6 @@ module Twilio
           #  the default value of 50 records.  If no page_size is                      defined
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-          
           # @return [Array] Array of up to limit results
           def list(limit: nil, page_size: nil)
             self.stream(
@@ -51,7 +49,6 @@ module Twilio
           #  the default value of 50 records.                      If no page_size is defined
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-          
           # @return [Enumerable] Enumerable that will yield up to limit results
           def stream(limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
@@ -91,7 +88,6 @@ module Twilio
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          
           # @return [Page] Page of CredentialInstance
           def page(page_token: nil, page_number: nil, page_size: nil)
             params = {
@@ -116,7 +112,6 @@ module Twilio
           # @param [String] private_key The private_key
           # @param [Boolean] sandbox The sandbox
           # @param [String] api_key The api_key
-          
           # @return [CredentialInstance] Newly created CredentialInstance
           def create(type: nil, friendly_name: nil, certificate: nil, private_key: nil, sandbox: nil, api_key: nil)
             data = {
@@ -153,7 +148,6 @@ module Twilio
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          
           # @return [CredentialPage] CredentialPage
           def initialize(version, response, solution)
             super(version, response)
@@ -165,7 +159,6 @@ module Twilio
           ##
           # Build an instance of CredentialInstance
           # @param [Hash] payload Payload response from the API
-          
           # @return [CredentialInstance] CredentialInstance
           def get_instance(payload)
             return CredentialInstance.new(
@@ -186,7 +179,6 @@ module Twilio
           # Initialize the CredentialContext
           # @param [Version] version Version that contains the resource
           # @param [String] sid The sid
-          
           # @return [CredentialContext] CredentialContext
           def initialize(version, sid)
             super(version)
@@ -224,7 +216,6 @@ module Twilio
           # @param [String] private_key The private_key
           # @param [Boolean] sandbox The sandbox
           # @param [String] api_key The api_key
-          
           # @return [CredentialInstance] Updated CredentialInstance
           def update(friendly_name: nil, certificate: nil, private_key: nil, sandbox: nil, api_key: nil)
             data = {
@@ -269,7 +260,6 @@ module Twilio
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
           # @param [String] sid The sid
-          
           # @return [CredentialInstance] CredentialInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -297,7 +287,6 @@ module Twilio
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
           # @param [Version] version Version that contains the resource
-          
           # @return [CredentialContext] CredentialContext for this CredentialInstance
           def context
             unless @instance_context
@@ -355,7 +344,6 @@ module Twilio
           # @param [String] private_key The private_key
           # @param [Boolean] sandbox The sandbox
           # @param [String] api_key The api_key
-          
           # @return [CredentialInstance] Updated CredentialInstance
           def update(friendly_name: nil, certificate: nil, private_key: nil, sandbox: nil, api_key: nil)
             context.update(

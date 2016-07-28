@@ -15,7 +15,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] owner_account_sid A 34 character string that uniquely identifies
             #   this resource.
-            
             # @return [IncomingPhoneNumberList] IncomingPhoneNumberList
             def initialize(version, owner_account_sid: nil)
               super(version)
@@ -47,7 +46,6 @@ module Twilio
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-            
             # @return [Array] Array of up to limit results
             def list(beta: nil, friendly_name: nil, phone_number: nil, limit: nil, page_size: nil)
               self.stream(
@@ -74,7 +72,6 @@ module Twilio
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-            
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(beta: nil, friendly_name: nil, phone_number: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
@@ -127,7 +124,6 @@ module Twilio
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            
             # @return [Page] Page of IncomingPhoneNumberInstance
             def page(beta: nil, friendly_name: nil, phone_number: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
@@ -190,7 +186,6 @@ module Twilio
             #   (E.164 format)
             # @param [String] area_code The desired area code for the new phone number. Any
             #   three digit US or Canada rea code is valid
-            
             # @return [IncomingPhoneNumberInstance] Newly created IncomingPhoneNumberInstance
             def create(api_version: nil, friendly_name: nil, sms_application_sid: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, status_callback: nil, status_callback_method: nil, voice_application_sid: nil, voice_caller_id_lookup: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil, phone_number: nil, area_code: nil)
               data = {
@@ -271,7 +266,6 @@ module Twilio
             # @param [Hash] solution Path solution for the resource
             # @param [String] owner_account_sid A 34 character string that uniquely identifies
             #   this resource.
-            
             # @return [IncomingPhoneNumberPage] IncomingPhoneNumberPage
             def initialize(version, response, solution)
               super(version, response)
@@ -283,7 +277,6 @@ module Twilio
             ##
             # Build an instance of IncomingPhoneNumberInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [IncomingPhoneNumberInstance] IncomingPhoneNumberInstance
             def get_instance(payload)
               return IncomingPhoneNumberInstance.new(
@@ -307,7 +300,6 @@ module Twilio
             # @param [String] owner_account_sid The owner_account_sid
             # @param [String] sid The incoming-phone-number Sid that uniquely identifies this
             #   resource
-            
             # @return [IncomingPhoneNumberContext] IncomingPhoneNumberContext
             def initialize(version, owner_account_sid, sid)
               super(version)
@@ -361,7 +353,6 @@ module Twilio
             # @param [String] voice_url The URL Twilio will request when this phone number
             #   receives a call. The VoiceURL will  no longer be used if a `VoiceApplicationSid`
             #   or a `TrunkSid` is set.
-            
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
             def update(account_sid: nil, api_version: nil, friendly_name: nil, sms_application_sid: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, status_callback: nil, status_callback_method: nil, voice_application_sid: nil, voice_caller_id_lookup: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil)
               data = {
@@ -441,7 +432,6 @@ module Twilio
             #   this resource.
             # @param [String] sid The incoming-phone-number Sid that uniquely identifies this
             #   resource
-            
             # @return [IncomingPhoneNumberInstance] IncomingPhoneNumberInstance
             def initialize(version, payload, owner_account_sid: nil, sid: nil)
               super(version)
@@ -486,7 +476,6 @@ module Twilio
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
             # @param [Version] version Version that contains the resource
-            
             # @return [IncomingPhoneNumberContext] IncomingPhoneNumberContext for this IncomingPhoneNumberInstance
             def context
               unless @instance_context
@@ -636,7 +625,6 @@ module Twilio
             # @param [String] voice_url The URL Twilio will request when this phone number
             #   receives a call. The VoiceURL will  no longer be used if a `VoiceApplicationSid`
             #   or a `TrunkSid` is set.
-            
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
             def update(account_sid: nil, api_version: nil, friendly_name: nil, sms_application_sid: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, status_callback: nil, status_callback_method: nil, voice_application_sid: nil, voice_caller_id_lookup: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil)
               context.update(

@@ -14,7 +14,6 @@ module Twilio
             # Initialize the SandboxList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The account_sid
-            
             # @return [SandboxList] SandboxList
             def initialize(version, account_sid: nil)
               super(version)
@@ -39,7 +38,6 @@ module Twilio
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
             # @param [String] account_sid The account_sid
-            
             # @return [SandboxPage] SandboxPage
             def initialize(version, response, solution)
               super(version, response)
@@ -51,7 +49,6 @@ module Twilio
             ##
             # Build an instance of SandboxInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [SandboxInstance] SandboxInstance
             def get_instance(payload)
               return SandboxInstance.new(
@@ -73,7 +70,6 @@ module Twilio
             # Initialize the SandboxContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The account_sid
-            
             # @return [SandboxContext] SandboxContext
             def initialize(version, account_sid)
               super(version)
@@ -112,7 +108,6 @@ module Twilio
             # @param [String] sms_method The sms_method
             # @param [String] status_callback The status_callback
             # @param [String] status_callback_method The status_callback_method
-            
             # @return [SandboxInstance] Updated SandboxInstance
             def update(voice_url: nil, voice_method: nil, sms_url: nil, sms_method: nil, status_callback: nil, status_callback_method: nil)
               data = {
@@ -151,7 +146,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The account_sid
-            
             # @return [SandboxInstance] SandboxInstance
             def initialize(version, payload, account_sid: nil)
               super(version)
@@ -185,7 +179,6 @@ module Twilio
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
             # @param [Version] version Version that contains the resource
-            
             # @return [SandboxContext] SandboxContext for this SandboxInstance
             def context
               unless @instance_context
@@ -268,7 +261,6 @@ module Twilio
             # @param [String] sms_method The sms_method
             # @param [String] status_callback The status_callback
             # @param [String] status_callback_method The status_callback_method
-            
             # @return [SandboxInstance] Updated SandboxInstance
             def update(voice_url: nil, voice_method: nil, sms_url: nil, sms_method: nil, status_callback: nil, status_callback_method: nil)
               context.update(

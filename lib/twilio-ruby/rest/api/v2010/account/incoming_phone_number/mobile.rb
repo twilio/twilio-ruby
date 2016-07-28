@@ -16,7 +16,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] owner_account_sid A 34 character string that uniquely identifies
               #   this resource.
-              
               # @return [MobileList] MobileList
               def initialize(version, owner_account_sid: nil)
                 super(version)
@@ -41,7 +40,6 @@ module Twilio
               #  the default value of 50 records.  If no page_size is                      defined
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-              
               # @return [Array] Array of up to limit results
               def list(beta: nil, friendly_name: nil, phone_number: nil, limit: nil, page_size: nil)
                 self.stream(
@@ -66,7 +64,6 @@ module Twilio
               #  the default value of 50 records.                      If no page_size is defined
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-              
               # @return [Enumerable] Enumerable that will yield up to limit results
               def stream(beta: nil, friendly_name: nil, phone_number: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
@@ -115,7 +112,6 @@ module Twilio
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
-              
               # @return [Page] Page of MobileInstance
               def page(beta: nil, friendly_name: nil, phone_number: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
@@ -153,7 +149,6 @@ module Twilio
               # @param [String] voice_fallback_url The voice_fallback_url
               # @param [String] voice_method The voice_method
               # @param [String] voice_url The voice_url
-              
               # @return [MobileInstance] Newly created MobileInstance
               def create(phone_number: nil, api_version: nil, friendly_name: nil, sms_application_sid: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, status_callback: nil, status_callback_method: nil, voice_application_sid: nil, voice_caller_id_lookup: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil)
                 data = {
@@ -203,7 +198,6 @@ module Twilio
               # @param [Hash] solution Path solution for the resource
               # @param [String] owner_account_sid A 34 character string that uniquely identifies
               #   this resource.
-              
               # @return [MobilePage] MobilePage
               def initialize(version, response, solution)
                 super(version, response)
@@ -215,7 +209,6 @@ module Twilio
               ##
               # Build an instance of MobileInstance
               # @param [Hash] payload Payload response from the API
-              
               # @return [MobileInstance] MobileInstance
               def get_instance(payload)
                 return MobileInstance.new(
@@ -239,7 +232,6 @@ module Twilio
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] owner_account_sid A 34 character string that uniquely identifies
               #   this resource.
-              
               # @return [MobileInstance] MobileInstance
               def initialize(version, payload, owner_account_sid: nil)
                 super(version)

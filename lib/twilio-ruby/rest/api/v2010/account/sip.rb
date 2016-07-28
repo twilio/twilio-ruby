@@ -15,7 +15,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
-            
             # @return [SipList] SipList
             def initialize(version, account_sid: nil)
               super(version)
@@ -34,7 +33,6 @@ module Twilio
             ##
             # Access the domains
             # @param [String] sid The domain sid that uniquely identifies the resource
-            
             # @return [DomainList] DomainList
             def domains(sid=:unset)
               if sid != :unset
@@ -55,7 +53,6 @@ module Twilio
             # Access the ip_access_control_lists
             # @param [String] sid The ip-access-control-list Sid that uniquely identifies this
             #   resource
-            
             # @return [IpAccessControlListList] IpAccessControlListList
             def ip_access_control_lists(sid=:unset)
               if sid != :unset
@@ -75,7 +72,6 @@ module Twilio
             ##
             # Access the credential_lists
             # @param [String] sid The credential Sid that uniquely identifies this resource
-            
             # @return [CredentialListList] CredentialListList
             def credential_lists(sid=:unset)
               if sid != :unset
@@ -107,7 +103,6 @@ module Twilio
             # @param [Hash] solution Path solution for the resource
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
-            
             # @return [SipPage] SipPage
             def initialize(version, response, solution)
               super(version, response)
@@ -119,7 +114,6 @@ module Twilio
             ##
             # Build an instance of SipInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [SipInstance] SipInstance
             def get_instance(payload)
               return SipInstance.new(
@@ -143,7 +137,6 @@ module Twilio
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
-            
             # @return [SipInstance] SipInstance
             def initialize(version, payload, account_sid: nil)
               super(version)

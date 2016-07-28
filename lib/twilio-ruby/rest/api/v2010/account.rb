@@ -12,7 +12,6 @@ module Twilio
           ##
           # Initialize the AccountList
           # @param [Version] version Version that contains the resource
-          
           # @return [AccountList] AccountList
           def initialize(version)
             super(version)
@@ -27,7 +26,6 @@ module Twilio
           # Request is executed immediately.
           # @param [String] friendly_name A human readable description of the account to
           #   create, defaults to `SubAccount Created at {YYYY-MM-DD HH:MM meridian}`
-          
           # @return [AccountInstance] Newly created AccountInstance
           def create(friendly_name: nil)
             data = {
@@ -59,7 +57,6 @@ module Twilio
           #  the default value of 50 records.  If no page_size is                      defined
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-          
           # @return [Array] Array of up to limit results
           def list(friendly_name: nil, status: nil, limit: nil, page_size: nil)
             self.stream(
@@ -83,7 +80,6 @@ module Twilio
           #  the default value of 50 records.                      If no page_size is defined
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-          
           # @return [Enumerable] Enumerable that will yield up to limit results
           def stream(friendly_name: nil, status: nil, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
@@ -131,7 +127,6 @@ module Twilio
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          
           # @return [Page] Page of AccountInstance
           def page(friendly_name: nil, status: nil, page_token: nil, page_number: nil, page_size: nil)
             params = {
@@ -162,7 +157,6 @@ module Twilio
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          
           # @return [AccountPage] AccountPage
           def initialize(version, response, solution)
             super(version, response)
@@ -174,7 +168,6 @@ module Twilio
           ##
           # Build an instance of AccountInstance
           # @param [Hash] payload Payload response from the API
-          
           # @return [AccountInstance] AccountInstance
           def get_instance(payload)
             return AccountInstance.new(
@@ -196,7 +189,6 @@ module Twilio
           # @param [Version] version Version that contains the resource
           # @param [String] sid The Account Sid that uniquely identifies the account to
           #   fetch
-          
           # @return [AccountContext] AccountContext
           def initialize(version, sid)
             super(version)
@@ -259,7 +251,6 @@ module Twilio
           #   Account
           # @param [account.Status] status Alter the status of this account with a given
           #   Status
-          
           # @return [AccountInstance] Updated AccountInstance
           def update(friendly_name: nil, status: nil)
             data = {
@@ -755,7 +746,6 @@ module Twilio
           # @param [Hash] payload payload that contains response from Twilio
           # @param [String] sid The Account Sid that uniquely identifies the account to
           #   fetch
-          
           # @return [AccountInstance] AccountInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -785,7 +775,6 @@ module Twilio
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
           # @param [Version] version Version that contains the resource
-          
           # @return [AccountContext] AccountContext for this AccountInstance
           def context
             unless @instance_context
@@ -850,7 +839,6 @@ module Twilio
           #   Account
           # @param [account.Status] status Alter the status of this account with a given
           #   Status
-          
           # @return [AccountInstance] Updated AccountInstance
           def update(friendly_name: nil, status: nil)
             context.update(

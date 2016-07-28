@@ -16,7 +16,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The account_sid
               # @param [String] message_sid The message_sid
-              
               # @return [FeedbackList] FeedbackList
               def initialize(version, account_sid: nil, message_sid: nil)
                 super(version)
@@ -33,7 +32,6 @@ module Twilio
               # Retrieve a single page of FeedbackInstance records from the API.
               # Request is executed immediately.
               # @param [feedback.Outcome] outcome The outcome
-              
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(outcome: nil)
                 data = {
@@ -69,7 +67,6 @@ module Twilio
               # @param [Hash] solution Path solution for the resource
               # @param [String] account_sid The account_sid
               # @param [String] message_sid The message_sid
-              
               # @return [FeedbackPage] FeedbackPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -81,7 +78,6 @@ module Twilio
               ##
               # Build an instance of FeedbackInstance
               # @param [Hash] payload Payload response from the API
-              
               # @return [FeedbackInstance] FeedbackInstance
               def get_instance(payload)
                 return FeedbackInstance.new(
@@ -106,7 +102,6 @@ module Twilio
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The account_sid
               # @param [String] message_sid The message_sid
-              
               # @return [FeedbackInstance] FeedbackInstance
               def initialize(version, payload, account_sid: nil, message_sid: nil)
                 super(version)

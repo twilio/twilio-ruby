@@ -14,7 +14,6 @@ module Twilio
             # Initialize the MessageList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The unique id of the Account that sent this message.
-            
             # @return [MessageList] MessageList
             def initialize(version, account_sid: nil)
               super(version)
@@ -43,7 +42,6 @@ module Twilio
             # @param [String] from A Twilio phone number or alphanumeric sender ID enabled for
             #   the type of message you wish to send.
             # @param [String] messaging_service_sid The messaging_service_sid
-            
             # @return [MessageInstance] Newly created MessageInstance
             def create(to: nil, status_callback: nil, application_sid: nil, max_price: nil, provide_feedback: nil, body: nil, media_url: nil, from: nil, messaging_service_sid: nil)
               data = {
@@ -86,7 +84,6 @@ module Twilio
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-            
             # @return [Array] Array of up to limit results
             def list(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, limit: nil, page_size: nil)
               self.stream(
@@ -115,7 +112,6 @@ module Twilio
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-            
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
@@ -170,7 +166,6 @@ module Twilio
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            
             # @return [Page] Page of MessageInstance
             def page(to: nil, from: nil, date_sent_before: nil, date_sent: nil, date_sent_after: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
@@ -205,7 +200,6 @@ module Twilio
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
             # @param [String] account_sid The unique id of the Account that sent this message.
-            
             # @return [MessagePage] MessagePage
             def initialize(version, response, solution)
               super(version, response)
@@ -217,7 +211,6 @@ module Twilio
             ##
             # Build an instance of MessageInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [MessageInstance] MessageInstance
             def get_instance(payload)
               return MessageInstance.new(
@@ -240,7 +233,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The account_sid
             # @param [String] sid The message Sid that uniquely identifies this resource
-            
             # @return [MessageContext] MessageContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -287,7 +279,6 @@ module Twilio
             ##
             # Update the MessageInstance
             # @param [String] body The body
-            
             # @return [MessageInstance] Updated MessageInstance
             def update(body: nil)
               data = {
@@ -362,7 +353,6 @@ module Twilio
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The unique id of the Account that sent this message.
             # @param [String] sid The message Sid that uniquely identifies this resource
-            
             # @return [MessageInstance] MessageInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
@@ -402,7 +392,6 @@ module Twilio
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
             # @param [Version] version Version that contains the resource
-            
             # @return [MessageContext] MessageContext for this MessageInstance
             def context
               unless @instance_context
@@ -508,7 +497,6 @@ module Twilio
             ##
             # Update the MessageInstance
             # @param [String] body The body
-            
             # @return [MessageInstance] Updated MessageInstance
             def update(body: nil)
               context.update(

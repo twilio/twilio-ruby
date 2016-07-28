@@ -15,7 +15,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
-            
             # @return [NewKeyList] NewKeyList
             def initialize(version, account_sid: nil)
               super(version)
@@ -31,7 +30,6 @@ module Twilio
             # Retrieve a single page of NewKeyInstance records from the API.
             # Request is executed immediately.
             # @param [String] friendly_name The friendly_name
-            
             # @return [NewKeyInstance] Newly created NewKeyInstance
             def create(friendly_name: nil)
               data = {
@@ -66,7 +64,6 @@ module Twilio
             # @param [Hash] solution Path solution for the resource
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
-            
             # @return [NewKeyPage] NewKeyPage
             def initialize(version, response, solution)
               super(version, response)
@@ -78,7 +75,6 @@ module Twilio
             ##
             # Build an instance of NewKeyInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [NewKeyInstance] NewKeyInstance
             def get_instance(payload)
               return NewKeyInstance.new(
@@ -102,7 +98,6 @@ module Twilio
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
-            
             # @return [NewKeyInstance] NewKeyInstance
             def initialize(version, payload, account_sid: nil)
               super(version)

@@ -13,7 +13,6 @@ module Twilio
             ##
             # Initialize the CountryList
             # @param [Version] version Version that contains the resource
-            
             # @return [CountryList] CountryList
             def initialize(version)
               super(version)
@@ -33,7 +32,6 @@ module Twilio
             #  the default value of 50 records.  If no page_size is                      defined
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
-            
             # @return [Array] Array of up to limit results
             def list(limit: nil, page_size: nil)
               self.stream(
@@ -52,7 +50,6 @@ module Twilio
             #  the default value of 50 records.                      If no page_size is defined
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
-            
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
@@ -92,7 +89,6 @@ module Twilio
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            
             # @return [Page] Page of CountryInstance
             def page(page_token: nil, page_number: nil, page_size: nil)
               params = {
@@ -121,7 +117,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            
             # @return [CountryPage] CountryPage
             def initialize(version, response, solution)
               super(version, response)
@@ -133,7 +128,6 @@ module Twilio
             ##
             # Build an instance of CountryInstance
             # @param [Hash] payload Payload response from the API
-            
             # @return [CountryInstance] CountryInstance
             def get_instance(payload)
               return CountryInstance.new(
@@ -154,7 +148,6 @@ module Twilio
             # Initialize the CountryContext
             # @param [Version] version Version that contains the resource
             # @param [String] iso_country The iso_country
-            
             # @return [CountryContext] CountryContext
             def initialize(version, iso_country)
               super(version)
@@ -199,7 +192,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] iso_country The iso_country
-            
             # @return [CountryInstance] CountryInstance
             def initialize(version, payload, iso_country: nil)
               super(version)
@@ -225,7 +217,6 @@ module Twilio
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
             # @param [Version] version Version that contains the resource
-            
             # @return [CountryContext] CountryContext for this CountryInstance
             def context
               unless @instance_context
