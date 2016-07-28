@@ -265,14 +265,14 @@ module Twilio
             # Fetch a CountryInstance
             # @return [CountryInstance] Fetched CountryInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Pricing.V1.CountryInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Pricing.V1.CountryInstance #{values}>"
             end
           end
         end

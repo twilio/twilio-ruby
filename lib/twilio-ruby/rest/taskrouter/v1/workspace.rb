@@ -505,7 +505,7 @@ module Twilio
           # Fetch a WorkspaceInstance
           # @return [WorkspaceInstance] Fetched WorkspaceInstance
           def fetch
-            @context.fetch()
+            context.fetch
           end
           
           ##
@@ -517,7 +517,8 @@ module Twilio
           
           # @return [WorkspaceInstance] Updated WorkspaceInstance
           def update(default_activity_sid: nil, event_callback_url: nil, friendly_name: nil, timeout_activity_sid: nil)
-            @context.update(
+            context.update(
+                default_activity_sid: default_activity_sid,
                 event_callback_url: event_callback_url,
                 friendly_name: friendly_name,
                 timeout_activity_sid: timeout_activity_sid,
@@ -528,63 +529,63 @@ module Twilio
           # Deletes the WorkspaceInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            @context.delete()
+            context.delete
           end
           
           ##
           # Access the activities
           # @return [activities] activities
           def activities
-            @context.activities
+            context.activities
           end
           
           ##
           # Access the events
           # @return [events] events
           def events
-            @context.events
+            context.events
           end
           
           ##
           # Access the tasks
           # @return [tasks] tasks
           def tasks
-            @context.tasks
+            context.tasks
           end
           
           ##
           # Access the task_queues
           # @return [task_queues] task_queues
           def task_queues
-            @context.task_queues
+            context.task_queues
           end
           
           ##
           # Access the workers
           # @return [workers] workers
           def workers
-            @context.workers
+            context.workers
           end
           
           ##
           # Access the workflows
           # @return [workflows] workflows
           def workflows
-            @context.workflows
+            context.workflows
           end
           
           ##
           # Access the statistics
           # @return [statistics] statistics
           def statistics
-            @context.statistics
+            context.statistics
           end
           
           ##
           # Provide a user friendly representation
           def to_s
-            context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Taskrouter.V1.WorkspaceInstance #{context}>"
+            values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Taskrouter.V1.WorkspaceInstance #{values}>"
           end
         end
       end

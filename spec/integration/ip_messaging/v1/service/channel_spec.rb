@@ -86,18 +86,14 @@ describe 'Channel' do
     
     expect {
       @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .channels.create(friendly_name: "friendly_name", unique_name: "unique_name")
+                             .channels.create()
     }.to raise_exception(Twilio::REST::TwilioException)
     
-    values = {
-        'FriendlyName' => "friendly_name",
-        'UniqueName' => "unique_name",
-    }
+    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels',
-        data: values,
     ))).to eq(true)
   end
 
@@ -126,7 +122,7 @@ describe 'Channel' do
     ))
     
     actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .channels.create(friendly_name: "friendly_name", unique_name: "unique_name")
+                                    .channels.create()
     
     expect(actual).to_not eq(nil)
   end

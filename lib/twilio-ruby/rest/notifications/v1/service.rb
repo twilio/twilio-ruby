@@ -427,14 +427,14 @@ module Twilio
           # Deletes the ServiceInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            @context.delete()
+            context.delete
           end
           
           ##
           # Fetch a ServiceInstance
           # @return [ServiceInstance] Fetched ServiceInstance
           def fetch
-            @context.fetch()
+            context.fetch
           end
           
           ##
@@ -451,7 +451,8 @@ module Twilio
           
           # @return [ServiceInstance] Updated ServiceInstance
           def update(friendly_name: nil, apn_credential_sid: nil, gcm_credential_sid: nil, messaging_service_sid: nil, facebook_messenger_page_id: nil, default_apn_notification_protocol_version: nil, default_gcm_notification_protocol_version: nil)
-            @context.update(
+            context.update(
+                friendly_name: friendly_name,
                 apn_credential_sid: apn_credential_sid,
                 gcm_credential_sid: gcm_credential_sid,
                 messaging_service_sid: messaging_service_sid,
@@ -465,21 +466,21 @@ module Twilio
           # Access the bindings
           # @return [bindings] bindings
           def bindings
-            @context.bindings
+            context.bindings
           end
           
           ##
           # Access the notifications
           # @return [notifications] notifications
           def notifications
-            @context.notifications
+            context.notifications
           end
           
           ##
           # Provide a user friendly representation
           def to_s
-            context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Notifications.V1.ServiceInstance #{context}>"
+            values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Notifications.V1.ServiceInstance #{values}>"
           end
         end
       end

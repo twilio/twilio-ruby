@@ -205,7 +205,8 @@ module Twilio
               
               # @return [TaskQueueStatisticsInstance] Fetched TaskQueueStatisticsInstance
               def fetch(end_date: nil, friendly_name: nil, minutes: nil, start_date: nil)
-                @context.fetch(
+                context.fetch(
+                    end_date: end_date,
                     friendly_name: friendly_name,
                     minutes: minutes,
                     start_date: start_date,
@@ -215,8 +216,8 @@ module Twilio
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Taskrouter.V1.TaskQueueStatisticsInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Taskrouter.V1.TaskQueueStatisticsInstance #{values}>"
               end
             end
           end

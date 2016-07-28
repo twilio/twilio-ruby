@@ -36,7 +36,7 @@ module Twilio
         ##
         # Provide a user friendly representation
         def to_s
-          #<Twilio::REST::IpMessaging::V1>
+          '<Twilio::REST::IpMessaging::V1>'
         end
       end
     end

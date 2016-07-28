@@ -324,35 +324,35 @@ module Twilio
             # Fetch a AvailablePhoneNumberCountryInstance
             # @return [AvailablePhoneNumberCountryInstance] Fetched AvailablePhoneNumberCountryInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
             # Access the local
             # @return [local] local
             def local
-              @context.local
+              context.local
             end
             
             ##
             # Access the toll_free
             # @return [toll_free] toll_free
             def toll_free
-              @context.toll_free
+              context.toll_free
             end
             
             ##
             # Access the mobile
             # @return [mobile] mobile
             def mobile
-              @context.mobile
+              context.mobile
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Api.V2010.AvailablePhoneNumberCountryInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Api.V2010.AvailablePhoneNumberCountryInstance #{values}>"
             end
           end
         end

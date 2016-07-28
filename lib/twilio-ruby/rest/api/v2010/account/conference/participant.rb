@@ -348,7 +348,7 @@ module Twilio
               # Fetch a ParticipantInstance
               # @return [ParticipantInstance] Fetched ParticipantInstance
               def fetch
-                @context.fetch()
+                context.fetch
               end
               
               ##
@@ -357,21 +357,23 @@ module Twilio
               
               # @return [ParticipantInstance] Updated ParticipantInstance
               def update(muted: nil)
-                @context.update()
+                context.update(
+                    muted: muted,
+                )
               end
               
               ##
               # Deletes the ParticipantInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                @context.delete()
+                context.delete
               end
               
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Api.V2010.ParticipantInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.ParticipantInstance #{values}>"
               end
             end
           end

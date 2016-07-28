@@ -446,7 +446,7 @@ module Twilio
               # Fetch a TriggerInstance
               # @return [TriggerInstance] Fetched TriggerInstance
               def fetch
-                @context.fetch()
+                context.fetch
               end
               
               ##
@@ -460,7 +460,8 @@ module Twilio
               
               # @return [TriggerInstance] Updated TriggerInstance
               def update(callback_method: nil, callback_url: nil, friendly_name: nil)
-                @context.update(
+                context.update(
+                    callback_method: callback_method,
                     callback_url: callback_url,
                     friendly_name: friendly_name,
                 )
@@ -470,14 +471,14 @@ module Twilio
               # Deletes the TriggerInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                @context.delete()
+                context.delete
               end
               
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Api.V2010.TriggerInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.TriggerInstance #{values}>"
               end
             end
           end

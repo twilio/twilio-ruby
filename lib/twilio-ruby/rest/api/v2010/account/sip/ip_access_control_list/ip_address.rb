@@ -359,7 +359,7 @@ module Twilio
                 # Fetch a IpAddressInstance
                 # @return [IpAddressInstance] Fetched IpAddressInstance
                 def fetch
-                  @context.fetch()
+                  context.fetch
                 end
                 
                 ##
@@ -369,7 +369,8 @@ module Twilio
                 
                 # @return [IpAddressInstance] Updated IpAddressInstance
                 def update(ip_address: nil, friendly_name: nil)
-                  @context.update(
+                  context.update(
+                      ip_address: ip_address,
                       friendly_name: friendly_name,
                   )
                 end
@@ -378,14 +379,14 @@ module Twilio
                 # Deletes the IpAddressInstance
                 # @return [Boolean] true if delete succeeds, true otherwise
                 def delete
-                  @context.delete()
+                  context.delete
                 end
                 
                 ##
                 # Provide a user friendly representation
                 def to_s
-                  context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                  "<Twilio.Api.V2010.IpAddressInstance #{context}>"
+                  values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                  "<Twilio.Api.V2010.IpAddressInstance #{values}>"
                 end
               end
             end

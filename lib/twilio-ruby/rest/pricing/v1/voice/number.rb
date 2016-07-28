@@ -184,14 +184,14 @@ module Twilio
             # Fetch a NumberInstance
             # @return [NumberInstance] Fetched NumberInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Pricing.V1.NumberInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Pricing.V1.NumberInstance #{values}>"
             end
           end
         end

@@ -191,18 +191,14 @@ describe 'IpAddress' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .sip \
                        .ip_access_control_lists("ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .ip_addresses("IPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(ip_address: "ip_address", friendly_name: "friendly_name")
+                       .ip_addresses("IPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
     }.to raise_exception(Twilio::REST::TwilioException)
     
-    values = {
-        'IpAddress' => "ip_address",
-        'FriendlyName' => "friendly_name",
-    }
+    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/IpAccessControlLists/ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAddresses/IPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
-        data: values,
     ))).to eq(true)
   end
 
@@ -226,7 +222,7 @@ describe 'IpAddress' do
     actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                               .sip \
                               .ip_access_control_lists("ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .ip_addresses("IPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(ip_address: "ip_address", friendly_name: "friendly_name")
+                              .ip_addresses("IPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
     
     expect(actual).to_not eq(nil)
   end

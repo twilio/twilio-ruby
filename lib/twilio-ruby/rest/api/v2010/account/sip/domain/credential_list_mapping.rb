@@ -323,21 +323,21 @@ module Twilio
                 # Fetch a CredentialListMappingInstance
                 # @return [CredentialListMappingInstance] Fetched CredentialListMappingInstance
                 def fetch
-                  @context.fetch()
+                  context.fetch
                 end
                 
                 ##
                 # Deletes the CredentialListMappingInstance
                 # @return [Boolean] true if delete succeeds, true otherwise
                 def delete
-                  @context.delete()
+                  context.delete
                 end
                 
                 ##
                 # Provide a user friendly representation
                 def to_s
-                  context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                  "<Twilio.Api.V2010.CredentialListMappingInstance #{context}>"
+                  values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                  "<Twilio.Api.V2010.CredentialListMappingInstance #{values}>"
                 end
               end
             end

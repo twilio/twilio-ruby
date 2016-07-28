@@ -385,7 +385,7 @@ module Twilio
               # Fetch a ReservationInstance
               # @return [ReservationInstance] Fetched ReservationInstance
               def fetch
-                @context.fetch()
+                context.fetch
               end
               
               ##
@@ -413,7 +413,8 @@ module Twilio
               
               # @return [ReservationInstance] Updated ReservationInstance
               def update(reservation_status: nil, worker_activity_sid: nil, instruction: nil, dequeue_post_work_activity_sid: nil, dequeue_from: nil, dequeue_record: nil, dequeue_timeout: nil, dequeue_to: nil, dequeue_status_callback_url: nil, call_from: nil, call_record: nil, call_timeout: nil, call_to: nil, call_url: nil, call_status_callback_url: nil, call_accept: nil, redirect_call_sid: nil, redirect_accept: nil, redirect_url: nil)
-                @context.update(
+                context.update(
+                    reservation_status: reservation_status,
                     worker_activity_sid: worker_activity_sid,
                     instruction: instruction,
                     dequeue_post_work_activity_sid: dequeue_post_work_activity_sid,
@@ -438,8 +439,8 @@ module Twilio
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Taskrouter.V1.ReservationInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Taskrouter.V1.ReservationInstance #{values}>"
               end
             end
           end

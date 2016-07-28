@@ -375,21 +375,21 @@ module Twilio
           # Fetch a AlertInstance
           # @return [AlertInstance] Fetched AlertInstance
           def fetch
-            @context.fetch()
+            context.fetch
           end
           
           ##
           # Deletes the AlertInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            @context.delete()
+            context.delete
           end
           
           ##
           # Provide a user friendly representation
           def to_s
-            context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Monitor.V1.AlertInstance #{context}>"
+            values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Monitor.V1.AlertInstance #{values}>"
           end
         end
       end

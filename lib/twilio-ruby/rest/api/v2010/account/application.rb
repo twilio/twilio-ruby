@@ -509,14 +509,14 @@ module Twilio
             # Deletes the ApplicationInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Fetch a ApplicationInstance
             # @return [ApplicationInstance] Fetched ApplicationInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
@@ -557,7 +557,8 @@ module Twilio
             
             # @return [ApplicationInstance] Updated ApplicationInstance
             def update(friendly_name: nil, api_version: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, status_callback: nil, status_callback_method: nil, voice_caller_id_lookup: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil, sms_status_callback: nil, message_status_callback: nil)
-              @context.update(
+              context.update(
+                  friendly_name: friendly_name,
                   api_version: api_version,
                   voice_url: voice_url,
                   voice_method: voice_method,
@@ -578,8 +579,8 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Api.V2010.ApplicationInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Api.V2010.ApplicationInstance #{values}>"
             end
           end
         end

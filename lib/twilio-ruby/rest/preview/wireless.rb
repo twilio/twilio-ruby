@@ -45,7 +45,7 @@ module Twilio
         ##
         # Provide a user friendly representation
         def to_s
-          #<Twilio::REST::Preview::Wireless>
+          '<Twilio::REST::Preview::Wireless>'
         end
       end
     end

@@ -445,7 +445,7 @@ module Twilio
             # Fetch a WorkerInstance
             # @return [WorkerInstance] Fetched WorkerInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
@@ -456,7 +456,8 @@ module Twilio
             
             # @return [WorkerInstance] Updated WorkerInstance
             def update(activity_sid: nil, attributes: nil, friendly_name: nil)
-              @context.update(
+              context.update(
+                  activity_sid: activity_sid,
                   attributes: attributes,
                   friendly_name: friendly_name,
               )
@@ -466,21 +467,21 @@ module Twilio
             # Deletes the WorkerInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Access the statistics
             # @return [statistics] statistics
             def statistics
-              @context.statistics
+              context.statistics
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Taskrouter.V1.WorkerInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Taskrouter.V1.WorkerInstance #{values}>"
             end
           end
         end

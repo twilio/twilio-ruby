@@ -229,7 +229,7 @@ module Twilio
           # @param [Boolean] read_status_enabled The read_status_enabled
           # @param [String] typing_indicator_timeout The typing_indicator_timeout
           # @param [String] consumption_report_interval The consumption_report_interval
-          # @param [String] webhooks The webhooks
+          # @param [Hash] webhooks The webhooks
           
           # @return [ServiceInstance] Updated ServiceInstance
           def update(friendly_name: nil, default_service_role_sid: nil, default_channel_role_sid: nil, default_channel_creator_role_sid: nil, read_status_enabled: nil, typing_indicator_timeout: nil, consumption_report_interval: nil, webhooks: nil)
@@ -443,14 +443,14 @@ module Twilio
           # Fetch a ServiceInstance
           # @return [ServiceInstance] Fetched ServiceInstance
           def fetch
-            @context.fetch()
+            context.fetch
           end
           
           ##
           # Deletes the ServiceInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            @context.delete()
+            context.delete
           end
           
           ##
@@ -463,11 +463,12 @@ module Twilio
           # @param [Boolean] read_status_enabled The read_status_enabled
           # @param [String] typing_indicator_timeout The typing_indicator_timeout
           # @param [String] consumption_report_interval The consumption_report_interval
-          # @param [String] webhooks The webhooks
+          # @param [Hash] webhooks The webhooks
           
           # @return [ServiceInstance] Updated ServiceInstance
           def update(friendly_name: nil, default_service_role_sid: nil, default_channel_role_sid: nil, default_channel_creator_role_sid: nil, read_status_enabled: nil, typing_indicator_timeout: nil, consumption_report_interval: nil, webhooks: nil)
-            @context.update(
+            context.update(
+                friendly_name: friendly_name,
                 default_service_role_sid: default_service_role_sid,
                 default_channel_role_sid: default_channel_role_sid,
                 default_channel_creator_role_sid: default_channel_creator_role_sid,
@@ -482,28 +483,28 @@ module Twilio
           # Access the channels
           # @return [channels] channels
           def channels
-            @context.channels
+            context.channels
           end
           
           ##
           # Access the roles
           # @return [roles] roles
           def roles
-            @context.roles
+            context.roles
           end
           
           ##
           # Access the users
           # @return [users] users
           def users
-            @context.users
+            context.users
           end
           
           ##
           # Provide a user friendly representation
           def to_s
-            context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.IpMessaging.V1.ServiceInstance #{context}>"
+            values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.IpMessaging.V1.ServiceInstance #{values}>"
           end
         end
       end

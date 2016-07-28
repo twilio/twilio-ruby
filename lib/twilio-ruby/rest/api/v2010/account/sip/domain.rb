@@ -470,7 +470,7 @@ module Twilio
               # Fetch a DomainInstance
               # @return [DomainInstance] Fetched DomainInstance
               def fetch
-                @context.fetch()
+                context.fetch
               end
               
               ##
@@ -487,7 +487,8 @@ module Twilio
               
               # @return [DomainInstance] Updated DomainInstance
               def update(auth_type: nil, friendly_name: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_status_callback_method: nil, voice_status_callback_url: nil, voice_url: nil)
-                @context.update(
+                context.update(
+                    auth_type: auth_type,
                     friendly_name: friendly_name,
                     voice_fallback_method: voice_fallback_method,
                     voice_fallback_url: voice_fallback_url,
@@ -502,28 +503,28 @@ module Twilio
               # Deletes the DomainInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                @context.delete()
+                context.delete
               end
               
               ##
               # Access the ip_access_control_list_mappings
               # @return [ip_access_control_list_mappings] ip_access_control_list_mappings
               def ip_access_control_list_mappings
-                @context.ip_access_control_list_mappings
+                context.ip_access_control_list_mappings
               end
               
               ##
               # Access the credential_list_mappings
               # @return [credential_list_mappings] credential_list_mappings
               def credential_list_mappings
-                @context.credential_list_mappings
+                context.credential_list_mappings
               end
               
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Api.V2010.DomainInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.DomainInstance #{values}>"
               end
             end
           end

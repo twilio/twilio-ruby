@@ -420,14 +420,14 @@ module Twilio
               # Deletes the SmsMessageInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                @context.delete()
+                context.delete
               end
               
               ##
               # Fetch a SmsMessageInstance
               # @return [SmsMessageInstance] Fetched SmsMessageInstance
               def fetch
-                @context.fetch()
+                context.fetch
               end
               
               ##
@@ -436,14 +436,16 @@ module Twilio
               
               # @return [SmsMessageInstance] Updated SmsMessageInstance
               def update(body: nil)
-                @context.update()
+                context.update(
+                    body: body,
+                )
               end
               
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Api.V2010.SmsMessageInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.SmsMessageInstance #{values}>"
               end
             end
           end

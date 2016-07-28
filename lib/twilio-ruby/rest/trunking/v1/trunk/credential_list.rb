@@ -312,21 +312,21 @@ module Twilio
             # Fetch a CredentialListInstance
             # @return [CredentialListInstance] Fetched CredentialListInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
             # Deletes the CredentialListInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Trunking.V1.CredentialListInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Trunking.V1.CredentialListInstance #{values}>"
             end
           end
         end

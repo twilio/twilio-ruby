@@ -274,21 +274,21 @@ module Twilio
               # Fetch a FeedbackSummaryInstance
               # @return [FeedbackSummaryInstance] Fetched FeedbackSummaryInstance
               def fetch
-                @context.fetch()
+                context.fetch
               end
               
               ##
               # Deletes the FeedbackSummaryInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                @context.delete()
+                context.delete
               end
               
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Api.V2010.FeedbackSummaryInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.FeedbackSummaryInstance #{values}>"
               end
             end
           end

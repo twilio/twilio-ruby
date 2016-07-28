@@ -45,7 +45,7 @@ module Twilio
         ##
         # Provide a user friendly representation
         def to_s
-          #<Twilio::REST::Pricing::V1>
+          '<Twilio::REST::Pricing::V1>'
         end
       end
     end

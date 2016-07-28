@@ -136,7 +136,7 @@ module Twilio
         ##
         # Provide a user friendly representation
         def to_s
-          #<Twilio::REST::Api::V2010>
+          '<Twilio::REST::Api::V2010>'
         end
       end
     end

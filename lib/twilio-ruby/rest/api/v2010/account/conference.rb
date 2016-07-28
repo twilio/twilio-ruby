@@ -380,21 +380,21 @@ module Twilio
             # Fetch a ConferenceInstance
             # @return [ConferenceInstance] Fetched ConferenceInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
             # Access the participants
             # @return [participants] participants
             def participants
-              @context.participants
+              context.participants
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Api.V2010.ConferenceInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Api.V2010.ConferenceInstance #{values}>"
             end
           end
         end

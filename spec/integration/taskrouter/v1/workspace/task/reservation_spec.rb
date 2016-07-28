@@ -148,17 +148,14 @@ describe 'Reservation' do
     expect {
       @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .tasks("WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .reservations("WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(reservation_status: "reservation_status")
+                           .reservations("WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
     }.to raise_exception(Twilio::REST::TwilioException)
     
-    values = {
-        'ReservationStatus' => "reservation_status",
-    }
+    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://taskrouter.twilio.com/v1/Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Reservations/WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-        data: values,
     ))).to eq(true)
   end
 
@@ -188,7 +185,7 @@ describe 'Reservation' do
     
     actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                                   .tasks("WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .reservations("WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(reservation_status: "reservation_status")
+                                  .reservations("WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
     
     expect(actual).to_not eq(nil)
   end

@@ -31,7 +31,7 @@ module Twilio
             # Request is executed immediately.
             # @param [String] friendly_name The friendly_name
             # @param [String] unique_name The unique_name
-            # @param [String] attributes The attributes
+            # @param [Hash] attributes The attributes
             # @param [channel.ChannelType] type The type
             
             # @return [ChannelInstance] Newly created ChannelInstance
@@ -238,7 +238,7 @@ module Twilio
             # Update the ChannelInstance
             # @param [String] friendly_name The friendly_name
             # @param [String] unique_name The unique_name
-            # @param [String] attributes The attributes
+            # @param [Hash] attributes The attributes
             # @param [channel.ChannelType] type The type
             
             # @return [ChannelInstance] Updated ChannelInstance
@@ -425,26 +425,27 @@ module Twilio
             # Fetch a ChannelInstance
             # @return [ChannelInstance] Fetched ChannelInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
             # Deletes the ChannelInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Update the ChannelInstance
             # @param [String] friendly_name The friendly_name
             # @param [String] unique_name The unique_name
-            # @param [String] attributes The attributes
+            # @param [Hash] attributes The attributes
             # @param [channel.ChannelType] type The type
             
             # @return [ChannelInstance] Updated ChannelInstance
             def update(friendly_name: nil, unique_name: nil, attributes: nil, type: nil)
-              @context.update(
+              context.update(
+                  friendly_name: friendly_name,
                   unique_name: unique_name,
                   attributes: attributes,
                   type: type,
@@ -455,21 +456,21 @@ module Twilio
             # Access the members
             # @return [members] members
             def members
-              @context.members
+              context.members
             end
             
             ##
             # Access the messages
             # @return [messages] messages
             def messages
-              @context.messages
+              context.messages
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.IpMessaging.V1.ChannelInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.IpMessaging.V1.ChannelInstance #{values}>"
             end
           end
         end

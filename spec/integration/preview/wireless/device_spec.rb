@@ -11,14 +11,14 @@ describe 'Device' do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
     expect {
-      @client.preview.wireless.devices("sid").fetch()
+      @client.preview.wireless.devices("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
     }.to raise_exception(Twilio::REST::TwilioException)
     
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/wireless/Devices/sid',
+        url: 'https://preview.twilio.com/wireless/Devices/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     ))).to eq(true)
   end
 
@@ -59,14 +59,14 @@ describe 'Device' do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
     expect {
-      @client.preview.wireless.devices("sid").update()
+      @client.preview.wireless.devices("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
     }.to raise_exception(Twilio::REST::TwilioException)
     
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/wireless/Devices/sid',
+        url: 'https://preview.twilio.com/wireless/Devices/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     ))).to eq(true)
   end
 end

@@ -336,21 +336,21 @@ module Twilio
               # Fetch a MemberInstance
               # @return [MemberInstance] Fetched MemberInstance
               def fetch
-                @context.fetch()
+                context.fetch
               end
               
               ##
               # Deletes the MemberInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                @context.delete()
+                context.delete
               end
               
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.IpMessaging.V1.MemberInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.IpMessaging.V1.MemberInstance #{values}>"
               end
             end
           end

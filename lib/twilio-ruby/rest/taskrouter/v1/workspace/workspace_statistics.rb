@@ -198,7 +198,8 @@ module Twilio
             
             # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
             def fetch(minutes: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil)
-              @context.fetch(
+              context.fetch(
+                  minutes: minutes,
                   start_date_before: start_date_before,
                   start_date: start_date,
                   start_date_after: start_date_after,
@@ -211,8 +212,8 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Taskrouter.V1.WorkspaceStatisticsInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Taskrouter.V1.WorkspaceStatisticsInstance #{values}>"
             end
           end
         end

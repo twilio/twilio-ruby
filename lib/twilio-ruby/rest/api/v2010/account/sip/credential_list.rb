@@ -367,7 +367,7 @@ module Twilio
               # Fetch a CredentialListInstance
               # @return [CredentialListInstance] Fetched CredentialListInstance
               def fetch
-                @context.fetch()
+                context.fetch
               end
               
               ##
@@ -376,28 +376,30 @@ module Twilio
               
               # @return [CredentialListInstance] Updated CredentialListInstance
               def update(friendly_name: nil)
-                @context.update()
+                context.update(
+                    friendly_name: friendly_name,
+                )
               end
               
               ##
               # Deletes the CredentialListInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                @context.delete()
+                context.delete
               end
               
               ##
               # Access the credentials
               # @return [credentials] credentials
               def credentials
-                @context.credentials
+                context.credentials
               end
               
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Api.V2010.CredentialListInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.CredentialListInstance #{values}>"
               end
             end
           end

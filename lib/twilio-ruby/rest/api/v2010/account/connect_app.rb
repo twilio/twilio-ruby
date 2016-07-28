@@ -349,7 +349,7 @@ module Twilio
             # Fetch a ConnectAppInstance
             # @return [ConnectAppInstance] Fetched ConnectAppInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
@@ -372,7 +372,8 @@ module Twilio
             
             # @return [ConnectAppInstance] Updated ConnectAppInstance
             def update(authorize_redirect_url: nil, company_name: nil, deauthorize_callback_method: nil, deauthorize_callback_url: nil, description: nil, friendly_name: nil, homepage_url: nil, permissions: nil)
-              @context.update(
+              context.update(
+                  authorize_redirect_url: authorize_redirect_url,
                   company_name: company_name,
                   deauthorize_callback_method: deauthorize_callback_method,
                   deauthorize_callback_url: deauthorize_callback_url,
@@ -386,8 +387,8 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Api.V2010.ConnectAppInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Api.V2010.ConnectAppInstance #{values}>"
             end
           end
         end

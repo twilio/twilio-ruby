@@ -352,14 +352,14 @@ module Twilio
             # Fetch a RoleInstance
             # @return [RoleInstance] Fetched RoleInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
             # Deletes the RoleInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
@@ -369,7 +369,8 @@ module Twilio
             
             # @return [RoleInstance] Updated RoleInstance
             def update(friendly_name: nil, permission: nil)
-              @context.update(
+              context.update(
+                  friendly_name: friendly_name,
                   permission: permission,
               )
             end
@@ -377,8 +378,8 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.IpMessaging.V1.RoleInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.IpMessaging.V1.RoleInstance #{values}>"
             end
           end
         end

@@ -27,7 +27,7 @@ module Twilio
         ##
         # Provide a user friendly representation
         def to_s
-          #<Twilio::REST::Trunking::V1>
+          '<Twilio::REST::Trunking::V1>'
         end
       end
     end

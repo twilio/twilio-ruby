@@ -373,7 +373,7 @@ module Twilio
               # Fetch a ShortCodeInstance
               # @return [ShortCodeInstance] Fetched ShortCodeInstance
               def fetch
-                @context.fetch()
+                context.fetch
               end
               
               ##
@@ -394,7 +394,8 @@ module Twilio
               
               # @return [ShortCodeInstance] Updated ShortCodeInstance
               def update(friendly_name: nil, api_version: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil)
-                @context.update(
+                context.update(
+                    friendly_name: friendly_name,
                     api_version: api_version,
                     sms_url: sms_url,
                     sms_method: sms_method,
@@ -406,8 +407,8 @@ module Twilio
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Api.V2010.ShortCodeInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.ShortCodeInstance #{values}>"
               end
             end
           end

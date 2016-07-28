@@ -85,11 +85,10 @@ describe 'Credential' do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
     expect {
-      @client.ip_messaging.v1.credentials.create(friendly_name: "friendly_name", type: "gcm")
+      @client.ip_messaging.v1.credentials.create(type: "gcm")
     }.to raise_exception(Twilio::REST::TwilioException)
     
     values = {
-        'FriendlyName' => "friendly_name",
         'Type' => "gcm",
     }
     expect(
@@ -117,7 +116,7 @@ describe 'Credential' do
       ]
     ))
     
-    actual = @client.ip_messaging.v1.credentials.create(friendly_name: "friendly_name", type: "gcm")
+    actual = @client.ip_messaging.v1.credentials.create(type: "gcm")
     
     expect(actual).to_not eq(nil)
   end
@@ -163,18 +162,14 @@ describe 'Credential' do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
     
     expect {
-      @client.ip_messaging.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(friendly_name: "friendly_name", type: "gcm")
+      @client.ip_messaging.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
     }.to raise_exception(Twilio::REST::TwilioException)
     
-    values = {
-        'FriendlyName' => "friendly_name",
-        'Type' => "gcm",
-    }
+    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://ip-messaging.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-        data: values,
     ))).to eq(true)
   end
 
@@ -195,7 +190,7 @@ describe 'Credential' do
       ]
     ))
     
-    actual = @client.ip_messaging.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(friendly_name: "friendly_name", type: "gcm")
+    actual = @client.ip_messaging.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
     
     expect(actual).to_not eq(nil)
   end

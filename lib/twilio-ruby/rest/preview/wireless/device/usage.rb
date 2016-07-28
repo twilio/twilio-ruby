@@ -208,7 +208,8 @@ module Twilio
             
             # @return [UsageInstance] Fetched UsageInstance
             def fetch(end_: nil, start: nil)
-              @context.fetch(
+              context.fetch(
+                  end_: end_,
                   start: start,
               )
             end
@@ -216,8 +217,8 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Preview.Wireless.UsageInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Preview.Wireless.UsageInstance #{values}>"
             end
           end
         end

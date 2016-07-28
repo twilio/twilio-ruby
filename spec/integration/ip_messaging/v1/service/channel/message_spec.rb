@@ -60,4 +60,41 @@ describe 'Message' do
         url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages',
     ))).to eq(true)
   end
+
+  it "can delete" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                             .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                             .messages("IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {}
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'delete',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    ))).to eq(true)
+  end
+
+  it "can update" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    
+    expect {
+      @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                             .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                             .messages("IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(body: "body")
+    }.to raise_exception(Twilio::REST::TwilioException)
+    
+    values = {
+        'Body' => "body",
+    }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        data: values,
+    ))).to eq(true)
+  end
 end

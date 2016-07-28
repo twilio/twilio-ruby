@@ -422,14 +422,14 @@ module Twilio
             # Deletes the AddressInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Fetch a AddressInstance
             # @return [AddressInstance] Fetched AddressInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
@@ -443,7 +443,8 @@ module Twilio
             
             # @return [AddressInstance] Updated AddressInstance
             def update(friendly_name: nil, customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil)
-              @context.update(
+              context.update(
+                  friendly_name: friendly_name,
                   customer_name: customer_name,
                   street: street,
                   city: city,
@@ -456,14 +457,14 @@ module Twilio
             # Access the dependent_phone_numbers
             # @return [dependent_phone_numbers] dependent_phone_numbers
             def dependent_phone_numbers
-              @context.dependent_phone_numbers
+              context.dependent_phone_numbers
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Api.V2010.AddressInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Api.V2010.AddressInstance #{values}>"
             end
           end
         end

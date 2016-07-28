@@ -339,7 +339,7 @@ module Twilio
             # Fetch a OutgoingCallerIdInstance
             # @return [OutgoingCallerIdInstance] Fetched OutgoingCallerIdInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
@@ -348,21 +348,23 @@ module Twilio
             
             # @return [OutgoingCallerIdInstance] Updated OutgoingCallerIdInstance
             def update(friendly_name: nil)
-              @context.update()
+              context.update(
+                  friendly_name: friendly_name,
+              )
             end
             
             ##
             # Deletes the OutgoingCallerIdInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Api.V2010.OutgoingCallerIdInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Api.V2010.OutgoingCallerIdInstance #{values}>"
             end
           end
         end

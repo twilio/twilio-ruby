@@ -309,14 +309,14 @@ module Twilio
           # Fetch a RatePlanInstance
           # @return [RatePlanInstance] Fetched RatePlanInstance
           def fetch
-            @context.fetch()
+            context.fetch
           end
           
           ##
           # Provide a user friendly representation
           def to_s
-            context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Preview.Wireless.RatePlanInstance #{context}>"
+            values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Preview.Wireless.RatePlanInstance #{values}>"
           end
         end
       end

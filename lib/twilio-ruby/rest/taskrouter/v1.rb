@@ -27,7 +27,7 @@ module Twilio
         ##
         # Provide a user friendly representation
         def to_s
-          #<Twilio::REST::Taskrouter::V1>
+          '<Twilio::REST::Taskrouter::V1>'
         end
       end
     end

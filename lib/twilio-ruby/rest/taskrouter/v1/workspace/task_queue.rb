@@ -423,7 +423,7 @@ module Twilio
             # Fetch a TaskQueueInstance
             # @return [TaskQueueInstance] Fetched TaskQueueInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
@@ -436,7 +436,8 @@ module Twilio
             
             # @return [TaskQueueInstance] Updated TaskQueueInstance
             def update(friendly_name: nil, target_workers: nil, reservation_activity_sid: nil, assignment_activity_sid: nil, max_reserved_workers: nil)
-              @context.update(
+              context.update(
+                  friendly_name: friendly_name,
                   target_workers: target_workers,
                   reservation_activity_sid: reservation_activity_sid,
                   assignment_activity_sid: assignment_activity_sid,
@@ -448,21 +449,21 @@ module Twilio
             # Deletes the TaskQueueInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Access the statistics
             # @return [statistics] statistics
             def statistics
-              @context.statistics
+              context.statistics
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Taskrouter.V1.TaskQueueInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Taskrouter.V1.TaskQueueInstance #{values}>"
             end
           end
         end

@@ -364,14 +364,14 @@ module Twilio
           # Fetch a EventInstance
           # @return [EventInstance] Fetched EventInstance
           def fetch
-            @context.fetch()
+            context.fetch
           end
           
           ##
           # Provide a user friendly representation
           def to_s
-            context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Monitor.V1.EventInstance #{context}>"
+            values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Monitor.V1.EventInstance #{values}>"
           end
         end
       end

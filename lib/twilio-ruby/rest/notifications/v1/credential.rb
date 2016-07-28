@@ -110,18 +110,18 @@ module Twilio
           ##
           # Retrieve a single page of CredentialInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name The friendly_name
           # @param [credential.PushService] type The type
+          # @param [String] friendly_name The friendly_name
           # @param [String] certificate The certificate
           # @param [String] private_key The private_key
           # @param [Boolean] sandbox The sandbox
           # @param [String] api_key The api_key
           
           # @return [CredentialInstance] Newly created CredentialInstance
-          def create(friendly_name: nil, type: nil, certificate: nil, private_key: nil, sandbox: nil, api_key: nil)
+          def create(type: nil, friendly_name: nil, certificate: nil, private_key: nil, sandbox: nil, api_key: nil)
             data = {
-                'FriendlyName' => friendly_name,
                 'Type' => type,
+                'FriendlyName' => friendly_name,
                 'Certificate' => certificate,
                 'PrivateKey' => private_key,
                 'Sandbox' => sandbox,
@@ -220,17 +220,15 @@ module Twilio
           ##
           # Update the CredentialInstance
           # @param [String] friendly_name The friendly_name
-          # @param [credential.PushService] type The type
           # @param [String] certificate The certificate
           # @param [String] private_key The private_key
           # @param [Boolean] sandbox The sandbox
           # @param [String] api_key The api_key
           
           # @return [CredentialInstance] Updated CredentialInstance
-          def update(friendly_name: nil, type: nil, certificate: nil, private_key: nil, sandbox: nil, api_key: nil)
+          def update(friendly_name: nil, certificate: nil, private_key: nil, sandbox: nil, api_key: nil)
             data = {
                 'FriendlyName' => friendly_name,
-                'Type' => type,
                 'Certificate' => certificate,
                 'PrivateKey' => private_key,
                 'Sandbox' => sandbox,
@@ -347,22 +345,21 @@ module Twilio
           # Fetch a CredentialInstance
           # @return [CredentialInstance] Fetched CredentialInstance
           def fetch
-            @context.fetch()
+            context.fetch
           end
           
           ##
           # Update the CredentialInstance
           # @param [String] friendly_name The friendly_name
-          # @param [credential.PushService] type The type
           # @param [String] certificate The certificate
           # @param [String] private_key The private_key
           # @param [Boolean] sandbox The sandbox
           # @param [String] api_key The api_key
           
           # @return [CredentialInstance] Updated CredentialInstance
-          def update(friendly_name: nil, type: nil, certificate: nil, private_key: nil, sandbox: nil, api_key: nil)
-            @context.update(
-                type: type,
+          def update(friendly_name: nil, certificate: nil, private_key: nil, sandbox: nil, api_key: nil)
+            context.update(
+                friendly_name: friendly_name,
                 certificate: certificate,
                 private_key: private_key,
                 sandbox: sandbox,
@@ -374,14 +371,14 @@ module Twilio
           # Deletes the CredentialInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            @context.delete()
+            context.delete
           end
           
           ##
           # Provide a user friendly representation
           def to_s
-            context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Notifications.V1.CredentialInstance #{context}>"
+            values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Notifications.V1.CredentialInstance #{values}>"
           end
         end
       end

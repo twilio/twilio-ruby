@@ -257,7 +257,7 @@ module Twilio
             # Fetch a SandboxInstance
             # @return [SandboxInstance] Fetched SandboxInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
@@ -271,7 +271,8 @@ module Twilio
             
             # @return [SandboxInstance] Updated SandboxInstance
             def update(voice_url: nil, voice_method: nil, sms_url: nil, sms_method: nil, status_callback: nil, status_callback_method: nil)
-              @context.update(
+              context.update(
+                  voice_url: voice_url,
                   voice_method: voice_method,
                   sms_url: sms_url,
                   sms_method: sms_method,
@@ -283,8 +284,8 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Api.V2010.SandboxInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Api.V2010.SandboxInstance #{values}>"
             end
           end
         end

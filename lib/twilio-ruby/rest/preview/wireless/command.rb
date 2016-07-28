@@ -329,14 +329,14 @@ module Twilio
           # Fetch a CommandInstance
           # @return [CommandInstance] Fetched CommandInstance
           def fetch
-            @context.fetch()
+            context.fetch
           end
           
           ##
           # Provide a user friendly representation
           def to_s
-            context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Preview.Wireless.CommandInstance #{context}>"
+            values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Preview.Wireless.CommandInstance #{values}>"
           end
         end
       end

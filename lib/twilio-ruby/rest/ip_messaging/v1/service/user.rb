@@ -229,11 +229,15 @@ module Twilio
             ##
             # Update the UserInstance
             # @param [String] role_sid The role_sid
+            # @param [Hash] attributes The attributes
+            # @param [String] friendly_name The friendly_name
             
             # @return [UserInstance] Updated UserInstance
-            def update(role_sid: nil)
+            def update(role_sid: nil, attributes: nil, friendly_name: nil)
               data = {
                   'RoleSid' => role_sid,
+                  'Attributes' => attributes,
+                  'FriendlyName' => friendly_name,
               }
               
               payload = @version.update(
@@ -343,30 +347,36 @@ module Twilio
             # Fetch a UserInstance
             # @return [UserInstance] Fetched UserInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
             # Deletes the UserInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Update the UserInstance
             # @param [String] role_sid The role_sid
+            # @param [Hash] attributes The attributes
+            # @param [String] friendly_name The friendly_name
             
             # @return [UserInstance] Updated UserInstance
-            def update(role_sid: nil)
-              @context.update()
+            def update(role_sid: nil, attributes: nil, friendly_name: nil)
+              context.update(
+                  role_sid: role_sid,
+                  attributes: attributes,
+                  friendly_name: friendly_name,
+              )
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.IpMessaging.V1.UserInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.IpMessaging.V1.UserInstance #{values}>"
             end
           end
         end

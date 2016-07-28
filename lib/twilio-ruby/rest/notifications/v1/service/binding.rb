@@ -403,21 +403,21 @@ module Twilio
             # Fetch a BindingInstance
             # @return [BindingInstance] Fetched BindingInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
             # Deletes the BindingInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Notifications.V1.BindingInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Notifications.V1.BindingInstance #{values}>"
             end
           end
         end

@@ -205,17 +205,14 @@ describe 'User' do
     
     expect {
       @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(role_sid: "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                             .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
     }.to raise_exception(Twilio::REST::TwilioException)
     
-    values = {
-        'RoleSid' => "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    }
+    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-        data: values,
     ))).to eq(true)
   end
 
@@ -239,7 +236,7 @@ describe 'User' do
     ))
     
     actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(role_sid: "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                                    .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
     
     expect(actual).to_not eq(nil)
   end

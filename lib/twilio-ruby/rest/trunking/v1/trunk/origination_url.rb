@@ -372,14 +372,14 @@ module Twilio
             # Fetch a OriginationUrlInstance
             # @return [OriginationUrlInstance] Fetched OriginationUrlInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
             # Deletes the OriginationUrlInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
@@ -392,7 +392,8 @@ module Twilio
             
             # @return [OriginationUrlInstance] Updated OriginationUrlInstance
             def update(weight: nil, priority: nil, enabled: nil, friendly_name: nil, sip_url: nil)
-              @context.update(
+              context.update(
+                  weight: weight,
                   priority: priority,
                   enabled: enabled,
                   friendly_name: friendly_name,
@@ -403,8 +404,8 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Trunking.V1.OriginationUrlInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Trunking.V1.OriginationUrlInstance #{values}>"
             end
           end
         end

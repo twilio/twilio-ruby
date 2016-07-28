@@ -471,14 +471,14 @@ module Twilio
           # Fetch a TrunkInstance
           # @return [TrunkInstance] Fetched TrunkInstance
           def fetch
-            @context.fetch()
+            context.fetch
           end
           
           ##
           # Deletes the TrunkInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            @context.delete()
+            context.delete
           end
           
           ##
@@ -492,7 +492,8 @@ module Twilio
           
           # @return [TrunkInstance] Updated TrunkInstance
           def update(friendly_name: nil, domain_name: nil, disaster_recovery_url: nil, disaster_recovery_method: nil, recording: nil, secure: nil)
-            @context.update(
+            context.update(
+                friendly_name: friendly_name,
                 domain_name: domain_name,
                 disaster_recovery_url: disaster_recovery_url,
                 disaster_recovery_method: disaster_recovery_method,
@@ -505,35 +506,35 @@ module Twilio
           # Access the origination_urls
           # @return [origination_urls] origination_urls
           def origination_urls
-            @context.origination_urls
+            context.origination_urls
           end
           
           ##
           # Access the credentials_lists
           # @return [credentials_lists] credentials_lists
           def credentials_lists
-            @context.credentials_lists
+            context.credentials_lists
           end
           
           ##
           # Access the ip_access_control_lists
           # @return [ip_access_control_lists] ip_access_control_lists
           def ip_access_control_lists
-            @context.ip_access_control_lists
+            context.ip_access_control_lists
           end
           
           ##
           # Access the phone_numbers
           # @return [phone_numbers] phone_numbers
           def phone_numbers
-            @context.phone_numbers
+            context.phone_numbers
           end
           
           ##
           # Provide a user friendly representation
           def to_s
-            context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Trunking.V1.TrunkInstance #{context}>"
+            values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Trunking.V1.TrunkInstance #{values}>"
           end
         end
       end

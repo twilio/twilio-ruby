@@ -323,21 +323,21 @@ module Twilio
                 # Fetch a IpAccessControlListMappingInstance
                 # @return [IpAccessControlListMappingInstance] Fetched IpAccessControlListMappingInstance
                 def fetch
-                  @context.fetch()
+                  context.fetch
                 end
                 
                 ##
                 # Deletes the IpAccessControlListMappingInstance
                 # @return [Boolean] true if delete succeeds, true otherwise
                 def delete
-                  @context.delete()
+                  context.delete
                 end
                 
                 ##
                 # Provide a user friendly representation
                 def to_s
-                  context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                  "<Twilio.Api.V2010.IpAccessControlListMappingInstance #{context}>"
+                  values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                  "<Twilio.Api.V2010.IpAccessControlListMappingInstance #{values}>"
                 end
               end
             end

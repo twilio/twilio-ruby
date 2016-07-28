@@ -841,7 +841,7 @@ module Twilio
           # Fetch a AccountInstance
           # @return [AccountInstance] Fetched AccountInstance
           def fetch
-            @context.fetch()
+            context.fetch
           end
           
           ##
@@ -853,7 +853,8 @@ module Twilio
           
           # @return [AccountInstance] Updated AccountInstance
           def update(friendly_name: nil, status: nil)
-            @context.update(
+            context.update(
+                friendly_name: friendly_name,
                 status: status,
             )
           end
@@ -862,175 +863,175 @@ module Twilio
           # Access the addresses
           # @return [addresses] addresses
           def addresses
-            @context.addresses
+            context.addresses
           end
           
           ##
           # Access the applications
           # @return [applications] applications
           def applications
-            @context.applications
+            context.applications
           end
           
           ##
           # Access the authorized_connect_apps
           # @return [authorized_connect_apps] authorized_connect_apps
           def authorized_connect_apps
-            @context.authorized_connect_apps
+            context.authorized_connect_apps
           end
           
           ##
           # Access the available_phone_numbers
           # @return [available_phone_numbers] available_phone_numbers
           def available_phone_numbers
-            @context.available_phone_numbers
+            context.available_phone_numbers
           end
           
           ##
           # Access the calls
           # @return [calls] calls
           def calls
-            @context.calls
+            context.calls
           end
           
           ##
           # Access the conferences
           # @return [conferences] conferences
           def conferences
-            @context.conferences
+            context.conferences
           end
           
           ##
           # Access the connect_apps
           # @return [connect_apps] connect_apps
           def connect_apps
-            @context.connect_apps
+            context.connect_apps
           end
           
           ##
           # Access the incoming_phone_numbers
           # @return [incoming_phone_numbers] incoming_phone_numbers
           def incoming_phone_numbers
-            @context.incoming_phone_numbers
+            context.incoming_phone_numbers
           end
           
           ##
           # Access the keys
           # @return [keys] keys
           def keys
-            @context.keys
+            context.keys
           end
           
           ##
           # Access the messages
           # @return [messages] messages
           def messages
-            @context.messages
+            context.messages
           end
           
           ##
           # Access the new_keys
           # @return [new_keys] new_keys
           def new_keys
-            @context.new_keys
+            context.new_keys
           end
           
           ##
           # Access the new_signing_keys
           # @return [new_signing_keys] new_signing_keys
           def new_signing_keys
-            @context.new_signing_keys
+            context.new_signing_keys
           end
           
           ##
           # Access the notifications
           # @return [notifications] notifications
           def notifications
-            @context.notifications
+            context.notifications
           end
           
           ##
           # Access the outgoing_caller_ids
           # @return [outgoing_caller_ids] outgoing_caller_ids
           def outgoing_caller_ids
-            @context.outgoing_caller_ids
+            context.outgoing_caller_ids
           end
           
           ##
           # Access the queues
           # @return [queues] queues
           def queues
-            @context.queues
+            context.queues
           end
           
           ##
           # Access the recordings
           # @return [recordings] recordings
           def recordings
-            @context.recordings
+            context.recordings
           end
           
           ##
           # Access the sandbox
           # @return [sandbox] sandbox
           def sandbox
-            @context.sandbox
+            context.sandbox
           end
           
           ##
           # Access the signing_keys
           # @return [signing_keys] signing_keys
           def signing_keys
-            @context.signing_keys
+            context.signing_keys
           end
           
           ##
           # Access the sip
           # @return [sip] sip
           def sip
-            @context.sip
+            context.sip
           end
           
           ##
           # Access the sms
           # @return [sms] sms
           def sms
-            @context.sms
+            context.sms
           end
           
           ##
           # Access the tokens
           # @return [tokens] tokens
           def tokens
-            @context.tokens
+            context.tokens
           end
           
           ##
           # Access the transcriptions
           # @return [transcriptions] transcriptions
           def transcriptions
-            @context.transcriptions
+            context.transcriptions
           end
           
           ##
           # Access the usage
           # @return [usage] usage
           def usage
-            @context.usage
+            context.usage
           end
           
           ##
           # Access the validation_requests
           # @return [validation_requests] validation_requests
           def validation_requests
-            @context.validation_requests
+            context.validation_requests
           end
           
           ##
           # Provide a user friendly representation
           def to_s
-            context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Api.V2010.AccountInstance #{context}>"
+            values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Api.V2010.AccountInstance #{values}>"
           end
         end
       end

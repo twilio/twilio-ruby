@@ -229,6 +229,40 @@ module Twilio
               end
               
               ##
+              # Deletes the MessageInstance
+              # @return [Boolean] true if delete succeeds, true otherwise
+              def delete
+                return @version.delete('delete', @uri)
+              end
+              
+              ##
+              # Update the MessageInstance
+              # @param [String] body The body
+              # @param [Hash] attributes The attributes
+              
+              # @return [MessageInstance] Updated MessageInstance
+              def update(body: nil, attributes: nil)
+                data = {
+                    'Body' => body,
+                    'Attributes' => attributes,
+                }
+                
+                payload = @version.update(
+                    'POST',
+                    @uri,
+                    data: data,
+                )
+                
+                return MessageInstance.new(
+                    @version,
+                    payload,
+                    service_sid: @solution['service_sid'],
+                    channel_sid: @solution['channel_sid'],
+                    sid: @solution['sid'],
+                )
+              end
+              
+              ##
               # Provide a user friendly representation
               def to_s
                 context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -334,14 +368,34 @@ module Twilio
               # Fetch a MessageInstance
               # @return [MessageInstance] Fetched MessageInstance
               def fetch
-                @context.fetch()
+                context.fetch
+              end
+              
+              ##
+              # Deletes the MessageInstance
+              # @return [Boolean] true if delete succeeds, true otherwise
+              def delete
+                context.delete
+              end
+              
+              ##
+              # Update the MessageInstance
+              # @param [String] body The body
+              # @param [Hash] attributes The attributes
+              
+              # @return [MessageInstance] Updated MessageInstance
+              def update(body: nil, attributes: nil)
+                context.update(
+                    body: body,
+                    attributes: attributes,
+                )
               end
               
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.IpMessaging.V1.MessageInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.IpMessaging.V1.MessageInstance #{values}>"
               end
             end
           end

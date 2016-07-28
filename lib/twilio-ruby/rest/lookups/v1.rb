@@ -27,7 +27,7 @@ module Twilio
         ##
         # Provide a user friendly representation
         def to_s
-          #<Twilio::REST::Lookups::V1>
+          '<Twilio::REST::Lookups::V1>'
         end
       end
     end

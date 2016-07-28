@@ -188,7 +188,8 @@ module Twilio
           
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
           def fetch(country_code: nil, type: nil, add_ons: nil, add_ons_data: nil)
-            @context.fetch(
+            context.fetch(
+                country_code: country_code,
                 type: type,
                 add_ons: add_ons,
                 add_ons_data: add_ons_data,
@@ -198,8 +199,8 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Lookups.V1.PhoneNumberInstance #{context}>"
+            values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Lookups.V1.PhoneNumberInstance #{values}>"
           end
         end
       end

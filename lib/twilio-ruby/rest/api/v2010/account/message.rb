@@ -495,14 +495,14 @@ module Twilio
             # Deletes the MessageInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Fetch a MessageInstance
             # @return [MessageInstance] Fetched MessageInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
@@ -511,28 +511,30 @@ module Twilio
             
             # @return [MessageInstance] Updated MessageInstance
             def update(body: nil)
-              @context.update()
+              context.update(
+                  body: body,
+              )
             end
             
             ##
             # Access the media
             # @return [media] media
             def media
-              @context.media
+              context.media
             end
             
             ##
             # Access the feedback
             # @return [feedback] feedback
             def feedback
-              @context.feedback
+              context.feedback
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Api.V2010.MessageInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Api.V2010.MessageInstance #{values}>"
             end
           end
         end

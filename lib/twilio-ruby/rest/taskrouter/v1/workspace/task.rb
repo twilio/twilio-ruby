@@ -447,7 +447,7 @@ module Twilio
             # Fetch a TaskInstance
             # @return [TaskInstance] Fetched TaskInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
@@ -459,7 +459,8 @@ module Twilio
             
             # @return [TaskInstance] Updated TaskInstance
             def update(attributes: nil, assignment_status: nil, reason: nil, priority: nil)
-              @context.update(
+              context.update(
+                  attributes: attributes,
                   assignment_status: assignment_status,
                   reason: reason,
                   priority: priority,
@@ -470,21 +471,21 @@ module Twilio
             # Deletes the TaskInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Access the reservations
             # @return [reservations] reservations
             def reservations
-              @context.reservations
+              context.reservations
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Taskrouter.V1.TaskInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Taskrouter.V1.TaskInstance #{values}>"
             end
           end
         end

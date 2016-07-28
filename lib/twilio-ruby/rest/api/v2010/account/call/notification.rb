@@ -377,21 +377,21 @@ module Twilio
               # Fetch a NotificationInstance
               # @return [NotificationInstance] Fetched NotificationInstance
               def fetch
-                @context.fetch()
+                context.fetch
               end
               
               ##
               # Deletes the NotificationInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                @context.delete()
+                context.delete
               end
               
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Api.V2010.NotificationInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.NotificationInstance #{values}>"
               end
             end
           end

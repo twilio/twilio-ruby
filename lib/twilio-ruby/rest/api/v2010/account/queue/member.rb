@@ -312,7 +312,7 @@ module Twilio
               # Fetch a MemberInstance
               # @return [MemberInstance] Fetched MemberInstance
               def fetch
-                @context.fetch()
+                context.fetch
               end
               
               ##
@@ -322,7 +322,8 @@ module Twilio
               
               # @return [MemberInstance] Updated MemberInstance
               def update(url: nil, method: nil)
-                @context.update(
+                context.update(
+                    url: url,
                     method: method,
                 )
               end
@@ -330,8 +331,8 @@ module Twilio
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Api.V2010.MemberInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.MemberInstance #{values}>"
               end
             end
           end

@@ -299,14 +299,14 @@ module Twilio
             # Fetch a AuthorizedConnectAppInstance
             # @return [AuthorizedConnectAppInstance] Fetched AuthorizedConnectAppInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Api.V2010.AuthorizedConnectAppInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Api.V2010.AuthorizedConnectAppInstance #{values}>"
             end
           end
         end

@@ -395,7 +395,7 @@ module Twilio
             # Fetch a WorkflowInstance
             # @return [WorkflowInstance] Fetched WorkflowInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
@@ -409,7 +409,8 @@ module Twilio
             
             # @return [WorkflowInstance] Updated WorkflowInstance
             def update(friendly_name: nil, assignment_callback_url: nil, fallback_assignment_callback_url: nil, configuration: nil, task_reservation_timeout: nil)
-              @context.update(
+              context.update(
+                  friendly_name: friendly_name,
                   assignment_callback_url: assignment_callback_url,
                   fallback_assignment_callback_url: fallback_assignment_callback_url,
                   configuration: configuration,
@@ -421,21 +422,21 @@ module Twilio
             # Deletes the WorkflowInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Access the statistics
             # @return [statistics] statistics
             def statistics
-              @context.statistics
+              context.statistics
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Taskrouter.V1.WorkflowInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Taskrouter.V1.WorkflowInstance #{values}>"
             end
           end
         end

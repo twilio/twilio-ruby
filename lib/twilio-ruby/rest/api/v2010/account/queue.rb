@@ -379,7 +379,7 @@ module Twilio
             # Fetch a QueueInstance
             # @return [QueueInstance] Fetched QueueInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
@@ -390,7 +390,8 @@ module Twilio
             
             # @return [QueueInstance] Updated QueueInstance
             def update(friendly_name: nil, max_size: nil)
-              @context.update(
+              context.update(
+                  friendly_name: friendly_name,
                   max_size: max_size,
               )
             end
@@ -399,21 +400,21 @@ module Twilio
             # Deletes the QueueInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Access the members
             # @return [members] members
             def members
-              @context.members
+              context.members
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Api.V2010.QueueInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Api.V2010.QueueInstance #{values}>"
             end
           end
         end

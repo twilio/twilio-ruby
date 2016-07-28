@@ -326,21 +326,21 @@ module Twilio
               # Deletes the MediaInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                @context.delete()
+                context.delete
               end
               
               ##
               # Fetch a MediaInstance
               # @return [MediaInstance] Fetched MediaInstance
               def fetch
-                @context.fetch()
+                context.fetch
               end
               
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Api.V2010.MediaInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.MediaInstance #{values}>"
               end
             end
           end

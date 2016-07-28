@@ -300,7 +300,7 @@ module Twilio
             # Fetch a SigningKeyInstance
             # @return [SigningKeyInstance] Fetched SigningKeyInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
@@ -309,21 +309,23 @@ module Twilio
             
             # @return [SigningKeyInstance] Updated SigningKeyInstance
             def update(friendly_name: nil)
-              @context.update()
+              context.update(
+                  friendly_name: friendly_name,
+              )
             end
             
             ##
             # Deletes the SigningKeyInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Api.V2010.SigningKeyInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Api.V2010.SigningKeyInstance #{values}>"
             end
           end
         end

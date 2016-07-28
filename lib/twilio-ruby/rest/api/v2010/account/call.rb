@@ -666,14 +666,14 @@ module Twilio
             # Deletes the CallInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Fetch a CallInstance
             # @return [CallInstance] Fetched CallInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
@@ -697,7 +697,8 @@ module Twilio
             
             # @return [CallInstance] Updated CallInstance
             def update(url: nil, method: nil, status: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, status_callback_method: nil)
-              @context.update(
+              context.update(
+                  url: url,
                   method: method,
                   status: status,
                   fallback_url: fallback_url,
@@ -711,28 +712,28 @@ module Twilio
             # Access the recordings
             # @return [recordings] recordings
             def recordings
-              @context.recordings
+              context.recordings
             end
             
             ##
             # Access the notifications
             # @return [notifications] notifications
             def notifications
-              @context.notifications
+              context.notifications
             end
             
             ##
             # Access the feedback
             # @return [feedback] feedback
             def feedback
-              @context.feedback
+              context.feedback
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Api.V2010.CallInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Api.V2010.CallInstance #{values}>"
             end
           end
         end

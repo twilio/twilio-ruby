@@ -41,7 +41,7 @@ module Twilio
             # @param [String] apn The apn
             # @param [String] gcm The gcm
             # @param [String] sms The sms
-            # @param [String] facebook_messenger The facebook_messenger
+            # @param [Hash] facebook_messenger The facebook_messenger
             
             # @return [NotificationInstance] Newly created NotificationInstance
             def create(identity: nil, tag: nil, body: nil, priority: nil, ttl: nil, title: nil, sound: nil, action: nil, data: nil, apn: nil, gcm: nil, sms: nil, facebook_messenger: nil)

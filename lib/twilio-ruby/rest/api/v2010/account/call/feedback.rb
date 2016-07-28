@@ -256,7 +256,8 @@ module Twilio
               
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(quality_score: nil, issue: nil)
-                @context.create(
+                context.create(
+                    quality_score: quality_score,
                     issue: issue,
                 )
               end
@@ -265,7 +266,7 @@ module Twilio
               # Fetch a FeedbackInstance
               # @return [FeedbackInstance] Fetched FeedbackInstance
               def fetch
-                @context.fetch()
+                context.fetch
               end
               
               ##
@@ -276,7 +277,8 @@ module Twilio
               
               # @return [FeedbackInstance] Updated FeedbackInstance
               def update(quality_score: nil, issue: nil)
-                @context.update(
+                context.update(
+                    quality_score: quality_score,
                     issue: issue,
                 )
               end
@@ -284,8 +286,8 @@ module Twilio
               ##
               # Provide a user friendly representation
               def to_s
-                context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Api.V2010.FeedbackInstance #{context}>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.FeedbackInstance #{values}>"
               end
             end
           end

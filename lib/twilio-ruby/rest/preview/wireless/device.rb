@@ -409,7 +409,7 @@ module Twilio
           # Fetch a DeviceInstance
           # @return [DeviceInstance] Fetched DeviceInstance
           def fetch
-            @context.fetch()
+            context.fetch
           end
           
           ##
@@ -425,7 +425,8 @@ module Twilio
           
           # @return [DeviceInstance] Updated DeviceInstance
           def update(alias_: nil, callback_method: nil, callback_url: nil, friendly_name: nil, sim_identifier: nil, status: nil, commands_callback_method: nil, commands_callback_url: nil)
-            @context.update(
+            context.update(
+                alias_: alias_,
                 callback_method: callback_method,
                 callback_url: callback_url,
                 friendly_name: friendly_name,
@@ -440,14 +441,14 @@ module Twilio
           # Access the usage
           # @return [usage] usage
           def usage
-            @context.usage
+            context.usage
           end
           
           ##
           # Provide a user friendly representation
           def to_s
-            context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Preview.Wireless.DeviceInstance #{context}>"
+            values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Preview.Wireless.DeviceInstance #{values}>"
           end
         end
       end

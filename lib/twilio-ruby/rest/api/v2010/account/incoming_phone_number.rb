@@ -639,7 +639,8 @@ module Twilio
             
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
             def update(account_sid: nil, api_version: nil, friendly_name: nil, sms_application_sid: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, status_callback: nil, status_callback_method: nil, voice_application_sid: nil, voice_caller_id_lookup: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil)
-              @context.update(
+              context.update(
+                  account_sid: account_sid,
                   api_version: api_version,
                   friendly_name: friendly_name,
                   sms_application_sid: sms_application_sid,
@@ -662,21 +663,21 @@ module Twilio
             # Fetch a IncomingPhoneNumberInstance
             # @return [IncomingPhoneNumberInstance] Fetched IncomingPhoneNumberInstance
             def fetch
-              @context.fetch()
+              context.fetch
             end
             
             ##
             # Deletes the IncomingPhoneNumberInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              @context.delete()
+              context.delete
             end
             
             ##
             # Provide a user friendly representation
             def to_s
-              context = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Api.V2010.IncomingPhoneNumberInstance #{context}>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Api.V2010.IncomingPhoneNumberInstance #{values}>"
             end
           end
         end

@@ -36,7 +36,7 @@ module Twilio
         ##
         # Provide a user friendly representation
         def to_s
-          #<Twilio::REST::Monitor::V1>
+          '<Twilio::REST::Monitor::V1>'
         end
       end
     end
