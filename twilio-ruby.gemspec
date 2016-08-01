@@ -23,7 +23,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency('builder', '>= 2.1.2')
   spec.add_dependency('jwt', '~> 1.0')
-  spec.add_dependency('activesupport', '~> 4.2')
   spec.add_dependency('faraday', '~>0.9')
   spec.add_dependency('jruby-openssl') if RUBY_PLATFORM == 'java'
   # Workaround for RBX <= 2.2.1, should be fixed in next version
