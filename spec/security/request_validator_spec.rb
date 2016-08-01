@@ -95,9 +95,21 @@ describe Twilio::Security::RequestValidator do
       expect(validator.validate(voice_url, voice_params, signature)).to eq(true)
     end
 
+    it 'should validate an authentic Twilio Voice request from ActionController::Parameters' do
+      signature = 'oVb2kXoVy8GEfwBDjR8bk/ZZ6eA='
+      params = ActionController::Parameters[voice_params]
+      expect(validator.validate(voice_url, params, signature)).to eq(true)
+    end
+
     it 'should validate an authentic Twilio SMS request' do
       signature = 'mxeiv65lEe0b8L6LdVw2jgJi8yw='
       expect(validator.validate(sms_url, sms_params, signature)).to eq(true)
+    end
+
+    it 'should validate an authentic Twilio SMS request from ActionController::Parameters' do
+      signature = 'mxeiv65lEe0b8L6LdVw2jgJi8yw='
+      params = ActionController::Parameters[sms_params]
+      expect(validator.validate(sms_url, params, signature)).to eq(true)
     end
 
     it 'should not validate a Twilio Voice request with wrong signature' do
