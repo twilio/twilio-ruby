@@ -6,37 +6,35 @@ require 'openssl'
 require 'base64'
 require 'forwardable'
 require 'jwt'
+require 'time'
 
 require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
 require 'rack/twilio_webhook_authentication'
 
 require 'twilio-ruby/util'
-require 'twilio-ruby/util/capability'
-require 'twilio-ruby/util/client_config'
+require 'twilio-ruby/jwt/access_token'
+require 'twilio-ruby/jwt/capability'
+require 'twilio-ruby/jwt/task_router'
+require 'twilio-ruby/security/request_validator'
 require 'twilio-ruby/util/configuration'
-require 'twilio-ruby/util/request_validator'
-require 'twilio-ruby/util/access_token'
+
 require 'twilio-ruby/twiml/response'
 
-Dir[File.dirname(__FILE__) + "/twilio-ruby/http/**/*.rb"].each do |file|
+Dir[File.dirname(__FILE__) + '/twilio-ruby/http/**/*.rb'].each do |file|
   require file
 end
-Dir[File.dirname(__FILE__) + "/twilio-ruby/framework/**/*.rb"].each do |file|
+Dir[File.dirname(__FILE__) + '/twilio-ruby/framework/**/*.rb'].each do |file|
   require file
 end
-Dir[File.dirname(__FILE__) + "/twilio-ruby/rest/*.rb"].each do |file|
+Dir[File.dirname(__FILE__) + '/twilio-ruby/rest/*.rb'].each do |file|
   require file
 end
-Dir[File.dirname(__FILE__) + "/twilio-ruby/rest/**/*.rb"].each do |file|
+Dir[File.dirname(__FILE__) + '/twilio-ruby/rest/**/*.rb'].each do |file|
   require file
 end
-Dir[File.dirname(__FILE__) + "/twilio-ruby/compatibility/**/*.rb"].each do |file|
+Dir[File.dirname(__FILE__) + '/twilio-ruby/compatibility/**/*.rb'].each do |file|
   require file
 end
-Dir[File.dirname(__FILE__) + "/twilio-ruby/task_router/**/*.rb"].each do |file|
-  require file
-end
-
 
 module Twilio
   extend SingleForwardable

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Twilio::Util::RequestValidator do
+describe Twilio::Security::RequestValidator do
   describe 'configuration' do
     after(:each) do
       Twilio.instance_variable_set('@configuration', nil)
@@ -11,7 +11,7 @@ describe Twilio::Util::RequestValidator do
         config.auth_token = 'someToken'
       end
 
-      validator = Twilio::Util::RequestValidator.new
+      validator = Twilio::Security::RequestValidator.new
       expect(validator.instance_variable_get('@auth_token')).to eq('someToken')
     end
 
@@ -20,19 +20,19 @@ describe Twilio::Util::RequestValidator do
         config.auth_token = 'someToken'
       end
 
-      validator = Twilio::Util::RequestValidator.new 'otherToken'
+      validator = Twilio::Security::RequestValidator.new 'otherToken'
       expect(validator.instance_variable_get('@auth_token')).to eq('otherToken')
     end
 
     it 'should throw an argument error if the auth token isn\'t set' do
-      expect { Twilio::Util::RequestValidator.new }.to raise_error(ArgumentError)
+      expect { Twilio::Security::RequestValidator.new }.to raise_error(ArgumentError)
     end
   end
 
   describe 'validations' do
     let(:token) { '2bd9e9638872de601313dc77410d3b23' }
 
-    let(:validator) { Twilio::Util::RequestValidator.new token }
+    let(:validator) { Twilio::Security::RequestValidator.new token }
 
     let(:voice_url) { 'http://twiliotests.heroku.com/validate/voice' }
 

@@ -1,5 +1,5 @@
 module Twilio
-  module Util
+  module Security
     class RequestValidator
 
       def initialize(auth_token = nil)

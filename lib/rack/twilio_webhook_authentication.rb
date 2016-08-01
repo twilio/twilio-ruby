@@ -25,12 +25,12 @@ module Rack
     end
 
     def call(env)
-      return @app.call(env) unless env["PATH_INFO"].match(@path_regex)
+      return @app.call(env) unless env['PATH_INFO'].match(@path_regex)
       request = Rack::Request.new(env)
       original_url = request.url
       params = request.post? ? request.POST : {}
       auth_token = @auth_token || get_auth_token(params['AccountSid'])
-      validator = Twilio::Util::RequestValidator.new(auth_token)
+      validator = Twilio::Security::RequestValidator.new(auth_token)
       signature = env['HTTP_X_TWILIO_SIGNATURE'] || ""
       if validator.validate(original_url, params, signature)
         @app.call(env)
@@ -38,7 +38,7 @@ module Rack
         [
           403,
           {'Content-Type' => 'text/plain'},
-          ["Twilio Request Validation Failed."]
+          ['Twilio Request Validation Failed.']
         ]
       end
     end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Twilio::Util::Capability do
+describe Twilio::JWT::Capability do
   describe 'config' do
     after(:each) do
       Twilio.instance_variable_set('@configuration', nil)
@@ -12,7 +12,7 @@ describe Twilio::Util::Capability do
         config.auth_token = 'someToken'
       end
 
-      capability = Twilio::Util::Capability.new
+      capability = Twilio::JWT::Capability.new
       expect(capability.instance_variable_get('@account_sid')).to eq('someSid')
       expect(capability.instance_variable_get('@auth_token')).to eq('someToken')
     end
@@ -23,7 +23,7 @@ describe Twilio::Util::Capability do
         config.auth_token = 'someToken'
       end
 
-      capability = Twilio::Util::Capability.new'otherSid', 'otherToken'
+      capability = Twilio::JWT::Capability.new'otherSid', 'otherToken'
       expect(capability.instance_variable_get('@account_sid')).to eq('otherSid')
       expect(capability.instance_variable_get('@auth_token')).to eq('otherToken')
     end
@@ -34,23 +34,23 @@ describe Twilio::Util::Capability do
         config.auth_token = 'someToken'
       end
 
-      capability = Twilio::Util::Capability.new 'otherSid'
+      capability = Twilio::JWT::Capability.new 'otherSid'
       expect(capability.instance_variable_get('@account_sid')).to eq('otherSid')
       expect(capability.instance_variable_get('@auth_token')).to eq('someToken')
     end
 
     it 'should throw an argument error if the sid and token isn\'t set' do
-      expect { Twilio::Util::Capability.new }.to raise_error(ArgumentError)
+      expect { Twilio::JWT::Capability.new }.to raise_error(ArgumentError)
     end
 
     it 'should throw an argument error if only the account_sid is set' do
-      expect { Twilio::Util::Capability.new 'someSid' }.to raise_error(ArgumentError)
+      expect { Twilio::JWT::Capability.new 'someSid' }.to raise_error(ArgumentError)
     end
   end
 
   describe 'with a capability' do
     before :each do
-      @capability = Twilio::Util::Capability.new 'myAccountSid', 'myAuthToken'
+      @capability = Twilio::JWT::Capability.new 'myAccountSid', 'myAuthToken'
     end
 
     def queries(q)
@@ -99,9 +99,9 @@ describe Twilio::Util::Capability do
       token = @capability.generate
       decoded, header = JWT.decode token, 'myAuthToken'
       expect(queries(decoded['scope'])).to eq([
-        ['incoming', {'clientName' => 'andrew'}],
-        ['incoming', {'clientName' => 'bridget'}]
-      ])
+                                                  ['incoming', {'clientName' => 'andrew'}],
+                                                  ['incoming', {'clientName' => 'bridget'}]
+                                              ])
     end
 
     it 'should generate a proper outgoing client scope string' do
@@ -123,19 +123,19 @@ describe Twilio::Util::Capability do
     end
 
     it 'should generate a proper outgoing client scope string based on the ' +
-         'client name when calling #allow_client_incoming first' do
+           'client name when calling #allow_client_incoming first' do
       @capability.allow_client_incoming 'andrew'
       @capability.allow_client_outgoing 'myAppSid'
       token = @capability.generate
       decoded, header = JWT.decode token, 'myAuthToken'
       expect(queries(decoded['scope'])).to eq([
-        ['incoming', {'clientName' => 'andrew'}],
-        ['outgoing', {'clientName' => 'andrew', 'appSid' => 'myAppSid'}]
-      ])
+                                                  ['incoming', {'clientName' => 'andrew'}],
+                                                  ['outgoing', {'clientName' => 'andrew', 'appSid' => 'myAppSid'}]
+                                              ])
     end
 
     it 'should generate a proper outgoing client scope string based on the ' +
-         'client name when calling #allow_client_incoming second' do
+           'client name when calling #allow_client_incoming second' do
       @capability.allow_client_outgoing 'myAppSid'
       @capability.allow_client_incoming 'andrew'
       token = @capability.generate
@@ -144,7 +144,7 @@ describe Twilio::Util::Capability do
     end
 
     it 'should generate a proper outgoing client scope string with parameters ' +
-         'and a client name when calling #allow_client_incoming first' do
+           'and a client name when calling #allow_client_incoming first' do
       @capability.allow_client_incoming 'andrew'
       app_params_hash = {'key' => 'a value', :foo => 'bar/baz'}
       @capability.allow_client_outgoing 'myAppSid', app_params_hash
@@ -164,7 +164,7 @@ describe Twilio::Util::Capability do
     end
 
     it 'should generate a proper outgoing client scope string with parameters ' +
-         'and a client name when calling #allow_client_incoming second' do
+           'and a client name when calling #allow_client_incoming second' do
       app_params_hash = {'key' => 'a value', :foo => 'bar/baz'}
       @capability.allow_client_outgoing 'myAppSid', app_params_hash
       @capability.allow_client_incoming 'andrew'
