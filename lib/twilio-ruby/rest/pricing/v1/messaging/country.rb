@@ -174,7 +174,7 @@ module Twilio
               return CountryInstance.new(
                   @version,
                   payload,
-                  iso_country: @solution['iso_country'],
+                  iso_country: @solution[:iso_country],
               )
             end
             

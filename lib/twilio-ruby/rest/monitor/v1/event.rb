@@ -243,7 +243,7 @@ module Twilio
             return EventInstance.new(
                 @version,
                 payload,
-                sid: @solution['sid'],
+                sid: @solution[:sid],
             )
           end
           

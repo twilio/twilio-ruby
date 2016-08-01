@@ -162,8 +162,8 @@ module Twilio
                 return ReservationInstance.new(
                     @version,
                     payload,
-                    workspace_sid: @solution['workspace_sid'],
-                    task_sid: @solution['task_sid'],
+                    workspace_sid: @solution[:workspace_sid],
+                    task_sid: @solution[:task_sid],
                 )
               end
               
@@ -209,9 +209,9 @@ module Twilio
                 return ReservationInstance.new(
                     @version,
                     payload,
-                    workspace_sid: @solution['workspace_sid'],
-                    task_sid: @solution['task_sid'],
-                    sid: @solution['sid'],
+                    workspace_sid: @solution[:workspace_sid],
+                    task_sid: @solution[:task_sid],
+                    sid: @solution[:sid],
                 )
               end
               
@@ -270,9 +270,9 @@ module Twilio
                 return ReservationInstance.new(
                     @version,
                     payload,
-                    workspace_sid: @solution['workspace_sid'],
-                    task_sid: @solution['task_sid'],
-                    sid: @solution['sid'],
+                    workspace_sid: @solution[:workspace_sid],
+                    task_sid: @solution[:task_sid],
+                    sid: @solution[:sid],
                 )
               end
               

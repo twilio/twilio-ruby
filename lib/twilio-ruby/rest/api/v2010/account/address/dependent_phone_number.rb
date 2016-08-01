@@ -141,8 +141,8 @@ module Twilio
                 return DependentPhoneNumberInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    address_sid: @solution['address_sid'],
+                    account_sid: @solution[:account_sid],
+                    address_sid: @solution[:address_sid],
                 )
               end
               

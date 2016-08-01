@@ -139,7 +139,7 @@ module Twilio
               return AvailablePhoneNumberCountryInstance.new(
                   @version,
                   payload,
-                  account_sid: @solution['account_sid'],
+                  account_sid: @solution[:account_sid],
               )
             end
             
@@ -188,8 +188,8 @@ module Twilio
               return AvailablePhoneNumberCountryInstance.new(
                   @version,
                   payload,
-                  account_sid: @solution['account_sid'],
-                  country_code: @solution['country_code'],
+                  account_sid: @solution[:account_sid],
+                  country_code: @solution[:country_code],
               )
             end
             

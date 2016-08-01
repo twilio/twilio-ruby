@@ -52,7 +52,7 @@ module Twilio
               return OriginationUrlInstance.new(
                   @version,
                   payload,
-                  trunk_sid: @solution['trunk_sid'],
+                  trunk_sid: @solution[:trunk_sid],
               )
             end
             
@@ -168,7 +168,7 @@ module Twilio
               return OriginationUrlInstance.new(
                   @version,
                   payload,
-                  trunk_sid: @solution['trunk_sid'],
+                  trunk_sid: @solution[:trunk_sid],
               )
             end
             
@@ -212,8 +212,8 @@ module Twilio
               return OriginationUrlInstance.new(
                   @version,
                   payload,
-                  trunk_sid: @solution['trunk_sid'],
-                  sid: @solution['sid'],
+                  trunk_sid: @solution[:trunk_sid],
+                  sid: @solution[:sid],
               )
             end
             
@@ -250,8 +250,8 @@ module Twilio
               return OriginationUrlInstance.new(
                   @version,
                   payload,
-                  trunk_sid: @solution['trunk_sid'],
-                  sid: @solution['sid'],
+                  trunk_sid: @solution[:trunk_sid],
+                  sid: @solution[:sid],
               )
             end
             

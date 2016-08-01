@@ -173,7 +173,7 @@ module Twilio
             return RatePlanInstance.new(
                 @version,
                 payload,
-                sid: @solution['sid'],
+                sid: @solution[:sid],
             )
           end
           

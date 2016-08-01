@@ -89,7 +89,7 @@ module Twilio
               return UsageInstance.new(
                   @version,
                   payload,
-                  account_sid: @solution['account_sid'],
+                  account_sid: @solution[:account_sid],
               )
             end
             

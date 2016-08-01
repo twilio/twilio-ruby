@@ -46,7 +46,7 @@ module Twilio
               return UserInstance.new(
                   @version,
                   payload,
-                  service_sid: @solution['service_sid'],
+                  service_sid: @solution[:service_sid],
               )
             end
             
@@ -162,7 +162,7 @@ module Twilio
               return UserInstance.new(
                   @version,
                   payload,
-                  service_sid: @solution['service_sid'],
+                  service_sid: @solution[:service_sid],
               )
             end
             
@@ -206,8 +206,8 @@ module Twilio
               return UserInstance.new(
                   @version,
                   payload,
-                  service_sid: @solution['service_sid'],
-                  sid: @solution['sid'],
+                  service_sid: @solution[:service_sid],
+                  sid: @solution[:sid],
               )
             end
             
@@ -240,8 +240,8 @@ module Twilio
               return UserInstance.new(
                   @version,
                   payload,
-                  service_sid: @solution['service_sid'],
-                  sid: @solution['sid'],
+                  service_sid: @solution[:service_sid],
+                  sid: @solution[:sid],
               )
             end
             

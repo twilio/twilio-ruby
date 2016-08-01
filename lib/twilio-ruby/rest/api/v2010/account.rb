@@ -241,7 +241,7 @@ module Twilio
             return AccountInstance.new(
                 @version,
                 payload,
-                sid: @solution['sid'],
+                sid: @solution[:sid],
             )
           end
           
@@ -267,7 +267,7 @@ module Twilio
             return AccountInstance.new(
                 @version,
                 payload,
-                sid: @solution['sid'],
+                sid: @solution[:sid],
             )
           end
           

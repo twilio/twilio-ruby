@@ -227,7 +227,7 @@ module Twilio
             return ServiceInstance.new(
                 @version,
                 payload,
-                sid: @solution['sid'],
+                sid: @solution[:sid],
             )
           end
           
@@ -263,7 +263,7 @@ module Twilio
             return ServiceInstance.new(
                 @version,
                 payload,
-                sid: @solution['sid'],
+                sid: @solution[:sid],
             )
           end
           

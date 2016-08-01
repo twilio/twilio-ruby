@@ -162,7 +162,7 @@ module Twilio
                 return ShortCodeInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
+                    account_sid: @solution[:account_sid],
                 )
               end
               
@@ -206,8 +206,8 @@ module Twilio
                 return ShortCodeInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    sid: @solution['sid'],
+                    account_sid: @solution[:account_sid],
+                    sid: @solution[:sid],
                 )
               end
               
@@ -246,8 +246,8 @@ module Twilio
                 return ShortCodeInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    sid: @solution['sid'],
+                    account_sid: @solution[:account_sid],
+                    sid: @solution[:sid],
                 )
               end
               

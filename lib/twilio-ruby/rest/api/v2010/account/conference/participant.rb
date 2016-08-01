@@ -152,8 +152,8 @@ module Twilio
                 return ParticipantInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    conference_sid: @solution['conference_sid'],
+                    account_sid: @solution[:account_sid],
+                    conference_sid: @solution[:conference_sid],
                 )
               end
               
@@ -200,9 +200,9 @@ module Twilio
                 return ParticipantInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    conference_sid: @solution['conference_sid'],
-                    call_sid: @solution['call_sid'],
+                    account_sid: @solution[:account_sid],
+                    conference_sid: @solution[:conference_sid],
+                    call_sid: @solution[:call_sid],
                 )
               end
               
@@ -224,9 +224,9 @@ module Twilio
                 return ParticipantInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    conference_sid: @solution['conference_sid'],
-                    call_sid: @solution['call_sid'],
+                    account_sid: @solution[:account_sid],
+                    conference_sid: @solution[:conference_sid],
+                    call_sid: @solution[:call_sid],
                 )
               end
               

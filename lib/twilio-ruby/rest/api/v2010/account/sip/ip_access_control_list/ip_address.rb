@@ -132,8 +132,8 @@ module Twilio
                   return IpAddressInstance.new(
                       @version,
                       payload,
-                      account_sid: @solution['account_sid'],
-                      ip_access_control_list_sid: @solution['ip_access_control_list_sid'],
+                      account_sid: @solution[:account_sid],
+                      ip_access_control_list_sid: @solution[:ip_access_control_list_sid],
                   )
                 end
                 
@@ -168,8 +168,8 @@ module Twilio
                   return IpAddressInstance.new(
                       @version,
                       payload,
-                      account_sid: @solution['account_sid'],
-                      ip_access_control_list_sid: @solution['ip_access_control_list_sid'],
+                      account_sid: @solution[:account_sid],
+                      ip_access_control_list_sid: @solution[:ip_access_control_list_sid],
                   )
                 end
                 
@@ -215,9 +215,9 @@ module Twilio
                   return IpAddressInstance.new(
                       @version,
                       payload,
-                      account_sid: @solution['account_sid'],
-                      ip_access_control_list_sid: @solution['ip_access_control_list_sid'],
-                      sid: @solution['sid'],
+                      account_sid: @solution[:account_sid],
+                      ip_access_control_list_sid: @solution[:ip_access_control_list_sid],
+                      sid: @solution[:sid],
                   )
                 end
                 
@@ -241,9 +241,9 @@ module Twilio
                   return IpAddressInstance.new(
                       @version,
                       payload,
-                      account_sid: @solution['account_sid'],
-                      ip_access_control_list_sid: @solution['ip_access_control_list_sid'],
-                      sid: @solution['sid'],
+                      account_sid: @solution[:account_sid],
+                      ip_access_control_list_sid: @solution[:ip_access_control_list_sid],
+                      sid: @solution[:sid],
                   )
                 end
                 

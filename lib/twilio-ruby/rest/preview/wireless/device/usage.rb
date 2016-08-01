@@ -54,7 +54,7 @@ module Twilio
               return UsageInstance.new(
                   @version,
                   payload,
-                  device_sid: @solution['device_sid'],
+                  device_sid: @solution[:device_sid],
               )
             end
             
@@ -101,7 +101,7 @@ module Twilio
               return UsageInstance.new(
                   @version,
                   payload,
-                  device_sid: @solution['device_sid'],
+                  device_sid: @solution[:device_sid],
               )
             end
             

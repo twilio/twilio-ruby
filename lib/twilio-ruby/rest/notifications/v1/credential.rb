@@ -205,7 +205,7 @@ module Twilio
             return CredentialInstance.new(
                 @version,
                 payload,
-                sid: @solution['sid'],
+                sid: @solution[:sid],
             )
           end
           
@@ -235,7 +235,7 @@ module Twilio
             return CredentialInstance.new(
                 @version,
                 payload,
-                sid: @solution['sid'],
+                sid: @solution[:sid],
             )
           end
           

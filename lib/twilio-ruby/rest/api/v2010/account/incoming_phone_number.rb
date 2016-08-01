@@ -217,7 +217,7 @@ module Twilio
               return IncomingPhoneNumberInstance.new(
                   @version,
                   payload,
-                  owner_account_sid: @solution['owner_account_sid'],
+                  owner_account_sid: @solution[:owner_account_sid],
               )
             end
             
@@ -282,7 +282,7 @@ module Twilio
               return IncomingPhoneNumberInstance.new(
                   @version,
                   payload,
-                  owner_account_sid: @solution['owner_account_sid'],
+                  owner_account_sid: @solution[:owner_account_sid],
               )
             end
             
@@ -383,8 +383,8 @@ module Twilio
               return IncomingPhoneNumberInstance.new(
                   @version,
                   payload,
-                  owner_account_sid: @solution['owner_account_sid'],
-                  sid: @solution['sid'],
+                  owner_account_sid: @solution[:owner_account_sid],
+                  sid: @solution[:sid],
               )
             end
             
@@ -403,8 +403,8 @@ module Twilio
               return IncomingPhoneNumberInstance.new(
                   @version,
                   payload,
-                  owner_account_sid: @solution['owner_account_sid'],
-                  sid: @solution['sid'],
+                  owner_account_sid: @solution[:owner_account_sid],
+                  sid: @solution[:sid],
               )
             end
             

@@ -49,8 +49,8 @@ module Twilio
                 return MessageInstance.new(
                     @version,
                     payload,
-                    service_sid: @solution['service_sid'],
-                    channel_sid: @solution['channel_sid'],
+                    service_sid: @solution[:service_sid],
+                    channel_sid: @solution[:channel_sid],
                 )
               end
               
@@ -167,8 +167,8 @@ module Twilio
                 return MessageInstance.new(
                     @version,
                     payload,
-                    service_sid: @solution['service_sid'],
-                    channel_sid: @solution['channel_sid'],
+                    service_sid: @solution[:service_sid],
+                    channel_sid: @solution[:channel_sid],
                 )
               end
               
@@ -214,9 +214,9 @@ module Twilio
                 return MessageInstance.new(
                     @version,
                     payload,
-                    service_sid: @solution['service_sid'],
-                    channel_sid: @solution['channel_sid'],
-                    sid: @solution['sid'],
+                    service_sid: @solution[:service_sid],
+                    channel_sid: @solution[:channel_sid],
+                    sid: @solution[:sid],
                 )
               end
               
@@ -247,9 +247,9 @@ module Twilio
                 return MessageInstance.new(
                     @version,
                     payload,
-                    service_sid: @solution['service_sid'],
-                    channel_sid: @solution['channel_sid'],
-                    sid: @solution['sid'],
+                    service_sid: @solution[:service_sid],
+                    channel_sid: @solution[:channel_sid],
+                    sid: @solution[:sid],
                 )
               end
               

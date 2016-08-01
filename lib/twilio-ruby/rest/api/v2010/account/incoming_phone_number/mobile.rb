@@ -179,7 +179,7 @@ module Twilio
                 return MobileInstance.new(
                     @version,
                     payload,
-                    owner_account_sid: @solution['owner_account_sid'],
+                    owner_account_sid: @solution[:owner_account_sid],
                 )
               end
               
@@ -214,7 +214,7 @@ module Twilio
                 return MobileInstance.new(
                     @version,
                     payload,
-                    owner_account_sid: @solution['owner_account_sid'],
+                    owner_account_sid: @solution[:owner_account_sid],
                 )
               end
               

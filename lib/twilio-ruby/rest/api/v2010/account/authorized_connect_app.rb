@@ -139,7 +139,7 @@ module Twilio
               return AuthorizedConnectAppInstance.new(
                   @version,
                   payload,
-                  account_sid: @solution['account_sid'],
+                  account_sid: @solution[:account_sid],
               )
             end
             
@@ -183,8 +183,8 @@ module Twilio
               return AuthorizedConnectAppInstance.new(
                   @version,
                   payload,
-                  account_sid: @solution['account_sid'],
-                  connect_app_sid: @solution['connect_app_sid'],
+                  account_sid: @solution[:account_sid],
+                  connect_app_sid: @solution[:connect_app_sid],
               )
             end
             

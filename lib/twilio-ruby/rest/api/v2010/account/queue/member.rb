@@ -143,8 +143,8 @@ module Twilio
                 return MemberInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    queue_sid: @solution['queue_sid'],
+                    account_sid: @solution[:account_sid],
+                    queue_sid: @solution[:queue_sid],
                 )
               end
               
@@ -190,9 +190,9 @@ module Twilio
                 return MemberInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    queue_sid: @solution['queue_sid'],
-                    call_sid: @solution['call_sid'],
+                    account_sid: @solution[:account_sid],
+                    queue_sid: @solution[:queue_sid],
+                    call_sid: @solution[:call_sid],
                 )
               end
               
@@ -216,9 +216,9 @@ module Twilio
                 return MemberInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    queue_sid: @solution['queue_sid'],
-                    call_sid: @solution['call_sid'],
+                    account_sid: @solution[:account_sid],
+                    queue_sid: @solution[:queue_sid],
+                    call_sid: @solution[:call_sid],
                 )
               end
               

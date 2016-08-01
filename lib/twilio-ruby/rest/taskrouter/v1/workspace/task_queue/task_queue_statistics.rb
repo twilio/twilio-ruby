@@ -58,8 +58,8 @@ module Twilio
                 return TaskQueueStatisticsInstance.new(
                     @version,
                     payload,
-                    workspace_sid: @solution['workspace_sid'],
-                    task_queue_sid: @solution['task_queue_sid'],
+                    workspace_sid: @solution[:workspace_sid],
+                    task_queue_sid: @solution[:task_queue_sid],
                 )
               end
               
@@ -112,8 +112,8 @@ module Twilio
                 return TaskQueueStatisticsInstance.new(
                     @version,
                     payload,
-                    workspace_sid: @solution['workspace_sid'],
-                    task_queue_sid: @solution['task_queue_sid'],
+                    workspace_sid: @solution[:workspace_sid],
+                    task_queue_sid: @solution[:task_queue_sid],
                 )
               end
               

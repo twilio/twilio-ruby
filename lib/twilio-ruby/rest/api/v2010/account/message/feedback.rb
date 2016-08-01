@@ -47,8 +47,8 @@ module Twilio
                 return FeedbackInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    message_sid: @solution['message_sid'],
+                    account_sid: @solution[:account_sid],
+                    message_sid: @solution[:message_sid],
                 )
               end
               
@@ -83,8 +83,8 @@ module Twilio
                 return FeedbackInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    message_sid: @solution['message_sid'],
+                    account_sid: @solution[:account_sid],
+                    message_sid: @solution[:message_sid],
                 )
               end
               

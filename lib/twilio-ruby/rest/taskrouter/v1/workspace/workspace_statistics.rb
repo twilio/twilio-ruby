@@ -54,7 +54,7 @@ module Twilio
               return WorkspaceStatisticsInstance.new(
                   @version,
                   payload,
-                  workspace_sid: @solution['workspace_sid'],
+                  workspace_sid: @solution[:workspace_sid],
               )
             end
             
@@ -111,7 +111,7 @@ module Twilio
               return WorkspaceStatisticsInstance.new(
                   @version,
                   payload,
-                  workspace_sid: @solution['workspace_sid'],
+                  workspace_sid: @solution[:workspace_sid],
               )
             end
             

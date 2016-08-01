@@ -45,7 +45,7 @@ module Twilio
               return NewSigningKeyInstance.new(
                   @version,
                   payload,
-                  account_sid: @solution['account_sid'],
+                  account_sid: @solution[:account_sid],
               )
             end
             
@@ -80,7 +80,7 @@ module Twilio
               return NewSigningKeyInstance.new(
                   @version,
                   payload,
-                  account_sid: @solution['account_sid'],
+                  account_sid: @solution[:account_sid],
               )
             end
             

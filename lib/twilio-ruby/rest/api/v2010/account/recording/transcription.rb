@@ -141,8 +141,8 @@ module Twilio
                 return TranscriptionInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    recording_sid: @solution['recording_sid'],
+                    account_sid: @solution[:account_sid],
+                    recording_sid: @solution[:recording_sid],
                 )
               end
               
@@ -188,9 +188,9 @@ module Twilio
                 return TranscriptionInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    recording_sid: @solution['recording_sid'],
-                    sid: @solution['sid'],
+                    account_sid: @solution[:account_sid],
+                    recording_sid: @solution[:recording_sid],
+                    sid: @solution[:sid],
                 )
               end
               

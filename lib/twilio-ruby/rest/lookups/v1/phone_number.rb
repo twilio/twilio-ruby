@@ -99,7 +99,7 @@ module Twilio
             return PhoneNumberInstance.new(
                 @version,
                 payload,
-                phone_number: @solution['phone_number'],
+                phone_number: @solution[:phone_number],
             )
           end
           

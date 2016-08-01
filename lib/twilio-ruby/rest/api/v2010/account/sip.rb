@@ -119,7 +119,7 @@ module Twilio
               return SipInstance.new(
                   @version,
                   payload,
-                  account_sid: @solution['account_sid'],
+                  account_sid: @solution[:account_sid],
               )
             end
             

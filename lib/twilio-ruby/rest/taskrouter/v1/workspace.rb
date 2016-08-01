@@ -215,7 +215,7 @@ module Twilio
             return WorkspaceInstance.new(
                 @version,
                 payload,
-                sid: @solution['sid'],
+                sid: @solution[:sid],
             )
           end
           
@@ -243,7 +243,7 @@ module Twilio
             return WorkspaceInstance.new(
                 @version,
                 payload,
-                sid: @solution['sid'],
+                sid: @solution[:sid],
             )
           end
           

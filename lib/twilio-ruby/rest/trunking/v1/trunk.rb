@@ -211,7 +211,7 @@ module Twilio
             return TrunkInstance.new(
                 @version,
                 payload,
-                sid: @solution['sid'],
+                sid: @solution[:sid],
             )
           end
           
@@ -250,7 +250,7 @@ module Twilio
             return TrunkInstance.new(
                 @version,
                 payload,
-                sid: @solution['sid'],
+                sid: @solution[:sid],
             )
           end
           

@@ -166,8 +166,8 @@ module Twilio
                 return MediaInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    message_sid: @solution['message_sid'],
+                    account_sid: @solution[:account_sid],
+                    message_sid: @solution[:message_sid],
                 )
               end
               
@@ -220,9 +220,9 @@ module Twilio
                 return MediaInstance.new(
                     @version,
                     payload,
-                    account_sid: @solution['account_sid'],
-                    message_sid: @solution['message_sid'],
-                    sid: @solution['sid'],
+                    account_sid: @solution[:account_sid],
+                    message_sid: @solution[:message_sid],
+                    sid: @solution[:sid],
                 )
               end
               
