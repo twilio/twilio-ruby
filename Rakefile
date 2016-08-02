@@ -54,6 +54,6 @@ SRC
   # Make a git commit
   `git commit -am "Bumping to version #{version}"`
 
-  # Do the deploy
-  `make deploy`
+  # Do the gem deployment
+  `make gem`
 end
