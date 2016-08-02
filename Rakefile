@@ -59,4 +59,10 @@ SRC
 
   # Push the branch back up
   `git push`
+
+  # Tag the branch
+  `git tag #{version}`
+
+  # Push the tags
+  `git push --tags`
 end
