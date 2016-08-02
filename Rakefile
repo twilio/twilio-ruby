@@ -56,4 +56,7 @@ SRC
 
   # Do the gem deployment
   `make gem`
+
+  # Push the branch back up
+  `git push`
 end
