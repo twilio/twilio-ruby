@@ -140,6 +140,28 @@ module Twilio
         end
       end
 
+      class SyncGrant
+        attr_accessor :service_sid,
+                      :endpoint_id
+
+        def key
+          'data_sync'
+
+        end
+
+        def payload
+          payload = {}
+
+          if @service_sid
+            payload['service_sid'] = @service_sid
+          end
+          if @endpoint_id
+            payload['endpoint_id'] = @endpoint_id
+          end
+
+          payload
+        end
+      end
     end
   end
 end
