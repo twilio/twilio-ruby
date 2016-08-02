@@ -32,6 +32,13 @@ module Twilio
                 # Lists AllTimeInstance records from the API as a list.
                 # Unlike stream(), this operation is eager and will load `limit` records into
                 # memory before returning.
+                # @param [all_time.Category] category The category
+                # @param [Time] start_date_before The start_date
+                # @param [Time] start_date The start_date
+                # @param [Time] start_date_after: The start_date
+                # @param [Time] end_date_before The end_date
+                # @param [Time] end_date The end_date
+                # @param [Time] end_date_after: The end_date
                 # @param [Integer] limit Upper limit for the number of records to return. stream()
                 #                   guarantees to never return more than limit.  Default is no limit
                 # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -39,8 +46,15 @@ module Twilio
                 #  but a limit is defined, stream() will attempt to read                      the
                 #  limit with the most efficient page size,                      i.e. min(limit, 1000)
                 # @return [Array] Array of up to limit results
-                def list(limit: nil, page_size: nil)
+                def list(category: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, limit: nil, page_size: nil)
                   self.stream(
+                      category: category,
+                      start_date_before: start_date_before,
+                      start_date: start_date,
+                      start_date_after: start_date_after,
+                      end_date_before: end_date_before,
+                      end_date: end_date,
+                      end_date_after: end_date_after,
                       limit: limit,
                       page_size: page_size
                   ).entries
@@ -50,6 +64,13 @@ module Twilio
                 # Streams AllTimeInstance records from the API as an Enumerable.
                 # This operation lazily loads records as efficiently as possible until the limit
                 # is reached.
+                # @param [all_time.Category] category The category
+                # @param [Time] start_date_before The start_date
+                # @param [Time] start_date The start_date
+                # @param [Time] start_date_after: The start_date
+                # @param [Time] end_date_before The end_date
+                # @param [Time] end_date The end_date
+                # @param [Time] end_date_after: The end_date
                 # @param [Integer] limit Upper limit for the number of records to return.                  stream()
                 #  guarantees to never return more than limit.                  Default is no limit
                 # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -57,10 +78,17 @@ module Twilio
                 #                       but a limit is defined, stream() will attempt to                      read the
                 #  limit with the most efficient page size,                       i.e. min(limit, 1000)
                 # @return [Enumerable] Enumerable that will yield up to limit results
-                def stream(limit: nil, page_size: nil)
+                def stream(category: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, limit: nil, page_size: nil)
                   limits = @version.read_limits(limit, page_size)
                   
                   page = self.page(
+                      category: category,
+                      start_date_before: start_date_before,
+                      start_date: start_date,
+                      start_date_after: start_date_after,
+                      end_date_before: end_date_before,
+                      end_date: end_date,
+                      end_date_after: end_date_after,
                       page_size: limits['page_size'],
                   )
                   
@@ -71,6 +99,13 @@ module Twilio
                 # When passed a block, yields AllTimeInstance records from the API.
                 # This operation lazily loads records as efficiently as possible until the limit
                 # is reached.
+                # @param [all_time.Category] category The category
+                # @param [Time] start_date_before The start_date
+                # @param [Time] start_date The start_date
+                # @param [Time] start_date_after: The start_date
+                # @param [Time] end_date_before The end_date
+                # @param [Time] end_date The end_date
+                # @param [Time] end_date_after: The end_date
                 # @param [Integer] limit Upper limit for the number of records to return.                  stream()
                 #  guarantees to never return more than limit.                  Default is no limit
                 # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
@@ -92,12 +127,26 @@ module Twilio
                 ##
                 # Retrieve a single page of AllTimeInstance records from the API.
                 # Request is executed immediately.
+                # @param [all_time.Category] category The category
+                # @param [Time] start_date_before The start_date
+                # @param [Time] start_date The start_date
+                # @param [Time] start_date_after: The start_date
+                # @param [Time] end_date_before The end_date
+                # @param [Time] end_date The end_date
+                # @param [Time] end_date_after: The end_date
                 # @param [String] page_token PageToken provided by the API
                 # @param [Integer] page_number Page Number, this value is simply for client state
                 # @param [Integer] page_size Number of records to return, defaults to 50
                 # @return [Page] Page of AllTimeInstance
-                def page(page_token: nil, page_number: nil, page_size: nil)
+                def page(category: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil, page_token: nil, page_number: nil, page_size: nil)
                   params = {
+                      'Category' => category,
+                      'StartDate<' => Twilio.serialize_iso8601(start_date_before),
+                      'StartDate' => Twilio.serialize_iso8601(start_date),
+                      'StartDate>' => Twilio.serialize_iso8601(start_date_after),
+                      'EndDate<' => Twilio.serialize_iso8601(end_date_before),
+                      'EndDate' => Twilio.serialize_iso8601(end_date),
+                      'EndDate>' => Twilio.serialize_iso8601(end_date_after),
                       'PageToken' => page_token,
                       'Page' => page_number,
                       'PageSize' => page_size,

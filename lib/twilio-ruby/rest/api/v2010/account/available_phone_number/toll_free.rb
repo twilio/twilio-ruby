@@ -44,6 +44,13 @@ module Twilio
               # @param [Boolean] exclude_foreign_address_required The
               #   exclude_foreign_address_required
               # @param [Boolean] beta The beta
+              # @param [String] near_number The near_number
+              # @param [String] near_lat_long The near_lat_long
+              # @param [String] distance The distance
+              # @param [String] in_postal_code The in_postal_code
+              # @param [String] in_region The in_region
+              # @param [String] in_rate_center The in_rate_center
+              # @param [String] in_lata The in_lata
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -51,7 +58,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, limit: nil, page_size: nil)
+              def list(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, near_number: nil, near_lat_long: nil, distance: nil, in_postal_code: nil, in_region: nil, in_rate_center: nil, in_lata: nil, limit: nil, page_size: nil)
                 self.stream(
                     area_code: area_code,
                     contains: contains,
@@ -62,6 +69,13 @@ module Twilio
                     exclude_local_address_required: exclude_local_address_required,
                     exclude_foreign_address_required: exclude_foreign_address_required,
                     beta: beta,
+                    near_number: near_number,
+                    near_lat_long: near_lat_long,
+                    distance: distance,
+                    in_postal_code: in_postal_code,
+                    in_region: in_region,
+                    in_rate_center: in_rate_center,
+                    in_lata: in_lata,
                     limit: limit,
                     page_size: page_size
                 ).entries
@@ -82,6 +96,13 @@ module Twilio
               # @param [Boolean] exclude_foreign_address_required The
               #   exclude_foreign_address_required
               # @param [Boolean] beta The beta
+              # @param [String] near_number The near_number
+              # @param [String] near_lat_long The near_lat_long
+              # @param [String] distance The distance
+              # @param [String] in_postal_code The in_postal_code
+              # @param [String] in_region The in_region
+              # @param [String] in_rate_center The in_rate_center
+              # @param [String] in_lata The in_lata
               # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -89,7 +110,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, limit: nil, page_size: nil)
+              def stream(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, near_number: nil, near_lat_long: nil, distance: nil, in_postal_code: nil, in_region: nil, in_rate_center: nil, in_lata: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
                 page = self.page(
@@ -102,6 +123,13 @@ module Twilio
                     exclude_local_address_required: exclude_local_address_required,
                     exclude_foreign_address_required: exclude_foreign_address_required,
                     beta: beta,
+                    near_number: near_number,
+                    near_lat_long: near_lat_long,
+                    distance: distance,
+                    in_postal_code: in_postal_code,
+                    in_region: in_region,
+                    in_rate_center: in_rate_center,
+                    in_lata: in_lata,
                     page_size: limits['page_size'],
                 )
                 
@@ -123,6 +151,13 @@ module Twilio
               # @param [Boolean] exclude_foreign_address_required The
               #   exclude_foreign_address_required
               # @param [Boolean] beta The beta
+              # @param [String] near_number The near_number
+              # @param [String] near_lat_long The near_lat_long
+              # @param [String] distance The distance
+              # @param [String] in_postal_code The in_postal_code
+              # @param [String] in_region The in_region
+              # @param [String] in_rate_center The in_rate_center
+              # @param [String] in_lata The in_lata
               # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
@@ -155,11 +190,18 @@ module Twilio
               # @param [Boolean] exclude_foreign_address_required The
               #   exclude_foreign_address_required
               # @param [Boolean] beta The beta
+              # @param [String] near_number The near_number
+              # @param [String] near_lat_long The near_lat_long
+              # @param [String] distance The distance
+              # @param [String] in_postal_code The in_postal_code
+              # @param [String] in_region The in_region
+              # @param [String] in_rate_center The in_rate_center
+              # @param [String] in_lata The in_lata
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of TollFreeInstance
-              def page(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, page_token: nil, page_number: nil, page_size: nil)
+              def page(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, near_number: nil, near_lat_long: nil, distance: nil, in_postal_code: nil, in_region: nil, in_rate_center: nil, in_lata: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
                     'AreaCode' => area_code,
                     'Contains' => contains,
@@ -170,6 +212,13 @@ module Twilio
                     'ExcludeLocalAddressRequired' => exclude_local_address_required,
                     'ExcludeForeignAddressRequired' => exclude_foreign_address_required,
                     'Beta' => beta,
+                    'NearNumber' => near_number,
+                    'NearLatLong' => near_lat_long,
+                    'Distance' => distance,
+                    'InPostalCode' => in_postal_code,
+                    'InRegion' => in_region,
+                    'InRateCenter' => in_rate_center,
+                    'InLata' => in_lata,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
