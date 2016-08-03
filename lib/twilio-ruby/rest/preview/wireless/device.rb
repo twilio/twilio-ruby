@@ -66,10 +66,10 @@ module Twilio
                 status: status,
                 sim_identifier: sim_identifier,
                 rate_plan: rate_plan,
-                page_size: limits['page_size'],
+                page_size: limits[:page_size],
             )
             
-            @version.stream(page, limit: limits['limit'], page_limit: limits['page_limit'])
+            @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
           
           ##
@@ -89,12 +89,12 @@ module Twilio
             limits = @version.read_limits
             
             page = self.page(
-                page_size: limits['page_size'],
+                page_size: limits[:page_size],
             )
             
             @version.stream(page,
-                            limit: limits['limit'],
-                            page_limit: limits['page_limit']).each {|x| yield x}
+                            limit: limits[:limit],
+                            page_limit: limits[:page_limit]).each {|x| yield x}
           end
           
           ##

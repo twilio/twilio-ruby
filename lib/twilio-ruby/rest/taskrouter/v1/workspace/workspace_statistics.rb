@@ -84,22 +84,14 @@ module Twilio
             ##
             # Fetch a WorkspaceStatisticsInstance
             # @param [String] minutes The minutes
-            # @param [Time] start_date_before The start_date
-            # @param [Time] start_date The start_date
-            # @param [Time] start_date_after: The start_date
-            # @param [Time] end_date_before The end_date
-            # @param [Time] end_date The end_date
-            # @param [Time] end_date_after: The end_date
+            # @param [String] start_date The start_date
+            # @param [String] end_date The end_date
             # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
-            def fetch(minutes: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil)
+            def fetch(minutes: nil, start_date: nil, end_date: nil)
               params = {
                   'Minutes' => minutes,
-                  'StartDate<' => Twilio.serialize_iso8601(start_date_before),
-                  'StartDate' => Twilio.serialize_iso8601(start_date),
-                  'StartDate>' => Twilio.serialize_iso8601(start_date_after),
-                  'EndDate<' => Twilio.serialize_iso8601(end_date_before),
-                  'EndDate' => Twilio.serialize_iso8601(end_date),
-                  'EndDate>' => Twilio.serialize_iso8601(end_date_after),
+                  'StartDate' => start_date,
+                  'EndDate' => end_date,
               }
               
               payload = @version.fetch(
@@ -182,22 +174,14 @@ module Twilio
             ##
             # Fetch a WorkspaceStatisticsInstance
             # @param [String] minutes The minutes
-            # @param [Time] start_date_before The start_date
-            # @param [Time] start_date The start_date
-            # @param [Time] start_date_after: The start_date
-            # @param [Time] end_date_before The end_date
-            # @param [Time] end_date The end_date
-            # @param [Time] end_date_after: The end_date
+            # @param [String] start_date The start_date
+            # @param [String] end_date The end_date
             # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
-            def fetch(minutes: nil, start_date_before: nil, start_date: nil, start_date_after: nil, end_date_before: nil, end_date: nil, end_date_after: nil)
+            def fetch(minutes: nil, start_date: nil, end_date: nil)
               context.fetch(
                   minutes: minutes,
-                  start_date_before: start_date_before,
                   start_date: start_date,
-                  start_date_after: start_date_after,
-                  end_date_before: end_date_before,
                   end_date: end_date,
-                  end_date_after: end_date_after,
               )
             end
             
