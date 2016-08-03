@@ -8,9 +8,9 @@ module Twilio
                     :identity,
                     :nbf
 
-      def initialize(account_sid, signing_key_id, secret, ttl=3600, identity=nil, nbf=nil)
+      def initialize(account_sid, key_sid, secret, ttl=3600, identity=nil, nbf=nil)
         @account_sid = account_sid
-        @signing_key_sid = signing_key_id
+        @key_sid = key_sid
         @secret = secret
         @ttl = ttl
         @identity = identity
@@ -37,8 +37,8 @@ module Twilio
         @grants.each { |grant| grants[grant.key] = grant.payload }
 
         payload = {
-            jti: "#{@signing_key_sid}-#{now}",
-            iss: @signing_key_sid,
+            jti: "#{@key_sid}-#{now}",
+            iss: @key_sid,
             sub: @account_sid,
             exp: now + @ttl,
             grants: grants
