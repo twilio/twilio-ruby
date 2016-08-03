@@ -442,7 +442,7 @@ module Twilio
             ##
             # Update the TaskInstance
             # @param [String] attributes The attributes
-            # @param [task.Status] assignment_status The assignment_status
+            # @param [reservation.Status] assignment_status The assignment_status
             # @param [String] reason The reason
             # @param [String] priority The priority
             # @return [TaskInstance] Updated TaskInstance

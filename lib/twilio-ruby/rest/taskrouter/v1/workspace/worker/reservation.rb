@@ -9,23 +9,23 @@ module Twilio
     class Taskrouter < Domain
       class V1 < Version
         class WorkspaceContext < InstanceContext
-          class TaskContext < InstanceContext
+          class WorkerContext < InstanceContext
             class ReservationList < ListResource
               ##
               # Initialize the ReservationList
               # @param [Version] version Version that contains the resource
               # @param [String] workspace_sid The workspace_sid
-              # @param [String] task_sid The task_sid
+              # @param [String] worker_sid The worker_sid
               # @return [ReservationList] ReservationList
-              def initialize(version, workspace_sid: nil, task_sid: nil)
+              def initialize(version, workspace_sid: nil, worker_sid: nil)
                 super(version)
                 
                 # Path Solution
                 @solution = {
                     workspace_sid: workspace_sid,
-                    task_sid: task_sid
+                    worker_sid: worker_sid
                 }
-                @uri = "/Workspaces/#{@solution[:workspace_sid]}/Tasks/#{@solution[:task_sid]}/Reservations"
+                @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers/#{@solution[:worker_sid]}/Reservations"
               end
               
               ##
@@ -131,7 +131,7 @@ module Twilio
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
               # @param [String] workspace_sid The workspace_sid
-              # @param [String] task_sid The task_sid
+              # @param [String] worker_sid The worker_sid
               # @return [ReservationPage] ReservationPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -149,7 +149,7 @@ module Twilio
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
-                    task_sid: @solution[:task_sid],
+                    worker_sid: @solution[:worker_sid],
                 )
               end
               
@@ -165,19 +165,19 @@ module Twilio
               # Initialize the ReservationContext
               # @param [Version] version Version that contains the resource
               # @param [String] workspace_sid The workspace_sid
-              # @param [String] task_sid The task_sid
+              # @param [String] worker_sid The worker_sid
               # @param [String] sid The sid
               # @return [ReservationContext] ReservationContext
-              def initialize(version, workspace_sid, task_sid, sid)
+              def initialize(version, workspace_sid, worker_sid, sid)
                 super(version)
                 
                 # Path Solution
                 @solution = {
                     workspace_sid: workspace_sid,
-                    task_sid: task_sid,
+                    worker_sid: worker_sid,
                     sid: sid,
                 }
-                @uri = "/Workspaces/#{@solution[:workspace_sid]}/Tasks/#{@solution[:task_sid]}/Reservations/#{@solution[:sid]}"
+                @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers/#{@solution[:worker_sid]}/Reservations/#{@solution[:sid]}"
               end
               
               ##
@@ -196,7 +196,7 @@ module Twilio
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
-                    task_sid: @solution[:task_sid],
+                    worker_sid: @solution[:worker_sid],
                     sid: @solution[:sid],
                 )
               end
@@ -257,7 +257,7 @@ module Twilio
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
-                    task_sid: @solution[:task_sid],
+                    worker_sid: @solution[:worker_sid],
                     sid: @solution[:sid],
                 )
               end
@@ -276,10 +276,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] workspace_sid The workspace_sid
-              # @param [String] task_sid The task_sid
+              # @param [String] worker_sid The worker_sid
               # @param [String] sid The sid
               # @return [ReservationInstance] ReservationInstance
-              def initialize(version, payload, workspace_sid: nil, task_sid: nil, sid: nil)
+              def initialize(version, payload, workspace_sid: nil, worker_sid: nil, sid: nil)
                 super(version)
                 
                 # Marshaled Properties
@@ -299,7 +299,7 @@ module Twilio
                 @instance_context = nil
                 @params = {
                     'workspace_sid' => workspace_sid,
-                    'task_sid' => task_sid,
+                    'worker_sid' => worker_sid,
                     'sid' => sid || @properties['sid'],
                 }
               end
@@ -314,7 +314,7 @@ module Twilio
                   @instance_context = ReservationContext.new(
                       @version,
                       @params['workspace_sid'],
-                      @params['task_sid'],
+                      @params['worker_sid'],
                       @params['sid'],
                   )
                 end

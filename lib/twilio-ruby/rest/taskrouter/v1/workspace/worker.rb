@@ -261,6 +261,7 @@ module Twilio
               
               # Dependents
               @statistics = nil
+              @reservations = nil
             end
             
             ##
@@ -326,6 +327,30 @@ module Twilio
                   @solution[:workspace_sid],
                   @solution[:sid],
               )
+            end
+            
+            ##
+            # Access the reservations
+            # @return [ReservationList] ReservationList
+            def reservations(sid=:unset)
+              if sid != :unset
+                return ReservationContext.new(
+                    @version,
+                    @solution[:workspace_sid],
+                    @solution[:sid],
+                    sid,
+                )
+              end
+              
+              unless @reservations
+                @reservations = ReservationList.new(
+                    @version,
+                    workspace_sid: @solution[:workspace_sid],
+                    worker_sid: @solution[:sid],
+                )
+              end
+              
+              @reservations
             end
             
             ##
@@ -463,6 +488,13 @@ module Twilio
             # @return [statistics] statistics
             def statistics
               context.statistics
+            end
+            
+            ##
+            # Access the reservations
+            # @return [reservations] reservations
+            def reservations
+              context.reservations
             end
             
             ##
