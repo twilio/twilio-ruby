@@ -62,6 +62,21 @@ module Twilio
         )
       end
 
+      def exception(response, header)
+        message = header
+        code = response.status_code
+
+        if response.body.has_key?('message')
+          message += ": #{response.body['message']}"
+        end
+
+        if response.body.has_key?('code')
+          code = response.body['code']
+        end
+
+        return Twilio::REST::RestException.new(message, code, response.status_code)
+      end
+
       def fetch(method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
         response = self.request(
           method,
@@ -74,7 +89,7 @@ module Twilio
         )
 
         if response.status_code < 200 || response.status_code >= 300
-          raise Twilio::REST::TwilioException.new('Unable to fetch record')
+          raise exception(response, 'Unable to fetch record')
         end
 
         response.body
@@ -92,7 +107,7 @@ module Twilio
         )
 
         if response.status_code < 200 || response.status_code >= 300
-          raise TwilioException.new('Unable to update record')
+          raise exception(response, 'Unable to update record')
         end
 
         response.body
@@ -110,7 +125,7 @@ module Twilio
         )
 
         if response.status_code < 200 || response.status_code >= 300
-          raise TwilioException.new('Unable to delete record')
+          raise exception(response, 'Unable to delete record')
         end
 
         response.status_code == 204
@@ -159,10 +174,10 @@ module Twilio
                     timeout)
 
         if response.status_code < 200 || response.status_code >= 300
-          raise TwilioException.new("[#{response.status_code}] Unable to create record\n#{response.body}")
+          raise exception(response, 'Unable to create record')
         end
 
-        return response.body
+        response.body
       end
     end
   end
