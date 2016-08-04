@@ -1,21 +1,23 @@
 module Twilio
   module REST
     class TwilioException < Exception
-      def initialize(msg, body = nil)
-        @msg = msg
+      attr_reader :message, :body
+
+      def initialize(message, body = nil)
+        @message = message
         @body = body
       end
 
       def to_s
-        "#{@msg}: #{@body || 'no body'}"
+        "#{@message}: #{@body || 'no body'}"
       end
     end
 
     class RestException < TwilioException
-      attr_accessor :msg, :code, :status_code
+      attr_reader :message, :code, :status_code
 
-      def initialize(msg, code, status_code)
-        @msg = msg
+      def initialize(message, code, status_code)
+        @message = message
         @code = code
         @status_code = status_code
       end
