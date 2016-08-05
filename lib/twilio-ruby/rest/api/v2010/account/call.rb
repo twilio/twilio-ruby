@@ -48,6 +48,7 @@ module Twilio
             # @param [String] status_callback A URL that Twilio will request when the call
             #   ends to notify your app. If an `ApplicationSid` was provided, this parameter is
             #   ignored.
+            # @param [String] status_callback_event The status_callback_event
             # @param [String] status_callback_method The HTTP method that Twilio should use to
             #   request the `StatusCallback`. Defaults to `POST`. If an `ApplicationSid` was
             #   provided, this parameter is ignored.
@@ -66,6 +67,10 @@ module Twilio
             # @param [Boolean] record Set this parameter to true to record the entirety of a
             #   phone call. The RecordingUrl will be sent to the StatusCallback URL. Defaults to
             #   false.
+            # @param [String] recording_channels The recording_channels
+            # @param [String] recording_status_callback The recording_status_callback
+            # @param [String] recording_status_callback_method The
+            #   recording_status_callback_method
             # @param [String] sip_auth_username The sip_auth_username
             # @param [String] sip_auth_password The sip_auth_password
             # @param [String] url The fully qualified URL that should be consulted when the
@@ -75,7 +80,7 @@ module Twilio
             #   should use to handle this phone call. If this parameter is present, Twilio will
             #   ignore all of the voice URLs passed and use the URLs set on the application.
             # @return [CallInstance] Newly created CallInstance
-            def create(to: nil, from: nil, method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, status_callback_method: nil, send_digits: nil, if_machine: nil, timeout: nil, record: nil, sip_auth_username: nil, sip_auth_password: nil, url: nil, application_sid: nil)
+            def create(to: nil, from: nil, method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, status_callback_event: nil, status_callback_method: nil, send_digits: nil, if_machine: nil, timeout: nil, record: nil, recording_channels: nil, recording_status_callback: nil, recording_status_callback_method: nil, sip_auth_username: nil, sip_auth_password: nil, url: nil, application_sid: nil)
               data = {
                   'To' => to,
                   'From' => from,
@@ -85,11 +90,15 @@ module Twilio
                   'FallbackUrl' => fallback_url,
                   'FallbackMethod' => fallback_method,
                   'StatusCallback' => status_callback,
+                  'StatusCallbackEvent' => status_callback_event,
                   'StatusCallbackMethod' => status_callback_method,
                   'SendDigits' => send_digits,
                   'IfMachine' => if_machine,
                   'Timeout' => timeout,
                   'Record' => record,
+                  'RecordingChannels' => recording_channels,
+                  'RecordingStatusCallback' => recording_status_callback,
+                  'RecordingStatusCallbackMethod' => recording_status_callback_method,
                   'SipAuthUsername' => sip_auth_username,
                   'SipAuthPassword' => sip_auth_password,
               }
