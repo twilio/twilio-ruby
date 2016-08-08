@@ -101,6 +101,41 @@ module Twilio
 
       end
 
+      class ProgrammableVoiceGrant
+        attr_accessor :outgoing_application_sid,
+                      :outgoing_application_params,
+                      :push_credential_sid,
+                      :endpoint_id
+
+        def key
+          'programmable_voice'
+        end
+
+        def payload
+          payload = {}
+
+          if outgoing_application_sid
+            outgoing = {}
+            outgoing[:application_sid] = outgoing_application_sid
+            if outgoing_application_params
+              outgoing[:params] = outgoing_application_params
+            end
+
+            payload[:outgoing] = outgoing
+          end
+
+          if push_credential_sid
+            payload[:push_credential_sid] = push_credential_sid
+          end
+
+          if endpoint_id
+            payload[:endpoint_id] = endpoint_id
+          end
+
+          payload
+        end
+      end
+
     end
   end
 end
