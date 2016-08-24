@@ -113,7 +113,7 @@ describe Twilio::Util::AccessToken do
 
   it 'should add programmable voice grant' do
     scat = Twilio::Util::AccessToken.new 'AC123', 'SK123','secret'
-    pvg = Twilio::Util::AccessToken::ProgrammableVoiceGrant.new
+    pvg = Twilio::Util::AccessToken::VoiceGrant.new
     pvg.outgoing_application_sid = 'AP123'
     pvg.outgoing_application_params = { :foo => 'bar' }
 
@@ -131,9 +131,9 @@ describe Twilio::Util::AccessToken do
     expect(payload['jti']).to start_with payload['iss']
     expect(payload['grants']).not_to be_nil
     expect(payload['grants'].count).to eq(1)
-    expect(payload['grants']['programmable_voice']).not_to be_nil
-    expect(payload['grants']['programmable_voice']['outgoing']['application_sid']).to eq('AP123')
-    expect(payload['grants']['programmable_voice']['outgoing']['params']['foo']).to eq('bar')
+    expect(payload['grants']['voice']).not_to be_nil
+    expect(payload['grants']['voice']['outgoing']['application_sid']).to eq('AP123')
+    expect(payload['grants']['voice']['outgoing']['params']['foo']).to eq('bar')
   end
 
 end
