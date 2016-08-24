@@ -106,14 +106,14 @@ module Twilio
 
       end
 
-      class ProgrammableVoiceGrant
+      class VoiceGrant
         attr_accessor :outgoing_application_sid,
                       :outgoing_application_params,
                       :push_credential_sid,
                       :endpoint_id
 
         def key
-          'programmable_voice'
+          'voice'
         end
 
         def payload
