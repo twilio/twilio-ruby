@@ -26,7 +26,6 @@ module Twilio
         now = Time.now.to_i - 1
         headers = {
             'cty' => 'twilio-fpa;v=1',
-            'typ' => 'JWT'
         }
 
         grants = {}
