@@ -25,8 +25,7 @@ module Twilio
       def to_jwt(algorithm='HS256')
         now = Time.now.to_i - 1
         headers = {
-            cty: 'twilio-fpa;v=1',
-            typ: 'JWT'
+            cty: 'twilio-fpa;v=1'
         }
 
         grants = {}
@@ -104,6 +103,41 @@ module Twilio
           payload
         end
 
+      end
+
+      class VoiceGrant
+        attr_accessor :outgoing_application_sid,
+                      :outgoing_application_params,
+                      :push_credential_sid,
+                      :endpoint_id
+
+        def key
+          'voice'
+        end
+
+        def payload
+          payload = {}
+
+          if outgoing_application_sid
+            outgoing = {}
+            outgoing[:application_sid] = outgoing_application_sid
+            if outgoing_application_params
+              outgoing[:params] = outgoing_application_params
+            end
+
+            payload[:outgoing] = outgoing
+          end
+
+          if push_credential_sid
+            payload[:push_credential_sid] = push_credential_sid
+          end
+
+          if endpoint_id
+            payload[:endpoint_id] = endpoint_id
+          end
+
+          payload
+        end
       end
 
     end
