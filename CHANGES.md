@@ -1,7 +1,7 @@
 twilio-ruby changelog
 =====================
 
-Version 5.0.0-rc9
+Version 5.0.0-rc16
 -------------
 
 Release September 1, 2016
