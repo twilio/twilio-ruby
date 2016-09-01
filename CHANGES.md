@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 4.12.0
+--------------
+
+Released September 1, 2016:
+
+- Add voice grant.
+
 Version 4.11.1
 -------------
 
