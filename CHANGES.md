@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+Version 5.0.0-rc9
+-------------
+
+Release September 1, 2016
+
+- Add voice grant.
+
 Version 5.0.0-rc8
 -------------
 
@@ -41,7 +48,7 @@ Release January 29, 2016
 - Fully configurable and swappable HTTP Client interfaces
 - Normalization of mounts -> endpoints relations, with first-class unified support for subdomains and multi-version support
 - Fixed URL pathing of subresources, preventing edge case errors with path building via mounting
-- Proper serialization/deserialization of types (integers, dates, etc.) 
+- Proper serialization/deserialization of types (integers, dates, etc.)
 
 Version 4.2.0
 -------------
