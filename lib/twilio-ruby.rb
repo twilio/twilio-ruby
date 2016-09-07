@@ -11,6 +11,7 @@ require 'time'
 require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
 require 'rack/twilio_webhook_authentication'
 
+require 'twilio-ruby/error'
 require 'twilio-ruby/util'
 require 'twilio-ruby/jwt/access_token'
 require 'twilio-ruby/jwt/capability'
