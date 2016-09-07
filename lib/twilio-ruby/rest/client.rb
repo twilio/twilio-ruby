@@ -14,8 +14,8 @@ module Twilio
       ##
       # Initializes the Twilio Client
       def initialize(username=nil, password=nil, account_sid=nil, http_client=Twilio::HTTP::Client.new)
-        @username = username || Twilio.configuration.account_sid
-        @password = password || Twilio.configuration.auth_token
+        @username = username || Twilio.account_sid
+        @password = password || Twilio.auth_token
         @account_sid = account_sid || @username
         @auth_token = @password
         @auth = [@username, @password]
@@ -24,9 +24,10 @@ module Twilio
         # Domains
         @api = nil
         @ip_messaging = nil
+        @chat = nil
         @lookups = nil
         @monitor = nil
-        @notifications = nil
+        @notify = nil
         @preview = nil
         @pricing = nil
         @taskrouter = nil
@@ -78,6 +79,12 @@ module Twilio
       end
       
       ##
+      # Access the Chat Twilio Domain
+      def chat
+        @chat ||= Chat.new self
+      end
+      
+      ##
       # Access the Lookups Twilio Domain
       def lookups
         @lookups ||= Lookups.new self
@@ -90,9 +97,9 @@ module Twilio
       end
       
       ##
-      # Access the Notifications Twilio Domain
-      def notifications
-        @notifications ||= Notifications.new self
+      # Access the Notify Twilio Domain
+      def notify
+        @notify ||= Notify.new self
       end
       
       ##
@@ -175,6 +182,10 @@ module Twilio
         return self.account.new_signing_keys
       end
       
+      def notifications
+        return self.account.notifications
+      end
+      
       def outgoing_caller_ids
         return self.account.outgoing_caller_ids
       end
@@ -199,8 +210,8 @@ module Twilio
         return self.account.sip
       end
       
-      def sms
-        return self.account.sms
+      def short_codes
+        return self.account.short_codes
       end
       
       def tokens

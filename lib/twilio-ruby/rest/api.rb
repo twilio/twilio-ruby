@@ -112,8 +112,8 @@ module Twilio
         self.account.sip()
       end
       
-      def sms
-        self.account.sms()
+      def short_codes(sid=:unset)
+        self.account.short_codes(sid)
       end
       
       def tokens

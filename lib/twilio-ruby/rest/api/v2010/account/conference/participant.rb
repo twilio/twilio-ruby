@@ -35,6 +35,7 @@ module Twilio
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
               # @param [Boolean] muted Only show participants that are muted or unmuted
+              # @param [Boolean] hold The hold
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -42,9 +43,10 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(muted: nil, limit: nil, page_size: nil)
+              def list(muted: nil, hold: nil, limit: nil, page_size: nil)
                 self.stream(
                     muted: muted,
+                    hold: hold,
                     limit: limit,
                     page_size: page_size
                 ).entries
@@ -55,6 +57,7 @@ module Twilio
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
               # @param [Boolean] muted Only show participants that are muted or unmuted
+              # @param [Boolean] hold The hold
               # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -62,11 +65,12 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(muted: nil, limit: nil, page_size: nil)
+              def stream(muted: nil, hold: nil, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
                 
                 page = self.page(
                     muted: muted,
+                    hold: hold,
                     page_size: limits[:page_size],
                 )
                 
@@ -78,6 +82,7 @@ module Twilio
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
               # @param [Boolean] muted Only show participants that are muted or unmuted
+              # @param [Boolean] hold The hold
               # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
@@ -100,13 +105,15 @@ module Twilio
               # Retrieve a single page of ParticipantInstance records from the API.
               # Request is executed immediately.
               # @param [Boolean] muted Only show participants that are muted or unmuted
+              # @param [Boolean] hold The hold
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of ParticipantInstance
-              def page(muted: nil, page_token: nil, page_number: nil, page_size: nil)
+              def page(muted: nil, hold: nil, page_token: nil, page_number: nil, page_size: nil)
                 params = {
                     'Muted' => muted,
+                    'Hold' => hold,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
@@ -209,10 +216,16 @@ module Twilio
               ##
               # Update the ParticipantInstance
               # @param [Boolean] muted Indicates if the participant should be muted
+              # @param [Boolean] hold The hold
+              # @param [String] hold_url The hold_url
+              # @param [String] hold_method The hold_method
               # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(muted: nil)
+              def update(muted: nil, hold: nil, hold_url: nil, hold_method: nil)
                 data = {
                     'Muted' => muted,
+                    'Hold' => hold,
+                    'HoldUrl' => hold_url,
+                    'HoldMethod' => hold_method,
                 }
                 
                 payload = @version.update(
@@ -268,6 +281,7 @@ module Twilio
                     'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                     'end_conference_on_exit' => payload['end_conference_on_exit'],
                     'muted' => payload['muted'],
+                    'hold' => payload['hold'],
                     'start_conference_on_enter' => payload['start_conference_on_enter'],
                     'uri' => payload['uri'],
                 }
@@ -326,6 +340,10 @@ module Twilio
                 @properties['muted']
               end
               
+              def hold
+                @properties['hold']
+              end
+              
               def start_conference_on_enter
                 @properties['start_conference_on_enter']
               end
@@ -344,10 +362,16 @@ module Twilio
               ##
               # Update the ParticipantInstance
               # @param [Boolean] muted Indicates if the participant should be muted
+              # @param [Boolean] hold The hold
+              # @param [String] hold_url The hold_url
+              # @param [String] hold_method The hold_method
               # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(muted: nil)
+              def update(muted: nil, hold: nil, hold_url: nil, hold_method: nil)
                 context.update(
                     muted: muted,
+                    hold: hold,
+                    hold_url: hold_url,
+                    hold_method: hold_method,
                 )
               end
               

@@ -219,7 +219,7 @@ module Twilio
             @sandbox = nil
             @signing_keys = nil
             @sip = nil
-            @sms = nil
+            @short_codes = nil
             @tokens = nil
             @transcriptions = nil
             @usage = nil
@@ -654,17 +654,25 @@ module Twilio
           end
           
           ##
-          # Access the sms
-          # @return [SmsList] SmsList
-          def sms
-            unless @sms
-              @sms = SmsList.new(
+          # Access the short_codes
+          # @return [ShortCodeList] ShortCodeList
+          def short_codes(sid=:unset)
+            if sid != :unset
+              return ShortCodeContext.new(
+                  @version,
+                  @solution[:sid],
+                  sid,
+              )
+            end
+            
+            unless @short_codes
+              @short_codes = ShortCodeList.new(
                   @version,
                   account_sid: @solution[:sid],
               )
             end
             
-            @sms
+            @short_codes
           end
           
           ##
@@ -981,10 +989,10 @@ module Twilio
           end
           
           ##
-          # Access the sms
-          # @return [sms] sms
-          def sms
-            context.sms
+          # Access the short_codes
+          # @return [short_codes] short_codes
+          def short_codes
+            context.short_codes
           end
           
           ##

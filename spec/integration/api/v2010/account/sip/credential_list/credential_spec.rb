@@ -188,18 +188,14 @@ describe 'Credential' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .sip \
                        .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(username: "username", password: "password")
+                       .credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
     }.to raise_exception(Twilio::REST::TwilioException)
     
-    values = {
-        'Username' => "username",
-        'Password' => "password",
-    }
+    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
-        data: values,
     ))).to eq(true)
   end
 
@@ -222,7 +218,7 @@ describe 'Credential' do
     actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                               .sip \
                               .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(username: "username", password: "password")
+                              .credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
     
     expect(actual).to_not eq(nil)
   end

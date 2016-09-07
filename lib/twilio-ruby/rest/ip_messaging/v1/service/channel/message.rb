@@ -33,11 +33,13 @@ module Twilio
               # Request is executed immediately.
               # @param [String] body The body
               # @param [String] from The from
+              # @param [String] attributes The attributes
               # @return [MessageInstance] Newly created MessageInstance
-              def create(body: nil, from: nil)
+              def create(body: nil, from: nil, attributes: nil)
                 data = {
                     'Body' => body,
                     'From' => from,
+                    'Attributes' => attributes,
                 }
                 
                 payload = @version.create(

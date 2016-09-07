@@ -30,11 +30,15 @@ module Twilio
             # Request is executed immediately.
             # @param [String] identity The identity
             # @param [String] role_sid The role_sid
+            # @param [String] attributes The attributes
+            # @param [String] friendly_name The friendly_name
             # @return [UserInstance] Newly created UserInstance
-            def create(identity: nil, role_sid: nil)
+            def create(identity: nil, role_sid: nil, attributes: nil, friendly_name: nil)
               data = {
                   'Identity' => identity,
                   'RoleSid' => role_sid,
+                  'Attributes' => attributes,
+                  'FriendlyName' => friendly_name,
               }
               
               payload = @version.create(

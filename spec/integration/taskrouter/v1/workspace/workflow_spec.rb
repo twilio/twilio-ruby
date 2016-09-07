@@ -209,13 +209,12 @@ describe 'Workflow' do
     
     expect {
       @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .workflows.create(friendly_name: "friendly_name", configuration: "configuration", assignment_callback_url: "https://example.com")
+                           .workflows.create(friendly_name: "friendly_name", configuration: "configuration")
     }.to raise_exception(Twilio::REST::TwilioException)
     
     values = {
         'FriendlyName' => "friendly_name",
         'Configuration' => "configuration",
-        'AssignmentCallbackUrl' => "https://example.com",
     }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -247,7 +246,7 @@ describe 'Workflow' do
     ))
     
     actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .workflows.create(friendly_name: "friendly_name", configuration: "configuration", assignment_callback_url: "https://example.com")
+                                  .workflows.create(friendly_name: "friendly_name", configuration: "configuration")
     
     expect(actual).to_not eq(nil)
   end

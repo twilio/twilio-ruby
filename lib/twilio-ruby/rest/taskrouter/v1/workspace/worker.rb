@@ -262,6 +262,7 @@ module Twilio
               # Dependents
               @statistics = nil
               @reservations = nil
+              @worker_channels = nil
             end
             
             ##
@@ -351,6 +352,30 @@ module Twilio
               end
               
               @reservations
+            end
+            
+            ##
+            # Access the worker_channels
+            # @return [WorkerChannelList] WorkerChannelList
+            def worker_channels(sid=:unset)
+              if sid != :unset
+                return WorkerChannelContext.new(
+                    @version,
+                    @solution[:workspace_sid],
+                    @solution[:sid],
+                    sid,
+                )
+              end
+              
+              unless @worker_channels
+                @worker_channels = WorkerChannelList.new(
+                    @version,
+                    workspace_sid: @solution[:workspace_sid],
+                    worker_sid: @solution[:sid],
+                )
+              end
+              
+              @worker_channels
             end
             
             ##
@@ -495,6 +520,13 @@ module Twilio
             # @return [reservations] reservations
             def reservations
               context.reservations
+            end
+            
+            ##
+            # Access the worker_channels
+            # @return [worker_channels] worker_channels
+            def worker_channels
+              context.worker_channels
             end
             
             ##

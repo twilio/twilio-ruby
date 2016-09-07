@@ -115,12 +115,16 @@ module Twilio
           # Request is executed immediately.
           # @param [String] friendly_name The friendly_name
           # @param [String] event_callback_url The event_callback_url
+          # @param [String] events_filter The events_filter
+          # @param [Boolean] multi_task_enabled The multi_task_enabled
           # @param [String] template The template
           # @return [WorkspaceInstance] Newly created WorkspaceInstance
-          def create(friendly_name: nil, event_callback_url: nil, template: nil)
+          def create(friendly_name: nil, event_callback_url: nil, events_filter: nil, multi_task_enabled: nil, template: nil)
             data = {
                 'FriendlyName' => friendly_name,
                 'EventCallbackUrl' => event_callback_url,
+                'EventsFilter' => events_filter,
+                'MultiTaskEnabled' => multi_task_enabled,
                 'Template' => template,
             }
             
@@ -198,6 +202,7 @@ module Twilio
             @workers = nil
             @workflows = nil
             @statistics = nil
+            @task_channels = nil
           end
           
           ##
@@ -223,14 +228,18 @@ module Twilio
           # Update the WorkspaceInstance
           # @param [String] default_activity_sid The default_activity_sid
           # @param [String] event_callback_url The event_callback_url
+          # @param [String] events_filter The events_filter
           # @param [String] friendly_name The friendly_name
+          # @param [Boolean] multi_task_enabled The multi_task_enabled
           # @param [String] timeout_activity_sid The timeout_activity_sid
           # @return [WorkspaceInstance] Updated WorkspaceInstance
-          def update(default_activity_sid: nil, event_callback_url: nil, friendly_name: nil, timeout_activity_sid: nil)
+          def update(default_activity_sid: nil, event_callback_url: nil, events_filter: nil, friendly_name: nil, multi_task_enabled: nil, timeout_activity_sid: nil)
             data = {
                 'DefaultActivitySid' => default_activity_sid,
                 'EventCallbackUrl' => event_callback_url,
+                'EventsFilter' => events_filter,
                 'FriendlyName' => friendly_name,
+                'MultiTaskEnabled' => multi_task_enabled,
                 'TimeoutActivitySid' => timeout_activity_sid,
             }
             
@@ -397,6 +406,28 @@ module Twilio
           end
           
           ##
+          # Access the task_channels
+          # @return [TaskChannelList] TaskChannelList
+          def task_channels(sid=:unset)
+            if sid != :unset
+              return TaskChannelContext.new(
+                  @version,
+                  @solution[:sid],
+                  sid,
+              )
+            end
+            
+            unless @task_channels
+              @task_channels = TaskChannelList.new(
+                  @version,
+                  workspace_sid: @solution[:sid],
+              )
+            end
+            
+            @task_channels
+          end
+          
+          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -422,7 +453,9 @@ module Twilio
                 'default_activity_name' => payload['default_activity_name'],
                 'default_activity_sid' => payload['default_activity_sid'],
                 'event_callback_url' => payload['event_callback_url'],
+                'events_filter' => payload['events_filter'],
                 'friendly_name' => payload['friendly_name'],
+                'multi_task_enabled' => payload['multi_task_enabled'],
                 'sid' => payload['sid'],
                 'timeout_activity_name' => payload['timeout_activity_name'],
                 'timeout_activity_sid' => payload['timeout_activity_sid'],
@@ -474,8 +507,16 @@ module Twilio
             @properties['event_callback_url']
           end
           
+          def events_filter
+            @properties['events_filter']
+          end
+          
           def friendly_name
             @properties['friendly_name']
+          end
+          
+          def multi_task_enabled
+            @properties['multi_task_enabled']
           end
           
           def sid
@@ -501,14 +542,18 @@ module Twilio
           # Update the WorkspaceInstance
           # @param [String] default_activity_sid The default_activity_sid
           # @param [String] event_callback_url The event_callback_url
+          # @param [String] events_filter The events_filter
           # @param [String] friendly_name The friendly_name
+          # @param [Boolean] multi_task_enabled The multi_task_enabled
           # @param [String] timeout_activity_sid The timeout_activity_sid
           # @return [WorkspaceInstance] Updated WorkspaceInstance
-          def update(default_activity_sid: nil, event_callback_url: nil, friendly_name: nil, timeout_activity_sid: nil)
+          def update(default_activity_sid: nil, event_callback_url: nil, events_filter: nil, friendly_name: nil, multi_task_enabled: nil, timeout_activity_sid: nil)
             context.update(
                 default_activity_sid: default_activity_sid,
                 event_callback_url: event_callback_url,
+                events_filter: events_filter,
                 friendly_name: friendly_name,
+                multi_task_enabled: multi_task_enabled,
                 timeout_activity_sid: timeout_activity_sid,
             )
           end
@@ -567,6 +612,13 @@ module Twilio
           # @return [statistics] statistics
           def statistics
             context.statistics
+          end
+          
+          ##
+          # Access the task_channels
+          # @return [task_channels] task_channels
+          def task_channels
+            context.task_channels
           end
           
           ##

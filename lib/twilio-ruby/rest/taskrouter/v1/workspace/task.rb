@@ -35,6 +35,7 @@ module Twilio
             # @param [String] workflow_name The workflow_name
             # @param [String] task_queue_sid The task_queue_sid
             # @param [String] task_queue_name The task_queue_name
+            # @param [String] task_channel The task_channel
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -42,7 +43,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, limit: nil, page_size: nil)
+            def list(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, task_channel: nil, limit: nil, page_size: nil)
               self.stream(
                   priority: priority,
                   assignment_status: assignment_status,
@@ -50,6 +51,7 @@ module Twilio
                   workflow_name: workflow_name,
                   task_queue_sid: task_queue_sid,
                   task_queue_name: task_queue_name,
+                  task_channel: task_channel,
                   limit: limit,
                   page_size: page_size
               ).entries
@@ -65,6 +67,7 @@ module Twilio
             # @param [String] workflow_name The workflow_name
             # @param [String] task_queue_sid The task_queue_sid
             # @param [String] task_queue_name The task_queue_name
+            # @param [String] task_channel The task_channel
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -72,7 +75,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, limit: nil, page_size: nil)
+            def stream(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, task_channel: nil, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
               
               page = self.page(
@@ -82,6 +85,7 @@ module Twilio
                   workflow_name: workflow_name,
                   task_queue_sid: task_queue_sid,
                   task_queue_name: task_queue_name,
+                  task_channel: task_channel,
                   page_size: limits[:page_size],
               )
               
@@ -98,6 +102,7 @@ module Twilio
             # @param [String] workflow_name The workflow_name
             # @param [String] task_queue_sid The task_queue_sid
             # @param [String] task_queue_name The task_queue_name
+            # @param [String] task_channel The task_channel
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
@@ -125,11 +130,12 @@ module Twilio
             # @param [String] workflow_name The workflow_name
             # @param [String] task_queue_sid The task_queue_sid
             # @param [String] task_queue_name The task_queue_name
+            # @param [String] task_channel The task_channel
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of TaskInstance
-            def page(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, page_token: nil, page_number: nil, page_size: nil)
+            def page(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, task_channel: nil, page_token: nil, page_number: nil, page_size: nil)
               params = {
                   'Priority' => priority,
                   'AssignmentStatus' => assignment_status,
@@ -137,6 +143,7 @@ module Twilio
                   'WorkflowName' => workflow_name,
                   'TaskQueueSid' => task_queue_sid,
                   'TaskQueueName' => task_queue_name,
+                  'TaskChannel' => task_channel,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
@@ -156,13 +163,15 @@ module Twilio
             # @param [String] workflow_sid The workflow_sid
             # @param [String] timeout The timeout
             # @param [String] priority The priority
+            # @param [String] task_channel The task_channel
             # @return [TaskInstance] Newly created TaskInstance
-            def create(attributes: nil, workflow_sid: nil, timeout: nil, priority: nil)
+            def create(attributes: nil, workflow_sid: nil, timeout: nil, priority: nil, task_channel: nil)
               data = {
                   'Attributes' => attributes,
                   'WorkflowSid' => workflow_sid,
                   'Timeout' => timeout,
                   'Priority' => priority,
+                  'TaskChannel' => task_channel,
               }
               
               payload = @version.create(
@@ -266,13 +275,15 @@ module Twilio
             # @param [task.Status] assignment_status The assignment_status
             # @param [String] reason The reason
             # @param [String] priority The priority
+            # @param [String] task_channel The task_channel
             # @return [TaskInstance] Updated TaskInstance
-            def update(attributes: nil, assignment_status: nil, reason: nil, priority: nil)
+            def update(attributes: nil, assignment_status: nil, reason: nil, priority: nil, task_channel: nil)
               data = {
                   'Attributes' => attributes,
                   'AssignmentStatus' => assignment_status,
                   'Reason' => reason,
                   'Priority' => priority,
+                  'TaskChannel' => task_channel,
               }
               
               payload = @version.update(
@@ -351,6 +362,8 @@ module Twilio
                   'reason' => payload['reason'],
                   'sid' => payload['sid'],
                   'task_queue_sid' => payload['task_queue_sid'],
+                  'task_channel_sid' => payload['task_channel_sid'],
+                  'task_channel_unique_name' => payload['task_channel_unique_name'],
                   'timeout' => payload['timeout'].to_i,
                   'workflow_sid' => payload['workflow_sid'],
                   'workspace_sid' => payload['workspace_sid'],
@@ -420,6 +433,14 @@ module Twilio
               @properties['task_queue_sid']
             end
             
+            def task_channel_sid
+              @properties['task_channel_sid']
+            end
+            
+            def task_channel_unique_name
+              @properties['task_channel_unique_name']
+            end
+            
             def timeout
               @properties['timeout']
             end
@@ -445,13 +466,15 @@ module Twilio
             # @param [reservation.Status] assignment_status The assignment_status
             # @param [String] reason The reason
             # @param [String] priority The priority
+            # @param [String] task_channel The task_channel
             # @return [TaskInstance] Updated TaskInstance
-            def update(attributes: nil, assignment_status: nil, reason: nil, priority: nil)
+            def update(attributes: nil, assignment_status: nil, reason: nil, priority: nil, task_channel: nil)
               context.update(
                   attributes: attributes,
                   assignment_status: assignment_status,
                   reason: reason,
                   priority: priority,
+                  task_channel: task_channel,
               )
             end
             

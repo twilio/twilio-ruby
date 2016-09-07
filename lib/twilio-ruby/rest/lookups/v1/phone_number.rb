@@ -123,6 +123,7 @@ module Twilio
             
             # Marshaled Properties
             @properties = {
+                'caller_name' => payload['caller_name'],
                 'country_code' => payload['country_code'],
                 'phone_number' => payload['phone_number'],
                 'national_format' => payload['national_format'],
@@ -150,6 +151,10 @@ module Twilio
               )
             end
             @instance_context
+          end
+          
+          def caller_name
+            @properties['caller_name']
           end
           
           def country_code

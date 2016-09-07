@@ -36,6 +36,7 @@ describe 'Participant' do
           "date_updated": "Fri, 18 Feb 2011 21:07:19 +0000",
           "end_conference_on_exit": false,
           "muted": false,
+          "hold": false,
           "start_conference_on_enter": true,
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Conferences/CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
@@ -55,17 +56,14 @@ describe 'Participant' do
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .conferences("CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .participants("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(muted: true)
+                       .participants("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
     }.to raise_exception(Twilio::REST::TwilioException)
     
-    values = {
-        'Muted' => true,
-    }
+    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Conferences/CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
-        data: values,
     ))).to eq(true)
   end
 
@@ -81,6 +79,7 @@ describe 'Participant' do
           "date_updated": "Fri, 18 Feb 2011 21:07:19 +0000",
           "end_conference_on_exit": false,
           "muted": false,
+          "hold": false,
           "start_conference_on_enter": true,
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Conferences/CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
@@ -89,7 +88,7 @@ describe 'Participant' do
     
     actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                               .conferences("CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .participants("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(muted: true)
+                              .participants("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
     
     expect(actual).to_not eq(nil)
   end
@@ -162,6 +161,7 @@ describe 'Participant' do
                   "date_updated": "Fri, 18 Feb 2011 21:07:19 +0000",
                   "end_conference_on_exit": false,
                   "muted": false,
+                  "hold": false,
                   "start_conference_on_enter": true,
                   "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Conferences/CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
               }

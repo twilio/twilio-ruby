@@ -37,19 +37,19 @@ module Twilio
             #   Application
             # @param [String] max_price The max_price
             # @param [Boolean] provide_feedback The provide_feedback
-            # @param [String] body The body
-            # @param [String] media_url The media_url
             # @param [String] from A Twilio phone number or alphanumeric sender ID enabled for
             #   the type of message you wish to send.
             # @param [String] messaging_service_sid The messaging_service_sid
+            # @param [String] body The body
+            # @param [String] media_url The media_url
             # @return [MessageInstance] Newly created MessageInstance
-            def create(to: nil, status_callback: nil, application_sid: nil, max_price: nil, provide_feedback: nil, body: nil, media_url: nil, from: nil, messaging_service_sid: nil)
+            def create(to: nil, status_callback: nil, application_sid: nil, max_price: nil, provide_feedback: nil, from: nil, messaging_service_sid: nil, body: nil, media_url: nil)
               data = {
                   'To' => to,
-                  'Body' => body,
-                  'MediaUrl' => media_url,
                   'From' => from,
                   'MessagingServiceSid' => messaging_service_sid,
+                  'Body' => body,
+                  'MediaUrl' => media_url,
                   'StatusCallback' => status_callback,
                   'ApplicationSid' => application_sid,
                   'MaxPrice' => max_price,

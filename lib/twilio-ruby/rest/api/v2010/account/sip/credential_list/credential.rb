@@ -223,12 +223,10 @@ module Twilio
                 
                 ##
                 # Update the CredentialInstance
-                # @param [String] username The username
                 # @param [String] password The password
                 # @return [CredentialInstance] Updated CredentialInstance
-                def update(username: nil, password: nil)
+                def update(password: nil)
                   data = {
-                      'Username' => username,
                       'Password' => password,
                   }
                   
@@ -348,12 +346,10 @@ module Twilio
                 
                 ##
                 # Update the CredentialInstance
-                # @param [String] username The username
                 # @param [String] password The password
                 # @return [CredentialInstance] Updated CredentialInstance
-                def update(username: nil, password: nil)
+                def update(password: nil)
                   context.update(
-                      username: username,
                       password: password,
                   )
                 end

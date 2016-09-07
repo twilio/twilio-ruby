@@ -17,13 +17,24 @@ module Twilio
         @port = 443
         
         # Versions
+        @sync = nil
         @wireless = nil
+      end
+      
+      ##
+      # Version sync of preview
+      def sync
+        @sync ||= Sync.new self
       end
       
       ##
       # Version wireless of preview
       def wireless
         @wireless ||= Wireless.new self
+      end
+      
+      def services
+        self.sync.services
       end
       
       def commands

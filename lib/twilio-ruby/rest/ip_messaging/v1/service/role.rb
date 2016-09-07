@@ -222,12 +222,10 @@ module Twilio
             
             ##
             # Update the RoleInstance
-            # @param [String] friendly_name The friendly_name
             # @param [String] permission The permission
             # @return [RoleInstance] Updated RoleInstance
-            def update(friendly_name: nil, permission: nil)
+            def update(permission: nil)
               data = {
-                  'FriendlyName' => friendly_name,
                   'Permission' => permission,
               }
               
@@ -353,12 +351,10 @@ module Twilio
             
             ##
             # Update the RoleInstance
-            # @param [String] friendly_name The friendly_name
             # @param [String] permission The permission
             # @return [RoleInstance] Updated RoleInstance
-            def update(friendly_name: nil, permission: nil)
+            def update(permission: nil)
               context.update(
-                  friendly_name: friendly_name,
                   permission: permission,
               )
             end

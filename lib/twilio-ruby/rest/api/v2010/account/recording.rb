@@ -272,6 +272,11 @@ module Twilio
                   'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                   'duration' => payload['duration'],
                   'sid' => payload['sid'],
+                  'price' => payload['price'],
+                  'price_unit' => payload['price_unit'],
+                  'status' => payload['status'],
+                  'channels' => payload['channels'].to_i,
+                  'source' => payload['source'],
                   'uri' => payload['uri'],
               }
               
@@ -325,6 +330,26 @@ module Twilio
             
             def sid
               @properties['sid']
+            end
+            
+            def price
+              @properties['price']
+            end
+            
+            def price_unit
+              @properties['price_unit']
+            end
+            
+            def status
+              @properties['status']
+            end
+            
+            def channels
+              @properties['channels']
+            end
+            
+            def source
+              @properties['source']
             end
             
             def uri

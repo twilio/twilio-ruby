@@ -81,12 +81,11 @@ describe 'User' do
     
     expect {
       @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .users.create(identity: "identity", role_sid: "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                             .users.create(identity: "identity")
     }.to raise_exception(Twilio::REST::TwilioException)
     
     values = {
         'Identity' => "identity",
-        'RoleSid' => "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -116,7 +115,7 @@ describe 'User' do
     ))
     
     actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .users.create(identity: "identity", role_sid: "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                                    .users.create(identity: "identity")
     
     expect(actual).to_not eq(nil)
   end

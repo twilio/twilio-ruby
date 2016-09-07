@@ -218,11 +218,10 @@ describe 'Role' do
     
     expect {
       @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .roles("RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(friendly_name: "friendly_name", permission: ['permission'])
+                             .roles("RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(permission: ['permission'])
     }.to raise_exception(Twilio::REST::TwilioException)
     
     values = {
-        'FriendlyName' => "friendly_name",
         'Permission' => ['permission'],
     }
     expect(
@@ -257,7 +256,7 @@ describe 'Role' do
     ))
     
     actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .roles("RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(friendly_name: "friendly_name", permission: ['permission'])
+                                    .roles("RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(permission: ['permission'])
     
     expect(actual).to_not eq(nil)
   end
