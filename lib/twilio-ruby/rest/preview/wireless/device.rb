@@ -245,17 +245,19 @@ module Twilio
           # @param [String] callback_method The callback_method
           # @param [String] callback_url The callback_url
           # @param [String] friendly_name The friendly_name
+          # @param [String] rate_plan The rate_plan
           # @param [String] sim_identifier The sim_identifier
           # @param [String] status The status
           # @param [String] commands_callback_method The commands_callback_method
           # @param [String] commands_callback_url The commands_callback_url
           # @return [DeviceInstance] Updated DeviceInstance
-          def update(alias_: nil, callback_method: nil, callback_url: nil, friendly_name: nil, sim_identifier: nil, status: nil, commands_callback_method: nil, commands_callback_url: nil)
+          def update(alias_: nil, callback_method: nil, callback_url: nil, friendly_name: nil, rate_plan: nil, sim_identifier: nil, status: nil, commands_callback_method: nil, commands_callback_url: nil)
             data = {
                 'Alias' => alias_,
                 'CallbackMethod' => callback_method,
                 'CallbackUrl' => callback_url,
                 'FriendlyName' => friendly_name,
+                'RatePlan' => rate_plan,
                 'SimIdentifier' => sim_identifier,
                 'Status' => status,
                 'CommandsCallbackMethod' => commands_callback_method,
@@ -407,17 +409,19 @@ module Twilio
           # @param [String] callback_method The callback_method
           # @param [String] callback_url The callback_url
           # @param [String] friendly_name The friendly_name
+          # @param [String] rate_plan The rate_plan
           # @param [String] sim_identifier The sim_identifier
           # @param [String] status The status
           # @param [String] commands_callback_method The commands_callback_method
           # @param [String] commands_callback_url The commands_callback_url
           # @return [DeviceInstance] Updated DeviceInstance
-          def update(alias_: nil, callback_method: nil, callback_url: nil, friendly_name: nil, sim_identifier: nil, status: nil, commands_callback_method: nil, commands_callback_url: nil)
+          def update(alias_: nil, callback_method: nil, callback_url: nil, friendly_name: nil, rate_plan: nil, sim_identifier: nil, status: nil, commands_callback_method: nil, commands_callback_url: nil)
             context.update(
                 alias_: alias_,
                 callback_method: callback_method,
                 callback_url: callback_url,
                 friendly_name: friendly_name,
+                rate_plan: rate_plan,
                 sim_identifier: sim_identifier,
                 status: status,
                 commands_callback_method: commands_callback_method,

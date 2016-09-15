@@ -26,11 +26,13 @@ module Twilio
           # Request is executed immediately.
           # @param [String] friendly_name The friendly_name
           # @param [String] webhook_url The webhook_url
+          # @param [Boolean] reachability_webhooks_enabled The reachability_webhooks_enabled
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil, webhook_url: nil)
+          def create(friendly_name: nil, webhook_url: nil, reachability_webhooks_enabled: nil)
             data = {
                 'FriendlyName' => friendly_name,
                 'WebhookUrl' => webhook_url,
+                'ReachabilityWebhooksEnabled' => reachability_webhooks_enabled,
             }
             
             payload = @version.create(
@@ -217,11 +219,13 @@ module Twilio
           # Update the ServiceInstance
           # @param [String] webhook_url The webhook_url
           # @param [String] friendly_name The friendly_name
+          # @param [Boolean] reachability_webhooks_enabled The reachability_webhooks_enabled
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(webhook_url: nil, friendly_name: nil)
+          def update(webhook_url: nil, friendly_name: nil, reachability_webhooks_enabled: nil)
             data = {
                 'WebhookUrl' => webhook_url,
                 'FriendlyName' => friendly_name,
+                'ReachabilityWebhooksEnabled' => reachability_webhooks_enabled,
             }
             
             payload = @version.update(
@@ -330,6 +334,7 @@ module Twilio
                 'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
                 'url' => payload['url'],
                 'webhook_url' => payload['webhook_url'],
+                'reachability_webhooks_enabled' => payload['reachability_webhooks_enabled'],
                 'links' => payload['links'],
             }
             
@@ -383,6 +388,10 @@ module Twilio
             @properties['webhook_url']
           end
           
+          def reachability_webhooks_enabled
+            @properties['reachability_webhooks_enabled']
+          end
+          
           def links
             @properties['links']
           end
@@ -405,11 +414,13 @@ module Twilio
           # Update the ServiceInstance
           # @param [String] webhook_url The webhook_url
           # @param [String] friendly_name The friendly_name
+          # @param [Boolean] reachability_webhooks_enabled The reachability_webhooks_enabled
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(webhook_url: nil, friendly_name: nil)
+          def update(webhook_url: nil, friendly_name: nil, reachability_webhooks_enabled: nil)
             context.update(
                 webhook_url: webhook_url,
                 friendly_name: friendly_name,
+                reachability_webhooks_enabled: reachability_webhooks_enabled,
             )
           end
           

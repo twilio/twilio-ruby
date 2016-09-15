@@ -23,8 +23,8 @@ module Twilio
         
         # Domains
         @api = nil
-        @ip_messaging = nil
         @chat = nil
+        @ip_messaging = nil
         @lookups = nil
         @monitor = nil
         @notify = nil
@@ -73,15 +73,15 @@ module Twilio
       end
       
       ##
-      # Access the IpMessaging Twilio Domain
-      def ip_messaging
-        @ip_messaging ||= IpMessaging.new self
-      end
-      
-      ##
       # Access the Chat Twilio Domain
       def chat
         @chat ||= Chat.new self
+      end
+      
+      ##
+      # Access the IpMessaging Twilio Domain
+      def ip_messaging
+        @ip_messaging ||= IpMessaging.new self
       end
       
       ##

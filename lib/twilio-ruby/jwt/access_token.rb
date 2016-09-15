@@ -152,11 +152,11 @@ module Twilio
         def payload
           payload = {}
 
-          if @service_sid
-            payload['service_sid'] = @service_sid
+          if service_sid
+            payload['service_sid'] = service_sid
           end
-          if @endpoint_id
-            payload['endpoint_id'] = @endpoint_id
+          if endpoint_id
+            payload['endpoint_id'] = endpoint_id
           end
 
           payload
