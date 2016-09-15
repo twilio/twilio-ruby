@@ -90,6 +90,33 @@ describe Twilio::JWT::AccessToken do
     expect(payload['grants']['ip_messaging']['deployment_role_sid']).to eq('DR123')
   end
 
+  it 'should be able to add Sync grants' do
+    scat = Twilio::JWT::AccessToken.new 'AC123', 'SK123','secret'
+    scat.identity = "brodawg"
+
+    grant = Twilio::JWT::AccessToken::SyncGrant.new
+    grant.service_sid = 'IS123'
+    grant.endpoint_id = 'EP123'
+    scat.add_grant(grant)
+
+    token = scat.to_s
+    expect(token).not_to be_nil
+    payload, header = JWT.decode token, 'secret'
+
+    expect(payload['iss']).to eq('SK123')
+    expect(payload['sub']).to eq('AC123')
+    expect(payload['exp']).not_to be_nil
+    expect(payload['exp']).to be >= Time.now.to_i
+    expect(payload['jti']).not_to be_nil
+    expect(payload['jti']).to start_with payload['iss']
+    expect(payload['grants']).not_to be_nil
+    expect(payload['grants'].count).to eq(2)
+    expect(payload['grants']['identity']).to eq("brodawg")
+    expect(payload['grants']['data_sync']).not_to be_nil
+    expect(payload['grants']['data_sync']['service_sid']).to eq('IS123')
+    expect(payload['grants']['data_sync']['endpoint_id']).to eq('EP123')
+  end
+
   it 'should add rest grants' do
     scat = Twilio::JWT::AccessToken.new 'AC123', 'SK123','secret'
     scat.add_grant(Twilio::JWT::AccessToken::ConversationsGrant.new)
