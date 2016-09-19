@@ -135,6 +135,24 @@ module Twilio
         end
       end
 
+      class VideoGrant
+        attr_accessor :configuration_profile_sid
+
+        def key
+          'video'
+        end
+
+        def payload
+          payload = {}
+
+          if configuration_profile_sid
+            payload[:configuration_profile_sid] = configuration_profile_sid
+          end
+
+          payload
+        end
+      end
+
     end
   end
 end
