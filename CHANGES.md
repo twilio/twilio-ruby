@@ -1,6 +1,20 @@
 twilio-ruby changelog
 =====================
 
+Version 4.13.0
+--------------
+
+Released September 19, 2016:
+
+- Add VideoGrant.
+
+Version 4.12.1
+--------------
+
+Released September 1, 2016:
+
+- Add VoiceGrant.
+
 Version 4.11.1
 -------------
 
