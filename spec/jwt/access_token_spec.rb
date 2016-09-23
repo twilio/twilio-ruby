@@ -163,4 +163,27 @@ describe Twilio::JWT::AccessToken do
     expect(payload['grants']['voice']['outgoing']['params']['foo']).to eq('bar')
   end
 
+  it 'should add video grant' do
+    scat = Twilio::JWT::AccessToken.new 'AC123', 'SK123','secret'
+    vg = Twilio::JWT::AccessToken::VideoGrant.new
+    vg.configuration_profile_sid = 'CP123'
+
+    scat.add_grant(vg)
+
+    token = scat.to_s
+    expect(token).not_to be_nil
+    payload, header = JWT.decode token, 'secret'
+
+    expect(payload['iss']).to eq('SK123')
+    expect(payload['sub']).to eq('AC123')
+    expect(payload['exp']).not_to be_nil
+    expect(payload['exp']).to be >= Time.now.to_i
+    expect(payload['jti']).not_to be_nil
+    expect(payload['jti']).to start_with payload['iss']
+    expect(payload['grants']).not_to be_nil
+    expect(payload['grants'].count).to eq(1)
+    expect(payload['grants']['video']).not_to be_nil
+    expect(payload['grants']['video']['configuration_profile_sid']).to eq('CP123')
+  end
+
 end
