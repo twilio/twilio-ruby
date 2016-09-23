@@ -258,7 +258,7 @@ directory. Also for those upgrading, the [upgrade guide][upgrade] is available i
 [wiki]: https://github.com/twilio/twilio-ruby/wiki
 [bundler]: http://bundler.io
 [rubygems]: http://rubygems.org
-[gem]: https://rubygems.org/gems/twilio
+[gem]: https://rubygems.org/gems/twilio-ruby
 [travis]: http://travis-ci.org/twilio/twilio-ruby
 [codeclimate]: https://codeclimate.com/github/twilio/twilio-ruby
 [jruby]: http://www.jruby.org
