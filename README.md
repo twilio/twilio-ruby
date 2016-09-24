@@ -30,10 +30,10 @@ make install
 
 ## Getting Started With REST
 
-### Setup Work
+### Send an SMS
 
 ``` ruby
-require 'rubygems' # not necessary with ruby 1.9 but included for completeness
+# Send an SMS using Twilio's REST API and Ruby
 require 'twilio-ruby'
 
 # put your own credentials here
@@ -43,19 +43,7 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 # set up a client to talk to the Twilio REST API
 @client = Twilio::REST::Client.new account_sid, auth_token
 
-# alternatively, you can preconfigure the client like so
-Twilio.configure do |config|
-  config.account_sid = account_sid
-  config.auth_token = auth_token
-end
-
-# and then you can create a new client without parameters
-@client = Twilio::REST::Client.new
-```
-
-### Send an SMS
-
-``` ruby
+# send an SMS programatically
 @client.messages.create(
   from: '+14159341234',
   to: '+16105557069',
@@ -66,6 +54,19 @@ end
 ### Send an MMS
 
 ``` ruby
+require 'rubygems' # not necessary with ruby 1.9 but included for completeness
+require 'twilio-ruby'
+
+# alternatively, you can preconfigure the client like so
+Twilio.configure do |config|
+  config.account_sid = account_sid
+  config.auth_token = auth_token
+end
+
+# and then you can create a new client without parameters
+@client = Twilio::REST::Client.new
+
+# send an MMS programatically
 @client.messages.create(
   from: '+14159341234',
   to: '+16105557069',
@@ -77,6 +78,15 @@ end
 ### Do Some Stuff With Calls
 
 ``` ruby
+require 'twilio-ruby'
+
+# put your own credentials here
+account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
+
+# set up a client to talk to the Twilio REST API
+@client = Twilio::REST::Client.new account_sid, auth_token
+
 # make a new outgoing call
 @call = @client.calls.create(
   from: '+14159341234',
@@ -243,7 +253,7 @@ implementations:
 
 If you need help installing or using the library, please contact Twilio Support at help@twilio.com first. Twilio's Support staff are well-versed in all of the Twilio Helper Libraries, and usually reply within 24 hours.
 
-If you've instead found a bug in the library or would like new features added, go ahead and open issues or pull requests against this repo!
+If you have instead found a bug in the library or would like new features added, go ahead and open issues or pull requests against this repo!
 
 ## More Information
 
