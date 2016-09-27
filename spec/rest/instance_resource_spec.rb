@@ -12,4 +12,20 @@ describe Twilio::REST::InstanceResource do
     resource = Twilio::REST::InstanceResource.new('uri', 'client', params)
     expect(resource.some_key).to eq('someValue')
   end
+
+  context 'lazy loading' do
+    before do
+      client = double
+      expect(client).to receive(:get).with('uri').and_return({ 'SomeKey' => 'someValue' })
+      @resource = Twilio::REST::InstanceResource.new('uri', client)
+    end
+
+    it 'should load when a missing method is called' do
+      expect(@resource.some_key).to eq('someValue')
+    end
+
+    it 'should load when #respond_to? is called' do
+      expect(@resource.respond_to?(:some_key)).to be(true)
+    end
+  end
 end

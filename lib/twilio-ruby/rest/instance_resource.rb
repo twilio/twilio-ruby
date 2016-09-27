@@ -70,6 +70,15 @@ module Twilio
         self.send method, *args
       end
 
+      ##
+      # Lazily load attributes of the instance resource by waiting to fetch it
+      # until an attempt is made to access an unknown attribute.
+      def respond_to?(method, include_private = false)
+        return super if @updated
+        set_up_properties_from(@client.get(@path))
+        super
+      end
+
       protected
 
       def set_up_properties_from(hash)
