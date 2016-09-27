@@ -19,14 +19,14 @@ module Twilio
         @host = host
       end
 
-      attr_reader :account_sid, :last_request, :last_response
+      attr_reader :account_sid, :username, :last_request, :last_response
 
       def initialize(*args)
         options = args.last.is_a?(Hash) ? args.pop : {}
         options[:host] ||= self.class.host
         @config = Twilio::Util::ClientConfig.new options
 
-        @username = args[0] || Twilio.account_sid
+        @username = args[0] || Twilio.username || Twilio.account_sid
         @auth_token = args[1] || Twilio.auth_token
         @account_sid = (args.size > 2 && args[2].is_a?(String) ? args[2] : args[0]) || Twilio.account_sid
         if @account_sid.nil? || @auth_token.nil?

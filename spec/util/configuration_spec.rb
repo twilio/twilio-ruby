@@ -12,4 +12,10 @@ describe Twilio::Util::Configuration do
     config.auth_token = 'someToken'
     expect(config.auth_token).to eq('someToken')
   end
+
+  it 'should have a username attribute' do
+    config = Twilio::Util::Configuration.new
+    config.username = 'someUsername'
+    expect(config.username).to eq('someUsername')
+  end
 end
