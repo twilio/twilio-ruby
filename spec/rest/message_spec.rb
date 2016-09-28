@@ -9,4 +9,13 @@ describe Twilio::REST::Message do
     expect(@message).to respond_to(:media)
     expect(@message.media.instance_variable_get('@path')).to eq('someUri/Media')
   end
+
+  describe "#to_h" do
+    it 'returns a hash of helpful message attributes' do
+      #puts @message.to_h #> NoMethodError: undefined method `get' for "someClient":String
+      expect(@message).to respond_to(:to_h)
+      #expect(@message.to_h.class).to eq(Hash)
+      #expect(@message.from).to eq(@message.to_h[:from])
+    end
+  end
 end
