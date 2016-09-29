@@ -42,7 +42,7 @@ describe Twilio::TaskRouter::WorkerCapability do
     it 'should allow websocket operations and activity list fetches by default' do
       token = @capability.generate_token
       decoded, header = JWT.decode token, 'foobar'
-      expect(decoded['policies'].size).to eq(6)
+      expect(decoded['policies'].size).to eq(7)
       get_policy = {
         "url" => 'https://event-bridge.twilio.com/v1/wschannels/AC123/WK789',
         "method" => 'GET',
@@ -95,6 +95,15 @@ describe Twilio::TaskRouter::WorkerCapability do
           'allow' => true
       }
       expect(decoded['policies'][5]).to eq(worker_reservations_policy)
+      
+      worker_channels_policy = {
+          'url' => 'https://taskrouter.twilio.com/v1/Workspaces/WS456/Workers/WK789/Channels/**',
+          'method' => 'GET',
+          'query_filter' => {},
+          'post_filter' => {},
+          'allow' => true
+      }
+      expect(decoded['policies'][6]).to eq(worker_channels_policy)
     end
 
     it 'should add a policy when #allow_activity_updates is called' do

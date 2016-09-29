@@ -42,7 +42,7 @@ describe Twilio::TaskRouter::Capability do
     it 'should allow websocket operations and fetching the workspace by default' do
       token = @capability.generate_token
       decoded, header = JWT.decode token, 'foobar'
-      expect(decoded['policies'].size).to eq(6)
+      expect(decoded['policies'].size).to eq(7)
 
       activites_fetch_policy = {
           'url' => 'https://taskrouter.twilio.com/v1/Workspaces/WS456/Activities',
@@ -70,6 +70,15 @@ describe Twilio::TaskRouter::Capability do
           'allow' => true
       }
       expect(decoded['policies'][2]).to eq(worker_reservation_fetch_policy)
+      
+      get_policy = {
+        "url" => 'https://taskrouter.twilio.com/v1/Workspaces/WS456/Workers/WK789/Channels/**',
+        "method" => 'GET',
+        "query_filter" => {},
+        "post_filter" => {},
+        "allow" => true
+      }
+      expect(decoded['policies'][3]).to eq(get_policy)
 
       get_policy = {
         "url" => 'https://event-bridge.twilio.com/v1/wschannels/AC123/WK789',
@@ -78,7 +87,7 @@ describe Twilio::TaskRouter::Capability do
         "post_filter" => {},
         "allow" => true
       }
-      expect(decoded['policies'][3]).to eq(get_policy)
+      expect(decoded['policies'][4]).to eq(get_policy)
       post_policy = {
         "url" => 'https://event-bridge.twilio.com/v1/wschannels/AC123/WK789',
         "method" => 'POST',
@@ -86,7 +95,7 @@ describe Twilio::TaskRouter::Capability do
         "post_filter" => {},
         "allow" => true
       }
-      expect(decoded['policies'][4]).to eq(post_policy)
+      expect(decoded['policies'][5]).to eq(post_policy)
 
       worker_fetch_policy = {
           'url' => 'https://taskrouter.twilio.com/v1/Workspaces/WS456/Workers/WK789',
@@ -95,7 +104,7 @@ describe Twilio::TaskRouter::Capability do
           'post_filter' => {},
           'allow' => true
       }
-      expect(decoded['policies'][5]).to eq(worker_fetch_policy)
+      expect(decoded['policies'][6]).to eq(worker_fetch_policy)
     end
 
     it 'should add a policy when #allow_worker_activity_updates is called' do
