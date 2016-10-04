@@ -4,6 +4,7 @@ module Twilio
 
       def twilify(something)
         return key_map(something, :twilify) if something.is_a? Hash
+        return array_map(something, :twilify) if something.is_a?(Array)
         string = something.to_s
         string.split('_').map do |string_part|
           string_part[0,1].capitalize + string_part[1..-1]
@@ -12,6 +13,7 @@ module Twilio
 
       def detwilify(something)
         return key_map(something, :detwilify) if something.is_a? Hash
+        return array_map(something, :detwilify) if something.is_a?(Array)
         string = something.to_s
         string = string[0,1].downcase + string[1..-1]
         string.gsub(/[A-Z][a-z]*/) { |s| "_#{s.downcase}" }
@@ -44,6 +46,13 @@ module Twilio
         end
         Hash[*something]
       end
+
+      # Intended for use on an array of parameter pairs, like
+      # [ [ :type, 'carrier' ], [ :type, 'caller_name'] ]
+      def array_map(something, method)
+        something.map { |pair| [ send(method, pair[0]).to_sym, pair[1].to_s ] }
+      end
+
     end
   end
 end
