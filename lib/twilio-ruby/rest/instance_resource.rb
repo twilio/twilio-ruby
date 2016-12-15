@@ -74,6 +74,8 @@ module Twilio
 
       def set_up_properties_from(hash)
         eigenclass = class << self; self; end
+        eigenclass.send :define_method, :properties, &lambda { hash }
+
         hash.each do |p,v|
           property = detwilify p
           unless ['client', 'updated'].include? property

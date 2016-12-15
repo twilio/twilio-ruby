@@ -12,4 +12,10 @@ describe Twilio::REST::InstanceResource do
     resource = Twilio::REST::InstanceResource.new('uri', 'client', params)
     expect(resource.some_key).to eq('someValue')
   end
+
+  it 'should expose the properties method' do
+    params = { 'SomeKey' => 'someValue' }
+    resource = Twilio::REST::InstanceResource.new('uri', 'client', params)
+    expect(resource.properties).to eq({ 'SomeKey' => 'someValue' })
+  end
 end
