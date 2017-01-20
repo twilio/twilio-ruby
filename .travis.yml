@@ -2,6 +2,7 @@ sudo: false
 language: ruby
 cache: bundler
 bundler_args: --without development
+dist: trusty
 rvm:
   - ruby-head
   - ruby
@@ -11,7 +12,7 @@ rvm:
   - jruby-head
   - jruby
   - rbx-head
-  - rbx-2.2.2
+  - rbx-2
 matrix:
   fast_finish: true
   allow_failures:
