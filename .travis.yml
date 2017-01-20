@@ -2,7 +2,6 @@ sudo: false
 language: ruby
 cache: bundler
 bundler_args: --without development
-dist: trusty
 rvm:
   - ruby-head
   - ruby
@@ -21,3 +20,4 @@ matrix:
     - rvm: jruby-head
     - rvm: jruby
     - rvm: rbx-head
+    - rvm: rbx-2
