@@ -11,7 +11,7 @@ rvm:
   - jruby-head
   - jruby
   - rbx-head
-  - rbx-2
+  - rbx-2.2.2
 matrix:
   fast_finish: true
   allow_failures:
