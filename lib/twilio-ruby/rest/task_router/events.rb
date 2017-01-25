@@ -1,7 +1,7 @@
 module Twilio
   module REST
     module TaskRouter
-      class Events < ListResource; end
+      class Events < Twilio::REST::NextGenListResource; end
       class Event < InstanceResource; end
     end
   end
