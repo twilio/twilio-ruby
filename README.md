@@ -56,7 +56,7 @@ end
 ### Send an SMS
 
 ``` ruby
-@client.messages.create(
+@client.account.messages.create(
   from: '+14159341234',
   to: '+16105557069',
   body: 'Hey there!'
@@ -66,7 +66,7 @@ end
 ### Send an MMS
 
 ``` ruby
-@client.messages.create(
+@client.account.messages.create(
   from: '+14159341234',
   to: '+16105557069',
   body: 'Hey there!',
@@ -78,7 +78,7 @@ end
 
 ``` ruby
 # make a new outgoing call
-@call = @client.calls.create(
+@call = @client.account.calls.create(
   from: '+14159341234',
   to: '+18004567890',
   url: 'http://example.com/call-handler'
@@ -88,7 +88,7 @@ end
 @call.cancel
 
 # if you have the call sid, you can fetch a call object via:
-@call = @client.calls.get('CA386025c9bf5d6052a1d1ea42b4d16662')
+@call = @client.account.calls.get('CA386025c9bf5d6052a1d1ea42b4d16662')
 
 # redirect an in-progress call
 @call.redirect_to('http://example.com/call-redirect')
@@ -101,21 +101,21 @@ end
 
 ``` ruby
 # list calls made or received on or after May 13, 2013
-@client.calls.list("start_time>" => "2013-05-13") # Notice we omit the "=" in the "start_time>=" parameter because it is automatically added
+@client.account.calls.list("start_time>" => "2013-05-13") # Notice we omit the "=" in the "start_time>=" parameter because it is automatically added
 ```
 
 ### Buy a Phone Number
 
 ``` ruby
 # print some available numbers
-@numbers = @client.available_phone_numbers.get('US').local.list(
+@numbers = @client.account.available_phone_numbers.get('US').local.list(
   contains: 'AWESOME'
 )
 @numbers.each {|num| puts num.phone_number}
 
 # buy the first one
 @number = @numbers[0].phone_number
-@client.incoming_phone_numbers.create(phone_number: @number)
+@client.account.incoming_phone_numbers.create(phone_number: @number)
 ```
 
 ## Create a Task with TaskRouter
