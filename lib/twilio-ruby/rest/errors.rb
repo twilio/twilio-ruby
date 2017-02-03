@@ -9,6 +9,10 @@ module Twilio
         super message
         @code = code
       end
+
+      def to_s
+        "#{code} - #{message}"
+      end
     end
   end
 end
