@@ -7,8 +7,9 @@ module Twilio
         list_key = response['meta']['key']
         raise "Couldn't find a list key in response meta" unless list_key
         resources = response[list_key]
+        path = full_path ? @path.split('com').last.split("?").first : @path
         resource_list = resources.map do |resource|
-          @instance_class.new "#{@path}/#{resource[@instance_id_key]}", @client,
+          @instance_class.new "#{path}/#{resource[@instance_id_key]}", @client,
                               resource
         end
         client, list_class = @client, self.class
@@ -16,14 +17,14 @@ module Twilio
           eigenclass = class << self; self; end
           eigenclass.send :define_method, :next_page, &lambda {
             if response['meta']['next_page_url']
-              list_class.new(response['meta']['next_page_url'], client).list({})
+              list_class.new(response['meta']['next_page_url'], client).list({}, true)
             else
               []
             end
           }
           eigenclass.send :define_method, :previous_page, &lambda {
             if response['meta']['previous_page_url']
-              list_class.new(response['meta']['previous_page_url'], client).list({})
+              list_class.new(response['meta']['previous_page_url'], client).list({}, true)
             else
               []
             end
