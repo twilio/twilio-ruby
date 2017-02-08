@@ -23,7 +23,7 @@ module Twilio
       end
 
       def to_s
-        "[HTTP #{status_code}] #{code} : #{msg}"
+        "[HTTP #{status_code}] #{code} : #{message}"
       end
     end
   end
