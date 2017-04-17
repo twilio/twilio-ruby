@@ -42,25 +42,6 @@ describe Twilio::JWT::AccessToken do
     expect(payload['grants']['identity']).to eq('abc')
   end
 
-  it 'should be able to add conversation grant' do
-    scat = Twilio::JWT::AccessToken.new 'AC123', 'SK123','secret'
-    scat.add_grant(Twilio::JWT::AccessToken::ConversationsGrant.new)
-
-    token = scat.to_s
-    expect(token).not_to be_nil
-    payload, header = JWT.decode token, 'secret'
-
-    expect(payload['iss']).to eq('SK123')
-    expect(payload['sub']).to eq('AC123')
-    expect(payload['exp']).not_to be_nil
-    expect(payload['exp']).to be >= Time.now.to_i
-    expect(payload['jti']).not_to be_nil
-    expect(payload['jti']).to start_with payload['iss']
-    expect(payload['grants']).not_to be_nil
-    expect(payload['grants'].count).to eq(1)
-    expect(payload['grants']['rtc']).not_to be_nil
-  end
-
   it 'should be able to add endpoint grants' do
     scat = Twilio::JWT::AccessToken.new 'AC123', 'SK123','secret'
 
@@ -119,7 +100,7 @@ describe Twilio::JWT::AccessToken do
 
   it 'should add rest grants' do
     scat = Twilio::JWT::AccessToken.new 'AC123', 'SK123','secret'
-    scat.add_grant(Twilio::JWT::AccessToken::ConversationsGrant.new)
+    scat.add_grant(Twilio::JWT::AccessToken::VideoGrant.new)
     scat.add_grant(Twilio::JWT::AccessToken::IpMessagingGrant.new)
 
     token = scat.to_s
@@ -134,7 +115,7 @@ describe Twilio::JWT::AccessToken do
     expect(payload['jti']).to start_with payload['iss']
     expect(payload['grants']).not_to be_nil
     expect(payload['grants'].count).to eq(2)
-    expect(payload['grants']['rtc']).not_to be_nil
+    expect(payload['grants']['video']).not_to be_nil
     expect(payload['grants']['ip_messaging']).not_to be_nil
   end
 
@@ -166,7 +147,7 @@ describe Twilio::JWT::AccessToken do
   it 'should add video grant' do
     scat = Twilio::JWT::AccessToken.new 'AC123', 'SK123','secret'
     vg = Twilio::JWT::AccessToken::VideoGrant.new
-    vg.configuration_profile_sid = 'CP123'
+    vg.room = 'room'
 
     scat.add_grant(vg)
 
@@ -183,7 +164,7 @@ describe Twilio::JWT::AccessToken do
     expect(payload['grants']).not_to be_nil
     expect(payload['grants'].count).to eq(1)
     expect(payload['grants']['video']).not_to be_nil
-    expect(payload['grants']['video']['configuration_profile_sid']).to eq('CP123')
+    expect(payload['grants']['video']['room']).to eq('room')
   end
 
 end
