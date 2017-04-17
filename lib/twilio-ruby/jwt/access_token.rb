@@ -52,25 +52,6 @@ module Twilio
         to_jwt
       end
 
-      class ConversationsGrant
-        attr_accessor :configuration_profile_sid
-
-        def key
-          'rtc'
-        end
-
-        def payload
-          payload = {}
-
-          if configuration_profile_sid
-            payload[:configuration_profile_sid] = configuration_profile_sid
-          end
-
-          payload
-        end
-
-      end
-
       class IpMessagingGrant
         attr_accessor :service_sid,
                       :endpoint_id,
@@ -164,7 +145,7 @@ module Twilio
       end
 
       class VideoGrant
-        attr_accessor :configuration_profile_sid
+        attr_accessor :room
 
         def key
           'video'
@@ -173,8 +154,8 @@ module Twilio
         def payload
           payload = {}
 
-          if configuration_profile_sid
-            payload[:configuration_profile_sid] = configuration_profile_sid
+          if room
+            payload[:room] = room
           end
 
           payload
