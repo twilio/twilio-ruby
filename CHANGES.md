@@ -1,5 +1,11 @@
 twilio-ruby changelog
 =====================
+Version 5.0.0-rc18
+-------------
+
+Release April 17, 2017
+
+- Update VideoGrant access token to accept `room` instead of `configuration_profile_sid`
 
 Version 5.0.0-rc16
 -------------
