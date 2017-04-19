@@ -144,6 +144,31 @@ module Twilio
         end
       end
 
+      class ConversationsGrant
+        attr_accessor :configuration_profile_sid
+
+        def key
+          'rtc'
+        end
+
+        def payload
+          payload = {}
+
+          if configuration_profile_sid
+            payload[:configuration_profile_sid] = configuration_profile_sid
+          end
+
+          payload
+        end
+
+       class << self
+         extend Gem::Deprecate
+         deprecate :new, 'VideoGrant.new', 2017, 5
+       end
+    
+
+      end
+
       class VideoGrant
         attr_accessor :room
 
