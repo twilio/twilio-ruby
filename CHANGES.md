@@ -1,5 +1,14 @@
 twilio-ruby changelog
 =====================
+
+[2017-04-27] Version 5.0.0-rc19
+------------------
+
+- Add chat v2.
+- Wireless rate plans updates.
+- Message `ValidityPeriod` parameter.
+- New Usage API categories.
+
 Version 5.0.0-rc18
 -------------
 
