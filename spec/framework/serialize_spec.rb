@@ -50,4 +50,23 @@ describe Twilio do
 
 
   end
+
+  describe 'serialize_object' do
+
+    it 'should jsonify hashes' do
+      actual = Twilio.serialize_object({twilio: "rocks"})
+      expect(actual).to eq('{"twilio":"rocks"}')
+    end
+
+    it 'should jsonify arrays' do
+      actual = Twilio.serialize_object(["twilio", "rocks"])
+      expect(actual).to eq('["twilio","rocks"]')
+    end
+
+    it 'should not modify other types' do
+      actual = Twilio.serialize_object(123)
+      expect(actual).to eq(123)
+    end
+
+  end
 end
