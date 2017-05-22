@@ -13,7 +13,7 @@ describe 'AvailablePhoneNumberCountry' do
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .available_phone_numbers.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -93,7 +93,7 @@ describe 'AvailablePhoneNumberCountry' do
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .available_phone_numbers("US").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

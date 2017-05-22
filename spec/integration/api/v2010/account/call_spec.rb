@@ -13,7 +13,7 @@ describe 'Call' do
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls.create(to: "+123456789", from: "+987654321")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'To' => "+123456789",
@@ -76,7 +76,7 @@ describe 'Call' do
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -104,7 +104,7 @@ describe 'Call' do
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -163,7 +163,7 @@ describe 'Call' do
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -264,7 +264,7 @@ describe 'Call' do
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

@@ -187,6 +187,34 @@ module Twilio
         end
       end
 
+      class TaskRouterGrant
+        attr_accessor :workspace_sid,
+                      :worker_sid,
+                      :role
+
+        def key
+          'task_router'
+        end
+
+        def payload
+          payload = {}
+
+          if workspace_sid
+            payload[:workspace_sid] = workspace_sid
+          end
+
+          if worker_sid
+            payload[:worker_sid] = worker_sid
+          end
+
+          if role
+            payload[:role] = role
+          end
+
+          payload
+        end
+      end
+
 
     end
   end

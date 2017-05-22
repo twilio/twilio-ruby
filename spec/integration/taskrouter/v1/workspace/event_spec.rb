@@ -13,7 +13,7 @@ describe 'Event' do
     expect {
       @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .events("EVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -68,7 +68,7 @@ describe 'Event' do
     expect {
       @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .events.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

@@ -13,7 +13,7 @@ describe 'Document' do
     expect {
       @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -57,7 +57,7 @@ describe 'Document' do
     expect {
       @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -85,7 +85,7 @@ describe 'Document' do
     expect {
       @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .documents.create()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -129,7 +129,7 @@ describe 'Document' do
     expect {
       @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .documents.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -211,10 +211,10 @@ describe 'Document' do
     expect {
       @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(data: "{}")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
-        'Data' => "{}",
+        'Data' => Twilio.serialize_object("{}"),
     }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(

@@ -14,7 +14,7 @@ describe 'Invite' do
       @client.chat.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                      .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                      .invites("INaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -57,7 +57,7 @@ describe 'Invite' do
       @client.chat.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                      .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                      .invites.create(identity: "identity")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'Identity' => "identity",
@@ -103,7 +103,7 @@ describe 'Invite' do
       @client.chat.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                      .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                      .invites.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -185,7 +185,7 @@ describe 'Invite' do
       @client.chat.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                      .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                      .invites("INaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

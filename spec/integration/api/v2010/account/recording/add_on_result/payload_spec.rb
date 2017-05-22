@@ -15,7 +15,7 @@ describe 'Payload' do
                        .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .payloads("XHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -63,7 +63,7 @@ describe 'Payload' do
                        .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .payloads.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -149,7 +149,7 @@ describe 'Payload' do
                        .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .payloads("XHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

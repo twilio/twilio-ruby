@@ -28,7 +28,7 @@ module Twilio
 
       def process_response(response)
         if response.status_code != 200
-          raise Twilio::REST::TwilioException.new('Unable to fetch page', response)
+          raise Twilio::REST::TwilioError.new('Unable to fetch page', response)
         end
 
         response.body
@@ -45,7 +45,7 @@ module Twilio
           end
         end
 
-        raise Twilio::REST::TwilioException.new('Page Records can not be deserialized')
+        raise Twilio::REST::TwilioError.new('Page Records can not be deserialized')
       end
 
       def previous_page_url
@@ -69,7 +69,7 @@ module Twilio
       end
 
       def get_instance(payload)
-        raise Twilio::REST::TwilioException.new('Page.get_instance() must be implemented in the derived class')
+        raise Twilio::REST::TwilioError.new('Page.get_instance() must be implemented in the derived class')
       end
 
       def previous_page

@@ -15,7 +15,7 @@ describe 'CredentialListMapping' do
                        .sip \
                        .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .credential_list_mappings.create(credential_list_sid: "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'CredentialListSid' => "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -62,7 +62,7 @@ describe 'CredentialListMapping' do
                        .sip \
                        .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .credential_list_mappings.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -140,7 +140,7 @@ describe 'CredentialListMapping' do
                        .sip \
                        .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .credential_list_mappings("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -184,7 +184,7 @@ describe 'CredentialListMapping' do
                        .sip \
                        .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .credential_list_mappings("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

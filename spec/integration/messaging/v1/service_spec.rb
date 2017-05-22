@@ -12,7 +12,7 @@ describe 'Service' do
 
     expect {
       @client.messaging.v1.services.create(friendly_name: "friendly_name")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'FriendlyName' => "friendly_name",
@@ -43,6 +43,10 @@ describe 'Service' do
           "sticky_sender": true,
           "smart_encoding": false,
           "mms_converter": true,
+          "fallback_to_long_code": true,
+          "scan_message_content": "inherit",
+          "area_code_geomatch": true,
+          "validity_period": 600,
           "links": {
               "phone_numbers": "https://messaging.twilio.com/v1/Services/MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers",
               "short_codes": "https://messaging.twilio.com/v1/Services/MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes",
@@ -63,7 +67,7 @@ describe 'Service' do
 
     expect {
       @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -86,6 +90,10 @@ describe 'Service' do
           "sticky_sender": false,
           "mms_converter": true,
           "smart_encoding": false,
+          "fallback_to_long_code": true,
+          "scan_message_content": "inherit",
+          "area_code_geomatch": true,
+          "validity_period": 600,
           "inbound_request_url": "https://www.example.com",
           "inbound_method": "POST",
           "fallback_url": null,
@@ -111,7 +119,7 @@ describe 'Service' do
 
     expect {
       @client.messaging.v1.services.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -145,6 +153,10 @@ describe 'Service' do
                   "sticky_sender": true,
                   "mms_converter": true,
                   "smart_encoding": false,
+                  "fallback_to_long_code": true,
+                  "area_code_geomatch": true,
+                  "validity_period": 600,
+                  "scan_message_content": "inherit",
                   "inbound_request_url": "https://www.example.com/",
                   "inbound_method": "POST",
                   "fallback_url": null,
@@ -172,7 +184,7 @@ describe 'Service' do
 
     expect {
       @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -200,6 +212,10 @@ describe 'Service' do
           "sticky_sender": true,
           "mms_converter": true,
           "smart_encoding": false,
+          "fallback_to_long_code": true,
+          "area_code_geomatch": true,
+          "validity_period": 600,
+          "scan_message_content": "inherit",
           "links": {
               "phone_numbers": "https://messaging.twilio.com/v1/Services/MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers",
               "short_codes": "https://messaging.twilio.com/v1/Services/MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes",
@@ -220,7 +236,7 @@ describe 'Service' do
 
     expect {
       @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

@@ -12,7 +12,7 @@ describe 'Fax' do
 
     expect {
       @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -34,6 +34,7 @@ describe 'Fax' do
           "direction": "outbound",
           "from": "+14155551234",
           "media_url": "https://www.example.com/fax.pdf",
+          "media_sid": "MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "num_pages": null,
           "price": null,
           "price_unit": null,
@@ -42,6 +43,9 @@ describe 'Fax' do
           "status": "queued",
           "to": "+14155554321",
           "duration": null,
+          "links": {
+              "media": "https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media"
+          },
           "url": "https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -57,7 +61,7 @@ describe 'Fax' do
 
     expect {
       @client.fax.v1.faxes.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -105,6 +109,7 @@ describe 'Fax' do
                   "direction": "outbound",
                   "from": "+14155551234",
                   "media_url": "https://www.example.com/fax.pdf",
+                  "media_sid": "MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "num_pages": null,
                   "price": null,
                   "price_unit": null,
@@ -113,6 +118,9 @@ describe 'Fax' do
                   "status": "queued",
                   "to": "+14155554321",
                   "duration": null,
+                  "links": {
+                      "media": "https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media"
+                  },
                   "url": "https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
           ],
@@ -138,11 +146,10 @@ describe 'Fax' do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
 
     expect {
-      @client.fax.v1.faxes.create(from: "from", to: "to", media_url: "https://example.com")
-    }.to raise_exception(Twilio::REST::TwilioException)
+      @client.fax.v1.faxes.create(to: "to", media_url: "https://example.com")
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
-        'From' => "from",
         'To' => "to",
         'MediaUrl' => "https://example.com",
     }
@@ -166,6 +173,7 @@ describe 'Fax' do
           "direction": "outbound",
           "from": "+14155551234",
           "media_url": null,
+          "media_sid": null,
           "num_pages": null,
           "price": null,
           "price_unit": null,
@@ -174,12 +182,15 @@ describe 'Fax' do
           "status": "queued",
           "to": "+14155554321",
           "duration": null,
+          "links": {
+              "media": "https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media"
+          },
           "url": "https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
     ))
 
-    actual = @client.fax.v1.faxes.create(from: "from", to: "to", media_url: "https://example.com")
+    actual = @client.fax.v1.faxes.create(to: "to", media_url: "https://example.com")
 
     expect(actual).to_not eq(nil)
   end
@@ -189,7 +200,7 @@ describe 'Fax' do
 
     expect {
       @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -211,6 +222,7 @@ describe 'Fax' do
           "direction": "outbound",
           "from": "+14155551234",
           "media_url": null,
+          "media_sid": null,
           "num_pages": null,
           "price": null,
           "price_unit": null,
@@ -219,6 +231,9 @@ describe 'Fax' do
           "status": "canceled",
           "to": "+14155554321",
           "duration": null,
+          "links": {
+              "media": "https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media"
+          },
           "url": "https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -227,5 +242,31 @@ describe 'Fax' do
     actual = @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
 
     expect(actual).to_not eq(nil)
+  end
+
+  it "can delete" do
+    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+
+    expect {
+      @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {}
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'delete',
+        url: 'https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    ))).to eq(true)
+  end
+
+  it "receives delete responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        204,
+      nil,
+    ))
+
+    actual = @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+
+    expect(actual).to eq(true)
   end
 end

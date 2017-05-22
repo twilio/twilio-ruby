@@ -13,7 +13,7 @@ describe 'ValidationRequest' do
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .validation_requests.create(phone_number: "+987654321")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'PhoneNumber' => "+987654321",

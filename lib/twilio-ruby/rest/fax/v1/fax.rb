@@ -27,6 +27,8 @@ module Twilio
           # memory before returning.
           # @param [String] from The from
           # @param [String] to The to
+          # @param [Time] date_created_on_or_before The date_created_on_or_before
+          # @param [Time] date_created_after The date_created_after
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #                   guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -34,10 +36,12 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(from: nil, to: nil, limit: nil, page_size: nil)
+          def list(from: nil, to: nil, date_created_on_or_before: nil, date_created_after: nil, limit: nil, page_size: nil)
             self.stream(
                 from: from,
                 to: to,
+                date_created_on_or_before: date_created_on_or_before,
+                date_created_after: date_created_after,
                 limit: limit,
                 page_size: page_size
             ).entries
@@ -49,6 +53,8 @@ module Twilio
           # is reached.
           # @param [String] from The from
           # @param [String] to The to
+          # @param [Time] date_created_on_or_before The date_created_on_or_before
+          # @param [Time] date_created_after The date_created_after
           # @param [Integer] limit Upper limit for the number of records to return.                  stream()
           #  guarantees to never return more than limit.                  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -56,12 +62,14 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(from: nil, to: nil, limit: nil, page_size: nil)
+          def stream(from: nil, to: nil, date_created_on_or_before: nil, date_created_after: nil, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
                 from: from,
                 to: to,
+                date_created_on_or_before: date_created_on_or_before,
+                date_created_after: date_created_after,
                 page_size: limits[:page_size],
             )
 
@@ -74,6 +82,8 @@ module Twilio
           # is reached.
           # @param [String] from The from
           # @param [String] to The to
+          # @param [Time] date_created_on_or_before The date_created_on_or_before
+          # @param [Time] date_created_after The date_created_after
           # @param [Integer] limit Upper limit for the number of records to return.                  stream()
           #  guarantees to never return more than limit.                  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
@@ -97,14 +107,18 @@ module Twilio
           # Request is executed immediately.
           # @param [String] from The from
           # @param [String] to The to
+          # @param [Time] date_created_on_or_before The date_created_on_or_before
+          # @param [Time] date_created_after The date_created_after
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of FaxInstance
-          def page(from: nil, to: nil, page_token: nil, page_number: nil, page_size: nil)
+          def page(from: nil, to: nil, date_created_on_or_before: nil, date_created_after: nil, page_token: nil, page_number: nil, page_size: nil)
             params = {
                 'From' => from,
                 'To' => to,
+                'DateCreatedOnOrBefore' => Twilio.serialize_iso8601(date_created_on_or_before),
+                'DateCreatedAfter' => Twilio.serialize_iso8601(date_created_after),
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
@@ -120,19 +134,23 @@ module Twilio
           ##
           # Retrieve a single page of FaxInstance records from the API.
           # Request is executed immediately.
-          # @param [String] from The from
           # @param [String] to The to
           # @param [String] media_url The media_url
           # @param [fax.Quality] quality The quality
           # @param [String] status_callback The status_callback
+          # @param [String] from The from
+          # @param [String] sip_auth_username The sip_auth_username
+          # @param [String] sip_auth_password The sip_auth_password
           # @return [FaxInstance] Newly created FaxInstance
-          def create(from: nil, to: nil, media_url: nil, quality: nil, status_callback: nil)
+          def create(to: nil, media_url: nil, quality: nil, status_callback: nil, from: nil, sip_auth_username: nil, sip_auth_password: nil)
             data = {
-                'From' => from,
                 'To' => to,
                 'MediaUrl' => media_url,
                 'Quality' => quality,
                 'StatusCallback' => status_callback,
+                'From' => from,
+                'SipAuthUsername' => sip_auth_username,
+                'SipAuthPassword' => sip_auth_password,
             }
 
             payload = @version.create(
@@ -200,6 +218,9 @@ module Twilio
                 sid: sid,
             }
             @uri = "/Faxes/#{@solution[:sid]}"
+
+            # Dependents
+            @media = nil
           end
 
           ##
@@ -244,6 +265,35 @@ module Twilio
           end
 
           ##
+          # Deletes the FaxInstance
+          # @return [Boolean] true if delete succeeds, true otherwise
+          def delete
+            return @version.delete('delete', @uri)
+          end
+
+          ##
+          # Access the media
+          # @return [FaxMediaList] FaxMediaList
+          def media(sid=:unset)
+            if sid != :unset
+              return FaxMediaContext.new(
+                  @version,
+                  @solution[:sid],
+                  sid,
+              )
+            end
+
+            unless @media
+              @media = FaxMediaList.new(
+                  @version,
+                  fax_sid: @solution[:sid],
+              )
+            end
+
+            @media
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -268,6 +318,7 @@ module Twilio
                 'from' => payload['from'],
                 'to' => payload['to'],
                 'quality' => payload['quality'],
+                'media_sid' => payload['media_sid'],
                 'media_url' => payload['media_url'],
                 'num_pages' => payload['num_pages'] == nil ? payload['num_pages'] : payload['num_pages'].to_i,
                 'duration' => payload['duration'] == nil ? payload['duration'] : payload['duration'].to_i,
@@ -278,6 +329,7 @@ module Twilio
                 'price_unit' => payload['price_unit'],
                 'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                'links' => payload['links'],
                 'url' => payload['url'],
             }
 
@@ -323,6 +375,10 @@ module Twilio
             @properties['quality']
           end
 
+          def media_sid
+            @properties['media_sid']
+          end
+
           def media_url
             @properties['media_url']
           end
@@ -363,6 +419,10 @@ module Twilio
             @properties['date_updated']
           end
 
+          def links
+            @properties['links']
+          end
+
           def url
             @properties['url']
           end
@@ -382,6 +442,20 @@ module Twilio
             context.update(
                 status: status,
             )
+          end
+
+          ##
+          # Deletes the FaxInstance
+          # @return [Boolean] true if delete succeeds, true otherwise
+          def delete
+            context.delete
+          end
+
+          ##
+          # Access the media
+          # @return [media] media
+          def media
+            context.media
           end
 
           ##

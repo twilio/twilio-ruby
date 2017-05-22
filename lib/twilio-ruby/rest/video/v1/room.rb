@@ -219,6 +219,9 @@ module Twilio
                 sid: sid,
             }
             @uri = "/Rooms/#{@solution[:sid]}"
+
+            # Dependents
+            @recordings = nil
           end
 
           ##
@@ -263,6 +266,28 @@ module Twilio
           end
 
           ##
+          # Access the recordings
+          # @return [RoomRecordingList] RoomRecordingList
+          def recordings(sid=:unset)
+            if sid != :unset
+              return RoomRecordingContext.new(
+                  @version,
+                  @solution[:sid],
+                  sid,
+              )
+            end
+
+            unless @recordings
+              @recordings = RoomRecordingList.new(
+                  @version,
+                  room_sid: @solution[:sid],
+              )
+            end
+
+            @recordings
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -297,6 +322,7 @@ module Twilio
                 'max_participants' => payload['max_participants'].to_i,
                 'record_participants_on_connect' => payload['record_participants_on_connect'],
                 'url' => payload['url'],
+                'links' => payload['links'],
             }
 
             # Context
@@ -381,6 +407,10 @@ module Twilio
             @properties['url']
           end
 
+          def links
+            @properties['links']
+          end
+
           ##
           # Fetch a RoomInstance
           # @return [RoomInstance] Fetched RoomInstance
@@ -396,6 +426,13 @@ module Twilio
             context.update(
                 status: status,
             )
+          end
+
+          ##
+          # Access the recordings
+          # @return [recordings] recordings
+          def recordings
+            context.recordings
           end
 
           ##

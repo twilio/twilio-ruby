@@ -14,7 +14,7 @@ describe 'UserChannel' do
       @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                      .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                      .user_channels.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

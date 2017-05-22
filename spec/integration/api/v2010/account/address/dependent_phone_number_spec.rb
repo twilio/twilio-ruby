@@ -14,7 +14,7 @@ describe 'DependentPhoneNumber' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .addresses("ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .dependent_phone_numbers.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

@@ -14,7 +14,7 @@ describe 'Recording' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -56,7 +56,7 @@ describe 'Recording' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -86,7 +86,7 @@ describe 'Recording' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .recordings.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

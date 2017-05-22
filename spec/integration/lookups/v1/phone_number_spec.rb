@@ -12,7 +12,7 @@ describe 'PhoneNumber' do
 
     expect {
       @client.lookups.v1.phone_numbers("+987654321").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

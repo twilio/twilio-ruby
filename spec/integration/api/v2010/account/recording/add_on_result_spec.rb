@@ -14,7 +14,7 @@ describe 'AddOnResult' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -59,7 +59,7 @@ describe 'AddOnResult' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .add_on_results.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -141,7 +141,7 @@ describe 'AddOnResult' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

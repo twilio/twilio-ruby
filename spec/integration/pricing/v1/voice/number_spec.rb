@@ -13,7 +13,7 @@ describe 'Number' do
     expect {
       @client.pricing.v1.voice \
                         .numbers("+987654321").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

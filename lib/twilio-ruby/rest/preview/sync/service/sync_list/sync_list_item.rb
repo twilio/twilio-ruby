@@ -35,7 +35,7 @@ module Twilio
               # @return [SyncListItemInstance] Newly created SyncListItemInstance
               def create(data: nil)
                 data = {
-                    'Data' => data,
+                    'Data' => Twilio.serialize_object(data),
                 }
 
                 payload = @version.create(
@@ -252,7 +252,7 @@ module Twilio
               # @return [SyncListItemInstance] Updated SyncListItemInstance
               def update(data: nil)
                 data = {
-                    'Data' => data,
+                    'Data' => Twilio.serialize_object(data),
                 }
 
                 payload = @version.update(

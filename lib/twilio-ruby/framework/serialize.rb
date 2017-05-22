@@ -17,6 +17,15 @@ module Twilio
     end
   end
 
+  def self.serialize_object(object)
+    if object.is_a?(Hash) or object.is_a?(Array)
+      require 'json'
+      JSON.generate(object)
+    else
+      object
+    end
+  end
+
   def self.flatten(map, result={}, previous=[])
     map.each do |key, value|
       if value.is_a? Hash

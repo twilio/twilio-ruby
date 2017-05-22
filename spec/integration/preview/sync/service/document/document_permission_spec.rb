@@ -14,7 +14,7 @@ describe 'DocumentPermission' do
       @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .document_permissions("identity").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -55,7 +55,7 @@ describe 'DocumentPermission' do
       @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .document_permissions("identity").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -85,7 +85,7 @@ describe 'DocumentPermission' do
       @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .document_permissions.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -165,7 +165,7 @@ describe 'DocumentPermission' do
       @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .document_permissions("identity").update(read: true, write: true, manage: true)
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'Read' => true,

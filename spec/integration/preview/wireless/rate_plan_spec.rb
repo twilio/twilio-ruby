@@ -12,7 +12,7 @@ describe 'RatePlan' do
 
     expect {
       @client.preview.wireless.rate_plans.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -64,19 +64,19 @@ describe 'RatePlan' do
               {
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "unique_name": "unique_name",
-                  "commands": {
-                      "enabled": true
-                  },
-                  "data": {
-                      "limit": 1000,
-                      "metering": "pooled"
-                  },
+                  "data_enabled": true,
+                  "data_limit": 1000,
+                  "data_metering": "pooled",
                   "date_created": "2015-07-30T20:00:00Z",
                   "date_updated": "2015-07-30T20:00:00Z",
                   "friendly_name": "friendly_name",
-                  "renewal": "monthly",
-                  "roaming": [
-                      "National"
+                  "messaging_enabled": true,
+                  "voice_enabled": true,
+                  "national_roaming_enabled": true,
+                  "international_roaming": [
+                      "data",
+                      "messaging",
+                      "voice"
                   ],
                   "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "url": "https://preview.twilio.com/wireless/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -96,7 +96,7 @@ describe 'RatePlan' do
 
     expect {
       @client.preview.wireless.rate_plans("WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -113,19 +113,19 @@ describe 'RatePlan' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "unique_name": "unique_name",
-          "commands": {
-              "enabled": true
-          },
-          "data": {
-              "limit": 1000,
-              "metering": "pooled"
-          },
+          "data_enabled": true,
+          "data_limit": 1000,
+          "data_metering": "pooled",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "friendly_name": "friendly_name",
-          "renewal": "monthly",
-          "roaming": [
-              "National"
+          "messaging_enabled": true,
+          "voice_enabled": true,
+          "national_roaming_enabled": true,
+          "international_roaming": [
+              "data",
+              "messaging",
+              "voice"
           ],
           "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "url": "https://preview.twilio.com/wireless/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -143,7 +143,7 @@ describe 'RatePlan' do
 
     expect {
       @client.preview.wireless.rate_plans.create()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -160,19 +160,19 @@ describe 'RatePlan' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "unique_name": "unique_name",
-          "commands": {
-              "enabled": true
-          },
-          "data": {
-              "limit": 1000,
-              "metering": "pooled"
-          },
+          "data_enabled": true,
+          "data_limit": 1000,
+          "data_metering": "pooled",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "friendly_name": "friendly_name",
-          "renewal": "monthly",
-          "roaming": [
-              "National"
+          "messaging_enabled": true,
+          "voice_enabled": true,
+          "national_roaming_enabled": true,
+          "international_roaming": [
+              "data",
+              "messaging",
+              "voice"
           ],
           "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "url": "https://preview.twilio.com/wireless/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -190,7 +190,7 @@ describe 'RatePlan' do
 
     expect {
       @client.preview.wireless.rate_plans("WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -207,19 +207,19 @@ describe 'RatePlan' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "unique_name": "unique_name",
-          "commands": {
-              "enabled": true
-          },
-          "data": {
-              "limit": 1000,
-              "metering": "pooled"
-          },
+          "data_enabled": true,
+          "data_limit": 1000,
+          "data_metering": "pooled",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "friendly_name": "friendly_name",
-          "renewal": "monthly",
-          "roaming": [
-              "National"
+          "messaging_enabled": true,
+          "voice_enabled": true,
+          "national_roaming_enabled": true,
+          "international_roaming": [
+              "data",
+              "messaging",
+              "voice"
           ],
           "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "url": "https://preview.twilio.com/wireless/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -237,7 +237,7 @@ describe 'RatePlan' do
 
     expect {
       @client.preview.wireless.rate_plans("WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

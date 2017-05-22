@@ -14,7 +14,7 @@ describe 'Participant' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .conferences("CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .participants("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -58,7 +58,7 @@ describe 'Participant' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .conferences("CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .participants("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -102,7 +102,7 @@ describe 'Participant' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .conferences("CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .participants.create(from: "+987654321", to: "+123456789")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'From' => "+987654321",
@@ -177,7 +177,7 @@ describe 'Participant' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .conferences("CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .participants("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -207,7 +207,7 @@ describe 'Participant' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .conferences("CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .participants.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

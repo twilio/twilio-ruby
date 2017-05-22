@@ -14,7 +14,7 @@ describe 'Feedback' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .feedback().create(quality_score: 1)
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'QualityScore' => 1,
@@ -59,7 +59,7 @@ describe 'Feedback' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .feedback().fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -101,7 +101,7 @@ describe 'Feedback' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .feedback().update(quality_score: 1)
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'QualityScore' => 1,

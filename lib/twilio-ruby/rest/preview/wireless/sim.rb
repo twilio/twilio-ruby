@@ -225,8 +225,16 @@ module Twilio
           # @param [String] status The status
           # @param [String] commands_callback_method The commands_callback_method
           # @param [String] commands_callback_url The commands_callback_url
+          # @param [String] sms_fallback_method The sms_fallback_method
+          # @param [String] sms_fallback_url The sms_fallback_url
+          # @param [String] sms_method The sms_method
+          # @param [String] sms_url The sms_url
+          # @param [String] voice_fallback_method The voice_fallback_method
+          # @param [String] voice_fallback_url The voice_fallback_url
+          # @param [String] voice_method The voice_method
+          # @param [String] voice_url The voice_url
           # @return [SimInstance] Updated SimInstance
-          def update(unique_name: nil, callback_method: nil, callback_url: nil, friendly_name: nil, rate_plan: nil, status: nil, commands_callback_method: nil, commands_callback_url: nil)
+          def update(unique_name: nil, callback_method: nil, callback_url: nil, friendly_name: nil, rate_plan: nil, status: nil, commands_callback_method: nil, commands_callback_url: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil)
             data = {
                 'UniqueName' => unique_name,
                 'CallbackMethod' => callback_method,
@@ -236,6 +244,14 @@ module Twilio
                 'Status' => status,
                 'CommandsCallbackMethod' => commands_callback_method,
                 'CommandsCallbackUrl' => commands_callback_url,
+                'SmsFallbackMethod' => sms_fallback_method,
+                'SmsFallbackUrl' => sms_fallback_url,
+                'SmsMethod' => sms_method,
+                'SmsUrl' => sms_url,
+                'VoiceFallbackMethod' => voice_fallback_method,
+                'VoiceFallbackUrl' => voice_fallback_url,
+                'VoiceMethod' => voice_method,
+                'VoiceUrl' => voice_url,
             }
 
             payload = @version.update(
@@ -291,6 +307,14 @@ module Twilio
                 'status' => payload['status'],
                 'commands_callback_url' => payload['commands_callback_url'],
                 'commands_callback_method' => payload['commands_callback_method'],
+                'sms_fallback_method' => payload['sms_fallback_method'],
+                'sms_fallback_url' => payload['sms_fallback_url'],
+                'sms_method' => payload['sms_method'],
+                'sms_url' => payload['sms_url'],
+                'voice_fallback_method' => payload['voice_fallback_method'],
+                'voice_fallback_url' => payload['voice_fallback_url'],
+                'voice_method' => payload['voice_method'],
+                'voice_url' => payload['voice_url'],
                 'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
                 'url' => payload['url'],
@@ -359,6 +383,38 @@ module Twilio
             @properties['commands_callback_method']
           end
 
+          def sms_fallback_method
+            @properties['sms_fallback_method']
+          end
+
+          def sms_fallback_url
+            @properties['sms_fallback_url']
+          end
+
+          def sms_method
+            @properties['sms_method']
+          end
+
+          def sms_url
+            @properties['sms_url']
+          end
+
+          def voice_fallback_method
+            @properties['voice_fallback_method']
+          end
+
+          def voice_fallback_url
+            @properties['voice_fallback_url']
+          end
+
+          def voice_method
+            @properties['voice_method']
+          end
+
+          def voice_url
+            @properties['voice_url']
+          end
+
           def date_created
             @properties['date_created']
           end
@@ -392,8 +448,16 @@ module Twilio
           # @param [String] status The status
           # @param [String] commands_callback_method The commands_callback_method
           # @param [String] commands_callback_url The commands_callback_url
+          # @param [String] sms_fallback_method The sms_fallback_method
+          # @param [String] sms_fallback_url The sms_fallback_url
+          # @param [String] sms_method The sms_method
+          # @param [String] sms_url The sms_url
+          # @param [String] voice_fallback_method The voice_fallback_method
+          # @param [String] voice_fallback_url The voice_fallback_url
+          # @param [String] voice_method The voice_method
+          # @param [String] voice_url The voice_url
           # @return [SimInstance] Updated SimInstance
-          def update(unique_name: nil, callback_method: nil, callback_url: nil, friendly_name: nil, rate_plan: nil, status: nil, commands_callback_method: nil, commands_callback_url: nil)
+          def update(unique_name: nil, callback_method: nil, callback_url: nil, friendly_name: nil, rate_plan: nil, status: nil, commands_callback_method: nil, commands_callback_url: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil)
             context.update(
                 unique_name: unique_name,
                 callback_method: callback_method,
@@ -403,6 +467,14 @@ module Twilio
                 status: status,
                 commands_callback_method: commands_callback_method,
                 commands_callback_url: commands_callback_url,
+                sms_fallback_method: sms_fallback_method,
+                sms_fallback_url: sms_fallback_url,
+                sms_method: sms_method,
+                sms_url: sms_url,
+                voice_fallback_method: voice_fallback_method,
+                voice_fallback_url: voice_fallback_url,
+                voice_method: voice_method,
+                voice_url: voice_url,
             )
           end
 

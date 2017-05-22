@@ -15,7 +15,7 @@ describe 'ThisMonth' do
                        .usage \
                        .records \
                        .this_month.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

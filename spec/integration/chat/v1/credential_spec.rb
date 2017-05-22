@@ -12,7 +12,7 @@ describe 'Credential' do
 
     expect {
       @client.chat.v1.credentials.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -86,7 +86,7 @@ describe 'Credential' do
 
     expect {
       @client.chat.v1.credentials.create(type: "gcm")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'Type' => "gcm",
@@ -126,7 +126,7 @@ describe 'Credential' do
 
     expect {
       @client.chat.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -163,7 +163,7 @@ describe 'Credential' do
 
     expect {
       @client.chat.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -200,7 +200,7 @@ describe 'Credential' do
 
     expect {
       @client.chat.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

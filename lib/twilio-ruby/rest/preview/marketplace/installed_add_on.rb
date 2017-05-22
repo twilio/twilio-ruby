@@ -37,7 +37,7 @@ module Twilio
             data = {
                 'AvailableAddOnSid' => available_add_on_sid,
                 'AcceptTermsOfService' => accept_terms_of_service,
-                'Configuration' => configuration,
+                'Configuration' => Twilio.serialize_object(configuration),
                 'UniqueName' => unique_name,
             }
 
@@ -229,7 +229,7 @@ module Twilio
           # @return [InstalledAddOnInstance] Updated InstalledAddOnInstance
           def update(configuration: nil, unique_name: nil)
             data = {
-                'Configuration' => configuration,
+                'Configuration' => Twilio.serialize_object(configuration),
                 'UniqueName' => unique_name,
             }
 

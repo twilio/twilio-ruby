@@ -14,7 +14,7 @@ describe 'Mobile' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .incoming_phone_numbers \
                        .mobile.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -119,7 +119,7 @@ describe 'Mobile' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .incoming_phone_numbers \
                        .mobile.create(phone_number: "+987654321")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'PhoneNumber' => "+987654321",

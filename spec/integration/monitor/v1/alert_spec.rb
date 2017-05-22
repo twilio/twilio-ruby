@@ -12,7 +12,7 @@ describe 'Alert' do
 
     expect {
       @client.monitor.v1.alerts("NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -58,7 +58,7 @@ describe 'Alert' do
 
     expect {
       @client.monitor.v1.alerts("NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -84,7 +84,7 @@ describe 'Alert' do
 
     expect {
       @client.monitor.v1.alerts.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

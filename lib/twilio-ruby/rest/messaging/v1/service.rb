@@ -33,8 +33,13 @@ module Twilio
           # @param [Boolean] sticky_sender The sticky_sender
           # @param [Boolean] mms_converter The mms_converter
           # @param [Boolean] smart_encoding The smart_encoding
+          # @param [service.ScanMessageContent] scan_message_content The
+          #   scan_message_content
+          # @param [Boolean] fallback_to_long_code The fallback_to_long_code
+          # @param [Boolean] area_code_geomatch The area_code_geomatch
+          # @param [String] validity_period The validity_period
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil, inbound_request_url: nil, inbound_method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, sticky_sender: nil, mms_converter: nil, smart_encoding: nil)
+          def create(friendly_name: nil, inbound_request_url: nil, inbound_method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, sticky_sender: nil, mms_converter: nil, smart_encoding: nil, scan_message_content: nil, fallback_to_long_code: nil, area_code_geomatch: nil, validity_period: nil)
             data = {
                 'FriendlyName' => friendly_name,
                 'InboundRequestUrl' => inbound_request_url,
@@ -45,6 +50,10 @@ module Twilio
                 'StickySender' => sticky_sender,
                 'MmsConverter' => mms_converter,
                 'SmartEncoding' => smart_encoding,
+                'ScanMessageContent' => scan_message_content,
+                'FallbackToLongCode' => fallback_to_long_code,
+                'AreaCodeGeomatch' => area_code_geomatch,
+                'ValidityPeriod' => validity_period,
             }
 
             payload = @version.create(
@@ -212,8 +221,13 @@ module Twilio
           # @param [Boolean] sticky_sender The sticky_sender
           # @param [Boolean] mms_converter The mms_converter
           # @param [Boolean] smart_encoding The smart_encoding
+          # @param [service.ScanMessageContent] scan_message_content The
+          #   scan_message_content
+          # @param [Boolean] fallback_to_long_code The fallback_to_long_code
+          # @param [Boolean] area_code_geomatch The area_code_geomatch
+          # @param [String] validity_period The validity_period
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: nil, inbound_request_url: nil, inbound_method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, sticky_sender: nil, mms_converter: nil, smart_encoding: nil)
+          def update(friendly_name: nil, inbound_request_url: nil, inbound_method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, sticky_sender: nil, mms_converter: nil, smart_encoding: nil, scan_message_content: nil, fallback_to_long_code: nil, area_code_geomatch: nil, validity_period: nil)
             data = {
                 'FriendlyName' => friendly_name,
                 'InboundRequestUrl' => inbound_request_url,
@@ -224,6 +238,10 @@ module Twilio
                 'StickySender' => sticky_sender,
                 'MmsConverter' => mms_converter,
                 'SmartEncoding' => smart_encoding,
+                'ScanMessageContent' => scan_message_content,
+                'FallbackToLongCode' => fallback_to_long_code,
+                'AreaCodeGeomatch' => area_code_geomatch,
+                'ValidityPeriod' => validity_period,
             }
 
             payload = @version.update(
@@ -364,6 +382,10 @@ module Twilio
                 'sticky_sender' => payload['sticky_sender'],
                 'mms_converter' => payload['mms_converter'],
                 'smart_encoding' => payload['smart_encoding'],
+                'scan_message_content' => payload['scan_message_content'],
+                'fallback_to_long_code' => payload['fallback_to_long_code'],
+                'area_code_geomatch' => payload['area_code_geomatch'],
+                'validity_period' => payload['validity_period'].to_i,
                 'url' => payload['url'],
                 'links' => payload['links'],
             }
@@ -442,6 +464,22 @@ module Twilio
             @properties['smart_encoding']
           end
 
+          def scan_message_content
+            @properties['scan_message_content']
+          end
+
+          def fallback_to_long_code
+            @properties['fallback_to_long_code']
+          end
+
+          def area_code_geomatch
+            @properties['area_code_geomatch']
+          end
+
+          def validity_period
+            @properties['validity_period']
+          end
+
           def url
             @properties['url']
           end
@@ -461,8 +499,13 @@ module Twilio
           # @param [Boolean] sticky_sender The sticky_sender
           # @param [Boolean] mms_converter The mms_converter
           # @param [Boolean] smart_encoding The smart_encoding
+          # @param [service.ScanMessageContent] scan_message_content The
+          #   scan_message_content
+          # @param [Boolean] fallback_to_long_code The fallback_to_long_code
+          # @param [Boolean] area_code_geomatch The area_code_geomatch
+          # @param [String] validity_period The validity_period
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: nil, inbound_request_url: nil, inbound_method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, sticky_sender: nil, mms_converter: nil, smart_encoding: nil)
+          def update(friendly_name: nil, inbound_request_url: nil, inbound_method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, sticky_sender: nil, mms_converter: nil, smart_encoding: nil, scan_message_content: nil, fallback_to_long_code: nil, area_code_geomatch: nil, validity_period: nil)
             context.update(
                 friendly_name: friendly_name,
                 inbound_request_url: inbound_request_url,
@@ -473,6 +516,10 @@ module Twilio
                 sticky_sender: sticky_sender,
                 mms_converter: mms_converter,
                 smart_encoding: smart_encoding,
+                scan_message_content: scan_message_content,
+                fallback_to_long_code: fallback_to_long_code,
+                area_code_geomatch: area_code_geomatch,
+                validity_period: validity_period,
             )
           end
 

@@ -14,7 +14,7 @@ describe 'Media' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .media("MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -44,7 +44,7 @@ describe 'Media' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .media("MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -84,7 +84,7 @@ describe 'Media' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .media.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

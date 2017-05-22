@@ -15,7 +15,7 @@ describe 'IpAccessControlListMapping' do
                        .sip \
                        .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .ip_access_control_list_mappings("ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -59,7 +59,7 @@ describe 'IpAccessControlListMapping' do
                        .sip \
                        .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .ip_access_control_list_mappings.create(ip_access_control_list_sid: "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'IpAccessControlListSid' => "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -106,7 +106,7 @@ describe 'IpAccessControlListMapping' do
                        .sip \
                        .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .ip_access_control_list_mappings.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -194,7 +194,7 @@ describe 'IpAccessControlListMapping' do
                        .sip \
                        .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .ip_access_control_list_mappings("ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

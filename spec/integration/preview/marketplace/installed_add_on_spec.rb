@@ -12,7 +12,7 @@ describe 'InstalledAddOn' do
 
     expect {
       @client.preview.marketplace.installed_add_ons.create(available_add_on_sid: "XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", accept_terms_of_service: true)
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'AvailableAddOnSid' => "XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -60,7 +60,7 @@ describe 'InstalledAddOn' do
 
     expect {
       @client.preview.marketplace.installed_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -86,7 +86,7 @@ describe 'InstalledAddOn' do
 
     expect {
       @client.preview.marketplace.installed_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -130,7 +130,7 @@ describe 'InstalledAddOn' do
 
     expect {
       @client.preview.marketplace.installed_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -174,7 +174,7 @@ describe 'InstalledAddOn' do
 
     expect {
       @client.preview.marketplace.installed_add_ons.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

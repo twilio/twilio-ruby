@@ -14,7 +14,7 @@ describe 'SegmentMembership' do
       @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .segment_memberships.create(segment: "segment")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'Segment' => "segment",
@@ -55,7 +55,7 @@ describe 'SegmentMembership' do
       @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .segment_memberships("segment").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -85,7 +85,7 @@ describe 'SegmentMembership' do
       @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .segment_memberships("segment").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

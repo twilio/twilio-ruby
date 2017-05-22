@@ -14,7 +14,7 @@ describe 'TollFree' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .incoming_phone_numbers \
                        .toll_free.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -119,7 +119,7 @@ describe 'TollFree' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .incoming_phone_numbers \
                        .toll_free.create(phone_number: "+987654321")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'PhoneNumber' => "+987654321",

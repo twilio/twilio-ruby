@@ -8,7 +8,8 @@ module Twilio
       end
 
       def validate(url, params, signature)
-        expected = build_signature_for url, params
+        params_hash = params_to_hash(params)
+        expected = build_signature_for(url, params_hash)
         secure_compare(expected, signature)
       end
 
@@ -31,6 +32,23 @@ module Twilio
         res = 0
         b.each_byte { |byte| res |= byte ^ l.shift }
         res == 0
+      end
+
+      # `ActionController::Parameters` no longer, as of Rails 5, inherits
+      # from `Hash` so the `sort` method, used above in `build_signature_for`
+      # is deprecated.
+      #
+      # `to_unsafe_h` was introduced in Rails 4.2.1, before then it is still
+      # possible to sort on an ActionController::Parameters object.
+      #
+      # We use `to_unsafe_h` as `to_h` returns a hash of the permitted
+      # parameters only and we need all the parameters to create the signature.
+      def params_to_hash(params)
+        if params.respond_to?(:to_unsafe_h)
+          params.to_unsafe_h
+        else
+          params
+        end
       end
     end
   end

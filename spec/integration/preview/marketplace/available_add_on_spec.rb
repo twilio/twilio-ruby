@@ -12,7 +12,7 @@ describe 'AvailableAddOn' do
 
     expect {
       @client.preview.marketplace.available_add_ons("XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -60,7 +60,7 @@ describe 'AvailableAddOn' do
 
     expect {
       @client.preview.marketplace.available_add_ons.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

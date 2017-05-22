@@ -14,7 +14,7 @@ describe 'Transcription' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .transcriptions("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -60,7 +60,7 @@ describe 'Transcription' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .transcriptions("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -90,7 +90,7 @@ describe 'Transcription' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .transcriptions.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

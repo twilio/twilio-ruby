@@ -108,21 +108,27 @@ module Twilio
           # Request is executed immediately.
           # @param [String] unique_name The unique_name
           # @param [String] friendly_name The friendly_name
-          # @param [String] roaming The roaming
+          # @param [Boolean] data_enabled The data_enabled
           # @param [String] data_limit The data_limit
           # @param [String] data_metering The data_metering
+          # @param [Boolean] messaging_enabled The messaging_enabled
+          # @param [Boolean] voice_enabled The voice_enabled
           # @param [Boolean] commands_enabled The commands_enabled
-          # @param [String] renewal The renewal
+          # @param [Boolean] national_roaming_enabled The national_roaming_enabled
+          # @param [String] international_roaming The international_roaming
           # @return [RatePlanInstance] Newly created RatePlanInstance
-          def create(unique_name: nil, friendly_name: nil, roaming: nil, data_limit: nil, data_metering: nil, commands_enabled: nil, renewal: nil)
+          def create(unique_name: nil, friendly_name: nil, data_enabled: nil, data_limit: nil, data_metering: nil, messaging_enabled: nil, voice_enabled: nil, commands_enabled: nil, national_roaming_enabled: nil, international_roaming: nil)
             data = {
                 'UniqueName' => unique_name,
                 'FriendlyName' => friendly_name,
-                'Roaming' => roaming,
+                'DataEnabled' => data_enabled,
                 'DataLimit' => data_limit,
                 'DataMetering' => data_metering,
+                'MessagingEnabled' => messaging_enabled,
+                'VoiceEnabled' => voice_enabled,
                 'CommandsEnabled' => commands_enabled,
-                'Renewal' => renewal,
+                'NationalRoamingEnabled' => national_roaming_enabled,
+                'InternationalRoaming' => international_roaming,
             }
 
             payload = @version.create(
@@ -266,10 +272,13 @@ module Twilio
                 'unique_name' => payload['unique_name'],
                 'account_sid' => payload['account_sid'],
                 'friendly_name' => payload['friendly_name'],
-                'roaming' => payload['roaming'],
-                'data' => payload['data'],
-                'commands' => payload['commands'],
-                'renewal' => payload['renewal'],
+                'data_enabled' => payload['data_enabled'],
+                'data_metering' => payload['data_metering'],
+                'data_limit' => payload['data_limit'].to_i,
+                'messaging_enabled' => payload['messaging_enabled'],
+                'voice_enabled' => payload['voice_enabled'],
+                'national_roaming_enabled' => payload['national_roaming_enabled'],
+                'international_roaming' => payload['international_roaming'],
                 'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
                 'url' => payload['url'],
@@ -313,20 +322,32 @@ module Twilio
             @properties['friendly_name']
           end
 
-          def roaming
-            @properties['roaming']
+          def data_enabled
+            @properties['data_enabled']
           end
 
-          def data
-            @properties['data']
+          def data_metering
+            @properties['data_metering']
           end
 
-          def commands
-            @properties['commands']
+          def data_limit
+            @properties['data_limit']
           end
 
-          def renewal
-            @properties['renewal']
+          def messaging_enabled
+            @properties['messaging_enabled']
+          end
+
+          def voice_enabled
+            @properties['voice_enabled']
+          end
+
+          def national_roaming_enabled
+            @properties['national_roaming_enabled']
+          end
+
+          def international_roaming
+            @properties['international_roaming']
           end
 
           def date_created

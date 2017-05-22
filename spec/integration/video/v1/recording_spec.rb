@@ -12,7 +12,7 @@ describe 'Recording' do
 
     expect {
       @client.video.v1.recordings("RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -58,7 +58,7 @@ describe 'Recording' do
 
     expect {
       @client.video.v1.recordings.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -97,7 +97,7 @@ describe 'Recording' do
 
     expect {
       @client.video.v1.recordings("RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

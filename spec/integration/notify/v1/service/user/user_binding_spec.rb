@@ -14,7 +14,7 @@ describe 'UserBinding' do
       @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -65,7 +65,7 @@ describe 'UserBinding' do
       @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -95,7 +95,7 @@ describe 'UserBinding' do
       @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .bindings.create(binding_type: "apn", address: "address")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'BindingType' => "apn",
@@ -150,7 +150,7 @@ describe 'UserBinding' do
       @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .bindings.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

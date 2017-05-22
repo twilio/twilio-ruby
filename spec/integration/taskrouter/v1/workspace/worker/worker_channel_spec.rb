@@ -14,7 +14,7 @@ describe 'WorkerChannel' do
       @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .workers("WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .worker_channels.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -104,7 +104,7 @@ describe 'WorkerChannel' do
       @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .workers("WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .worker_channels("WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -155,7 +155,7 @@ describe 'WorkerChannel' do
       @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .workers("WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .worker_channels("WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

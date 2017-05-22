@@ -14,7 +14,7 @@ describe 'FeedbackSummary' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls \
                        .feedback_summaries.create(start_date: Date.new(2008, 1, 2), end_date: Date.new(2008, 1, 2))
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'StartDate' => Twilio.serialize_iso8601(Date.new(2008, 1, 2)),
@@ -71,7 +71,7 @@ describe 'FeedbackSummary' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls \
                        .feedback_summaries("FSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -124,7 +124,7 @@ describe 'FeedbackSummary' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls \
                        .feedback_summaries("FSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

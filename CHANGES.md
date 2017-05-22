@@ -1,6 +1,14 @@
 twilio-ruby changelog
 =====================
 
+[2017-05-22] Version 5.0.0-rc20
+- Add Wireless Domain
+- Add Fax Domain
+- Add Video Domain
+- Updated Usage Trigger enums with missing categories.
+- Add `area_code_geomatch`, `validtiy_period`, `fallback_to_long_code` to Messaging Service
+- Converted `TwilioException` to `TwilioError`
+
 [2017-04-27] Version 5.0.0-rc19
 ------------------
 

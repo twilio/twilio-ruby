@@ -58,7 +58,7 @@ module Twilio
                   'Apn' => apn,
                   'Gcm' => gcm,
                   'Sms' => sms,
-                  'FacebookMessenger' => facebook_messenger,
+                  'FacebookMessenger' => Twilio.serialize_object(facebook_messenger),
                   'Fcm' => fcm,
                   'Segment' => segment,
               }

@@ -34,7 +34,7 @@ module Twilio
             def create(unique_name: nil, data: nil)
               data = {
                   'UniqueName' => unique_name,
-                  'Data' => data,
+                  'Data' => Twilio.serialize_object(data),
               }
 
               payload = @version.create(
@@ -227,7 +227,7 @@ module Twilio
             # @return [DocumentInstance] Updated DocumentInstance
             def update(data: nil)
               data = {
-                  'Data' => data,
+                  'Data' => Twilio.serialize_object(data),
               }
 
               payload = @version.update(

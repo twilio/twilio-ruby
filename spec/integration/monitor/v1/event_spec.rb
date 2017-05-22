@@ -12,7 +12,7 @@ describe 'Event' do
 
     expect {
       @client.monitor.v1.events("AEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -63,7 +63,7 @@ describe 'Event' do
 
     expect {
       @client.monitor.v1.events.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

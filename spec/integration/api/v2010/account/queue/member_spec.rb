@@ -14,7 +14,7 @@ describe 'Member' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .queues("QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .members("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -52,7 +52,7 @@ describe 'Member' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .queues("QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .members("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(url: "https://example.com", method: "GET")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'Url' => "https://example.com",
@@ -94,7 +94,7 @@ describe 'Member' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .queues("QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .members.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

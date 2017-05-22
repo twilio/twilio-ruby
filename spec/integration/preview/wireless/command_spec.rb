@@ -12,7 +12,7 @@ describe 'Command' do
 
     expect {
       @client.preview.wireless.commands("DCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -52,7 +52,7 @@ describe 'Command' do
 
     expect {
       @client.preview.wireless.commands.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -129,7 +129,7 @@ describe 'Command' do
 
     expect {
       @client.preview.wireless.commands.create(command: "command")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'Command' => "command",

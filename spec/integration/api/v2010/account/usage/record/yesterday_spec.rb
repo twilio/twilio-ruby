@@ -15,7 +15,7 @@ describe 'Yesterday' do
                        .usage \
                        .records \
                        .yesterday.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

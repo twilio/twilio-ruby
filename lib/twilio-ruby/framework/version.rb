@@ -74,7 +74,7 @@ module Twilio
           code = response.body['code']
         end
 
-        return Twilio::REST::RestException.new(message, code, response.status_code)
+        return Twilio::REST::RestError.new(message, code, response.status_code)
       end
 
       def fetch(method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)

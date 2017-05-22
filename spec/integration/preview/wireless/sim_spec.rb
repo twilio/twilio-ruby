@@ -12,7 +12,7 @@ describe 'Sim' do
 
     expect {
       @client.preview.wireless.sims("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -34,6 +34,14 @@ describe 'Sim' do
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "friendly_name": "friendly_name",
+          "sms_fallback_method": "http_method",
+          "sms_fallback_url": "http://www.example.com",
+          "sms_method": "http_method",
+          "sms_url": "http://www.example.com",
+          "voice_fallback_method": "http_method",
+          "voice_fallback_url": "http://www.example.com",
+          "voice_method": "http_method",
+          "voice_url": "http://www.example.com",
           "links": {
               "usage": "https://preview.twilio.com/wireless/Sims/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Usage",
               "rate_plan": "https://preview.twilio.com/wireless/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -58,7 +66,7 @@ describe 'Sim' do
 
     expect {
       @client.preview.wireless.sims.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -115,6 +123,14 @@ describe 'Sim' do
                   "iccid": "iccid",
                   "e_id": "e_id",
                   "status": "status",
+                  "sms_fallback_method": "http_method",
+                  "sms_fallback_url": "http://www.example.com",
+                  "sms_method": "http_method",
+                  "sms_url": "http://www.example.com",
+                  "voice_fallback_method": "http_method",
+                  "voice_fallback_url": "http://www.example.com",
+                  "voice_method": "http_method",
+                  "voice_url": "http://www.example.com",
                   "url": "https://preview.twilio.com/wireless/Sims/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
           ],
@@ -141,7 +157,7 @@ describe 'Sim' do
 
     expect {
       @client.preview.wireless.sims("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -172,6 +188,14 @@ describe 'Sim' do
           "iccid": "iccid",
           "e_id": "e_id",
           "status": "status",
+          "sms_fallback_method": "http_method",
+          "sms_fallback_url": "http://www.example.com",
+          "sms_method": "http_method",
+          "sms_url": "http://www.example.com",
+          "voice_fallback_method": "http_method",
+          "voice_fallback_url": "http://www.example.com",
+          "voice_method": "http_method",
+          "voice_url": "http://www.example.com",
           "url": "https://preview.twilio.com/wireless/Sims/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]

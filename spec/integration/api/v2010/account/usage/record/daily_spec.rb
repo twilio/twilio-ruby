@@ -15,7 +15,7 @@ describe 'Daily' do
                        .usage \
                        .records \
                        .daily.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

@@ -14,7 +14,7 @@ describe 'TaskQueuesStatistics' do
       @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .task_queues("WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .task_queues_statistics.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

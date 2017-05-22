@@ -15,7 +15,7 @@ describe 'AllTime' do
                        .usage \
                        .records \
                        .all_time.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

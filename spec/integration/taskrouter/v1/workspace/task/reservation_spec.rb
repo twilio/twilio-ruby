@@ -14,7 +14,7 @@ describe 'Reservation' do
       @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .tasks("WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .reservations.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -101,7 +101,7 @@ describe 'Reservation' do
       @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .tasks("WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .reservations("WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -149,7 +149,7 @@ describe 'Reservation' do
       @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .tasks("WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .reservations("WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

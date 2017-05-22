@@ -13,7 +13,7 @@ describe 'InstalledAddOnExtension' do
     expect {
       @client.preview.marketplace.installed_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                                  .extensions("XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -51,7 +51,7 @@ describe 'InstalledAddOnExtension' do
     expect {
       @client.preview.marketplace.installed_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                                  .extensions("XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(enabled: true)
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'Enabled' => true,
@@ -92,7 +92,7 @@ describe 'InstalledAddOnExtension' do
     expect {
       @client.preview.marketplace.installed_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                                  .extensions.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

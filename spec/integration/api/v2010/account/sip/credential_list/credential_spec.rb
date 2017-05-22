@@ -15,7 +15,7 @@ describe 'Credential' do
                        .sip \
                        .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .credentials.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -101,7 +101,7 @@ describe 'Credential' do
                        .sip \
                        .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .credentials.create(username: "username", password: "password")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'Username' => "username",
@@ -147,7 +147,7 @@ describe 'Credential' do
                        .sip \
                        .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -189,7 +189,7 @@ describe 'Credential' do
                        .sip \
                        .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -231,7 +231,7 @@ describe 'Credential' do
                        .sip \
                        .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

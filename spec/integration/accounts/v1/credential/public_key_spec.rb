@@ -13,7 +13,7 @@ describe 'PublicKey' do
     expect {
       @client.accounts.v1.credentials \
                          .public_key.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -88,7 +88,7 @@ describe 'PublicKey' do
     expect {
       @client.accounts.v1.credentials \
                          .public_key.create(public_key: "publickey")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'PublicKey' => "publickey",
@@ -128,7 +128,7 @@ describe 'PublicKey' do
     expect {
       @client.accounts.v1.credentials \
                          .public_key("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -165,7 +165,7 @@ describe 'PublicKey' do
     expect {
       @client.accounts.v1.credentials \
                          .public_key("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -202,7 +202,7 @@ describe 'PublicKey' do
     expect {
       @client.accounts.v1.credentials \
                          .public_key("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

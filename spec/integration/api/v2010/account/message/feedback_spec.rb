@@ -14,7 +14,7 @@ describe 'Feedback' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .feedback.create()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

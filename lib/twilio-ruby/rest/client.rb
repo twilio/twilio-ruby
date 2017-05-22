@@ -9,13 +9,14 @@ module Twilio
     ##
     # A client for accessing the Twilio API.
     class Client
-      attr_accessor :http_client, :username, :password, :account_sid, :auth_token
+      attr_accessor :http_client, :username, :password, :account_sid, :auth_token, :region
 
       ##
       # Initializes the Twilio Client
-      def initialize(username=nil, password=nil, account_sid=nil, http_client=Twilio::HTTP::Client.new)
+      def initialize(username=nil, password=nil, account_sid=nil, region=nil, http_client=Twilio::HTTP::Client.new)
         @username = username || Twilio.account_sid
         @password = password || Twilio.auth_token
+        @region = region
         @account_sid = account_sid || @username
         @auth_token = @password
         @auth = [@username, @password]
@@ -36,6 +37,8 @@ module Twilio
         @trunking = nil
         @video = nil
         @messaging = nil
+        @wireless = nil
+        @sync = nil
       end
 
       ##
@@ -55,6 +58,13 @@ module Twilio
 
         unless headers['Accept']
           headers['Accept'] = 'application/json'
+        end
+
+        if !region.nil?
+            head, tail  = uri.split('.', 2)
+            if !tail.start_with?(region)
+                uri = [head, region, tail].join('.')
+            end
         end
 
         @http_client.request(
@@ -154,96 +164,108 @@ module Twilio
         @messaging ||= Messaging.new self
       end
 
-      def addresses
-        return self.api.v2010.account.addresses
+      ##
+      # Access the Wireless Twilio Domain
+      def wireless
+        @wireless ||= Wireless.new self
       end
 
-      def applications
-        return self.api.v2010.account.applications
+      ##
+      # Access the Sync Twilio Domain
+      def sync
+        @sync ||= Sync.new self
       end
 
-      def authorized_connect_apps
-        return self.api.v2010.account.authorized_connect_apps
+      def addresses(sid=:unset)
+        self.api.v2010.account.addresses(sid)
       end
 
-      def available_phone_numbers
-        return self.api.v2010.account.available_phone_numbers
+      def applications(sid=:unset)
+        self.api.v2010.account.applications(sid)
       end
 
-      def calls
-        return self.api.v2010.account.calls
+      def authorized_connect_apps(sid=:unset)
+        self.api.v2010.account.authorized_connect_apps(sid)
       end
 
-      def conferences
-        return self.api.v2010.account.conferences
+      def available_phone_numbers(sid=:unset)
+        self.api.v2010.account.available_phone_numbers(sid)
       end
 
-      def connect_apps
-        return self.api.v2010.account.connect_apps
+      def calls(sid=:unset)
+        self.api.v2010.account.calls(sid)
       end
 
-      def incoming_phone_numbers
-        return self.api.v2010.account.incoming_phone_numbers
+      def conferences(sid=:unset)
+        self.api.v2010.account.conferences(sid)
       end
 
-      def keys
-        return self.api.v2010.account.keys
+      def connect_apps(sid=:unset)
+        self.api.v2010.account.connect_apps(sid)
       end
 
-      def messages
-        return self.api.v2010.account.messages
+      def incoming_phone_numbers(sid=:unset)
+        self.api.v2010.account.incoming_phone_numbers(sid)
+      end
+
+      def keys(sid=:unset)
+        self.api.v2010.account.keys(sid)
+      end
+
+      def messages(sid=:unset)
+        self.api.v2010.account.messages(sid)
       end
 
       def new_keys
-        return self.api.v2010.account.new_keys
+        self.api.v2010.account.new_keys
       end
 
       def new_signing_keys
-        return self.api.v2010.account.new_signing_keys
+        self.api.v2010.account.new_signing_keys
       end
 
-      def notifications
-        return self.api.v2010.account.notifications
+      def notifications(sid=:unset)
+        self.api.v2010.account.notifications(sid)
       end
 
-      def outgoing_caller_ids
-        return self.api.v2010.account.outgoing_caller_ids
+      def outgoing_caller_ids(sid=:unset)
+        self.api.v2010.account.outgoing_caller_ids(sid)
       end
 
-      def queues
-        return self.api.v2010.account.queues
+      def queues(sid=:unset)
+        self.api.v2010.account.queues(sid)
       end
 
-      def recordings
-        return self.api.v2010.account.recordings
+      def recordings(sid=:unset)
+        self.api.v2010.account.recordings(sid)
       end
 
-      def signing_keys
-        return self.api.v2010.account.signing_keys
+      def signing_keys(sid=:unset)
+        self.api.v2010.account.signing_keys(sid)
       end
 
       def sip
-        return self.api.v2010.account.sip
+        self.api.v2010.account.sip
       end
 
-      def short_codes
-        return self.api.v2010.account.short_codes
+      def short_codes(sid=:unset)
+        self.api.v2010.account.short_codes(sid)
       end
 
       def tokens
-        return self.api.v2010.account.tokens
+        self.api.v2010.account.tokens
       end
 
-      def transcriptions
-        return self.api.v2010.account.transcriptions
+      def transcriptions(sid=:unset)
+        self.api.v2010.account.transcriptions(sid)
       end
 
       def usage
-        return self.api.v2010.account.usage
+        self.api.v2010.account.usage
       end
 
       def validation_requests
-        return self.api.v2010.account.validation_requests
+        self.api.v2010.account.validation_requests
       end
 
       ##

@@ -13,7 +13,7 @@ describe 'Country' do
     expect {
       @client.pricing.v1.messaging \
                         .countries.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -85,7 +85,7 @@ describe 'Country' do
     expect {
       @client.pricing.v1.messaging \
                         .countries("US").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

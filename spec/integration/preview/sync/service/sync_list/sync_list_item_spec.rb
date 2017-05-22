@@ -14,7 +14,7 @@ describe 'SyncListItem' do
       @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .sync_list_items(1).fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -57,7 +57,7 @@ describe 'SyncListItem' do
       @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .sync_list_items(1).delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -87,10 +87,10 @@ describe 'SyncListItem' do
       @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .sync_list_items.create(data: "{}")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
-        'Data' => "{}",
+        'Data' => Twilio.serialize_object("{}"),
     }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -133,7 +133,7 @@ describe 'SyncListItem' do
       @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .sync_list_items.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -215,10 +215,10 @@ describe 'SyncListItem' do
       @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                           .sync_list_items(1).update(data: "{}")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
-        'Data' => "{}",
+        'Data' => Twilio.serialize_object("{}"),
     }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(

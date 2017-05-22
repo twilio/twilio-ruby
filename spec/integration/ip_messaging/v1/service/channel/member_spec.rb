@@ -14,7 +14,7 @@ describe 'Member' do
       @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                              .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                              .members("MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -58,7 +58,7 @@ describe 'Member' do
       @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                              .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                              .members.create(identity: "identity")
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'Identity' => "identity",
@@ -105,7 +105,7 @@ describe 'Member' do
       @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                              .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                              .members.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -188,7 +188,7 @@ describe 'Member' do
       @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                              .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                              .members("MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -218,7 +218,7 @@ describe 'Member' do
       @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                              .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                              .members("MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

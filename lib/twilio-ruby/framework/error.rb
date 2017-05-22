@@ -1,6 +1,6 @@
 module Twilio
   module REST
-    class TwilioException < Exception
+    class TwilioError < StandardError
       attr_reader :message, :body
 
       def initialize(message, body = nil)
@@ -13,7 +13,7 @@ module Twilio
       end
     end
 
-    class RestException < TwilioException
+    class RestError < TwilioError
       attr_reader :message, :code, :status_code
 
       def initialize(message, code, status_code)
@@ -26,5 +26,6 @@ module Twilio
         "[HTTP #{status_code}] #{code} : #{message}"
       end
     end
+
   end
 end

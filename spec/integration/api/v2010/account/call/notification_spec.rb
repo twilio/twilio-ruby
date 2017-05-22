@@ -14,7 +14,7 @@ describe 'Notification' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .notifications("NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -64,7 +64,7 @@ describe 'Notification' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .notifications("NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -94,7 +94,7 @@ describe 'Notification' do
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .notifications.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

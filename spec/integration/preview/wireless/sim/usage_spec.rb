@@ -13,7 +13,7 @@ describe 'Usage' do
     expect {
       @client.preview.wireless.sims("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                               .usage().fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(

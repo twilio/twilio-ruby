@@ -15,7 +15,7 @@ describe 'AssignedAddOnExtension' do
                        .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .assigned_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .extensions("XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
@@ -59,7 +59,7 @@ describe 'AssignedAddOnExtension' do
                        .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .assigned_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .extensions.list()
-    }.to raise_exception(Twilio::REST::TwilioException)
+    }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
