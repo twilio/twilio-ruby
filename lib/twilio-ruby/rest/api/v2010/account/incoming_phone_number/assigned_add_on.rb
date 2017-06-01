@@ -115,6 +115,19 @@ module Twilio
               ##
               # Retrieve a single page of AssignedAddOnInstance records from the API.
               # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of AssignedAddOnInstance
+              def get_page(target_url: nil)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
+                )
+                return AssignedAddOnPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of AssignedAddOnInstance records from the API.
+              # Request is executed immediately.
               # @param [String] installed_add_on_sid A 34 character string that uniquely
               #   identifies the Add-on installation.
               # @return [AssignedAddOnInstance] Newly created AssignedAddOnInstance

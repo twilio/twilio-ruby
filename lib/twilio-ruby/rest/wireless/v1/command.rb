@@ -127,6 +127,19 @@ module Twilio
           ##
           # Retrieve a single page of CommandInstance records from the API.
           # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of CommandInstance
+          def get_page(target_url: nil)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            return CommandPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of CommandInstance records from the API.
+          # Request is executed immediately.
           # @param [String] command The command
           # @param [String] sim The sim
           # @param [String] callback_method The callback_method

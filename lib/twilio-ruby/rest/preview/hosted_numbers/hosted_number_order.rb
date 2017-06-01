@@ -169,6 +169,19 @@ module Twilio
           ##
           # Retrieve a single page of HostedNumberOrderInstance records from the API.
           # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of HostedNumberOrderInstance
+          def get_page(target_url: nil)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            return HostedNumberOrderPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of HostedNumberOrderInstance records from the API.
+          # Request is executed immediately.
           # @param [String] address_sid A 34 character string that uniquely identifies the
           #   Address resource that represents the address of the owner of this phone number.
           # @param [String] phone_number An E164 formatted phone number hosted by this

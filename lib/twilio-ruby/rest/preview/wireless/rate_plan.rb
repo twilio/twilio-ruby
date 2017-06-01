@@ -106,6 +106,19 @@ module Twilio
           ##
           # Retrieve a single page of RatePlanInstance records from the API.
           # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of RatePlanInstance
+          def get_page(target_url: nil)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            return RatePlanPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of RatePlanInstance records from the API.
+          # Request is executed immediately.
           # @param [String] unique_name The unique_name
           # @param [String] friendly_name The friendly_name
           # @param [Boolean] data_enabled The data_enabled

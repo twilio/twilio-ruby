@@ -108,6 +108,19 @@ module Twilio
             end
 
             ##
+            # Retrieve a single page of SegmentInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of SegmentInstance
+            def get_page(target_url: nil)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              return SegmentPage.new(@version, response, @solution)
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Notify.V1.SegmentList>'

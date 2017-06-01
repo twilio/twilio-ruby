@@ -134,6 +134,19 @@ module Twilio
           ##
           # Retrieve a single page of FaxInstance records from the API.
           # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of FaxInstance
+          def get_page(target_url: nil)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            return FaxPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of FaxInstance records from the API.
+          # Request is executed immediately.
           # @param [String] to The to
           # @param [String] media_url The media_url
           # @param [fax.Quality] quality The quality

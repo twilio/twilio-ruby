@@ -143,6 +143,19 @@ module Twilio
                 end
 
                 ##
+                # Retrieve a single page of MessageInteractionInstance records from the API.
+                # Request is executed immediately.
+                # @param [String] target_url API-generated URL for the requested results page
+                # @return [Page] Page of MessageInteractionInstance
+                def get_page(target_url: nil)
+                  response = @version.domain.request(
+                      'GET',
+                      target_url
+                  )
+                  return MessageInteractionPage.new(@version, response, @solution)
+                end
+
+                ##
                 # Provide a user friendly representation
                 def to_s
                   '#<Twilio.Preview.Proxy.MessageInteractionList>'

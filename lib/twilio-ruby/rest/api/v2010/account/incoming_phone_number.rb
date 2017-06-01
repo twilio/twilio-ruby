@@ -334,6 +334,9 @@ module Twilio
                   sid: sid,
               }
               @uri = "/Accounts/#{@solution[:account_sid]}/IncomingPhoneNumbers/#{@solution[:sid]}.json"
+
+              # Dependents
+              @assigned_add_ons = nil
             end
 
             ##
@@ -445,6 +448,30 @@ module Twilio
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               return @version.delete('delete', @uri)
+            end
+
+            ##
+            # Access the assigned_add_ons
+            # @return [AssignedAddOnList] AssignedAddOnList
+            def assigned_add_ons(sid=:unset)
+              if sid != :unset
+                return AssignedAddOnContext.new(
+                    @version,
+                    @solution[:account_sid],
+                    @solution[:sid],
+                    sid,
+                )
+              end
+
+              unless @assigned_add_ons
+                @assigned_add_ons = AssignedAddOnList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                    resource_sid: @solution[:sid],
+                )
+              end
+
+              @assigned_add_ons
             end
 
             ##
@@ -714,6 +741,13 @@ module Twilio
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               context.delete
+            end
+
+            ##
+            # Access the assigned_add_ons
+            # @return [assigned_add_ons] assigned_add_ons
+            def assigned_add_ons
+              context.assigned_add_ons
             end
 
             ##

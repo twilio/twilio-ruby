@@ -136,6 +136,19 @@ module Twilio
             ##
             # Retrieve a single page of SessionInstance records from the API.
             # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of SessionInstance
+            def get_page(target_url: nil)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              return SessionPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of SessionInstance records from the API.
+            # Request is executed immediately.
             # @param [String] unique_name Provides a unique and addressable name to be
             #   assigned to this Session, assigned by the developer, to be optionally used in
             #   addition to SID.
