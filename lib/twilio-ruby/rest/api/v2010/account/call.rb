@@ -252,6 +252,19 @@ module Twilio
             end
 
             ##
+            # Retrieve a single page of CallInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of CallInstance
+            def get_page(target_url: nil)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              return CallPage.new(@version, response, @solution)
+            end
+
+            ##
             # Access the feedback_summaries
             # @param [String] sid The sid
             # @return [FeedbackSummaryList] FeedbackSummaryList

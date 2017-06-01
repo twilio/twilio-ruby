@@ -107,6 +107,19 @@ module Twilio
             ##
             # Retrieve a single page of PublicKeyInstance records from the API.
             # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of PublicKeyInstance
+            def get_page(target_url: nil)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              return PublicKeyPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of PublicKeyInstance records from the API.
+            # Request is executed immediately.
             # @param [String] public_key URL encoded representation of the public key, e.g.
             #   -----BEGIN PUBLIC KEY-----MIIBIjANB.pa9xQIDAQAB-----END PUBLIC KEY-----
             # @param [String] friendly_name A human readable description of this resource, up

@@ -133,6 +133,19 @@ module Twilio
               ##
               # Retrieve a single page of TollFreeInstance records from the API.
               # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of TollFreeInstance
+              def get_page(target_url: nil)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
+                )
+                return TollFreePage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of TollFreeInstance records from the API.
+              # Request is executed immediately.
               # @param [String] phone_number The phone_number
               # @param [String] api_version The api_version
               # @param [String] friendly_name The friendly_name

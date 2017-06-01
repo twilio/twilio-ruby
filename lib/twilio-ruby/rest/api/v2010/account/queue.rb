@@ -110,6 +110,19 @@ module Twilio
             ##
             # Retrieve a single page of QueueInstance records from the API.
             # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of QueueInstance
+            def get_page(target_url: nil)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              return QueuePage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of QueueInstance records from the API.
+            # Request is executed immediately.
             # @param [String] friendly_name A user-provided string that identifies this queue.
             # @param [String] max_size The upper limit of calls allowed to be in the queue.
             #   The default is 100. The maximum is 1000.

@@ -112,6 +112,19 @@ module Twilio
               ##
               # Retrieve a single page of DomainInstance records from the API.
               # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of DomainInstance
+              def get_page(target_url: nil)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
+                )
+                return DomainPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of DomainInstance records from the API.
+              # Request is executed immediately.
               # @param [String] domain_name The unique address you reserve on Twilio to which
               #   you route your SIP traffic
               # @param [String] friendly_name A user-specified, human-readable name for the

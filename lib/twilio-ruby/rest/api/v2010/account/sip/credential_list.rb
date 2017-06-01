@@ -112,6 +112,19 @@ module Twilio
               ##
               # Retrieve a single page of CredentialListInstance records from the API.
               # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of CredentialListInstance
+              def get_page(target_url: nil)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
+                )
+                return CredentialListPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of CredentialListInstance records from the API.
+              # Request is executed immediately.
               # @param [String] friendly_name The friendly_name
               # @return [CredentialListInstance] Newly created CredentialListInstance
               def create(friendly_name: nil)

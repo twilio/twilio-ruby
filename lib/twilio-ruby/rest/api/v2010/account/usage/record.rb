@@ -165,6 +165,19 @@ module Twilio
               end
 
               ##
+              # Retrieve a single page of RecordInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of RecordInstance
+              def get_page(target_url: nil)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
+                )
+                return RecordPage.new(@version, response, @solution)
+              end
+
+              ##
               # Access the all_time
               # @return [AllTimeList] AllTimeList
               def all_time

@@ -26,19 +26,13 @@ module Twilio
         @accounts = nil
         @api = nil
         @chat = nil
-        @fax = nil
         @ip_messaging = nil
         @lookups = nil
         @monitor = nil
-        @notify = nil
-        @preview = nil
         @pricing = nil
         @taskrouter = nil
         @trunking = nil
         @video = nil
-        @messaging = nil
-        @wireless = nil
-        @sync = nil
       end
 
       ##
@@ -99,12 +93,6 @@ module Twilio
       end
 
       ##
-      # Access the Fax Twilio Domain
-      def fax
-        @fax ||= Fax.new self
-      end
-
-      ##
       # Access the IpMessaging Twilio Domain
       def ip_messaging
         @ip_messaging ||= IpMessaging.new self
@@ -120,18 +108,6 @@ module Twilio
       # Access the Monitor Twilio Domain
       def monitor
         @monitor ||= Monitor.new self
-      end
-
-      ##
-      # Access the Notify Twilio Domain
-      def notify
-        @notify ||= Notify.new self
-      end
-
-      ##
-      # Access the Preview Twilio Domain
-      def preview
-        @preview ||= Preview.new self
       end
 
       ##
@@ -156,24 +132,6 @@ module Twilio
       # Access the Video Twilio Domain
       def video
         @video ||= Video.new self
-      end
-
-      ##
-      # Access the Messaging Twilio Domain
-      def messaging
-        @messaging ||= Messaging.new self
-      end
-
-      ##
-      # Access the Wireless Twilio Domain
-      def wireless
-        @wireless ||= Wireless.new self
-      end
-
-      ##
-      # Access the Sync Twilio Domain
-      def sync
-        @sync ||= Sync.new self
       end
 
       def addresses(sid=:unset)

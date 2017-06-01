@@ -113,6 +113,19 @@ module Twilio
           ##
           # Retrieve a single page of WorkspaceInstance records from the API.
           # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of WorkspaceInstance
+          def get_page(target_url: nil)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            return WorkspacePage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of WorkspaceInstance records from the API.
+          # Request is executed immediately.
           # @param [String] friendly_name The friendly_name
           # @param [String] event_callback_url The event_callback_url
           # @param [String] events_filter The events_filter

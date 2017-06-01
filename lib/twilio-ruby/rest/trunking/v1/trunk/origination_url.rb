@@ -139,6 +139,19 @@ module Twilio
             end
 
             ##
+            # Retrieve a single page of OriginationUrlInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of OriginationUrlInstance
+            def get_page(target_url: nil)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              return OriginationUrlPage.new(@version, response, @solution)
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Trunking.V1.OriginationUrlList>'

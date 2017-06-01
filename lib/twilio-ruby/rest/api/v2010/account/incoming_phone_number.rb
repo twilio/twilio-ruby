@@ -145,6 +145,19 @@ module Twilio
             ##
             # Retrieve a single page of IncomingPhoneNumberInstance records from the API.
             # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of IncomingPhoneNumberInstance
+            def get_page(target_url: nil)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              return IncomingPhoneNumberPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of IncomingPhoneNumberInstance records from the API.
+            # Request is executed immediately.
             # @param [String] api_version Calls to this phone number will start a new TwiML
             #   session with this API version.
             # @param [String] friendly_name A human readable descriptive text for this
@@ -321,9 +334,6 @@ module Twilio
                   sid: sid,
               }
               @uri = "/Accounts/#{@solution[:account_sid]}/IncomingPhoneNumbers/#{@solution[:sid]}.json"
-
-              # Dependents
-              @assigned_add_ons = nil
             end
 
             ##
@@ -435,30 +445,6 @@ module Twilio
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               return @version.delete('delete', @uri)
-            end
-
-            ##
-            # Access the assigned_add_ons
-            # @return [AssignedAddOnList] AssignedAddOnList
-            def assigned_add_ons(sid=:unset)
-              if sid != :unset
-                return AssignedAddOnContext.new(
-                    @version,
-                    @solution[:account_sid],
-                    @solution[:sid],
-                    sid,
-                )
-              end
-
-              unless @assigned_add_ons
-                @assigned_add_ons = AssignedAddOnList.new(
-                    @version,
-                    account_sid: @solution[:account_sid],
-                    resource_sid: @solution[:sid],
-                )
-              end
-
-              @assigned_add_ons
             end
 
             ##
@@ -728,13 +714,6 @@ module Twilio
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               context.delete
-            end
-
-            ##
-            # Access the assigned_add_ons
-            # @return [assigned_add_ons] assigned_add_ons
-            def assigned_add_ons
-              context.assigned_add_ons
             end
 
             ##

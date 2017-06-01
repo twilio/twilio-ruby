@@ -114,6 +114,19 @@ module Twilio
                 ##
                 # Retrieve a single page of IpAddressInstance records from the API.
                 # Request is executed immediately.
+                # @param [String] target_url API-generated URL for the requested results page
+                # @return [Page] Page of IpAddressInstance
+                def get_page(target_url: nil)
+                  response = @version.domain.request(
+                      'GET',
+                      target_url
+                  )
+                  return IpAddressPage.new(@version, response, @solution)
+                end
+
+                ##
+                # Retrieve a single page of IpAddressInstance records from the API.
+                # Request is executed immediately.
                 # @param [String] friendly_name The friendly_name
                 # @param [String] ip_address The ip_address
                 # @return [IpAddressInstance] Newly created IpAddressInstance
