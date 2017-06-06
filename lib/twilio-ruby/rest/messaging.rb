@@ -26,8 +26,8 @@ module Twilio
         @v1 ||= V1.new self
       end
 
-      def services
-        self.v1.services
+      def services(sid=:unset)
+        self.v1.services(sid)
       end
 
       ##

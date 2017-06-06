@@ -35,12 +35,12 @@ module Twilio
               # @param [String] from The from
               # @param [String] attributes The attributes
               # @return [MessageInstance] Newly created MessageInstance
-              def create(body: nil, from: nil, attributes: nil)
-                data = {
+              def create(body: nil, from: Twilio::Values::Unset, attributes: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'Body' => body,
                     'From' => from,
                     'Attributes' => attributes,
-                }
+                })
 
                 payload = @version.create(
                     'POST',
@@ -68,7 +68,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(order: nil, limit: nil, page_size: nil)
+              def list(order: Twilio::Values::Unset, limit: nil, page_size: nil)
                 self.stream(
                     order: order,
                     limit: limit,
@@ -88,7 +88,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(order: nil, limit: nil, page_size: nil)
+              def stream(order: Twilio::Values::Unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -130,13 +130,13 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of MessageInstance
-              def page(order: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(order: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+                params = Twilio::Values.of({
                     'Order' => order,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
@@ -212,7 +212,7 @@ module Twilio
               # Fetch a MessageInstance
               # @return [MessageInstance] Fetched MessageInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -241,11 +241,11 @@ module Twilio
               # @param [String] body The body
               # @param [String] attributes The attributes
               # @return [MessageInstance] Updated MessageInstance
-              def update(body: nil, attributes: nil)
-                data = {
+              def update(body: Twilio::Values::Unset, attributes: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'Body' => body,
                     'Attributes' => attributes,
-                }
+                })
 
                 payload = @version.update(
                     'POST',
@@ -396,7 +396,7 @@ module Twilio
               # @param [String] body The body
               # @param [String] attributes The attributes
               # @return [MessageInstance] Updated MessageInstance
-              def update(body: nil, attributes: nil)
+              def update(body: Twilio::Values::Unset, attributes: Twilio::Values::Unset)
                 context.update(
                     body: body,
                     attributes: attributes,

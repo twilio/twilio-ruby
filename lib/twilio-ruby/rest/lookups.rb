@@ -26,8 +26,8 @@ module Twilio
         @v1 ||= V1.new self
       end
 
-      def phone_numbers
-        self.v1.phone_numbers
+      def phone_numbers(phone_number=:unset)
+        self.v1.phone_numbers(phone_number)
       end
 
       ##

@@ -33,7 +33,7 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(friendly_name: nil, limit: nil, page_size: nil)
+          def list(friendly_name: Twilio::Values::Unset, limit: nil, page_size: nil)
             self.stream(
                 friendly_name: friendly_name,
                 limit: limit,
@@ -53,7 +53,7 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(friendly_name: nil, limit: nil, page_size: nil)
+          def stream(friendly_name: Twilio::Values::Unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -95,13 +95,13 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of WorkspaceInstance
-          def page(friendly_name: nil, page_token: nil, page_number: nil, page_size: nil)
-            params = {
+          def page(friendly_name: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            params = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
-            }
+            })
             response = @version.page(
                 'GET',
                 @uri,
@@ -120,15 +120,15 @@ module Twilio
           # @param [String] template The template
           # @param [workspace.QueueOrder] prioritize_queue_order The prioritize_queue_order
           # @return [WorkspaceInstance] Newly created WorkspaceInstance
-          def create(friendly_name: nil, event_callback_url: nil, events_filter: nil, multi_task_enabled: nil, template: nil, prioritize_queue_order: nil)
-            data = {
+          def create(friendly_name: nil, event_callback_url: Twilio::Values::Unset, events_filter: Twilio::Values::Unset, multi_task_enabled: Twilio::Values::Unset, template: Twilio::Values::Unset, prioritize_queue_order: Twilio::Values::Unset)
+            data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'EventCallbackUrl' => event_callback_url,
                 'EventsFilter' => events_filter,
                 'MultiTaskEnabled' => multi_task_enabled,
                 'Template' => template,
                 'PrioritizeQueueOrder' => prioritize_queue_order,
-            }
+            })
 
             payload = @version.create(
                 'POST',
@@ -211,7 +211,7 @@ module Twilio
           # Fetch a WorkspaceInstance
           # @return [WorkspaceInstance] Fetched WorkspaceInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -236,8 +236,8 @@ module Twilio
           # @param [String] timeout_activity_sid The timeout_activity_sid
           # @param [workspace.QueueOrder] prioritize_queue_order The prioritize_queue_order
           # @return [WorkspaceInstance] Updated WorkspaceInstance
-          def update(default_activity_sid: nil, event_callback_url: nil, events_filter: nil, friendly_name: nil, multi_task_enabled: nil, timeout_activity_sid: nil, prioritize_queue_order: nil)
-            data = {
+          def update(default_activity_sid: Twilio::Values::Unset, event_callback_url: Twilio::Values::Unset, events_filter: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, multi_task_enabled: Twilio::Values::Unset, timeout_activity_sid: Twilio::Values::Unset, prioritize_queue_order: Twilio::Values::Unset)
+            data = Twilio::Values.of({
                 'DefaultActivitySid' => default_activity_sid,
                 'EventCallbackUrl' => event_callback_url,
                 'EventsFilter' => events_filter,
@@ -245,7 +245,7 @@ module Twilio
                 'MultiTaskEnabled' => multi_task_enabled,
                 'TimeoutActivitySid' => timeout_activity_sid,
                 'PrioritizeQueueOrder' => prioritize_queue_order,
-            }
+            })
 
             payload = @version.update(
                 'POST',
@@ -567,7 +567,7 @@ module Twilio
           # @param [String] timeout_activity_sid The timeout_activity_sid
           # @param [workspace.QueueOrder] prioritize_queue_order The prioritize_queue_order
           # @return [WorkspaceInstance] Updated WorkspaceInstance
-          def update(default_activity_sid: nil, event_callback_url: nil, events_filter: nil, friendly_name: nil, multi_task_enabled: nil, timeout_activity_sid: nil, prioritize_queue_order: nil)
+          def update(default_activity_sid: Twilio::Values::Unset, event_callback_url: Twilio::Values::Unset, events_filter: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, multi_task_enabled: Twilio::Values::Unset, timeout_activity_sid: Twilio::Values::Unset, prioritize_queue_order: Twilio::Values::Unset)
             context.update(
                 default_activity_sid: default_activity_sid,
                 event_callback_url: event_callback_url,

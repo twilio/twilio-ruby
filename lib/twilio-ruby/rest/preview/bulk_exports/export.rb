@@ -82,7 +82,7 @@ module Twilio
           # Fetch a ExportInstance
           # @return [ExportInstance] Fetched ExportInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',

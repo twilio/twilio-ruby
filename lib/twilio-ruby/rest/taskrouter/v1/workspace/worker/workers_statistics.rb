@@ -91,15 +91,15 @@ module Twilio
               # @param [String] task_queue_name The task_queue_name
               # @param [String] friendly_name The friendly_name
               # @return [WorkersStatisticsInstance] Fetched WorkersStatisticsInstance
-              def fetch(minutes: nil, start_date: nil, end_date: nil, task_queue_sid: nil, task_queue_name: nil, friendly_name: nil)
-                params = {
+              def fetch(minutes: Twilio::Values::Unset, start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset, task_queue_sid: Twilio::Values::Unset, task_queue_name: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset)
+                params = Twilio::Values.of({
                     'Minutes' => minutes,
                     'StartDate' => Twilio.serialize_iso8601(start_date),
                     'EndDate' => Twilio.serialize_iso8601(end_date),
                     'TaskQueueSid' => task_queue_sid,
                     'TaskQueueName' => task_queue_name,
                     'FriendlyName' => friendly_name,
-                }
+                })
 
                 payload = @version.fetch(
                     'GET',
@@ -192,7 +192,7 @@ module Twilio
               # @param [String] task_queue_name The task_queue_name
               # @param [String] friendly_name The friendly_name
               # @return [WorkersStatisticsInstance] Fetched WorkersStatisticsInstance
-              def fetch(minutes: nil, start_date: nil, end_date: nil, task_queue_sid: nil, task_queue_name: nil, friendly_name: nil)
+              def fetch(minutes: Twilio::Values::Unset, start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset, task_queue_sid: Twilio::Values::Unset, task_queue_name: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset)
                 context.fetch(
                     minutes: minutes,
                     start_date: start_date,

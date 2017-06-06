@@ -47,7 +47,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, limit: nil, page_size: nil)
+            def list(date_created_before: Twilio::Values::Unset, date_created: Twilio::Values::Unset, date_created_after: Twilio::Values::Unset, date_updated_before: Twilio::Values::Unset, date_updated: Twilio::Values::Unset, date_updated_after: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, status: Twilio::Values::Unset, limit: nil, page_size: nil)
               self.stream(
                   date_created_before: date_created_before,
                   date_created: date_created,
@@ -83,7 +83,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, limit: nil, page_size: nil)
+            def stream(date_created_before: Twilio::Values::Unset, date_created: Twilio::Values::Unset, date_created_after: Twilio::Values::Unset, date_updated_before: Twilio::Values::Unset, date_updated: Twilio::Values::Unset, date_updated_after: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, status: Twilio::Values::Unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -150,8 +150,8 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of ConferenceInstance
-            def page(date_created_before: nil, date_created: nil, date_created_after: nil, date_updated_before: nil, date_updated: nil, date_updated_after: nil, friendly_name: nil, status: nil, page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(date_created_before: Twilio::Values::Unset, date_created: Twilio::Values::Unset, date_created_after: Twilio::Values::Unset, date_updated_before: Twilio::Values::Unset, date_updated: Twilio::Values::Unset, date_updated_after: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, status: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+              params = Twilio::Values.of({
                   'DateCreated<' => Twilio.serialize_iso8601(date_created_before),
                   'DateCreated' => Twilio.serialize_iso8601(date_created),
                   'DateCreated>' => Twilio.serialize_iso8601(date_created_after),
@@ -163,7 +163,7 @@ module Twilio
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
@@ -239,7 +239,7 @@ module Twilio
             # Fetch a ConferenceInstance
             # @return [ConferenceInstance] Fetched ConferenceInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -259,10 +259,10 @@ module Twilio
             # Update the ConferenceInstance
             # @param [conference.UpdateStatus] status The status
             # @return [ConferenceInstance] Updated ConferenceInstance
-            def update(status: nil)
-              data = {
+            def update(status: Twilio::Values::Unset)
+              data = Twilio::Values.of({
                   'Status' => status,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -411,7 +411,7 @@ module Twilio
             # Update the ConferenceInstance
             # @param [conference.UpdateStatus] status The status
             # @return [ConferenceInstance] Updated ConferenceInstance
-            def update(status: nil)
+            def update(status: Twilio::Values::Unset)
               context.update(
                   status: status,
               )

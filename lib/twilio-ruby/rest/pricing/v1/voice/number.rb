@@ -80,7 +80,7 @@ module Twilio
             # Fetch a NumberInstance
             # @return [NumberInstance] Fetched NumberInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',

@@ -38,15 +38,15 @@ module Twilio
               # @param [String] credential_sid The credential_sid
               # @param [String] endpoint The endpoint
               # @return [UserBindingInstance] Newly created UserBindingInstance
-              def create(binding_type: nil, address: nil, tag: nil, notification_protocol_version: nil, credential_sid: nil, endpoint: nil)
-                data = {
+              def create(binding_type: nil, address: nil, tag: Twilio::Values::Unset, notification_protocol_version: Twilio::Values::Unset, credential_sid: Twilio::Values::Unset, endpoint: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'BindingType' => binding_type,
                     'Address' => address,
                     'Tag' => tag,
                     'NotificationProtocolVersion' => notification_protocol_version,
                     'CredentialSid' => credential_sid,
                     'Endpoint' => endpoint,
-                }
+                })
 
                 payload = @version.create(
                     'POST',
@@ -76,7 +76,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(start_date: nil, end_date: nil, tag: nil, limit: nil, page_size: nil)
+              def list(start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset, tag: Twilio::Values::Unset, limit: nil, page_size: nil)
                 self.stream(
                     start_date: start_date,
                     end_date: end_date,
@@ -100,7 +100,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(start_date: nil, end_date: nil, tag: nil, limit: nil, page_size: nil)
+              def stream(start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset, tag: Twilio::Values::Unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -148,15 +148,15 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of UserBindingInstance
-              def page(start_date: nil, end_date: nil, tag: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset, tag: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+                params = Twilio::Values.of({
                     'StartDate' => Twilio.serialize_iso8601(start_date),
                     'EndDate' => Twilio.serialize_iso8601(end_date),
                     'Tag' => tag,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
@@ -232,7 +232,7 @@ module Twilio
               # Fetch a UserBindingInstance
               # @return [UserBindingInstance] Fetched UserBindingInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',

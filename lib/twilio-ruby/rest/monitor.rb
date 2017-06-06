@@ -26,12 +26,12 @@ module Twilio
         @v1 ||= V1.new self
       end
 
-      def alerts
-        self.v1.alerts
+      def alerts(sid=:unset)
+        self.v1.alerts(sid)
       end
 
-      def events
-        self.v1.events
+      def events(sid=:unset)
+        self.v1.events(sid)
       end
 
       ##

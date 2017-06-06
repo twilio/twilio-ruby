@@ -26,8 +26,8 @@ module Twilio
         @v1 ||= V1.new self
       end
 
-      def trunks
-        self.v1.trunks
+      def trunks(sid=:unset)
+        self.v1.trunks(sid)
       end
 
       ##

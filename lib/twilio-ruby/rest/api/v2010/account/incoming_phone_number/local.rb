@@ -41,7 +41,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(beta: nil, friendly_name: nil, phone_number: nil, limit: nil, page_size: nil)
+              def list(beta: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, phone_number: Twilio::Values::Unset, limit: nil, page_size: nil)
                 self.stream(
                     beta: beta,
                     friendly_name: friendly_name,
@@ -65,7 +65,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(beta: nil, friendly_name: nil, phone_number: nil, limit: nil, page_size: nil)
+              def stream(beta: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, phone_number: Twilio::Values::Unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -113,15 +113,15 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of LocalInstance
-              def page(beta: nil, friendly_name: nil, phone_number: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(beta: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, phone_number: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+                params = Twilio::Values.of({
                     'Beta' => beta,
                     'FriendlyName' => friendly_name,
                     'PhoneNumber' => phone_number,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
@@ -150,8 +150,8 @@ module Twilio
               # @param [String] voice_method The voice_method
               # @param [String] voice_url The voice_url
               # @return [LocalInstance] Newly created LocalInstance
-              def create(phone_number: nil, api_version: nil, friendly_name: nil, sms_application_sid: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, status_callback: nil, status_callback_method: nil, voice_application_sid: nil, voice_caller_id_lookup: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil)
-                data = {
+              def create(phone_number: nil, api_version: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, sms_application_sid: Twilio::Values::Unset, sms_fallback_method: Twilio::Values::Unset, sms_fallback_url: Twilio::Values::Unset, sms_method: Twilio::Values::Unset, sms_url: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset, voice_application_sid: Twilio::Values::Unset, voice_caller_id_lookup: Twilio::Values::Unset, voice_fallback_method: Twilio::Values::Unset, voice_fallback_url: Twilio::Values::Unset, voice_method: Twilio::Values::Unset, voice_url: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'PhoneNumber' => phone_number,
                     'ApiVersion' => api_version,
                     'FriendlyName' => friendly_name,
@@ -168,7 +168,7 @@ module Twilio
                     'VoiceFallbackUrl' => voice_fallback_url,
                     'VoiceMethod' => voice_method,
                     'VoiceUrl' => voice_url,
-                }
+                })
 
                 payload = @version.create(
                     'POST',

@@ -35,7 +35,7 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(sim: nil, status: nil, direction: nil, limit: nil, page_size: nil)
+          def list(sim: Twilio::Values::Unset, status: Twilio::Values::Unset, direction: Twilio::Values::Unset, limit: nil, page_size: nil)
             self.stream(
                 sim: sim,
                 status: status,
@@ -59,7 +59,7 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(sim: nil, status: nil, direction: nil, limit: nil, page_size: nil)
+          def stream(sim: Twilio::Values::Unset, status: Twilio::Values::Unset, direction: Twilio::Values::Unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -107,15 +107,15 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of CommandInstance
-          def page(sim: nil, status: nil, direction: nil, page_token: nil, page_number: nil, page_size: nil)
-            params = {
+          def page(sim: Twilio::Values::Unset, status: Twilio::Values::Unset, direction: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            params = Twilio::Values.of({
                 'Sim' => sim,
                 'Status' => status,
                 'Direction' => direction,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
-            }
+            })
             response = @version.page(
                 'GET',
                 @uri,
@@ -134,15 +134,15 @@ module Twilio
           # @param [command.CommandMode] command_mode The command_mode
           # @param [String] include_sid The include_sid
           # @return [CommandInstance] Newly created CommandInstance
-          def create(command: nil, sim: nil, callback_method: nil, callback_url: nil, command_mode: nil, include_sid: nil)
-            data = {
+          def create(command: nil, sim: Twilio::Values::Unset, callback_method: Twilio::Values::Unset, callback_url: Twilio::Values::Unset, command_mode: Twilio::Values::Unset, include_sid: Twilio::Values::Unset)
+            data = Twilio::Values.of({
                 'Command' => command,
                 'Sim' => sim,
                 'CallbackMethod' => callback_method,
                 'CallbackUrl' => callback_url,
                 'CommandMode' => command_mode,
                 'IncludeSid' => include_sid,
-            }
+            })
 
             payload = @version.create(
                 'POST',
@@ -215,7 +215,7 @@ module Twilio
           # Fetch a CommandInstance
           # @return [CommandInstance] Fetched CommandInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
