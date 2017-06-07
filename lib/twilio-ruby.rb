@@ -7,6 +7,7 @@ require 'base64'
 require 'forwardable'
 require 'jwt'
 require 'time'
+require 'json'
 
 require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
 require 'rack/twilio_webhook_authentication'
