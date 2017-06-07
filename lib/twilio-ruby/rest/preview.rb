@@ -20,6 +20,9 @@ module Twilio
         @sync = nil
         @wireless = nil
         @marketplace = nil
+        @bulk_exports = nil
+        @proxy = nil
+        @hosted_numbers = nil
       end
 
       ##
@@ -40,8 +43,26 @@ module Twilio
         @marketplace ||= Marketplace.new self
       end
 
+      ##
+      # Version bulk_exports of preview
+      def bulk_exports
+        @bulk_exports ||= BulkExports.new self
+      end
+
+      ##
+      # Version proxy of preview
+      def proxy
+        @proxy ||= Proxy.new self
+      end
+
+      ##
+      # Version hosted_numbers of preview
+      def hosted_numbers
+        @hosted_numbers ||= HostedNumbers.new self
+      end
+
       def services
-        self.sync.services
+        self.proxy.services
       end
 
       def commands
@@ -62,6 +83,18 @@ module Twilio
 
       def installed_add_ons
         self.marketplace.installed_add_ons
+      end
+
+      def exports
+        self.bulk_exports.exports
+      end
+
+      def export_configuration
+        self.bulk_exports.export_configuration
+      end
+
+      def hosted_number_orders
+        self.hosted_numbers.hosted_number_orders
       end
 
       ##

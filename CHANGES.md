@@ -1,7 +1,13 @@
 twilio-ruby changelog
 =====================
+[2017-05-24] Version 5.0.0-rc21
+-------------------------------
+- Add HostedNumbers preview support.
+- Add Proxy preview support.
+- Add BulkExports preview support.
 
 [2017-05-22] Version 5.0.0-rc20
+-------------------------------
 - Add Wireless Domain
 - Add Fax Domain
 - Add Video Domain
@@ -10,7 +16,7 @@ twilio-ruby changelog
 - Converted `TwilioException` to `TwilioError`
 
 [2017-04-27] Version 5.0.0-rc19
-------------------
+-------------------------------
 
 - Add chat v2.
 - Wireless rate plans updates.
@@ -18,14 +24,14 @@ twilio-ruby changelog
 - New Usage API categories.
 
 Version 5.0.0-rc18
--------------
+-------------------------------
 
 Release April 17, 2017
 
 - Update VideoGrant access token to accept `room` instead of `configuration_profile_sid`
 
 Version 5.0.0-rc16
--------------
+-------------------------------
 
 Release September 1, 2016
 
