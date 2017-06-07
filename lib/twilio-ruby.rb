@@ -1,6 +1,6 @@
 require 'net/http'
 require 'net/https'
-require 'builder'
+require 'libxml'
 require 'cgi'
 require 'openssl'
 require 'base64'
