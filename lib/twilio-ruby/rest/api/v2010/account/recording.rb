@@ -30,8 +30,9 @@ module Twilio
             # Lists RecordingInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [Time] date_created Only show recordings on the given date. Should be
-            #   formatted as YYYY-MM-DD. You can also specify inequalities
+            # @param [Time] date_created_before Filter by date created
+            # @param [Time] date_created Filter by date created
+            # @param [Time] date_created_after: Filter by date created
             # @param [String] call_sid Only show recordings made during the call given by the
             #   indicated sid
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -41,9 +42,11 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(date_created: Twilio::Values::Unset, call_sid: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def list(date_created_before: Twilio::Values::Unset, date_created: Twilio::Values::Unset, date_created_after: Twilio::Values::Unset, call_sid: Twilio::Values::Unset, limit: nil, page_size: nil)
               self.stream(
+                  date_created_before: date_created_before,
                   date_created: date_created,
+                  date_created_after: date_created_after,
                   call_sid: call_sid,
                   limit: limit,
                   page_size: page_size
@@ -54,8 +57,9 @@ module Twilio
             # Streams RecordingInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Time] date_created Only show recordings on the given date. Should be
-            #   formatted as YYYY-MM-DD. You can also specify inequalities
+            # @param [Time] date_created_before Filter by date created
+            # @param [Time] date_created Filter by date created
+            # @param [Time] date_created_after: Filter by date created
             # @param [String] call_sid Only show recordings made during the call given by the
             #   indicated sid
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
@@ -65,11 +69,13 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(date_created: Twilio::Values::Unset, call_sid: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def stream(date_created_before: Twilio::Values::Unset, date_created: Twilio::Values::Unset, date_created_after: Twilio::Values::Unset, call_sid: Twilio::Values::Unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
+                  date_created_before: date_created_before,
                   date_created: date_created,
+                  date_created_after: date_created_after,
                   call_sid: call_sid,
                   page_size: limits[:page_size],
               )
@@ -81,8 +87,9 @@ module Twilio
             # When passed a block, yields RecordingInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Time] date_created Only show recordings on the given date. Should be
-            #   formatted as YYYY-MM-DD. You can also specify inequalities
+            # @param [Time] date_created_before Filter by date created
+            # @param [Time] date_created Filter by date created
+            # @param [Time] date_created_after: Filter by date created
             # @param [String] call_sid Only show recordings made during the call given by the
             #   indicated sid
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
@@ -106,17 +113,20 @@ module Twilio
             ##
             # Retrieve a single page of RecordingInstance records from the API.
             # Request is executed immediately.
-            # @param [Time] date_created Only show recordings on the given date. Should be
-            #   formatted as YYYY-MM-DD. You can also specify inequalities
+            # @param [Time] date_created_before Filter by date created
+            # @param [Time] date_created Filter by date created
+            # @param [Time] date_created_after: Filter by date created
             # @param [String] call_sid Only show recordings made during the call given by the
             #   indicated sid
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of RecordingInstance
-            def page(date_created: Twilio::Values::Unset, call_sid: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            def page(date_created_before: Twilio::Values::Unset, date_created: Twilio::Values::Unset, date_created_after: Twilio::Values::Unset, call_sid: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
               params = Twilio::Values.of({
+                  'DateCreated<' => Twilio.serialize_iso8601(date_created_before),
                   'DateCreated' => Twilio.serialize_iso8601(date_created),
+                  'DateCreated>' => Twilio.serialize_iso8601(date_created_after),
                   'CallSid' => call_sid,
                   'PageToken' => page_token,
                   'Page' => page_number,

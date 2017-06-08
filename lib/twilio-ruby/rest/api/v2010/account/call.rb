@@ -132,8 +132,12 @@ module Twilio
             # @param [String] parent_call_sid Only show calls spawned by the call with this
             #   Sid
             # @param [feedback_summary.Status] status Only show calls currently in this status
-            # @param [Time] start_time Only show calls that started on this date
-            # @param [Time] end_time Only show call that ended on this date
+            # @param [Time] start_time_before StartTime to filter on
+            # @param [Time] start_time StartTime to filter on
+            # @param [Time] start_time_after: StartTime to filter on
+            # @param [Time] end_time_before EndTime to filter on
+            # @param [Time] end_time EndTime to filter on
+            # @param [Time] end_time_after: EndTime to filter on
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -141,14 +145,18 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(to: Twilio::Values::Unset, from: Twilio::Values::Unset, parent_call_sid: Twilio::Values::Unset, status: Twilio::Values::Unset, start_time: Twilio::Values::Unset, end_time: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def list(to: Twilio::Values::Unset, from: Twilio::Values::Unset, parent_call_sid: Twilio::Values::Unset, status: Twilio::Values::Unset, start_time_before: Twilio::Values::Unset, start_time: Twilio::Values::Unset, start_time_after: Twilio::Values::Unset, end_time_before: Twilio::Values::Unset, end_time: Twilio::Values::Unset, end_time_after: Twilio::Values::Unset, limit: nil, page_size: nil)
               self.stream(
                   to: to,
                   from: from,
                   parent_call_sid: parent_call_sid,
                   status: status,
+                  start_time_before: start_time_before,
                   start_time: start_time,
+                  start_time_after: start_time_after,
+                  end_time_before: end_time_before,
                   end_time: end_time,
+                  end_time_after: end_time_after,
                   limit: limit,
                   page_size: page_size
               ).entries
@@ -163,8 +171,12 @@ module Twilio
             # @param [String] parent_call_sid Only show calls spawned by the call with this
             #   Sid
             # @param [feedback_summary.Status] status Only show calls currently in this status
-            # @param [Time] start_time Only show calls that started on this date
-            # @param [Time] end_time Only show call that ended on this date
+            # @param [Time] start_time_before StartTime to filter on
+            # @param [Time] start_time StartTime to filter on
+            # @param [Time] start_time_after: StartTime to filter on
+            # @param [Time] end_time_before EndTime to filter on
+            # @param [Time] end_time EndTime to filter on
+            # @param [Time] end_time_after: EndTime to filter on
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -172,7 +184,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(to: Twilio::Values::Unset, from: Twilio::Values::Unset, parent_call_sid: Twilio::Values::Unset, status: Twilio::Values::Unset, start_time: Twilio::Values::Unset, end_time: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def stream(to: Twilio::Values::Unset, from: Twilio::Values::Unset, parent_call_sid: Twilio::Values::Unset, status: Twilio::Values::Unset, start_time_before: Twilio::Values::Unset, start_time: Twilio::Values::Unset, start_time_after: Twilio::Values::Unset, end_time_before: Twilio::Values::Unset, end_time: Twilio::Values::Unset, end_time_after: Twilio::Values::Unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -180,8 +192,12 @@ module Twilio
                   from: from,
                   parent_call_sid: parent_call_sid,
                   status: status,
+                  start_time_before: start_time_before,
                   start_time: start_time,
+                  start_time_after: start_time_after,
+                  end_time_before: end_time_before,
                   end_time: end_time,
+                  end_time_after: end_time_after,
                   page_size: limits[:page_size],
               )
 
@@ -197,8 +213,12 @@ module Twilio
             # @param [String] parent_call_sid Only show calls spawned by the call with this
             #   Sid
             # @param [feedback_summary.Status] status Only show calls currently in this status
-            # @param [Time] start_time Only show calls that started on this date
-            # @param [Time] end_time Only show call that ended on this date
+            # @param [Time] start_time_before StartTime to filter on
+            # @param [Time] start_time StartTime to filter on
+            # @param [Time] start_time_after: StartTime to filter on
+            # @param [Time] end_time_before EndTime to filter on
+            # @param [Time] end_time EndTime to filter on
+            # @param [Time] end_time_after: EndTime to filter on
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
@@ -225,20 +245,28 @@ module Twilio
             # @param [String] parent_call_sid Only show calls spawned by the call with this
             #   Sid
             # @param [feedback_summary.Status] status Only show calls currently in this status
-            # @param [Time] start_time Only show calls that started on this date
-            # @param [Time] end_time Only show call that ended on this date
+            # @param [Time] start_time_before StartTime to filter on
+            # @param [Time] start_time StartTime to filter on
+            # @param [Time] start_time_after: StartTime to filter on
+            # @param [Time] end_time_before EndTime to filter on
+            # @param [Time] end_time EndTime to filter on
+            # @param [Time] end_time_after: EndTime to filter on
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of CallInstance
-            def page(to: Twilio::Values::Unset, from: Twilio::Values::Unset, parent_call_sid: Twilio::Values::Unset, status: Twilio::Values::Unset, start_time: Twilio::Values::Unset, end_time: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            def page(to: Twilio::Values::Unset, from: Twilio::Values::Unset, parent_call_sid: Twilio::Values::Unset, status: Twilio::Values::Unset, start_time_before: Twilio::Values::Unset, start_time: Twilio::Values::Unset, start_time_after: Twilio::Values::Unset, end_time_before: Twilio::Values::Unset, end_time: Twilio::Values::Unset, end_time_after: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
               params = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
                   'ParentCallSid' => parent_call_sid,
                   'Status' => status,
+                  'StartTime<' => Twilio.serialize_iso8601(start_time_before),
                   'StartTime' => Twilio.serialize_iso8601(start_time),
+                  'StartTime>' => Twilio.serialize_iso8601(start_time_after),
+                  'EndTime<' => Twilio.serialize_iso8601(end_time_before),
                   'EndTime' => Twilio.serialize_iso8601(end_time),
+                  'EndTime>' => Twilio.serialize_iso8601(end_time_after),
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
