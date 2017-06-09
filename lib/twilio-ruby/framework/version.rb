@@ -1,7 +1,6 @@
 module Twilio
   module REST
     class Version
-      MAX_PAGE_SIZE = 1000
 
       attr_accessor :domain
 
@@ -12,7 +11,6 @@ module Twilio
           @page = page
           @limit = limit
           @page_limit = page_limit
-
         end
 
         def each
@@ -74,7 +72,7 @@ module Twilio
           code = response.body['code']
         end
 
-        return Twilio::REST::RestError.new(message, code, response.status_code)
+        Twilio::REST::RestError.new(message, code, response.status_code)
       end
 
       def fetch(method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
@@ -136,7 +134,7 @@ module Twilio
 
         unless limit.nil?
           # If there is no user-specified page_size, pick the most network efficient size
-          page_size ||= [limit, MAX_PAGE_SIZE].min
+          page_size = limit
           page_limit = (limit / page_size.to_f).ceil
         end
 
