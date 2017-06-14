@@ -87,12 +87,12 @@ module Twilio
             # @param [Time] start_date The start_date
             # @param [Time] end_date The end_date
             # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
-            def fetch(minutes: nil, start_date: nil, end_date: nil)
-              params = {
+            def fetch(minutes: Twilio::Values::Unset, start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset)
+              params = Twilio::Values.of({
                   'Minutes' => minutes,
                   'StartDate' => Twilio.serialize_iso8601(start_date),
                   'EndDate' => Twilio.serialize_iso8601(end_date),
-              }
+              })
 
               payload = @version.fetch(
                   'GET',
@@ -182,7 +182,7 @@ module Twilio
             # @param [Time] start_date The start_date
             # @param [Time] end_date The end_date
             # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
-            def fetch(minutes: nil, start_date: nil, end_date: nil)
+            def fetch(minutes: Twilio::Values::Unset, start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset)
               context.fetch(
                   minutes: minutes,
                   start_date: start_date,

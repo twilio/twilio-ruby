@@ -34,9 +34,9 @@ module Twilio
               # @param [Hash] data The data
               # @return [SyncListItemInstance] Newly created SyncListItemInstance
               def create(data: nil)
-                data = {
+                data = Twilio::Values.of({
                     'Data' => Twilio.serialize_object(data),
-                }
+                })
 
                 payload = @version.create(
                     'POST',
@@ -66,7 +66,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(order: nil, from: nil, bounds: nil, limit: nil, page_size: nil)
+              def list(order: Twilio::Values::Unset, from: Twilio::Values::Unset, bounds: Twilio::Values::Unset, limit: nil, page_size: nil)
                 self.stream(
                     order: order,
                     from: from,
@@ -90,7 +90,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(order: nil, from: nil, bounds: nil, limit: nil, page_size: nil)
+              def stream(order: Twilio::Values::Unset, from: Twilio::Values::Unset, bounds: Twilio::Values::Unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -138,19 +138,32 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of SyncListItemInstance
-              def page(order: nil, from: nil, bounds: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(order: Twilio::Values::Unset, from: Twilio::Values::Unset, bounds: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+                params = Twilio::Values.of({
                     'Order' => order,
                     'From' => from,
                     'Bounds' => bounds,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
                     params
+                )
+                return SyncListItemPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of SyncListItemInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of SyncListItemInstance
+              def get_page(target_url: nil)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
                 )
                 return SyncListItemPage.new(@version, response, @solution)
               end
@@ -222,7 +235,7 @@ module Twilio
               # Fetch a SyncListItemInstance
               # @return [SyncListItemInstance] Fetched SyncListItemInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -251,9 +264,9 @@ module Twilio
               # @param [Hash] data The data
               # @return [SyncListItemInstance] Updated SyncListItemInstance
               def update(data: nil)
-                data = {
+                data = Twilio::Values.of({
                     'Data' => Twilio.serialize_object(data),
-                }
+                })
 
                 payload = @version.update(
                     'POST',

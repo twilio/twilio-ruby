@@ -26,8 +26,8 @@ module Twilio
         @v1 ||= V1.new self
       end
 
-      def faxes
-        self.v1.faxes
+      def faxes(sid=:unset)
+        self.v1.faxes(sid)
       end
 
       ##

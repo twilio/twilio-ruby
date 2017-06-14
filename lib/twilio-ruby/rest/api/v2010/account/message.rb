@@ -44,8 +44,8 @@ module Twilio
             # @param [String] body The body
             # @param [String] media_url The media_url
             # @return [MessageInstance] Newly created MessageInstance
-            def create(to: nil, status_callback: nil, application_sid: nil, max_price: nil, provide_feedback: nil, validity_period: nil, from: nil, messaging_service_sid: nil, body: nil, media_url: nil)
-              data = {
+            def create(to: nil, status_callback: Twilio::Values::Unset, application_sid: Twilio::Values::Unset, max_price: Twilio::Values::Unset, provide_feedback: Twilio::Values::Unset, validity_period: Twilio::Values::Unset, from: Twilio::Values::Unset, messaging_service_sid: Twilio::Values::Unset, body: Twilio::Values::Unset, media_url: Twilio::Values::Unset)
+              data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
                   'MessagingServiceSid' => messaging_service_sid,
@@ -56,7 +56,7 @@ module Twilio
                   'MaxPrice' => max_price,
                   'ProvideFeedback' => provide_feedback,
                   'ValidityPeriod' => validity_period,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -85,7 +85,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(to: nil, from: nil, date_sent: nil, limit: nil, page_size: nil)
+            def list(to: Twilio::Values::Unset, from: Twilio::Values::Unset, date_sent: Twilio::Values::Unset, limit: nil, page_size: nil)
               self.stream(
                   to: to,
                   from: from,
@@ -109,7 +109,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(to: nil, from: nil, date_sent: nil, limit: nil, page_size: nil)
+            def stream(to: Twilio::Values::Unset, from: Twilio::Values::Unset, date_sent: Twilio::Values::Unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -157,19 +157,32 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of MessageInstance
-            def page(to: nil, from: nil, date_sent: nil, page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(to: Twilio::Values::Unset, from: Twilio::Values::Unset, date_sent: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+              params = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
                   'DateSent' => Twilio.serialize_iso8601(date_sent),
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
+              )
+              return MessagePage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of MessageInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of MessageInstance
+            def get_page(target_url: nil)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
               )
               return MessagePage.new(@version, response, @solution)
             end
@@ -248,7 +261,7 @@ module Twilio
             # Fetch a MessageInstance
             # @return [MessageInstance] Fetched MessageInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -269,9 +282,9 @@ module Twilio
             # @param [String] body The body
             # @return [MessageInstance] Updated MessageInstance
             def update(body: nil)
-              data = {
+              data = Twilio::Values.of({
                   'Body' => body,
-              }
+              })
 
               payload = @version.update(
                   'POST',

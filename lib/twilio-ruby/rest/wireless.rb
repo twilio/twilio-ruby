@@ -26,16 +26,16 @@ module Twilio
         @v1 ||= V1.new self
       end
 
-      def commands
-        self.v1.commands
+      def commands(sid=:unset)
+        self.v1.commands(sid)
       end
 
-      def rate_plans
-        self.v1.rate_plans
+      def rate_plans(sid=:unset)
+        self.v1.rate_plans(sid)
       end
 
-      def sims
-        self.v1.sims
+      def sims(sid=:unset)
+        self.v1.sims(sid)
       end
 
       ##

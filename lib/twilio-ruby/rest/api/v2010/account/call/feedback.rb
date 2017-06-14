@@ -96,11 +96,11 @@ module Twilio
               # @param [String] quality_score The quality_score
               # @param [feedback.Issues] issue The issue
               # @return [FeedbackInstance] Newly created FeedbackInstance
-              def create(quality_score: nil, issue: nil)
-                data = {
+              def create(quality_score: nil, issue: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'QualityScore' => quality_score,
                     'Issue' => issue,
-                }
+                })
 
                 payload = @version.create(
                     'POST',
@@ -120,7 +120,7 @@ module Twilio
               # Fetch a FeedbackInstance
               # @return [FeedbackInstance] Fetched FeedbackInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -142,11 +142,11 @@ module Twilio
               # @param [feedback.Issues] issue One or more of the issues experienced during the
               #   call
               # @return [FeedbackInstance] Updated FeedbackInstance
-              def update(quality_score: nil, issue: nil)
-                data = {
+              def update(quality_score: nil, issue: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'QualityScore' => quality_score,
                     'Issue' => issue,
-                }
+                })
 
                 payload = @version.update(
                     'POST',
@@ -246,7 +246,7 @@ module Twilio
               # @param [String] quality_score The quality_score
               # @param [feedback.Issues] issue The issue
               # @return [FeedbackInstance] Newly created FeedbackInstance
-              def create(quality_score: nil, issue: nil)
+              def create(quality_score: nil, issue: Twilio::Values::Unset)
                 context.create(
                     quality_score: quality_score,
                     issue: issue,
@@ -266,7 +266,7 @@ module Twilio
               # @param [feedback.Issues] issue One or more of the issues experienced during the
               #   call
               # @return [FeedbackInstance] Updated FeedbackInstance
-              def update(quality_score: nil, issue: nil)
+              def update(quality_score: nil, issue: Twilio::Values::Unset)
                 context.update(
                     quality_score: quality_score,
                     issue: issue,

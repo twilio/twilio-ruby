@@ -61,40 +61,40 @@ module Twilio
         @hosted_numbers ||= HostedNumbers.new self
       end
 
-      def services
-        self.proxy.services
+      def services(sid=:unset)
+        self.proxy.services(sid)
       end
 
-      def commands
-        self.wireless.commands
+      def commands(sid=:unset)
+        self.wireless.commands(sid)
       end
 
-      def rate_plans
-        self.wireless.rate_plans
+      def rate_plans(sid=:unset)
+        self.wireless.rate_plans(sid)
       end
 
-      def sims
-        self.wireless.sims
+      def sims(sid=:unset)
+        self.wireless.sims(sid)
       end
 
-      def available_add_ons
-        self.marketplace.available_add_ons
+      def available_add_ons(sid=:unset)
+        self.marketplace.available_add_ons(sid)
       end
 
-      def installed_add_ons
-        self.marketplace.installed_add_ons
+      def installed_add_ons(sid=:unset)
+        self.marketplace.installed_add_ons(sid)
       end
 
-      def exports
-        self.bulk_exports.exports
+      def exports(resource_type=:unset)
+        self.bulk_exports.exports(resource_type)
       end
 
-      def export_configuration
-        self.bulk_exports.export_configuration
+      def export_configuration(resource_type=:unset)
+        self.bulk_exports.export_configuration(resource_type)
       end
 
-      def hosted_number_orders
-        self.hosted_numbers.hosted_number_orders
+      def hosted_number_orders(sid=:unset)
+        self.hosted_numbers.hosted_number_orders(sid)
       end
 
       ##

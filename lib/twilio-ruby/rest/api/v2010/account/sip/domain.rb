@@ -95,16 +95,29 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of DomainInstance
-              def page(page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+                params = Twilio::Values.of({
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
                     params
+                )
+                return DomainPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of DomainInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of DomainInstance
+              def get_page(target_url: nil)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
                 )
                 return DomainPage.new(@version, response, @solution)
               end
@@ -129,8 +142,8 @@ module Twilio
               #   pass status parameters
               # @param [String] voice_status_callback_method The voice_status_callback_method
               # @return [DomainInstance] Newly created DomainInstance
-              def create(domain_name: nil, friendly_name: nil, auth_type: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, voice_status_callback_url: nil, voice_status_callback_method: nil)
-                data = {
+              def create(domain_name: nil, friendly_name: Twilio::Values::Unset, auth_type: Twilio::Values::Unset, voice_url: Twilio::Values::Unset, voice_method: Twilio::Values::Unset, voice_fallback_url: Twilio::Values::Unset, voice_fallback_method: Twilio::Values::Unset, voice_status_callback_url: Twilio::Values::Unset, voice_status_callback_method: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'DomainName' => domain_name,
                     'FriendlyName' => friendly_name,
                     'AuthType' => auth_type,
@@ -140,7 +153,7 @@ module Twilio
                     'VoiceFallbackMethod' => voice_fallback_method,
                     'VoiceStatusCallbackUrl' => voice_status_callback_url,
                     'VoiceStatusCallbackMethod' => voice_status_callback_method,
-                }
+                })
 
                 payload = @version.create(
                     'POST',
@@ -223,7 +236,7 @@ module Twilio
               # Fetch a DomainInstance
               # @return [DomainInstance] Fetched DomainInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -251,8 +264,8 @@ module Twilio
               # @param [String] voice_status_callback_url The voice_status_callback_url
               # @param [String] voice_url The voice_url
               # @return [DomainInstance] Updated DomainInstance
-              def update(auth_type: nil, friendly_name: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_status_callback_method: nil, voice_status_callback_url: nil, voice_url: nil)
-                data = {
+              def update(auth_type: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, voice_fallback_method: Twilio::Values::Unset, voice_fallback_url: Twilio::Values::Unset, voice_method: Twilio::Values::Unset, voice_status_callback_method: Twilio::Values::Unset, voice_status_callback_url: Twilio::Values::Unset, voice_url: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'AuthType' => auth_type,
                     'FriendlyName' => friendly_name,
                     'VoiceFallbackMethod' => voice_fallback_method,
@@ -261,7 +274,7 @@ module Twilio
                     'VoiceStatusCallbackMethod' => voice_status_callback_method,
                     'VoiceStatusCallbackUrl' => voice_status_callback_url,
                     'VoiceUrl' => voice_url,
-                }
+                })
 
                 payload = @version.update(
                     'POST',
@@ -479,7 +492,7 @@ module Twilio
               # @param [String] voice_status_callback_url The voice_status_callback_url
               # @param [String] voice_url The voice_url
               # @return [DomainInstance] Updated DomainInstance
-              def update(auth_type: nil, friendly_name: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_status_callback_method: nil, voice_status_callback_url: nil, voice_url: nil)
+              def update(auth_type: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, voice_fallback_method: Twilio::Values::Unset, voice_fallback_url: Twilio::Values::Unset, voice_method: Twilio::Values::Unset, voice_status_callback_method: Twilio::Values::Unset, voice_status_callback_url: Twilio::Values::Unset, voice_url: Twilio::Values::Unset)
                 context.update(
                     auth_type: auth_type,
                     friendly_name: friendly_name,

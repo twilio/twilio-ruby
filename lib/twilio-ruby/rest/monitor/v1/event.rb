@@ -38,7 +38,7 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(actor_sid: nil, event_type: nil, resource_sid: nil, source_ip_address: nil, start_date: nil, end_date: nil, limit: nil, page_size: nil)
+          def list(actor_sid: Twilio::Values::Unset, event_type: Twilio::Values::Unset, resource_sid: Twilio::Values::Unset, source_ip_address: Twilio::Values::Unset, start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset, limit: nil, page_size: nil)
             self.stream(
                 actor_sid: actor_sid,
                 event_type: event_type,
@@ -68,7 +68,7 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(actor_sid: nil, event_type: nil, resource_sid: nil, source_ip_address: nil, start_date: nil, end_date: nil, limit: nil, page_size: nil)
+          def stream(actor_sid: Twilio::Values::Unset, event_type: Twilio::Values::Unset, resource_sid: Twilio::Values::Unset, source_ip_address: Twilio::Values::Unset, start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -125,8 +125,8 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of EventInstance
-          def page(actor_sid: nil, event_type: nil, resource_sid: nil, source_ip_address: nil, start_date: nil, end_date: nil, page_token: nil, page_number: nil, page_size: nil)
-            params = {
+          def page(actor_sid: Twilio::Values::Unset, event_type: Twilio::Values::Unset, resource_sid: Twilio::Values::Unset, source_ip_address: Twilio::Values::Unset, start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            params = Twilio::Values.of({
                 'ActorSid' => actor_sid,
                 'EventType' => event_type,
                 'ResourceSid' => resource_sid,
@@ -136,11 +136,24 @@ module Twilio
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
-            }
+            })
             response = @version.page(
                 'GET',
                 @uri,
                 params
+            )
+            return EventPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of EventInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of EventInstance
+          def get_page(target_url: nil)
+            response = @version.domain.request(
+                'GET',
+                target_url
             )
             return EventPage.new(@version, response, @solution)
           end
@@ -204,7 +217,7 @@ module Twilio
           # Fetch a EventInstance
           # @return [EventInstance] Fetched EventInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',

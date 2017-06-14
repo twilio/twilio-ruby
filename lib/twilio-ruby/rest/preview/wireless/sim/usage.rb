@@ -86,11 +86,11 @@ module Twilio
             # @param [String] end_ The end
             # @param [String] start The start
             # @return [UsageInstance] Fetched UsageInstance
-            def fetch(end_: nil, start: nil)
-              params = {
+            def fetch(end_: Twilio::Values::Unset, start: Twilio::Values::Unset)
+              params = Twilio::Values.of({
                   'End' => end_,
                   'Start' => start,
-              }
+              })
 
               payload = @version.fetch(
                   'GET',
@@ -199,7 +199,7 @@ module Twilio
             # @param [String] end_ The end
             # @param [String] start The start
             # @return [UsageInstance] Fetched UsageInstance
-            def fetch(end_: nil, start: nil)
+            def fetch(end_: Twilio::Values::Unset, start: Twilio::Values::Unset)
               context.fetch(
                   end_: end_,
                   start: start,

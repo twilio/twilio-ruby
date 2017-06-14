@@ -67,8 +67,8 @@ module Twilio
               # @param [String] conference_recording_status_callback_method The
               #   conference_recording_status_callback_method
               # @return [ParticipantInstance] Newly created ParticipantInstance
-              def create(from: nil, to: nil, status_callback: nil, status_callback_method: nil, status_callback_event: nil, timeout: nil, record: nil, muted: nil, beep: nil, start_conference_on_enter: nil, end_conference_on_exit: nil, wait_url: nil, wait_method: nil, early_media: nil, max_participants: nil, conference_record: nil, conference_trim: nil, conference_status_callback: nil, conference_status_callback_method: nil, conference_status_callback_event: nil, recording_channels: nil, recording_status_callback: nil, recording_status_callback_method: nil, sip_auth_username: nil, sip_auth_password: nil, region: nil, conference_recording_status_callback: nil, conference_recording_status_callback_method: nil)
-                data = {
+              def create(from: nil, to: nil, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset, status_callback_event: Twilio::Values::Unset, timeout: Twilio::Values::Unset, record: Twilio::Values::Unset, muted: Twilio::Values::Unset, beep: Twilio::Values::Unset, start_conference_on_enter: Twilio::Values::Unset, end_conference_on_exit: Twilio::Values::Unset, wait_url: Twilio::Values::Unset, wait_method: Twilio::Values::Unset, early_media: Twilio::Values::Unset, max_participants: Twilio::Values::Unset, conference_record: Twilio::Values::Unset, conference_trim: Twilio::Values::Unset, conference_status_callback: Twilio::Values::Unset, conference_status_callback_method: Twilio::Values::Unset, conference_status_callback_event: Twilio::Values::Unset, recording_channels: Twilio::Values::Unset, recording_status_callback: Twilio::Values::Unset, recording_status_callback_method: Twilio::Values::Unset, sip_auth_username: Twilio::Values::Unset, sip_auth_password: Twilio::Values::Unset, region: Twilio::Values::Unset, conference_recording_status_callback: Twilio::Values::Unset, conference_recording_status_callback_method: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'From' => from,
                     'To' => to,
                     'StatusCallback' => status_callback,
@@ -97,7 +97,7 @@ module Twilio
                     'Region' => region,
                     'ConferenceRecordingStatusCallback' => conference_recording_status_callback,
                     'ConferenceRecordingStatusCallbackMethod' => conference_recording_status_callback_method,
-                }
+                })
 
                 payload = @version.create(
                     'POST',
@@ -126,7 +126,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(muted: nil, hold: nil, limit: nil, page_size: nil)
+              def list(muted: Twilio::Values::Unset, hold: Twilio::Values::Unset, limit: nil, page_size: nil)
                 self.stream(
                     muted: muted,
                     hold: hold,
@@ -148,7 +148,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(muted: nil, hold: nil, limit: nil, page_size: nil)
+              def stream(muted: Twilio::Values::Unset, hold: Twilio::Values::Unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -193,18 +193,31 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of ParticipantInstance
-              def page(muted: nil, hold: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(muted: Twilio::Values::Unset, hold: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+                params = Twilio::Values.of({
                     'Muted' => muted,
                     'Hold' => hold,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
                     params
+                )
+                return ParticipantPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of ParticipantInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of ParticipantInstance
+              def get_page(target_url: nil)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
                 )
                 return ParticipantPage.new(@version, response, @solution)
               end
@@ -279,7 +292,7 @@ module Twilio
               # Fetch a ParticipantInstance
               # @return [ParticipantInstance] Fetched ParticipantInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -303,13 +316,13 @@ module Twilio
               # @param [String] hold_url The hold_url
               # @param [String] hold_method The hold_method
               # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(muted: nil, hold: nil, hold_url: nil, hold_method: nil)
-                data = {
+              def update(muted: Twilio::Values::Unset, hold: Twilio::Values::Unset, hold_url: Twilio::Values::Unset, hold_method: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'Muted' => muted,
                     'Hold' => hold,
                     'HoldUrl' => hold_url,
                     'HoldMethod' => hold_method,
-                }
+                })
 
                 payload = @version.update(
                     'POST',
@@ -454,7 +467,7 @@ module Twilio
               # @param [String] hold_url The hold_url
               # @param [String] hold_method The hold_method
               # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(muted: nil, hold: nil, hold_url: nil, hold_method: nil)
+              def update(muted: Twilio::Values::Unset, hold: Twilio::Values::Unset, hold_url: Twilio::Values::Unset, hold_method: Twilio::Values::Unset)
                 context.update(
                     muted: muted,
                     hold: hold,

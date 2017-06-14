@@ -32,8 +32,8 @@ module Twilio
         self.v2010.account
       end
 
-      def accounts
-        self.v2010.accounts
+      def accounts(sid=:unset)
+        self.v2010.accounts(sid)
       end
 
       def addresses(sid=:unset)

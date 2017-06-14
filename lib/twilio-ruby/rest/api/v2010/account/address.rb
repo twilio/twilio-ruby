@@ -37,8 +37,8 @@ module Twilio
             # @param [String] friendly_name The friendly_name
             # @param [Boolean] emergency_enabled The emergency_enabled
             # @return [AddressInstance] Newly created AddressInstance
-            def create(customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil, iso_country: nil, friendly_name: nil, emergency_enabled: nil)
-              data = {
+            def create(customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil, iso_country: nil, friendly_name: Twilio::Values::Unset, emergency_enabled: Twilio::Values::Unset)
+              data = Twilio::Values.of({
                   'CustomerName' => customer_name,
                   'Street' => street,
                   'City' => city,
@@ -47,7 +47,7 @@ module Twilio
                   'IsoCountry' => iso_country,
                   'FriendlyName' => friendly_name,
                   'EmergencyEnabled' => emergency_enabled,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -76,7 +76,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(customer_name: nil, friendly_name: nil, iso_country: nil, limit: nil, page_size: nil)
+            def list(customer_name: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, iso_country: Twilio::Values::Unset, limit: nil, page_size: nil)
               self.stream(
                   customer_name: customer_name,
                   friendly_name: friendly_name,
@@ -100,7 +100,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(customer_name: nil, friendly_name: nil, iso_country: nil, limit: nil, page_size: nil)
+            def stream(customer_name: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, iso_country: Twilio::Values::Unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -148,19 +148,32 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of AddressInstance
-            def page(customer_name: nil, friendly_name: nil, iso_country: nil, page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(customer_name: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, iso_country: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+              params = Twilio::Values.of({
                   'CustomerName' => customer_name,
                   'FriendlyName' => friendly_name,
                   'IsoCountry' => iso_country,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
+              )
+              return AddressPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of AddressInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of AddressInstance
+            def get_page(target_url: nil)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
               )
               return AddressPage.new(@version, response, @solution)
             end
@@ -238,7 +251,7 @@ module Twilio
             # Fetch a AddressInstance
             # @return [AddressInstance] Fetched AddressInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -264,8 +277,8 @@ module Twilio
             # @param [String] postal_code The postal_code
             # @param [Boolean] emergency_enabled The emergency_enabled
             # @return [AddressInstance] Updated AddressInstance
-            def update(friendly_name: nil, customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil, emergency_enabled: nil)
-              data = {
+            def update(friendly_name: Twilio::Values::Unset, customer_name: Twilio::Values::Unset, street: Twilio::Values::Unset, city: Twilio::Values::Unset, region: Twilio::Values::Unset, postal_code: Twilio::Values::Unset, emergency_enabled: Twilio::Values::Unset)
+              data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'CustomerName' => customer_name,
                   'Street' => street,
@@ -273,7 +286,7 @@ module Twilio
                   'Region' => region,
                   'PostalCode' => postal_code,
                   'EmergencyEnabled' => emergency_enabled,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -445,7 +458,7 @@ module Twilio
             # @param [String] postal_code The postal_code
             # @param [Boolean] emergency_enabled The emergency_enabled
             # @return [AddressInstance] Updated AddressInstance
-            def update(friendly_name: nil, customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil, emergency_enabled: nil)
+            def update(friendly_name: Twilio::Values::Unset, customer_name: Twilio::Values::Unset, street: Twilio::Values::Unset, city: Twilio::Values::Unset, region: Twilio::Values::Unset, postal_code: Twilio::Values::Unset, emergency_enabled: Twilio::Values::Unset)
               context.update(
                   friendly_name: friendly_name,
                   customer_name: customer_name,

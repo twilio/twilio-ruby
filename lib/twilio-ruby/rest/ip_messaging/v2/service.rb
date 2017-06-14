@@ -27,9 +27,9 @@ module Twilio
           # @param [String] friendly_name The friendly_name
           # @return [ServiceInstance] Newly created ServiceInstance
           def create(friendly_name: nil)
-            data = {
+            data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
-            }
+            })
 
             payload = @version.create(
                 'POST',
@@ -111,16 +111,29 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of ServiceInstance
-          def page(page_token: nil, page_number: nil, page_size: nil)
-            params = {
+          def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            params = Twilio::Values.of({
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
-            }
+            })
             response = @version.page(
                 'GET',
                 @uri,
                 params
+            )
+            return ServicePage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of ServiceInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of ServiceInstance
+          def get_page(target_url: nil)
+            response = @version.domain.request(
+                'GET',
+                target_url
             )
             return ServicePage.new(@version, response, @solution)
           end
@@ -189,7 +202,7 @@ module Twilio
           # Fetch a ServiceInstance
           # @return [ServiceInstance] Fetched ServiceInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -255,8 +268,8 @@ module Twilio
           # @param [String] limits_channel_members The limits.channel_members
           # @param [String] limits_user_channels The limits.user_channels
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: nil, default_service_role_sid: nil, default_channel_role_sid: nil, default_channel_creator_role_sid: nil, read_status_enabled: nil, reachability_enabled: nil, typing_indicator_timeout: nil, consumption_report_interval: nil, notifications_new_message_enabled: nil, notifications_new_message_template: nil, notifications_new_message_sound: nil, notifications_new_message_badge_count_enabled: nil, notifications_added_to_channel_enabled: nil, notifications_added_to_channel_template: nil, notifications_added_to_channel_sound: nil, notifications_removed_from_channel_enabled: nil, notifications_removed_from_channel_template: nil, notifications_removed_from_channel_sound: nil, notifications_invited_to_channel_enabled: nil, notifications_invited_to_channel_template: nil, notifications_invited_to_channel_sound: nil, pre_webhook_url: nil, post_webhook_url: nil, webhook_method: nil, webhook_filters: nil, limits_channel_members: nil, limits_user_channels: nil)
-            data = {
+          def update(friendly_name: Twilio::Values::Unset, default_service_role_sid: Twilio::Values::Unset, default_channel_role_sid: Twilio::Values::Unset, default_channel_creator_role_sid: Twilio::Values::Unset, read_status_enabled: Twilio::Values::Unset, reachability_enabled: Twilio::Values::Unset, typing_indicator_timeout: Twilio::Values::Unset, consumption_report_interval: Twilio::Values::Unset, notifications_new_message_enabled: Twilio::Values::Unset, notifications_new_message_template: Twilio::Values::Unset, notifications_new_message_sound: Twilio::Values::Unset, notifications_new_message_badge_count_enabled: Twilio::Values::Unset, notifications_added_to_channel_enabled: Twilio::Values::Unset, notifications_added_to_channel_template: Twilio::Values::Unset, notifications_added_to_channel_sound: Twilio::Values::Unset, notifications_removed_from_channel_enabled: Twilio::Values::Unset, notifications_removed_from_channel_template: Twilio::Values::Unset, notifications_removed_from_channel_sound: Twilio::Values::Unset, notifications_invited_to_channel_enabled: Twilio::Values::Unset, notifications_invited_to_channel_template: Twilio::Values::Unset, notifications_invited_to_channel_sound: Twilio::Values::Unset, pre_webhook_url: Twilio::Values::Unset, post_webhook_url: Twilio::Values::Unset, webhook_method: Twilio::Values::Unset, webhook_filters: Twilio::Values::Unset, limits_channel_members: Twilio::Values::Unset, limits_user_channels: Twilio::Values::Unset)
+            data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DefaultServiceRoleSid' => default_service_role_sid,
                 'DefaultChannelRoleSid' => default_channel_role_sid,
@@ -284,7 +297,7 @@ module Twilio
                 'WebhookFilters' => webhook_filters,
                 'Limits.ChannelMembers' => limits_channel_members,
                 'Limits.UserChannels' => limits_user_channels,
-            }
+            })
 
             payload = @version.update(
                 'POST',
@@ -567,7 +580,7 @@ module Twilio
           # @param [String] limits_channel_members The limits.channel_members
           # @param [String] limits_user_channels The limits.user_channels
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: nil, default_service_role_sid: nil, default_channel_role_sid: nil, default_channel_creator_role_sid: nil, read_status_enabled: nil, reachability_enabled: nil, typing_indicator_timeout: nil, consumption_report_interval: nil, notifications_new_message_enabled: nil, notifications_new_message_template: nil, notifications_new_message_sound: nil, notifications_new_message_badge_count_enabled: nil, notifications_added_to_channel_enabled: nil, notifications_added_to_channel_template: nil, notifications_added_to_channel_sound: nil, notifications_removed_from_channel_enabled: nil, notifications_removed_from_channel_template: nil, notifications_removed_from_channel_sound: nil, notifications_invited_to_channel_enabled: nil, notifications_invited_to_channel_template: nil, notifications_invited_to_channel_sound: nil, pre_webhook_url: nil, post_webhook_url: nil, webhook_method: nil, webhook_filters: nil, limits_channel_members: nil, limits_user_channels: nil)
+          def update(friendly_name: Twilio::Values::Unset, default_service_role_sid: Twilio::Values::Unset, default_channel_role_sid: Twilio::Values::Unset, default_channel_creator_role_sid: Twilio::Values::Unset, read_status_enabled: Twilio::Values::Unset, reachability_enabled: Twilio::Values::Unset, typing_indicator_timeout: Twilio::Values::Unset, consumption_report_interval: Twilio::Values::Unset, notifications_new_message_enabled: Twilio::Values::Unset, notifications_new_message_template: Twilio::Values::Unset, notifications_new_message_sound: Twilio::Values::Unset, notifications_new_message_badge_count_enabled: Twilio::Values::Unset, notifications_added_to_channel_enabled: Twilio::Values::Unset, notifications_added_to_channel_template: Twilio::Values::Unset, notifications_added_to_channel_sound: Twilio::Values::Unset, notifications_removed_from_channel_enabled: Twilio::Values::Unset, notifications_removed_from_channel_template: Twilio::Values::Unset, notifications_removed_from_channel_sound: Twilio::Values::Unset, notifications_invited_to_channel_enabled: Twilio::Values::Unset, notifications_invited_to_channel_template: Twilio::Values::Unset, notifications_invited_to_channel_sound: Twilio::Values::Unset, pre_webhook_url: Twilio::Values::Unset, post_webhook_url: Twilio::Values::Unset, webhook_method: Twilio::Values::Unset, webhook_filters: Twilio::Values::Unset, limits_channel_members: Twilio::Values::Unset, limits_user_channels: Twilio::Values::Unset)
             context.update(
                 friendly_name: friendly_name,
                 default_service_role_sid: default_service_role_sid,

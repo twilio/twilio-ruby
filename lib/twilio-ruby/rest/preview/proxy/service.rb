@@ -89,16 +89,29 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of ServiceInstance
-          def page(page_token: nil, page_number: nil, page_size: nil)
-            params = {
+          def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            params = Twilio::Values.of({
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
-            }
+            })
             response = @version.page(
                 'GET',
                 @uri,
                 params
+            )
+            return ServicePage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of ServiceInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of ServiceInstance
+          def get_page(target_url: nil)
+            response = @version.domain.request(
+                'GET',
+                target_url
             )
             return ServicePage.new(@version, response, @solution)
           end
@@ -113,12 +126,12 @@ module Twilio
           # @param [String] callback_url The URL Twilio will request for callback
           #   notifications.
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil, auto_create: nil, callback_url: nil)
-            data = {
+          def create(friendly_name: Twilio::Values::Unset, auto_create: Twilio::Values::Unset, callback_url: Twilio::Values::Unset)
+            data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'AutoCreate' => auto_create,
                 'CallbackUrl' => callback_url,
-            }
+            })
 
             payload = @version.create(
                 'POST',
@@ -196,7 +209,7 @@ module Twilio
           # Fetch a ServiceInstance
           # @return [ServiceInstance] Fetched ServiceInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -227,12 +240,12 @@ module Twilio
           # @param [String] callback_url The URL Twilio will request for callback
           #   notifications.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: nil, auto_create: nil, callback_url: nil)
-            data = {
+          def update(friendly_name: Twilio::Values::Unset, auto_create: Twilio::Values::Unset, callback_url: Twilio::Values::Unset)
+            data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'AutoCreate' => auto_create,
                 'CallbackUrl' => callback_url,
-            }
+            })
 
             payload = @version.update(
                 'POST',
@@ -425,7 +438,7 @@ module Twilio
           # @param [String] callback_url The URL Twilio will request for callback
           #   notifications.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: nil, auto_create: nil, callback_url: nil)
+          def update(friendly_name: Twilio::Values::Unset, auto_create: Twilio::Values::Unset, callback_url: Twilio::Values::Unset)
             context.update(
                 friendly_name: friendly_name,
                 auto_create: auto_create,

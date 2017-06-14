@@ -47,8 +47,8 @@ module Twilio
               # @param [trigger.TriggerField] trigger_by The field in the UsageRecord that fires
               #   the trigger. One of `count`, `usage`, or `price`
               # @return [TriggerInstance] Newly created TriggerInstance
-              def create(callback_url: nil, trigger_value: nil, usage_category: nil, callback_method: nil, friendly_name: nil, recurring: nil, trigger_by: nil)
-                data = {
+              def create(callback_url: nil, trigger_value: nil, usage_category: nil, callback_method: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, recurring: Twilio::Values::Unset, trigger_by: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'CallbackUrl' => callback_url,
                     'TriggerValue' => trigger_value,
                     'UsageCategory' => usage_category,
@@ -56,7 +56,7 @@ module Twilio
                     'FriendlyName' => friendly_name,
                     'Recurring' => recurring,
                     'TriggerBy' => trigger_by,
-                }
+                })
 
                 payload = @version.create(
                     'POST',
@@ -88,7 +88,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(recurring: nil, trigger_by: nil, usage_category: nil, limit: nil, page_size: nil)
+              def list(recurring: Twilio::Values::Unset, trigger_by: Twilio::Values::Unset, usage_category: Twilio::Values::Unset, limit: nil, page_size: nil)
                 self.stream(
                     recurring: recurring,
                     trigger_by: trigger_by,
@@ -115,7 +115,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(recurring: nil, trigger_by: nil, usage_category: nil, limit: nil, page_size: nil)
+              def stream(recurring: Twilio::Values::Unset, trigger_by: Twilio::Values::Unset, usage_category: Twilio::Values::Unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -169,19 +169,32 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of TriggerInstance
-              def page(recurring: nil, trigger_by: nil, usage_category: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(recurring: Twilio::Values::Unset, trigger_by: Twilio::Values::Unset, usage_category: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+                params = Twilio::Values.of({
                     'Recurring' => recurring,
                     'TriggerBy' => trigger_by,
                     'UsageCategory' => usage_category,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
                     params
+                )
+                return TriggerPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of TriggerInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of TriggerInstance
+              def get_page(target_url: nil)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
                 )
                 return TriggerPage.new(@version, response, @solution)
               end
@@ -250,7 +263,7 @@ module Twilio
               # Fetch a TriggerInstance
               # @return [TriggerInstance] Fetched TriggerInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -275,12 +288,12 @@ module Twilio
               # @param [String] friendly_name A user-specified, human-readable name for the
               #   trigger.
               # @return [TriggerInstance] Updated TriggerInstance
-              def update(callback_method: nil, callback_url: nil, friendly_name: nil)
-                data = {
+              def update(callback_method: Twilio::Values::Unset, callback_url: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'CallbackMethod' => callback_method,
                     'CallbackUrl' => callback_url,
                     'FriendlyName' => friendly_name,
-                }
+                })
 
                 payload = @version.update(
                     'POST',
@@ -447,7 +460,7 @@ module Twilio
               # @param [String] friendly_name A user-specified, human-readable name for the
               #   trigger.
               # @return [TriggerInstance] Updated TriggerInstance
-              def update(callback_method: nil, callback_url: nil, friendly_name: nil)
+              def update(callback_method: Twilio::Values::Unset, callback_url: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset)
                 context.update(
                     callback_method: callback_method,
                     callback_url: callback_url,
