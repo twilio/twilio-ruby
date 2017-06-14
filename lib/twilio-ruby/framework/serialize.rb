@@ -19,7 +19,6 @@ module Twilio
 
   def self.serialize_object(object)
     if object.is_a?(Hash) or object.is_a?(Array)
-      require 'json'
       JSON.generate(object)
     else
       object
