@@ -1,12 +1,13 @@
 require 'net/http'
 require 'net/https'
-require 'builder'
+require 'libxml'
 require 'cgi'
 require 'openssl'
 require 'base64'
 require 'forwardable'
 require 'jwt'
 require 'time'
+require 'json'
 
 require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
 require 'rack/twilio_webhook_authentication'
@@ -18,7 +19,9 @@ require 'twilio-ruby/jwt/task_router'
 require 'twilio-ruby/security/request_validator'
 require 'twilio-ruby/util/configuration'
 
-require 'twilio-ruby/twiml/response'
+require 'twilio-ruby/twiml/twiml'
+require 'twilio-ruby/twiml/voice_response'
+require 'twilio-ruby/twiml/messaging_response'
 
 Dir[File.dirname(__FILE__) + '/twilio-ruby/http/**/*.rb'].each do |file|
   require file
