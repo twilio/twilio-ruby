@@ -12,8 +12,9 @@ require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
 require 'rack/twilio_webhook_authentication'
 
 require 'twilio-ruby/util'
+require 'twilio-ruby/jwt/jwt'
 require 'twilio-ruby/jwt/access_token'
-require 'twilio-ruby/jwt/capability'
+require 'twilio-ruby/jwt/client_capability'
 require 'twilio-ruby/jwt/task_router'
 require 'twilio-ruby/security/request_validator'
 require 'twilio-ruby/util/configuration'

@@ -1,52 +1,80 @@
 module Twilio
   module JWT
-    class TaskRouterCapability
-      TASK_ROUTER_BASE_URL = 'https://taskrouter.twilio.com'
+    class TaskRouterCapability < BaseJWT
       TASK_ROUTER_VERSION = 'v1'
+      TASK_ROUTER_BASE_URL = 'https://taskrouter.twilio.com'
       TASK_ROUTER_WEBSOCKET_BASE_URL = 'https://event-bridge.twilio.com/v1/wschannels'
 
-      REQUIRED = {required: true}
-      OPTIONAL = {required: false}
-
-      def initialize(account_sid, auth_token, workspace_sid, channel_id)
+      def initialize(account_sid, auth_token, workspace_sid: nil, channel_id: nil, **optionals)
+        super(secret_key: auth_token,
+              issuer: account_sid,
+              algorithm: 'HS256',
+              nbf: optionals['nbf'],
+              ttl: optionals['ttl'] || 3600,
+              valid_until: optionals['valid_until']
+        )
         @account_sid = account_sid
         @auth_token = auth_token
-        @policies = []
-
         @workspace_sid = workspace_sid
         @channel_id = channel_id
+        @policies = []
 
-        @base_url = "#{TASK_ROUTER_BASE_URL}/#{TASK_ROUTER_VERSION}/Workspaces/#{workspace_sid}"
+        _validate_input
 
-        validate_jwt
-
-        setup_resource
-
-        allow_websocket_requests(@channel_id)
-        allow(@resource_url, 'GET')
+        self.allow_websockets(@channel_id)
+        self.allow_fetch
+        self.allow_updates if optionals.key?(:allow_updates)
+        self.allow_delete if optionals.key?(:allow_delete)
+        self.allow_fetch_subresources if optionals.key?(:allow_fetch_subresources)
+        self.allow_update_subresources if optionals.key?(:allow_update_subresources)
+        self.allow_delete_subresources if optionals.key?(:allow_delete_subresources)
       end
 
-      def allow_fetch_subresources
-        allow(@resource_url + '/**', 'GET')
+      def allow_fetch
+        self.add_policy(self.resource_url, 'GET', true)
       end
 
       def allow_updates
-        allow(@resource_url, 'POST')
-      end
-
-      def allow_updates_subresources
-        allow(@resource_url + '/**', 'POST')
+        self.add_policy(self.resource_url, 'POST', true)
       end
 
       def allow_delete
-        allow(@resource_url, 'DELETE')
+        self.add_policy(self.resource_url, 'DELETE', true)
+      end
+
+      def allow_fetch_subresources
+        self.add_policy(self.resource_url + '/**', 'GET', true)
+      end
+
+      def allow_updates_subresources
+        self.add_policy(self.resource_url + '/**', 'POST', true)
       end
 
       def allow_delete_subresources
-        allow(@resource_url + '/**', 'DELETE')
+        self.add_policy(self.resource_url + '/**', 'DELETE', true)
       end
 
-      def add_policy(url, method, allowed = true, query_filters = nil, post_filters = nil)
+      def allow_websockets(channel_id=nil)
+        channel_id = channel_id || @channel_id
+        worker_url = "#{TASK_ROUTER_WEBSOCKET_BASE_URL}/#{@account_sid}/#{channel_id}"
+        ['GET', 'POST'].each do |meth|
+          add_policy(worker_url, meth)
+        end
+      end
+
+      def workspace_url
+        return "#{TASK_ROUTER_BASE_URL}/#{TASK_ROUTER_VERSION}/Workspaces/#{@workspace_sid}"
+      end
+
+      def resource_url
+        fail NotImplementedError, "Resource URL must be specified by subclass"
+      end
+
+      def channel_prefix
+        fail NotImplementedError, "Channel Prefix must be specified by subclass"
+      end
+
+      def add_policy(url, method, allowed = true, query_filters: nil, post_filters: nil)
         policy = {
             url: url,
             method: method,
@@ -58,75 +86,32 @@ module Twilio
         @policies.push(policy)
       end
 
-      def allow(url, method, query_filters = nil, post_filters = nil)
-        add_policy(url, method, true, query_filters, post_filters)
-      end
-
-      def deny(url, method, query_filters = nil, post_filters = nil)
-        add_policy(url, method, false, query_filters, post_filters)
-      end
-
-      def generate_token(ttl = 3600)
-        task_router_attributes = {
-            account_sid: @account_sid,
-            workspace_sid: @workspace_sid,
-            channel: @channel_id
-        }
-
-        if @channel_id[0..1] == 'WK'
-          task_router_attributes[:worker_sid] = @channel_id
-        elsif @channel_id[0..1] == 'WQ'
-          task_router_attributes[:taskqueue_sid] = @channel_id
-        end
-
-        generate_token_protected(ttl, task_router_attributes)
+      def to_s
+        to_jwt
       end
 
       protected
-
-      def generate_token_protected(ttl = 3600, extra_attributes)
+      def _generate_payload
         payload = {
-            iss: @account_sid,
-            exp: (Time.now.to_i + ttl),
+            account_sid: @account_sid,
+            workspace_sid: @workspace_sid,
+            channel: @channel_id,
             version: TASK_ROUTER_VERSION,
             friendly_name: @channel_id,
-            policies: @policies,
-        }
-        extra_attributes.each { |key, value|
-          payload[key] = value
+            policies: @policies
         }
 
-        ::JWT.encode payload, @auth_token
-      end
-
-      def setup_resource
-        if @channel_id[0..1] == 'WS'
-          @resource_url = @base_url
-        elsif @channel_id[0..1] == 'WK'
-          @resource_url = @base_url + '/Workers/' + @channel_id
-
-          @activity_url = @base_url + '/Activities'
-          allow(@activity_url, 'GET')
-
-          @tasks_url = @base_url + '/Tasks/**'
-          allow(@tasks_url, 'GET')
-
-          @worker_reservations_url = @resource_url + '/Reservations/**'
-          allow(@worker_reservations_url, 'GET')
-
+        if @channel_id[0..1] == 'WK'
+          payload[:worker_sid] = @channel_id
         elsif @channel_id[0..1] == 'WQ'
-          @resource_url = @base_url + '/TaskQueues/' + @channel_id
+          payload[:taskqueue_sid] = @channel_id
         end
+
+        return payload
       end
 
-      def allow_websocket_requests(channel_id)
-        worker_url = "#{TASK_ROUTER_WEBSOCKET_BASE_URL}/#{@account_sid}/#{channel_id}"
-        ['GET', 'POST'].each do |meth|
-          add_policy(worker_url, meth)
-        end
-      end
-
-      def validate_jwt
+      private
+      def _validate_input
         if @account_sid.nil? or @account_sid[0..1] != 'AC'
           raise "Invalid AccountSid provided #{@account_sid}"
         end
@@ -137,7 +122,7 @@ module Twilio
           raise 'ChannelId not provided'
         end
         @prefix = @channel_id[0..1]
-        if @prefix != 'WS' and @prefix != 'WK' and @prefix != 'WQ'
+        if @prefix != self.channel_prefix
           raise "Invalid ChannelId provided: #{@channel_id}"
         end
       end
@@ -145,59 +130,88 @@ module Twilio
 
     class WorkerCapability < TaskRouterCapability
 
-      def initialize(account_sid, auth_token, workspace_sid, worker_sid)
-        super(account_sid, auth_token, workspace_sid, worker_sid)
-        @tasks_url = @base_url + '/Tasks/**'
-        @activity_url = @base_url + '/Activities'
-        @worker_reservations_url = @resource_url + '/Reservations/**'
+      def initialize(account_sid, auth_token, workspace_sid, worker_sid, **optionals)
+        super(account_sid, auth_token, workspace_sid: workspace_sid, channel_id: worker_sid, **optionals)
 
-        allow(@activity_url, 'GET')
-        allow(@tasks_url, 'GET')
-        allow(@worker_reservations_url, 'GET')
+        self.allow_fetch_tasks
+        self.allow_fetch_activities
+        self.allow_fetch_worker_reservations
+        self.allow_update_activities if optionals[:allow_update_activities]
+        self.allow_update_worker_reservations if optionals[:allow_update_worker_reservations]
       end
 
-      def allow_activity_updates
-        allow(@resource_url, 'POST', nil, {ActivitySid: REQUIRED})
+      def allow_fetch_tasks
+        self.add_policy(self.workspace_url + '/Tasks/**', 'GET', true)
       end
 
-      def allow_reservation_updates
-        allow(@tasks_url, 'POST', nil, nil)
-        allow(@worker_reservations_url, 'POST', nil, nil)
+      def allow_fetch_activities
+        self.add_policy(self.workspace_url + '/Activities', 'GET', true)
       end
 
-      protected
-
-      def setup_resource
-        @resource_url = @base_url + '/Workers/' + @channel_id
+      def allow_fetch_worker_reservations
+        self.add_policy(self.resource_url + '/Reservations/**', 'GET', true)
       end
 
-    end
-
-    class WorkspaceCapability < TaskRouterCapability
-
-      def initialize(account_sid, auth_token, workspace_sid)
-        super(account_sid, auth_token, workspace_sid, workspace_sid)
+      def allow_update_activities
+        post_filter = {ActivitySid: {required: true}}
+        self.add_policy(self.workspace_url + '/Activities', 'POST', true, post_filters: post_filter)
       end
 
-      protected
-
-      def setup_resource
-        @resource_url = @base_url
+      def allow_update_worker_reservations
+        self.add_policy(self.workspace_url + '/Tasks/**', 'POST', true)
+        self.add_policy(self.resource_url + '/Reservations/**', 'POST', true)
       end
 
+      def resource_url
+        return self.workspace_url + '/Workers/' + @channel_id
+      end
+
+      def channel_prefix
+        return 'WK'
+      end
+
+      def to_s
+        return self.to_jwt
+      end
     end
 
     class TaskQueueCapability < TaskRouterCapability
 
-      def initialize(account_sid, auth_token, workspace_sid, taskqueue_sid)
-        super(account_sid, auth_token, workspace_sid, taskqueue_sid)
+      def initialize(account_sid, auth_token, workspace_sid, taskqueue_sid, **optionals)
+        super(account_sid, auth_token, workspace_sid: workspace_sid, channel_id: taskqueue_sid, **optionals)
       end
 
-      protected
-
-      def setup_resource
-        @resource_url = @base_url + '/TaskQueues/' + @channel_id
+      def resource_url
+        return self.workspace_url + '/TaskQueues/' + @channel_id
       end
+
+      def channel_prefix
+        return 'WQ'
+      end
+
+      def to_s
+        return self.to_jwt
+      end
+    end
+
+    class WorkspaceCapability < TaskRouterCapability
+
+      def initialize(account_sid, auth_token, workspace_sid, **optionals)
+        super(account_sid, auth_token, workspace_sid: workspace_sid, channel_id: workspace_sid, ttl: 3600, **optionals)
+      end
+
+      def resource_url
+        return self.workspace_url
+      end
+
+      def channel_prefix
+        return 'WS'
+      end
+
+      def to_s
+        return self.to_jwt
+      end
+
     end
   end
 end
