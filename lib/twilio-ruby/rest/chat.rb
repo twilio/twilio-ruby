@@ -33,12 +33,12 @@ module Twilio
         @v2 ||= V2.new self
       end
 
-      def credentials
-        self.v2.credentials
+      def credentials(sid=:unset)
+        self.v2.credentials(sid)
       end
 
-      def services
-        self.v2.services
+      def services(sid=:unset)
+        self.v2.services(sid)
       end
 
       ##

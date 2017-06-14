@@ -40,7 +40,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(reservation_status: nil, limit: nil, page_size: nil)
+              def list(reservation_status: Twilio::Values::Unset, limit: nil, page_size: nil)
                 self.stream(
                     reservation_status: reservation_status,
                     limit: limit,
@@ -60,7 +60,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(reservation_status: nil, limit: nil, page_size: nil)
+              def stream(reservation_status: Twilio::Values::Unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -102,13 +102,13 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of ReservationInstance
-              def page(reservation_status: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(reservation_status: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+                params = Twilio::Values.of({
                     'ReservationStatus' => reservation_status,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
@@ -197,7 +197,7 @@ module Twilio
               # Fetch a ReservationInstance
               # @return [ReservationInstance] Fetched ReservationInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -237,8 +237,8 @@ module Twilio
               # @param [Boolean] redirect_accept The redirect_accept
               # @param [String] redirect_url The redirect_url
               # @return [ReservationInstance] Updated ReservationInstance
-              def update(reservation_status: nil, worker_activity_sid: nil, instruction: nil, dequeue_post_work_activity_sid: nil, dequeue_from: nil, dequeue_record: nil, dequeue_timeout: nil, dequeue_to: nil, dequeue_status_callback_url: nil, call_from: nil, call_record: nil, call_timeout: nil, call_to: nil, call_url: nil, call_status_callback_url: nil, call_accept: nil, redirect_call_sid: nil, redirect_accept: nil, redirect_url: nil)
-                data = {
+              def update(reservation_status: Twilio::Values::Unset, worker_activity_sid: Twilio::Values::Unset, instruction: Twilio::Values::Unset, dequeue_post_work_activity_sid: Twilio::Values::Unset, dequeue_from: Twilio::Values::Unset, dequeue_record: Twilio::Values::Unset, dequeue_timeout: Twilio::Values::Unset, dequeue_to: Twilio::Values::Unset, dequeue_status_callback_url: Twilio::Values::Unset, call_from: Twilio::Values::Unset, call_record: Twilio::Values::Unset, call_timeout: Twilio::Values::Unset, call_to: Twilio::Values::Unset, call_url: Twilio::Values::Unset, call_status_callback_url: Twilio::Values::Unset, call_accept: Twilio::Values::Unset, redirect_call_sid: Twilio::Values::Unset, redirect_accept: Twilio::Values::Unset, redirect_url: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'ReservationStatus' => reservation_status,
                     'WorkerActivitySid' => worker_activity_sid,
                     'Instruction' => instruction,
@@ -258,7 +258,7 @@ module Twilio
                     'RedirectCallSid' => redirect_call_sid,
                     'RedirectAccept' => redirect_accept,
                     'RedirectUrl' => redirect_url,
-                }
+                })
 
                 payload = @version.update(
                     'POST',
@@ -410,7 +410,7 @@ module Twilio
               # @param [Boolean] redirect_accept The redirect_accept
               # @param [String] redirect_url The redirect_url
               # @return [ReservationInstance] Updated ReservationInstance
-              def update(reservation_status: nil, worker_activity_sid: nil, instruction: nil, dequeue_post_work_activity_sid: nil, dequeue_from: nil, dequeue_record: nil, dequeue_timeout: nil, dequeue_to: nil, dequeue_status_callback_url: nil, call_from: nil, call_record: nil, call_timeout: nil, call_to: nil, call_url: nil, call_status_callback_url: nil, call_accept: nil, redirect_call_sid: nil, redirect_accept: nil, redirect_url: nil)
+              def update(reservation_status: Twilio::Values::Unset, worker_activity_sid: Twilio::Values::Unset, instruction: Twilio::Values::Unset, dequeue_post_work_activity_sid: Twilio::Values::Unset, dequeue_from: Twilio::Values::Unset, dequeue_record: Twilio::Values::Unset, dequeue_timeout: Twilio::Values::Unset, dequeue_to: Twilio::Values::Unset, dequeue_status_callback_url: Twilio::Values::Unset, call_from: Twilio::Values::Unset, call_record: Twilio::Values::Unset, call_timeout: Twilio::Values::Unset, call_to: Twilio::Values::Unset, call_url: Twilio::Values::Unset, call_status_callback_url: Twilio::Values::Unset, call_accept: Twilio::Values::Unset, redirect_call_sid: Twilio::Values::Unset, redirect_accept: Twilio::Values::Unset, redirect_url: Twilio::Values::Unset)
                 context.update(
                     reservation_status: reservation_status,
                     worker_activity_sid: worker_activity_sid,

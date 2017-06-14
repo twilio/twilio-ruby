@@ -33,8 +33,8 @@ module Twilio
           # @param [Boolean] record_participants_on_connect The
           #   record_participants_on_connect
           # @return [RoomInstance] Newly created RoomInstance
-          def create(enable_turn: nil, type: nil, unique_name: nil, status_callback: nil, status_callback_method: nil, max_participants: nil, record_participants_on_connect: nil)
-            data = {
+          def create(enable_turn: Twilio::Values::Unset, type: Twilio::Values::Unset, unique_name: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset, max_participants: Twilio::Values::Unset, record_participants_on_connect: Twilio::Values::Unset)
+            data = Twilio::Values.of({
                 'EnableTurn' => enable_turn,
                 'Type' => type,
                 'UniqueName' => unique_name,
@@ -42,7 +42,7 @@ module Twilio
                 'StatusCallbackMethod' => status_callback_method,
                 'MaxParticipants' => max_participants,
                 'RecordParticipantsOnConnect' => record_participants_on_connect,
-            }
+            })
 
             payload = @version.create(
                 'POST',
@@ -71,7 +71,7 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(status: nil, unique_name: nil, date_created_after: nil, date_created_before: nil, limit: nil, page_size: nil)
+          def list(status: Twilio::Values::Unset, unique_name: Twilio::Values::Unset, date_created_after: Twilio::Values::Unset, date_created_before: Twilio::Values::Unset, limit: nil, page_size: nil)
             self.stream(
                 status: status,
                 unique_name: unique_name,
@@ -97,7 +97,7 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(status: nil, unique_name: nil, date_created_after: nil, date_created_before: nil, limit: nil, page_size: nil)
+          def stream(status: Twilio::Values::Unset, unique_name: Twilio::Values::Unset, date_created_after: Twilio::Values::Unset, date_created_before: Twilio::Values::Unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -148,8 +148,8 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of RoomInstance
-          def page(status: nil, unique_name: nil, date_created_after: nil, date_created_before: nil, page_token: nil, page_number: nil, page_size: nil)
-            params = {
+          def page(status: Twilio::Values::Unset, unique_name: Twilio::Values::Unset, date_created_after: Twilio::Values::Unset, date_created_before: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            params = Twilio::Values.of({
                 'Status' => status,
                 'UniqueName' => unique_name,
                 'DateCreatedAfter' => Twilio.serialize_iso8601(date_created_after),
@@ -157,7 +157,7 @@ module Twilio
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
-            }
+            })
             response = @version.page(
                 'GET',
                 @uri,
@@ -241,7 +241,7 @@ module Twilio
           # Fetch a RoomInstance
           # @return [RoomInstance] Fetched RoomInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -261,9 +261,9 @@ module Twilio
           # @param [room.RoomStatus] status The status
           # @return [RoomInstance] Updated RoomInstance
           def update(status: nil)
-            data = {
+            data = Twilio::Values.of({
                 'Status' => status,
-            }
+            })
 
             payload = @version.update(
                 'POST',

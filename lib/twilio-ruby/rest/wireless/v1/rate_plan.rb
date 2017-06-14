@@ -89,12 +89,12 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of RatePlanInstance
-          def page(page_token: nil, page_number: nil, page_size: nil)
-            params = {
+          def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            params = Twilio::Values.of({
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
-            }
+            })
             response = @version.page(
                 'GET',
                 @uri,
@@ -129,8 +129,8 @@ module Twilio
           # @param [Boolean] national_roaming_enabled The national_roaming_enabled
           # @param [String] international_roaming The international_roaming
           # @return [RatePlanInstance] Newly created RatePlanInstance
-          def create(unique_name: nil, friendly_name: nil, data_enabled: nil, data_limit: nil, data_metering: nil, messaging_enabled: nil, voice_enabled: nil, national_roaming_enabled: nil, international_roaming: nil)
-            data = {
+          def create(unique_name: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, data_enabled: Twilio::Values::Unset, data_limit: Twilio::Values::Unset, data_metering: Twilio::Values::Unset, messaging_enabled: Twilio::Values::Unset, voice_enabled: Twilio::Values::Unset, national_roaming_enabled: Twilio::Values::Unset, international_roaming: Twilio::Values::Unset)
+            data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'FriendlyName' => friendly_name,
                 'DataEnabled' => data_enabled,
@@ -140,7 +140,7 @@ module Twilio
                 'VoiceEnabled' => voice_enabled,
                 'NationalRoamingEnabled' => national_roaming_enabled,
                 'InternationalRoaming' => international_roaming,
-            }
+            })
 
             payload = @version.create(
                 'POST',
@@ -213,7 +213,7 @@ module Twilio
           # Fetch a RatePlanInstance
           # @return [RatePlanInstance] Fetched RatePlanInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -233,11 +233,11 @@ module Twilio
           # @param [String] unique_name The unique_name
           # @param [String] friendly_name The friendly_name
           # @return [RatePlanInstance] Updated RatePlanInstance
-          def update(unique_name: nil, friendly_name: nil)
-            data = {
+          def update(unique_name: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset)
+            data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'FriendlyName' => friendly_name,
-            }
+            })
 
             payload = @version.update(
                 'POST',
@@ -385,7 +385,7 @@ module Twilio
           # @param [String] unique_name The unique_name
           # @param [String] friendly_name The friendly_name
           # @return [RatePlanInstance] Updated RatePlanInstance
-          def update(unique_name: nil, friendly_name: nil)
+          def update(unique_name: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset)
             context.update(
                 unique_name: unique_name,
                 friendly_name: friendly_name,

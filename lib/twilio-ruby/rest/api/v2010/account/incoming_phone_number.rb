@@ -47,7 +47,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(beta: nil, friendly_name: nil, phone_number: nil, limit: nil, page_size: nil)
+            def list(beta: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, phone_number: Twilio::Values::Unset, limit: nil, page_size: nil)
               self.stream(
                   beta: beta,
                   friendly_name: friendly_name,
@@ -73,7 +73,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(beta: nil, friendly_name: nil, phone_number: nil, limit: nil, page_size: nil)
+            def stream(beta: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, phone_number: Twilio::Values::Unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -125,15 +125,15 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of IncomingPhoneNumberInstance
-            def page(beta: nil, friendly_name: nil, phone_number: nil, page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(beta: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, phone_number: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+              params = Twilio::Values.of({
                   'Beta' => beta,
                   'FriendlyName' => friendly_name,
                   'PhoneNumber' => phone_number,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
@@ -208,8 +208,8 @@ module Twilio
             # @param [String] area_code The desired area code for the new phone number. Any
             #   three digit US or Canada rea code is valid
             # @return [IncomingPhoneNumberInstance] Newly created IncomingPhoneNumberInstance
-            def create(api_version: nil, friendly_name: nil, sms_application_sid: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, status_callback: nil, status_callback_method: nil, voice_application_sid: nil, voice_caller_id_lookup: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil, emergency_status: nil, emergency_address_sid: nil, trunk_sid: nil, phone_number: nil, area_code: nil)
-              data = {
+            def create(api_version: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, sms_application_sid: Twilio::Values::Unset, sms_fallback_method: Twilio::Values::Unset, sms_fallback_url: Twilio::Values::Unset, sms_method: Twilio::Values::Unset, sms_url: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset, voice_application_sid: Twilio::Values::Unset, voice_caller_id_lookup: Twilio::Values::Unset, voice_fallback_method: Twilio::Values::Unset, voice_fallback_url: Twilio::Values::Unset, voice_method: Twilio::Values::Unset, voice_url: Twilio::Values::Unset, emergency_status: Twilio::Values::Unset, emergency_address_sid: Twilio::Values::Unset, trunk_sid: Twilio::Values::Unset, phone_number: Twilio::Values::Unset, area_code: Twilio::Values::Unset)
+              data = Twilio::Values.of({
                   'PhoneNumber' => phone_number,
                   'AreaCode' => area_code,
                   'ApiVersion' => api_version,
@@ -230,7 +230,7 @@ module Twilio
                   'EmergencyStatus' => emergency_status,
                   'EmergencyAddressSid' => emergency_address_sid,
                   'TrunkSid' => trunk_sid,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -387,8 +387,8 @@ module Twilio
             #   the Trunk. Setting a `TrunkSid` will automatically delete your
             #   `VoiceApplicationSid` and vice versa.
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
-            def update(api_version: nil, friendly_name: nil, sms_application_sid: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, status_callback: nil, status_callback_method: nil, voice_application_sid: nil, voice_caller_id_lookup: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil, emergency_status: nil, emergency_address_sid: nil, trunk_sid: nil)
-              data = {
+            def update(api_version: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, sms_application_sid: Twilio::Values::Unset, sms_fallback_method: Twilio::Values::Unset, sms_fallback_url: Twilio::Values::Unset, sms_method: Twilio::Values::Unset, sms_url: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset, voice_application_sid: Twilio::Values::Unset, voice_caller_id_lookup: Twilio::Values::Unset, voice_fallback_method: Twilio::Values::Unset, voice_fallback_url: Twilio::Values::Unset, voice_method: Twilio::Values::Unset, voice_url: Twilio::Values::Unset, emergency_status: Twilio::Values::Unset, emergency_address_sid: Twilio::Values::Unset, trunk_sid: Twilio::Values::Unset)
+              data = Twilio::Values.of({
                   'ApiVersion' => api_version,
                   'FriendlyName' => friendly_name,
                   'SmsApplicationSid' => sms_application_sid,
@@ -407,7 +407,7 @@ module Twilio
                   'EmergencyStatus' => emergency_status,
                   'EmergencyAddressSid' => emergency_address_sid,
                   'TrunkSid' => trunk_sid,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -427,7 +427,7 @@ module Twilio
             # Fetch a IncomingPhoneNumberInstance
             # @return [IncomingPhoneNumberInstance] Fetched IncomingPhoneNumberInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -706,7 +706,7 @@ module Twilio
             #   the Trunk. Setting a `TrunkSid` will automatically delete your
             #   `VoiceApplicationSid` and vice versa.
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
-            def update(api_version: nil, friendly_name: nil, sms_application_sid: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, status_callback: nil, status_callback_method: nil, voice_application_sid: nil, voice_caller_id_lookup: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil, emergency_status: nil, emergency_address_sid: nil, trunk_sid: nil)
+            def update(api_version: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, sms_application_sid: Twilio::Values::Unset, sms_fallback_method: Twilio::Values::Unset, sms_fallback_url: Twilio::Values::Unset, sms_method: Twilio::Values::Unset, sms_url: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset, voice_application_sid: Twilio::Values::Unset, voice_caller_id_lookup: Twilio::Values::Unset, voice_fallback_method: Twilio::Values::Unset, voice_fallback_url: Twilio::Values::Unset, voice_method: Twilio::Values::Unset, voice_url: Twilio::Values::Unset, emergency_status: Twilio::Values::Unset, emergency_address_sid: Twilio::Values::Unset, trunk_sid: Twilio::Values::Unset)
               context.update(
                   api_version: api_version,
                   friendly_name: friendly_name,

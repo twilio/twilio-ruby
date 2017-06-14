@@ -37,7 +37,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(friendly_name: nil, limit: nil, page_size: nil)
+            def list(friendly_name: Twilio::Values::Unset, limit: nil, page_size: nil)
               self.stream(
                   friendly_name: friendly_name,
                   limit: limit,
@@ -57,7 +57,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(friendly_name: nil, limit: nil, page_size: nil)
+            def stream(friendly_name: Twilio::Values::Unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -99,13 +99,13 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of WorkflowInstance
-            def page(friendly_name: nil, page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(friendly_name: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+              params = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
@@ -137,14 +137,14 @@ module Twilio
             #   fallback_assignment_callback_url
             # @param [String] task_reservation_timeout The task_reservation_timeout
             # @return [WorkflowInstance] Newly created WorkflowInstance
-            def create(friendly_name: nil, configuration: nil, assignment_callback_url: nil, fallback_assignment_callback_url: nil, task_reservation_timeout: nil)
-              data = {
+            def create(friendly_name: nil, configuration: nil, assignment_callback_url: Twilio::Values::Unset, fallback_assignment_callback_url: Twilio::Values::Unset, task_reservation_timeout: Twilio::Values::Unset)
+              data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'Configuration' => configuration,
                   'AssignmentCallbackUrl' => assignment_callback_url,
                   'FallbackAssignmentCallbackUrl' => fallback_assignment_callback_url,
                   'TaskReservationTimeout' => task_reservation_timeout,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -225,7 +225,7 @@ module Twilio
             # Fetch a WorkflowInstance
             # @return [WorkflowInstance] Fetched WorkflowInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -250,14 +250,14 @@ module Twilio
             # @param [String] configuration The configuration
             # @param [String] task_reservation_timeout The task_reservation_timeout
             # @return [WorkflowInstance] Updated WorkflowInstance
-            def update(friendly_name: nil, assignment_callback_url: nil, fallback_assignment_callback_url: nil, configuration: nil, task_reservation_timeout: nil)
-              data = {
+            def update(friendly_name: Twilio::Values::Unset, assignment_callback_url: Twilio::Values::Unset, fallback_assignment_callback_url: Twilio::Values::Unset, configuration: Twilio::Values::Unset, task_reservation_timeout: Twilio::Values::Unset)
+              data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'AssignmentCallbackUrl' => assignment_callback_url,
                   'FallbackAssignmentCallbackUrl' => fallback_assignment_callback_url,
                   'Configuration' => configuration,
                   'TaskReservationTimeout' => task_reservation_timeout,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -419,7 +419,7 @@ module Twilio
             # @param [String] configuration The configuration
             # @param [String] task_reservation_timeout The task_reservation_timeout
             # @return [WorkflowInstance] Updated WorkflowInstance
-            def update(friendly_name: nil, assignment_callback_url: nil, fallback_assignment_callback_url: nil, configuration: nil, task_reservation_timeout: nil)
+            def update(friendly_name: Twilio::Values::Unset, assignment_callback_url: Twilio::Values::Unset, fallback_assignment_callback_url: Twilio::Values::Unset, configuration: Twilio::Values::Unset, task_reservation_timeout: Twilio::Values::Unset)
               context.update(
                   friendly_name: friendly_name,
                   assignment_callback_url: assignment_callback_url,

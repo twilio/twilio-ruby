@@ -43,7 +43,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(identifier: nil, participant_type: nil, limit: nil, page_size: nil)
+              def list(identifier: Twilio::Values::Unset, participant_type: Twilio::Values::Unset, limit: nil, page_size: nil)
                 self.stream(
                     identifier: identifier,
                     participant_type: participant_type,
@@ -67,7 +67,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(identifier: nil, participant_type: nil, limit: nil, page_size: nil)
+              def stream(identifier: Twilio::Values::Unset, participant_type: Twilio::Values::Unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -116,14 +116,14 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of ParticipantInstance
-              def page(identifier: nil, participant_type: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(identifier: Twilio::Values::Unset, participant_type: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+                params = Twilio::Values.of({
                     'Identifier' => identifier,
                     'ParticipantType' => participant_type,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
@@ -155,12 +155,12 @@ module Twilio
               # @param [participant.ParticipantType] participant_type The Type of this
               #   Participant. One of `sms`, `voice` or `phone`.
               # @return [ParticipantInstance] Newly created ParticipantInstance
-              def create(identifier: nil, friendly_name: nil, participant_type: nil)
-                data = {
+              def create(identifier: nil, friendly_name: Twilio::Values::Unset, participant_type: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'Identifier' => identifier,
                     'FriendlyName' => friendly_name,
                     'ParticipantType' => participant_type,
-                }
+                })
 
                 payload = @version.create(
                     'POST',
@@ -247,7 +247,7 @@ module Twilio
               # Fetch a ParticipantInstance
               # @return [ParticipantInstance] Fetched ParticipantInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -280,12 +280,12 @@ module Twilio
               # @param [String] friendly_name A human readable description of this resource, up
               #   to 64 characters.
               # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(participant_type: nil, identifier: nil, friendly_name: nil)
-                data = {
+              def update(participant_type: Twilio::Values::Unset, identifier: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset)
+                data = Twilio::Values.of({
                     'ParticipantType' => participant_type,
                     'Identifier' => identifier,
                     'FriendlyName' => friendly_name,
-                }
+                })
 
                 payload = @version.update(
                     'POST',
@@ -462,7 +462,7 @@ module Twilio
               # @param [String] friendly_name A human readable description of this resource, up
               #   to 64 characters.
               # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(participant_type: nil, identifier: nil, friendly_name: nil)
+              def update(participant_type: Twilio::Values::Unset, identifier: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset)
                 context.update(
                     participant_type: participant_type,
                     identifier: identifier,

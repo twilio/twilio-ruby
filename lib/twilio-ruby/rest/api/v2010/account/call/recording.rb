@@ -42,7 +42,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(date_created_before: nil, date_created: nil, date_created_after: nil, limit: nil, page_size: nil)
+              def list(date_created_before: Twilio::Values::Unset, date_created: Twilio::Values::Unset, date_created_after: Twilio::Values::Unset, limit: nil, page_size: nil)
                 self.stream(
                     date_created_before: date_created_before,
                     date_created: date_created,
@@ -66,7 +66,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(date_created_before: nil, date_created: nil, date_created_after: nil, limit: nil, page_size: nil)
+              def stream(date_created_before: Twilio::Values::Unset, date_created: Twilio::Values::Unset, date_created_after: Twilio::Values::Unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -114,15 +114,15 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of RecordingInstance
-              def page(date_created_before: nil, date_created: nil, date_created_after: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(date_created_before: Twilio::Values::Unset, date_created: Twilio::Values::Unset, date_created_after: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+                params = Twilio::Values.of({
                     'DateCreated<' => Twilio.serialize_iso8601(date_created_before),
                     'DateCreated' => Twilio.serialize_iso8601(date_created),
                     'DateCreated>' => Twilio.serialize_iso8601(date_created_after),
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
@@ -211,7 +211,7 @@ module Twilio
               # Fetch a RecordingInstance
               # @return [RecordingInstance] Fetched RecordingInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',

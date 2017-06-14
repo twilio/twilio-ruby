@@ -26,12 +26,12 @@ module Twilio
         @v1 ||= V1.new self
       end
 
-      def recordings
-        self.v1.recordings
+      def recordings(sid=:unset)
+        self.v1.recordings(sid)
       end
 
-      def rooms
-        self.v1.rooms
+      def rooms(sid=:unset)
+        self.v1.rooms(sid)
       end
 
       ##

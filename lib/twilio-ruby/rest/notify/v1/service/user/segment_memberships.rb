@@ -34,9 +34,9 @@ module Twilio
               # @param [String] segment The segment
               # @return [SegmentMembershipInstance] Newly created SegmentMembershipInstance
               def create(segment: nil)
-                data = {
+                data = Twilio::Values.of({
                     'Segment' => segment,
-                }
+                })
 
                 payload = @version.create(
                     'POST',
@@ -126,7 +126,7 @@ module Twilio
               # Fetch a SegmentMembershipInstance
               # @return [SegmentMembershipInstance] Fetched SegmentMembershipInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',

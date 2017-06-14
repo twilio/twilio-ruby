@@ -26,8 +26,8 @@ module Twilio
         @v1 ||= V1.new self
       end
 
-      def workspaces
-        self.v1.workspaces
+      def workspaces(sid=:unset)
+        self.v1.workspaces(sid)
       end
 
       ##

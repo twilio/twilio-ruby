@@ -94,12 +94,12 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of KeyInstance
-            def page(page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+              params = Twilio::Values.of({
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
@@ -185,7 +185,7 @@ module Twilio
             # Fetch a KeyInstance
             # @return [KeyInstance] Fetched KeyInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -205,10 +205,10 @@ module Twilio
             # Update the KeyInstance
             # @param [String] friendly_name The friendly_name
             # @return [KeyInstance] Updated KeyInstance
-            def update(friendly_name: nil)
-              data = {
+            def update(friendly_name: Twilio::Values::Unset)
+              data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -310,7 +310,7 @@ module Twilio
             # Update the KeyInstance
             # @param [String] friendly_name The friendly_name
             # @return [KeyInstance] Updated KeyInstance
-            def update(friendly_name: nil)
+            def update(friendly_name: Twilio::Values::Unset)
               context.update(
                   friendly_name: friendly_name,
               )

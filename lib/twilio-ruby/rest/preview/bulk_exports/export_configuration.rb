@@ -79,7 +79,7 @@ module Twilio
           # Fetch a ExportConfigurationInstance
           # @return [ExportConfigurationInstance] Fetched ExportConfigurationInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -101,13 +101,13 @@ module Twilio
           # @param [String] webhook_method The webhook_method
           # @param [String] email The email
           # @return [ExportConfigurationInstance] Updated ExportConfigurationInstance
-          def update(enabled: nil, webhook_url: nil, webhook_method: nil, email: nil)
-            data = {
+          def update(enabled: Twilio::Values::Unset, webhook_url: Twilio::Values::Unset, webhook_method: Twilio::Values::Unset, email: Twilio::Values::Unset)
+            data = Twilio::Values.of({
                 'Enabled' => enabled,
                 'WebhookUrl' => webhook_url,
                 'WebhookMethod' => webhook_method,
                 'Email' => email,
-            }
+            })
 
             payload = @version.update(
                 'POST',
@@ -210,7 +210,7 @@ module Twilio
           # @param [String] webhook_method The webhook_method
           # @param [String] email The email
           # @return [ExportConfigurationInstance] Updated ExportConfigurationInstance
-          def update(enabled: nil, webhook_url: nil, webhook_method: nil, email: nil)
+          def update(enabled: Twilio::Values::Unset, webhook_url: Twilio::Values::Unset, webhook_method: Twilio::Values::Unset, email: Twilio::Values::Unset)
             context.update(
                 enabled: enabled,
                 webhook_url: webhook_url,

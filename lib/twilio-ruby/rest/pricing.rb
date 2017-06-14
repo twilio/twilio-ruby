@@ -27,15 +27,15 @@ module Twilio
       end
 
       def messaging
-        self.v1.messaging
+        self.v1.messaging()
       end
 
       def phone_numbers
-        self.v1.phone_numbers
+        self.v1.phone_numbers()
       end
 
       def voice
-        self.v1.voice
+        self.v1.voice()
       end
 
       ##

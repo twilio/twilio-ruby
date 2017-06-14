@@ -63,8 +63,8 @@ module Twilio
             #   if you use the `/Messages` endpoint to send the message and specify this
             #   application's `Sid` as the `ApplicationSid` on an outgoing SMS request.
             # @return [ApplicationInstance] Newly created ApplicationInstance
-            def create(friendly_name: nil, api_version: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, status_callback: nil, status_callback_method: nil, voice_caller_id_lookup: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil, sms_status_callback: nil, message_status_callback: nil)
-              data = {
+            def create(friendly_name: nil, api_version: Twilio::Values::Unset, voice_url: Twilio::Values::Unset, voice_method: Twilio::Values::Unset, voice_fallback_url: Twilio::Values::Unset, voice_fallback_method: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset, voice_caller_id_lookup: Twilio::Values::Unset, sms_url: Twilio::Values::Unset, sms_method: Twilio::Values::Unset, sms_fallback_url: Twilio::Values::Unset, sms_fallback_method: Twilio::Values::Unset, sms_status_callback: Twilio::Values::Unset, message_status_callback: Twilio::Values::Unset)
+              data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'ApiVersion' => api_version,
                   'VoiceUrl' => voice_url,
@@ -80,7 +80,7 @@ module Twilio
                   'SmsFallbackMethod' => sms_fallback_method,
                   'SmsStatusCallback' => sms_status_callback,
                   'MessageStatusCallback' => message_status_callback,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -108,7 +108,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(friendly_name: nil, limit: nil, page_size: nil)
+            def list(friendly_name: Twilio::Values::Unset, limit: nil, page_size: nil)
               self.stream(
                   friendly_name: friendly_name,
                   limit: limit,
@@ -129,7 +129,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(friendly_name: nil, limit: nil, page_size: nil)
+            def stream(friendly_name: Twilio::Values::Unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -173,13 +173,13 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of ApplicationInstance
-            def page(friendly_name: nil, page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(friendly_name: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+              params = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
@@ -273,7 +273,7 @@ module Twilio
             # Fetch a ApplicationInstance
             # @return [ApplicationInstance] Fetched ApplicationInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -325,8 +325,8 @@ module Twilio
             #   if you use the `/Messages` endpoint to send the message and specify this
             #   application's `Sid` as the `ApplicationSid` on an outgoing SMS request.
             # @return [ApplicationInstance] Updated ApplicationInstance
-            def update(friendly_name: nil, api_version: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, status_callback: nil, status_callback_method: nil, voice_caller_id_lookup: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil, sms_status_callback: nil, message_status_callback: nil)
-              data = {
+            def update(friendly_name: Twilio::Values::Unset, api_version: Twilio::Values::Unset, voice_url: Twilio::Values::Unset, voice_method: Twilio::Values::Unset, voice_fallback_url: Twilio::Values::Unset, voice_fallback_method: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset, voice_caller_id_lookup: Twilio::Values::Unset, sms_url: Twilio::Values::Unset, sms_method: Twilio::Values::Unset, sms_fallback_url: Twilio::Values::Unset, sms_fallback_method: Twilio::Values::Unset, sms_status_callback: Twilio::Values::Unset, message_status_callback: Twilio::Values::Unset)
+              data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'ApiVersion' => api_version,
                   'VoiceUrl' => voice_url,
@@ -342,7 +342,7 @@ module Twilio
                   'SmsFallbackMethod' => sms_fallback_method,
                   'SmsStatusCallback' => sms_status_callback,
                   'MessageStatusCallback' => message_status_callback,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -557,7 +557,7 @@ module Twilio
             #   if you use the `/Messages` endpoint to send the message and specify this
             #   application's `Sid` as the `ApplicationSid` on an outgoing SMS request.
             # @return [ApplicationInstance] Updated ApplicationInstance
-            def update(friendly_name: nil, api_version: nil, voice_url: nil, voice_method: nil, voice_fallback_url: nil, voice_fallback_method: nil, status_callback: nil, status_callback_method: nil, voice_caller_id_lookup: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil, sms_status_callback: nil, message_status_callback: nil)
+            def update(friendly_name: Twilio::Values::Unset, api_version: Twilio::Values::Unset, voice_url: Twilio::Values::Unset, voice_method: Twilio::Values::Unset, voice_fallback_url: Twilio::Values::Unset, voice_fallback_method: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset, voice_caller_id_lookup: Twilio::Values::Unset, sms_url: Twilio::Values::Unset, sms_method: Twilio::Values::Unset, sms_fallback_url: Twilio::Values::Unset, sms_fallback_method: Twilio::Values::Unset, sms_status_callback: Twilio::Values::Unset, message_status_callback: Twilio::Values::Unset)
               context.update(
                   friendly_name: friendly_name,
                   api_version: api_version,
