@@ -89,7 +89,7 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of ServiceInstance
-          def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+          def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
                 'Page' => page_number,
@@ -106,6 +106,19 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of ServiceInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            return ServicePage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of ServiceInstance records from the API.
+          # Request is executed immediately.
           # @param [String] friendly_name A human readable description of this resource, up
           #   to 64 characters.
           # @param [Boolean] auto_create Boolean flag specifying whether to create threads
@@ -113,7 +126,7 @@ module Twilio
           # @param [String] callback_url The URL Twilio will request for callback
           #   notifications.
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: Twilio::Values::Unset, auto_create: Twilio::Values::Unset, callback_url: Twilio::Values::Unset)
+          def create(friendly_name: :unset, auto_create: :unset, callback_url: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'AutoCreate' => auto_create,
@@ -227,7 +240,7 @@ module Twilio
           # @param [String] callback_url The URL Twilio will request for callback
           #   notifications.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: Twilio::Values::Unset, auto_create: Twilio::Values::Unset, callback_url: Twilio::Values::Unset)
+          def update(friendly_name: :unset, auto_create: :unset, callback_url: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'AutoCreate' => auto_create,
@@ -425,7 +438,7 @@ module Twilio
           # @param [String] callback_url The URL Twilio will request for callback
           #   notifications.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: Twilio::Values::Unset, auto_create: Twilio::Values::Unset, callback_url: Twilio::Values::Unset)
+          def update(friendly_name: :unset, auto_create: :unset, callback_url: :unset)
             context.update(
                 friendly_name: friendly_name,
                 auto_create: auto_create,

@@ -116,7 +116,7 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of CredentialListInstance
-            def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'PageToken' => page_token,
                   'Page' => page_number,
@@ -126,6 +126,19 @@ module Twilio
                   'GET',
                   @uri,
                   params
+              )
+              return CredentialListPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of CredentialListInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of CredentialListInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
               )
               return CredentialListPage.new(@version, response, @solution)
             end

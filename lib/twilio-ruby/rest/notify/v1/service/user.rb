@@ -31,7 +31,7 @@ module Twilio
             # @param [String] identity The identity
             # @param [String] segment The segment
             # @return [UserInstance] Newly created UserInstance
-            def create(identity: nil, segment: Twilio::Values::Unset)
+            def create(identity: nil, segment: :unset)
               data = Twilio::Values.of({
                   'Identity' => identity,
                   'Segment' => segment,
@@ -63,7 +63,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(identity: Twilio::Values::Unset, segment: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def list(identity: :unset, segment: :unset, limit: nil, page_size: nil)
               self.stream(
                   identity: identity,
                   segment: segment,
@@ -85,7 +85,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(identity: Twilio::Values::Unset, segment: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def stream(identity: :unset, segment: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -130,7 +130,7 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of UserInstance
-            def page(identity: Twilio::Values::Unset, segment: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            def page(identity: :unset, segment: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'Identity' => identity,
                   'Segment' => segment,
@@ -142,6 +142,19 @@ module Twilio
                   'GET',
                   @uri,
                   params
+              )
+              return UserPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of UserInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of UserInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
               )
               return UserPage.new(@version, response, @solution)
             end

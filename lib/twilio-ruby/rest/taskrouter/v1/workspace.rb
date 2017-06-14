@@ -33,7 +33,7 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(friendly_name: Twilio::Values::Unset, limit: nil, page_size: nil)
+          def list(friendly_name: :unset, limit: nil, page_size: nil)
             self.stream(
                 friendly_name: friendly_name,
                 limit: limit,
@@ -53,7 +53,7 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(friendly_name: Twilio::Values::Unset, limit: nil, page_size: nil)
+          def stream(friendly_name: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -95,7 +95,7 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of WorkspaceInstance
-          def page(friendly_name: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+          def page(friendly_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'PageToken' => page_token,
@@ -113,6 +113,19 @@ module Twilio
           ##
           # Retrieve a single page of WorkspaceInstance records from the API.
           # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of WorkspaceInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            return WorkspacePage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of WorkspaceInstance records from the API.
+          # Request is executed immediately.
           # @param [String] friendly_name The friendly_name
           # @param [String] event_callback_url The event_callback_url
           # @param [String] events_filter The events_filter
@@ -120,7 +133,7 @@ module Twilio
           # @param [String] template The template
           # @param [workspace.QueueOrder] prioritize_queue_order The prioritize_queue_order
           # @return [WorkspaceInstance] Newly created WorkspaceInstance
-          def create(friendly_name: nil, event_callback_url: Twilio::Values::Unset, events_filter: Twilio::Values::Unset, multi_task_enabled: Twilio::Values::Unset, template: Twilio::Values::Unset, prioritize_queue_order: Twilio::Values::Unset)
+          def create(friendly_name: nil, event_callback_url: :unset, events_filter: :unset, multi_task_enabled: :unset, template: :unset, prioritize_queue_order: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'EventCallbackUrl' => event_callback_url,
@@ -236,7 +249,7 @@ module Twilio
           # @param [String] timeout_activity_sid The timeout_activity_sid
           # @param [workspace.QueueOrder] prioritize_queue_order The prioritize_queue_order
           # @return [WorkspaceInstance] Updated WorkspaceInstance
-          def update(default_activity_sid: Twilio::Values::Unset, event_callback_url: Twilio::Values::Unset, events_filter: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, multi_task_enabled: Twilio::Values::Unset, timeout_activity_sid: Twilio::Values::Unset, prioritize_queue_order: Twilio::Values::Unset)
+          def update(default_activity_sid: :unset, event_callback_url: :unset, events_filter: :unset, friendly_name: :unset, multi_task_enabled: :unset, timeout_activity_sid: :unset, prioritize_queue_order: :unset)
             data = Twilio::Values.of({
                 'DefaultActivitySid' => default_activity_sid,
                 'EventCallbackUrl' => event_callback_url,
@@ -567,7 +580,7 @@ module Twilio
           # @param [String] timeout_activity_sid The timeout_activity_sid
           # @param [workspace.QueueOrder] prioritize_queue_order The prioritize_queue_order
           # @return [WorkspaceInstance] Updated WorkspaceInstance
-          def update(default_activity_sid: Twilio::Values::Unset, event_callback_url: Twilio::Values::Unset, events_filter: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, multi_task_enabled: Twilio::Values::Unset, timeout_activity_sid: Twilio::Values::Unset, prioritize_queue_order: Twilio::Values::Unset)
+          def update(default_activity_sid: :unset, event_callback_url: :unset, events_filter: :unset, friendly_name: :unset, multi_task_enabled: :unset, timeout_activity_sid: :unset, prioritize_queue_order: :unset)
             context.update(
                 default_activity_sid: default_activity_sid,
                 event_callback_url: event_callback_url,

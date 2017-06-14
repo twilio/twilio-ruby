@@ -41,7 +41,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(end_date: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, minutes: Twilio::Values::Unset, start_date: Twilio::Values::Unset, limit: nil, page_size: nil)
+              def list(end_date: :unset, friendly_name: :unset, minutes: :unset, start_date: :unset, limit: nil, page_size: nil)
                 self.stream(
                     end_date: end_date,
                     friendly_name: friendly_name,
@@ -67,7 +67,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(end_date: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, minutes: Twilio::Values::Unset, start_date: Twilio::Values::Unset, limit: nil, page_size: nil)
+              def stream(end_date: :unset, friendly_name: :unset, minutes: :unset, start_date: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -118,7 +118,7 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of TaskQueuesStatisticsInstance
-              def page(end_date: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, minutes: Twilio::Values::Unset, start_date: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+              def page(end_date: :unset, friendly_name: :unset, minutes: :unset, start_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'EndDate' => Twilio.serialize_iso8601(end_date),
                     'FriendlyName' => friendly_name,
@@ -132,6 +132,19 @@ module Twilio
                     'GET',
                     @uri,
                     params
+                )
+                return TaskQueuesStatisticsPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of TaskQueuesStatisticsInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of TaskQueuesStatisticsInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
                 )
                 return TaskQueuesStatisticsPage.new(@version, response, @solution)
               end

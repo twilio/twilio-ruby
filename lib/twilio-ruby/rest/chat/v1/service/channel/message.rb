@@ -35,7 +35,7 @@ module Twilio
               # @param [String] from The from
               # @param [String] attributes The attributes
               # @return [MessageInstance] Newly created MessageInstance
-              def create(body: nil, from: Twilio::Values::Unset, attributes: Twilio::Values::Unset)
+              def create(body: nil, from: :unset, attributes: :unset)
                 data = Twilio::Values.of({
                     'Body' => body,
                     'From' => from,
@@ -68,7 +68,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(order: Twilio::Values::Unset, limit: nil, page_size: nil)
+              def list(order: :unset, limit: nil, page_size: nil)
                 self.stream(
                     order: order,
                     limit: limit,
@@ -88,7 +88,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(order: Twilio::Values::Unset, limit: nil, page_size: nil)
+              def stream(order: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -130,7 +130,7 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of MessageInstance
-              def page(order: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+              def page(order: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'Order' => order,
                     'PageToken' => page_token,
@@ -141,6 +141,19 @@ module Twilio
                     'GET',
                     @uri,
                     params
+                )
+                return MessagePage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of MessageInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of MessageInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
                 )
                 return MessagePage.new(@version, response, @solution)
               end
@@ -241,7 +254,7 @@ module Twilio
               # @param [String] body The body
               # @param [String] attributes The attributes
               # @return [MessageInstance] Updated MessageInstance
-              def update(body: Twilio::Values::Unset, attributes: Twilio::Values::Unset)
+              def update(body: :unset, attributes: :unset)
                 data = Twilio::Values.of({
                     'Body' => body,
                     'Attributes' => attributes,
@@ -396,7 +409,7 @@ module Twilio
               # @param [String] body The body
               # @param [String] attributes The attributes
               # @return [MessageInstance] Updated MessageInstance
-              def update(body: Twilio::Values::Unset, attributes: Twilio::Values::Unset)
+              def update(body: :unset, attributes: :unset)
                 context.update(
                     body: body,
                     attributes: attributes,

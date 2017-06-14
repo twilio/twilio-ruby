@@ -33,7 +33,7 @@ module Twilio
               # Request is executed immediately.
               # @param [feedback.Outcome] outcome The outcome
               # @return [FeedbackInstance] Newly created FeedbackInstance
-              def create(outcome: Twilio::Values::Unset)
+              def create(outcome: :unset)
                 data = Twilio::Values.of({
                     'Outcome' => outcome,
                 })

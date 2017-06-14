@@ -94,7 +94,7 @@ module Twilio
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
               # @return [TaskQueueStatisticsInstance] Fetched TaskQueueStatisticsInstance
-              def fetch(end_date: Twilio::Values::Unset, minutes: Twilio::Values::Unset, start_date: Twilio::Values::Unset)
+              def fetch(end_date: :unset, minutes: :unset, start_date: :unset)
                 params = Twilio::Values.of({
                     'EndDate' => Twilio.serialize_iso8601(end_date),
                     'Minutes' => minutes,
@@ -198,7 +198,7 @@ module Twilio
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
               # @return [TaskQueueStatisticsInstance] Fetched TaskQueueStatisticsInstance
-              def fetch(end_date: Twilio::Values::Unset, minutes: Twilio::Values::Unset, start_date: Twilio::Values::Unset)
+              def fetch(end_date: :unset, minutes: :unset, start_date: :unset)
                 context.fetch(
                     end_date: end_date,
                     minutes: minutes,

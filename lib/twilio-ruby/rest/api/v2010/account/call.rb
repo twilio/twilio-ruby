@@ -85,7 +85,7 @@ module Twilio
             #   should use to handle this phone call. If this parameter is present, Twilio will
             #   ignore all of the voice URLs passed and use the URLs set on the application.
             # @return [CallInstance] Newly created CallInstance
-            def create(to: nil, from: nil, method: Twilio::Values::Unset, fallback_url: Twilio::Values::Unset, fallback_method: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, status_callback_event: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset, send_digits: Twilio::Values::Unset, if_machine: Twilio::Values::Unset, timeout: Twilio::Values::Unset, record: Twilio::Values::Unset, recording_channels: Twilio::Values::Unset, recording_status_callback: Twilio::Values::Unset, recording_status_callback_method: Twilio::Values::Unset, sip_auth_username: Twilio::Values::Unset, sip_auth_password: Twilio::Values::Unset, machine_detection: Twilio::Values::Unset, machine_detection_timeout: Twilio::Values::Unset, url: Twilio::Values::Unset, application_sid: Twilio::Values::Unset)
+            def create(to: nil, from: nil, method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, send_digits: :unset, if_machine: :unset, timeout: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, machine_detection: :unset, machine_detection_timeout: :unset, url: :unset, application_sid: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -141,7 +141,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(to: Twilio::Values::Unset, from: Twilio::Values::Unset, parent_call_sid: Twilio::Values::Unset, status: Twilio::Values::Unset, start_time: Twilio::Values::Unset, end_time: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def list(to: :unset, from: :unset, parent_call_sid: :unset, status: :unset, start_time: :unset, end_time: :unset, limit: nil, page_size: nil)
               self.stream(
                   to: to,
                   from: from,
@@ -172,7 +172,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(to: Twilio::Values::Unset, from: Twilio::Values::Unset, parent_call_sid: Twilio::Values::Unset, status: Twilio::Values::Unset, start_time: Twilio::Values::Unset, end_time: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def stream(to: :unset, from: :unset, parent_call_sid: :unset, status: :unset, start_time: :unset, end_time: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -231,7 +231,7 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of CallInstance
-            def page(to: Twilio::Values::Unset, from: Twilio::Values::Unset, parent_call_sid: Twilio::Values::Unset, status: Twilio::Values::Unset, start_time: Twilio::Values::Unset, end_time: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            def page(to: :unset, from: :unset, parent_call_sid: :unset, status: :unset, start_time: :unset, end_time: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -247,6 +247,19 @@ module Twilio
                   'GET',
                   @uri,
                   params
+              )
+              return CallPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of CallInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of CallInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
               )
               return CallPage.new(@version, response, @solution)
             end
@@ -381,7 +394,7 @@ module Twilio
             # @param [String] status_callback_method The HTTP method that Twilio should use to
             #   request the `StatusCallback`. Defaults to `POST`.
             # @return [CallInstance] Updated CallInstance
-            def update(url: Twilio::Values::Unset, method: Twilio::Values::Unset, status: Twilio::Values::Unset, fallback_url: Twilio::Values::Unset, fallback_method: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset)
+            def update(url: :unset, method: :unset, status: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_method: :unset)
               data = Twilio::Values.of({
                   'Url' => url,
                   'Method' => method,
@@ -671,7 +684,7 @@ module Twilio
             # @param [String] status_callback_method The HTTP method that Twilio should use to
             #   request the `StatusCallback`. Defaults to `POST`.
             # @return [CallInstance] Updated CallInstance
-            def update(url: Twilio::Values::Unset, method: Twilio::Values::Unset, status: Twilio::Values::Unset, fallback_url: Twilio::Values::Unset, fallback_method: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset)
+            def update(url: :unset, method: :unset, status: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_method: :unset)
               context.update(
                   url: url,
                   method: method,

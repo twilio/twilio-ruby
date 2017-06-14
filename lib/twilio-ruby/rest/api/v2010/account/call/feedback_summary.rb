@@ -36,7 +36,7 @@ module Twilio
               # @param [String] status_callback The status_callback
               # @param [String] status_callback_method The status_callback_method
               # @return [FeedbackSummaryInstance] Newly created FeedbackSummaryInstance
-              def create(start_date: nil, end_date: nil, include_subaccounts: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset)
+              def create(start_date: nil, end_date: nil, include_subaccounts: :unset, status_callback: :unset, status_callback_method: :unset)
                 data = Twilio::Values.of({
                     'StartDate' => Twilio.serialize_iso8601(start_date),
                     'EndDate' => Twilio.serialize_iso8601(end_date),

@@ -33,7 +33,7 @@ module Twilio
             # @param [String] attributes The attributes
             # @param [channel.ChannelType] type The type
             # @return [ChannelInstance] Newly created ChannelInstance
-            def create(friendly_name: Twilio::Values::Unset, unique_name: Twilio::Values::Unset, attributes: Twilio::Values::Unset, type: Twilio::Values::Unset)
+            def create(friendly_name: :unset, unique_name: :unset, attributes: :unset, type: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'UniqueName' => unique_name,
@@ -66,7 +66,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(type: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def list(type: :unset, limit: nil, page_size: nil)
               self.stream(
                   type: type,
                   limit: limit,
@@ -86,7 +86,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(type: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def stream(type: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -128,7 +128,7 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of ChannelInstance
-            def page(type: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            def page(type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'Type' => type,
                   'PageToken' => page_token,
@@ -139,6 +139,19 @@ module Twilio
                   'GET',
                   @uri,
                   params
+              )
+              return ChannelPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of ChannelInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of ChannelInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
               )
               return ChannelPage.new(@version, response, @solution)
             end
@@ -240,7 +253,7 @@ module Twilio
             # @param [String] unique_name The unique_name
             # @param [String] attributes The attributes
             # @return [ChannelInstance] Updated ChannelInstance
-            def update(friendly_name: Twilio::Values::Unset, unique_name: Twilio::Values::Unset, attributes: Twilio::Values::Unset)
+            def update(friendly_name: :unset, unique_name: :unset, attributes: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'UniqueName' => unique_name,
@@ -470,7 +483,7 @@ module Twilio
             # @param [String] unique_name The unique_name
             # @param [String] attributes The attributes
             # @return [ChannelInstance] Updated ChannelInstance
-            def update(friendly_name: Twilio::Values::Unset, unique_name: Twilio::Values::Unset, attributes: Twilio::Values::Unset)
+            def update(friendly_name: :unset, unique_name: :unset, attributes: :unset)
               context.update(
                   friendly_name: friendly_name,
                   unique_name: unique_name,

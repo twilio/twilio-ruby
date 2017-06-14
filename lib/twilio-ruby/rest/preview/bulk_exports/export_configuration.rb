@@ -101,7 +101,7 @@ module Twilio
           # @param [String] webhook_method The webhook_method
           # @param [String] email The email
           # @return [ExportConfigurationInstance] Updated ExportConfigurationInstance
-          def update(enabled: Twilio::Values::Unset, webhook_url: Twilio::Values::Unset, webhook_method: Twilio::Values::Unset, email: Twilio::Values::Unset)
+          def update(enabled: :unset, webhook_url: :unset, webhook_method: :unset, email: :unset)
             data = Twilio::Values.of({
                 'Enabled' => enabled,
                 'WebhookUrl' => webhook_url,
@@ -210,7 +210,7 @@ module Twilio
           # @param [String] webhook_method The webhook_method
           # @param [String] email The email
           # @return [ExportConfigurationInstance] Updated ExportConfigurationInstance
-          def update(enabled: Twilio::Values::Unset, webhook_url: Twilio::Values::Unset, webhook_method: Twilio::Values::Unset, email: Twilio::Values::Unset)
+          def update(enabled: :unset, webhook_url: :unset, webhook_method: :unset, email: :unset)
             context.update(
                 enabled: enabled,
                 webhook_url: webhook_url,

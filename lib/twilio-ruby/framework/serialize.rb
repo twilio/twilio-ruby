@@ -1,6 +1,6 @@
 module Twilio
   def self.serialize_iso8601(date)
-    if date.eql?(Twilio::Values::Unset)
+    if date.eql?(:unset)
       date
     elsif date
       date.iso8601

@@ -89,7 +89,7 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of RatePlanInstance
-          def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+          def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
                 'Page' => page_number,
@@ -99,6 +99,19 @@ module Twilio
                 'GET',
                 @uri,
                 params
+            )
+            return RatePlanPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of RatePlanInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of RatePlanInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
             )
             return RatePlanPage.new(@version, response, @solution)
           end
@@ -116,7 +129,7 @@ module Twilio
           # @param [Boolean] national_roaming_enabled The national_roaming_enabled
           # @param [String] international_roaming The international_roaming
           # @return [RatePlanInstance] Newly created RatePlanInstance
-          def create(unique_name: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, data_enabled: Twilio::Values::Unset, data_limit: Twilio::Values::Unset, data_metering: Twilio::Values::Unset, messaging_enabled: Twilio::Values::Unset, voice_enabled: Twilio::Values::Unset, national_roaming_enabled: Twilio::Values::Unset, international_roaming: Twilio::Values::Unset)
+          def create(unique_name: :unset, friendly_name: :unset, data_enabled: :unset, data_limit: :unset, data_metering: :unset, messaging_enabled: :unset, voice_enabled: :unset, national_roaming_enabled: :unset, international_roaming: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'FriendlyName' => friendly_name,
@@ -220,7 +233,7 @@ module Twilio
           # @param [String] unique_name The unique_name
           # @param [String] friendly_name The friendly_name
           # @return [RatePlanInstance] Updated RatePlanInstance
-          def update(unique_name: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset)
+          def update(unique_name: :unset, friendly_name: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'FriendlyName' => friendly_name,
@@ -372,7 +385,7 @@ module Twilio
           # @param [String] unique_name The unique_name
           # @param [String] friendly_name The friendly_name
           # @return [RatePlanInstance] Updated RatePlanInstance
-          def update(unique_name: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset)
+          def update(unique_name: :unset, friendly_name: :unset)
             context.update(
                 unique_name: unique_name,
                 friendly_name: friendly_name,

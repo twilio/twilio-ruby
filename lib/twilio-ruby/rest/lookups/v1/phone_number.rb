@@ -82,7 +82,7 @@ module Twilio
           # @param [String] add_ons The add_ons
           # @param [Hash] add_ons_data The add_ons_data
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
-          def fetch(country_code: Twilio::Values::Unset, type: Twilio::Values::Unset, add_ons: Twilio::Values::Unset, add_ons_data: Twilio::Values::Unset)
+          def fetch(country_code: :unset, type: :unset, add_ons: :unset, add_ons_data: :unset)
             params = Twilio::Values.of({
                 'CountryCode' => country_code,
                 'Type' => type,
@@ -189,7 +189,7 @@ module Twilio
           # @param [String] add_ons The add_ons
           # @param [Hash] add_ons_data The add_ons_data
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
-          def fetch(country_code: Twilio::Values::Unset, type: Twilio::Values::Unset, add_ons: Twilio::Values::Unset, add_ons_data: Twilio::Values::Unset)
+          def fetch(country_code: :unset, type: :unset, add_ons: :unset, add_ons_data: :unset)
             context.fetch(
                 country_code: country_code,
                 type: type,

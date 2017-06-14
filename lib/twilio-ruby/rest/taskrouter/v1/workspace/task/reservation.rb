@@ -40,7 +40,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(reservation_status: Twilio::Values::Unset, limit: nil, page_size: nil)
+              def list(reservation_status: :unset, limit: nil, page_size: nil)
                 self.stream(
                     reservation_status: reservation_status,
                     limit: limit,
@@ -60,7 +60,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(reservation_status: Twilio::Values::Unset, limit: nil, page_size: nil)
+              def stream(reservation_status: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -102,7 +102,7 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of ReservationInstance
-              def page(reservation_status: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+              def page(reservation_status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'ReservationStatus' => reservation_status,
                     'PageToken' => page_token,
@@ -113,6 +113,19 @@ module Twilio
                     'GET',
                     @uri,
                     params
+                )
+                return ReservationPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of ReservationInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of ReservationInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
                 )
                 return ReservationPage.new(@version, response, @solution)
               end
@@ -224,7 +237,7 @@ module Twilio
               # @param [Boolean] redirect_accept The redirect_accept
               # @param [String] redirect_url The redirect_url
               # @return [ReservationInstance] Updated ReservationInstance
-              def update(reservation_status: Twilio::Values::Unset, worker_activity_sid: Twilio::Values::Unset, instruction: Twilio::Values::Unset, dequeue_post_work_activity_sid: Twilio::Values::Unset, dequeue_from: Twilio::Values::Unset, dequeue_record: Twilio::Values::Unset, dequeue_timeout: Twilio::Values::Unset, dequeue_to: Twilio::Values::Unset, dequeue_status_callback_url: Twilio::Values::Unset, call_from: Twilio::Values::Unset, call_record: Twilio::Values::Unset, call_timeout: Twilio::Values::Unset, call_to: Twilio::Values::Unset, call_url: Twilio::Values::Unset, call_status_callback_url: Twilio::Values::Unset, call_accept: Twilio::Values::Unset, redirect_call_sid: Twilio::Values::Unset, redirect_accept: Twilio::Values::Unset, redirect_url: Twilio::Values::Unset)
+              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset)
                 data = Twilio::Values.of({
                     'ReservationStatus' => reservation_status,
                     'WorkerActivitySid' => worker_activity_sid,
@@ -397,7 +410,7 @@ module Twilio
               # @param [Boolean] redirect_accept The redirect_accept
               # @param [String] redirect_url The redirect_url
               # @return [ReservationInstance] Updated ReservationInstance
-              def update(reservation_status: Twilio::Values::Unset, worker_activity_sid: Twilio::Values::Unset, instruction: Twilio::Values::Unset, dequeue_post_work_activity_sid: Twilio::Values::Unset, dequeue_from: Twilio::Values::Unset, dequeue_record: Twilio::Values::Unset, dequeue_timeout: Twilio::Values::Unset, dequeue_to: Twilio::Values::Unset, dequeue_status_callback_url: Twilio::Values::Unset, call_from: Twilio::Values::Unset, call_record: Twilio::Values::Unset, call_timeout: Twilio::Values::Unset, call_to: Twilio::Values::Unset, call_url: Twilio::Values::Unset, call_status_callback_url: Twilio::Values::Unset, call_accept: Twilio::Values::Unset, redirect_call_sid: Twilio::Values::Unset, redirect_accept: Twilio::Values::Unset, redirect_url: Twilio::Values::Unset)
+              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset)
                 context.update(
                     reservation_status: reservation_status,
                     worker_activity_sid: worker_activity_sid,

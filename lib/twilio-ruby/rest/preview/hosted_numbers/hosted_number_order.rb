@@ -44,7 +44,7 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(status: Twilio::Values::Unset, phone_number: Twilio::Values::Unset, incoming_phone_number_sid: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, unique_name: Twilio::Values::Unset, limit: nil, page_size: nil)
+          def list(status: :unset, phone_number: :unset, incoming_phone_number_sid: :unset, friendly_name: :unset, unique_name: :unset, limit: nil, page_size: nil)
             self.stream(
                 status: status,
                 phone_number: phone_number,
@@ -79,7 +79,7 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(status: Twilio::Values::Unset, phone_number: Twilio::Values::Unset, incoming_phone_number_sid: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, unique_name: Twilio::Values::Unset, limit: nil, page_size: nil)
+          def stream(status: :unset, phone_number: :unset, incoming_phone_number_sid: :unset, friendly_name: :unset, unique_name: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -147,7 +147,7 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of HostedNumberOrderInstance
-          def page(status: Twilio::Values::Unset, phone_number: Twilio::Values::Unset, incoming_phone_number_sid: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, unique_name: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+          def page(status: :unset, phone_number: :unset, incoming_phone_number_sid: :unset, friendly_name: :unset, unique_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'Status' => status,
                 'PhoneNumber' => phone_number,
@@ -162,6 +162,19 @@ module Twilio
                 'GET',
                 @uri,
                 params
+            )
+            return HostedNumberOrderPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of HostedNumberOrderInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of HostedNumberOrderInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
             )
             return HostedNumberOrderPage.new(@version, response, @solution)
           end
@@ -198,7 +211,7 @@ module Twilio
           # @param [String] sms_fallback_method Optional. The SMS Fallback Method attached
           #   to the IncomingPhoneNumber resource.
           # @return [HostedNumberOrderInstance] Newly created HostedNumberOrderInstance
-          def create(address_sid: nil, phone_number: nil, type: nil, iso_country: nil, sms_capability: nil, email: nil, account_sid: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, unique_name: Twilio::Values::Unset, cc_emails: Twilio::Values::Unset, sms_url: Twilio::Values::Unset, sms_method: Twilio::Values::Unset, sms_fallback_url: Twilio::Values::Unset, sms_fallback_method: Twilio::Values::Unset)
+          def create(address_sid: nil, phone_number: nil, type: nil, iso_country: nil, sms_capability: nil, email: nil, account_sid: :unset, friendly_name: :unset, unique_name: :unset, cc_emails: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset)
             data = Twilio::Values.of({
                 'AddressSid' => address_sid,
                 'PhoneNumber' => phone_number,
@@ -324,7 +337,7 @@ module Twilio
           # @param [hosted_number_order.Status] status The Status of this HostedNumberOrder.
           #   User can only update this to `pending-loa`.
           # @return [HostedNumberOrderInstance] Updated HostedNumberOrderInstance
-          def update(friendly_name: Twilio::Values::Unset, unique_name: Twilio::Values::Unset, email: Twilio::Values::Unset, cc_emails: Twilio::Values::Unset, status: Twilio::Values::Unset)
+          def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'UniqueName' => unique_name,
@@ -494,7 +507,7 @@ module Twilio
           # @param [hosted_number_order.Status] status The Status of this HostedNumberOrder.
           #   User can only update this to `pending-loa`.
           # @return [HostedNumberOrderInstance] Updated HostedNumberOrderInstance
-          def update(friendly_name: Twilio::Values::Unset, unique_name: Twilio::Values::Unset, email: Twilio::Values::Unset, cc_emails: Twilio::Values::Unset, status: Twilio::Values::Unset)
+          def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset)
             context.update(
                 friendly_name: friendly_name,
                 unique_name: unique_name,

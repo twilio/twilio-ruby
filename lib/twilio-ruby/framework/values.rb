@@ -1,10 +1,7 @@
 module Twilio
   class Values
-      class Unset
-    end
-
     def self.of(hash)
-      hash.delete_if { |k,v| v.eql?(Unset)}
+      hash.delete_if { |_,v| v.eql?(:unset)}
     end
   end
 end

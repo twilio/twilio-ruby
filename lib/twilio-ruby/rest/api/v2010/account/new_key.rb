@@ -31,7 +31,7 @@ module Twilio
             # Request is executed immediately.
             # @param [String] friendly_name The friendly_name
             # @return [NewKeyInstance] Newly created NewKeyInstance
-            def create(friendly_name: Twilio::Values::Unset)
+            def create(friendly_name: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
               })

@@ -45,7 +45,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(end_date: Twilio::Values::Unset, event_type: Twilio::Values::Unset, minutes: Twilio::Values::Unset, reservation_sid: Twilio::Values::Unset, start_date: Twilio::Values::Unset, task_queue_sid: Twilio::Values::Unset, task_sid: Twilio::Values::Unset, worker_sid: Twilio::Values::Unset, workflow_sid: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def list(end_date: :unset, event_type: :unset, minutes: :unset, reservation_sid: :unset, start_date: :unset, task_queue_sid: :unset, task_sid: :unset, worker_sid: :unset, workflow_sid: :unset, limit: nil, page_size: nil)
               self.stream(
                   end_date: end_date,
                   event_type: event_type,
@@ -81,7 +81,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(end_date: Twilio::Values::Unset, event_type: Twilio::Values::Unset, minutes: Twilio::Values::Unset, reservation_sid: Twilio::Values::Unset, start_date: Twilio::Values::Unset, task_queue_sid: Twilio::Values::Unset, task_sid: Twilio::Values::Unset, worker_sid: Twilio::Values::Unset, workflow_sid: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def stream(end_date: :unset, event_type: :unset, minutes: :unset, reservation_sid: :unset, start_date: :unset, task_queue_sid: :unset, task_sid: :unset, worker_sid: :unset, workflow_sid: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -147,7 +147,7 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of EventInstance
-            def page(end_date: Twilio::Values::Unset, event_type: Twilio::Values::Unset, minutes: Twilio::Values::Unset, reservation_sid: Twilio::Values::Unset, start_date: Twilio::Values::Unset, task_queue_sid: Twilio::Values::Unset, task_sid: Twilio::Values::Unset, worker_sid: Twilio::Values::Unset, workflow_sid: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            def page(end_date: :unset, event_type: :unset, minutes: :unset, reservation_sid: :unset, start_date: :unset, task_queue_sid: :unset, task_sid: :unset, worker_sid: :unset, workflow_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'EndDate' => Twilio.serialize_iso8601(end_date),
                   'EventType' => event_type,
@@ -166,6 +166,19 @@ module Twilio
                   'GET',
                   @uri,
                   params
+              )
+              return EventPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of EventInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of EventInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
               )
               return EventPage.new(@version, response, @solution)
             end

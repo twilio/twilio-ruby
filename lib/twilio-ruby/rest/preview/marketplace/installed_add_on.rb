@@ -33,7 +33,7 @@ module Twilio
           # @param [String] unique_name The human-readable string that uniquely identifies
           #   this Add-on installation for an Account.
           # @return [InstalledAddOnInstance] Newly created InstalledAddOnInstance
-          def create(available_add_on_sid: nil, accept_terms_of_service: nil, configuration: Twilio::Values::Unset, unique_name: Twilio::Values::Unset)
+          def create(available_add_on_sid: nil, accept_terms_of_service: nil, configuration: :unset, unique_name: :unset)
             data = Twilio::Values.of({
                 'AvailableAddOnSid' => available_add_on_sid,
                 'AcceptTermsOfService' => accept_terms_of_service,
@@ -121,7 +121,7 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of InstalledAddOnInstance
-          def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+          def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
                 'Page' => page_number,
@@ -131,6 +131,19 @@ module Twilio
                 'GET',
                 @uri,
                 params
+            )
+            return InstalledAddOnPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of InstalledAddOnInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of InstalledAddOnInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
             )
             return InstalledAddOnPage.new(@version, response, @solution)
           end
@@ -227,7 +240,7 @@ module Twilio
           # @param [String] unique_name The human-readable string that uniquely identifies
           #   this Add-on installation for an Account.
           # @return [InstalledAddOnInstance] Updated InstalledAddOnInstance
-          def update(configuration: Twilio::Values::Unset, unique_name: Twilio::Values::Unset)
+          def update(configuration: :unset, unique_name: :unset)
             data = Twilio::Values.of({
                 'Configuration' => Twilio.serialize_object(configuration),
                 'UniqueName' => unique_name,
@@ -384,7 +397,7 @@ module Twilio
           # @param [String] unique_name The human-readable string that uniquely identifies
           #   this Add-on installation for an Account.
           # @return [InstalledAddOnInstance] Updated InstalledAddOnInstance
-          def update(configuration: Twilio::Values::Unset, unique_name: Twilio::Values::Unset)
+          def update(configuration: :unset, unique_name: :unset)
             context.update(
                 configuration: configuration,
                 unique_name: unique_name,

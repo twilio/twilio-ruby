@@ -35,7 +35,7 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(sim: Twilio::Values::Unset, status: Twilio::Values::Unset, direction: Twilio::Values::Unset, limit: nil, page_size: nil)
+          def list(sim: :unset, status: :unset, direction: :unset, limit: nil, page_size: nil)
             self.stream(
                 sim: sim,
                 status: status,
@@ -59,7 +59,7 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(sim: Twilio::Values::Unset, status: Twilio::Values::Unset, direction: Twilio::Values::Unset, limit: nil, page_size: nil)
+          def stream(sim: :unset, status: :unset, direction: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -107,7 +107,7 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of CommandInstance
-          def page(sim: Twilio::Values::Unset, status: Twilio::Values::Unset, direction: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+          def page(sim: :unset, status: :unset, direction: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'Sim' => sim,
                 'Status' => status,
@@ -127,6 +127,19 @@ module Twilio
           ##
           # Retrieve a single page of CommandInstance records from the API.
           # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of CommandInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            return CommandPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of CommandInstance records from the API.
+          # Request is executed immediately.
           # @param [String] command The command
           # @param [String] sim The sim
           # @param [String] callback_method The callback_method
@@ -134,7 +147,7 @@ module Twilio
           # @param [command.CommandMode] command_mode The command_mode
           # @param [String] include_sid The include_sid
           # @return [CommandInstance] Newly created CommandInstance
-          def create(command: nil, sim: Twilio::Values::Unset, callback_method: Twilio::Values::Unset, callback_url: Twilio::Values::Unset, command_mode: Twilio::Values::Unset, include_sid: Twilio::Values::Unset)
+          def create(command: nil, sim: :unset, callback_method: :unset, callback_url: :unset, command_mode: :unset, include_sid: :unset)
             data = Twilio::Values.of({
                 'Command' => command,
                 'Sim' => sim,

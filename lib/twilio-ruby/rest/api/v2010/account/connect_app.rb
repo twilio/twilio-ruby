@@ -94,7 +94,7 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of ConnectAppInstance
-            def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'PageToken' => page_token,
                   'Page' => page_number,
@@ -104,6 +104,19 @@ module Twilio
                   'GET',
                   @uri,
                   params
+              )
+              return ConnectAppPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of ConnectAppInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of ConnectAppInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
               )
               return ConnectAppPage.new(@version, response, @solution)
             end
@@ -206,7 +219,7 @@ module Twilio
             # @param [connect_app.Permission] permissions The set of permissions that your
             #   ConnectApp requests.
             # @return [ConnectAppInstance] Updated ConnectAppInstance
-            def update(authorize_redirect_url: Twilio::Values::Unset, company_name: Twilio::Values::Unset, deauthorize_callback_method: Twilio::Values::Unset, deauthorize_callback_url: Twilio::Values::Unset, description: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, homepage_url: Twilio::Values::Unset, permissions: Twilio::Values::Unset)
+            def update(authorize_redirect_url: :unset, company_name: :unset, deauthorize_callback_method: :unset, deauthorize_callback_url: :unset, description: :unset, friendly_name: :unset, homepage_url: :unset, permissions: :unset)
               data = Twilio::Values.of({
                   'AuthorizeRedirectUrl' => authorize_redirect_url,
                   'CompanyName' => company_name,
@@ -360,7 +373,7 @@ module Twilio
             # @param [connect_app.Permission] permissions The set of permissions that your
             #   ConnectApp requests.
             # @return [ConnectAppInstance] Updated ConnectAppInstance
-            def update(authorize_redirect_url: Twilio::Values::Unset, company_name: Twilio::Values::Unset, deauthorize_callback_method: Twilio::Values::Unset, deauthorize_callback_url: Twilio::Values::Unset, description: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, homepage_url: Twilio::Values::Unset, permissions: Twilio::Values::Unset)
+            def update(authorize_redirect_url: :unset, company_name: :unset, deauthorize_callback_method: :unset, deauthorize_callback_url: :unset, description: :unset, friendly_name: :unset, homepage_url: :unset, permissions: :unset)
               context.update(
                   authorize_redirect_url: authorize_redirect_url,
                   company_name: company_name,

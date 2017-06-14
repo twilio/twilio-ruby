@@ -93,7 +93,7 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of QueueInstance
-            def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'PageToken' => page_token,
                   'Page' => page_number,
@@ -110,11 +110,24 @@ module Twilio
             ##
             # Retrieve a single page of QueueInstance records from the API.
             # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of QueueInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              return QueuePage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of QueueInstance records from the API.
+            # Request is executed immediately.
             # @param [String] friendly_name A user-provided string that identifies this queue.
             # @param [String] max_size The upper limit of calls allowed to be in the queue.
             #   The default is 100. The maximum is 1000.
             # @return [QueueInstance] Newly created QueueInstance
-            def create(friendly_name: nil, max_size: Twilio::Values::Unset)
+            def create(friendly_name: nil, max_size: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'MaxSize' => max_size,
@@ -221,7 +234,7 @@ module Twilio
             # @param [String] max_size The maximum number of members that can be in the queue
             #   at a time
             # @return [QueueInstance] Updated QueueInstance
-            def update(friendly_name: Twilio::Values::Unset, max_size: Twilio::Values::Unset)
+            def update(friendly_name: :unset, max_size: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'MaxSize' => max_size,
@@ -377,7 +390,7 @@ module Twilio
             # @param [String] max_size The maximum number of members that can be in the queue
             #   at a time
             # @return [QueueInstance] Updated QueueInstance
-            def update(friendly_name: Twilio::Values::Unset, max_size: Twilio::Values::Unset)
+            def update(friendly_name: :unset, max_size: :unset)
               context.update(
                   friendly_name: friendly_name,
                   max_size: max_size,

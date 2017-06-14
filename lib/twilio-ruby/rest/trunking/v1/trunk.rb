@@ -31,7 +31,7 @@ module Twilio
           # @param [String] recording The recording
           # @param [Boolean] secure The secure
           # @return [TrunkInstance] Newly created TrunkInstance
-          def create(friendly_name: Twilio::Values::Unset, domain_name: Twilio::Values::Unset, disaster_recovery_url: Twilio::Values::Unset, disaster_recovery_method: Twilio::Values::Unset, recording: Twilio::Values::Unset, secure: Twilio::Values::Unset)
+          def create(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DomainName' => domain_name,
@@ -121,7 +121,7 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of TrunkInstance
-          def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+          def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
                 'Page' => page_number,
@@ -131,6 +131,19 @@ module Twilio
                 'GET',
                 @uri,
                 params
+            )
+            return TrunkPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of TrunkInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of TrunkInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
             )
             return TrunkPage.new(@version, response, @solution)
           end
@@ -231,7 +244,7 @@ module Twilio
           # @param [String] recording The recording
           # @param [Boolean] secure The secure
           # @return [TrunkInstance] Updated TrunkInstance
-          def update(friendly_name: Twilio::Values::Unset, domain_name: Twilio::Values::Unset, disaster_recovery_url: Twilio::Values::Unset, disaster_recovery_method: Twilio::Values::Unset, recording: Twilio::Values::Unset, secure: Twilio::Values::Unset)
+          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DomainName' => domain_name,
@@ -479,7 +492,7 @@ module Twilio
           # @param [String] recording The recording
           # @param [Boolean] secure The secure
           # @return [TrunkInstance] Updated TrunkInstance
-          def update(friendly_name: Twilio::Values::Unset, domain_name: Twilio::Values::Unset, disaster_recovery_url: Twilio::Values::Unset, disaster_recovery_method: Twilio::Values::Unset, recording: Twilio::Values::Unset, secure: Twilio::Values::Unset)
+          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset)
             context.update(
                 friendly_name: friendly_name,
                 domain_name: domain_name,

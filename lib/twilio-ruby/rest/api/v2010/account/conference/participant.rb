@@ -67,7 +67,7 @@ module Twilio
               # @param [String] conference_recording_status_callback_method The
               #   conference_recording_status_callback_method
               # @return [ParticipantInstance] Newly created ParticipantInstance
-              def create(from: nil, to: nil, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset, status_callback_event: Twilio::Values::Unset, timeout: Twilio::Values::Unset, record: Twilio::Values::Unset, muted: Twilio::Values::Unset, beep: Twilio::Values::Unset, start_conference_on_enter: Twilio::Values::Unset, end_conference_on_exit: Twilio::Values::Unset, wait_url: Twilio::Values::Unset, wait_method: Twilio::Values::Unset, early_media: Twilio::Values::Unset, max_participants: Twilio::Values::Unset, conference_record: Twilio::Values::Unset, conference_trim: Twilio::Values::Unset, conference_status_callback: Twilio::Values::Unset, conference_status_callback_method: Twilio::Values::Unset, conference_status_callback_event: Twilio::Values::Unset, recording_channels: Twilio::Values::Unset, recording_status_callback: Twilio::Values::Unset, recording_status_callback_method: Twilio::Values::Unset, sip_auth_username: Twilio::Values::Unset, sip_auth_password: Twilio::Values::Unset, region: Twilio::Values::Unset, conference_recording_status_callback: Twilio::Values::Unset, conference_recording_status_callback_method: Twilio::Values::Unset)
+              def create(from: nil, to: nil, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_record: :unset, conference_trim: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, region: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset)
                 data = Twilio::Values.of({
                     'From' => from,
                     'To' => to,
@@ -126,7 +126,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(muted: Twilio::Values::Unset, hold: Twilio::Values::Unset, limit: nil, page_size: nil)
+              def list(muted: :unset, hold: :unset, limit: nil, page_size: nil)
                 self.stream(
                     muted: muted,
                     hold: hold,
@@ -148,7 +148,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(muted: Twilio::Values::Unset, hold: Twilio::Values::Unset, limit: nil, page_size: nil)
+              def stream(muted: :unset, hold: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -193,7 +193,7 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of ParticipantInstance
-              def page(muted: Twilio::Values::Unset, hold: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+              def page(muted: :unset, hold: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'Muted' => muted,
                     'Hold' => hold,
@@ -205,6 +205,19 @@ module Twilio
                     'GET',
                     @uri,
                     params
+                )
+                return ParticipantPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of ParticipantInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of ParticipantInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
                 )
                 return ParticipantPage.new(@version, response, @solution)
               end
@@ -303,7 +316,7 @@ module Twilio
               # @param [String] hold_url The hold_url
               # @param [String] hold_method The hold_method
               # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(muted: Twilio::Values::Unset, hold: Twilio::Values::Unset, hold_url: Twilio::Values::Unset, hold_method: Twilio::Values::Unset)
+              def update(muted: :unset, hold: :unset, hold_url: :unset, hold_method: :unset)
                 data = Twilio::Values.of({
                     'Muted' => muted,
                     'Hold' => hold,
@@ -454,7 +467,7 @@ module Twilio
               # @param [String] hold_url The hold_url
               # @param [String] hold_method The hold_method
               # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(muted: Twilio::Values::Unset, hold: Twilio::Values::Unset, hold_url: Twilio::Values::Unset, hold_method: Twilio::Values::Unset)
+              def update(muted: :unset, hold: :unset, hold_url: :unset, hold_method: :unset)
                 context.update(
                     muted: muted,
                     hold: hold,

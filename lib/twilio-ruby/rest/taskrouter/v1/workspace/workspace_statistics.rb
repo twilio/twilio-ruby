@@ -87,7 +87,7 @@ module Twilio
             # @param [Time] start_date The start_date
             # @param [Time] end_date The end_date
             # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
-            def fetch(minutes: Twilio::Values::Unset, start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset)
+            def fetch(minutes: :unset, start_date: :unset, end_date: :unset)
               params = Twilio::Values.of({
                   'Minutes' => minutes,
                   'StartDate' => Twilio.serialize_iso8601(start_date),
@@ -182,7 +182,7 @@ module Twilio
             # @param [Time] start_date The start_date
             # @param [Time] end_date The end_date
             # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
-            def fetch(minutes: Twilio::Values::Unset, start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset)
+            def fetch(minutes: :unset, start_date: :unset, end_date: :unset)
               context.fetch(
                   minutes: minutes,
                   start_date: start_date,

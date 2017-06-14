@@ -90,7 +90,7 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of PublicKeyInstance
-            def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'PageToken' => page_token,
                   'Page' => page_number,
@@ -107,6 +107,19 @@ module Twilio
             ##
             # Retrieve a single page of PublicKeyInstance records from the API.
             # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of PublicKeyInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              return PublicKeyPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of PublicKeyInstance records from the API.
+            # Request is executed immediately.
             # @param [String] public_key URL encoded representation of the public key, e.g.
             #   -----BEGIN PUBLIC KEY-----MIIBIjANB.pa9xQIDAQAB-----END PUBLIC KEY-----
             # @param [String] friendly_name A human readable description of this resource, up
@@ -114,7 +127,7 @@ module Twilio
             # @param [String] account_sid The Subaccount this Credential should be associated
             #   with. Needs to be a valid Subaccount of the account issuing the request
             # @return [PublicKeyInstance] Newly created PublicKeyInstance
-            def create(public_key: nil, friendly_name: Twilio::Values::Unset, account_sid: Twilio::Values::Unset)
+            def create(public_key: nil, friendly_name: :unset, account_sid: :unset)
               data = Twilio::Values.of({
                   'PublicKey' => public_key,
                   'FriendlyName' => friendly_name,
@@ -213,7 +226,7 @@ module Twilio
             # @param [String] friendly_name A human readable description of this resource, up
             #   to 64 characters.
             # @return [PublicKeyInstance] Updated PublicKeyInstance
-            def update(friendly_name: Twilio::Values::Unset)
+            def update(friendly_name: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
               })
@@ -325,7 +338,7 @@ module Twilio
             # @param [String] friendly_name A human readable description of this resource, up
             #   to 64 characters.
             # @return [PublicKeyInstance] Updated PublicKeyInstance
-            def update(friendly_name: Twilio::Values::Unset)
+            def update(friendly_name: :unset)
               context.update(
                   friendly_name: friendly_name,
               )

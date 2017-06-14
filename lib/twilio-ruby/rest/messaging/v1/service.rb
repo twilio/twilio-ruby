@@ -39,7 +39,7 @@ module Twilio
           # @param [Boolean] area_code_geomatch The area_code_geomatch
           # @param [String] validity_period The validity_period
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil, inbound_request_url: Twilio::Values::Unset, inbound_method: Twilio::Values::Unset, fallback_url: Twilio::Values::Unset, fallback_method: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, sticky_sender: Twilio::Values::Unset, mms_converter: Twilio::Values::Unset, smart_encoding: Twilio::Values::Unset, scan_message_content: Twilio::Values::Unset, fallback_to_long_code: Twilio::Values::Unset, area_code_geomatch: Twilio::Values::Unset, validity_period: Twilio::Values::Unset)
+          def create(friendly_name: nil, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'InboundRequestUrl' => inbound_request_url,
@@ -136,7 +136,7 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of ServiceInstance
-          def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+          def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
                 'Page' => page_number,
@@ -146,6 +146,19 @@ module Twilio
                 'GET',
                 @uri,
                 params
+            )
+            return ServicePage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of ServiceInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of ServiceInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
             )
             return ServicePage.new(@version, response, @solution)
           end
@@ -227,7 +240,7 @@ module Twilio
           # @param [Boolean] area_code_geomatch The area_code_geomatch
           # @param [String] validity_period The validity_period
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: Twilio::Values::Unset, inbound_request_url: Twilio::Values::Unset, inbound_method: Twilio::Values::Unset, fallback_url: Twilio::Values::Unset, fallback_method: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, sticky_sender: Twilio::Values::Unset, mms_converter: Twilio::Values::Unset, smart_encoding: Twilio::Values::Unset, scan_message_content: Twilio::Values::Unset, fallback_to_long_code: Twilio::Values::Unset, area_code_geomatch: Twilio::Values::Unset, validity_period: Twilio::Values::Unset)
+          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'InboundRequestUrl' => inbound_request_url,
@@ -505,7 +518,7 @@ module Twilio
           # @param [Boolean] area_code_geomatch The area_code_geomatch
           # @param [String] validity_period The validity_period
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: Twilio::Values::Unset, inbound_request_url: Twilio::Values::Unset, inbound_method: Twilio::Values::Unset, fallback_url: Twilio::Values::Unset, fallback_method: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, sticky_sender: Twilio::Values::Unset, mms_converter: Twilio::Values::Unset, smart_encoding: Twilio::Values::Unset, scan_message_content: Twilio::Values::Unset, fallback_to_long_code: Twilio::Values::Unset, area_code_geomatch: Twilio::Values::Unset, validity_period: Twilio::Values::Unset)
+          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset)
             context.update(
                 friendly_name: friendly_name,
                 inbound_request_url: inbound_request_url,

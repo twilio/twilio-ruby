@@ -45,7 +45,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(priority: Twilio::Values::Unset, assignment_status: Twilio::Values::Unset, workflow_sid: Twilio::Values::Unset, workflow_name: Twilio::Values::Unset, task_queue_sid: Twilio::Values::Unset, task_queue_name: Twilio::Values::Unset, evaluate_task_attributes: Twilio::Values::Unset, ordering: Twilio::Values::Unset, has_addons: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def list(priority: :unset, assignment_status: :unset, workflow_sid: :unset, workflow_name: :unset, task_queue_sid: :unset, task_queue_name: :unset, evaluate_task_attributes: :unset, ordering: :unset, has_addons: :unset, limit: nil, page_size: nil)
               self.stream(
                   priority: priority,
                   assignment_status: assignment_status,
@@ -81,7 +81,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(priority: Twilio::Values::Unset, assignment_status: Twilio::Values::Unset, workflow_sid: Twilio::Values::Unset, workflow_name: Twilio::Values::Unset, task_queue_sid: Twilio::Values::Unset, task_queue_name: Twilio::Values::Unset, evaluate_task_attributes: Twilio::Values::Unset, ordering: Twilio::Values::Unset, has_addons: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def stream(priority: :unset, assignment_status: :unset, workflow_sid: :unset, workflow_name: :unset, task_queue_sid: :unset, task_queue_name: :unset, evaluate_task_attributes: :unset, ordering: :unset, has_addons: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -147,7 +147,7 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of TaskInstance
-            def page(priority: Twilio::Values::Unset, assignment_status: Twilio::Values::Unset, workflow_sid: Twilio::Values::Unset, workflow_name: Twilio::Values::Unset, task_queue_sid: Twilio::Values::Unset, task_queue_name: Twilio::Values::Unset, evaluate_task_attributes: Twilio::Values::Unset, ordering: Twilio::Values::Unset, has_addons: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            def page(priority: :unset, assignment_status: :unset, workflow_sid: :unset, workflow_name: :unset, task_queue_sid: :unset, task_queue_name: :unset, evaluate_task_attributes: :unset, ordering: :unset, has_addons: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'Priority' => priority,
                   'AssignmentStatus' => assignment_status,
@@ -173,13 +173,26 @@ module Twilio
             ##
             # Retrieve a single page of TaskInstance records from the API.
             # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of TaskInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              return TaskPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of TaskInstance records from the API.
+            # Request is executed immediately.
             # @param [String] timeout The timeout
             # @param [String] priority The priority
             # @param [String] task_channel The task_channel
             # @param [String] workflow_sid The workflow_sid
             # @param [String] attributes The attributes
             # @return [TaskInstance] Newly created TaskInstance
-            def create(timeout: Twilio::Values::Unset, priority: Twilio::Values::Unset, task_channel: Twilio::Values::Unset, workflow_sid: Twilio::Values::Unset, attributes: Twilio::Values::Unset)
+            def create(timeout: :unset, priority: :unset, task_channel: :unset, workflow_sid: :unset, attributes: :unset)
               data = Twilio::Values.of({
                   'Timeout' => timeout,
                   'Priority' => priority,
@@ -291,7 +304,7 @@ module Twilio
             # @param [String] priority The priority
             # @param [String] task_channel The task_channel
             # @return [TaskInstance] Updated TaskInstance
-            def update(attributes: Twilio::Values::Unset, assignment_status: Twilio::Values::Unset, reason: Twilio::Values::Unset, priority: Twilio::Values::Unset, task_channel: Twilio::Values::Unset)
+            def update(attributes: :unset, assignment_status: :unset, reason: :unset, priority: :unset, task_channel: :unset)
               data = Twilio::Values.of({
                   'Attributes' => attributes,
                   'AssignmentStatus' => assignment_status,
@@ -507,7 +520,7 @@ module Twilio
             # @param [String] priority The priority
             # @param [String] task_channel The task_channel
             # @return [TaskInstance] Updated TaskInstance
-            def update(attributes: Twilio::Values::Unset, assignment_status: Twilio::Values::Unset, reason: Twilio::Values::Unset, priority: Twilio::Values::Unset, task_channel: Twilio::Values::Unset)
+            def update(attributes: :unset, assignment_status: :unset, reason: :unset, priority: :unset, task_channel: :unset)
               context.update(
                   attributes: attributes,
                   assignment_status: assignment_status,

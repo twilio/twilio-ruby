@@ -29,7 +29,7 @@ module Twilio
           # @param [Boolean] reachability_webhooks_enabled The reachability_webhooks_enabled
           # @param [Boolean] acl_enabled The acl_enabled
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: Twilio::Values::Unset, webhook_url: Twilio::Values::Unset, reachability_webhooks_enabled: Twilio::Values::Unset, acl_enabled: Twilio::Values::Unset)
+          def create(friendly_name: :unset, webhook_url: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'WebhookUrl' => webhook_url,
@@ -117,7 +117,7 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of ServiceInstance
-          def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+          def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
                 'Page' => page_number,
@@ -127,6 +127,19 @@ module Twilio
                 'GET',
                 @uri,
                 params
+            )
+            return ServicePage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of ServiceInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of ServiceInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
             )
             return ServicePage.new(@version, response, @solution)
           end
@@ -224,7 +237,7 @@ module Twilio
           # @param [Boolean] reachability_webhooks_enabled The reachability_webhooks_enabled
           # @param [Boolean] acl_enabled The acl_enabled
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(webhook_url: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, reachability_webhooks_enabled: Twilio::Values::Unset, acl_enabled: Twilio::Values::Unset)
+          def update(webhook_url: :unset, friendly_name: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset)
             data = Twilio::Values.of({
                 'WebhookUrl' => webhook_url,
                 'FriendlyName' => friendly_name,
@@ -426,7 +439,7 @@ module Twilio
           # @param [Boolean] reachability_webhooks_enabled The reachability_webhooks_enabled
           # @param [Boolean] acl_enabled The acl_enabled
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(webhook_url: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, reachability_webhooks_enabled: Twilio::Values::Unset, acl_enabled: Twilio::Values::Unset)
+          def update(webhook_url: :unset, friendly_name: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset)
             context.update(
                 webhook_url: webhook_url,
                 friendly_name: friendly_name,

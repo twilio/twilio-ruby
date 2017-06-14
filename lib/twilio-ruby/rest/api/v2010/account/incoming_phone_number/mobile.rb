@@ -41,7 +41,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(beta: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, phone_number: Twilio::Values::Unset, limit: nil, page_size: nil)
+              def list(beta: :unset, friendly_name: :unset, phone_number: :unset, limit: nil, page_size: nil)
                 self.stream(
                     beta: beta,
                     friendly_name: friendly_name,
@@ -65,7 +65,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(beta: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, phone_number: Twilio::Values::Unset, limit: nil, page_size: nil)
+              def stream(beta: :unset, friendly_name: :unset, phone_number: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -113,7 +113,7 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of MobileInstance
-              def page(beta: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, phone_number: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+              def page(beta: :unset, friendly_name: :unset, phone_number: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'Beta' => beta,
                     'FriendlyName' => friendly_name,
@@ -126,6 +126,19 @@ module Twilio
                     'GET',
                     @uri,
                     params
+                )
+                return MobilePage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of MobileInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of MobileInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
                 )
                 return MobilePage.new(@version, response, @solution)
               end
@@ -150,7 +163,7 @@ module Twilio
               # @param [String] voice_method The voice_method
               # @param [String] voice_url The voice_url
               # @return [MobileInstance] Newly created MobileInstance
-              def create(phone_number: nil, api_version: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, sms_application_sid: Twilio::Values::Unset, sms_fallback_method: Twilio::Values::Unset, sms_fallback_url: Twilio::Values::Unset, sms_method: Twilio::Values::Unset, sms_url: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset, voice_application_sid: Twilio::Values::Unset, voice_caller_id_lookup: Twilio::Values::Unset, voice_fallback_method: Twilio::Values::Unset, voice_fallback_url: Twilio::Values::Unset, voice_method: Twilio::Values::Unset, voice_url: Twilio::Values::Unset)
+              def create(phone_number: nil, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset)
                 data = Twilio::Values.of({
                     'PhoneNumber' => phone_number,
                     'ApiVersion' => api_version,

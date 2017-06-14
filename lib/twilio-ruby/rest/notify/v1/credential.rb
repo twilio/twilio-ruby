@@ -89,7 +89,7 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of CredentialInstance
-          def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+          def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
                 'Page' => page_number,
@@ -106,6 +106,19 @@ module Twilio
           ##
           # Retrieve a single page of CredentialInstance records from the API.
           # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of CredentialInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            return CredentialPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of CredentialInstance records from the API.
+          # Request is executed immediately.
           # @param [credential.PushService] type The type
           # @param [String] friendly_name The friendly_name
           # @param [String] certificate The certificate
@@ -114,7 +127,7 @@ module Twilio
           # @param [String] api_key The api_key
           # @param [String] secret The secret
           # @return [CredentialInstance] Newly created CredentialInstance
-          def create(type: nil, friendly_name: Twilio::Values::Unset, certificate: Twilio::Values::Unset, private_key: Twilio::Values::Unset, sandbox: Twilio::Values::Unset, api_key: Twilio::Values::Unset, secret: Twilio::Values::Unset)
+          def create(type: nil, friendly_name: :unset, certificate: :unset, private_key: :unset, sandbox: :unset, api_key: :unset, secret: :unset)
             data = Twilio::Values.of({
                 'Type' => type,
                 'FriendlyName' => friendly_name,
@@ -220,7 +233,7 @@ module Twilio
           # @param [String] api_key The api_key
           # @param [String] secret The secret
           # @return [CredentialInstance] Updated CredentialInstance
-          def update(friendly_name: Twilio::Values::Unset, certificate: Twilio::Values::Unset, private_key: Twilio::Values::Unset, sandbox: Twilio::Values::Unset, api_key: Twilio::Values::Unset, secret: Twilio::Values::Unset)
+          def update(friendly_name: :unset, certificate: :unset, private_key: :unset, sandbox: :unset, api_key: :unset, secret: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'Certificate' => certificate,
@@ -350,7 +363,7 @@ module Twilio
           # @param [String] api_key The api_key
           # @param [String] secret The secret
           # @return [CredentialInstance] Updated CredentialInstance
-          def update(friendly_name: Twilio::Values::Unset, certificate: Twilio::Values::Unset, private_key: Twilio::Values::Unset, sandbox: Twilio::Values::Unset, api_key: Twilio::Values::Unset, secret: Twilio::Values::Unset)
+          def update(friendly_name: :unset, certificate: :unset, private_key: :unset, sandbox: :unset, api_key: :unset, secret: :unset)
             context.update(
                 friendly_name: friendly_name,
                 certificate: certificate,

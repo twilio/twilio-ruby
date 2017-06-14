@@ -91,7 +91,7 @@ module Twilio
               # @param [String] task_queue_name The task_queue_name
               # @param [String] friendly_name The friendly_name
               # @return [WorkersStatisticsInstance] Fetched WorkersStatisticsInstance
-              def fetch(minutes: Twilio::Values::Unset, start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset, task_queue_sid: Twilio::Values::Unset, task_queue_name: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset)
+              def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_queue_sid: :unset, task_queue_name: :unset, friendly_name: :unset)
                 params = Twilio::Values.of({
                     'Minutes' => minutes,
                     'StartDate' => Twilio.serialize_iso8601(start_date),
@@ -192,7 +192,7 @@ module Twilio
               # @param [String] task_queue_name The task_queue_name
               # @param [String] friendly_name The friendly_name
               # @return [WorkersStatisticsInstance] Fetched WorkersStatisticsInstance
-              def fetch(minutes: Twilio::Values::Unset, start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset, task_queue_sid: Twilio::Values::Unset, task_queue_name: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset)
+              def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_queue_sid: :unset, task_queue_name: :unset, friendly_name: :unset)
                 context.fetch(
                     minutes: minutes,
                     start_date: start_date,

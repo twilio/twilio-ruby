@@ -35,7 +35,7 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(log_level: Twilio::Values::Unset, start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset, limit: nil, page_size: nil)
+          def list(log_level: :unset, start_date: :unset, end_date: :unset, limit: nil, page_size: nil)
             self.stream(
                 log_level: log_level,
                 start_date: start_date,
@@ -59,7 +59,7 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(log_level: Twilio::Values::Unset, start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset, limit: nil, page_size: nil)
+          def stream(log_level: :unset, start_date: :unset, end_date: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -107,7 +107,7 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of AlertInstance
-          def page(log_level: Twilio::Values::Unset, start_date: Twilio::Values::Unset, end_date: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+          def page(log_level: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'LogLevel' => log_level,
                 'StartDate' => Twilio.serialize_iso8601(start_date),
@@ -120,6 +120,19 @@ module Twilio
                 'GET',
                 @uri,
                 params
+            )
+            return AlertPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of AlertInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of AlertInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
             )
             return AlertPage.new(@version, response, @solution)
           end

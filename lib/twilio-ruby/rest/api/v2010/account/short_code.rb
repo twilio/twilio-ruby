@@ -41,7 +41,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(friendly_name: Twilio::Values::Unset, short_code: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def list(friendly_name: :unset, short_code: :unset, limit: nil, page_size: nil)
               self.stream(
                   friendly_name: friendly_name,
                   short_code: short_code,
@@ -65,7 +65,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(friendly_name: Twilio::Values::Unset, short_code: Twilio::Values::Unset, limit: nil, page_size: nil)
+            def stream(friendly_name: :unset, short_code: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -114,7 +114,7 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of ShortCodeInstance
-            def page(friendly_name: Twilio::Values::Unset, short_code: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+            def page(friendly_name: :unset, short_code: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'ShortCode' => short_code,
@@ -126,6 +126,19 @@ module Twilio
                   'GET',
                   @uri,
                   params
+              )
+              return ShortCodePage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of ShortCodeInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of ShortCodeInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
               )
               return ShortCodePage.new(@version, response, @solution)
             end
@@ -226,7 +239,7 @@ module Twilio
             # @param [String] sms_fallback_method The HTTP method Twilio will use when
             #   requesting the above URL. Either `GET` or `POST`.
             # @return [ShortCodeInstance] Updated ShortCodeInstance
-            def update(friendly_name: Twilio::Values::Unset, api_version: Twilio::Values::Unset, sms_url: Twilio::Values::Unset, sms_method: Twilio::Values::Unset, sms_fallback_url: Twilio::Values::Unset, sms_fallback_method: Twilio::Values::Unset)
+            def update(friendly_name: :unset, api_version: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'ApiVersion' => api_version,
@@ -381,7 +394,7 @@ module Twilio
             # @param [String] sms_fallback_method The HTTP method Twilio will use when
             #   requesting the above URL. Either `GET` or `POST`.
             # @return [ShortCodeInstance] Updated ShortCodeInstance
-            def update(friendly_name: Twilio::Values::Unset, api_version: Twilio::Values::Unset, sms_url: Twilio::Values::Unset, sms_method: Twilio::Values::Unset, sms_fallback_url: Twilio::Values::Unset, sms_fallback_method: Twilio::Values::Unset)
+            def update(friendly_name: :unset, api_version: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset)
               context.update(
                   friendly_name: friendly_name,
                   api_version: api_version,

@@ -95,7 +95,7 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of DomainInstance
-              def page(page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+              def page(page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'PageToken' => page_token,
                     'Page' => page_number,
@@ -105,6 +105,19 @@ module Twilio
                     'GET',
                     @uri,
                     params
+                )
+                return DomainPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of DomainInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of DomainInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
                 )
                 return DomainPage.new(@version, response, @solution)
               end
@@ -129,7 +142,7 @@ module Twilio
               #   pass status parameters
               # @param [String] voice_status_callback_method The voice_status_callback_method
               # @return [DomainInstance] Newly created DomainInstance
-              def create(domain_name: nil, friendly_name: Twilio::Values::Unset, auth_type: Twilio::Values::Unset, voice_url: Twilio::Values::Unset, voice_method: Twilio::Values::Unset, voice_fallback_url: Twilio::Values::Unset, voice_fallback_method: Twilio::Values::Unset, voice_status_callback_url: Twilio::Values::Unset, voice_status_callback_method: Twilio::Values::Unset)
+              def create(domain_name: nil, friendly_name: :unset, auth_type: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, voice_status_callback_url: :unset, voice_status_callback_method: :unset)
                 data = Twilio::Values.of({
                     'DomainName' => domain_name,
                     'FriendlyName' => friendly_name,
@@ -251,7 +264,7 @@ module Twilio
               # @param [String] voice_status_callback_url The voice_status_callback_url
               # @param [String] voice_url The voice_url
               # @return [DomainInstance] Updated DomainInstance
-              def update(auth_type: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, voice_fallback_method: Twilio::Values::Unset, voice_fallback_url: Twilio::Values::Unset, voice_method: Twilio::Values::Unset, voice_status_callback_method: Twilio::Values::Unset, voice_status_callback_url: Twilio::Values::Unset, voice_url: Twilio::Values::Unset)
+              def update(auth_type: :unset, friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset)
                 data = Twilio::Values.of({
                     'AuthType' => auth_type,
                     'FriendlyName' => friendly_name,
@@ -479,7 +492,7 @@ module Twilio
               # @param [String] voice_status_callback_url The voice_status_callback_url
               # @param [String] voice_url The voice_url
               # @return [DomainInstance] Updated DomainInstance
-              def update(auth_type: Twilio::Values::Unset, friendly_name: Twilio::Values::Unset, voice_fallback_method: Twilio::Values::Unset, voice_fallback_url: Twilio::Values::Unset, voice_method: Twilio::Values::Unset, voice_status_callback_method: Twilio::Values::Unset, voice_status_callback_url: Twilio::Values::Unset, voice_url: Twilio::Values::Unset)
+              def update(auth_type: :unset, friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset)
                 context.update(
                     auth_type: auth_type,
                     friendly_name: friendly_name,

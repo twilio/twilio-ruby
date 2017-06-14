@@ -35,7 +35,7 @@ module Twilio
             # @param [String] status_callback The status_callback
             # @param [String] status_callback_method The status_callback_method
             # @return [ValidationRequestInstance] Newly created ValidationRequestInstance
-            def create(phone_number: nil, friendly_name: Twilio::Values::Unset, call_delay: Twilio::Values::Unset, extension: Twilio::Values::Unset, status_callback: Twilio::Values::Unset, status_callback_method: Twilio::Values::Unset)
+            def create(phone_number: nil, friendly_name: :unset, call_delay: :unset, extension: :unset, status_callback: :unset, status_callback_method: :unset)
               data = Twilio::Values.of({
                   'PhoneNumber' => phone_number,
                   'FriendlyName' => friendly_name,

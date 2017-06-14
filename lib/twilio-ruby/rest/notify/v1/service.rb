@@ -38,7 +38,7 @@ module Twilio
           #   default_fcm_notification_protocol_version
           # @param [Boolean] log_enabled The log_enabled
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: Twilio::Values::Unset, apn_credential_sid: Twilio::Values::Unset, gcm_credential_sid: Twilio::Values::Unset, messaging_service_sid: Twilio::Values::Unset, facebook_messenger_page_id: Twilio::Values::Unset, default_apn_notification_protocol_version: Twilio::Values::Unset, default_gcm_notification_protocol_version: Twilio::Values::Unset, fcm_credential_sid: Twilio::Values::Unset, default_fcm_notification_protocol_version: Twilio::Values::Unset, log_enabled: Twilio::Values::Unset)
+          def create(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'ApnCredentialSid' => apn_credential_sid,
@@ -76,7 +76,7 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(friendly_name: Twilio::Values::Unset, limit: nil, page_size: nil)
+          def list(friendly_name: :unset, limit: nil, page_size: nil)
             self.stream(
                 friendly_name: friendly_name,
                 limit: limit,
@@ -96,7 +96,7 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(friendly_name: Twilio::Values::Unset, limit: nil, page_size: nil)
+          def stream(friendly_name: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -138,7 +138,7 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of ServiceInstance
-          def page(friendly_name: Twilio::Values::Unset, page_token: Twilio::Values::Unset, page_number: Twilio::Values::Unset, page_size: Twilio::Values.Unset)
+          def page(friendly_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'PageToken' => page_token,
@@ -149,6 +149,19 @@ module Twilio
                 'GET',
                 @uri,
                 params
+            )
+            return ServicePage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of ServiceInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of ServiceInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
             )
             return ServicePage.new(@version, response, @solution)
           end
@@ -256,7 +269,7 @@ module Twilio
           #   default_fcm_notification_protocol_version
           # @param [Boolean] log_enabled The log_enabled
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: Twilio::Values::Unset, apn_credential_sid: Twilio::Values::Unset, gcm_credential_sid: Twilio::Values::Unset, messaging_service_sid: Twilio::Values::Unset, facebook_messenger_page_id: Twilio::Values::Unset, default_apn_notification_protocol_version: Twilio::Values::Unset, default_gcm_notification_protocol_version: Twilio::Values::Unset, fcm_credential_sid: Twilio::Values::Unset, default_fcm_notification_protocol_version: Twilio::Values::Unset, log_enabled: Twilio::Values::Unset)
+          def update(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'ApnCredentialSid' => apn_credential_sid,
@@ -509,7 +522,7 @@ module Twilio
           #   default_fcm_notification_protocol_version
           # @param [Boolean] log_enabled The log_enabled
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: Twilio::Values::Unset, apn_credential_sid: Twilio::Values::Unset, gcm_credential_sid: Twilio::Values::Unset, messaging_service_sid: Twilio::Values::Unset, facebook_messenger_page_id: Twilio::Values::Unset, default_apn_notification_protocol_version: Twilio::Values::Unset, default_gcm_notification_protocol_version: Twilio::Values::Unset, fcm_credential_sid: Twilio::Values::Unset, default_fcm_notification_protocol_version: Twilio::Values::Unset, log_enabled: Twilio::Values::Unset)
+          def update(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset)
             context.update(
                 friendly_name: friendly_name,
                 apn_credential_sid: apn_credential_sid,
