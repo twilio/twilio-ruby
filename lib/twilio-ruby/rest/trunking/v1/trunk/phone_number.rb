@@ -41,7 +41,7 @@ module Twilio
                   data: data
               )
 
-              return PhoneNumberInstance.new(
+              PhoneNumberInstance.new(
                   @version,
                   payload,
                   trunk_sid: @solution[:trunk_sid],
@@ -127,7 +127,7 @@ module Twilio
                   @uri,
                   params
               )
-              return PhoneNumberPage.new(@version, response, @solution)
+              PhoneNumberPage.new(@version, response, @solution)
             end
 
             ##
@@ -140,7 +140,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return PhoneNumberPage.new(@version, response, @solution)
+              PhoneNumberPage.new(@version, response, @solution)
             end
 
             ##
@@ -170,7 +170,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [PhoneNumberInstance] PhoneNumberInstance
             def get_instance(payload)
-              return PhoneNumberInstance.new(
+              PhoneNumberInstance.new(
                   @version,
                   payload,
                   trunk_sid: @solution[:trunk_sid],
@@ -214,7 +214,7 @@ module Twilio
                   params,
               )
 
-              return PhoneNumberInstance.new(
+              PhoneNumberInstance.new(
                   @version,
                   payload,
                   trunk_sid: @solution[:trunk_sid],
@@ -226,7 +226,7 @@ module Twilio
             # Deletes the PhoneNumberInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##

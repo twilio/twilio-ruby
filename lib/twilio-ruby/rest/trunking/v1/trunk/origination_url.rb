@@ -49,7 +49,7 @@ module Twilio
                   data: data
               )
 
-              return OriginationUrlInstance.new(
+              OriginationUrlInstance.new(
                   @version,
                   payload,
                   trunk_sid: @solution[:trunk_sid],
@@ -135,7 +135,7 @@ module Twilio
                   @uri,
                   params
               )
-              return OriginationUrlPage.new(@version, response, @solution)
+              OriginationUrlPage.new(@version, response, @solution)
             end
 
             ##
@@ -148,7 +148,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return OriginationUrlPage.new(@version, response, @solution)
+              OriginationUrlPage.new(@version, response, @solution)
             end
 
             ##
@@ -178,7 +178,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [OriginationUrlInstance] OriginationUrlInstance
             def get_instance(payload)
-              return OriginationUrlInstance.new(
+              OriginationUrlInstance.new(
                   @version,
                   payload,
                   trunk_sid: @solution[:trunk_sid],
@@ -222,7 +222,7 @@ module Twilio
                   params,
               )
 
-              return OriginationUrlInstance.new(
+              OriginationUrlInstance.new(
                   @version,
                   payload,
                   trunk_sid: @solution[:trunk_sid],
@@ -234,7 +234,7 @@ module Twilio
             # Deletes the OriginationUrlInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -260,7 +260,7 @@ module Twilio
                   data: data,
               )
 
-              return OriginationUrlInstance.new(
+              OriginationUrlInstance.new(
                   @version,
                   payload,
                   trunk_sid: @solution[:trunk_sid],

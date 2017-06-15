@@ -128,7 +128,7 @@ module Twilio
                       @uri,
                       params
                   )
-                  return AllTimePage.new(@version, response, @solution)
+                  AllTimePage.new(@version, response, @solution)
                 end
 
                 ##
@@ -141,7 +141,7 @@ module Twilio
                       'GET',
                       target_url
                   )
-                  return AllTimePage.new(@version, response, @solution)
+                  AllTimePage.new(@version, response, @solution)
                 end
 
                 ##
@@ -172,7 +172,7 @@ module Twilio
                 # @param [Hash] payload Payload response from the API
                 # @return [AllTimeInstance] AllTimeInstance
                 def get_instance(payload)
-                  return AllTimeInstance.new(
+                  AllTimeInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],

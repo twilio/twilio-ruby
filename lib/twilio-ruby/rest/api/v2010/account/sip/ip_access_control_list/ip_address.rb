@@ -108,7 +108,7 @@ module Twilio
                       @uri,
                       params
                   )
-                  return IpAddressPage.new(@version, response, @solution)
+                  IpAddressPage.new(@version, response, @solution)
                 end
 
                 ##
@@ -121,7 +121,7 @@ module Twilio
                       'GET',
                       target_url
                   )
-                  return IpAddressPage.new(@version, response, @solution)
+                  IpAddressPage.new(@version, response, @solution)
                 end
 
                 ##
@@ -142,7 +142,7 @@ module Twilio
                       data: data
                   )
 
-                  return IpAddressInstance.new(
+                  IpAddressInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],
@@ -178,7 +178,7 @@ module Twilio
                 # @param [Hash] payload Payload response from the API
                 # @return [IpAddressInstance] IpAddressInstance
                 def get_instance(payload)
-                  return IpAddressInstance.new(
+                  IpAddressInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],
@@ -225,7 +225,7 @@ module Twilio
                       params,
                   )
 
-                  return IpAddressInstance.new(
+                  IpAddressInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],
@@ -251,7 +251,7 @@ module Twilio
                       data: data,
                   )
 
-                  return IpAddressInstance.new(
+                  IpAddressInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],
@@ -264,7 +264,7 @@ module Twilio
                 # Deletes the IpAddressInstance
                 # @return [Boolean] true if delete succeeds, true otherwise
                 def delete
-                  return @version.delete('delete', @uri)
+                  @version.delete('delete', @uri)
                 end
 
                 ##

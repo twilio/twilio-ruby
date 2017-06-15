@@ -104,7 +104,7 @@ module Twilio
                   @uri,
                   params
               )
-              return AvailableAddOnExtensionPage.new(@version, response, @solution)
+              AvailableAddOnExtensionPage.new(@version, response, @solution)
             end
 
             ##
@@ -117,7 +117,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return AvailableAddOnExtensionPage.new(@version, response, @solution)
+              AvailableAddOnExtensionPage.new(@version, response, @solution)
             end
 
             ##
@@ -147,7 +147,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [AvailableAddOnExtensionInstance] AvailableAddOnExtensionInstance
             def get_instance(payload)
-              return AvailableAddOnExtensionInstance.new(
+              AvailableAddOnExtensionInstance.new(
                   @version,
                   payload,
                   available_add_on_sid: @solution[:available_add_on_sid],
@@ -191,7 +191,7 @@ module Twilio
                   params,
               )
 
-              return AvailableAddOnExtensionInstance.new(
+              AvailableAddOnExtensionInstance.new(
                   @version,
                   payload,
                   available_add_on_sid: @solution[:available_add_on_sid],

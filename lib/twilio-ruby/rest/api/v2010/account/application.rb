@@ -88,7 +88,7 @@ module Twilio
                   data: data
               )
 
-              return ApplicationInstance.new(
+              ApplicationInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -185,7 +185,7 @@ module Twilio
                   @uri,
                   params
               )
-              return ApplicationPage.new(@version, response, @solution)
+              ApplicationPage.new(@version, response, @solution)
             end
 
             ##
@@ -198,7 +198,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return ApplicationPage.new(@version, response, @solution)
+              ApplicationPage.new(@version, response, @solution)
             end
 
             ##
@@ -229,7 +229,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ApplicationInstance] ApplicationInstance
             def get_instance(payload)
-              return ApplicationInstance.new(
+              ApplicationInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -266,7 +266,7 @@ module Twilio
             # Deletes the ApplicationInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -281,7 +281,7 @@ module Twilio
                   params,
               )
 
-              return ApplicationInstance.new(
+              ApplicationInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -350,7 +350,7 @@ module Twilio
                   data: data,
               )
 
-              return ApplicationInstance.new(
+              ApplicationInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],

@@ -118,7 +118,7 @@ module Twilio
                   @uri,
                   params
               )
-              return ActivityPage.new(@version, response, @solution)
+              ActivityPage.new(@version, response, @solution)
             end
 
             ##
@@ -131,7 +131,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return ActivityPage.new(@version, response, @solution)
+              ActivityPage.new(@version, response, @solution)
             end
 
             ##
@@ -152,7 +152,7 @@ module Twilio
                   data: data
               )
 
-              return ActivityInstance.new(
+              ActivityInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -186,7 +186,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ActivityInstance] ActivityInstance
             def get_instance(payload)
-              return ActivityInstance.new(
+              ActivityInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -230,7 +230,7 @@ module Twilio
                   params,
               )
 
-              return ActivityInstance.new(
+              ActivityInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -253,7 +253,7 @@ module Twilio
                   data: data,
               )
 
-              return ActivityInstance.new(
+              ActivityInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -265,7 +265,7 @@ module Twilio
             # Deletes the ActivityInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##

@@ -128,7 +128,7 @@ module Twilio
                       @uri,
                       params
                   )
-                  return MonthlyPage.new(@version, response, @solution)
+                  MonthlyPage.new(@version, response, @solution)
                 end
 
                 ##
@@ -141,7 +141,7 @@ module Twilio
                       'GET',
                       target_url
                   )
-                  return MonthlyPage.new(@version, response, @solution)
+                  MonthlyPage.new(@version, response, @solution)
                 end
 
                 ##
@@ -172,7 +172,7 @@ module Twilio
                 # @param [Hash] payload Payload response from the API
                 # @return [MonthlyInstance] MonthlyInstance
                 def get_instance(payload)
-                  return MonthlyInstance.new(
+                  MonthlyInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],

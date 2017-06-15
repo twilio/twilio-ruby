@@ -55,7 +55,7 @@ module Twilio
                   data: data
               )
 
-              return AddressInstance.new(
+              AddressInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -162,7 +162,7 @@ module Twilio
                   @uri,
                   params
               )
-              return AddressPage.new(@version, response, @solution)
+              AddressPage.new(@version, response, @solution)
             end
 
             ##
@@ -175,7 +175,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return AddressPage.new(@version, response, @solution)
+              AddressPage.new(@version, response, @solution)
             end
 
             ##
@@ -205,7 +205,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [AddressInstance] AddressInstance
             def get_instance(payload)
-              return AddressInstance.new(
+              AddressInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -244,7 +244,7 @@ module Twilio
             # Deletes the AddressInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -259,7 +259,7 @@ module Twilio
                   params,
               )
 
-              return AddressInstance.new(
+              AddressInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -294,7 +294,7 @@ module Twilio
                   data: data,
               )
 
-              return AddressInstance.new(
+              AddressInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],

@@ -107,7 +107,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return WorkerChannelPage.new(@version, response, @solution)
+                WorkerChannelPage.new(@version, response, @solution)
               end
 
               ##
@@ -120,7 +120,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return WorkerChannelPage.new(@version, response, @solution)
+                WorkerChannelPage.new(@version, response, @solution)
               end
 
               ##
@@ -151,7 +151,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [WorkerChannelInstance] WorkerChannelInstance
               def get_instance(payload)
-                return WorkerChannelInstance.new(
+                WorkerChannelInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -198,7 +198,7 @@ module Twilio
                     params,
                 )
 
-                return WorkerChannelInstance.new(
+                WorkerChannelInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -224,7 +224,7 @@ module Twilio
                     data: data,
                 )
 
-                return WorkerChannelInstance.new(
+                WorkerChannelInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],

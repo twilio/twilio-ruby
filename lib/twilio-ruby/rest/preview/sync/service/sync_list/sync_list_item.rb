@@ -44,7 +44,7 @@ module Twilio
                     data: data
                 )
 
-                return SyncListItemInstance.new(
+                SyncListItemInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -152,7 +152,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return SyncListItemPage.new(@version, response, @solution)
+                SyncListItemPage.new(@version, response, @solution)
               end
 
               ##
@@ -165,7 +165,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return SyncListItemPage.new(@version, response, @solution)
+                SyncListItemPage.new(@version, response, @solution)
               end
 
               ##
@@ -196,7 +196,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [SyncListItemInstance] SyncListItemInstance
               def get_instance(payload)
-                return SyncListItemInstance.new(
+                SyncListItemInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -243,7 +243,7 @@ module Twilio
                     params,
                 )
 
-                return SyncListItemInstance.new(
+                SyncListItemInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -256,7 +256,7 @@ module Twilio
               # Deletes the SyncListItemInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##
@@ -274,7 +274,7 @@ module Twilio
                     data: data,
                 )
 
-                return SyncListItemInstance.new(
+                SyncListItemInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],

@@ -106,7 +106,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return CredentialListPage.new(@version, response, @solution)
+                CredentialListPage.new(@version, response, @solution)
               end
 
               ##
@@ -119,7 +119,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return CredentialListPage.new(@version, response, @solution)
+                CredentialListPage.new(@version, response, @solution)
               end
 
               ##
@@ -138,7 +138,7 @@ module Twilio
                     data: data
                 )
 
-                return CredentialListInstance.new(
+                CredentialListInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -173,7 +173,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [CredentialListInstance] CredentialListInstance
               def get_instance(payload)
-                return CredentialListInstance.new(
+                CredentialListInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -220,7 +220,7 @@ module Twilio
                     params,
                 )
 
-                return CredentialListInstance.new(
+                CredentialListInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -243,7 +243,7 @@ module Twilio
                     data: data,
                 )
 
-                return CredentialListInstance.new(
+                CredentialListInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -255,7 +255,7 @@ module Twilio
               # Deletes the CredentialListInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##

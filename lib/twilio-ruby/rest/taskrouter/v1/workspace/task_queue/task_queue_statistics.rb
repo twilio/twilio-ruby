@@ -55,7 +55,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [TaskQueueStatisticsInstance] TaskQueueStatisticsInstance
               def get_instance(payload)
-                return TaskQueueStatisticsInstance.new(
+                TaskQueueStatisticsInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -107,7 +107,7 @@ module Twilio
                     params,
                 )
 
-                return TaskQueueStatisticsInstance.new(
+                TaskQueueStatisticsInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],

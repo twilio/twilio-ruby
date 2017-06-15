@@ -104,7 +104,7 @@ module Twilio
                   @uri,
                   params
               )
-              return QueuePage.new(@version, response, @solution)
+              QueuePage.new(@version, response, @solution)
             end
 
             ##
@@ -117,7 +117,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return QueuePage.new(@version, response, @solution)
+              QueuePage.new(@version, response, @solution)
             end
 
             ##
@@ -139,7 +139,7 @@ module Twilio
                   data: data
               )
 
-              return QueueInstance.new(
+              QueueInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -173,7 +173,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [QueueInstance] QueueInstance
             def get_instance(payload)
-              return QueueInstance.new(
+              QueueInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -220,7 +220,7 @@ module Twilio
                   params,
               )
 
-              return QueueInstance.new(
+              QueueInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -246,7 +246,7 @@ module Twilio
                   data: data,
               )
 
-              return QueueInstance.new(
+              QueueInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -258,7 +258,7 @@ module Twilio
             # Deletes the QueueInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##

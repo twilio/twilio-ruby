@@ -100,7 +100,7 @@ module Twilio
                 @uri,
                 params
             )
-            return RatePlanPage.new(@version, response, @solution)
+            RatePlanPage.new(@version, response, @solution)
           end
 
           ##
@@ -113,7 +113,7 @@ module Twilio
                 'GET',
                 target_url
             )
-            return RatePlanPage.new(@version, response, @solution)
+            RatePlanPage.new(@version, response, @solution)
           end
 
           ##
@@ -148,7 +148,7 @@ module Twilio
                 data: data
             )
 
-            return RatePlanInstance.new(
+            RatePlanInstance.new(
                 @version,
                 payload,
             )
@@ -180,7 +180,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [RatePlanInstance] RatePlanInstance
           def get_instance(payload)
-            return RatePlanInstance.new(
+            RatePlanInstance.new(
                 @version,
                 payload,
             )
@@ -221,7 +221,7 @@ module Twilio
                 params,
             )
 
-            return RatePlanInstance.new(
+            RatePlanInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -245,7 +245,7 @@ module Twilio
                 data: data,
             )
 
-            return RatePlanInstance.new(
+            RatePlanInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -256,7 +256,7 @@ module Twilio
           # Deletes the RatePlanInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            return @version.delete('delete', @uri)
+            @version.delete('delete', @uri)
           end
 
           ##

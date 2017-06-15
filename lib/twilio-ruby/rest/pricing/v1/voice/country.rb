@@ -101,7 +101,7 @@ module Twilio
                   @uri,
                   params
               )
-              return CountryPage.new(@version, response, @solution)
+              CountryPage.new(@version, response, @solution)
             end
 
             ##
@@ -114,7 +114,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return CountryPage.new(@version, response, @solution)
+              CountryPage.new(@version, response, @solution)
             end
 
             ##
@@ -143,7 +143,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [CountryInstance] CountryInstance
             def get_instance(payload)
-              return CountryInstance.new(
+              CountryInstance.new(
                   @version,
                   payload,
               )
@@ -184,7 +184,7 @@ module Twilio
                   params,
               )
 
-              return CountryInstance.new(
+              CountryInstance.new(
                   @version,
                   payload,
                   iso_country: @solution[:iso_country],

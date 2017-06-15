@@ -54,7 +54,7 @@ module Twilio
                     data: data
                 )
 
-                return UserBindingInstance.new(
+                UserBindingInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -162,7 +162,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return UserBindingPage.new(@version, response, @solution)
+                UserBindingPage.new(@version, response, @solution)
               end
 
               ##
@@ -175,7 +175,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return UserBindingPage.new(@version, response, @solution)
+                UserBindingPage.new(@version, response, @solution)
               end
 
               ##
@@ -206,7 +206,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [UserBindingInstance] UserBindingInstance
               def get_instance(payload)
-                return UserBindingInstance.new(
+                UserBindingInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -253,7 +253,7 @@ module Twilio
                     params,
                 )
 
-                return UserBindingInstance.new(
+                UserBindingInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -266,7 +266,7 @@ module Twilio
               # Deletes the UserBindingInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##

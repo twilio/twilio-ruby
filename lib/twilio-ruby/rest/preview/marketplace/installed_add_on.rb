@@ -47,7 +47,7 @@ module Twilio
                 data: data
             )
 
-            return InstalledAddOnInstance.new(
+            InstalledAddOnInstance.new(
                 @version,
                 payload,
             )
@@ -132,7 +132,7 @@ module Twilio
                 @uri,
                 params
             )
-            return InstalledAddOnPage.new(@version, response, @solution)
+            InstalledAddOnPage.new(@version, response, @solution)
           end
 
           ##
@@ -145,7 +145,7 @@ module Twilio
                 'GET',
                 target_url
             )
-            return InstalledAddOnPage.new(@version, response, @solution)
+            InstalledAddOnPage.new(@version, response, @solution)
           end
 
           ##
@@ -174,7 +174,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [InstalledAddOnInstance] InstalledAddOnInstance
           def get_instance(payload)
-            return InstalledAddOnInstance.new(
+            InstalledAddOnInstance.new(
                 @version,
                 payload,
             )
@@ -211,7 +211,7 @@ module Twilio
           # Deletes the InstalledAddOnInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            return @version.delete('delete', @uri)
+            @version.delete('delete', @uri)
           end
 
           ##
@@ -226,7 +226,7 @@ module Twilio
                 params,
             )
 
-            return InstalledAddOnInstance.new(
+            InstalledAddOnInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -252,7 +252,7 @@ module Twilio
                 data: data,
             )
 
-            return InstalledAddOnInstance.new(
+            InstalledAddOnInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],

@@ -51,7 +51,7 @@ module Twilio
                   data: data
               )
 
-              return ValidationRequestInstance.new(
+              ValidationRequestInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -85,7 +85,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ValidationRequestInstance] ValidationRequestInstance
             def get_instance(payload)
-              return ValidationRequestInstance.new(
+              ValidationRequestInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],

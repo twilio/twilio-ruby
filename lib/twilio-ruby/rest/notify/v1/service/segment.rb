@@ -104,7 +104,7 @@ module Twilio
                   @uri,
                   params
               )
-              return SegmentPage.new(@version, response, @solution)
+              SegmentPage.new(@version, response, @solution)
             end
 
             ##
@@ -117,7 +117,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return SegmentPage.new(@version, response, @solution)
+              SegmentPage.new(@version, response, @solution)
             end
 
             ##
@@ -147,7 +147,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [SegmentInstance] SegmentInstance
             def get_instance(payload)
-              return SegmentInstance.new(
+              SegmentInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],

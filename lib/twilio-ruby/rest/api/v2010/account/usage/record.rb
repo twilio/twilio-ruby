@@ -161,7 +161,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return RecordPage.new(@version, response, @solution)
+                RecordPage.new(@version, response, @solution)
               end
 
               ##
@@ -174,7 +174,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return RecordPage.new(@version, response, @solution)
+                RecordPage.new(@version, response, @solution)
               end
 
               ##
@@ -285,7 +285,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [RecordInstance] RecordInstance
               def get_instance(payload)
-                return RecordInstance.new(
+                RecordInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],

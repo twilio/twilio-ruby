@@ -121,7 +121,7 @@ module Twilio
                 @uri,
                 params
             )
-            return CommandPage.new(@version, response, @solution)
+            CommandPage.new(@version, response, @solution)
           end
 
           ##
@@ -134,7 +134,7 @@ module Twilio
                 'GET',
                 target_url
             )
-            return CommandPage.new(@version, response, @solution)
+            CommandPage.new(@version, response, @solution)
           end
 
           ##
@@ -163,7 +163,7 @@ module Twilio
                 data: data
             )
 
-            return CommandInstance.new(
+            CommandInstance.new(
                 @version,
                 payload,
             )
@@ -195,7 +195,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [CommandInstance] CommandInstance
           def get_instance(payload)
-            return CommandInstance.new(
+            CommandInstance.new(
                 @version,
                 payload,
             )
@@ -236,7 +236,7 @@ module Twilio
                 params,
             )
 
-            return CommandInstance.new(
+            CommandInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],

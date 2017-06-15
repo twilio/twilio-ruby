@@ -156,7 +156,7 @@ module Twilio
                   @uri,
                   params
               )
-              return WorkerPage.new(@version, response, @solution)
+              WorkerPage.new(@version, response, @solution)
             end
 
             ##
@@ -169,7 +169,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return WorkerPage.new(@version, response, @solution)
+              WorkerPage.new(@version, response, @solution)
             end
 
             ##
@@ -192,7 +192,7 @@ module Twilio
                   data: data
               )
 
-              return WorkerInstance.new(
+              WorkerInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -241,7 +241,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [WorkerInstance] WorkerInstance
             def get_instance(payload)
-              return WorkerInstance.new(
+              WorkerInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -290,7 +290,7 @@ module Twilio
                   params,
               )
 
-              return WorkerInstance.new(
+              WorkerInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -317,7 +317,7 @@ module Twilio
                   data: data,
               )
 
-              return WorkerInstance.new(
+              WorkerInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -329,14 +329,14 @@ module Twilio
             # Deletes the WorkerInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
             # Access the statistics
             # @return [WorkerStatisticsList] WorkerStatisticsList
             def statistics
-              return WorkerStatisticsContext.new(
+              WorkerStatisticsContext.new(
                   @version,
                   @solution[:workspace_sid],
                   @solution[:sid],

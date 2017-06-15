@@ -41,7 +41,7 @@ module Twilio
                   data: data
               )
 
-              return IpAccessControlListInstance.new(
+              IpAccessControlListInstance.new(
                   @version,
                   payload,
                   trunk_sid: @solution[:trunk_sid],
@@ -127,7 +127,7 @@ module Twilio
                   @uri,
                   params
               )
-              return IpAccessControlListPage.new(@version, response, @solution)
+              IpAccessControlListPage.new(@version, response, @solution)
             end
 
             ##
@@ -140,7 +140,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return IpAccessControlListPage.new(@version, response, @solution)
+              IpAccessControlListPage.new(@version, response, @solution)
             end
 
             ##
@@ -170,7 +170,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [IpAccessControlListInstance] IpAccessControlListInstance
             def get_instance(payload)
-              return IpAccessControlListInstance.new(
+              IpAccessControlListInstance.new(
                   @version,
                   payload,
                   trunk_sid: @solution[:trunk_sid],
@@ -214,7 +214,7 @@ module Twilio
                   params,
               )
 
-              return IpAccessControlListInstance.new(
+              IpAccessControlListInstance.new(
                   @version,
                   payload,
                   trunk_sid: @solution[:trunk_sid],
@@ -226,7 +226,7 @@ module Twilio
             # Deletes the IpAccessControlListInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##

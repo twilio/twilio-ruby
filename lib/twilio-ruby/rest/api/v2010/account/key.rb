@@ -105,7 +105,7 @@ module Twilio
                   @uri,
                   params
               )
-              return KeyPage.new(@version, response, @solution)
+              KeyPage.new(@version, response, @solution)
             end
 
             ##
@@ -118,7 +118,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return KeyPage.new(@version, response, @solution)
+              KeyPage.new(@version, response, @solution)
             end
 
             ##
@@ -149,7 +149,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [KeyInstance] KeyInstance
             def get_instance(payload)
-              return KeyInstance.new(
+              KeyInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -193,7 +193,7 @@ module Twilio
                   params,
               )
 
-              return KeyInstance.new(
+              KeyInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -216,7 +216,7 @@ module Twilio
                   data: data,
               )
 
-              return KeyInstance.new(
+              KeyInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -228,7 +228,7 @@ module Twilio
             # Deletes the KeyInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##

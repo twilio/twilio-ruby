@@ -55,7 +55,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [WorkflowStatisticsInstance] WorkflowStatisticsInstance
               def get_instance(payload)
-                return WorkflowStatisticsInstance.new(
+                WorkflowStatisticsInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -107,7 +107,7 @@ module Twilio
                     params,
                 )
 
-                return WorkflowStatisticsInstance.new(
+                WorkflowStatisticsInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],

@@ -50,7 +50,7 @@ module Twilio
                 data: data
             )
 
-            return RoomInstance.new(
+            RoomInstance.new(
                 @version,
                 payload,
             )
@@ -163,7 +163,7 @@ module Twilio
                 @uri,
                 params
             )
-            return RoomPage.new(@version, response, @solution)
+            RoomPage.new(@version, response, @solution)
           end
 
           ##
@@ -176,7 +176,7 @@ module Twilio
                 'GET',
                 target_url
             )
-            return RoomPage.new(@version, response, @solution)
+            RoomPage.new(@version, response, @solution)
           end
 
           ##
@@ -205,7 +205,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [RoomInstance] RoomInstance
           def get_instance(payload)
-            return RoomInstance.new(
+            RoomInstance.new(
                 @version,
                 payload,
             )
@@ -249,7 +249,7 @@ module Twilio
                 params,
             )
 
-            return RoomInstance.new(
+            RoomInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -271,7 +271,7 @@ module Twilio
                 data: data,
             )
 
-            return RoomInstance.new(
+            RoomInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],

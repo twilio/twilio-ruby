@@ -46,7 +46,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [ExportInstance] ExportInstance
           def get_instance(payload)
-            return ExportInstance.new(
+            ExportInstance.new(
                 @version,
                 payload,
             )
@@ -90,7 +90,7 @@ module Twilio
                 params,
             )
 
-            return ExportInstance.new(
+            ExportInstance.new(
                 @version,
                 payload,
                 resource_type: @solution[:resource_type],

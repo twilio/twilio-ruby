@@ -133,7 +133,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return TaskQueuesStatisticsPage.new(@version, response, @solution)
+                TaskQueuesStatisticsPage.new(@version, response, @solution)
               end
 
               ##
@@ -146,7 +146,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return TaskQueuesStatisticsPage.new(@version, response, @solution)
+                TaskQueuesStatisticsPage.new(@version, response, @solution)
               end
 
               ##
@@ -176,7 +176,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [TaskQueuesStatisticsInstance] TaskQueuesStatisticsInstance
               def get_instance(payload)
-                return TaskQueuesStatisticsInstance.new(
+                TaskQueuesStatisticsInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],

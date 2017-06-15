@@ -47,7 +47,7 @@ module Twilio
                 data: data
             )
 
-            return TrunkInstance.new(
+            TrunkInstance.new(
                 @version,
                 payload,
             )
@@ -132,7 +132,7 @@ module Twilio
                 @uri,
                 params
             )
-            return TrunkPage.new(@version, response, @solution)
+            TrunkPage.new(@version, response, @solution)
           end
 
           ##
@@ -145,7 +145,7 @@ module Twilio
                 'GET',
                 target_url
             )
-            return TrunkPage.new(@version, response, @solution)
+            TrunkPage.new(@version, response, @solution)
           end
 
           ##
@@ -174,7 +174,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [TrunkInstance] TrunkInstance
           def get_instance(payload)
-            return TrunkInstance.new(
+            TrunkInstance.new(
                 @version,
                 payload,
             )
@@ -221,7 +221,7 @@ module Twilio
                 params,
             )
 
-            return TrunkInstance.new(
+            TrunkInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -232,7 +232,7 @@ module Twilio
           # Deletes the TrunkInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            return @version.delete('delete', @uri)
+            @version.delete('delete', @uri)
           end
 
           ##
@@ -260,7 +260,7 @@ module Twilio
                 data: data,
             )
 
-            return TrunkInstance.new(
+            TrunkInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],

@@ -139,7 +139,7 @@ module Twilio
                   @uri,
                   params
               )
-              return IncomingPhoneNumberPage.new(@version, response, @solution)
+              IncomingPhoneNumberPage.new(@version, response, @solution)
             end
 
             ##
@@ -152,7 +152,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return IncomingPhoneNumberPage.new(@version, response, @solution)
+              IncomingPhoneNumberPage.new(@version, response, @solution)
             end
 
             ##
@@ -238,7 +238,7 @@ module Twilio
                   data: data
               )
 
-              return IncomingPhoneNumberInstance.new(
+              IncomingPhoneNumberInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -303,7 +303,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [IncomingPhoneNumberInstance] IncomingPhoneNumberInstance
             def get_instance(payload)
-              return IncomingPhoneNumberInstance.new(
+              IncomingPhoneNumberInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -415,7 +415,7 @@ module Twilio
                   data: data,
               )
 
-              return IncomingPhoneNumberInstance.new(
+              IncomingPhoneNumberInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -435,7 +435,7 @@ module Twilio
                   params,
               )
 
-              return IncomingPhoneNumberInstance.new(
+              IncomingPhoneNumberInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -447,7 +447,7 @@ module Twilio
             # Deletes the IncomingPhoneNumberInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##

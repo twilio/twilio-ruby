@@ -167,7 +167,7 @@ module Twilio
                   @uri,
                   params
               )
-              return TaskPage.new(@version, response, @solution)
+              TaskPage.new(@version, response, @solution)
             end
 
             ##
@@ -180,7 +180,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return TaskPage.new(@version, response, @solution)
+              TaskPage.new(@version, response, @solution)
             end
 
             ##
@@ -207,7 +207,7 @@ module Twilio
                   data: data
               )
 
-              return TaskInstance.new(
+              TaskInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -241,7 +241,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [TaskInstance] TaskInstance
             def get_instance(payload)
-              return TaskInstance.new(
+              TaskInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -288,7 +288,7 @@ module Twilio
                   params,
               )
 
-              return TaskInstance.new(
+              TaskInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -319,7 +319,7 @@ module Twilio
                   data: data,
               )
 
-              return TaskInstance.new(
+              TaskInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -331,7 +331,7 @@ module Twilio
             # Deletes the TaskInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##

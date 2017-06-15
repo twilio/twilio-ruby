@@ -127,7 +127,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return TollFreePage.new(@version, response, @solution)
+                TollFreePage.new(@version, response, @solution)
               end
 
               ##
@@ -140,7 +140,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return TollFreePage.new(@version, response, @solution)
+                TollFreePage.new(@version, response, @solution)
               end
 
               ##
@@ -189,7 +189,7 @@ module Twilio
                     data: data
                 )
 
-                return TollFreeInstance.new(
+                TollFreeInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -224,7 +224,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [TollFreeInstance] TollFreeInstance
               def get_instance(payload)
-                return TollFreeInstance.new(
+                TollFreeInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],

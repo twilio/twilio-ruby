@@ -108,7 +108,7 @@ module Twilio
                       @uri,
                       params
                   )
-                  return CredentialPage.new(@version, response, @solution)
+                  CredentialPage.new(@version, response, @solution)
                 end
 
                 ##
@@ -121,7 +121,7 @@ module Twilio
                       'GET',
                       target_url
                   )
-                  return CredentialPage.new(@version, response, @solution)
+                  CredentialPage.new(@version, response, @solution)
                 end
 
                 ##
@@ -142,7 +142,7 @@ module Twilio
                       data: data
                   )
 
-                  return CredentialInstance.new(
+                  CredentialInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],
@@ -178,7 +178,7 @@ module Twilio
                 # @param [Hash] payload Payload response from the API
                 # @return [CredentialInstance] CredentialInstance
                 def get_instance(payload)
-                  return CredentialInstance.new(
+                  CredentialInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],
@@ -225,7 +225,7 @@ module Twilio
                       params,
                   )
 
-                  return CredentialInstance.new(
+                  CredentialInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],
@@ -249,7 +249,7 @@ module Twilio
                       data: data,
                   )
 
-                  return CredentialInstance.new(
+                  CredentialInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],
@@ -262,7 +262,7 @@ module Twilio
                 # Deletes the CredentialInstance
                 # @return [Boolean] true if delete succeeds, true otherwise
                 def delete
-                  return @version.delete('delete', @uri)
+                  @version.delete('delete', @uri)
                 end
 
                 ##

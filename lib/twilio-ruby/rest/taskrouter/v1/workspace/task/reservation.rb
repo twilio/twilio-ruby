@@ -114,7 +114,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return ReservationPage.new(@version, response, @solution)
+                ReservationPage.new(@version, response, @solution)
               end
 
               ##
@@ -127,7 +127,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return ReservationPage.new(@version, response, @solution)
+                ReservationPage.new(@version, response, @solution)
               end
 
               ##
@@ -158,7 +158,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [ReservationInstance] ReservationInstance
               def get_instance(payload)
-                return ReservationInstance.new(
+                ReservationInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -205,7 +205,7 @@ module Twilio
                     params,
                 )
 
-                return ReservationInstance.new(
+                ReservationInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -266,7 +266,7 @@ module Twilio
                     data: data,
                 )
 
-                return ReservationInstance.new(
+                ReservationInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],

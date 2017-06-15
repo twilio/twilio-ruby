@@ -109,7 +109,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return SyncListPermissionPage.new(@version, response, @solution)
+                SyncListPermissionPage.new(@version, response, @solution)
               end
 
               ##
@@ -122,7 +122,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return SyncListPermissionPage.new(@version, response, @solution)
+                SyncListPermissionPage.new(@version, response, @solution)
               end
 
               ##
@@ -155,7 +155,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [SyncListPermissionInstance] SyncListPermissionInstance
               def get_instance(payload)
-                return SyncListPermissionInstance.new(
+                SyncListPermissionInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -204,7 +204,7 @@ module Twilio
                     params,
                 )
 
-                return SyncListPermissionInstance.new(
+                SyncListPermissionInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -217,7 +217,7 @@ module Twilio
               # Deletes the SyncListPermissionInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##
@@ -242,7 +242,7 @@ module Twilio
                     data: data,
                 )
 
-                return SyncListPermissionInstance.new(
+                SyncListPermissionInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],

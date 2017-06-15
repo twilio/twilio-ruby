@@ -46,7 +46,7 @@ module Twilio
                       data: data
                   )
 
-                  return IpAccessControlListMappingInstance.new(
+                  IpAccessControlListMappingInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],
@@ -133,7 +133,7 @@ module Twilio
                       @uri,
                       params
                   )
-                  return IpAccessControlListMappingPage.new(@version, response, @solution)
+                  IpAccessControlListMappingPage.new(@version, response, @solution)
                 end
 
                 ##
@@ -146,7 +146,7 @@ module Twilio
                       'GET',
                       target_url
                   )
-                  return IpAccessControlListMappingPage.new(@version, response, @solution)
+                  IpAccessControlListMappingPage.new(@version, response, @solution)
                 end
 
                 ##
@@ -178,7 +178,7 @@ module Twilio
                 # @param [Hash] payload Payload response from the API
                 # @return [IpAccessControlListMappingInstance] IpAccessControlListMappingInstance
                 def get_instance(payload)
-                  return IpAccessControlListMappingInstance.new(
+                  IpAccessControlListMappingInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],
@@ -225,7 +225,7 @@ module Twilio
                       params,
                   )
 
-                  return IpAccessControlListMappingInstance.new(
+                  IpAccessControlListMappingInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],
@@ -238,7 +238,7 @@ module Twilio
                 # Deletes the IpAccessControlListMappingInstance
                 # @return [Boolean] true if delete succeeds, true otherwise
                 def delete
-                  return @version.delete('delete', @uri)
+                  @version.delete('delete', @uri)
                 end
 
                 ##

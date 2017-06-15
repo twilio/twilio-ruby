@@ -105,7 +105,7 @@ module Twilio
                     data: data
                 )
 
-                return ParticipantInstance.new(
+                ParticipantInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -206,7 +206,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return ParticipantPage.new(@version, response, @solution)
+                ParticipantPage.new(@version, response, @solution)
               end
 
               ##
@@ -219,7 +219,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return ParticipantPage.new(@version, response, @solution)
+                ParticipantPage.new(@version, response, @solution)
               end
 
               ##
@@ -252,7 +252,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [ParticipantInstance] ParticipantInstance
               def get_instance(payload)
-                return ParticipantInstance.new(
+                ParticipantInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -300,7 +300,7 @@ module Twilio
                     params,
                 )
 
-                return ParticipantInstance.new(
+                ParticipantInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -330,7 +330,7 @@ module Twilio
                     data: data,
                 )
 
-                return ParticipantInstance.new(
+                ParticipantInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -343,7 +343,7 @@ module Twilio
               # Deletes the ParticipantInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##

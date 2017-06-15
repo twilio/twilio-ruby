@@ -135,7 +135,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return NotificationPage.new(@version, response, @solution)
+                NotificationPage.new(@version, response, @solution)
               end
 
               ##
@@ -148,7 +148,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return NotificationPage.new(@version, response, @solution)
+                NotificationPage.new(@version, response, @solution)
               end
 
               ##
@@ -179,7 +179,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [NotificationInstance] NotificationInstance
               def get_instance(payload)
-                return NotificationInstance.new(
+                NotificationInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -226,7 +226,7 @@ module Twilio
                     params,
                 )
 
-                return NotificationInstance.new(
+                NotificationInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -239,7 +239,7 @@ module Twilio
               # Deletes the NotificationInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##

@@ -107,7 +107,7 @@ module Twilio
                 @uri,
                 params
             )
-            return WorkspacePage.new(@version, response, @solution)
+            WorkspacePage.new(@version, response, @solution)
           end
 
           ##
@@ -120,7 +120,7 @@ module Twilio
                 'GET',
                 target_url
             )
-            return WorkspacePage.new(@version, response, @solution)
+            WorkspacePage.new(@version, response, @solution)
           end
 
           ##
@@ -149,7 +149,7 @@ module Twilio
                 data: data
             )
 
-            return WorkspaceInstance.new(
+            WorkspaceInstance.new(
                 @version,
                 payload,
             )
@@ -181,7 +181,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [WorkspaceInstance] WorkspaceInstance
           def get_instance(payload)
-            return WorkspaceInstance.new(
+            WorkspaceInstance.new(
                 @version,
                 payload,
             )
@@ -232,7 +232,7 @@ module Twilio
                 params,
             )
 
-            return WorkspaceInstance.new(
+            WorkspaceInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -266,7 +266,7 @@ module Twilio
                 data: data,
             )
 
-            return WorkspaceInstance.new(
+            WorkspaceInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -277,7 +277,7 @@ module Twilio
           # Deletes the WorkspaceInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            return @version.delete('delete', @uri)
+            @version.delete('delete', @uri)
           end
 
           ##
@@ -416,7 +416,7 @@ module Twilio
           # Access the statistics
           # @return [WorkspaceStatisticsList] WorkspaceStatisticsList
           def statistics
-            return WorkspaceStatisticsContext.new(
+            WorkspaceStatisticsContext.new(
                 @version,
                 @solution[:sid],
             )

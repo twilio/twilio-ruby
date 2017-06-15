@@ -43,7 +43,7 @@ module Twilio
                   data: data
               )
 
-              return DocumentInstance.new(
+              DocumentInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -129,7 +129,7 @@ module Twilio
                   @uri,
                   params
               )
-              return DocumentPage.new(@version, response, @solution)
+              DocumentPage.new(@version, response, @solution)
             end
 
             ##
@@ -142,7 +142,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return DocumentPage.new(@version, response, @solution)
+              DocumentPage.new(@version, response, @solution)
             end
 
             ##
@@ -172,7 +172,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [DocumentInstance] DocumentInstance
             def get_instance(payload)
-              return DocumentInstance.new(
+              DocumentInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -219,7 +219,7 @@ module Twilio
                   params,
               )
 
-              return DocumentInstance.new(
+              DocumentInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -231,7 +231,7 @@ module Twilio
             # Deletes the DocumentInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -249,7 +249,7 @@ module Twilio
                   data: data,
               )
 
-              return DocumentInstance.new(
+              DocumentInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],

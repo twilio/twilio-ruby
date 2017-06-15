@@ -41,7 +41,7 @@ module Twilio
                   data: data
               )
 
-              return SyncListInstance.new(
+              SyncListInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -127,7 +127,7 @@ module Twilio
                   @uri,
                   params
               )
-              return SyncListPage.new(@version, response, @solution)
+              SyncListPage.new(@version, response, @solution)
             end
 
             ##
@@ -140,7 +140,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return SyncListPage.new(@version, response, @solution)
+              SyncListPage.new(@version, response, @solution)
             end
 
             ##
@@ -170,7 +170,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [SyncListInstance] SyncListInstance
             def get_instance(payload)
-              return SyncListInstance.new(
+              SyncListInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -218,7 +218,7 @@ module Twilio
                   params,
               )
 
-              return SyncListInstance.new(
+              SyncListInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -230,7 +230,7 @@ module Twilio
             # Deletes the SyncListInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##

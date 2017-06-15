@@ -111,7 +111,7 @@ module Twilio
                   @uri,
                   params
               )
-              return WorkflowPage.new(@version, response, @solution)
+              WorkflowPage.new(@version, response, @solution)
             end
 
             ##
@@ -124,7 +124,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return WorkflowPage.new(@version, response, @solution)
+              WorkflowPage.new(@version, response, @solution)
             end
 
             ##
@@ -152,7 +152,7 @@ module Twilio
                   data: data
               )
 
-              return WorkflowInstance.new(
+              WorkflowInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -186,7 +186,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [WorkflowInstance] WorkflowInstance
             def get_instance(payload)
-              return WorkflowInstance.new(
+              WorkflowInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -233,7 +233,7 @@ module Twilio
                   params,
               )
 
-              return WorkflowInstance.new(
+              WorkflowInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -265,7 +265,7 @@ module Twilio
                   data: data,
               )
 
-              return WorkflowInstance.new(
+              WorkflowInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -277,14 +277,14 @@ module Twilio
             # Deletes the WorkflowInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
             # Access the statistics
             # @return [WorkflowStatisticsList] WorkflowStatisticsList
             def statistics
-              return WorkflowStatisticsContext.new(
+              WorkflowStatisticsContext.new(
                   @version,
                   @solution[:workspace_sid],
                   @solution[:sid],

@@ -106,7 +106,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return DomainPage.new(@version, response, @solution)
+                DomainPage.new(@version, response, @solution)
               end
 
               ##
@@ -119,7 +119,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return DomainPage.new(@version, response, @solution)
+                DomainPage.new(@version, response, @solution)
               end
 
               ##
@@ -161,7 +161,7 @@ module Twilio
                     data: data
                 )
 
-                return DomainInstance.new(
+                DomainInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -196,7 +196,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [DomainInstance] DomainInstance
               def get_instance(payload)
-                return DomainInstance.new(
+                DomainInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -244,7 +244,7 @@ module Twilio
                     params,
                 )
 
-                return DomainInstance.new(
+                DomainInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -282,7 +282,7 @@ module Twilio
                     data: data,
                 )
 
-                return DomainInstance.new(
+                DomainInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -294,7 +294,7 @@ module Twilio
               # Deletes the DomainInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##

@@ -43,7 +43,7 @@ module Twilio
                   data: data
               )
 
-              return TokenInstance.new(
+              TokenInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -78,7 +78,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [TokenInstance] TokenInstance
             def get_instance(payload)
-              return TokenInstance.new(
+              TokenInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],

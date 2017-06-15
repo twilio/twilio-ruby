@@ -125,7 +125,7 @@ module Twilio
                   @uri,
                   params
               )
-              return TaskQueuePage.new(@version, response, @solution)
+              TaskQueuePage.new(@version, response, @solution)
             end
 
             ##
@@ -138,7 +138,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return TaskQueuePage.new(@version, response, @solution)
+              TaskQueuePage.new(@version, response, @solution)
             end
 
             ##
@@ -167,7 +167,7 @@ module Twilio
                   data: data
               )
 
-              return TaskQueueInstance.new(
+              TaskQueueInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -201,7 +201,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [TaskQueueInstance] TaskQueueInstance
             def get_instance(payload)
-              return TaskQueueInstance.new(
+              TaskQueueInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -249,7 +249,7 @@ module Twilio
                   params,
               )
 
-              return TaskQueueInstance.new(
+              TaskQueueInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -282,7 +282,7 @@ module Twilio
                   data: data,
               )
 
-              return TaskQueueInstance.new(
+              TaskQueueInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -294,7 +294,7 @@ module Twilio
             # Deletes the TaskQueueInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -315,7 +315,7 @@ module Twilio
             # Access the task_queue_statistics
             # @return [TaskQueueStatisticsList] TaskQueueStatisticsList
             def task_queue_statistics
-              return TaskQueueStatisticsContext.new(
+              TaskQueueStatisticsContext.new(
                   @version,
                   @solution[:workspace_sid],
                   @solution[:sid],

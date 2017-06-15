@@ -51,7 +51,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [UsageInstance] UsageInstance
             def get_instance(payload)
-              return UsageInstance.new(
+              UsageInstance.new(
                   @version,
                   payload,
                   sim_sid: @solution[:sim_sid],
@@ -98,7 +98,7 @@ module Twilio
                   params,
               )
 
-              return UsageInstance.new(
+              UsageInstance.new(
                   @version,
                   payload,
                   sim_sid: @solution[:sim_sid],

@@ -130,7 +130,7 @@ module Twilio
                   @uri,
                   params
               )
-              return SessionPage.new(@version, response, @solution)
+              SessionPage.new(@version, response, @solution)
             end
 
             ##
@@ -143,7 +143,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return SessionPage.new(@version, response, @solution)
+              SessionPage.new(@version, response, @solution)
             end
 
             ##
@@ -172,7 +172,7 @@ module Twilio
                   data: data
               )
 
-              return SessionInstance.new(
+              SessionInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -206,7 +206,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [SessionInstance] SessionInstance
             def get_instance(payload)
-              return SessionInstance.new(
+              SessionInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -254,7 +254,7 @@ module Twilio
                   params,
               )
 
-              return SessionInstance.new(
+              SessionInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -266,7 +266,7 @@ module Twilio
             # Deletes the SessionInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -294,7 +294,7 @@ module Twilio
                   data: data,
               )
 
-              return SessionInstance.new(
+              SessionInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],

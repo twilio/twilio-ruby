@@ -116,7 +116,7 @@ module Twilio
                   data: data
               )
 
-              return CallInstance.new(
+              CallInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -248,7 +248,7 @@ module Twilio
                   @uri,
                   params
               )
-              return CallPage.new(@version, response, @solution)
+              CallPage.new(@version, response, @solution)
             end
 
             ##
@@ -261,7 +261,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return CallPage.new(@version, response, @solution)
+              CallPage.new(@version, response, @solution)
             end
 
             ##
@@ -311,7 +311,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [CallInstance] CallInstance
             def get_instance(payload)
-              return CallInstance.new(
+              CallInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -352,7 +352,7 @@ module Twilio
             # Deletes the CallInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -367,7 +367,7 @@ module Twilio
                   params,
               )
 
-              return CallInstance.new(
+              CallInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -411,7 +411,7 @@ module Twilio
                   data: data,
               )
 
-              return CallInstance.new(
+              CallInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -471,7 +471,7 @@ module Twilio
             # Access the feedback
             # @return [FeedbackList] FeedbackList
             def feedback
-              return FeedbackContext.new(
+              FeedbackContext.new(
                   @version,
                   @solution[:account_sid],
                   @solution[:sid],

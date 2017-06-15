@@ -108,7 +108,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return MemberPage.new(@version, response, @solution)
+                MemberPage.new(@version, response, @solution)
               end
 
               ##
@@ -121,7 +121,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return MemberPage.new(@version, response, @solution)
+                MemberPage.new(@version, response, @solution)
               end
 
               ##
@@ -153,7 +153,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [MemberInstance] MemberInstance
               def get_instance(payload)
-                return MemberInstance.new(
+                MemberInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -200,7 +200,7 @@ module Twilio
                     params,
                 )
 
-                return MemberInstance.new(
+                MemberInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -226,7 +226,7 @@ module Twilio
                     data: data,
                 )
 
-                return MemberInstance.new(
+                MemberInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],

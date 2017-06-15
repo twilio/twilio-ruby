@@ -45,7 +45,7 @@ module Twilio
                   data: data
               )
 
-              return RoleInstance.new(
+              RoleInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -131,7 +131,7 @@ module Twilio
                   @uri,
                   params
               )
-              return RolePage.new(@version, response, @solution)
+              RolePage.new(@version, response, @solution)
             end
 
             ##
@@ -144,7 +144,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return RolePage.new(@version, response, @solution)
+              RolePage.new(@version, response, @solution)
             end
 
             ##
@@ -174,7 +174,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [RoleInstance] RoleInstance
             def get_instance(payload)
-              return RoleInstance.new(
+              RoleInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -218,7 +218,7 @@ module Twilio
                   params,
               )
 
-              return RoleInstance.new(
+              RoleInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -230,7 +230,7 @@ module Twilio
             # Deletes the RoleInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -248,7 +248,7 @@ module Twilio
                   data: data,
               )
 
-              return RoleInstance.new(
+              RoleInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],

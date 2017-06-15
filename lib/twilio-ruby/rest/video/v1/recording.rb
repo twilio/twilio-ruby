@@ -121,7 +121,7 @@ module Twilio
                 @uri,
                 params
             )
-            return RecordingPage.new(@version, response, @solution)
+            RecordingPage.new(@version, response, @solution)
           end
 
           ##
@@ -134,7 +134,7 @@ module Twilio
                 'GET',
                 target_url
             )
-            return RecordingPage.new(@version, response, @solution)
+            RecordingPage.new(@version, response, @solution)
           end
 
           ##
@@ -163,7 +163,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [RecordingInstance] RecordingInstance
           def get_instance(payload)
-            return RecordingInstance.new(
+            RecordingInstance.new(
                 @version,
                 payload,
             )
@@ -204,7 +204,7 @@ module Twilio
                 params,
             )
 
-            return RecordingInstance.new(
+            RecordingInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -215,7 +215,7 @@ module Twilio
           # Deletes the RecordingInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            return @version.delete('delete', @uri)
+            @version.delete('delete', @uri)
           end
 
           ##

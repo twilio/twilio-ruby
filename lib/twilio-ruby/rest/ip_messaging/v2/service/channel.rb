@@ -47,7 +47,7 @@ module Twilio
                   data: data
               )
 
-              return ChannelInstance.new(
+              ChannelInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -140,7 +140,7 @@ module Twilio
                   @uri,
                   params
               )
-              return ChannelPage.new(@version, response, @solution)
+              ChannelPage.new(@version, response, @solution)
             end
 
             ##
@@ -153,7 +153,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return ChannelPage.new(@version, response, @solution)
+              ChannelPage.new(@version, response, @solution)
             end
 
             ##
@@ -183,7 +183,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ChannelInstance] ChannelInstance
             def get_instance(payload)
-              return ChannelInstance.new(
+              ChannelInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -232,7 +232,7 @@ module Twilio
                   params,
               )
 
-              return ChannelInstance.new(
+              ChannelInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -244,7 +244,7 @@ module Twilio
             # Deletes the ChannelInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -266,7 +266,7 @@ module Twilio
                   data: data,
               )
 
-              return ChannelInstance.new(
+              ChannelInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],

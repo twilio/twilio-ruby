@@ -69,7 +69,7 @@ module Twilio
                   data: data
               )
 
-              return NotificationInstance.new(
+              NotificationInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -103,7 +103,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [NotificationInstance] NotificationInstance
             def get_instance(payload)
-              return NotificationInstance.new(
+              NotificationInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],

@@ -228,7 +228,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return MobilePage.new(@version, response, @solution)
+                MobilePage.new(@version, response, @solution)
               end
 
               ##
@@ -241,7 +241,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return MobilePage.new(@version, response, @solution)
+                MobilePage.new(@version, response, @solution)
               end
 
               ##
@@ -273,7 +273,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [MobileInstance] MobileInstance
               def get_instance(payload)
-                return MobileInstance.new(
+                MobileInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],

@@ -228,7 +228,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return LocalPage.new(@version, response, @solution)
+                LocalPage.new(@version, response, @solution)
               end
 
               ##
@@ -241,7 +241,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return LocalPage.new(@version, response, @solution)
+                LocalPage.new(@version, response, @solution)
               end
 
               ##
@@ -273,7 +273,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [LocalInstance] LocalInstance
               def get_instance(payload)
-                return LocalInstance.new(
+                LocalInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],

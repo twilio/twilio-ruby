@@ -42,7 +42,7 @@ module Twilio
                   data: data
               )
 
-              return NewSigningKeyInstance.new(
+              NewSigningKeyInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -77,7 +77,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [NewSigningKeyInstance] NewSigningKeyInstance
             def get_instance(payload)
-              return NewSigningKeyInstance.new(
+              NewSigningKeyInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],

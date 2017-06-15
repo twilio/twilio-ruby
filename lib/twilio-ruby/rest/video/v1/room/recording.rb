@@ -104,7 +104,7 @@ module Twilio
                   @uri,
                   params
               )
-              return RoomRecordingPage.new(@version, response, @solution)
+              RoomRecordingPage.new(@version, response, @solution)
             end
 
             ##
@@ -117,7 +117,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return RoomRecordingPage.new(@version, response, @solution)
+              RoomRecordingPage.new(@version, response, @solution)
             end
 
             ##
@@ -147,7 +147,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [RoomRecordingInstance] RoomRecordingInstance
             def get_instance(payload)
-              return RoomRecordingInstance.new(
+              RoomRecordingInstance.new(
                   @version,
                   payload,
                   room_sid: @solution[:room_sid],
@@ -191,7 +191,7 @@ module Twilio
                   params,
               )
 
-              return RoomRecordingInstance.new(
+              RoomRecordingInstance.new(
                   @version,
                   payload,
                   room_sid: @solution[:room_sid],

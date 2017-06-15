@@ -51,7 +51,7 @@ module Twilio
                     data: data
                 )
 
-                return FeedbackSummaryInstance.new(
+                FeedbackSummaryInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -86,7 +86,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [FeedbackSummaryInstance] FeedbackSummaryInstance
               def get_instance(payload)
-                return FeedbackSummaryInstance.new(
+                FeedbackSummaryInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -130,7 +130,7 @@ module Twilio
                     params,
                 )
 
-                return FeedbackSummaryInstance.new(
+                FeedbackSummaryInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -142,7 +142,7 @@ module Twilio
               # Deletes the FeedbackSummaryInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##

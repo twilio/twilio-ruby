@@ -104,7 +104,7 @@ module Twilio
                   @uri,
                   params
               )
-              return DayPage.new(@version, response, @solution)
+              DayPage.new(@version, response, @solution)
             end
 
             ##
@@ -117,7 +117,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return DayPage.new(@version, response, @solution)
+              DayPage.new(@version, response, @solution)
             end
 
             ##
@@ -147,7 +147,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [DayInstance] DayInstance
             def get_instance(payload)
-              return DayInstance.new(
+              DayInstance.new(
                   @version,
                   payload,
                   resource_type: @solution[:resource_type],

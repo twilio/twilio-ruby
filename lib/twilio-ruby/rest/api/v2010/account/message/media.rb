@@ -120,7 +120,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return MediaPage.new(@version, response, @solution)
+                MediaPage.new(@version, response, @solution)
               end
 
               ##
@@ -133,7 +133,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return MediaPage.new(@version, response, @solution)
+                MediaPage.new(@version, response, @solution)
               end
 
               ##
@@ -166,7 +166,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [MediaInstance] MediaInstance
               def get_instance(payload)
-                return MediaInstance.new(
+                MediaInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -205,7 +205,7 @@ module Twilio
               # Deletes the MediaInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##
@@ -220,7 +220,7 @@ module Twilio
                     params,
                 )
 
-                return MediaInstance.new(
+                MediaInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],

@@ -127,7 +127,7 @@ module Twilio
                   @uri,
                   params
               )
-              return ShortCodePage.new(@version, response, @solution)
+              ShortCodePage.new(@version, response, @solution)
             end
 
             ##
@@ -140,7 +140,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return ShortCodePage.new(@version, response, @solution)
+              ShortCodePage.new(@version, response, @solution)
             end
 
             ##
@@ -171,7 +171,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ShortCodeInstance] ShortCodeInstance
             def get_instance(payload)
-              return ShortCodeInstance.new(
+              ShortCodeInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -215,7 +215,7 @@ module Twilio
                   params,
               )
 
-              return ShortCodeInstance.new(
+              ShortCodeInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -255,7 +255,7 @@ module Twilio
                   data: data,
               )
 
-              return ShortCodeInstance.new(
+              ShortCodeInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],

@@ -100,7 +100,7 @@ module Twilio
                 @uri,
                 params
             )
-            return AvailableAddOnPage.new(@version, response, @solution)
+            AvailableAddOnPage.new(@version, response, @solution)
           end
 
           ##
@@ -113,7 +113,7 @@ module Twilio
                 'GET',
                 target_url
             )
-            return AvailableAddOnPage.new(@version, response, @solution)
+            AvailableAddOnPage.new(@version, response, @solution)
           end
 
           ##
@@ -142,7 +142,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [AvailableAddOnInstance] AvailableAddOnInstance
           def get_instance(payload)
-            return AvailableAddOnInstance.new(
+            AvailableAddOnInstance.new(
                 @version,
                 payload,
             )
@@ -187,7 +187,7 @@ module Twilio
                 params,
             )
 
-            return AvailableAddOnInstance.new(
+            AvailableAddOnInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],

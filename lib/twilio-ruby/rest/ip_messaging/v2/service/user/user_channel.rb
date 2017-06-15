@@ -107,7 +107,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return UserChannelPage.new(@version, response, @solution)
+                UserChannelPage.new(@version, response, @solution)
               end
 
               ##
@@ -120,7 +120,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return UserChannelPage.new(@version, response, @solution)
+                UserChannelPage.new(@version, response, @solution)
               end
 
               ##
@@ -151,7 +151,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [UserChannelInstance] UserChannelInstance
               def get_instance(payload)
-                return UserChannelInstance.new(
+                UserChannelInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],

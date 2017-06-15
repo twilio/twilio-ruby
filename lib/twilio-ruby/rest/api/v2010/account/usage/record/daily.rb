@@ -128,7 +128,7 @@ module Twilio
                       @uri,
                       params
                   )
-                  return DailyPage.new(@version, response, @solution)
+                  DailyPage.new(@version, response, @solution)
                 end
 
                 ##
@@ -141,7 +141,7 @@ module Twilio
                       'GET',
                       target_url
                   )
-                  return DailyPage.new(@version, response, @solution)
+                  DailyPage.new(@version, response, @solution)
                 end
 
                 ##
@@ -172,7 +172,7 @@ module Twilio
                 # @param [Hash] payload Payload response from the API
                 # @return [DailyInstance] DailyInstance
                 def get_instance(payload)
-                  return DailyInstance.new(
+                  DailyInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],

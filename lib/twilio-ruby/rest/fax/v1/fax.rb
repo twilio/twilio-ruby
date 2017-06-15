@@ -128,7 +128,7 @@ module Twilio
                 @uri,
                 params
             )
-            return FaxPage.new(@version, response, @solution)
+            FaxPage.new(@version, response, @solution)
           end
 
           ##
@@ -141,7 +141,7 @@ module Twilio
                 'GET',
                 target_url
             )
-            return FaxPage.new(@version, response, @solution)
+            FaxPage.new(@version, response, @solution)
           end
 
           ##
@@ -172,7 +172,7 @@ module Twilio
                 data: data
             )
 
-            return FaxInstance.new(
+            FaxInstance.new(
                 @version,
                 payload,
             )
@@ -204,7 +204,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [FaxInstance] FaxInstance
           def get_instance(payload)
-            return FaxInstance.new(
+            FaxInstance.new(
                 @version,
                 payload,
             )
@@ -248,7 +248,7 @@ module Twilio
                 params,
             )
 
-            return FaxInstance.new(
+            FaxInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -270,7 +270,7 @@ module Twilio
                 data: data,
             )
 
-            return FaxInstance.new(
+            FaxInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -281,7 +281,7 @@ module Twilio
           # Deletes the FaxInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            return @version.delete('delete', @uri)
+            @version.delete('delete', @uri)
           end
 
           ##

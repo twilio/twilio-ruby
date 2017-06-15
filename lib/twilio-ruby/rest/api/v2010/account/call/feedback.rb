@@ -57,7 +57,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [FeedbackInstance] FeedbackInstance
               def get_instance(payload)
-                return FeedbackInstance.new(
+                FeedbackInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -108,7 +108,7 @@ module Twilio
                     data: data
                 )
 
-                return FeedbackInstance.new(
+                FeedbackInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -128,7 +128,7 @@ module Twilio
                     params,
                 )
 
-                return FeedbackInstance.new(
+                FeedbackInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -154,7 +154,7 @@ module Twilio
                     data: data,
                 )
 
-                return FeedbackInstance.new(
+                FeedbackInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],

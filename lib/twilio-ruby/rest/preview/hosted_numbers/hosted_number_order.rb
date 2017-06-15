@@ -163,7 +163,7 @@ module Twilio
                 @uri,
                 params
             )
-            return HostedNumberOrderPage.new(@version, response, @solution)
+            HostedNumberOrderPage.new(@version, response, @solution)
           end
 
           ##
@@ -176,7 +176,7 @@ module Twilio
                 'GET',
                 target_url
             )
-            return HostedNumberOrderPage.new(@version, response, @solution)
+            HostedNumberOrderPage.new(@version, response, @solution)
           end
 
           ##
@@ -235,7 +235,7 @@ module Twilio
                 data: data
             )
 
-            return HostedNumberOrderInstance.new(
+            HostedNumberOrderInstance.new(
                 @version,
                 payload,
             )
@@ -267,7 +267,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [HostedNumberOrderInstance] HostedNumberOrderInstance
           def get_instance(payload)
-            return HostedNumberOrderInstance.new(
+            HostedNumberOrderInstance.new(
                 @version,
                 payload,
             )
@@ -309,7 +309,7 @@ module Twilio
                 params,
             )
 
-            return HostedNumberOrderInstance.new(
+            HostedNumberOrderInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -320,7 +320,7 @@ module Twilio
           # Deletes the HostedNumberOrderInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            return @version.delete('delete', @uri)
+            @version.delete('delete', @uri)
           end
 
           ##
@@ -352,7 +352,7 @@ module Twilio
                 data: data,
             )
 
-            return HostedNumberOrderInstance.new(
+            HostedNumberOrderInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],

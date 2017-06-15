@@ -142,7 +142,7 @@ module Twilio
                 @uri,
                 params
             )
-            return EventPage.new(@version, response, @solution)
+            EventPage.new(@version, response, @solution)
           end
 
           ##
@@ -155,7 +155,7 @@ module Twilio
                 'GET',
                 target_url
             )
-            return EventPage.new(@version, response, @solution)
+            EventPage.new(@version, response, @solution)
           end
 
           ##
@@ -184,7 +184,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [EventInstance] EventInstance
           def get_instance(payload)
-            return EventInstance.new(
+            EventInstance.new(
                 @version,
                 payload,
             )
@@ -225,7 +225,7 @@ module Twilio
                 params,
             )
 
-            return EventInstance.new(
+            EventInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],

@@ -169,7 +169,7 @@ module Twilio
                   @uri,
                   params
               )
-              return ConferencePage.new(@version, response, @solution)
+              ConferencePage.new(@version, response, @solution)
             end
 
             ##
@@ -182,7 +182,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return ConferencePage.new(@version, response, @solution)
+              ConferencePage.new(@version, response, @solution)
             end
 
             ##
@@ -213,7 +213,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ConferenceInstance] ConferenceInstance
             def get_instance(payload)
-              return ConferenceInstance.new(
+              ConferenceInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -260,7 +260,7 @@ module Twilio
                   params,
               )
 
-              return ConferenceInstance.new(
+              ConferenceInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -283,7 +283,7 @@ module Twilio
                   data: data,
               )
 
-              return ConferenceInstance.new(
+              ConferenceInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],

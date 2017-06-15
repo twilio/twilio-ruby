@@ -107,7 +107,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return DependentPhoneNumberPage.new(@version, response, @solution)
+                DependentPhoneNumberPage.new(@version, response, @solution)
               end
 
               ##
@@ -120,7 +120,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return DependentPhoneNumberPage.new(@version, response, @solution)
+                DependentPhoneNumberPage.new(@version, response, @solution)
               end
 
               ##
@@ -151,7 +151,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [DependentPhoneNumberInstance] DependentPhoneNumberInstance
               def get_instance(payload)
-                return DependentPhoneNumberInstance.new(
+                DependentPhoneNumberInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],

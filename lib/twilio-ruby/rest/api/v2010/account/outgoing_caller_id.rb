@@ -127,7 +127,7 @@ module Twilio
                   @uri,
                   params
               )
-              return OutgoingCallerIdPage.new(@version, response, @solution)
+              OutgoingCallerIdPage.new(@version, response, @solution)
             end
 
             ##
@@ -140,7 +140,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return OutgoingCallerIdPage.new(@version, response, @solution)
+              OutgoingCallerIdPage.new(@version, response, @solution)
             end
 
             ##
@@ -171,7 +171,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [OutgoingCallerIdInstance] OutgoingCallerIdInstance
             def get_instance(payload)
-              return OutgoingCallerIdInstance.new(
+              OutgoingCallerIdInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -216,7 +216,7 @@ module Twilio
                   params,
               )
 
-              return OutgoingCallerIdInstance.new(
+              OutgoingCallerIdInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -239,7 +239,7 @@ module Twilio
                   data: data,
               )
 
-              return OutgoingCallerIdInstance.new(
+              OutgoingCallerIdInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -251,7 +251,7 @@ module Twilio
             # Deletes the OutgoingCallerIdInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##

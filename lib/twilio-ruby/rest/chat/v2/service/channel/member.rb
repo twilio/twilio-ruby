@@ -46,7 +46,7 @@ module Twilio
                     data: data
                 )
 
-                return MemberInstance.new(
+                MemberInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -140,7 +140,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return MemberPage.new(@version, response, @solution)
+                MemberPage.new(@version, response, @solution)
               end
 
               ##
@@ -153,7 +153,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return MemberPage.new(@version, response, @solution)
+                MemberPage.new(@version, response, @solution)
               end
 
               ##
@@ -184,7 +184,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [MemberInstance] MemberInstance
               def get_instance(payload)
-                return MemberInstance.new(
+                MemberInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -231,7 +231,7 @@ module Twilio
                     params,
                 )
 
-                return MemberInstance.new(
+                MemberInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -244,7 +244,7 @@ module Twilio
               # Deletes the MemberInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##
@@ -264,7 +264,7 @@ module Twilio
                     data: data,
                 )
 
-                return MemberInstance.new(
+                MemberInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],

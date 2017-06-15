@@ -9,7 +9,7 @@ describe Twilio::JWT::AccessToken do
       expect(payload['iss']).to eq('SK123')
       expect(payload['exp']).to be > Time.now.to_i
       expect(payload['jti']).to start_with payload['iss']
-      expect(payload['nbf']).to be >= Time.now.to_i
+      expect(payload['nbf']).to be >= Time.now.to_i-1
       expect(payload['grants']).not_to be_nil
       expect(payload['grants'].count).to eq(0)
     end

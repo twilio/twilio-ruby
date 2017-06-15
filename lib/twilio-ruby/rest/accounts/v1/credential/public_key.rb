@@ -101,7 +101,7 @@ module Twilio
                   @uri,
                   params
               )
-              return PublicKeyPage.new(@version, response, @solution)
+              PublicKeyPage.new(@version, response, @solution)
             end
 
             ##
@@ -114,7 +114,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return PublicKeyPage.new(@version, response, @solution)
+              PublicKeyPage.new(@version, response, @solution)
             end
 
             ##
@@ -140,7 +140,7 @@ module Twilio
                   data: data
               )
 
-              return PublicKeyInstance.new(
+              PublicKeyInstance.new(
                   @version,
                   payload,
               )
@@ -172,7 +172,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [PublicKeyInstance] PublicKeyInstance
             def get_instance(payload)
-              return PublicKeyInstance.new(
+              PublicKeyInstance.new(
                   @version,
                   payload,
               )
@@ -214,7 +214,7 @@ module Twilio
                   params,
               )
 
-              return PublicKeyInstance.new(
+              PublicKeyInstance.new(
                   @version,
                   payload,
                   sid: @solution[:sid],
@@ -237,7 +237,7 @@ module Twilio
                   data: data,
               )
 
-              return PublicKeyInstance.new(
+              PublicKeyInstance.new(
                   @version,
                   payload,
                   sid: @solution[:sid],
@@ -248,7 +248,7 @@ module Twilio
             # Deletes the PublicKeyInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##

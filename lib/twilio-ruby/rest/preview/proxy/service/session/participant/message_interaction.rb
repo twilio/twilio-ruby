@@ -51,7 +51,7 @@ module Twilio
                       data: data
                   )
 
-                  return MessageInteractionInstance.new(
+                  MessageInteractionInstance.new(
                       @version,
                       payload,
                       service_sid: @solution[:service_sid],
@@ -139,7 +139,7 @@ module Twilio
                       @uri,
                       params
                   )
-                  return MessageInteractionPage.new(@version, response, @solution)
+                  MessageInteractionPage.new(@version, response, @solution)
                 end
 
                 ##
@@ -152,7 +152,7 @@ module Twilio
                       'GET',
                       target_url
                   )
-                  return MessageInteractionPage.new(@version, response, @solution)
+                  MessageInteractionPage.new(@version, response, @solution)
                 end
 
                 ##
@@ -184,7 +184,7 @@ module Twilio
                 # @param [Hash] payload Payload response from the API
                 # @return [MessageInteractionInstance] MessageInteractionInstance
                 def get_instance(payload)
-                  return MessageInteractionInstance.new(
+                  MessageInteractionInstance.new(
                       @version,
                       payload,
                       service_sid: @solution[:service_sid],
@@ -235,7 +235,7 @@ module Twilio
                       params,
                   )
 
-                  return MessageInteractionInstance.new(
+                  MessageInteractionInstance.new(
                       @version,
                       payload,
                       service_sid: @solution[:service_sid],

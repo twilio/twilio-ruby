@@ -107,7 +107,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return TranscriptionPage.new(@version, response, @solution)
+                TranscriptionPage.new(@version, response, @solution)
               end
 
               ##
@@ -120,7 +120,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return TranscriptionPage.new(@version, response, @solution)
+                TranscriptionPage.new(@version, response, @solution)
               end
 
               ##
@@ -151,7 +151,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [TranscriptionInstance] TranscriptionInstance
               def get_instance(payload)
-                return TranscriptionInstance.new(
+                TranscriptionInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -198,7 +198,7 @@ module Twilio
                     params,
                 )
 
-                return TranscriptionInstance.new(
+                TranscriptionInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -211,7 +211,7 @@ module Twilio
               # Deletes the TranscriptionInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##

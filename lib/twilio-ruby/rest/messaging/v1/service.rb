@@ -62,7 +62,7 @@ module Twilio
                 data: data
             )
 
-            return ServiceInstance.new(
+            ServiceInstance.new(
                 @version,
                 payload,
             )
@@ -147,7 +147,7 @@ module Twilio
                 @uri,
                 params
             )
-            return ServicePage.new(@version, response, @solution)
+            ServicePage.new(@version, response, @solution)
           end
 
           ##
@@ -160,7 +160,7 @@ module Twilio
                 'GET',
                 target_url
             )
-            return ServicePage.new(@version, response, @solution)
+            ServicePage.new(@version, response, @solution)
           end
 
           ##
@@ -189,7 +189,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [ServiceInstance] ServiceInstance
           def get_instance(payload)
-            return ServiceInstance.new(
+            ServiceInstance.new(
                 @version,
                 payload,
             )
@@ -263,7 +263,7 @@ module Twilio
                 data: data,
             )
 
-            return ServiceInstance.new(
+            ServiceInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -282,7 +282,7 @@ module Twilio
                 params,
             )
 
-            return ServiceInstance.new(
+            ServiceInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -293,7 +293,7 @@ module Twilio
           # Deletes the ServiceInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            return @version.delete('delete', @uri)
+            @version.delete('delete', @uri)
           end
 
           ##

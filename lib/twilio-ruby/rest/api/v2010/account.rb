@@ -38,7 +38,7 @@ module Twilio
                 data: data
             )
 
-            return AccountInstance.new(
+            AccountInstance.new(
                 @version,
                 payload,
             )
@@ -141,7 +141,7 @@ module Twilio
                 @uri,
                 params
             )
-            return AccountPage.new(@version, response, @solution)
+            AccountPage.new(@version, response, @solution)
           end
 
           ##
@@ -154,7 +154,7 @@ module Twilio
                 'GET',
                 target_url
             )
-            return AccountPage.new(@version, response, @solution)
+            AccountPage.new(@version, response, @solution)
           end
 
           ##
@@ -183,7 +183,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [AccountInstance] AccountInstance
           def get_instance(payload)
-            return AccountInstance.new(
+            AccountInstance.new(
                 @version,
                 payload,
             )
@@ -250,7 +250,7 @@ module Twilio
                 params,
             )
 
-            return AccountInstance.new(
+            AccountInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -276,7 +276,7 @@ module Twilio
                 data: data,
             )
 
-            return AccountInstance.new(
+            AccountInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],

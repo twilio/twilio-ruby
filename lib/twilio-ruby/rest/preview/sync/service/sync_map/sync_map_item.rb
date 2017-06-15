@@ -46,7 +46,7 @@ module Twilio
                     data: data
                 )
 
-                return SyncMapItemInstance.new(
+                SyncMapItemInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -154,7 +154,7 @@ module Twilio
                     @uri,
                     params
                 )
-                return SyncMapItemPage.new(@version, response, @solution)
+                SyncMapItemPage.new(@version, response, @solution)
               end
 
               ##
@@ -167,7 +167,7 @@ module Twilio
                     'GET',
                     target_url
                 )
-                return SyncMapItemPage.new(@version, response, @solution)
+                SyncMapItemPage.new(@version, response, @solution)
               end
 
               ##
@@ -198,7 +198,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [SyncMapItemInstance] SyncMapItemInstance
               def get_instance(payload)
-                return SyncMapItemInstance.new(
+                SyncMapItemInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -245,7 +245,7 @@ module Twilio
                     params,
                 )
 
-                return SyncMapItemInstance.new(
+                SyncMapItemInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -258,7 +258,7 @@ module Twilio
               # Deletes the SyncMapItemInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##
@@ -276,7 +276,7 @@ module Twilio
                     data: data,
                 )
 
-                return SyncMapItemInstance.new(
+                SyncMapItemInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],

@@ -135,7 +135,7 @@ module Twilio
                 @uri,
                 params
             )
-            return SimPage.new(@version, response, @solution)
+            SimPage.new(@version, response, @solution)
           end
 
           ##
@@ -148,7 +148,7 @@ module Twilio
                 'GET',
                 target_url
             )
-            return SimPage.new(@version, response, @solution)
+            SimPage.new(@version, response, @solution)
           end
 
           ##
@@ -177,7 +177,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [SimInstance] SimInstance
           def get_instance(payload)
-            return SimInstance.new(
+            SimInstance.new(
                 @version,
                 payload,
             )
@@ -221,7 +221,7 @@ module Twilio
                 params,
             )
 
-            return SimInstance.new(
+            SimInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -273,7 +273,7 @@ module Twilio
                 data: data,
             )
 
-            return SimInstance.new(
+            SimInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],

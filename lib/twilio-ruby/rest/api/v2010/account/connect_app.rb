@@ -105,7 +105,7 @@ module Twilio
                   @uri,
                   params
               )
-              return ConnectAppPage.new(@version, response, @solution)
+              ConnectAppPage.new(@version, response, @solution)
             end
 
             ##
@@ -118,7 +118,7 @@ module Twilio
                   'GET',
                   target_url
               )
-              return ConnectAppPage.new(@version, response, @solution)
+              ConnectAppPage.new(@version, response, @solution)
             end
 
             ##
@@ -149,7 +149,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ConnectAppInstance] ConnectAppInstance
             def get_instance(payload)
-              return ConnectAppInstance.new(
+              ConnectAppInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -193,7 +193,7 @@ module Twilio
                   params,
               )
 
-              return ConnectAppInstance.new(
+              ConnectAppInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -237,7 +237,7 @@ module Twilio
                   data: data,
               )
 
-              return ConnectAppInstance.new(
+              ConnectAppInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],

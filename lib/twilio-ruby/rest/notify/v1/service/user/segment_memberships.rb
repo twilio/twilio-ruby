@@ -44,7 +44,7 @@ module Twilio
                     data: data
                 )
 
-                return SegmentMembershipInstance.new(
+                SegmentMembershipInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -80,7 +80,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [SegmentMembershipInstance] SegmentMembershipInstance
               def get_instance(payload)
-                return SegmentMembershipInstance.new(
+                SegmentMembershipInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -119,7 +119,7 @@ module Twilio
               # Deletes the SegmentMembershipInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##
@@ -134,7 +134,7 @@ module Twilio
                     params,
                 )
 
-                return SegmentMembershipInstance.new(
+                SegmentMembershipInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
