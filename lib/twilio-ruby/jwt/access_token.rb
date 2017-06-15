@@ -11,7 +11,6 @@ module Twilio
                     :valid_until
 
       def initialize(account_sid, signing_key_sid, secret, grants=[], identity: nil, nbf: nil, ttl: 3600, valid_until: nil)
-        @account_sid = account_sid
         super(secret_key: secret,
               issuer: signing_key_sid,
               subject: account_sid,
@@ -19,6 +18,7 @@ module Twilio
               nbf: nbf,
               ttl: ttl,
               valid_until: valid_until)
+        @account_sid = account_sid
         @signing_key_sid = signing_key_sid
         @secret = secret
         @identity = identity
@@ -44,7 +44,7 @@ module Twilio
           grants[:identity] = @identity
         end
 
-        @grants.each { |grant| grants[grant.key] = grant.payload } unless @grants.empty?
+        @grants.each { |grant| grants[grant._key] = grant._generate_payload } unless @grants.empty?
 
         payload = {
             jti: "#{@signing_key_sid}-#{now}",
@@ -62,29 +62,30 @@ module Twilio
       end
     end
 
-    class AccessTokenGrant
-      def key
+    module AccessTokenGrant
+      def _key
         fail NotImplementedError
       end
 
-      def payload
+      def _generate_payload
         fail NotImplementedError
       end
 
     end
 
-    class IpMessagingGrant < AccessTokenGrant
+    class IpMessagingGrant
+      include AccessTokenGrant
       attr_accessor :service_sid,
                     :endpoint_id,
                     :deployment_role_sid,
                     :push_credential_sid
 
 
-      def key
+      def _key
         'ip_messaging'
       end
 
-      def payload
+      def _generate_payload
         payload = {}
 
         if service_sid
@@ -108,17 +109,18 @@ module Twilio
 
     end
 
-    class VoiceGrant < AccessTokenGrant
+    class VoiceGrant
+      include AccessTokenGrant
       attr_accessor :outgoing_application_sid,
                     :outgoing_application_params,
                     :push_credential_sid,
                     :endpoint_id
 
-      def key
+      def _key
         'voice'
       end
 
-      def payload
+      def _generate_payload
         payload = {}
 
         if outgoing_application_sid
@@ -143,16 +145,17 @@ module Twilio
       end
     end
 
-    class SyncGrant < AccessTokenGrant
+    class SyncGrant
+      include AccessTokenGrant
       attr_accessor :service_sid,
                     :endpoint_id
 
-      def key
+      def _key
         'data_sync'
 
       end
 
-      def payload
+      def _generate_payload
         payload = {}
 
         if service_sid
@@ -166,14 +169,15 @@ module Twilio
       end
     end
 
-    class ConversationsGrant < AccessTokenGrant
+    class ConversationsGrant
+      include AccessTokenGrant
       attr_accessor :configuration_profile_sid
 
-      def key
+      def _key
         'rtc'
       end
 
-      def payload
+      def _generate_payload
         payload = {}
 
         if configuration_profile_sid
@@ -191,14 +195,15 @@ module Twilio
 
     end
 
-    class VideoGrant < AccessTokenGrant
+    class VideoGrant
+      include AccessTokenGrant
       attr_accessor :room
 
-      def key
+      def _key
         'video'
       end
 
-      def payload
+      def _generate_payload
         payload = {}
 
         if room
@@ -209,16 +214,17 @@ module Twilio
       end
     end
 
-    class TaskRouterGrant < AccessTokenGrant
+    class TaskRouterGrant
+      include AccessTokenGrant
       attr_accessor :workspace_sid,
                     :worker_sid,
                     :role
 
-      def key
+      def _key
         'task_router'
       end
 
-      def payload
+      def _generate_payload
         payload = {}
 
         if workspace_sid

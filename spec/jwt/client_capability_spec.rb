@@ -4,15 +4,14 @@ describe Twilio::JWT::ClientCapability do
   describe 'initialization' do
     it 'should initialize without optionals' do
       clientCapability = Twilio::JWT::ClientCapability.new 'accountSid', 'authToken'
-
       expect(clientCapability.instance_variable_get('@account_sid')).to eq('accountSid')
       expect(clientCapability.instance_variable_get('@auth_token')).to eq('authToken')
       expect(clientCapability.instance_variable_get('@client_name')).to be_nil
-      expect(clientCapability.instance_variable_get('@capabilities')).to eq({})
+      expect(clientCapability.instance_variable_get('@scopes')).to eq([])
     end
   end
 
-  describe 'capabilities' do
+  describe 'ClientCapability scopes' do
     before :each do
       @clientCapability = Twilio::JWT::ClientCapability.new 'accountSid', 'authToken'
     end
@@ -21,65 +20,85 @@ describe Twilio::JWT::ClientCapability do
       expect(@clientCapability.__send__(:_generate_payload)[:scope]).to eq('')
     end
 
-    it 'allow_client_outgoing without params' do
-      @clientCapability.allow_client_outgoing('test-application-sid')
-      escope = 'scope:client:outgoing?appSid=test-application-sid'
+    it 'OutgoingClientScope sans params, client name' do
+      @outgoingScope = Twilio::JWT::OutgoingClientScope.new('test-application-sid')
+      @clientCapability.add_scope(@outgoingScope)
+      escope = 'scope:client:outgoing?appSid%3Dtest-application-sid'
       expect(@clientCapability.__send__(:_generate_payload)[:scope]).to eq(escope)
     end
 
-    it 'allow_client_outgoing with params' do
-      @clientCapability.allow_client_outgoing('test-application-sid', {'params_key'=>'param_value'})
-      escope = 'scope:client:outgoing?appSid=test-application-sid?params_key=param_value'
+    it 'OutgoingClientScope with client-name' do
+      @outgoingScope = Twilio::JWT::OutgoingClientScope.new('test-application-sid', 'test-client-name')
+      @clientCapability.add_scope(@outgoingScope)
+      escope = 'scope:client:outgoing?appSid%3Dtest-application-sid%26clientName%3Dtest-client-name'
       expect(@clientCapability.__send__(:_generate_payload)[:scope]).to eq(escope)
     end
 
-    it 'allow_client_incoming with params' do
-      @clientCapability.allow_client_incoming('test-client-name')
-      escope = 'scope:client:incoming?clientName=test-client-name'
+    it 'OutgoingClientScope with params' do
+      @outgoingScope = Twilio::JWT::OutgoingClientScope.new('test-application-sid', nil, {'params_key'=>'param_value'})
+      @clientCapability.add_scope(@outgoingScope)
+      escope = 'scope:client:outgoing?appSid%3Dtest-application-sid%26appParams%3Dparams_key%3Dparam_value'
       expect(@clientCapability.__send__(:_generate_payload)[:scope]).to eq(escope)
     end
 
-    it 'allow_event_stream' do
-      @clientCapability.allow_event_stream
-      escope = 'scope:stream:subscribe?path=/2010-04-01/Events'
+    it 'IncomingClientScope' do
+      @incomingScope = Twilio::JWT::IncomingClientScope.new('test-client-name')
+      @clientCapability.add_scope(@incomingScope)
+      escope = 'scope:client:incoming?clientName%3Dtest-client-name'
       expect(@clientCapability.__send__(:_generate_payload)[:scope]).to eq(escope)
     end
 
-    it 'allow_event_stream with filters' do
-      @clientCapability.allow_event_stream({'param_key'=>'param_value'})
-      escope = 'scope:stream:subscribe?path=/2010-04-01/Events?param_key=param_value'
+    it 'EventStreamScope sans filters' do
+      @eventStreamScope = Twilio::JWT::EventStreamScope.new
+      @clientCapability.add_scope(@eventStreamScope)
+      escope = 'scope:stream:subscribe?path%3D%2F2010-04-01%2FEvents'
       expect(@clientCapability.__send__(:_generate_payload)[:scope]).to eq(escope)
     end
 
-    it 'allow_client_ incoming and outgoing' do
-      @clientCapability.allow_client_outgoing('test-application-sid')
-      @clientCapability.allow_client_incoming('test-client-name')
-      escope = 'scope:client:outgoing?appSid=test-application-sid?clientName=test-client-name scope:client:incoming?clientName=test-client-name'
+    it 'EventStreamScope with filters' do
+      @eventStreamScope = Twilio::JWT::EventStreamScope.new({'param_key'=>'param_value'})
+      @clientCapability.add_scope(@eventStreamScope)
+      escope = 'scope:stream:subscribe?param_key%3Dparam_value%26path%3D%2F2010-04-01%2FEvents'
+      expect(@clientCapability.__send__(:_generate_payload)[:scope]).to eq(escope)
+    end
+
+    it 'OutgoingClientScope and IncomingClientScope' do
+      @outgoingScope = Twilio::JWT::OutgoingClientScope.new('test-application-sid')
+      @clientCapability.add_scope(@outgoingScope)
+      @incomingScope = Twilio::JWT::IncomingClientScope.new('test-client-name')
+      @clientCapability.add_scope(@incomingScope)
+      escope = 'scope:client:outgoing?appSid%3Dtest-application-sid scope:client:incoming?clientName%3Dtest-client-name'
       expect(@clientCapability.__send__(:_generate_payload)[:scope]).to eq(escope)
     end
 
     it 'complete payload' do
-      @clientCapability.allow_client_incoming('test-client-name')
+      @incomingScope = Twilio::JWT::IncomingClientScope.new('test-client-name')
+      @clientCapability.add_scope(@incomingScope)
       payload, _ = ::JWT.decode @clientCapability.to_s, 'authToken', true, {:algorithm=>'HS256'}
-      escope = 'scope:client:incoming?clientName=test-client-name'
+      escope = 'scope:client:incoming?clientName%3Dtest-client-name'
       expect(payload['iss']).to eq('accountSid')
       expect(payload['scope']).to eq(escope)
       expect(payload['exp']).to be > Time.now.to_i
       expect(payload['nbf']).to be <= Time.now.to_i
     end
   end
+
+  describe 'ClientCapability constructor with scopes' do
+    it 'Valid scopes in constructor' do
+      @incomingScope = Twilio::JWT::IncomingClientScope.new('test-client-name')
+      @clientCapability = Twilio::JWT::ClientCapability.new 'accountSid', 'authToken', scopes: [@incomingScope]
+      escope = 'scope:client:incoming?clientName%3Dtest-client-name'
+      expect(@clientCapability.__send__(:_generate_payload)[:scope]).to eq(escope)
+    end
+  end
 end
 
-describe Twilio::JWT::ScopeURI do
-  describe 'payload formatted properly' do
-    it 'payload without params' do
-      scopeUri = Twilio::JWT::ScopeURI.new('service-test', 'privilege-test')
-      expect(scopeUri.payload).to eq('scope:service-test:privilege-test')
+describe Twilio::JWT::Scope do
+  it 'Scope raise exception' do
+    class DummyScope
+      include Twilio::JWT::Scope
     end
-
-    it 'payload with params' do
-      scopeUri = Twilio::JWT::ScopeURI.new('service-test', 'privilege-test', param_key: 'param_value')
-      expect(scopeUri.payload).to eq('scope:service-test:privilege-test?param_key=param_value')
-    end
+    @dummyScope = DummyScope.new
+    expect{@dummyScope._generate_payload}.to raise_error(RuntimeError)
   end
 end

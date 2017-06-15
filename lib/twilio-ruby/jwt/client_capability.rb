@@ -4,39 +4,18 @@ module Twilio
       attr_accessor :account_sid,
                     :auth_token,
                     :client_name,
-                    :capabilities
+                    :scopes
 
-      def initialize(account_sid, auth_token, nbf: nil, ttl: 3600, valid_until: nil)
+      def initialize(account_sid, auth_token, scopes: [], nbf: nil, ttl: 3600, valid_until: nil)
         super(secret_key: auth_token, issuer: account_sid, algorithm: 'HS256', nbf: nbf, ttl: ttl, valid_until: valid_until)
         @account_sid = account_sid
         @auth_token = auth_token
         @client_name = nil
-        @capabilities = {}
+        @scopes = scopes
       end
 
-      def allow_client_outgoing(application_sid, params={})
-        scope = ScopeURI.new('client', 'outgoing', appSid: application_sid)
-
-        unless params.empty?
-          params.each { |k, v| scope.add_param(k, CGI.escape(v))}
-        end
-
-        @capabilities['outgoing'] = scope
-      end
-
-      def allow_client_incoming(client_name)
-        @client_name = client_name
-        @capabilities['incoming'] = ScopeURI.new('client', 'incoming', clientName: client_name)
-      end
-
-      def allow_event_stream(filters={})
-        scope = ScopeURI.new('stream', 'subscribe', path: '/2010-04-01/Events')
-
-        unless filters.empty?
-          filters.each{ |k, v| scope.add_param(k, CGI.escape(v))}
-        end
-
-        @capabilities['events'] = scope
+      def add_scope(scope)
+        @scopes.push(scope)
       end
 
       def to_s
@@ -45,36 +24,73 @@ module Twilio
 
       protected
       def _generate_payload
-        if capabilities.include?('outgoing') and !@client_name.nil?
-          @capabilities['outgoing'].add_param('clientName', @client_name)
+
+        scope = ''
+        unless @scopes.empty?
+          scope = @scopes.map {|scope| scope._generate_payload}.join(' ')
         end
 
         payload = {
-          scope: @capabilities.map{|_, v| v.payload}.join(' '),
+            scope: scope
         }
 
         return payload
       end
     end
 
-    class ScopeURI
-      def initialize(service, privilege, **params)
-        @service = service
-        @privilege = privilege
+    module Scope
+      def _generate_payload
+        raise 'Not Implemented'
+      end
+    end
+
+    class IncomingClientScope
+      include Scope
+
+      def initialize(client_name)
+        @client_name = client_name
+      end
+
+      def _generate_payload
+        return "scope:client:incoming?clientName" + CGI.escape("=#{@client_name}")
+      end
+
+    end
+
+    class OutgoingClientScope
+      include Scope
+
+      def initialize(application_sid, client_name = nil, params = {})
+        @application_sid = application_sid
+        @client_name = client_name
         @params = params
       end
 
-      def add_param(key, value)
-        @params[key] = value
-      end
-
-      def payload
-        param_string = ''
+      def _generate_payload
+        prefix = "scope:client:outgoing"
+        application_sid = "appSid=#{@application_sid}"
+        unless @client_name.nil?
+          client_name = "clientName=#{@client_name}"
+        end
         unless @params.empty?
-          param_string = @params.map{|k, v| "?#{k}=#{v}"}.join('')
+          params = "appParams=" + @params.map {|k, v| "#{k}=#{v}"}.join('&')
         end
 
-        return "scope:#{@service}:#{@privilege}#{param_string}"
+        suffix = CGI.escape([application_sid, client_name, params].compact.join('&'))
+        return [prefix, suffix].join('?')
+      end
+    end
+
+    class EventStreamScope
+      include Scope
+
+      def initialize(filters = {})
+        @filters = filters
+        @filters[:path] = '/2010-04-01/Events'
+      end
+
+      def _generate_payload
+        return "scope:stream:subscribe?" + CGI.escape(@filters.map {|k, v| "#{k}=#{v}"}.join('&'))
       end
     end
   end
