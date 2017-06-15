@@ -7,7 +7,7 @@ module Twilio
                     :scopes
 
       def initialize(account_sid, auth_token, scopes: [], nbf: nil, ttl: 3600, valid_until: nil)
-        super(secret_key: auth_token, issuer: account_sid, algorithm: 'HS256', nbf: nbf, ttl: ttl, valid_until: valid_until)
+        super(secret_key: auth_token, issuer: account_sid, nbf: nbf, ttl: ttl, valid_until: valid_until)
         @account_sid = account_sid
         @auth_token = auth_token
         @client_name = nil
@@ -19,7 +19,7 @@ module Twilio
       end
 
       def to_s
-        return self.to_jwt
+        self.to_jwt
       end
 
       protected
@@ -34,7 +34,7 @@ module Twilio
             scope: scope
         }
 
-        return payload
+        payload
       end
     end
 
@@ -52,7 +52,7 @@ module Twilio
       end
 
       def _generate_payload
-        return "scope:client:incoming?clientName" + CGI.escape("=#{@client_name}")
+        "scope:client:incoming?clientName" + CGI.escape("=#{@client_name}")
       end
 
     end
@@ -77,7 +77,8 @@ module Twilio
         end
 
         suffix = CGI.escape([application_sid, client_name, params].compact.join('&'))
-        return [prefix, suffix].join('?')
+
+        [prefix, suffix].join('?')
       end
     end
 
@@ -90,7 +91,7 @@ module Twilio
       end
 
       def _generate_payload
-        return "scope:stream:subscribe?" + CGI.escape(@filters.map {|k, v| "#{k}=#{v}"}.join('&'))
+        "scope:stream:subscribe?" + CGI.escape(@filters.map {|k, v| "#{k}=#{v}"}.join('&'))
       end
     end
   end

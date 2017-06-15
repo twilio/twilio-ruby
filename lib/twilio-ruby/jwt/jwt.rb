@@ -1,18 +1,23 @@
 module Twilio
   module JWT
     class BaseJWT
-      def initialize(secret_key: nil, issuer: nil, subject: nil, algorithm: 'HS256', nbf: nil, ttl: 3600, valid_until: nil)
+      # valid_until overrides ttl if specified
+      def initialize(secret_key: nil, issuer: nil, subject: nil, nbf: nil, ttl: 3600, valid_until: nil)
+        if secret_key.nil?
+          raise ArgumentError, 'JWT does not have a signing key'
+        end
+
         @secret_key = secret_key
         @issuer = issuer
         @subject = subject
-        @algorithm = algorithm
+        @algorithm = 'HS256'
         @nbf = nbf
         @ttl = ttl
         @valid_until = valid_until
       end
 
       def _generate_headers
-        return {}
+        {}
       end
 
       def _generate_payload
@@ -23,7 +28,7 @@ module Twilio
         headers = self._generate_headers.clone()
         headers[:typ] = 'JWT'
         headers[:alg] = @algorithm
-        return headers
+        headers
       end
 
       def payload
@@ -39,15 +44,11 @@ module Twilio
         end
 
         payload[:sub] = @subject unless @subject.nil?
-
-        return payload
+        payload
       end
 
       def to_jwt
-        if @secret_key.nil?
-          raise ArgumentError, 'JWT does not have a signing key'
-        end
-        return ::JWT.encode self.payload, @secret_key, @algorithm, self.headers
+        ::JWT.encode self.payload, @secret_key, @algorithm, self.headers
       end
 
     end

@@ -2,13 +2,12 @@ module Twilio
   module JWT
     class TaskRouterCapability < BaseJWT
       TASK_ROUTER_VERSION = 'v1'
-      def initialize(account_sid, auth_token, workspace_sid, channel_id, **optionals)
+      def initialize(account_sid, auth_token, workspace_sid, channel_id, nbf: nil, ttl: 3600, valid_until: nil)
         super(secret_key: auth_token,
               issuer: account_sid,
-              algorithm: 'HS256',
-              nbf: optionals['nbf'],
-              ttl: optionals['ttl'] || 3600,
-              valid_until: optionals['valid_until']
+              nbf: nbf,
+              ttl: ttl,
+              valid_until: valid_until
         )
         @account_sid = account_sid
         @auth_token = auth_token
@@ -45,7 +44,7 @@ module Twilio
           payload[:taskqueue_sid] = @channel_id
         end
 
-        return payload
+        payload
       end
     end
 
@@ -72,7 +71,7 @@ module Twilio
             post_filter: @post_filters,
             allow: @allowed
         }
-        return policy
+        policy
       end
 
     end
@@ -158,7 +157,7 @@ module Twilio
         url = [TASK_ROUTER_WEBSOCKET_BASE_URL, account_sid, channel_sid].join('/')
         get = Policy.new(url, 'GET', true)
         post = Policy.new(url, 'POST', true)
-        return [get, post]
+        [get, post]
       end
 
       def self.worker_policies(workspace_sid, worker_sid)
@@ -166,7 +165,7 @@ module Twilio
         tasks = Policy.new(self.all_tasks(workspace_sid), 'GET', true)
         reservations = Policy.new(self.all_reservations(workspace_sid, worker_sid), 'GET', true)
         fetch = Policy.new(self.worker(workspace_sid, worker_sid), 'GET', true)
-        return [activities, tasks, reservations, fetch]
+        [activities, tasks, reservations, fetch]
       end
     end
   end

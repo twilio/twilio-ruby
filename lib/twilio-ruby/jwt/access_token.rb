@@ -14,7 +14,6 @@ module Twilio
         super(secret_key: secret,
               issuer: signing_key_sid,
               subject: account_sid,
-              algorithm: 'HS256',
               nbf: nbf,
               ttl: ttl,
               valid_until: valid_until)
@@ -50,7 +49,8 @@ module Twilio
             jti: "#{@signing_key_sid}-#{now}",
             grants: grants
         }
-        return payload
+
+        payload
       end
 
       protected
@@ -58,7 +58,8 @@ module Twilio
         headers = {
             cty: 'twilio-fpa;v=1'
         }
-        return headers
+
+        headers
       end
     end
 
