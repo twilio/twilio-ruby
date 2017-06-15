@@ -46,7 +46,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [PhoneNumberInstance] PhoneNumberInstance
           def get_instance(payload)
-            return PhoneNumberInstance.new(
+            PhoneNumberInstance.new(
                 @version,
                 payload,
             )
@@ -82,12 +82,12 @@ module Twilio
           # @param [String] add_ons The add_ons
           # @param [Hash] add_ons_data The add_ons_data
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
-          def fetch(country_code: nil, type: nil, add_ons: nil, add_ons_data: nil)
-            params = {
+          def fetch(country_code: :unset, type: :unset, add_ons: :unset, add_ons_data: :unset)
+            params = Twilio::Values.of({
                 'CountryCode' => country_code,
                 'Type' => type,
                 'AddOns' => add_ons,
-            }
+            })
 
             params.merge!(Twilio.prefixed_collapsible_map(add_ons_data, 'AddOns'))
             payload = @version.fetch(
@@ -96,7 +96,7 @@ module Twilio
                 params,
             )
 
-            return PhoneNumberInstance.new(
+            PhoneNumberInstance.new(
                 @version,
                 payload,
                 phone_number: @solution[:phone_number],
@@ -189,7 +189,7 @@ module Twilio
           # @param [String] add_ons The add_ons
           # @param [Hash] add_ons_data The add_ons_data
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
-          def fetch(country_code: nil, type: nil, add_ons: nil, add_ons_data: nil)
+          def fetch(country_code: :unset, type: :unset, add_ons: :unset, add_ons_data: :unset)
             context.fetch(
                 country_code: country_code,
                 type: type,

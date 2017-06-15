@@ -33,8 +33,8 @@ module Twilio
           # @param [Boolean] record_participants_on_connect The
           #   record_participants_on_connect
           # @return [RoomInstance] Newly created RoomInstance
-          def create(enable_turn: nil, type: nil, unique_name: nil, status_callback: nil, status_callback_method: nil, max_participants: nil, record_participants_on_connect: nil)
-            data = {
+          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset)
+            data = Twilio::Values.of({
                 'EnableTurn' => enable_turn,
                 'Type' => type,
                 'UniqueName' => unique_name,
@@ -42,7 +42,7 @@ module Twilio
                 'StatusCallbackMethod' => status_callback_method,
                 'MaxParticipants' => max_participants,
                 'RecordParticipantsOnConnect' => record_participants_on_connect,
-            }
+            })
 
             payload = @version.create(
                 'POST',
@@ -50,7 +50,7 @@ module Twilio
                 data: data
             )
 
-            return RoomInstance.new(
+            RoomInstance.new(
                 @version,
                 payload,
             )
@@ -71,7 +71,7 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(status: nil, unique_name: nil, date_created_after: nil, date_created_before: nil, limit: nil, page_size: nil)
+          def list(status: :unset, unique_name: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
             self.stream(
                 status: status,
                 unique_name: unique_name,
@@ -97,7 +97,7 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(status: nil, unique_name: nil, date_created_after: nil, date_created_before: nil, limit: nil, page_size: nil)
+          def stream(status: :unset, unique_name: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -148,8 +148,8 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of RoomInstance
-          def page(status: nil, unique_name: nil, date_created_after: nil, date_created_before: nil, page_token: nil, page_number: nil, page_size: nil)
-            params = {
+          def page(status: :unset, unique_name: :unset, date_created_after: :unset, date_created_before: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            params = Twilio::Values.of({
                 'Status' => status,
                 'UniqueName' => unique_name,
                 'DateCreatedAfter' => Twilio.serialize_iso8601(date_created_after),
@@ -157,13 +157,26 @@ module Twilio
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
-            }
+            })
             response = @version.page(
                 'GET',
                 @uri,
                 params
             )
-            return RoomPage.new(@version, response, @solution)
+            RoomPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of RoomInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of RoomInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            RoomPage.new(@version, response, @solution)
           end
 
           ##
@@ -192,7 +205,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [RoomInstance] RoomInstance
           def get_instance(payload)
-            return RoomInstance.new(
+            RoomInstance.new(
                 @version,
                 payload,
             )
@@ -228,7 +241,7 @@ module Twilio
           # Fetch a RoomInstance
           # @return [RoomInstance] Fetched RoomInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -236,7 +249,7 @@ module Twilio
                 params,
             )
 
-            return RoomInstance.new(
+            RoomInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -248,9 +261,9 @@ module Twilio
           # @param [room.RoomStatus] status The status
           # @return [RoomInstance] Updated RoomInstance
           def update(status: nil)
-            data = {
+            data = Twilio::Values.of({
                 'Status' => status,
-            }
+            })
 
             payload = @version.update(
                 'POST',
@@ -258,7 +271,7 @@ module Twilio
                 data: data,
             )
 
-            return RoomInstance.new(
+            RoomInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],

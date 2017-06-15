@@ -35,10 +35,10 @@ module Twilio
               # @param [Hash] data The data
               # @return [SyncMapItemInstance] Newly created SyncMapItemInstance
               def create(key: nil, data: nil)
-                data = {
+                data = Twilio::Values.of({
                     'Key' => key,
                     'Data' => Twilio.serialize_object(data),
-                }
+                })
 
                 payload = @version.create(
                     'POST',
@@ -46,7 +46,7 @@ module Twilio
                     data: data
                 )
 
-                return SyncMapItemInstance.new(
+                SyncMapItemInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -68,7 +68,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(order: nil, from: nil, bounds: nil, limit: nil, page_size: nil)
+              def list(order: :unset, from: :unset, bounds: :unset, limit: nil, page_size: nil)
                 self.stream(
                     order: order,
                     from: from,
@@ -92,7 +92,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(order: nil, from: nil, bounds: nil, limit: nil, page_size: nil)
+              def stream(order: :unset, from: :unset, bounds: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -140,21 +140,34 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of SyncMapItemInstance
-              def page(order: nil, from: nil, bounds: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(order: :unset, from: :unset, bounds: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                params = Twilio::Values.of({
                     'Order' => order,
                     'From' => from,
                     'Bounds' => bounds,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
                     params
                 )
-                return SyncMapItemPage.new(@version, response, @solution)
+                SyncMapItemPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of SyncMapItemInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of SyncMapItemInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
+                )
+                SyncMapItemPage.new(@version, response, @solution)
               end
 
               ##
@@ -185,7 +198,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [SyncMapItemInstance] SyncMapItemInstance
               def get_instance(payload)
-                return SyncMapItemInstance.new(
+                SyncMapItemInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -224,7 +237,7 @@ module Twilio
               # Fetch a SyncMapItemInstance
               # @return [SyncMapItemInstance] Fetched SyncMapItemInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -232,7 +245,7 @@ module Twilio
                     params,
                 )
 
-                return SyncMapItemInstance.new(
+                SyncMapItemInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -245,7 +258,7 @@ module Twilio
               # Deletes the SyncMapItemInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##
@@ -253,9 +266,9 @@ module Twilio
               # @param [Hash] data The data
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
               def update(data: nil)
-                data = {
+                data = Twilio::Values.of({
                     'Data' => Twilio.serialize_object(data),
-                }
+                })
 
                 payload = @version.update(
                     'POST',
@@ -263,7 +276,7 @@ module Twilio
                     data: data,
                 )
 
-                return SyncMapItemInstance.new(
+                SyncMapItemInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],

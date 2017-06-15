@@ -41,7 +41,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(phone_number: nil, friendly_name: nil, limit: nil, page_size: nil)
+            def list(phone_number: :unset, friendly_name: :unset, limit: nil, page_size: nil)
               self.stream(
                   phone_number: phone_number,
                   friendly_name: friendly_name,
@@ -65,7 +65,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(phone_number: nil, friendly_name: nil, limit: nil, page_size: nil)
+            def stream(phone_number: :unset, friendly_name: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -114,20 +114,33 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of OutgoingCallerIdInstance
-            def page(phone_number: nil, friendly_name: nil, page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(phone_number: :unset, friendly_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              params = Twilio::Values.of({
                   'PhoneNumber' => phone_number,
                   'FriendlyName' => friendly_name,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
               )
-              return OutgoingCallerIdPage.new(@version, response, @solution)
+              OutgoingCallerIdPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of OutgoingCallerIdInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of OutgoingCallerIdInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              OutgoingCallerIdPage.new(@version, response, @solution)
             end
 
             ##
@@ -158,7 +171,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [OutgoingCallerIdInstance] OutgoingCallerIdInstance
             def get_instance(payload)
-              return OutgoingCallerIdInstance.new(
+              OutgoingCallerIdInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -195,7 +208,7 @@ module Twilio
             # Fetch a OutgoingCallerIdInstance
             # @return [OutgoingCallerIdInstance] Fetched OutgoingCallerIdInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -203,7 +216,7 @@ module Twilio
                   params,
               )
 
-              return OutgoingCallerIdInstance.new(
+              OutgoingCallerIdInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -215,10 +228,10 @@ module Twilio
             # Update the OutgoingCallerIdInstance
             # @param [String] friendly_name A human readable description of the caller ID
             # @return [OutgoingCallerIdInstance] Updated OutgoingCallerIdInstance
-            def update(friendly_name: nil)
-              data = {
+            def update(friendly_name: :unset)
+              data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -226,7 +239,7 @@ module Twilio
                   data: data,
               )
 
-              return OutgoingCallerIdInstance.new(
+              OutgoingCallerIdInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -238,7 +251,7 @@ module Twilio
             # Deletes the OutgoingCallerIdInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -336,7 +349,7 @@ module Twilio
             # Update the OutgoingCallerIdInstance
             # @param [String] friendly_name A human readable description of the caller ID
             # @return [OutgoingCallerIdInstance] Updated OutgoingCallerIdInstance
-            def update(friendly_name: nil)
+            def update(friendly_name: :unset)
               context.update(
                   friendly_name: friendly_name,
               )

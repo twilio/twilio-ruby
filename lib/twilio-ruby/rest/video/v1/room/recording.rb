@@ -93,18 +93,31 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of RoomRecordingInstance
-            def page(page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
+              params = Twilio::Values.of({
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
               )
-              return RoomRecordingPage.new(@version, response, @solution)
+              RoomRecordingPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of RoomRecordingInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of RoomRecordingInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              RoomRecordingPage.new(@version, response, @solution)
             end
 
             ##
@@ -134,7 +147,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [RoomRecordingInstance] RoomRecordingInstance
             def get_instance(payload)
-              return RoomRecordingInstance.new(
+              RoomRecordingInstance.new(
                   @version,
                   payload,
                   room_sid: @solution[:room_sid],
@@ -170,7 +183,7 @@ module Twilio
             # Fetch a RoomRecordingInstance
             # @return [RoomRecordingInstance] Fetched RoomRecordingInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -178,7 +191,7 @@ module Twilio
                   params,
               )
 
-              return RoomRecordingInstance.new(
+              RoomRecordingInstance.new(
                   @version,
                   payload,
                   room_sid: @solution[:room_sid],

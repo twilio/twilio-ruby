@@ -27,10 +27,10 @@ module Twilio
           # @param [String] friendly_name A human readable description of the account to
           #   create, defaults to `SubAccount Created at {YYYY-MM-DD HH:MM meridian}`
           # @return [AccountInstance] Newly created AccountInstance
-          def create(friendly_name: nil)
-            data = {
+          def create(friendly_name: :unset)
+            data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
-            }
+            })
 
             payload = @version.create(
                 'POST',
@@ -38,7 +38,7 @@ module Twilio
                 data: data
             )
 
-            return AccountInstance.new(
+            AccountInstance.new(
                 @version,
                 payload,
             )
@@ -58,7 +58,7 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(friendly_name: nil, status: nil, limit: nil, page_size: nil)
+          def list(friendly_name: :unset, status: :unset, limit: nil, page_size: nil)
             self.stream(
                 friendly_name: friendly_name,
                 status: status,
@@ -81,7 +81,7 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(friendly_name: nil, status: nil, limit: nil, page_size: nil)
+          def stream(friendly_name: :unset, status: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -128,20 +128,33 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of AccountInstance
-          def page(friendly_name: nil, status: nil, page_token: nil, page_number: nil, page_size: nil)
-            params = {
+          def page(friendly_name: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            params = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'Status' => status,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
-            }
+            })
             response = @version.page(
                 'GET',
                 @uri,
                 params
             )
-            return AccountPage.new(@version, response, @solution)
+            AccountPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of AccountInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of AccountInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            AccountPage.new(@version, response, @solution)
           end
 
           ##
@@ -170,7 +183,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [AccountInstance] AccountInstance
           def get_instance(payload)
-            return AccountInstance.new(
+            AccountInstance.new(
                 @version,
                 payload,
             )
@@ -229,7 +242,7 @@ module Twilio
           # Fetch a AccountInstance
           # @return [AccountInstance] Fetched AccountInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -237,7 +250,7 @@ module Twilio
                 params,
             )
 
-            return AccountInstance.new(
+            AccountInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -251,11 +264,11 @@ module Twilio
           # @param [account.Status] status Alter the status of this account with a given
           #   Status
           # @return [AccountInstance] Updated AccountInstance
-          def update(friendly_name: nil, status: nil)
-            data = {
+          def update(friendly_name: :unset, status: :unset)
+            data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'Status' => status,
-            }
+            })
 
             payload = @version.update(
                 'POST',
@@ -263,7 +276,7 @@ module Twilio
                 data: data,
             )
 
-            return AccountInstance.new(
+            AccountInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -837,7 +850,7 @@ module Twilio
           # @param [account.Status] status Alter the status of this account with a given
           #   Status
           # @return [AccountInstance] Updated AccountInstance
-          def update(friendly_name: nil, status: nil)
+          def update(friendly_name: :unset, status: :unset)
             context.update(
                 friendly_name: friendly_name,
                 status: status,

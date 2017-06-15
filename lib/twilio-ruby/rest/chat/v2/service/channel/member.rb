@@ -34,11 +34,11 @@ module Twilio
               # @param [String] identity The identity
               # @param [String] role_sid The role_sid
               # @return [MemberInstance] Newly created MemberInstance
-              def create(identity: nil, role_sid: nil)
-                data = {
+              def create(identity: nil, role_sid: :unset)
+                data = Twilio::Values.of({
                     'Identity' => identity,
                     'RoleSid' => role_sid,
-                }
+                })
 
                 payload = @version.create(
                     'POST',
@@ -46,7 +46,7 @@ module Twilio
                     data: data
                 )
 
-                return MemberInstance.new(
+                MemberInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -66,7 +66,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(identity: nil, limit: nil, page_size: nil)
+              def list(identity: :unset, limit: nil, page_size: nil)
                 self.stream(
                     identity: identity,
                     limit: limit,
@@ -86,7 +86,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(identity: nil, limit: nil, page_size: nil)
+              def stream(identity: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -128,19 +128,32 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of MemberInstance
-              def page(identity: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(identity: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                params = Twilio::Values.of({
                     'Identity' => identity,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
                     params
                 )
-                return MemberPage.new(@version, response, @solution)
+                MemberPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of MemberInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of MemberInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
+                )
+                MemberPage.new(@version, response, @solution)
               end
 
               ##
@@ -171,7 +184,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [MemberInstance] MemberInstance
               def get_instance(payload)
-                return MemberInstance.new(
+                MemberInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -210,7 +223,7 @@ module Twilio
               # Fetch a MemberInstance
               # @return [MemberInstance] Fetched MemberInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -218,7 +231,7 @@ module Twilio
                     params,
                 )
 
-                return MemberInstance.new(
+                MemberInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -231,7 +244,7 @@ module Twilio
               # Deletes the MemberInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##
@@ -239,11 +252,11 @@ module Twilio
               # @param [String] role_sid The role_sid
               # @param [String] last_consumed_message_index The last_consumed_message_index
               # @return [MemberInstance] Updated MemberInstance
-              def update(role_sid: nil, last_consumed_message_index: nil)
-                data = {
+              def update(role_sid: :unset, last_consumed_message_index: :unset)
+                data = Twilio::Values.of({
                     'RoleSid' => role_sid,
                     'LastConsumedMessageIndex' => last_consumed_message_index,
-                }
+                })
 
                 payload = @version.update(
                     'POST',
@@ -251,7 +264,7 @@ module Twilio
                     data: data,
                 )
 
-                return MemberInstance.new(
+                MemberInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -384,7 +397,7 @@ module Twilio
               # @param [String] role_sid The role_sid
               # @param [String] last_consumed_message_index The last_consumed_message_index
               # @return [MemberInstance] Updated MemberInstance
-              def update(role_sid: nil, last_consumed_message_index: nil)
+              def update(role_sid: :unset, last_consumed_message_index: :unset)
                 context.update(
                     role_sid: role_sid,
                     last_consumed_message_index: last_consumed_message_index,

@@ -36,14 +36,14 @@ module Twilio
               # @param [String] status_callback The status_callback
               # @param [String] status_callback_method The status_callback_method
               # @return [FeedbackSummaryInstance] Newly created FeedbackSummaryInstance
-              def create(start_date: nil, end_date: nil, include_subaccounts: nil, status_callback: nil, status_callback_method: nil)
-                data = {
+              def create(start_date: nil, end_date: nil, include_subaccounts: :unset, status_callback: :unset, status_callback_method: :unset)
+                data = Twilio::Values.of({
                     'StartDate' => Twilio.serialize_iso8601(start_date),
                     'EndDate' => Twilio.serialize_iso8601(end_date),
                     'IncludeSubaccounts' => include_subaccounts,
                     'StatusCallback' => status_callback,
                     'StatusCallbackMethod' => status_callback_method,
-                }
+                })
 
                 payload = @version.create(
                     'POST',
@@ -51,7 +51,7 @@ module Twilio
                     data: data
                 )
 
-                return FeedbackSummaryInstance.new(
+                FeedbackSummaryInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -86,7 +86,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [FeedbackSummaryInstance] FeedbackSummaryInstance
               def get_instance(payload)
-                return FeedbackSummaryInstance.new(
+                FeedbackSummaryInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -122,7 +122,7 @@ module Twilio
               # Fetch a FeedbackSummaryInstance
               # @return [FeedbackSummaryInstance] Fetched FeedbackSummaryInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -130,7 +130,7 @@ module Twilio
                     params,
                 )
 
-                return FeedbackSummaryInstance.new(
+                FeedbackSummaryInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -142,7 +142,7 @@ module Twilio
               # Deletes the FeedbackSummaryInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##

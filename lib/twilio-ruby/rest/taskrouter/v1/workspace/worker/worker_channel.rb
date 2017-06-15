@@ -96,18 +96,31 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of WorkerChannelInstance
-              def page(page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                params = Twilio::Values.of({
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
                     params
                 )
-                return WorkerChannelPage.new(@version, response, @solution)
+                WorkerChannelPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of WorkerChannelInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of WorkerChannelInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
+                )
+                WorkerChannelPage.new(@version, response, @solution)
               end
 
               ##
@@ -138,7 +151,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [WorkerChannelInstance] WorkerChannelInstance
               def get_instance(payload)
-                return WorkerChannelInstance.new(
+                WorkerChannelInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -177,7 +190,7 @@ module Twilio
               # Fetch a WorkerChannelInstance
               # @return [WorkerChannelInstance] Fetched WorkerChannelInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -185,7 +198,7 @@ module Twilio
                     params,
                 )
 
-                return WorkerChannelInstance.new(
+                WorkerChannelInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -199,11 +212,11 @@ module Twilio
               # @param [String] capacity The capacity
               # @param [Boolean] available The available
               # @return [WorkerChannelInstance] Updated WorkerChannelInstance
-              def update(capacity: nil, available: nil)
-                data = {
+              def update(capacity: :unset, available: :unset)
+                data = Twilio::Values.of({
                     'Capacity' => capacity,
                     'Available' => available,
-                }
+                })
 
                 payload = @version.update(
                     'POST',
@@ -211,7 +224,7 @@ module Twilio
                     data: data,
                 )
 
-                return WorkerChannelInstance.new(
+                WorkerChannelInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -352,7 +365,7 @@ module Twilio
               # @param [String] capacity The capacity
               # @param [Boolean] available The available
               # @return [WorkerChannelInstance] Updated WorkerChannelInstance
-              def update(capacity: nil, available: nil)
+              def update(capacity: :unset, available: :unset)
                 context.update(
                     capacity: capacity,
                     available: available,

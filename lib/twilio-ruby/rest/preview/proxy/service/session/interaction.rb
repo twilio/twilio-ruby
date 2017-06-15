@@ -45,7 +45,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(inbound_participant_status: nil, outbound_participant_status: nil, limit: nil, page_size: nil)
+              def list(inbound_participant_status: :unset, outbound_participant_status: :unset, limit: nil, page_size: nil)
                 self.stream(
                     inbound_participant_status: inbound_participant_status,
                     outbound_participant_status: outbound_participant_status,
@@ -71,7 +71,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(inbound_participant_status: nil, outbound_participant_status: nil, limit: nil, page_size: nil)
+              def stream(inbound_participant_status: :unset, outbound_participant_status: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -124,20 +124,33 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of InteractionInstance
-              def page(inbound_participant_status: nil, outbound_participant_status: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(inbound_participant_status: :unset, outbound_participant_status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                params = Twilio::Values.of({
                     'InboundParticipantStatus' => inbound_participant_status,
                     'OutboundParticipantStatus' => outbound_participant_status,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
                     params
                 )
-                return InteractionPage.new(@version, response, @solution)
+                InteractionPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of InteractionInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of InteractionInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
+                )
+                InteractionPage.new(@version, response, @solution)
               end
 
               ##
@@ -168,7 +181,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [InteractionInstance] InteractionInstance
               def get_instance(payload)
-                return InteractionInstance.new(
+                InteractionInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -208,7 +221,7 @@ module Twilio
               # Fetch a InteractionInstance
               # @return [InteractionInstance] Fetched InteractionInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -216,7 +229,7 @@ module Twilio
                     params,
                 )
 
-                return InteractionInstance.new(
+                InteractionInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],

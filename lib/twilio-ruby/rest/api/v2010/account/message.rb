@@ -44,8 +44,8 @@ module Twilio
             # @param [String] body The body
             # @param [String] media_url The media_url
             # @return [MessageInstance] Newly created MessageInstance
-            def create(to: nil, status_callback: nil, application_sid: nil, max_price: nil, provide_feedback: nil, validity_period: nil, from: nil, messaging_service_sid: nil, body: nil, media_url: nil)
-              data = {
+            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
+              data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
                   'MessagingServiceSid' => messaging_service_sid,
@@ -56,7 +56,7 @@ module Twilio
                   'MaxPrice' => max_price,
                   'ProvideFeedback' => provide_feedback,
                   'ValidityPeriod' => validity_period,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -64,7 +64,7 @@ module Twilio
                   data: data
               )
 
-              return MessageInstance.new(
+              MessageInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -85,7 +85,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(to: nil, from: nil, date_sent: nil, limit: nil, page_size: nil)
+            def list(to: :unset, from: :unset, date_sent: :unset, limit: nil, page_size: nil)
               self.stream(
                   to: to,
                   from: from,
@@ -109,7 +109,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(to: nil, from: nil, date_sent: nil, limit: nil, page_size: nil)
+            def stream(to: :unset, from: :unset, date_sent: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -157,21 +157,34 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of MessageInstance
-            def page(to: nil, from: nil, date_sent: nil, page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(to: :unset, from: :unset, date_sent: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              params = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
                   'DateSent' => Twilio.serialize_iso8601(date_sent),
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
               )
-              return MessagePage.new(@version, response, @solution)
+              MessagePage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of MessageInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of MessageInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              MessagePage.new(@version, response, @solution)
             end
 
             ##
@@ -201,7 +214,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [MessageInstance] MessageInstance
             def get_instance(payload)
-              return MessageInstance.new(
+              MessageInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -241,14 +254,14 @@ module Twilio
             # Deletes the MessageInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
             # Fetch a MessageInstance
             # @return [MessageInstance] Fetched MessageInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -256,7 +269,7 @@ module Twilio
                   params,
               )
 
-              return MessageInstance.new(
+              MessageInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -269,9 +282,9 @@ module Twilio
             # @param [String] body The body
             # @return [MessageInstance] Updated MessageInstance
             def update(body: nil)
-              data = {
+              data = Twilio::Values.of({
                   'Body' => body,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -279,7 +292,7 @@ module Twilio
                   data: data,
               )
 
-              return MessageInstance.new(
+              MessageInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],

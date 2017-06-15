@@ -39,8 +39,8 @@ module Twilio
           # @param [Boolean] area_code_geomatch The area_code_geomatch
           # @param [String] validity_period The validity_period
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil, inbound_request_url: nil, inbound_method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, sticky_sender: nil, mms_converter: nil, smart_encoding: nil, scan_message_content: nil, fallback_to_long_code: nil, area_code_geomatch: nil, validity_period: nil)
-            data = {
+          def create(friendly_name: nil, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset)
+            data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'InboundRequestUrl' => inbound_request_url,
                 'InboundMethod' => inbound_method,
@@ -54,7 +54,7 @@ module Twilio
                 'FallbackToLongCode' => fallback_to_long_code,
                 'AreaCodeGeomatch' => area_code_geomatch,
                 'ValidityPeriod' => validity_period,
-            }
+            })
 
             payload = @version.create(
                 'POST',
@@ -62,7 +62,7 @@ module Twilio
                 data: data
             )
 
-            return ServiceInstance.new(
+            ServiceInstance.new(
                 @version,
                 payload,
             )
@@ -136,18 +136,31 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of ServiceInstance
-          def page(page_token: nil, page_number: nil, page_size: nil)
-            params = {
+          def page(page_token: :unset, page_number: :unset, page_size: :unset)
+            params = Twilio::Values.of({
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
-            }
+            })
             response = @version.page(
                 'GET',
                 @uri,
                 params
             )
-            return ServicePage.new(@version, response, @solution)
+            ServicePage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of ServiceInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of ServiceInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            ServicePage.new(@version, response, @solution)
           end
 
           ##
@@ -176,7 +189,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [ServiceInstance] ServiceInstance
           def get_instance(payload)
-            return ServiceInstance.new(
+            ServiceInstance.new(
                 @version,
                 payload,
             )
@@ -227,8 +240,8 @@ module Twilio
           # @param [Boolean] area_code_geomatch The area_code_geomatch
           # @param [String] validity_period The validity_period
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: nil, inbound_request_url: nil, inbound_method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, sticky_sender: nil, mms_converter: nil, smart_encoding: nil, scan_message_content: nil, fallback_to_long_code: nil, area_code_geomatch: nil, validity_period: nil)
-            data = {
+          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset)
+            data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'InboundRequestUrl' => inbound_request_url,
                 'InboundMethod' => inbound_method,
@@ -242,7 +255,7 @@ module Twilio
                 'FallbackToLongCode' => fallback_to_long_code,
                 'AreaCodeGeomatch' => area_code_geomatch,
                 'ValidityPeriod' => validity_period,
-            }
+            })
 
             payload = @version.update(
                 'POST',
@@ -250,7 +263,7 @@ module Twilio
                 data: data,
             )
 
-            return ServiceInstance.new(
+            ServiceInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -261,7 +274,7 @@ module Twilio
           # Fetch a ServiceInstance
           # @return [ServiceInstance] Fetched ServiceInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -269,7 +282,7 @@ module Twilio
                 params,
             )
 
-            return ServiceInstance.new(
+            ServiceInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -280,7 +293,7 @@ module Twilio
           # Deletes the ServiceInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            return @version.delete('delete', @uri)
+            @version.delete('delete', @uri)
           end
 
           ##
@@ -505,7 +518,7 @@ module Twilio
           # @param [Boolean] area_code_geomatch The area_code_geomatch
           # @param [String] validity_period The validity_period
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: nil, inbound_request_url: nil, inbound_method: nil, fallback_url: nil, fallback_method: nil, status_callback: nil, sticky_sender: nil, mms_converter: nil, smart_encoding: nil, scan_message_content: nil, fallback_to_long_code: nil, area_code_geomatch: nil, validity_period: nil)
+          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset)
             context.update(
                 friendly_name: friendly_name,
                 inbound_request_url: inbound_request_url,

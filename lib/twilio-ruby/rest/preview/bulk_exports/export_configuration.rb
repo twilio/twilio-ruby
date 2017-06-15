@@ -46,7 +46,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [ExportConfigurationInstance] ExportConfigurationInstance
           def get_instance(payload)
-            return ExportConfigurationInstance.new(
+            ExportConfigurationInstance.new(
                 @version,
                 payload,
             )
@@ -79,7 +79,7 @@ module Twilio
           # Fetch a ExportConfigurationInstance
           # @return [ExportConfigurationInstance] Fetched ExportConfigurationInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -87,7 +87,7 @@ module Twilio
                 params,
             )
 
-            return ExportConfigurationInstance.new(
+            ExportConfigurationInstance.new(
                 @version,
                 payload,
                 resource_type: @solution[:resource_type],
@@ -101,13 +101,13 @@ module Twilio
           # @param [String] webhook_method The webhook_method
           # @param [String] email The email
           # @return [ExportConfigurationInstance] Updated ExportConfigurationInstance
-          def update(enabled: nil, webhook_url: nil, webhook_method: nil, email: nil)
-            data = {
+          def update(enabled: :unset, webhook_url: :unset, webhook_method: :unset, email: :unset)
+            data = Twilio::Values.of({
                 'Enabled' => enabled,
                 'WebhookUrl' => webhook_url,
                 'WebhookMethod' => webhook_method,
                 'Email' => email,
-            }
+            })
 
             payload = @version.update(
                 'POST',
@@ -115,7 +115,7 @@ module Twilio
                 data: data,
             )
 
-            return ExportConfigurationInstance.new(
+            ExportConfigurationInstance.new(
                 @version,
                 payload,
                 resource_type: @solution[:resource_type],
@@ -210,7 +210,7 @@ module Twilio
           # @param [String] webhook_method The webhook_method
           # @param [String] email The email
           # @return [ExportConfigurationInstance] Updated ExportConfigurationInstance
-          def update(enabled: nil, webhook_url: nil, webhook_method: nil, email: nil)
+          def update(enabled: :unset, webhook_url: :unset, webhook_method: :unset, email: :unset)
             context.update(
                 enabled: enabled,
                 webhook_url: webhook_url,

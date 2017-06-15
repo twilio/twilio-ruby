@@ -33,11 +33,11 @@ module Twilio
             # @param [String] permission The permission
             # @return [RoleInstance] Newly created RoleInstance
             def create(friendly_name: nil, type: nil, permission: nil)
-              data = {
+              data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'Type' => type,
                   'Permission' => permission,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -45,7 +45,7 @@ module Twilio
                   data: data
               )
 
-              return RoleInstance.new(
+              RoleInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -120,18 +120,31 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of RoleInstance
-            def page(page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
+              params = Twilio::Values.of({
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
               )
-              return RolePage.new(@version, response, @solution)
+              RolePage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of RoleInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of RoleInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              RolePage.new(@version, response, @solution)
             end
 
             ##
@@ -161,7 +174,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [RoleInstance] RoleInstance
             def get_instance(payload)
-              return RoleInstance.new(
+              RoleInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -197,7 +210,7 @@ module Twilio
             # Fetch a RoleInstance
             # @return [RoleInstance] Fetched RoleInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -205,7 +218,7 @@ module Twilio
                   params,
               )
 
-              return RoleInstance.new(
+              RoleInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -217,7 +230,7 @@ module Twilio
             # Deletes the RoleInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -225,9 +238,9 @@ module Twilio
             # @param [String] permission The permission
             # @return [RoleInstance] Updated RoleInstance
             def update(permission: nil)
-              data = {
+              data = Twilio::Values.of({
                   'Permission' => permission,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -235,7 +248,7 @@ module Twilio
                   data: data,
               )
 
-              return RoleInstance.new(
+              RoleInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],

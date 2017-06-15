@@ -45,7 +45,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, evaluate_task_attributes: nil, ordering: nil, has_addons: nil, limit: nil, page_size: nil)
+            def list(priority: :unset, assignment_status: :unset, workflow_sid: :unset, workflow_name: :unset, task_queue_sid: :unset, task_queue_name: :unset, evaluate_task_attributes: :unset, ordering: :unset, has_addons: :unset, limit: nil, page_size: nil)
               self.stream(
                   priority: priority,
                   assignment_status: assignment_status,
@@ -81,7 +81,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, evaluate_task_attributes: nil, ordering: nil, has_addons: nil, limit: nil, page_size: nil)
+            def stream(priority: :unset, assignment_status: :unset, workflow_sid: :unset, workflow_name: :unset, task_queue_sid: :unset, task_queue_name: :unset, evaluate_task_attributes: :unset, ordering: :unset, has_addons: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -147,8 +147,8 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of TaskInstance
-            def page(priority: nil, assignment_status: nil, workflow_sid: nil, workflow_name: nil, task_queue_sid: nil, task_queue_name: nil, evaluate_task_attributes: nil, ordering: nil, has_addons: nil, page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(priority: :unset, assignment_status: :unset, workflow_sid: :unset, workflow_name: :unset, task_queue_sid: :unset, task_queue_name: :unset, evaluate_task_attributes: :unset, ordering: :unset, has_addons: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              params = Twilio::Values.of({
                   'Priority' => priority,
                   'AssignmentStatus' => assignment_status,
                   'WorkflowSid' => workflow_sid,
@@ -161,13 +161,26 @@ module Twilio
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
               )
-              return TaskPage.new(@version, response, @solution)
+              TaskPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of TaskInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of TaskInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              TaskPage.new(@version, response, @solution)
             end
 
             ##
@@ -179,14 +192,14 @@ module Twilio
             # @param [String] workflow_sid The workflow_sid
             # @param [String] attributes The attributes
             # @return [TaskInstance] Newly created TaskInstance
-            def create(timeout: nil, priority: nil, task_channel: nil, workflow_sid: nil, attributes: nil)
-              data = {
+            def create(timeout: :unset, priority: :unset, task_channel: :unset, workflow_sid: :unset, attributes: :unset)
+              data = Twilio::Values.of({
                   'Timeout' => timeout,
                   'Priority' => priority,
                   'TaskChannel' => task_channel,
                   'WorkflowSid' => workflow_sid,
                   'Attributes' => attributes,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -194,7 +207,7 @@ module Twilio
                   data: data
               )
 
-              return TaskInstance.new(
+              TaskInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -228,7 +241,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [TaskInstance] TaskInstance
             def get_instance(payload)
-              return TaskInstance.new(
+              TaskInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -267,7 +280,7 @@ module Twilio
             # Fetch a TaskInstance
             # @return [TaskInstance] Fetched TaskInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -275,7 +288,7 @@ module Twilio
                   params,
               )
 
-              return TaskInstance.new(
+              TaskInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -291,14 +304,14 @@ module Twilio
             # @param [String] priority The priority
             # @param [String] task_channel The task_channel
             # @return [TaskInstance] Updated TaskInstance
-            def update(attributes: nil, assignment_status: nil, reason: nil, priority: nil, task_channel: nil)
-              data = {
+            def update(attributes: :unset, assignment_status: :unset, reason: :unset, priority: :unset, task_channel: :unset)
+              data = Twilio::Values.of({
                   'Attributes' => attributes,
                   'AssignmentStatus' => assignment_status,
                   'Reason' => reason,
                   'Priority' => priority,
                   'TaskChannel' => task_channel,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -306,7 +319,7 @@ module Twilio
                   data: data,
               )
 
-              return TaskInstance.new(
+              TaskInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -318,7 +331,7 @@ module Twilio
             # Deletes the TaskInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -507,7 +520,7 @@ module Twilio
             # @param [String] priority The priority
             # @param [String] task_channel The task_channel
             # @return [TaskInstance] Updated TaskInstance
-            def update(attributes: nil, assignment_status: nil, reason: nil, priority: nil, task_channel: nil)
+            def update(attributes: :unset, assignment_status: :unset, reason: :unset, priority: :unset, task_channel: :unset)
               context.update(
                   attributes: attributes,
                   assignment_status: assignment_status,

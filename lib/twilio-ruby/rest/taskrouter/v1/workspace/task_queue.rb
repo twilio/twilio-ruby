@@ -39,7 +39,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(friendly_name: nil, evaluate_worker_attributes: nil, worker_sid: nil, limit: nil, page_size: nil)
+            def list(friendly_name: :unset, evaluate_worker_attributes: :unset, worker_sid: :unset, limit: nil, page_size: nil)
               self.stream(
                   friendly_name: friendly_name,
                   evaluate_worker_attributes: evaluate_worker_attributes,
@@ -63,7 +63,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(friendly_name: nil, evaluate_worker_attributes: nil, worker_sid: nil, limit: nil, page_size: nil)
+            def stream(friendly_name: :unset, evaluate_worker_attributes: :unset, worker_sid: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -111,21 +111,34 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of TaskQueueInstance
-            def page(friendly_name: nil, evaluate_worker_attributes: nil, worker_sid: nil, page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(friendly_name: :unset, evaluate_worker_attributes: :unset, worker_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              params = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'EvaluateWorkerAttributes' => evaluate_worker_attributes,
                   'WorkerSid' => worker_sid,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
               )
-              return TaskQueuePage.new(@version, response, @solution)
+              TaskQueuePage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of TaskQueueInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of TaskQueueInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              TaskQueuePage.new(@version, response, @solution)
             end
 
             ##
@@ -138,15 +151,15 @@ module Twilio
             # @param [String] max_reserved_workers The max_reserved_workers
             # @param [task_queue.TaskOrder] task_order The task_order
             # @return [TaskQueueInstance] Newly created TaskQueueInstance
-            def create(friendly_name: nil, reservation_activity_sid: nil, assignment_activity_sid: nil, target_workers: nil, max_reserved_workers: nil, task_order: nil)
-              data = {
+            def create(friendly_name: nil, reservation_activity_sid: nil, assignment_activity_sid: nil, target_workers: :unset, max_reserved_workers: :unset, task_order: :unset)
+              data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'ReservationActivitySid' => reservation_activity_sid,
                   'AssignmentActivitySid' => assignment_activity_sid,
                   'TargetWorkers' => target_workers,
                   'MaxReservedWorkers' => max_reserved_workers,
                   'TaskOrder' => task_order,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -154,7 +167,7 @@ module Twilio
                   data: data
               )
 
-              return TaskQueueInstance.new(
+              TaskQueueInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -188,7 +201,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [TaskQueueInstance] TaskQueueInstance
             def get_instance(payload)
-              return TaskQueueInstance.new(
+              TaskQueueInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -228,7 +241,7 @@ module Twilio
             # Fetch a TaskQueueInstance
             # @return [TaskQueueInstance] Fetched TaskQueueInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -236,7 +249,7 @@ module Twilio
                   params,
               )
 
-              return TaskQueueInstance.new(
+              TaskQueueInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -253,15 +266,15 @@ module Twilio
             # @param [String] max_reserved_workers The max_reserved_workers
             # @param [task_queue.TaskOrder] task_order The task_order
             # @return [TaskQueueInstance] Updated TaskQueueInstance
-            def update(friendly_name: nil, target_workers: nil, reservation_activity_sid: nil, assignment_activity_sid: nil, max_reserved_workers: nil, task_order: nil)
-              data = {
+            def update(friendly_name: :unset, target_workers: :unset, reservation_activity_sid: :unset, assignment_activity_sid: :unset, max_reserved_workers: :unset, task_order: :unset)
+              data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'TargetWorkers' => target_workers,
                   'ReservationActivitySid' => reservation_activity_sid,
                   'AssignmentActivitySid' => assignment_activity_sid,
                   'MaxReservedWorkers' => max_reserved_workers,
                   'TaskOrder' => task_order,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -269,7 +282,7 @@ module Twilio
                   data: data,
               )
 
-              return TaskQueueInstance.new(
+              TaskQueueInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -281,7 +294,7 @@ module Twilio
             # Deletes the TaskQueueInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -302,7 +315,7 @@ module Twilio
             # Access the task_queue_statistics
             # @return [TaskQueueStatisticsList] TaskQueueStatisticsList
             def task_queue_statistics
-              return TaskQueueStatisticsContext.new(
+              TaskQueueStatisticsContext.new(
                   @version,
                   @solution[:workspace_sid],
                   @solution[:sid],
@@ -447,7 +460,7 @@ module Twilio
             # @param [String] max_reserved_workers The max_reserved_workers
             # @param [task_queue.TaskOrder] task_order The task_order
             # @return [TaskQueueInstance] Updated TaskQueueInstance
-            def update(friendly_name: nil, target_workers: nil, reservation_activity_sid: nil, assignment_activity_sid: nil, max_reserved_workers: nil, task_order: nil)
+            def update(friendly_name: :unset, target_workers: :unset, reservation_activity_sid: :unset, assignment_activity_sid: :unset, max_reserved_workers: :unset, task_order: :unset)
               context.update(
                   friendly_name: friendly_name,
                   target_workers: target_workers,

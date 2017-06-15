@@ -55,7 +55,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [TaskQueueStatisticsInstance] TaskQueueStatisticsInstance
               def get_instance(payload)
-                return TaskQueueStatisticsInstance.new(
+                TaskQueueStatisticsInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -94,12 +94,12 @@ module Twilio
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
               # @return [TaskQueueStatisticsInstance] Fetched TaskQueueStatisticsInstance
-              def fetch(end_date: nil, minutes: nil, start_date: nil)
-                params = {
+              def fetch(end_date: :unset, minutes: :unset, start_date: :unset)
+                params = Twilio::Values.of({
                     'EndDate' => Twilio.serialize_iso8601(end_date),
                     'Minutes' => minutes,
                     'StartDate' => Twilio.serialize_iso8601(start_date),
-                }
+                })
 
                 payload = @version.fetch(
                     'GET',
@@ -107,7 +107,7 @@ module Twilio
                     params,
                 )
 
-                return TaskQueueStatisticsInstance.new(
+                TaskQueueStatisticsInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -198,7 +198,7 @@ module Twilio
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
               # @return [TaskQueueStatisticsInstance] Fetched TaskQueueStatisticsInstance
-              def fetch(end_date: nil, minutes: nil, start_date: nil)
+              def fetch(end_date: :unset, minutes: :unset, start_date: :unset)
                 context.fetch(
                     end_date: end_date,
                     minutes: minutes,

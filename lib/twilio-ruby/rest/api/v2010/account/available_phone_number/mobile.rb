@@ -58,7 +58,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, near_number: nil, near_lat_long: nil, distance: nil, in_postal_code: nil, in_region: nil, in_rate_center: nil, in_lata: nil, limit: nil, page_size: nil)
+              def list(area_code: :unset, contains: :unset, sms_enabled: :unset, mms_enabled: :unset, voice_enabled: :unset, exclude_all_address_required: :unset, exclude_local_address_required: :unset, exclude_foreign_address_required: :unset, beta: :unset, near_number: :unset, near_lat_long: :unset, distance: :unset, in_postal_code: :unset, in_region: :unset, in_rate_center: :unset, in_lata: :unset, limit: nil, page_size: nil)
                 self.stream(
                     area_code: area_code,
                     contains: contains,
@@ -110,7 +110,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, near_number: nil, near_lat_long: nil, distance: nil, in_postal_code: nil, in_region: nil, in_rate_center: nil, in_lata: nil, limit: nil, page_size: nil)
+              def stream(area_code: :unset, contains: :unset, sms_enabled: :unset, mms_enabled: :unset, voice_enabled: :unset, exclude_all_address_required: :unset, exclude_local_address_required: :unset, exclude_foreign_address_required: :unset, beta: :unset, near_number: :unset, near_lat_long: :unset, distance: :unset, in_postal_code: :unset, in_region: :unset, in_rate_center: :unset, in_lata: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -201,8 +201,8 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of MobileInstance
-              def page(area_code: nil, contains: nil, sms_enabled: nil, mms_enabled: nil, voice_enabled: nil, exclude_all_address_required: nil, exclude_local_address_required: nil, exclude_foreign_address_required: nil, beta: nil, near_number: nil, near_lat_long: nil, distance: nil, in_postal_code: nil, in_region: nil, in_rate_center: nil, in_lata: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(area_code: :unset, contains: :unset, sms_enabled: :unset, mms_enabled: :unset, voice_enabled: :unset, exclude_all_address_required: :unset, exclude_local_address_required: :unset, exclude_foreign_address_required: :unset, beta: :unset, near_number: :unset, near_lat_long: :unset, distance: :unset, in_postal_code: :unset, in_region: :unset, in_rate_center: :unset, in_lata: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                params = Twilio::Values.of({
                     'AreaCode' => area_code,
                     'Contains' => contains,
                     'SmsEnabled' => sms_enabled,
@@ -222,13 +222,26 @@ module Twilio
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
                     params
                 )
-                return MobilePage.new(@version, response, @solution)
+                MobilePage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of MobileInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of MobileInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
+                )
+                MobilePage.new(@version, response, @solution)
               end
 
               ##
@@ -260,7 +273,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [MobileInstance] MobileInstance
               def get_instance(payload)
-                return MobileInstance.new(
+                MobileInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],

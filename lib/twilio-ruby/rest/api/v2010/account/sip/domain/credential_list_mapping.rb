@@ -36,9 +36,9 @@ module Twilio
                 # @param [String] credential_list_sid The credential_list_sid
                 # @return [CredentialListMappingInstance] Newly created CredentialListMappingInstance
                 def create(credential_list_sid: nil)
-                  data = {
+                  data = Twilio::Values.of({
                       'CredentialListSid' => credential_list_sid,
-                  }
+                  })
 
                   payload = @version.create(
                       'POST',
@@ -46,7 +46,7 @@ module Twilio
                       data: data
                   )
 
-                  return CredentialListMappingInstance.new(
+                  CredentialListMappingInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],
@@ -122,18 +122,31 @@ module Twilio
                 # @param [Integer] page_number Page Number, this value is simply for client state
                 # @param [Integer] page_size Number of records to return, defaults to 50
                 # @return [Page] Page of CredentialListMappingInstance
-                def page(page_token: nil, page_number: nil, page_size: nil)
-                  params = {
+                def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                  params = Twilio::Values.of({
                       'PageToken' => page_token,
                       'Page' => page_number,
                       'PageSize' => page_size,
-                  }
+                  })
                   response = @version.page(
                       'GET',
                       @uri,
                       params
                   )
-                  return CredentialListMappingPage.new(@version, response, @solution)
+                  CredentialListMappingPage.new(@version, response, @solution)
+                end
+
+                ##
+                # Retrieve a single page of CredentialListMappingInstance records from the API.
+                # Request is executed immediately.
+                # @param [String] target_url API-generated URL for the requested results page
+                # @return [Page] Page of CredentialListMappingInstance
+                def get_page(target_url)
+                  response = @version.domain.request(
+                      'GET',
+                      target_url
+                  )
+                  CredentialListMappingPage.new(@version, response, @solution)
                 end
 
                 ##
@@ -165,7 +178,7 @@ module Twilio
                 # @param [Hash] payload Payload response from the API
                 # @return [CredentialListMappingInstance] CredentialListMappingInstance
                 def get_instance(payload)
-                  return CredentialListMappingInstance.new(
+                  CredentialListMappingInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],
@@ -204,7 +217,7 @@ module Twilio
                 # Fetch a CredentialListMappingInstance
                 # @return [CredentialListMappingInstance] Fetched CredentialListMappingInstance
                 def fetch
-                  params = {}
+                  params = Twilio::Values.of({})
 
                   payload = @version.fetch(
                       'GET',
@@ -212,7 +225,7 @@ module Twilio
                       params,
                   )
 
-                  return CredentialListMappingInstance.new(
+                  CredentialListMappingInstance.new(
                       @version,
                       payload,
                       account_sid: @solution[:account_sid],
@@ -225,7 +238,7 @@ module Twilio
                 # Deletes the CredentialListMappingInstance
                 # @return [Boolean] true if delete succeeds, true otherwise
                 def delete
-                  return @version.delete('delete', @uri)
+                  @version.delete('delete', @uri)
                 end
 
                 ##

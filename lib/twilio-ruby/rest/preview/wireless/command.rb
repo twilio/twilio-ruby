@@ -36,7 +36,7 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(device: nil, sim: nil, status: nil, direction: nil, limit: nil, page_size: nil)
+          def list(device: :unset, sim: :unset, status: :unset, direction: :unset, limit: nil, page_size: nil)
             self.stream(
                 device: device,
                 sim: sim,
@@ -62,7 +62,7 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(device: nil, sim: nil, status: nil, direction: nil, limit: nil, page_size: nil)
+          def stream(device: :unset, sim: :unset, status: :unset, direction: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -113,8 +113,8 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of CommandInstance
-          def page(device: nil, sim: nil, status: nil, direction: nil, page_token: nil, page_number: nil, page_size: nil)
-            params = {
+          def page(device: :unset, sim: :unset, status: :unset, direction: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            params = Twilio::Values.of({
                 'Device' => device,
                 'Sim' => sim,
                 'Status' => status,
@@ -122,13 +122,26 @@ module Twilio
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
-            }
+            })
             response = @version.page(
                 'GET',
                 @uri,
                 params
             )
-            return CommandPage.new(@version, response, @solution)
+            CommandPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of CommandInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of CommandInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            CommandPage.new(@version, response, @solution)
           end
 
           ##
@@ -142,8 +155,8 @@ module Twilio
           # @param [String] command_mode The command_mode
           # @param [String] include_sid The include_sid
           # @return [CommandInstance] Newly created CommandInstance
-          def create(command: nil, device: nil, sim: nil, callback_method: nil, callback_url: nil, command_mode: nil, include_sid: nil)
-            data = {
+          def create(command: nil, device: :unset, sim: :unset, callback_method: :unset, callback_url: :unset, command_mode: :unset, include_sid: :unset)
+            data = Twilio::Values.of({
                 'Command' => command,
                 'Device' => device,
                 'Sim' => sim,
@@ -151,7 +164,7 @@ module Twilio
                 'CallbackUrl' => callback_url,
                 'CommandMode' => command_mode,
                 'IncludeSid' => include_sid,
-            }
+            })
 
             payload = @version.create(
                 'POST',
@@ -159,7 +172,7 @@ module Twilio
                 data: data
             )
 
-            return CommandInstance.new(
+            CommandInstance.new(
                 @version,
                 payload,
             )
@@ -191,7 +204,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [CommandInstance] CommandInstance
           def get_instance(payload)
-            return CommandInstance.new(
+            CommandInstance.new(
                 @version,
                 payload,
             )
@@ -224,7 +237,7 @@ module Twilio
           # Fetch a CommandInstance
           # @return [CommandInstance] Fetched CommandInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -232,7 +245,7 @@ module Twilio
                 params,
             )
 
-            return CommandInstance.new(
+            CommandInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],

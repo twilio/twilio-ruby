@@ -31,9 +31,9 @@ module Twilio
             # @param [String] sid The phone-number Sid that uniquely identifies this resource
             # @return [PhoneNumberInstance] Newly created PhoneNumberInstance
             def create(sid: nil)
-              data = {
+              data = Twilio::Values.of({
                   'Sid' => sid,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -41,7 +41,7 @@ module Twilio
                   data: data
               )
 
-              return PhoneNumberInstance.new(
+              PhoneNumberInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -116,18 +116,31 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of PhoneNumberInstance
-            def page(page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
+              params = Twilio::Values.of({
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
               )
-              return PhoneNumberPage.new(@version, response, @solution)
+              PhoneNumberPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of PhoneNumberInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of PhoneNumberInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              PhoneNumberPage.new(@version, response, @solution)
             end
 
             ##
@@ -157,7 +170,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [PhoneNumberInstance] PhoneNumberInstance
             def get_instance(payload)
-              return PhoneNumberInstance.new(
+              PhoneNumberInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -193,14 +206,14 @@ module Twilio
             # Deletes the PhoneNumberInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
             # Fetch a PhoneNumberInstance
             # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -208,7 +221,7 @@ module Twilio
                   params,
               )
 
-              return PhoneNumberInstance.new(
+              PhoneNumberInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],

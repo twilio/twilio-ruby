@@ -39,7 +39,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(end_: nil, start: nil, granularity: nil, limit: nil, page_size: nil)
+            def list(end_: :unset, start: :unset, granularity: :unset, limit: nil, page_size: nil)
               self.stream(
                   end_: end_,
                   start: start,
@@ -63,7 +63,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(end_: nil, start: nil, granularity: nil, limit: nil, page_size: nil)
+            def stream(end_: :unset, start: :unset, granularity: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -111,21 +111,34 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of UsageRecordInstance
-            def page(end_: nil, start: nil, granularity: nil, page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(end_: :unset, start: :unset, granularity: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              params = Twilio::Values.of({
                   'End' => Twilio.serialize_iso8601(end_),
                   'Start' => Twilio.serialize_iso8601(start),
                   'Granularity' => granularity,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
               )
-              return UsageRecordPage.new(@version, response, @solution)
+              UsageRecordPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of UsageRecordInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of UsageRecordInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              UsageRecordPage.new(@version, response, @solution)
             end
 
             ##
@@ -155,7 +168,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [UsageRecordInstance] UsageRecordInstance
             def get_instance(payload)
-              return UsageRecordInstance.new(
+              UsageRecordInstance.new(
                   @version,
                   payload,
                   sim_sid: @solution[:sim_sid],

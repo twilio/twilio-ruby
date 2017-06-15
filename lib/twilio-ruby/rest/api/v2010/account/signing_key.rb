@@ -94,18 +94,31 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of SigningKeyInstance
-            def page(page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
+              params = Twilio::Values.of({
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
               )
-              return SigningKeyPage.new(@version, response, @solution)
+              SigningKeyPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of SigningKeyInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of SigningKeyInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              SigningKeyPage.new(@version, response, @solution)
             end
 
             ##
@@ -136,7 +149,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [SigningKeyInstance] SigningKeyInstance
             def get_instance(payload)
-              return SigningKeyInstance.new(
+              SigningKeyInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -172,7 +185,7 @@ module Twilio
             # Fetch a SigningKeyInstance
             # @return [SigningKeyInstance] Fetched SigningKeyInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -180,7 +193,7 @@ module Twilio
                   params,
               )
 
-              return SigningKeyInstance.new(
+              SigningKeyInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -192,10 +205,10 @@ module Twilio
             # Update the SigningKeyInstance
             # @param [String] friendly_name The friendly_name
             # @return [SigningKeyInstance] Updated SigningKeyInstance
-            def update(friendly_name: nil)
-              data = {
+            def update(friendly_name: :unset)
+              data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -203,7 +216,7 @@ module Twilio
                   data: data,
               )
 
-              return SigningKeyInstance.new(
+              SigningKeyInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -215,7 +228,7 @@ module Twilio
             # Deletes the SigningKeyInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -297,7 +310,7 @@ module Twilio
             # Update the SigningKeyInstance
             # @param [String] friendly_name The friendly_name
             # @return [SigningKeyInstance] Updated SigningKeyInstance
-            def update(friendly_name: nil)
+            def update(friendly_name: :unset)
               context.update(
                   friendly_name: friendly_name,
               )

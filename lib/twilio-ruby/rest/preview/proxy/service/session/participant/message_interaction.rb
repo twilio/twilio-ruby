@@ -39,11 +39,11 @@ module Twilio
                 # @param [String] media_url The public url of an image or video to send to the
                 #   Participant.
                 # @return [MessageInteractionInstance] Newly created MessageInteractionInstance
-                def create(body: nil, media_url: nil)
-                  data = {
+                def create(body: :unset, media_url: :unset)
+                  data = Twilio::Values.of({
                       'Body' => body,
                       'MediaUrl' => media_url,
-                  }
+                  })
 
                   payload = @version.create(
                       'POST',
@@ -51,7 +51,7 @@ module Twilio
                       data: data
                   )
 
-                  return MessageInteractionInstance.new(
+                  MessageInteractionInstance.new(
                       @version,
                       payload,
                       service_sid: @solution[:service_sid],
@@ -128,18 +128,31 @@ module Twilio
                 # @param [Integer] page_number Page Number, this value is simply for client state
                 # @param [Integer] page_size Number of records to return, defaults to 50
                 # @return [Page] Page of MessageInteractionInstance
-                def page(page_token: nil, page_number: nil, page_size: nil)
-                  params = {
+                def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                  params = Twilio::Values.of({
                       'PageToken' => page_token,
                       'Page' => page_number,
                       'PageSize' => page_size,
-                  }
+                  })
                   response = @version.page(
                       'GET',
                       @uri,
                       params
                   )
-                  return MessageInteractionPage.new(@version, response, @solution)
+                  MessageInteractionPage.new(@version, response, @solution)
+                end
+
+                ##
+                # Retrieve a single page of MessageInteractionInstance records from the API.
+                # Request is executed immediately.
+                # @param [String] target_url API-generated URL for the requested results page
+                # @return [Page] Page of MessageInteractionInstance
+                def get_page(target_url)
+                  response = @version.domain.request(
+                      'GET',
+                      target_url
+                  )
+                  MessageInteractionPage.new(@version, response, @solution)
                 end
 
                 ##
@@ -171,7 +184,7 @@ module Twilio
                 # @param [Hash] payload Payload response from the API
                 # @return [MessageInteractionInstance] MessageInteractionInstance
                 def get_instance(payload)
-                  return MessageInteractionInstance.new(
+                  MessageInteractionInstance.new(
                       @version,
                       payload,
                       service_sid: @solution[:service_sid],
@@ -214,7 +227,7 @@ module Twilio
                 # Fetch a MessageInteractionInstance
                 # @return [MessageInteractionInstance] Fetched MessageInteractionInstance
                 def fetch
-                  params = {}
+                  params = Twilio::Values.of({})
 
                   payload = @version.fetch(
                       'GET',
@@ -222,7 +235,7 @@ module Twilio
                       params,
                   )
 
-                  return MessageInteractionInstance.new(
+                  MessageInteractionInstance.new(
                       @version,
                       payload,
                       service_sid: @solution[:service_sid],

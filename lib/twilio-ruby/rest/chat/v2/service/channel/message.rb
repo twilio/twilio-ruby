@@ -35,12 +35,12 @@ module Twilio
               # @param [String] from The from
               # @param [String] attributes The attributes
               # @return [MessageInstance] Newly created MessageInstance
-              def create(body: nil, from: nil, attributes: nil)
-                data = {
+              def create(body: nil, from: :unset, attributes: :unset)
+                data = Twilio::Values.of({
                     'Body' => body,
                     'From' => from,
                     'Attributes' => attributes,
-                }
+                })
 
                 payload = @version.create(
                     'POST',
@@ -48,7 +48,7 @@ module Twilio
                     data: data
                 )
 
-                return MessageInstance.new(
+                MessageInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -68,7 +68,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(order: nil, limit: nil, page_size: nil)
+              def list(order: :unset, limit: nil, page_size: nil)
                 self.stream(
                     order: order,
                     limit: limit,
@@ -88,7 +88,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(order: nil, limit: nil, page_size: nil)
+              def stream(order: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -130,19 +130,32 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of MessageInstance
-              def page(order: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(order: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                params = Twilio::Values.of({
                     'Order' => order,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
                     params
                 )
-                return MessagePage.new(@version, response, @solution)
+                MessagePage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of MessageInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of MessageInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
+                )
+                MessagePage.new(@version, response, @solution)
               end
 
               ##
@@ -173,7 +186,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [MessageInstance] MessageInstance
               def get_instance(payload)
-                return MessageInstance.new(
+                MessageInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -212,7 +225,7 @@ module Twilio
               # Fetch a MessageInstance
               # @return [MessageInstance] Fetched MessageInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -220,7 +233,7 @@ module Twilio
                     params,
                 )
 
-                return MessageInstance.new(
+                MessageInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -233,7 +246,7 @@ module Twilio
               # Deletes the MessageInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##
@@ -241,11 +254,11 @@ module Twilio
               # @param [String] body The body
               # @param [String] attributes The attributes
               # @return [MessageInstance] Updated MessageInstance
-              def update(body: nil, attributes: nil)
-                data = {
+              def update(body: :unset, attributes: :unset)
+                data = Twilio::Values.of({
                     'Body' => body,
                     'Attributes' => attributes,
-                }
+                })
 
                 payload = @version.update(
                     'POST',
@@ -253,7 +266,7 @@ module Twilio
                     data: data,
                 )
 
-                return MessageInstance.new(
+                MessageInstance.new(
                     @version,
                     payload,
                     service_sid: @solution[:service_sid],
@@ -396,7 +409,7 @@ module Twilio
               # @param [String] body The body
               # @param [String] attributes The attributes
               # @return [MessageInstance] Updated MessageInstance
-              def update(body: nil, attributes: nil)
+              def update(body: :unset, attributes: :unset)
                 context.update(
                     body: body,
                     attributes: attributes,

@@ -36,7 +36,7 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(from: nil, to: nil, date_created_on_or_before: nil, date_created_after: nil, limit: nil, page_size: nil)
+          def list(from: :unset, to: :unset, date_created_on_or_before: :unset, date_created_after: :unset, limit: nil, page_size: nil)
             self.stream(
                 from: from,
                 to: to,
@@ -62,7 +62,7 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(from: nil, to: nil, date_created_on_or_before: nil, date_created_after: nil, limit: nil, page_size: nil)
+          def stream(from: :unset, to: :unset, date_created_on_or_before: :unset, date_created_after: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -113,8 +113,8 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of FaxInstance
-          def page(from: nil, to: nil, date_created_on_or_before: nil, date_created_after: nil, page_token: nil, page_number: nil, page_size: nil)
-            params = {
+          def page(from: :unset, to: :unset, date_created_on_or_before: :unset, date_created_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            params = Twilio::Values.of({
                 'From' => from,
                 'To' => to,
                 'DateCreatedOnOrBefore' => Twilio.serialize_iso8601(date_created_on_or_before),
@@ -122,13 +122,26 @@ module Twilio
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
-            }
+            })
             response = @version.page(
                 'GET',
                 @uri,
                 params
             )
-            return FaxPage.new(@version, response, @solution)
+            FaxPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of FaxInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of FaxInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            FaxPage.new(@version, response, @solution)
           end
 
           ##
@@ -142,8 +155,8 @@ module Twilio
           # @param [String] sip_auth_username The sip_auth_username
           # @param [String] sip_auth_password The sip_auth_password
           # @return [FaxInstance] Newly created FaxInstance
-          def create(to: nil, media_url: nil, quality: nil, status_callback: nil, from: nil, sip_auth_username: nil, sip_auth_password: nil)
-            data = {
+          def create(to: nil, media_url: nil, quality: :unset, status_callback: :unset, from: :unset, sip_auth_username: :unset, sip_auth_password: :unset)
+            data = Twilio::Values.of({
                 'To' => to,
                 'MediaUrl' => media_url,
                 'Quality' => quality,
@@ -151,7 +164,7 @@ module Twilio
                 'From' => from,
                 'SipAuthUsername' => sip_auth_username,
                 'SipAuthPassword' => sip_auth_password,
-            }
+            })
 
             payload = @version.create(
                 'POST',
@@ -159,7 +172,7 @@ module Twilio
                 data: data
             )
 
-            return FaxInstance.new(
+            FaxInstance.new(
                 @version,
                 payload,
             )
@@ -191,7 +204,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [FaxInstance] FaxInstance
           def get_instance(payload)
-            return FaxInstance.new(
+            FaxInstance.new(
                 @version,
                 payload,
             )
@@ -227,7 +240,7 @@ module Twilio
           # Fetch a FaxInstance
           # @return [FaxInstance] Fetched FaxInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -235,7 +248,7 @@ module Twilio
                 params,
             )
 
-            return FaxInstance.new(
+            FaxInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -246,10 +259,10 @@ module Twilio
           # Update the FaxInstance
           # @param [fax.UpdateStatus] status The status
           # @return [FaxInstance] Updated FaxInstance
-          def update(status: nil)
-            data = {
+          def update(status: :unset)
+            data = Twilio::Values.of({
                 'Status' => status,
-            }
+            })
 
             payload = @version.update(
                 'POST',
@@ -257,7 +270,7 @@ module Twilio
                 data: data,
             )
 
-            return FaxInstance.new(
+            FaxInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -268,7 +281,7 @@ module Twilio
           # Deletes the FaxInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            return @version.delete('delete', @uri)
+            @version.delete('delete', @uri)
           end
 
           ##
@@ -438,7 +451,7 @@ module Twilio
           # Update the FaxInstance
           # @param [fax.UpdateStatus] status The status
           # @return [FaxInstance] Updated FaxInstance
-          def update(status: nil)
+          def update(status: :unset)
             context.update(
                 status: status,
             )

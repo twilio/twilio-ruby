@@ -44,8 +44,8 @@ module Twilio
             # @param [String] identity The identity
             # @param [String] tag The tag
             # @return [NotificationInstance] Newly created NotificationInstance
-            def create(body: nil, priority: nil, ttl: nil, title: nil, sound: nil, action: nil, data: nil, apn: nil, gcm: nil, sms: nil, facebook_messenger: nil, fcm: nil, segment: nil, identity: nil, tag: nil)
-              data = {
+            def create(body: :unset, priority: :unset, ttl: :unset, title: :unset, sound: :unset, action: :unset, data: :unset, apn: :unset, gcm: :unset, sms: :unset, facebook_messenger: :unset, fcm: :unset, segment: :unset, identity: :unset, tag: :unset)
+              data = Twilio::Values.of({
                   'Identity' => identity,
                   'Tag' => tag,
                   'Body' => body,
@@ -61,7 +61,7 @@ module Twilio
                   'FacebookMessenger' => Twilio.serialize_object(facebook_messenger),
                   'Fcm' => fcm,
                   'Segment' => segment,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -69,7 +69,7 @@ module Twilio
                   data: data
               )
 
-              return NotificationInstance.new(
+              NotificationInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -103,7 +103,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [NotificationInstance] NotificationInstance
             def get_instance(payload)
-              return NotificationInstance.new(
+              NotificationInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],

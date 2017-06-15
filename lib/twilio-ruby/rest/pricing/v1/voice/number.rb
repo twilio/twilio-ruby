@@ -47,7 +47,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [NumberInstance] NumberInstance
             def get_instance(payload)
-              return NumberInstance.new(
+              NumberInstance.new(
                   @version,
                   payload,
               )
@@ -80,7 +80,7 @@ module Twilio
             # Fetch a NumberInstance
             # @return [NumberInstance] Fetched NumberInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -88,7 +88,7 @@ module Twilio
                   params,
               )
 
-              return NumberInstance.new(
+              NumberInstance.new(
                   @version,
                   payload,
                   number: @solution[:number],

@@ -27,7 +27,7 @@ module Twilio
       end
 
       def credentials
-        self.v1.credentials
+        self.v1.credentials()
       end
 
       ##

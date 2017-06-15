@@ -57,7 +57,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [FeedbackInstance] FeedbackInstance
               def get_instance(payload)
-                return FeedbackInstance.new(
+                FeedbackInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -96,11 +96,11 @@ module Twilio
               # @param [String] quality_score The quality_score
               # @param [feedback.Issues] issue The issue
               # @return [FeedbackInstance] Newly created FeedbackInstance
-              def create(quality_score: nil, issue: nil)
-                data = {
+              def create(quality_score: nil, issue: :unset)
+                data = Twilio::Values.of({
                     'QualityScore' => quality_score,
                     'Issue' => issue,
-                }
+                })
 
                 payload = @version.create(
                     'POST',
@@ -108,7 +108,7 @@ module Twilio
                     data: data
                 )
 
-                return FeedbackInstance.new(
+                FeedbackInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -120,7 +120,7 @@ module Twilio
               # Fetch a FeedbackInstance
               # @return [FeedbackInstance] Fetched FeedbackInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -128,7 +128,7 @@ module Twilio
                     params,
                 )
 
-                return FeedbackInstance.new(
+                FeedbackInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -142,11 +142,11 @@ module Twilio
               # @param [feedback.Issues] issue One or more of the issues experienced during the
               #   call
               # @return [FeedbackInstance] Updated FeedbackInstance
-              def update(quality_score: nil, issue: nil)
-                data = {
+              def update(quality_score: nil, issue: :unset)
+                data = Twilio::Values.of({
                     'QualityScore' => quality_score,
                     'Issue' => issue,
-                }
+                })
 
                 payload = @version.update(
                     'POST',
@@ -154,7 +154,7 @@ module Twilio
                     data: data,
                 )
 
-                return FeedbackInstance.new(
+                FeedbackInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -246,7 +246,7 @@ module Twilio
               # @param [String] quality_score The quality_score
               # @param [feedback.Issues] issue The issue
               # @return [FeedbackInstance] Newly created FeedbackInstance
-              def create(quality_score: nil, issue: nil)
+              def create(quality_score: nil, issue: :unset)
                 context.create(
                     quality_score: quality_score,
                     issue: issue,
@@ -266,7 +266,7 @@ module Twilio
               # @param [feedback.Issues] issue One or more of the issues experienced during the
               #   call
               # @return [FeedbackInstance] Updated FeedbackInstance
-              def update(quality_score: nil, issue: nil)
+              def update(quality_score: nil, issue: :unset)
                 context.update(
                     quality_score: quality_score,
                     issue: issue,

@@ -14,7 +14,7 @@ module Twilio
         end
 
         def each
-          current_record = 1
+          current_record = 0
           current_page = 1
 
           while @page
@@ -48,7 +48,7 @@ module Twilio
       def request(method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
         url = self.relative_uri(uri)
         params = params.delete_if {|k,v| v.nil?}
-        data = data.delete_if {|k,v| v.nil?}
+        data = data
         @domain.request(
           method,
           url,

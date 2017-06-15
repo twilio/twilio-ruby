@@ -32,10 +32,10 @@ module Twilio
             # @param [String] ttl The duration in seconds for which the generated credentials
             #   are valid
             # @return [TokenInstance] Newly created TokenInstance
-            def create(ttl: nil)
-              data = {
+            def create(ttl: :unset)
+              data = Twilio::Values.of({
                   'Ttl' => ttl,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -43,7 +43,7 @@ module Twilio
                   data: data
               )
 
-              return TokenInstance.new(
+              TokenInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -78,7 +78,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [TokenInstance] TokenInstance
             def get_instance(payload)
-              return TokenInstance.new(
+              TokenInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],

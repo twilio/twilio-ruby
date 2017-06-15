@@ -86,7 +86,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [UsageInstance] UsageInstance
             def get_instance(payload)
-              return UsageInstance.new(
+              UsageInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],

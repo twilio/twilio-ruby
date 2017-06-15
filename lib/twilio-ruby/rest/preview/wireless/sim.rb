@@ -37,7 +37,7 @@ module Twilio
           #  but a limit is defined, stream() will attempt to read                      the
           #  limit with the most efficient page size,                      i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(status: nil, iccid: nil, rate_plan: nil, e_id: nil, sim_registration_code: nil, limit: nil, page_size: nil)
+          def list(status: :unset, iccid: :unset, rate_plan: :unset, e_id: :unset, sim_registration_code: :unset, limit: nil, page_size: nil)
             self.stream(
                 status: status,
                 iccid: iccid,
@@ -65,7 +65,7 @@ module Twilio
           #                       but a limit is defined, stream() will attempt to                      read the
           #  limit with the most efficient page size,                       i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(status: nil, iccid: nil, rate_plan: nil, e_id: nil, sim_registration_code: nil, limit: nil, page_size: nil)
+          def stream(status: :unset, iccid: :unset, rate_plan: :unset, e_id: :unset, sim_registration_code: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -119,8 +119,8 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of SimInstance
-          def page(status: nil, iccid: nil, rate_plan: nil, e_id: nil, sim_registration_code: nil, page_token: nil, page_number: nil, page_size: nil)
-            params = {
+          def page(status: :unset, iccid: :unset, rate_plan: :unset, e_id: :unset, sim_registration_code: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            params = Twilio::Values.of({
                 'Status' => status,
                 'Iccid' => iccid,
                 'RatePlan' => rate_plan,
@@ -129,13 +129,26 @@ module Twilio
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
-            }
+            })
             response = @version.page(
                 'GET',
                 @uri,
                 params
             )
-            return SimPage.new(@version, response, @solution)
+            SimPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of SimInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of SimInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            SimPage.new(@version, response, @solution)
           end
 
           ##
@@ -164,7 +177,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [SimInstance] SimInstance
           def get_instance(payload)
-            return SimInstance.new(
+            SimInstance.new(
                 @version,
                 payload,
             )
@@ -200,7 +213,7 @@ module Twilio
           # Fetch a SimInstance
           # @return [SimInstance] Fetched SimInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -208,7 +221,7 @@ module Twilio
                 params,
             )
 
-            return SimInstance.new(
+            SimInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -234,8 +247,8 @@ module Twilio
           # @param [String] voice_method The voice_method
           # @param [String] voice_url The voice_url
           # @return [SimInstance] Updated SimInstance
-          def update(unique_name: nil, callback_method: nil, callback_url: nil, friendly_name: nil, rate_plan: nil, status: nil, commands_callback_method: nil, commands_callback_url: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil)
-            data = {
+          def update(unique_name: :unset, callback_method: :unset, callback_url: :unset, friendly_name: :unset, rate_plan: :unset, status: :unset, commands_callback_method: :unset, commands_callback_url: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset)
+            data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'CallbackMethod' => callback_method,
                 'CallbackUrl' => callback_url,
@@ -252,7 +265,7 @@ module Twilio
                 'VoiceFallbackUrl' => voice_fallback_url,
                 'VoiceMethod' => voice_method,
                 'VoiceUrl' => voice_url,
-            }
+            })
 
             payload = @version.update(
                 'POST',
@@ -260,7 +273,7 @@ module Twilio
                 data: data,
             )
 
-            return SimInstance.new(
+            SimInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -271,7 +284,7 @@ module Twilio
           # Access the usage
           # @return [UsageList] UsageList
           def usage
-            return UsageContext.new(
+            UsageContext.new(
                 @version,
                 @solution[:sid],
             )
@@ -457,7 +470,7 @@ module Twilio
           # @param [String] voice_method The voice_method
           # @param [String] voice_url The voice_url
           # @return [SimInstance] Updated SimInstance
-          def update(unique_name: nil, callback_method: nil, callback_url: nil, friendly_name: nil, rate_plan: nil, status: nil, commands_callback_method: nil, commands_callback_url: nil, sms_fallback_method: nil, sms_fallback_url: nil, sms_method: nil, sms_url: nil, voice_fallback_method: nil, voice_fallback_url: nil, voice_method: nil, voice_url: nil)
+          def update(unique_name: :unset, callback_method: :unset, callback_url: :unset, friendly_name: :unset, rate_plan: :unset, status: :unset, commands_callback_method: :unset, commands_callback_url: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset)
             context.update(
                 unique_name: unique_name,
                 callback_method: callback_method,

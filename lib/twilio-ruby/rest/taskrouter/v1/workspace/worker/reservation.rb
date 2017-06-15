@@ -40,7 +40,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(reservation_status: nil, limit: nil, page_size: nil)
+              def list(reservation_status: :unset, limit: nil, page_size: nil)
                 self.stream(
                     reservation_status: reservation_status,
                     limit: limit,
@@ -60,7 +60,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(reservation_status: nil, limit: nil, page_size: nil)
+              def stream(reservation_status: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -102,19 +102,32 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of ReservationInstance
-              def page(reservation_status: nil, page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(reservation_status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                params = Twilio::Values.of({
                     'ReservationStatus' => reservation_status,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
                     params
                 )
-                return ReservationPage.new(@version, response, @solution)
+                ReservationPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of ReservationInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of ReservationInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
+                )
+                ReservationPage.new(@version, response, @solution)
               end
 
               ##
@@ -145,7 +158,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [ReservationInstance] ReservationInstance
               def get_instance(payload)
-                return ReservationInstance.new(
+                ReservationInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -184,7 +197,7 @@ module Twilio
               # Fetch a ReservationInstance
               # @return [ReservationInstance] Fetched ReservationInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -192,7 +205,7 @@ module Twilio
                     params,
                 )
 
-                return ReservationInstance.new(
+                ReservationInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -224,8 +237,8 @@ module Twilio
               # @param [Boolean] redirect_accept The redirect_accept
               # @param [String] redirect_url The redirect_url
               # @return [ReservationInstance] Updated ReservationInstance
-              def update(reservation_status: nil, worker_activity_sid: nil, instruction: nil, dequeue_post_work_activity_sid: nil, dequeue_from: nil, dequeue_record: nil, dequeue_timeout: nil, dequeue_to: nil, dequeue_status_callback_url: nil, call_from: nil, call_record: nil, call_timeout: nil, call_to: nil, call_url: nil, call_status_callback_url: nil, call_accept: nil, redirect_call_sid: nil, redirect_accept: nil, redirect_url: nil)
-                data = {
+              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset)
+                data = Twilio::Values.of({
                     'ReservationStatus' => reservation_status,
                     'WorkerActivitySid' => worker_activity_sid,
                     'Instruction' => instruction,
@@ -245,7 +258,7 @@ module Twilio
                     'RedirectCallSid' => redirect_call_sid,
                     'RedirectAccept' => redirect_accept,
                     'RedirectUrl' => redirect_url,
-                }
+                })
 
                 payload = @version.update(
                     'POST',
@@ -253,7 +266,7 @@ module Twilio
                     data: data,
                 )
 
-                return ReservationInstance.new(
+                ReservationInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -397,7 +410,7 @@ module Twilio
               # @param [Boolean] redirect_accept The redirect_accept
               # @param [String] redirect_url The redirect_url
               # @return [ReservationInstance] Updated ReservationInstance
-              def update(reservation_status: nil, worker_activity_sid: nil, instruction: nil, dequeue_post_work_activity_sid: nil, dequeue_from: nil, dequeue_record: nil, dequeue_timeout: nil, dequeue_to: nil, dequeue_status_callback_url: nil, call_from: nil, call_record: nil, call_timeout: nil, call_to: nil, call_url: nil, call_status_callback_url: nil, call_accept: nil, redirect_call_sid: nil, redirect_accept: nil, redirect_url: nil)
+              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset)
                 context.update(
                     reservation_status: reservation_status,
                     worker_activity_sid: worker_activity_sid,

@@ -41,7 +41,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(friendly_name: nil, short_code: nil, limit: nil, page_size: nil)
+            def list(friendly_name: :unset, short_code: :unset, limit: nil, page_size: nil)
               self.stream(
                   friendly_name: friendly_name,
                   short_code: short_code,
@@ -65,7 +65,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(friendly_name: nil, short_code: nil, limit: nil, page_size: nil)
+            def stream(friendly_name: :unset, short_code: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -114,20 +114,33 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of ShortCodeInstance
-            def page(friendly_name: nil, short_code: nil, page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(friendly_name: :unset, short_code: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              params = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'ShortCode' => short_code,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
               )
-              return ShortCodePage.new(@version, response, @solution)
+              ShortCodePage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of ShortCodeInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of ShortCodeInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              ShortCodePage.new(@version, response, @solution)
             end
 
             ##
@@ -158,7 +171,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ShortCodeInstance] ShortCodeInstance
             def get_instance(payload)
-              return ShortCodeInstance.new(
+              ShortCodeInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -194,7 +207,7 @@ module Twilio
             # Fetch a ShortCodeInstance
             # @return [ShortCodeInstance] Fetched ShortCodeInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -202,7 +215,7 @@ module Twilio
                   params,
               )
 
-              return ShortCodeInstance.new(
+              ShortCodeInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -226,15 +239,15 @@ module Twilio
             # @param [String] sms_fallback_method The HTTP method Twilio will use when
             #   requesting the above URL. Either `GET` or `POST`.
             # @return [ShortCodeInstance] Updated ShortCodeInstance
-            def update(friendly_name: nil, api_version: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil)
-              data = {
+            def update(friendly_name: :unset, api_version: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset)
+              data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'ApiVersion' => api_version,
                   'SmsUrl' => sms_url,
                   'SmsMethod' => sms_method,
                   'SmsFallbackUrl' => sms_fallback_url,
                   'SmsFallbackMethod' => sms_fallback_method,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -242,7 +255,7 @@ module Twilio
                   data: data,
               )
 
-              return ShortCodeInstance.new(
+              ShortCodeInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -381,7 +394,7 @@ module Twilio
             # @param [String] sms_fallback_method The HTTP method Twilio will use when
             #   requesting the above URL. Either `GET` or `POST`.
             # @return [ShortCodeInstance] Updated ShortCodeInstance
-            def update(friendly_name: nil, api_version: nil, sms_url: nil, sms_method: nil, sms_fallback_url: nil, sms_fallback_method: nil)
+            def update(friendly_name: :unset, api_version: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset)
               context.update(
                   friendly_name: friendly_name,
                   api_version: api_version,

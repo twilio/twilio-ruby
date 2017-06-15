@@ -98,18 +98,31 @@ module Twilio
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of AddOnResultInstance
-              def page(page_token: nil, page_number: nil, page_size: nil)
-                params = {
+              def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                params = Twilio::Values.of({
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
-                }
+                })
                 response = @version.page(
                     'GET',
                     @uri,
                     params
                 )
-                return AddOnResultPage.new(@version, response, @solution)
+                AddOnResultPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of AddOnResultInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of AddOnResultInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
+                )
+                AddOnResultPage.new(@version, response, @solution)
               end
 
               ##
@@ -142,7 +155,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [AddOnResultInstance] AddOnResultInstance
               def get_instance(payload)
-                return AddOnResultInstance.new(
+                AddOnResultInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -184,7 +197,7 @@ module Twilio
               # Fetch a AddOnResultInstance
               # @return [AddOnResultInstance] Fetched AddOnResultInstance
               def fetch
-                params = {}
+                params = Twilio::Values.of({})
 
                 payload = @version.fetch(
                     'GET',
@@ -192,7 +205,7 @@ module Twilio
                     params,
                 )
 
-                return AddOnResultInstance.new(
+                AddOnResultInstance.new(
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
@@ -205,7 +218,7 @@ module Twilio
               # Deletes the AddOnResultInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
-                return @version.delete('delete', @uri)
+                @version.delete('delete', @uri)
               end
 
               ##

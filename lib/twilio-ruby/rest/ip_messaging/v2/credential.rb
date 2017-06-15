@@ -89,18 +89,31 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of CredentialInstance
-          def page(page_token: nil, page_number: nil, page_size: nil)
-            params = {
+          def page(page_token: :unset, page_number: :unset, page_size: :unset)
+            params = Twilio::Values.of({
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
-            }
+            })
             response = @version.page(
                 'GET',
                 @uri,
                 params
             )
-            return CredentialPage.new(@version, response, @solution)
+            CredentialPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of CredentialInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of CredentialInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            CredentialPage.new(@version, response, @solution)
           end
 
           ##
@@ -114,8 +127,8 @@ module Twilio
           # @param [String] api_key The api_key
           # @param [String] secret The secret
           # @return [CredentialInstance] Newly created CredentialInstance
-          def create(type: nil, friendly_name: nil, certificate: nil, private_key: nil, sandbox: nil, api_key: nil, secret: nil)
-            data = {
+          def create(type: nil, friendly_name: :unset, certificate: :unset, private_key: :unset, sandbox: :unset, api_key: :unset, secret: :unset)
+            data = Twilio::Values.of({
                 'Type' => type,
                 'FriendlyName' => friendly_name,
                 'Certificate' => certificate,
@@ -123,7 +136,7 @@ module Twilio
                 'Sandbox' => sandbox,
                 'ApiKey' => api_key,
                 'Secret' => secret,
-            }
+            })
 
             payload = @version.create(
                 'POST',
@@ -131,7 +144,7 @@ module Twilio
                 data: data
             )
 
-            return CredentialInstance.new(
+            CredentialInstance.new(
                 @version,
                 payload,
             )
@@ -163,7 +176,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [CredentialInstance] CredentialInstance
           def get_instance(payload)
-            return CredentialInstance.new(
+            CredentialInstance.new(
                 @version,
                 payload,
             )
@@ -196,7 +209,7 @@ module Twilio
           # Fetch a CredentialInstance
           # @return [CredentialInstance] Fetched CredentialInstance
           def fetch
-            params = {}
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -204,7 +217,7 @@ module Twilio
                 params,
             )
 
-            return CredentialInstance.new(
+            CredentialInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -220,15 +233,15 @@ module Twilio
           # @param [String] api_key The api_key
           # @param [String] secret The secret
           # @return [CredentialInstance] Updated CredentialInstance
-          def update(friendly_name: nil, certificate: nil, private_key: nil, sandbox: nil, api_key: nil, secret: nil)
-            data = {
+          def update(friendly_name: :unset, certificate: :unset, private_key: :unset, sandbox: :unset, api_key: :unset, secret: :unset)
+            data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'Certificate' => certificate,
                 'PrivateKey' => private_key,
                 'Sandbox' => sandbox,
                 'ApiKey' => api_key,
                 'Secret' => secret,
-            }
+            })
 
             payload = @version.update(
                 'POST',
@@ -236,7 +249,7 @@ module Twilio
                 data: data,
             )
 
-            return CredentialInstance.new(
+            CredentialInstance.new(
                 @version,
                 payload,
                 sid: @solution[:sid],
@@ -247,7 +260,7 @@ module Twilio
           # Deletes the CredentialInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
-            return @version.delete('delete', @uri)
+            @version.delete('delete', @uri)
           end
 
           ##
@@ -350,7 +363,7 @@ module Twilio
           # @param [String] api_key The api_key
           # @param [String] secret The secret
           # @return [CredentialInstance] Updated CredentialInstance
-          def update(friendly_name: nil, certificate: nil, private_key: nil, sandbox: nil, api_key: nil, secret: nil)
+          def update(friendly_name: :unset, certificate: :unset, private_key: :unset, sandbox: :unset, api_key: :unset, secret: :unset)
             context.update(
                 friendly_name: friendly_name,
                 certificate: certificate,

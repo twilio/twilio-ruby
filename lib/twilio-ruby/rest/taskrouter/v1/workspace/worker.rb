@@ -46,7 +46,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(activity_name: nil, activity_sid: nil, available: nil, friendly_name: nil, target_workers_expression: nil, task_queue_name: nil, task_queue_sid: nil, limit: nil, page_size: nil)
+            def list(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, limit: nil, page_size: nil)
               self.stream(
                   activity_name: activity_name,
                   activity_sid: activity_sid,
@@ -78,7 +78,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(activity_name: nil, activity_sid: nil, available: nil, friendly_name: nil, target_workers_expression: nil, task_queue_name: nil, task_queue_sid: nil, limit: nil, page_size: nil)
+            def stream(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -138,8 +138,8 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of WorkerInstance
-            def page(activity_name: nil, activity_sid: nil, available: nil, friendly_name: nil, target_workers_expression: nil, task_queue_name: nil, task_queue_sid: nil, page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              params = Twilio::Values.of({
                   'ActivityName' => activity_name,
                   'ActivitySid' => activity_sid,
                   'Available' => available,
@@ -150,13 +150,26 @@ module Twilio
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
               )
-              return WorkerPage.new(@version, response, @solution)
+              WorkerPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of WorkerInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of WorkerInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              WorkerPage.new(@version, response, @solution)
             end
 
             ##
@@ -166,12 +179,12 @@ module Twilio
             # @param [String] activity_sid The activity_sid
             # @param [String] attributes The attributes
             # @return [WorkerInstance] Newly created WorkerInstance
-            def create(friendly_name: nil, activity_sid: nil, attributes: nil)
-              data = {
+            def create(friendly_name: nil, activity_sid: :unset, attributes: :unset)
+              data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'ActivitySid' => activity_sid,
                   'Attributes' => attributes,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -179,7 +192,7 @@ module Twilio
                   data: data
               )
 
-              return WorkerInstance.new(
+              WorkerInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -228,7 +241,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [WorkerInstance] WorkerInstance
             def get_instance(payload)
-              return WorkerInstance.new(
+              WorkerInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -269,7 +282,7 @@ module Twilio
             # Fetch a WorkerInstance
             # @return [WorkerInstance] Fetched WorkerInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -277,7 +290,7 @@ module Twilio
                   params,
               )
 
-              return WorkerInstance.new(
+              WorkerInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -291,12 +304,12 @@ module Twilio
             # @param [String] attributes The attributes
             # @param [String] friendly_name The friendly_name
             # @return [WorkerInstance] Updated WorkerInstance
-            def update(activity_sid: nil, attributes: nil, friendly_name: nil)
-              data = {
+            def update(activity_sid: :unset, attributes: :unset, friendly_name: :unset)
+              data = Twilio::Values.of({
                   'ActivitySid' => activity_sid,
                   'Attributes' => attributes,
                   'FriendlyName' => friendly_name,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -304,7 +317,7 @@ module Twilio
                   data: data,
               )
 
-              return WorkerInstance.new(
+              WorkerInstance.new(
                   @version,
                   payload,
                   workspace_sid: @solution[:workspace_sid],
@@ -316,14 +329,14 @@ module Twilio
             # Deletes the WorkerInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
             # Access the statistics
             # @return [WorkerStatisticsList] WorkerStatisticsList
             def statistics
-              return WorkerStatisticsContext.new(
+              WorkerStatisticsContext.new(
                   @version,
                   @solution[:workspace_sid],
                   @solution[:sid],
@@ -503,7 +516,7 @@ module Twilio
             # @param [String] attributes The attributes
             # @param [String] friendly_name The friendly_name
             # @return [WorkerInstance] Updated WorkerInstance
-            def update(activity_sid: nil, attributes: nil, friendly_name: nil)
+            def update(activity_sid: :unset, attributes: :unset, friendly_name: :unset)
               context.update(
                   activity_sid: activity_sid,
                   attributes: attributes,

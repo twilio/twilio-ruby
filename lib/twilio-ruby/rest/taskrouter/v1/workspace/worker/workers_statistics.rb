@@ -52,7 +52,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [WorkersStatisticsInstance] WorkersStatisticsInstance
               def get_instance(payload)
-                return WorkersStatisticsInstance.new(
+                WorkersStatisticsInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -91,15 +91,15 @@ module Twilio
               # @param [String] task_queue_name The task_queue_name
               # @param [String] friendly_name The friendly_name
               # @return [WorkersStatisticsInstance] Fetched WorkersStatisticsInstance
-              def fetch(minutes: nil, start_date: nil, end_date: nil, task_queue_sid: nil, task_queue_name: nil, friendly_name: nil)
-                params = {
+              def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_queue_sid: :unset, task_queue_name: :unset, friendly_name: :unset)
+                params = Twilio::Values.of({
                     'Minutes' => minutes,
                     'StartDate' => Twilio.serialize_iso8601(start_date),
                     'EndDate' => Twilio.serialize_iso8601(end_date),
                     'TaskQueueSid' => task_queue_sid,
                     'TaskQueueName' => task_queue_name,
                     'FriendlyName' => friendly_name,
-                }
+                })
 
                 payload = @version.fetch(
                     'GET',
@@ -107,7 +107,7 @@ module Twilio
                     params,
                 )
 
-                return WorkersStatisticsInstance.new(
+                WorkersStatisticsInstance.new(
                     @version,
                     payload,
                     workspace_sid: @solution[:workspace_sid],
@@ -192,7 +192,7 @@ module Twilio
               # @param [String] task_queue_name The task_queue_name
               # @param [String] friendly_name The friendly_name
               # @return [WorkersStatisticsInstance] Fetched WorkersStatisticsInstance
-              def fetch(minutes: nil, start_date: nil, end_date: nil, task_queue_sid: nil, task_queue_name: nil, friendly_name: nil)
+              def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_queue_sid: :unset, task_queue_name: :unset, friendly_name: :unset)
                 context.fetch(
                     minutes: minutes,
                     start_date: start_date,

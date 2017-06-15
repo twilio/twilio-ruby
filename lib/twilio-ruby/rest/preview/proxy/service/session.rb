@@ -41,7 +41,7 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(unique_name: nil, status: nil, limit: nil, page_size: nil)
+            def list(unique_name: :unset, status: :unset, limit: nil, page_size: nil)
               self.stream(
                   unique_name: unique_name,
                   status: status,
@@ -66,7 +66,7 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(unique_name: nil, status: nil, limit: nil, page_size: nil)
+            def stream(unique_name: :unset, status: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -117,20 +117,33 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of SessionInstance
-            def page(unique_name: nil, status: nil, page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(unique_name: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              params = Twilio::Values.of({
                   'UniqueName' => unique_name,
                   'Status' => status,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
               )
-              return SessionPage.new(@version, response, @solution)
+              SessionPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of SessionInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of SessionInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              SessionPage.new(@version, response, @solution)
             end
 
             ##
@@ -145,13 +158,13 @@ module Twilio
             #   or `completed`.
             # @param [String] participants The participants
             # @return [SessionInstance] Newly created SessionInstance
-            def create(unique_name: nil, ttl: nil, status: nil, participants: nil)
-              data = {
+            def create(unique_name: :unset, ttl: :unset, status: :unset, participants: :unset)
+              data = Twilio::Values.of({
                   'UniqueName' => unique_name,
                   'Ttl' => ttl,
                   'Status' => status,
                   'Participants' => participants,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -159,7 +172,7 @@ module Twilio
                   data: data
               )
 
-              return SessionInstance.new(
+              SessionInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -193,7 +206,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [SessionInstance] SessionInstance
             def get_instance(payload)
-              return SessionInstance.new(
+              SessionInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -233,7 +246,7 @@ module Twilio
             # Fetch a SessionInstance
             # @return [SessionInstance] Fetched SessionInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -241,7 +254,7 @@ module Twilio
                   params,
               )
 
-              return SessionInstance.new(
+              SessionInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -253,7 +266,7 @@ module Twilio
             # Deletes the SessionInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -267,13 +280,13 @@ module Twilio
             #   or `completed`.
             # @param [String] participants The participants
             # @return [SessionInstance] Updated SessionInstance
-            def update(unique_name: nil, ttl: nil, status: nil, participants: nil)
-              data = {
+            def update(unique_name: :unset, ttl: :unset, status: :unset, participants: :unset)
+              data = Twilio::Values.of({
                   'UniqueName' => unique_name,
                   'Ttl' => ttl,
                   'Status' => status,
                   'Participants' => participants,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -281,7 +294,7 @@ module Twilio
                   data: data,
               )
 
-              return SessionInstance.new(
+              SessionInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -469,7 +482,7 @@ module Twilio
             #   or `completed`.
             # @param [String] participants The participants
             # @return [SessionInstance] Updated SessionInstance
-            def update(unique_name: nil, ttl: nil, status: nil, participants: nil)
+            def update(unique_name: :unset, ttl: :unset, status: :unset, participants: :unset)
               context.update(
                   unique_name: unique_name,
                   ttl: ttl,

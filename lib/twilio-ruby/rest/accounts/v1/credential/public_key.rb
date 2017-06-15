@@ -90,18 +90,31 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of PublicKeyInstance
-            def page(page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
+              params = Twilio::Values.of({
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
               )
-              return PublicKeyPage.new(@version, response, @solution)
+              PublicKeyPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of PublicKeyInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of PublicKeyInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              PublicKeyPage.new(@version, response, @solution)
             end
 
             ##
@@ -114,12 +127,12 @@ module Twilio
             # @param [String] account_sid The Subaccount this Credential should be associated
             #   with. Needs to be a valid Subaccount of the account issuing the request
             # @return [PublicKeyInstance] Newly created PublicKeyInstance
-            def create(public_key: nil, friendly_name: nil, account_sid: nil)
-              data = {
+            def create(public_key: nil, friendly_name: :unset, account_sid: :unset)
+              data = Twilio::Values.of({
                   'PublicKey' => public_key,
                   'FriendlyName' => friendly_name,
                   'AccountSid' => account_sid,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -127,7 +140,7 @@ module Twilio
                   data: data
               )
 
-              return PublicKeyInstance.new(
+              PublicKeyInstance.new(
                   @version,
                   payload,
               )
@@ -159,7 +172,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [PublicKeyInstance] PublicKeyInstance
             def get_instance(payload)
-              return PublicKeyInstance.new(
+              PublicKeyInstance.new(
                   @version,
                   payload,
               )
@@ -193,7 +206,7 @@ module Twilio
             # Fetch a PublicKeyInstance
             # @return [PublicKeyInstance] Fetched PublicKeyInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -201,7 +214,7 @@ module Twilio
                   params,
               )
 
-              return PublicKeyInstance.new(
+              PublicKeyInstance.new(
                   @version,
                   payload,
                   sid: @solution[:sid],
@@ -213,10 +226,10 @@ module Twilio
             # @param [String] friendly_name A human readable description of this resource, up
             #   to 64 characters.
             # @return [PublicKeyInstance] Updated PublicKeyInstance
-            def update(friendly_name: nil)
-              data = {
+            def update(friendly_name: :unset)
+              data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
-              }
+              })
 
               payload = @version.update(
                   'POST',
@@ -224,7 +237,7 @@ module Twilio
                   data: data,
               )
 
-              return PublicKeyInstance.new(
+              PublicKeyInstance.new(
                   @version,
                   payload,
                   sid: @solution[:sid],
@@ -235,7 +248,7 @@ module Twilio
             # Deletes the PublicKeyInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
@@ -325,7 +338,7 @@ module Twilio
             # @param [String] friendly_name A human readable description of this resource, up
             #   to 64 characters.
             # @return [PublicKeyInstance] Updated PublicKeyInstance
-            def update(friendly_name: nil)
+            def update(friendly_name: :unset)
               context.update(
                   friendly_name: friendly_name,
               )

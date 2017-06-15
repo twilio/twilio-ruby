@@ -35,15 +35,15 @@ module Twilio
             # @param [String] status_callback The status_callback
             # @param [String] status_callback_method The status_callback_method
             # @return [ValidationRequestInstance] Newly created ValidationRequestInstance
-            def create(phone_number: nil, friendly_name: nil, call_delay: nil, extension: nil, status_callback: nil, status_callback_method: nil)
-              data = {
+            def create(phone_number: nil, friendly_name: :unset, call_delay: :unset, extension: :unset, status_callback: :unset, status_callback_method: :unset)
+              data = Twilio::Values.of({
                   'PhoneNumber' => phone_number,
                   'FriendlyName' => friendly_name,
                   'CallDelay' => call_delay,
                   'Extension' => extension,
                   'StatusCallback' => status_callback,
                   'StatusCallbackMethod' => status_callback_method,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -51,7 +51,7 @@ module Twilio
                   data: data
               )
 
-              return ValidationRequestInstance.new(
+              ValidationRequestInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],
@@ -85,7 +85,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ValidationRequestInstance] ValidationRequestInstance
             def get_instance(payload)
-              return ValidationRequestInstance.new(
+              ValidationRequestInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],

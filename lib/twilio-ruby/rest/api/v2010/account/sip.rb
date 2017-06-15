@@ -127,7 +127,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [SipInstance] SipInstance
             def get_instance(payload)
-              return SipInstance.new(
+              SipInstance.new(
                   @version,
                   payload,
                   account_sid: @solution[:account_sid],

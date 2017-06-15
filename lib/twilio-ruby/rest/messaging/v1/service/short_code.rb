@@ -31,9 +31,9 @@ module Twilio
             # @param [String] short_code_sid The short_code_sid
             # @return [ShortCodeInstance] Newly created ShortCodeInstance
             def create(short_code_sid: nil)
-              data = {
+              data = Twilio::Values.of({
                   'ShortCodeSid' => short_code_sid,
-              }
+              })
 
               payload = @version.create(
                   'POST',
@@ -41,7 +41,7 @@ module Twilio
                   data: data
               )
 
-              return ShortCodeInstance.new(
+              ShortCodeInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -116,18 +116,31 @@ module Twilio
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of ShortCodeInstance
-            def page(page_token: nil, page_number: nil, page_size: nil)
-              params = {
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
+              params = Twilio::Values.of({
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
-              }
+              })
               response = @version.page(
                   'GET',
                   @uri,
                   params
               )
-              return ShortCodePage.new(@version, response, @solution)
+              ShortCodePage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of ShortCodeInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] target_url API-generated URL for the requested results page
+            # @return [Page] Page of ShortCodeInstance
+            def get_page(target_url)
+              response = @version.domain.request(
+                  'GET',
+                  target_url
+              )
+              ShortCodePage.new(@version, response, @solution)
             end
 
             ##
@@ -157,7 +170,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ShortCodeInstance] ShortCodeInstance
             def get_instance(payload)
-              return ShortCodeInstance.new(
+              ShortCodeInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],
@@ -193,14 +206,14 @@ module Twilio
             # Deletes the ShortCodeInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
-              return @version.delete('delete', @uri)
+              @version.delete('delete', @uri)
             end
 
             ##
             # Fetch a ShortCodeInstance
             # @return [ShortCodeInstance] Fetched ShortCodeInstance
             def fetch
-              params = {}
+              params = Twilio::Values.of({})
 
               payload = @version.fetch(
                   'GET',
@@ -208,7 +221,7 @@ module Twilio
                   params,
               )
 
-              return ShortCodeInstance.new(
+              ShortCodeInstance.new(
                   @version,
                   payload,
                   service_sid: @solution[:service_sid],

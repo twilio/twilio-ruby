@@ -66,7 +66,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [PhoneNumberInstance] PhoneNumberInstance
           def get_instance(payload)
-            return PhoneNumberInstance.new(
+            PhoneNumberInstance.new(
                 @version,
                 payload,
             )
