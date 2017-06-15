@@ -79,7 +79,7 @@ describe Twilio::JWT::ClientCapability do
       expect(payload['iss']).to eq('accountSid')
       expect(payload['scope']).to eq(escope)
       expect(payload['exp']).to be > Time.now.to_i
-      expect(payload['nbf']).to be <= Time.now.to_i-1
+      expect(payload['nbf']).to be <= Time.now.to_i
     end
   end
 
