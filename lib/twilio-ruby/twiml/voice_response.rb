@@ -1,10 +1,9 @@
 module Twilio
   module TwiML
-
     # Voice TwiML Response
     class VoiceResponse < TwiML
       # Create a new <Response>
-      def initialize()
+      def initialize
         super()
         self.name = 'Response'
         yield(self) if block_given?
@@ -29,18 +28,19 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Dial> child element
       def dial(
-          number,
-          action: nil,
-          method: nil,
-          timeout: nil,
-          hangup_on_star: nil,
-          time_limit: nil,
-          caller_id: nil,
-          record: nil,
-          trim: nil,
-          recording_status_callback: nil,
-          recording_status_callback_method: nil,
-          **keyword_args)
+        number,
+        action: nil,
+        method: nil,
+        timeout: nil,
+        hangup_on_star: nil,
+        time_limit: nil,
+        caller_id: nil,
+        record: nil,
+        trim: nil,
+        recording_status_callback: nil,
+        recording_status_callback_method: nil,
+        **keyword_args
+      )
 
         dial = Dial.new(
             number: number,
@@ -93,7 +93,8 @@ module Twilio
         wait_url: nil,
         wait_url_method: nil,
         workflow_sid: nil,
-        **keyword_args)
+        **keyword_args
+      )
 
         enqueue = Enqueue.new(
           name,
@@ -140,7 +141,8 @@ module Twilio
         hints: nil,
         barge_in: nil,
         acknowledge_sound_url: nil,
-        **keyword_args)
+        **keyword_args
+      )
 
         gather = Gather.new(
           action: action,
@@ -238,7 +240,8 @@ module Twilio
         recording_status_callback_method: nil,
         transcribe: nil,
         transcribe_callback: nil,
-        **keyword_args)
+        **keyword_args
+      )
         self.append(Record.new(
           action: action,
           method: method,
@@ -314,14 +317,7 @@ module Twilio
       #
       # == Returns:
       # A <Response> element with a <Sms> child element
-      def sms(
-        body,
-        to: nil,
-        from: nil,
-        method: nil,
-        action: nil,
-        status_callback: nil,
-        **keyword_args)
+      def sms(body, to: nil, from: nil, method: nil, action: nil, status_callback: nil, **keyword_args)
         self.append(Sms.new(
           body,
           to: to,
@@ -346,9 +342,7 @@ module Twilio
       # A <Dial> element
       def initialize(number: nil, **keyword_args)
         super(**keyword_args)
-        if !(number.nil?)
-          @value = number
-        end
+        @value = number unless number.nil?
         yield(self) if block_given?
       end
 
@@ -745,12 +739,7 @@ module Twilio
       #
       # == Returns:
       # A <Gather> element with a <Say> child element
-      def say(
-        body,
-        loop: nil,
-        language: nil,
-        voice: nil,
-        **keyword_args)
+      def say(body, loop: nil, language: nil, voice: nil, **keyword_args)
         self.append(Say.new(
           body,
           loop: loop,

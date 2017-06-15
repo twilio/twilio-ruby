@@ -15,10 +15,11 @@ client = Twilio::REST::Client.new(account_sid, auth_token)
 
 calls = client.calls.list
 
-begin
+loop do
   calls.each do |call|
     price = call.price || '0.00' # since apparently prices can be nil...
     puts call.sid + "\t" + call.from + "\t" + call.to + "\t" + price
   end
   calls = calls.next_page
-end while not calls.empty?
+  break if calls.empty?
+end

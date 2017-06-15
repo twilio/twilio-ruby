@@ -1,10 +1,9 @@
 module Twilio
   module TwiML
-
     # Messaging TwiML Response
     class MessagingResponse < TwiML
       # Create a new <Response>
-      def initialize()
+      def initialize
         super()
         self.name = 'Response'
         yield(self) if block_given?
@@ -23,15 +22,7 @@ module Twilio
       #
       # == Returns:
       # A <Response> element with a <Message> child element
-      def message(
-        body,
-        to: nil,
-        from: nil,
-        method: nil,
-        action: nil,
-        status_callback: nil,
-        **keyword_args)
-
+      def message(body, to: nil, from: nil, method: nil, action: nil, status_callback: nil, **keyword_args)
         message = Message.new(
           body: body,
           to: to,
@@ -73,9 +64,7 @@ module Twilio
       # A <Message> element
       def initialize(body: nil, **keyword_args)
         super(**keyword_args)
-        if !(body.nil?)
-          @value = body
-        end
+        @value = body unless body.nil?
         yield(self) if block_given?
       end
 

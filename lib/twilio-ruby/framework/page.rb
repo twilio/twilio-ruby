@@ -4,26 +4,26 @@ module Twilio
       include Enumerable
 
       META_KEYS = [
-          'end',
-          'first_page_uri',
-          'next_page_uri',
-          'last_page_uri',
-          'page',
-          'page_size',
-          'previous_page_uri',
-          'total',
-          'num_pages',
-          'start',
-          'uri'
-      ]
+        'end',
+        'first_page_uri',
+        'next_page_uri',
+        'last_page_uri',
+        'page',
+        'page_size',
+        'previous_page_uri',
+        'total',
+        'num_pages',
+        'start',
+        'uri'
+      ].freeze
 
       def initialize(version, response)
-        payload = self.process_response(response)
+        payload = process_response(response)
 
         @version = version
         @payload = payload
         @solution = {}
-        @records = self.load_page(payload)
+        @records = load_page(payload)
       end
 
       def process_response(response)
@@ -40,9 +40,7 @@ module Twilio
         else
           keys = payload.keys
           key = keys - META_KEYS
-          if key.size == 1
-            return payload[key.first]
-          end
+          return payload[key.first] if key.size == 1
         end
 
         raise Twilio::REST::TwilioError.new('Page Records can not be deserialized')
@@ -73,7 +71,7 @@ module Twilio
       end
 
       def previous_page
-        return nil unless self.previous_page_url
+        return nil unless @previous_page_url
 
         response = @version.domain.request('GET', self.previous_page_url)
 
@@ -81,7 +79,7 @@ module Twilio
       end
 
       def next_page
-        return nil unless self.next_page_url
+        return nil unless @next_page_url
 
         response = @version.domain.request('GET', self.next_page_url)
 
@@ -90,7 +88,7 @@ module Twilio
 
       def each
         @records.each do |record|
-          yield self.get_instance(record)
+          yield get_instance(record)
         end
       end
 
@@ -100,4 +98,3 @@ module Twilio
     end
   end
 end
-

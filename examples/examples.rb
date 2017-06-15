@@ -123,8 +123,11 @@ end
 @participants.get('CA386025c9bf5d6052a1d1ea42b4d16662').mute
 
 # and, since we're lazy loading, this would only incur one http request
-@account.conferences.get('CFbbe46ff1274e283f7e3ac1df0072ab39').participants
-  .get('CA386025c9bf5d6052a1d1ea42b4d16662').update(muted: 'true')
+@account.conferences
+        .get('CFbbe46ff1274e283f7e3ac1df0072ab39')
+        .participants
+        .get('CA386025c9bf5d6052a1d1ea42b4d16662')
+        .update(muted: 'true')
 
 ################ QUEUES ###################
 
@@ -135,10 +138,10 @@ end
 @queues = @account.queues.list
 
 # get a particular queue and its members
-@queue = @account.queues.get("QQb6765b0458714964970a73dcaf55efd1")
+@queue = @account.queues.get('QQb6765b0458714964970a73dcaf55efd1')
 @members = @queue.members
 
-#list members
+# list members
 @members.list.each do |m|
   puts m.wait_time
 end

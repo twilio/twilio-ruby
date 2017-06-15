@@ -20,9 +20,7 @@ module Twilio
         @attrs = {}
 
         keyword_args.each do |key, val|
-          if !(val.nil?)
-            @attrs[TwiML.to_lower_camel_case(key)] = val
-          end
+          @attrs[TwiML.to_lower_camel_case(key)] = val unless val.nil?
         end
       end
 
@@ -39,7 +37,7 @@ module Twilio
         xml
       end
 
-      def xml()
+      def xml
         # create XML element
         elem = LibXML::XML::Node.new(@name, @value)
 
@@ -48,7 +46,7 @@ module Twilio
         keys.each do |key|
           value = @attrs[key]
 
-          if (value.is_a?(TrueClass) || value.is_a?(FalseClass))
+          if value.is_a?(TrueClass) || value.is_a?(FalseClass)
             elem[key] = value.to_s.downcase
           else
             elem[key] = value.to_s
@@ -63,9 +61,7 @@ module Twilio
       end
 
       def append(verb)
-        if !(verb.is_a?(TwiML))
-          raise TwiMLError.new "Only appending of TwiML is allowed"
-        end
+        raise TwiMLError, 'Only appending of TwiML is allowed' unless verb.is_a?(TwiML)
 
         @verbs << verb
         self

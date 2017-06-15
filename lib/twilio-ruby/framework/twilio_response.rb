@@ -7,7 +7,7 @@ module Twilio
       body = '{}' if !body || body.empty?
       @body = JSON.parse(body)
     end
-    
+
     def to_s
       "[#{status_code}] #{body}"
     end

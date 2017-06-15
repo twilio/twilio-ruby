@@ -455,7 +455,14 @@ describe Twilio::TwiML::VoiceResponse do
       r = Twilio::TwiML::VoiceResponse.new
       r.append(g)
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Gather><Say>Hey</Say><Play>hey.mp3</Play><Pause/></Gather></Response>')
+      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?>' \
+                             '<Response>' \
+                               '<Gather>' \
+                                 '<Say>Hey</Say>' \
+                                 '<Play>hey.mp3</Play>' \
+                                 '<Pause/>' \
+                               '</Gather>' \
+                             '</Response>')
     end
   end
 end

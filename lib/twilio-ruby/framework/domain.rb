@@ -15,11 +15,7 @@ module Twilio
       end
 
       def request(method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
-        if uri.match(/^http/)
-          url = uri
-        else
-          url = self.absolute_url(uri)
-        end
+        url = uri.match(/^http/) ? uri : self.absolute_url(uri)
 
         @client.request(
           @host,

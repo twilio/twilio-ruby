@@ -24,35 +24,29 @@ module Twilio
   end
 
   def self.deserialize_rfc2822(date)
-    unless date.nil?
-      Time.rfc2822(date)
-    end
+    Time.rfc2822(date) unless date.nil?
   end
 
   def self.deserialize_iso8601_date(date)
-    unless date.nil?
-      Date.parse(date)
-    end
+    Date.parse(date) unless date.nil?
   end
 
   def self.deserialize_iso8601_datetime(date)
-    unless date.nil?
-      Time.parse(date)
-    end
+    Time.parse(date) unless date.nil?
   end
 
   def self.serialize_object(object)
-    if object.is_a?(Hash) or object.is_a?(Array)
+    if object.is_a?(Hash) || object.is_a?(Array)
       JSON.generate(object)
     else
       object
     end
   end
 
-  def self.flatten(map, result={}, previous=[])
+  def self.flatten(map, result = {}, previous = [])
     map.each do |key, value|
       if value.is_a? Hash
-        self.flatten(value, result, previous + [key])
+        flatten(value, result, previous + [key])
       else
         result[(previous + [key]).join('.')] = value
       end
@@ -64,7 +58,7 @@ module Twilio
   def self.prefixed_collapsible_map(map, prefix)
     result = {}
     if map.is_a? Hash
-      flattened = self.flatten(map)
+      flattened = flatten(map)
       result = {}
       flattened.each do |key, value|
         result[prefix + '.' + key] = value
@@ -73,5 +67,4 @@ module Twilio
 
     result
   end
-
 end

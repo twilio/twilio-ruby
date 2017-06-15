@@ -5,7 +5,7 @@ module Twilio
     class Client
       attr_accessor :adapter
 
-      def initialize(proxy_addr=nil, proxy_port=nil, proxy_user=nil, proxy_pass=nil, ssl_ca_file=nil)
+      def initialize(proxy_addr = nil, proxy_port = nil, proxy_user = nil, proxy_pass = nil, ssl_ca_file = nil)
         @proxy_addr = proxy_addr
         @proxy_port = proxy_port
         @proxy_user = proxy_user
@@ -17,14 +17,14 @@ module Twilio
         Faraday::Utils.default_params_encoder = Faraday::FlatParamsEncoder
       end
 
-      def request(host, port, method, url, params={}, data={}, headers={}, auth=nil, timeout=nil)
-        @connection = Faraday.new(url: host + ":" + port.to_s, ssl: {verify: true}) do |f|
+      def request(host, port, method, url, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
+        @connection = Faraday.new(url: host + ':' + port.to_s, ssl: { verify: true }) do |f|
           f.request :url_encoded
           f.adapter @adapter
           f.headers = headers
           f.basic_auth(auth[0], auth[1])
           if @proxy_addr
-            f.proxy "#{@proxy_user}:#{@proxy_pass}@#{@proxy_addr}:#{@proxy_port}"
+            f.proxy '#{@proxy_user}:#{@proxy_pass}@#{@proxy_addr}:#{@proxy_port}'
           end
           f.options.open_timeout = timeout
           f.options.timeout = timeout
@@ -33,7 +33,7 @@ module Twilio
         response = @connection.send(method.downcase.to_sym, url, method == 'GET' ? params : data)
 
         @last_response = response
-        if response.body and !response.body.empty?
+        if response.body && !response.body.empty?
           object = response.body
         elsif response.status == 400
           object = { message: 'Bad request', code: 400 }.to_json
@@ -42,6 +42,5 @@ module Twilio
         TwilioResponse.new(response.status, object)
       end
     end
-
   end
 end
