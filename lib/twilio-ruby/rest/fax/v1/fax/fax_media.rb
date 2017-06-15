@@ -13,7 +13,8 @@ module Twilio
             ##
             # Initialize the FaxMediaList
             # @param [Version] version Version that contains the resource
-            # @param [String] fax_sid The fax_sid
+            # @param [String] fax_sid The unique SID identifier of the fax for which this
+            #   media is associated.
             # @return [FaxMediaList] FaxMediaList
             def initialize(version, fax_sid: nil)
               super(version)
@@ -133,7 +134,8 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] fax_sid The fax_sid
+            # @param [String] fax_sid The unique SID identifier of the fax for which this
+            #   media is associated.
             # @return [FaxMediaPage] FaxMediaPage
             def initialize(version, response, solution)
               super(version, response)
@@ -165,8 +167,9 @@ module Twilio
             ##
             # Initialize the FaxMediaContext
             # @param [Version] version Version that contains the resource
-            # @param [String] fax_sid The fax_sid
-            # @param [String] sid The sid
+            # @param [String] fax_sid The unique SID identifier of the fax.
+            # @param [String] sid A 34 character string that uniquely identifies this fax
+            #   media.
             # @return [FaxMediaContext] FaxMediaContext
             def initialize(version, fax_sid, sid)
               super(version)
@@ -219,8 +222,10 @@ module Twilio
             # Initialize the FaxMediaInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] fax_sid The fax_sid
-            # @param [String] sid The sid
+            # @param [String] fax_sid The unique SID identifier of the fax for which this
+            #   media is associated.
+            # @param [String] sid A 34 character string that uniquely identifies this fax
+            #   media.
             # @return [FaxMediaInstance] FaxMediaInstance
             def initialize(version, payload, fax_sid: nil, sid: nil)
               super(version)

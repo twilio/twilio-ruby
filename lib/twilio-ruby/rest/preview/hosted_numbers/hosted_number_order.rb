@@ -186,8 +186,6 @@ module Twilio
           #   Address resource that represents the address of the owner of this phone number.
           # @param [String] phone_number An E164 formatted phone number hosted by this
           #   HostedNumberOrder.
-          # @param [hosted_number_order.Type] type The type of the phone_number. One of
-          #   `local` or `tollfree`.
           # @param [String] iso_country The ISO country code of the phone_number.
           # @param [Boolean] sms_capability Used to specify that the SMS capability will be
           #   hosted on Twilio's platform.
@@ -211,11 +209,10 @@ module Twilio
           # @param [String] sms_fallback_method Optional. The SMS Fallback Method attached
           #   to the IncomingPhoneNumber resource.
           # @return [HostedNumberOrderInstance] Newly created HostedNumberOrderInstance
-          def create(address_sid: nil, phone_number: nil, type: nil, iso_country: nil, sms_capability: nil, email: nil, account_sid: :unset, friendly_name: :unset, unique_name: :unset, cc_emails: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset)
+          def create(address_sid: nil, phone_number: nil, iso_country: nil, sms_capability: nil, email: nil, account_sid: :unset, friendly_name: :unset, unique_name: :unset, cc_emails: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset)
             data = Twilio::Values.of({
                 'AddressSid' => address_sid,
                 'PhoneNumber' => phone_number,
-                'Type' => type,
                 'IsoCountry' => iso_country,
                 'SmsCapability' => sms_capability,
                 'Email' => email,

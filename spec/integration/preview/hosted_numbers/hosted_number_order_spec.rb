@@ -224,13 +224,12 @@ describe 'HostedNumberOrder' do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
 
     expect {
-      @client.preview.hosted_numbers.hosted_number_orders.create(address_sid: "ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", phone_number: "+987654321", type: "local", iso_country: "iso_country", sms_capability: true, email: "email")
+      @client.preview.hosted_numbers.hosted_number_orders.create(address_sid: "ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", phone_number: "+987654321", iso_country: "iso_country", sms_capability: true, email: "email")
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'AddressSid' => "ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         'PhoneNumber' => "+987654321",
-        'Type' => "local",
         'IsoCountry' => "iso_country",
         'SmsCapability' => true,
         'Email' => "email",
@@ -270,7 +269,7 @@ describe 'HostedNumberOrder' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.hosted_number_orders.create(address_sid: "ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", phone_number: "+987654321", type: "local", iso_country: "iso_country", sms_capability: true, email: "email")
+    actual = @client.preview.hosted_numbers.hosted_number_orders.create(address_sid: "ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", phone_number: "+987654321", iso_country: "iso_country", sms_capability: true, email: "email")
 
     expect(actual).to_not eq(nil)
   end

@@ -37,8 +37,11 @@ module Twilio
           # @param [String] default_fcm_notification_protocol_version The
           #   default_fcm_notification_protocol_version
           # @param [Boolean] log_enabled The log_enabled
+          # @param [String] alexa_skill_id The alexa_skill_id
+          # @param [String] default_alexa_notification_protocol_version The
+          #   default_alexa_notification_protocol_version
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset)
+          def create(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset, alexa_skill_id: :unset, default_alexa_notification_protocol_version: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'ApnCredentialSid' => apn_credential_sid,
@@ -50,6 +53,8 @@ module Twilio
                 'FcmCredentialSid' => fcm_credential_sid,
                 'DefaultFcmNotificationProtocolVersion' => default_fcm_notification_protocol_version,
                 'LogEnabled' => log_enabled,
+                'AlexaSkillId' => alexa_skill_id,
+                'DefaultAlexaNotificationProtocolVersion' => default_alexa_notification_protocol_version,
             })
 
             payload = @version.create(
@@ -268,8 +273,11 @@ module Twilio
           # @param [String] default_fcm_notification_protocol_version The
           #   default_fcm_notification_protocol_version
           # @param [Boolean] log_enabled The log_enabled
+          # @param [String] alexa_skill_id The alexa_skill_id
+          # @param [String] default_alexa_notification_protocol_version The
+          #   default_alexa_notification_protocol_version
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset)
+          def update(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset, alexa_skill_id: :unset, default_alexa_notification_protocol_version: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'ApnCredentialSid' => apn_credential_sid,
@@ -281,6 +289,8 @@ module Twilio
                 'FcmCredentialSid' => fcm_credential_sid,
                 'DefaultFcmNotificationProtocolVersion' => default_fcm_notification_protocol_version,
                 'LogEnabled' => log_enabled,
+                'AlexaSkillId' => alexa_skill_id,
+                'DefaultAlexaNotificationProtocolVersion' => default_alexa_notification_protocol_version,
             })
 
             payload = @version.update(
@@ -404,6 +414,8 @@ module Twilio
                 'log_enabled' => payload['log_enabled'],
                 'url' => payload['url'],
                 'links' => payload['links'],
+                'alexa_skill_id' => payload['alexa_skill_id'],
+                'default_alexa_notification_protocol_version' => payload['default_alexa_notification_protocol_version'],
             }
 
             # Context
@@ -492,6 +504,14 @@ module Twilio
             @properties['links']
           end
 
+          def alexa_skill_id
+            @properties['alexa_skill_id']
+          end
+
+          def default_alexa_notification_protocol_version
+            @properties['default_alexa_notification_protocol_version']
+          end
+
           ##
           # Deletes the ServiceInstance
           # @return [Boolean] true if delete succeeds, true otherwise
@@ -521,8 +541,11 @@ module Twilio
           # @param [String] default_fcm_notification_protocol_version The
           #   default_fcm_notification_protocol_version
           # @param [Boolean] log_enabled The log_enabled
+          # @param [String] alexa_skill_id The alexa_skill_id
+          # @param [String] default_alexa_notification_protocol_version The
+          #   default_alexa_notification_protocol_version
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset)
+          def update(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset, alexa_skill_id: :unset, default_alexa_notification_protocol_version: :unset)
             context.update(
                 friendly_name: friendly_name,
                 apn_credential_sid: apn_credential_sid,
@@ -534,6 +557,8 @@ module Twilio
                 fcm_credential_sid: fcm_credential_sid,
                 default_fcm_notification_protocol_version: default_fcm_notification_protocol_version,
                 log_enabled: log_enabled,
+                alexa_skill_id: alexa_skill_id,
+                default_alexa_notification_protocol_version: default_alexa_notification_protocol_version,
             )
           end
 

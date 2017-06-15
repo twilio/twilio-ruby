@@ -34,6 +34,7 @@ module Twilio
               # @param [Boolean] beta The beta
               # @param [String] friendly_name The friendly_name
               # @param [String] phone_number The phone_number
+              # @param [String] origin The origin
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -41,11 +42,12 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(beta: :unset, friendly_name: :unset, phone_number: :unset, limit: nil, page_size: nil)
+              def list(beta: :unset, friendly_name: :unset, phone_number: :unset, origin: :unset, limit: nil, page_size: nil)
                 self.stream(
                     beta: beta,
                     friendly_name: friendly_name,
                     phone_number: phone_number,
+                    origin: origin,
                     limit: limit,
                     page_size: page_size
                 ).entries
@@ -58,6 +60,7 @@ module Twilio
               # @param [Boolean] beta The beta
               # @param [String] friendly_name The friendly_name
               # @param [String] phone_number The phone_number
+              # @param [String] origin The origin
               # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -65,13 +68,14 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(beta: :unset, friendly_name: :unset, phone_number: :unset, limit: nil, page_size: nil)
+              def stream(beta: :unset, friendly_name: :unset, phone_number: :unset, origin: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
                     beta: beta,
                     friendly_name: friendly_name,
                     phone_number: phone_number,
+                    origin: origin,
                     page_size: limits[:page_size],
                 )
 
@@ -85,6 +89,7 @@ module Twilio
               # @param [Boolean] beta The beta
               # @param [String] friendly_name The friendly_name
               # @param [String] phone_number The phone_number
+              # @param [String] origin The origin
               # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
@@ -109,15 +114,17 @@ module Twilio
               # @param [Boolean] beta The beta
               # @param [String] friendly_name The friendly_name
               # @param [String] phone_number The phone_number
+              # @param [String] origin The origin
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of LocalInstance
-              def page(beta: :unset, friendly_name: :unset, phone_number: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              def page(beta: :unset, friendly_name: :unset, phone_number: :unset, origin: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'Beta' => beta,
                     'FriendlyName' => friendly_name,
                     'PhoneNumber' => phone_number,
+                    'Origin' => origin,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
@@ -260,6 +267,7 @@ module Twilio
                     'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                     'friendly_name' => payload['friendly_name'],
                     'phone_number' => payload['phone_number'],
+                    'origin' => payload['origin'],
                     'sid' => payload['sid'],
                     'sms_application_sid' => payload['sms_application_sid'],
                     'sms_fallback_method' => payload['sms_fallback_method'],
@@ -313,6 +321,10 @@ module Twilio
 
               def phone_number
                 @properties['phone_number']
+              end
+
+              def origin
+                @properties['origin']
               end
 
               def sid

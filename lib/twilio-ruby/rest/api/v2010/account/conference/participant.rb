@@ -315,13 +315,17 @@ module Twilio
               # @param [Boolean] hold The hold
               # @param [String] hold_url The hold_url
               # @param [String] hold_method The hold_method
+              # @param [String] announce_url The announce_url
+              # @param [String] announce_url_method The announce_url_method
               # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(muted: :unset, hold: :unset, hold_url: :unset, hold_method: :unset)
+              def update(muted: :unset, hold: :unset, hold_url: :unset, hold_method: :unset, announce_url: :unset, announce_url_method: :unset)
                 data = Twilio::Values.of({
                     'Muted' => muted,
                     'Hold' => hold,
                     'HoldUrl' => hold_url,
                     'HoldMethod' => hold_method,
+                    'AnnounceUrl' => announce_url,
+                    'AnnounceUrlMethod' => announce_url_method,
                 })
 
                 payload = @version.update(
@@ -466,13 +470,17 @@ module Twilio
               # @param [Boolean] hold The hold
               # @param [String] hold_url The hold_url
               # @param [String] hold_method The hold_method
+              # @param [String] announce_url The announce_url
+              # @param [String] announce_url_method The announce_url_method
               # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(muted: :unset, hold: :unset, hold_url: :unset, hold_method: :unset)
+              def update(muted: :unset, hold: :unset, hold_url: :unset, hold_method: :unset, announce_url: :unset, announce_url_method: :unset)
                 context.update(
                     muted: muted,
                     hold: hold,
                     hold_url: hold_url,
                     hold_method: hold_method,
+                    announce_url: announce_url,
+                    announce_url_method: announce_url_method,
                 )
               end
 

@@ -51,6 +51,7 @@ module Twilio
               # @param [String] in_region The in_region
               # @param [String] in_rate_center The in_rate_center
               # @param [String] in_lata The in_lata
+              # @param [String] in_locality The in_locality
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -58,7 +59,7 @@ module Twilio
               #  but a limit is defined, stream() will attempt to read                      the
               #  limit with the most efficient page size,                      i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(area_code: :unset, contains: :unset, sms_enabled: :unset, mms_enabled: :unset, voice_enabled: :unset, exclude_all_address_required: :unset, exclude_local_address_required: :unset, exclude_foreign_address_required: :unset, beta: :unset, near_number: :unset, near_lat_long: :unset, distance: :unset, in_postal_code: :unset, in_region: :unset, in_rate_center: :unset, in_lata: :unset, limit: nil, page_size: nil)
+              def list(area_code: :unset, contains: :unset, sms_enabled: :unset, mms_enabled: :unset, voice_enabled: :unset, exclude_all_address_required: :unset, exclude_local_address_required: :unset, exclude_foreign_address_required: :unset, beta: :unset, near_number: :unset, near_lat_long: :unset, distance: :unset, in_postal_code: :unset, in_region: :unset, in_rate_center: :unset, in_lata: :unset, in_locality: :unset, limit: nil, page_size: nil)
                 self.stream(
                     area_code: area_code,
                     contains: contains,
@@ -76,6 +77,7 @@ module Twilio
                     in_region: in_region,
                     in_rate_center: in_rate_center,
                     in_lata: in_lata,
+                    in_locality: in_locality,
                     limit: limit,
                     page_size: page_size
                 ).entries
@@ -103,6 +105,7 @@ module Twilio
               # @param [String] in_region The in_region
               # @param [String] in_rate_center The in_rate_center
               # @param [String] in_lata The in_lata
+              # @param [String] in_locality The in_locality
               # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -110,7 +113,7 @@ module Twilio
               #                       but a limit is defined, stream() will attempt to                      read the
               #  limit with the most efficient page size,                       i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(area_code: :unset, contains: :unset, sms_enabled: :unset, mms_enabled: :unset, voice_enabled: :unset, exclude_all_address_required: :unset, exclude_local_address_required: :unset, exclude_foreign_address_required: :unset, beta: :unset, near_number: :unset, near_lat_long: :unset, distance: :unset, in_postal_code: :unset, in_region: :unset, in_rate_center: :unset, in_lata: :unset, limit: nil, page_size: nil)
+              def stream(area_code: :unset, contains: :unset, sms_enabled: :unset, mms_enabled: :unset, voice_enabled: :unset, exclude_all_address_required: :unset, exclude_local_address_required: :unset, exclude_foreign_address_required: :unset, beta: :unset, near_number: :unset, near_lat_long: :unset, distance: :unset, in_postal_code: :unset, in_region: :unset, in_rate_center: :unset, in_lata: :unset, in_locality: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -130,6 +133,7 @@ module Twilio
                     in_region: in_region,
                     in_rate_center: in_rate_center,
                     in_lata: in_lata,
+                    in_locality: in_locality,
                     page_size: limits[:page_size],
                 )
 
@@ -158,6 +162,7 @@ module Twilio
               # @param [String] in_region The in_region
               # @param [String] in_rate_center The in_rate_center
               # @param [String] in_lata The in_lata
+              # @param [String] in_locality The in_locality
               # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
@@ -197,11 +202,12 @@ module Twilio
               # @param [String] in_region The in_region
               # @param [String] in_rate_center The in_rate_center
               # @param [String] in_lata The in_lata
+              # @param [String] in_locality The in_locality
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of MobileInstance
-              def page(area_code: :unset, contains: :unset, sms_enabled: :unset, mms_enabled: :unset, voice_enabled: :unset, exclude_all_address_required: :unset, exclude_local_address_required: :unset, exclude_foreign_address_required: :unset, beta: :unset, near_number: :unset, near_lat_long: :unset, distance: :unset, in_postal_code: :unset, in_region: :unset, in_rate_center: :unset, in_lata: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              def page(area_code: :unset, contains: :unset, sms_enabled: :unset, mms_enabled: :unset, voice_enabled: :unset, exclude_all_address_required: :unset, exclude_local_address_required: :unset, exclude_foreign_address_required: :unset, beta: :unset, near_number: :unset, near_lat_long: :unset, distance: :unset, in_postal_code: :unset, in_region: :unset, in_rate_center: :unset, in_lata: :unset, in_locality: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'AreaCode' => area_code,
                     'Contains' => contains,
@@ -219,6 +225,7 @@ module Twilio
                     'InRegion' => in_region,
                     'InRateCenter' => in_rate_center,
                     'InLata' => in_lata,
+                    'InLocality' => in_locality,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
@@ -305,6 +312,7 @@ module Twilio
                     'friendly_name' => payload['friendly_name'],
                     'phone_number' => payload['phone_number'],
                     'lata' => payload['lata'],
+                    'locality' => payload['locality'],
                     'rate_center' => payload['rate_center'],
                     'latitude' => payload['latitude'].to_f,
                     'longitude' => payload['longitude'].to_f,
@@ -327,6 +335,10 @@ module Twilio
 
               def lata
                 @properties['lata']
+              end
+
+              def locality
+                @properties['locality']
               end
 
               def rate_center

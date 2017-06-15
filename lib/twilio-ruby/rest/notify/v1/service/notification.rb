@@ -41,10 +41,11 @@ module Twilio
             # @param [Hash] facebook_messenger The facebook_messenger
             # @param [String] fcm The fcm
             # @param [String] segment The segment
+            # @param [String] alexa The alexa
             # @param [String] identity The identity
             # @param [String] tag The tag
             # @return [NotificationInstance] Newly created NotificationInstance
-            def create(body: :unset, priority: :unset, ttl: :unset, title: :unset, sound: :unset, action: :unset, data: :unset, apn: :unset, gcm: :unset, sms: :unset, facebook_messenger: :unset, fcm: :unset, segment: :unset, identity: :unset, tag: :unset)
+            def create(body: :unset, priority: :unset, ttl: :unset, title: :unset, sound: :unset, action: :unset, data: :unset, apn: :unset, gcm: :unset, sms: :unset, facebook_messenger: :unset, fcm: :unset, segment: :unset, alexa: :unset, identity: :unset, tag: :unset)
               data = Twilio::Values.of({
                   'Identity' => identity,
                   'Tag' => tag,
@@ -61,6 +62,7 @@ module Twilio
                   'FacebookMessenger' => Twilio.serialize_object(facebook_messenger),
                   'Fcm' => fcm,
                   'Segment' => segment,
+                  'Alexa' => alexa,
               })
 
               payload = @version.create(
@@ -148,6 +150,7 @@ module Twilio
                   'fcm' => payload['fcm'],
                   'sms' => payload['sms'],
                   'facebook_messenger' => payload['facebook_messenger'],
+                  'alexa' => payload['alexa'],
               }
             end
 
@@ -225,6 +228,10 @@ module Twilio
 
             def facebook_messenger
               @properties['facebook_messenger']
+            end
+
+            def alexa
+              @properties['alexa']
             end
 
             ##

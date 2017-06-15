@@ -25,10 +25,14 @@ module Twilio
           # Lists FaxInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] from The from
-          # @param [String] to The to
-          # @param [Time] date_created_on_or_before The date_created_on_or_before
-          # @param [Time] date_created_after The date_created_after
+          # @param [String] from Filters the returned list to only include faxes sent from
+          #   the supplied number, given in E.164 format.
+          # @param [String] to Filters the returned list to only include faxes sent to the
+          #   supplied number, given in E.164 format.
+          # @param [Time] date_created_on_or_before Filters the returned list to only
+          #   include faxes created on or before the supplied date, given in ISO 8601 format.
+          # @param [Time] date_created_after Filters the returned list to only include faxes
+          #   created after the supplied date, given in ISO 8601 format.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #                   guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -51,10 +55,14 @@ module Twilio
           # Streams FaxInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] from The from
-          # @param [String] to The to
-          # @param [Time] date_created_on_or_before The date_created_on_or_before
-          # @param [Time] date_created_after The date_created_after
+          # @param [String] from Filters the returned list to only include faxes sent from
+          #   the supplied number, given in E.164 format.
+          # @param [String] to Filters the returned list to only include faxes sent to the
+          #   supplied number, given in E.164 format.
+          # @param [Time] date_created_on_or_before Filters the returned list to only
+          #   include faxes created on or before the supplied date, given in ISO 8601 format.
+          # @param [Time] date_created_after Filters the returned list to only include faxes
+          #   created after the supplied date, given in ISO 8601 format.
           # @param [Integer] limit Upper limit for the number of records to return.                  stream()
           #  guarantees to never return more than limit.                  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -80,10 +88,14 @@ module Twilio
           # When passed a block, yields FaxInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] from The from
-          # @param [String] to The to
-          # @param [Time] date_created_on_or_before The date_created_on_or_before
-          # @param [Time] date_created_after The date_created_after
+          # @param [String] from Filters the returned list to only include faxes sent from
+          #   the supplied number, given in E.164 format.
+          # @param [String] to Filters the returned list to only include faxes sent to the
+          #   supplied number, given in E.164 format.
+          # @param [Time] date_created_on_or_before Filters the returned list to only
+          #   include faxes created on or before the supplied date, given in ISO 8601 format.
+          # @param [Time] date_created_after Filters the returned list to only include faxes
+          #   created after the supplied date, given in ISO 8601 format.
           # @param [Integer] limit Upper limit for the number of records to return.                  stream()
           #  guarantees to never return more than limit.                  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
@@ -105,10 +117,14 @@ module Twilio
           ##
           # Retrieve a single page of FaxInstance records from the API.
           # Request is executed immediately.
-          # @param [String] from The from
-          # @param [String] to The to
-          # @param [Time] date_created_on_or_before The date_created_on_or_before
-          # @param [Time] date_created_after The date_created_after
+          # @param [String] from Filters the returned list to only include faxes sent from
+          #   the supplied number, given in E.164 format.
+          # @param [String] to Filters the returned list to only include faxes sent to the
+          #   supplied number, given in E.164 format.
+          # @param [Time] date_created_on_or_before Filters the returned list to only
+          #   include faxes created on or before the supplied date, given in ISO 8601 format.
+          # @param [Time] date_created_after Filters the returned list to only include faxes
+          #   created after the supplied date, given in ISO 8601 format.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -147,15 +163,27 @@ module Twilio
           ##
           # Retrieve a single page of FaxInstance records from the API.
           # Request is executed immediately.
-          # @param [String] to The to
-          # @param [String] media_url The media_url
-          # @param [fax.Quality] quality The quality
-          # @param [String] status_callback The status_callback
-          # @param [String] from The from
-          # @param [String] sip_auth_username The sip_auth_username
-          # @param [String] sip_auth_password The sip_auth_password
+          # @param [String] to The phone number or SIP address to send the fax to,
+          #   E.164-formatted.
+          # @param [String] media_url The URL that Twilio will request to obtain the fax
+          #   media to send, which must be a PDF file.
+          # @param [fax.Quality] quality The quality setting to use for this fax. One of
+          #   `standard`, `fine` or `superfine`.
+          # @param [String] status_callback The URL that Twilio will request when the status
+          #   of the fax changes.
+          # @param [String] from The phone number to use as the caller id, E.164-formatted.
+          #   If using a phone number, it must be a Twilio number or a verified outgoing
+          #   caller id for your account. If sending to a SIP address, this can be any
+          #   alphanumeric string (plus the characters `+`, `_`, `.`, and `-`) to use in the
+          #   From header of the SIP request.
+          # @param [String] sip_auth_username The username to use for authentication when
+          #   sending to a SIP address.
+          # @param [String] sip_auth_password The password to use for authentication when
+          #   sending to a SIP address.
+          # @param [Boolean] store_media Whether or not to store a copy of the sent media on
+          #   Twilio's servers for later retrieval (defaults to `true`)
           # @return [FaxInstance] Newly created FaxInstance
-          def create(to: nil, media_url: nil, quality: :unset, status_callback: :unset, from: :unset, sip_auth_username: :unset, sip_auth_password: :unset)
+          def create(to: nil, media_url: nil, quality: :unset, status_callback: :unset, from: :unset, sip_auth_username: :unset, sip_auth_password: :unset, store_media: :unset)
             data = Twilio::Values.of({
                 'To' => to,
                 'MediaUrl' => media_url,
@@ -164,6 +192,7 @@ module Twilio
                 'From' => from,
                 'SipAuthUsername' => sip_auth_username,
                 'SipAuthPassword' => sip_auth_password,
+                'StoreMedia' => store_media,
             })
 
             payload = @version.create(
@@ -221,7 +250,7 @@ module Twilio
           ##
           # Initialize the FaxContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this fax.
           # @return [FaxContext] FaxContext
           def initialize(version, sid)
             super(version)
@@ -257,7 +286,9 @@ module Twilio
 
           ##
           # Update the FaxInstance
-          # @param [fax.UpdateStatus] status The status
+          # @param [fax.UpdateStatus] status The updated status of this fax. The only valid
+          #   option is `canceled`. This may fail if the status has already started
+          #   transmission.
           # @return [FaxInstance] Updated FaxInstance
           def update(status: :unset)
             data = Twilio::Values.of({
@@ -319,7 +350,7 @@ module Twilio
           # Initialize the FaxInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this fax.
           # @return [FaxInstance] FaxInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -449,7 +480,9 @@ module Twilio
 
           ##
           # Update the FaxInstance
-          # @param [fax.UpdateStatus] status The status
+          # @param [fax.UpdateStatus] status The updated status of this fax. The only valid
+          #   option is `canceled`. This may fail if the status has already started
+          #   transmission.
           # @return [FaxInstance] Updated FaxInstance
           def update(status: :unset)
             context.update(

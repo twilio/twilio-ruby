@@ -143,6 +143,40 @@ describe 'UserBinding' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives create_alexa responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        201,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "address": "address",
+          "binding_type": "binding_type",
+          "credential_sid": "CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "date_created": "2015-07-30T20:00:00Z",
+          "date_updated": "2015-07-30T20:00:00Z",
+          "endpoint": "endpoint",
+          "identity": "identity",
+          "links": {
+              "user": "https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/identity"
+          },
+          "notification_protocol_version": "notification_protocol_version",
+          "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sid": "BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "tags": [
+              "tag"
+          ],
+          "url": "https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/identity/Bindings/BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+
+    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                              .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                              .bindings.create(binding_type: "apn", address: "address")
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can read" do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
 
