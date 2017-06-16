@@ -1,5 +1,15 @@
 twilio-ruby changelog
 =====================
+[2017-06-19] Version 5.0.0-rc23
+-------------------------------
+- Fixed ClientCapability parameter encoded bug.
+- Optional URL parameter for TwiML Play verb. 
+
+[2017-06-15] Version 5.0.0-rc22
+-------------------------------
+- Refactor JWT token constructors 
+
+
 [2017-05-24] Version 5.0.0-rc21
 -------------------------------
 - Add HostedNumbers preview support.

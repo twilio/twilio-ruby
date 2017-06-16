@@ -186,13 +186,8 @@ module Twilio
       #
       # == Returns:
       # A <Response> element with a <Play> child element
-      def play(url, loop: nil, digits: nil, **keyword_args)
-        self.append(Play.new(
-          url,
-          loop: loop,
-          digits: digits,
-          **keyword_args
-        ))
+      def play(url: nil, loop: nil, digits: nil, **keyword_args)
+        append(Play.new(url: url, loop: loop, digits: digits, **keyword_args))
       end
 
       # Create a <Record> element
@@ -762,18 +757,8 @@ module Twilio
       #
       # == Returns:
       # A <Gather> element with a <Play> child element
-      def play(
-        url,
-        loop: nil,
-        digits: nil,
-        **keyword_args)
-
-        self.append(Play.new(
-          url,
-          loop: loop,
-          digits: digits,
-          **keyword_args
-        ))
+      def play(url: nil, loop: nil, digits: nil, **keyword_args)
+        append(Play.new(url: url, loop: loop, digits: digits, **keyword_args))
       end
 
       # Create a <Pause> element
@@ -812,7 +797,7 @@ module Twilio
       #
       # == Returns:
       # A <Play> element
-      def initialize(url, **keyword_args)
+      def initialize(url: nil, **keyword_args)
         super(**keyword_args)
         @value = url
       end
