@@ -77,7 +77,7 @@ describe Twilio::TwiML::VoiceResponse do
   context 'Testing Play' do
     it 'should allow empty play' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.play ''
+      r.play
 
       # For Ruby 2.0, 2.1, 2.2 both opening and closing tags are generated
       # Ruby 2.4 generates an empty tag
@@ -87,21 +87,21 @@ describe Twilio::TwiML::VoiceResponse do
 
     it 'should play hello' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.play 'http://hellomonkey.mp3'
+      r.play(url: 'http://hellomonkey.mp3')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play>http://hellomonkey.mp3</Play></Response>')
     end
 
     it 'should play hello on loop' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.play 'http://hellomonkey.mp3', loop: 3
+      r.play(url: 'http://hellomonkey.mp3', loop: 3)
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play loop="3">http://hellomonkey.mp3</Play></Response>')
     end
 
     it 'should play digits' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.play '', digits: 'w123'
+      r.play(digits: 'w123')
 
       # For Ruby 2.0, 2.1, 2.2 both opening and closing tags are generated
       # Ruby 2.4 generates an empty tag
@@ -440,7 +440,7 @@ describe Twilio::TwiML::VoiceResponse do
     it 'should allow nested play and pause' do
       g = Twilio::TwiML::Gather.new
       g.say 'Hey'
-      g.play 'hey.mp3'
+      g.play(url: 'hey.mp3')
       g.pause
 
       r = Twilio::TwiML::VoiceResponse.new
