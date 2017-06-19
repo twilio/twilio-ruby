@@ -52,7 +52,10 @@ module Twilio
       end
 
       def _generate_payload
-        "scope:client:incoming?clientName" + CGI.escape("=#{@client_name}")
+        prefix = "scope:client:incoming"
+        suffix = "clientName=" + CGI.escape("#{@client_name}")
+
+        [prefix, suffix].join('?')
       end
 
     end
@@ -68,16 +71,15 @@ module Twilio
 
       def _generate_payload
         prefix = "scope:client:outgoing"
-        application_sid = "appSid=#{@application_sid}"
+        application_sid = "appSid=#{CGI.escape(@application_sid)}"
         unless @client_name.nil?
-          client_name = "clientName=#{@client_name}"
+          client_name = "clientName=#{CGI.escape(@client_name)}"
         end
         unless @params.empty?
-          params = "appParams=" + @params.map {|k, v| "#{k}=#{v}"}.join('&')
+          params = "appParams=" + @params.map {|k, v| CGI.escape("#{k}=#{v}")}.join('&')
         end
 
-        suffix = CGI.escape([application_sid, client_name, params].compact.join('&'))
-
+        suffix = [application_sid, client_name, params].compact.join('&')
         [prefix, suffix].join('?')
       end
     end
@@ -87,11 +89,18 @@ module Twilio
 
       def initialize(filters = {})
         @filters = filters
-        @filters[:path] = '/2010-04-01/Events'
+        @path = '/2010-04-01/Events'
       end
 
       def _generate_payload
-        "scope:stream:subscribe?" + CGI.escape(@filters.map {|k, v| "#{k}=#{v}"}.join('&'))
+        prefix = "scope:stream:subscribe"
+        path = "path=#{CGI.escape(@path)}"
+        unless @filters.empty?
+          filters = "params=" + @filters.map {|k, v| CGI.escape("#{k}=#{v}")}.join('&')
+        end
+
+        suffix = [path, filters].compact.join('&')
+        [prefix, suffix].join('?')
       end
     end
   end
