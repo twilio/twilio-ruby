@@ -27,7 +27,7 @@ describe Twilio::JWT::AccessToken do
     end
 
     it 'grants during initialization' do
-      room_grant = Twilio::JWT::VideoGrant.new
+      room_grant = Twilio::JWT::AccessToken::VideoGrant.new
       room_grant.room = 'RM123'
       grants = [room_grant]
       scat = Twilio::JWT::AccessToken.new 'AC123', 'SK123', 'secret', grants
@@ -42,7 +42,7 @@ describe Twilio::JWT::AccessToken do
       end
 
       it 'IpMessaging grant' do
-        ip_messaging_grant = Twilio::JWT::IpMessagingGrant.new
+        ip_messaging_grant = Twilio::JWT::AccessToken::IpMessagingGrant.new
         ip_messaging_grant.service_sid = 'SS123'
         ip_messaging_grant.endpoint_id = 'EP123'
         ip_messaging_grant.deployment_role_sid = 'DR123'
@@ -57,7 +57,7 @@ describe Twilio::JWT::AccessToken do
       end
 
       it 'Voice grant' do
-        voice_grant = Twilio::JWT::VoiceGrant.new
+        voice_grant = Twilio::JWT::AccessToken::VoiceGrant.new
         voice_grant.outgoing_application_sid = 'AP123'
         voice_grant.outgoing_application_params = {:foo => 'bar'}
         voice_grant.push_credential_sid = 'PC123'
@@ -72,7 +72,7 @@ describe Twilio::JWT::AccessToken do
       end
 
       it 'Sync grant' do
-        sync_grant = Twilio::JWT::SyncGrant.new
+        sync_grant = Twilio::JWT::AccessToken::SyncGrant.new
         sync_grant.service_sid = 'SS123'
         sync_grant.endpoint_id = 'EP123'
         @scat.add_grant(sync_grant)
@@ -83,7 +83,7 @@ describe Twilio::JWT::AccessToken do
       end
 
       it 'Conversations grant' do
-        conversation_grant = Twilio::JWT::ConversationsGrant.new
+        conversation_grant = Twilio::JWT::AccessToken::ConversationsGrant.new
         conversation_grant.configuration_profile_sid = 'VS123'
         @scat.add_grant(conversation_grant)
         payload, _ = JWT.decode @scat.to_s, 'secret'
@@ -92,7 +92,7 @@ describe Twilio::JWT::AccessToken do
       end
 
       it 'Room grant' do
-        room_grant = Twilio::JWT::VideoGrant.new
+        room_grant = Twilio::JWT::AccessToken::VideoGrant.new
         room_grant.room = 'RM123'
         @scat.add_grant(room_grant)
         payload, _ = JWT.decode @scat.to_s, 'secret'
@@ -101,7 +101,7 @@ describe Twilio::JWT::AccessToken do
       end
 
       it 'TaskRouter grant' do
-        task_router_grant = Twilio::JWT::TaskRouterGrant.new
+        task_router_grant = Twilio::JWT::AccessToken::TaskRouterGrant.new
         task_router_grant.workspace_sid = 'WS123'
         task_router_grant.worker_sid = 'WK123'
         task_router_grant.role = 'worker'
@@ -114,10 +114,10 @@ describe Twilio::JWT::AccessToken do
       end
 
       it 'multiple grants' do
-        room_grant = Twilio::JWT::VideoGrant.new
+        room_grant = Twilio::JWT::AccessToken::VideoGrant.new
         room_grant.room = 'RM123'
         @scat.add_grant(room_grant)
-        task_router_grant = Twilio::JWT::TaskRouterGrant.new
+        task_router_grant = Twilio::JWT::AccessToken::TaskRouterGrant.new
         task_router_grant.workspace_sid = 'WS123'
         @scat.add_grant(task_router_grant)
         payload, _ = JWT.decode @scat.to_s, 'secret'

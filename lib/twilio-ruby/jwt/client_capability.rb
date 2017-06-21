@@ -1,5 +1,11 @@
 module Twilio
   module JWT
+    module Scope
+      def _generate_payload
+        raise 'Not Implemented'
+      end
+    end
+
     class ClientCapability < BaseJWT
       attr_accessor :account_sid,
                     :auth_token,
@@ -36,71 +42,65 @@ module Twilio
 
         payload
       end
-    end
 
-    module Scope
-      def _generate_payload
-        raise 'Not Implemented'
-      end
-    end
+      class IncomingClientScope
+        include Scope
 
-    class IncomingClientScope
-      include Scope
-
-      def initialize(client_name)
-        @client_name = client_name
-      end
-
-      def _generate_payload
-        prefix = "scope:client:incoming"
-        suffix = "clientName=" + CGI.escape("#{@client_name}")
-
-        [prefix, suffix].join('?')
-      end
-
-    end
-
-    class OutgoingClientScope
-      include Scope
-
-      def initialize(application_sid, client_name = nil, params = {})
-        @application_sid = application_sid
-        @client_name = client_name
-        @params = params
-      end
-
-      def _generate_payload
-        prefix = "scope:client:outgoing"
-        application_sid = "appSid=#{CGI.escape(@application_sid)}"
-        unless @client_name.nil?
-          client_name = "clientName=#{CGI.escape(@client_name)}"
-        end
-        unless @params.empty?
-          params = "appParams=" + @params.map {|k, v| CGI.escape("#{k}=#{v}")}.join('&')
+        def initialize(client_name)
+          @client_name = client_name
         end
 
-        suffix = [application_sid, client_name, params].compact.join('&')
-        [prefix, suffix].join('?')
-      end
-    end
+        def _generate_payload
+          prefix = "scope:client:incoming"
+          suffix = "clientName=" + CGI.escape("#{@client_name}")
 
-    class EventStreamScope
-      include Scope
-
-      def initialize(filters = {})
-        @filters = filters
-        @path = '/2010-04-01/Events'
-      end
-
-      def _generate_payload
-        prefix = "scope:stream:subscribe"
-        path = "path=#{CGI.escape(@path)}"
-        unless @filters.empty?
-          filters = "params=" + @filters.map {|k, v| CGI.escape("#{k}=#{v}")}.join('&')
+          [prefix, suffix].join('?')
         end
 
-        suffix = [path, filters].compact.join('&')
-        [prefix, suffix].join('?')
+      end
+
+      class OutgoingClientScope
+        include Scope
+
+        def initialize(application_sid, client_name = nil, params = {})
+          @application_sid = application_sid
+          @client_name = client_name
+          @params = params
+        end
+
+        def _generate_payload
+          prefix = "scope:client:outgoing"
+          application_sid = "appSid=#{CGI.escape(@application_sid)}"
+          unless @client_name.nil?
+            client_name = "clientName=#{CGI.escape(@client_name)}"
+          end
+          unless @params.empty?
+            params = "appParams=" + @params.map {|k, v| CGI.escape("#{k}=#{v}")}.join('&')
+          end
+
+          suffix = [application_sid, client_name, params].compact.join('&')
+          [prefix, suffix].join('?')
+        end
+      end
+
+      class EventStreamScope
+        include Scope
+
+        def initialize(filters = {})
+          @filters = filters
+          @path = '/2010-04-01/Events'
+        end
+
+        def _generate_payload
+          prefix = "scope:stream:subscribe"
+          path = "path=#{CGI.escape(@path)}"
+          unless @filters.empty?
+            filters = "params=" + @filters.map {|k, v| CGI.escape("#{k}=#{v}")}.join('&')
+          end
+
+          suffix = [path, filters].compact.join('&')
+          [prefix, suffix].join('?')
+        end
       end
     end
   end

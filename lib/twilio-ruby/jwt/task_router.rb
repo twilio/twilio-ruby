@@ -26,7 +26,7 @@ module Twilio
 
       protected
       def _generate_payload
-        Twilio::JWT::TaskRouterUtils.web_socket_policies(@account_sid, @channel_id).each {|policy| self.add_policy(policy)}
+        Twilio::JWT::TaskRouterCapability::TaskRouterUtils.web_socket_policies(@account_sid, @channel_id).each {|policy| self.add_policy(policy)}
         policies = @policies.map{ |policy| policy._generate_payload}
 
         payload = {
@@ -46,126 +46,126 @@ module Twilio
 
         payload
       end
-    end
 
-    class Policy
-      attr_accessor :url,
-                    :method,
-                    :allowed,
-                    :post_filters,
-                    :query_filters
+      class Policy
+        attr_accessor :url,
+                      :method,
+                      :allowed,
+                      :post_filters,
+                      :query_filters
 
-      def initialize(url, method, allowed, post_filters={}, query_filters={})
-        @url = url
-        @method = method
-        @allowed = allowed
-        @post_filters = post_filters
-        @query_filters = query_filters
+        def initialize(url, method, allowed, post_filters={}, query_filters={})
+          @url = url
+          @method = method
+          @allowed = allowed
+          @post_filters = post_filters
+          @query_filters = query_filters
+        end
+
+        def _generate_payload
+          policy = {
+              url: @url,
+              method: @method,
+              query_filter: @query_filters,
+              post_filter: @post_filters,
+              allow: @allowed
+          }
+          policy
+        end
+
       end
 
-      def _generate_payload
-        policy = {
-            url: @url,
-            method: @method,
-            query_filter: @query_filters,
-            post_filter: @post_filters,
-            allow: @allowed
-        }
-        policy
-      end
+      class TaskRouterUtils
+        TASK_ROUTER_VERSION = 'v1'
+        TASK_ROUTER_BASE_URL = 'https://taskrouter.twilio.com'
+        TASK_ROUTER_WEBSOCKET_BASE_URL = 'https://event-bridge.twilio.com/v1/wschannels'
 
-    end
+        def self.workspaces
+          [TASK_ROUTER_BASE_URL, TASK_ROUTER_VERSION, 'Workspaces'].join('/')
+        end
 
-    class TaskRouterUtils
-      TASK_ROUTER_VERSION = 'v1'
-      TASK_ROUTER_BASE_URL = 'https://taskrouter.twilio.com'
-      TASK_ROUTER_WEBSOCKET_BASE_URL = 'https://event-bridge.twilio.com/v1/wschannels'
+        def self.workspace(worskspace_sid)
+          [TASK_ROUTER_BASE_URL, TASK_ROUTER_VERSION, 'Workspaces', worskspace_sid].join('/')
+        end
 
-      def self.workspaces
-        [TASK_ROUTER_BASE_URL, TASK_ROUTER_VERSION, 'Workspaces'].join('/')
-      end
+        def self.all_workspaces
+          [TASK_ROUTER_BASE_URL, TASK_ROUTER_VERSION, 'Workspaces', '**'].join('/')
+        end
 
-      def self.workspace(worskspace_sid)
-        [TASK_ROUTER_BASE_URL, TASK_ROUTER_VERSION, 'Workspaces', worskspace_sid].join('/')
-      end
+        def self.tasks(workspace_sid)
+          [self.workspace(workspace_sid), 'Tasks'].join('/')
+        end
 
-      def self.all_workspaces
-        [TASK_ROUTER_BASE_URL, TASK_ROUTER_VERSION, 'Workspaces', '**'].join('/')
-      end
+        def self.task(workspace_sid, tasks_sid)
+          [self.workspace(workspace_sid), 'Tasks', tasks_sid].join('/')
+        end
 
-      def self.tasks(workspace_sid)
-        [self.workspace(workspace_sid), 'Tasks'].join('/')
-      end
+        def self.all_tasks(workspace_sid)
+          [self.workspace(workspace_sid), 'Tasks', '**'].join('/')
+        end
 
-      def self.task(workspace_sid, tasks_sid)
-        [self.workspace(workspace_sid), 'Tasks', tasks_sid].join('/')
-      end
+        def self.task_queues(workspace_sid)
+          [self.workspace(workspace_sid), 'TaskQueues'].join('/')
+        end
 
-      def self.all_tasks(workspace_sid)
-        [self.workspace(workspace_sid), 'Tasks', '**'].join('/')
-      end
+        def self.task_queue(workspace_sid, taskqueue_sid)
+          [self.workspace(workspace_sid), 'TaskQueues', taskqueue_sid].join('/')
+        end
 
-      def self.task_queues(workspace_sid)
-        [self.workspace(workspace_sid), 'TaskQueues'].join('/')
-      end
+        def self.all_task_queues(workspace_sid)
+          [self.workspace(workspace_sid), 'TaskQueues', '**'].join('/')
+        end
 
-      def self.task_queue(workspace_sid, taskqueue_sid)
-        [self.workspace(workspace_sid), 'TaskQueues', taskqueue_sid].join('/')
-      end
+        def self.activities(workspace_sid)
+          [self.workspace(workspace_sid), 'Activities'].join('/')
+        end
 
-      def self.all_task_queues(workspace_sid)
-        [self.workspace(workspace_sid), 'TaskQueues', '**'].join('/')
-      end
+        def self.activity(workspace_sid, activity_sid)
+          [self.workspace(workspace_sid), 'Activities', activity_sid].join('/')
+        end
 
-      def self.activities(workspace_sid)
-        [self.workspace(workspace_sid), 'Activities'].join('/')
-      end
+        def self.all_activities(workspace_sid)
+          [self.workspace(workspace_sid), 'Activities', '**'].join('/')
+        end
 
-      def self.activity(workspace_sid, activity_sid)
-        [self.workspace(workspace_sid), 'Activities', activity_sid].join('/')
-      end
+        def self.workers(workspace_sid)
+          [self.workspace(workspace_sid), 'Workers'].join('/')
+        end
 
-      def self.all_activities(workspace_sid)
-        [self.workspace(workspace_sid), 'Activities', '**'].join('/')
-      end
+        def self.worker(workspace_sid, worker_sid)
+          [self.workspace(workspace_sid), 'Workers', worker_sid].join('/')
+        end
 
-      def self.workers(workspace_sid)
-        [self.workspace(workspace_sid), 'Workers'].join('/')
-      end
+        def self.all_workers(workspace_sid)
+          [self.workspace(workspace_sid), 'Workers', '**'].join('/')
+        end
 
-      def self.worker(workspace_sid, worker_sid)
-        [self.workspace(workspace_sid), 'Workers', worker_sid].join('/')
-      end
+        def self.reservations(workspace_sid, worker_sid)
+          [self.worker(workspace_sid, worker_sid), 'Reservations'].join('/')
+        end
 
-      def self.all_workers(workspace_sid)
-        [self.workspace(workspace_sid), 'Workers', '**'].join('/')
-      end
+        def self.reservation(workspace_sid, worker_sid, reservation_sid)
+          [self.worker(workspace_sid, worker_sid), 'Reservations', reservation_sid].join('/')
+        end
 
-      def self.reservations(workspace_sid, worker_sid)
-        [self.worker(workspace_sid, worker_sid), 'Reservations'].join('/')
-      end
+        def self.all_reservations(workspace_sid, worker_sid)
+          [self.worker(workspace_sid, worker_sid), 'Reservations', '**'].join('/')
+        end
 
-      def self.reservation(workspace_sid, worker_sid, reservation_sid)
-        [self.worker(workspace_sid, worker_sid), 'Reservations', reservation_sid].join('/')
-      end
+        def self.web_socket_policies(account_sid, channel_sid)
+          url = [TASK_ROUTER_WEBSOCKET_BASE_URL, account_sid, channel_sid].join('/')
+          get = Policy.new(url, 'GET', true)
+          post = Policy.new(url, 'POST', true)
+          [get, post]
+        end
 
-      def self.all_reservations(workspace_sid, worker_sid)
-        [self.worker(workspace_sid, worker_sid), 'Reservations', '**'].join('/')
-      end
-
-      def self.web_socket_policies(account_sid, channel_sid)
-        url = [TASK_ROUTER_WEBSOCKET_BASE_URL, account_sid, channel_sid].join('/')
-        get = Policy.new(url, 'GET', true)
-        post = Policy.new(url, 'POST', true)
-        [get, post]
-      end
-
-      def self.worker_policies(workspace_sid, worker_sid)
-        activities = Policy.new(self.activities(workspace_sid), 'GET', true)
-        tasks = Policy.new(self.all_tasks(workspace_sid), 'GET', true)
-        reservations = Policy.new(self.all_reservations(workspace_sid, worker_sid), 'GET', true)
-        fetch = Policy.new(self.worker(workspace_sid, worker_sid), 'GET', true)
-        [activities, tasks, reservations, fetch]
+        def self.worker_policies(workspace_sid, worker_sid)
+          activities = Policy.new(self.activities(workspace_sid), 'GET', true)
+          tasks = Policy.new(self.all_tasks(workspace_sid), 'GET', true)
+          reservations = Policy.new(self.all_reservations(workspace_sid, worker_sid), 'GET', true)
+          fetch = Policy.new(self.worker(workspace_sid, worker_sid), 'GET', true)
+          [activities, tasks, reservations, fetch]
+        end
       end
     end
   end
