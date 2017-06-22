@@ -1,5 +1,11 @@
 twilio-ruby changelog
 =====================
+[2017-06-22] Version 5.0.0-rc24
+-------------------------------
+- Namespaced Policy, Grants, and Scope to their respective Token.
+- Added `announce_url` and `annouce_url_method` to Conference update.
+- Added `store_media` to Fax.
+
 [2017-06-19] Version 5.0.0-rc23
 -------------------------------
 - Fixed ClientCapability parameter encoded bug.
