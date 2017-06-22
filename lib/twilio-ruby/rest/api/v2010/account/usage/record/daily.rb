@@ -117,8 +117,8 @@ module Twilio
                 def page(category: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                   params = Twilio::Values.of({
                       'Category' => category,
-                      'StartDate' => Twilio.serialize_iso8601(start_date),
-                      'EndDate' => Twilio.serialize_iso8601(end_date),
+                      'StartDate' => Twilio.serialize_iso8601_date(start_date),
+                      'EndDate' => Twilio.serialize_iso8601_date(end_date),
                       'PageToken' => page_token,
                       'Page' => page_number,
                       'PageSize' => page_size,
@@ -205,10 +205,10 @@ module Twilio
                       'count' => payload['count'],
                       'count_unit' => payload['count_unit'],
                       'description' => payload['description'],
-                      'end_date' => payload['end_date'],
+                      'end_date' => Twilio.deserialize_iso8601_date(payload['end_date']),
                       'price' => payload['price'].to_f,
                       'price_unit' => payload['price_unit'],
-                      'start_date' => payload['start_date'],
+                      'start_date' => Twilio.deserialize_iso8601_date(payload['start_date']),
                       'subresource_uris' => payload['subresource_uris'],
                       'uri' => payload['uri'],
                       'usage' => payload['usage'],

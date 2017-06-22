@@ -236,8 +236,8 @@ module Twilio
                   'account_sid' => payload['account_sid'],
                   'fax_sid' => payload['fax_sid'],
                   'content_type' => payload['content_type'],
-                  'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                  'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                  'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                  'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
               }
 

@@ -133,8 +133,8 @@ module Twilio
             params = Twilio::Values.of({
                 'From' => from,
                 'To' => to,
-                'DateCreatedOnOrBefore' => Twilio.serialize_iso8601(date_created_on_or_before),
-                'DateCreatedAfter' => Twilio.serialize_iso8601(date_created_after),
+                'DateCreatedOnOrBefore' => Twilio.serialize_iso8601_datetime(date_created_on_or_before),
+                'DateCreatedAfter' => Twilio.serialize_iso8601_datetime(date_created_after),
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
@@ -177,13 +177,14 @@ module Twilio
           #   alphanumeric string (plus the characters `+`, `_`, `.`, and `-`) to use in the
           #   From header of the SIP request.
           # @param [String] sip_auth_username The username to use for authentication when
-          #   sending to a SIP address.
+          #   sending to a SIP address. Allowed characters are alphanumeric characters, plus
+          #   `-`, `&`, `=`, `+`, `$`, `,`, `;`, `:`, `?`, `/`, `_`, `.`, `!`, `~`, `*`, `'`,
+          #   `(`, and `)`.
           # @param [String] sip_auth_password The password to use for authentication when
-          #   sending to a SIP address.
-          # @param [Boolean] store_media Whether or not to store a copy of the sent media on
-          #   Twilio's servers for later retrieval (defaults to `true`)
+          #   sending to a SIP address. Allowed characters are alphanumeric characters, plus
+          #   `-`, `&`, `=`, `+`, `$`, `_`, `.`, `!`, `~`, `*`, `'`, `(`, and `)`.
           # @return [FaxInstance] Newly created FaxInstance
-          def create(to: nil, media_url: nil, quality: :unset, status_callback: :unset, from: :unset, sip_auth_username: :unset, sip_auth_password: :unset, store_media: :unset)
+          def create(to: nil, media_url: nil, quality: :unset, status_callback: :unset, from: :unset, sip_auth_username: :unset, sip_auth_password: :unset)
             data = Twilio::Values.of({
                 'To' => to,
                 'MediaUrl' => media_url,
@@ -192,7 +193,6 @@ module Twilio
                 'From' => from,
                 'SipAuthUsername' => sip_auth_username,
                 'SipAuthPassword' => sip_auth_password,
-                'StoreMedia' => store_media,
             })
 
             payload = @version.create(
@@ -371,8 +371,8 @@ module Twilio
                 'api_version' => payload['api_version'],
                 'price' => payload['price'].to_f,
                 'price_unit' => payload['price_unit'],
-                'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'links' => payload['links'],
                 'url' => payload['url'],
             }

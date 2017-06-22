@@ -291,8 +291,8 @@ module Twilio
               @properties = {
                   'account_sid' => payload['account_sid'],
                   'available' => payload['available'],
-                  'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                  'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                  'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                  'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'friendly_name' => payload['friendly_name'],
                   'sid' => payload['sid'],
                   'workspace_sid' => payload['workspace_sid'],

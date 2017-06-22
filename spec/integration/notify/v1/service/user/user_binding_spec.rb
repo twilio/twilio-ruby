@@ -143,7 +143,7 @@ describe 'UserBinding' do
     expect(actual).to_not eq(nil)
   end
 
-  it "receives create_alexa responses" do
+  it "receives createAlexa responses" do
     @holodeck.mock(Twilio::TwilioResponse.new(
         201,
       %q[

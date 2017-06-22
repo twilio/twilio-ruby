@@ -77,7 +77,9 @@ module Twilio
             # memory before returning.
             # @param [String] to Filter by messages to this number
             # @param [String] from Only show messages from this phone number
-            # @param [Time] date_sent Filter messages sent by this date
+            # @param [Time] date_sent_before Filter by date sent
+            # @param [Time] date_sent Filter by date sent
+            # @param [Time] date_sent_after: Filter by date sent
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -85,11 +87,13 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(to: :unset, from: :unset, date_sent: :unset, limit: nil, page_size: nil)
+            def list(to: :unset, from: :unset, date_sent_before: :unset, date_sent: :unset, date_sent_after: :unset, limit: nil, page_size: nil)
               self.stream(
                   to: to,
                   from: from,
+                  date_sent_before: date_sent_before,
                   date_sent: date_sent,
+                  date_sent_after: date_sent_after,
                   limit: limit,
                   page_size: page_size
               ).entries
@@ -101,7 +105,9 @@ module Twilio
             # is reached.
             # @param [String] to Filter by messages to this number
             # @param [String] from Only show messages from this phone number
-            # @param [Time] date_sent Filter messages sent by this date
+            # @param [Time] date_sent_before Filter by date sent
+            # @param [Time] date_sent Filter by date sent
+            # @param [Time] date_sent_after: Filter by date sent
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -109,13 +115,15 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(to: :unset, from: :unset, date_sent: :unset, limit: nil, page_size: nil)
+            def stream(to: :unset, from: :unset, date_sent_before: :unset, date_sent: :unset, date_sent_after: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
                   to: to,
                   from: from,
+                  date_sent_before: date_sent_before,
                   date_sent: date_sent,
+                  date_sent_after: date_sent_after,
                   page_size: limits[:page_size],
               )
 
@@ -128,7 +136,9 @@ module Twilio
             # is reached.
             # @param [String] to Filter by messages to this number
             # @param [String] from Only show messages from this phone number
-            # @param [Time] date_sent Filter messages sent by this date
+            # @param [Time] date_sent_before Filter by date sent
+            # @param [Time] date_sent Filter by date sent
+            # @param [Time] date_sent_after: Filter by date sent
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
@@ -152,16 +162,20 @@ module Twilio
             # Request is executed immediately.
             # @param [String] to Filter by messages to this number
             # @param [String] from Only show messages from this phone number
-            # @param [Time] date_sent Filter messages sent by this date
+            # @param [Time] date_sent_before Filter by date sent
+            # @param [Time] date_sent Filter by date sent
+            # @param [Time] date_sent_after: Filter by date sent
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of MessageInstance
-            def page(to: :unset, from: :unset, date_sent: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            def page(to: :unset, from: :unset, date_sent_before: :unset, date_sent: :unset, date_sent_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
-                  'DateSent' => Twilio.serialize_iso8601(date_sent),
+                  'DateSent<' => Twilio.serialize_iso8601_datetime(date_sent_before),
+                  'DateSent' => Twilio.serialize_iso8601_datetime(date_sent),
+                  'DateSent>' => Twilio.serialize_iso8601_datetime(date_sent_after),
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,

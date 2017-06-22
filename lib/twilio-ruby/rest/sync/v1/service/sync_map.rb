@@ -309,8 +309,8 @@ module Twilio
                   'url' => payload['url'],
                   'links' => payload['links'],
                   'revision' => payload['revision'],
-                  'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                  'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                  'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                  'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'created_by' => payload['created_by'],
               }
 

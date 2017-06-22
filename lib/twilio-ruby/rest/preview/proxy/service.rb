@@ -351,8 +351,8 @@ module Twilio
                 'account_sid' => payload['account_sid'],
                 'auto_create' => payload['auto_create'],
                 'callback_url' => payload['callback_url'],
-                'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
                 'links' => payload['links'],
             }

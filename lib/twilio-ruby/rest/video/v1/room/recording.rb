@@ -222,7 +222,7 @@ module Twilio
               @properties = {
                   'account_sid' => payload['account_sid'],
                   'status' => payload['status'],
-                  'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
+                  'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'sid' => payload['sid'],
                   'source_sid' => payload['source_sid'],
                   'size' => payload['size'] == nil ? payload['size'] : payload['size'].to_i,

@@ -280,8 +280,8 @@ module Twilio
                 'command_mode' => payload['command_mode'],
                 'status' => payload['status'],
                 'direction' => payload['direction'],
-                'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
             }
 

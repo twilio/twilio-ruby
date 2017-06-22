@@ -152,12 +152,12 @@ module Twilio
             # @return [Page] Page of ConferenceInstance
             def page(date_created_before: :unset, date_created: :unset, date_created_after: :unset, date_updated_before: :unset, date_updated: :unset, date_updated_after: :unset, friendly_name: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
-                  'DateCreated<' => Twilio.serialize_iso8601(date_created_before),
-                  'DateCreated' => Twilio.serialize_iso8601(date_created),
-                  'DateCreated>' => Twilio.serialize_iso8601(date_created_after),
-                  'DateUpdated<' => Twilio.serialize_iso8601(date_updated_before),
-                  'DateUpdated' => Twilio.serialize_iso8601(date_updated),
-                  'DateUpdated>' => Twilio.serialize_iso8601(date_updated_after),
+                  'DateCreated<' => Twilio.serialize_iso8601_date(date_created_before),
+                  'DateCreated' => Twilio.serialize_iso8601_date(date_created),
+                  'DateCreated>' => Twilio.serialize_iso8601_date(date_created_after),
+                  'DateUpdated<' => Twilio.serialize_iso8601_date(date_updated_before),
+                  'DateUpdated' => Twilio.serialize_iso8601_date(date_updated),
+                  'DateUpdated>' => Twilio.serialize_iso8601_date(date_updated_after),
                   'FriendlyName' => friendly_name,
                   'Status' => status,
                   'PageToken' => page_token,
