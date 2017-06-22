@@ -134,7 +134,7 @@ module Twilio
                   'sid' => payload['sid'],
                   'account_sid' => payload['account_sid'],
                   'service_sid' => payload['service_sid'],
-                  'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
+                  'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'identities' => payload['identities'],
                   'tags' => payload['tags'],
                   'segments' => payload['segments'],

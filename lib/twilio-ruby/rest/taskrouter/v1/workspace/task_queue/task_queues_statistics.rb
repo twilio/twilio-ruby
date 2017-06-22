@@ -120,10 +120,10 @@ module Twilio
               # @return [Page] Page of TaskQueuesStatisticsInstance
               def page(end_date: :unset, friendly_name: :unset, minutes: :unset, start_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
-                    'EndDate' => Twilio.serialize_iso8601(end_date),
+                    'EndDate' => Twilio.serialize_iso8601_datetime(end_date),
                     'FriendlyName' => friendly_name,
                     'Minutes' => minutes,
-                    'StartDate' => Twilio.serialize_iso8601(start_date),
+                    'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,

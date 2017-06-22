@@ -254,8 +254,8 @@ module Twilio
                   'sid' => payload['sid'],
                   'trunk_sid' => payload['trunk_sid'],
                   'friendly_name' => payload['friendly_name'],
-                  'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                  'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                  'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                  'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
               }
 

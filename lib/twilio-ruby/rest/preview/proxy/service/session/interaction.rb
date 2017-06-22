@@ -277,8 +277,8 @@ module Twilio
                     'outbound_resource_status' => payload['outbound_resource_status'],
                     'outbound_resource_type' => payload['outbound_resource_type'],
                     'outbound_resource_url' => payload['outbound_resource_url'],
-                    'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                    'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                    'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                    'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                     'url' => payload['url'],
                 }
 

@@ -38,8 +38,8 @@ module Twilio
               # @return [FeedbackSummaryInstance] Newly created FeedbackSummaryInstance
               def create(start_date: nil, end_date: nil, include_subaccounts: :unset, status_callback: :unset, status_callback_method: :unset)
                 data = Twilio::Values.of({
-                    'StartDate' => Twilio.serialize_iso8601(start_date),
-                    'EndDate' => Twilio.serialize_iso8601(end_date),
+                    'StartDate' => Twilio.serialize_iso8601_date(start_date),
+                    'EndDate' => Twilio.serialize_iso8601_date(end_date),
                     'IncludeSubaccounts' => include_subaccounts,
                     'StatusCallback' => status_callback,
                     'StatusCallbackMethod' => status_callback_method,
@@ -172,14 +172,14 @@ module Twilio
                     'call_feedback_count' => payload['call_feedback_count'].to_i,
                     'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                     'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-                    'end_date' => Twilio.deserialize_iso8601(payload['end_date']),
+                    'end_date' => Twilio.deserialize_iso8601_datetime(payload['end_date']),
                     'include_subaccounts' => payload['include_subaccounts'],
                     'issues' => payload['issues'],
                     'quality_score_average' => payload['quality_score_average'].to_f,
                     'quality_score_median' => payload['quality_score_median'].to_f,
                     'quality_score_standard_deviation' => payload['quality_score_standard_deviation'].to_f,
                     'sid' => payload['sid'],
-                    'start_date' => Twilio.deserialize_iso8601(payload['start_date']),
+                    'start_date' => Twilio.deserialize_iso8601_datetime(payload['start_date']),
                     'status' => payload['status'],
                 }
 

@@ -297,8 +297,8 @@ module Twilio
                   'sip_url' => payload['sip_url'],
                   'friendly_name' => payload['friendly_name'],
                   'priority' => payload['priority'].to_i,
-                  'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                  'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                  'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                  'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
               }
 

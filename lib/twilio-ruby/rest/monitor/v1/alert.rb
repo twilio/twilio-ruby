@@ -110,8 +110,8 @@ module Twilio
           def page(log_level: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'LogLevel' => log_level,
-                'StartDate' => Twilio.serialize_iso8601(start_date),
-                'EndDate' => Twilio.serialize_iso8601(end_date),
+                'StartDate' => Twilio.serialize_iso8601_date(start_date),
+                'EndDate' => Twilio.serialize_iso8601_date(end_date),
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
@@ -241,9 +241,9 @@ module Twilio
                 'account_sid' => payload['account_sid'],
                 'alert_text' => payload['alert_text'],
                 'api_version' => payload['api_version'],
-                'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                'date_generated' => Twilio.deserialize_iso8601(payload['date_generated']),
-                'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                'date_generated' => Twilio.deserialize_iso8601_datetime(payload['date_generated']),
+                'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'error_code' => payload['error_code'],
                 'log_level' => payload['log_level'],
                 'more_info' => payload['more_info'],

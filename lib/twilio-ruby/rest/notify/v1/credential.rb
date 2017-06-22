@@ -288,8 +288,8 @@ module Twilio
                 'friendly_name' => payload['friendly_name'],
                 'type' => payload['type'],
                 'sandbox' => payload['sandbox'],
-                'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
             }
 

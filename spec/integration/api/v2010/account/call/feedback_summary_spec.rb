@@ -17,8 +17,8 @@ describe 'FeedbackSummary' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
-        'StartDate' => Twilio.serialize_iso8601(Date.new(2008, 1, 2)),
-        'EndDate' => Twilio.serialize_iso8601(Date.new(2008, 1, 2)),
+        'StartDate' => Twilio.serialize_iso8601_date(Date.new(2008, 1, 2)),
+        'EndDate' => Twilio.serialize_iso8601_date(Date.new(2008, 1, 2)),
     }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(

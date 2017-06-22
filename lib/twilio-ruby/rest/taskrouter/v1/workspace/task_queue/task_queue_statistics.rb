@@ -96,9 +96,9 @@ module Twilio
               # @return [TaskQueueStatisticsInstance] Fetched TaskQueueStatisticsInstance
               def fetch(end_date: :unset, minutes: :unset, start_date: :unset)
                 params = Twilio::Values.of({
-                    'EndDate' => Twilio.serialize_iso8601(end_date),
+                    'EndDate' => Twilio.serialize_iso8601_datetime(end_date),
                     'Minutes' => minutes,
-                    'StartDate' => Twilio.serialize_iso8601(start_date),
+                    'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
                 })
 
                 payload = @version.fetch(

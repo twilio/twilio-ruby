@@ -300,11 +300,11 @@ module Twilio
                     'channel_sid' => payload['channel_sid'],
                     'service_sid' => payload['service_sid'],
                     'identity' => payload['identity'],
-                    'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                    'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                    'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                    'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                     'role_sid' => payload['role_sid'],
                     'last_consumed_message_index' => payload['last_consumed_message_index'] == nil ? payload['last_consumed_message_index'] : payload['last_consumed_message_index'].to_i,
-                    'last_consumption_timestamp' => Twilio.deserialize_iso8601(payload['last_consumption_timestamp']),
+                    'last_consumption_timestamp' => Twilio.deserialize_iso8601_datetime(payload['last_consumption_timestamp']),
                     'url' => payload['url'],
                 }
 

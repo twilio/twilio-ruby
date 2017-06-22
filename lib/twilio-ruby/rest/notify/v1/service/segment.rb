@@ -177,8 +177,8 @@ module Twilio
                   'account_sid' => payload['account_sid'],
                   'service_sid' => payload['service_sid'],
                   'unique_name' => payload['unique_name'],
-                  'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                  'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                  'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                  'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
               }
             end
 

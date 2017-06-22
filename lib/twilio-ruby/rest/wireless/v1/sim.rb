@@ -332,8 +332,8 @@ module Twilio
                 'voice_fallback_url' => payload['voice_fallback_url'],
                 'voice_method' => payload['voice_method'],
                 'voice_url' => payload['voice_url'],
-                'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
                 'links' => payload['links'],
             }

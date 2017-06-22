@@ -290,8 +290,8 @@ module Twilio
                 'voice_enabled' => payload['voice_enabled'],
                 'national_roaming_enabled' => payload['national_roaming_enabled'],
                 'international_roaming' => payload['international_roaming'],
-                'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
             }
 

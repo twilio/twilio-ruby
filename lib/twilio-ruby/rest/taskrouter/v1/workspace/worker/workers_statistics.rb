@@ -94,8 +94,8 @@ module Twilio
               def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_queue_sid: :unset, task_queue_name: :unset, friendly_name: :unset)
                 params = Twilio::Values.of({
                     'Minutes' => minutes,
-                    'StartDate' => Twilio.serialize_iso8601(start_date),
-                    'EndDate' => Twilio.serialize_iso8601(end_date),
+                    'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
+                    'EndDate' => Twilio.serialize_iso8601_datetime(end_date),
                     'TaskQueueSid' => task_queue_sid,
                     'TaskQueueName' => task_queue_name,
                     'FriendlyName' => friendly_name,

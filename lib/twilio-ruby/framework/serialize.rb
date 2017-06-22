@@ -1,9 +1,25 @@
 module Twilio
-  def self.serialize_iso8601(date)
+  def self.serialize_iso8601_date(date)
     if date.eql?(:unset)
       date
-    elsif date
+    elsif date.is_a?(Date)
       date.iso8601
+    elsif date.is_a?(Time)
+      date.strftime('%Y-%m-%d')
+    elsif date.is_a?(String)
+      date
+    end
+  end
+
+  def self.serialize_iso8601_datetime(date)
+    if date.eql?(:unset)
+      date
+    elsif date.is_a?(Date)
+      Time.new(date.year, date.month, date.day).utc.iso8601
+    elsif date.is_a?(Time)
+      date.utc.iso8601
+    elsif date.is_a?(String)
+      date
     end
   end
 
@@ -13,7 +29,13 @@ module Twilio
     end
   end
 
-  def self.deserialize_iso8601(date)
+  def self.deserialize_iso8601_date(date)
+    unless date.nil?
+      Date.parse(date)
+    end
+  end
+
+  def self.deserialize_iso8601_datetime(date)
     unless date.nil?
       Time.parse(date)
     end

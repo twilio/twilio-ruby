@@ -150,8 +150,8 @@ module Twilio
               # @return [Page] Page of UserBindingInstance
               def page(start_date: :unset, end_date: :unset, tag: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
-                    'StartDate' => Twilio.serialize_iso8601(start_date),
-                    'EndDate' => Twilio.serialize_iso8601(end_date),
+                    'StartDate' => Twilio.serialize_iso8601_date(start_date),
+                    'EndDate' => Twilio.serialize_iso8601_date(end_date),
                     'Tag' => tag,
                     'PageToken' => page_token,
                     'Page' => page_number,
@@ -295,8 +295,8 @@ module Twilio
                     'account_sid' => payload['account_sid'],
                     'service_sid' => payload['service_sid'],
                     'credential_sid' => payload['credential_sid'],
-                    'date_created' => Twilio.deserialize_iso8601(payload['date_created']),
-                    'date_updated' => Twilio.deserialize_iso8601(payload['date_updated']),
+                    'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                    'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                     'notification_protocol_version' => payload['notification_protocol_version'],
                     'endpoint' => payload['endpoint'],
                     'identity' => payload['identity'],
