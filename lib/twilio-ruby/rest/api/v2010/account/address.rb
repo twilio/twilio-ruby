@@ -304,7 +304,8 @@ module Twilio
 
             ##
             # Access the dependent_phone_numbers
-            # @return [DependentPhoneNumberList] DependentPhoneNumberList
+            # @return [DependentPhoneNumberList] if a(n) DependentPhoneNumberList object was created.
+            # @return [DependentPhoneNumberContext] if a(n) DependentPhoneNumberContext object was created.
             def dependent_phone_numbers
               unless @dependent_phone_numbers
                 @dependent_phone_numbers = DependentPhoneNumberList.new(

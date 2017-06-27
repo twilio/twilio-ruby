@@ -299,7 +299,8 @@ module Twilio
 
               ##
               # Access the ip_access_control_list_mappings
-              # @return [IpAccessControlListMappingList] IpAccessControlListMappingList
+              # @return [IpAccessControlListMappingList] if a(n) IpAccessControlListMappingList object was created.
+              # @return [IpAccessControlListMappingContext] if a(n) IpAccessControlListMappingContext object was created.
               def ip_access_control_list_mappings(sid=:unset)
                 if sid != :unset
                   return IpAccessControlListMappingContext.new(
@@ -323,7 +324,8 @@ module Twilio
 
               ##
               # Access the credential_list_mappings
-              # @return [CredentialListMappingList] CredentialListMappingList
+              # @return [CredentialListMappingList] if a(n) CredentialListMappingList object was created.
+              # @return [CredentialListMappingContext] if a(n) CredentialListMappingContext object was created.
               def credential_list_mappings(sid=:unset)
                 if sid != :unset
                   return CredentialListMappingContext.new(

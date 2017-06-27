@@ -293,7 +293,8 @@ module Twilio
 
             ##
             # Access the participants
-            # @return [ParticipantList] ParticipantList
+            # @return [ParticipantList] if a(n) ParticipantList object was created.
+            # @return [ParticipantContext] if a(n) ParticipantContext object was created.
             def participants(call_sid=:unset)
               if call_sid != :unset
                 return ParticipantContext.new(

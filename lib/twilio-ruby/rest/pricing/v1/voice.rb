@@ -27,7 +27,8 @@ module Twilio
           ##
           # Access the numbers
           # @param [String] number The number
-          # @return [NumberList] NumberList
+          # @return [NumberList] if a(n) NumberList object was created.
+          # @return [NumberContext] if a(n) NumberContext object was created.
           def numbers(number=:unset)
             if number != :unset
               return NumberContext.new(
@@ -44,7 +45,8 @@ module Twilio
           ##
           # Access the countries
           # @param [String] iso_country The iso_country
-          # @return [CountryList] CountryList
+          # @return [CountryList] if a(n) CountryList object was created.
+          # @return [CountryContext] if a(n) CountryContext object was created.
           def countries(iso_country=:unset)
             if iso_country != :unset
               return CountryContext.new(

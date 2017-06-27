@@ -308,7 +308,8 @@ module Twilio
 
           ##
           # Access the bindings
-          # @return [BindingList] BindingList
+          # @return [BindingList] if a(n) BindingList object was created.
+          # @return [BindingContext] if a(n) BindingContext object was created.
           def bindings(sid=:unset)
             if sid != :unset
               return BindingContext.new(
@@ -330,7 +331,8 @@ module Twilio
 
           ##
           # Access the notifications
-          # @return [NotificationList] NotificationList
+          # @return [NotificationList] if a(n) NotificationList object was created.
+          # @return [NotificationContext] if a(n) NotificationContext object was created.
           def notifications
             unless @notifications
               @notifications = NotificationList.new(
@@ -344,7 +346,8 @@ module Twilio
 
           ##
           # Access the users
-          # @return [UserList] UserList
+          # @return [UserList] if a(n) UserList object was created.
+          # @return [UserContext] if a(n) UserContext object was created.
           def users(identity=:unset)
             if identity != :unset
               return UserContext.new(
@@ -366,7 +369,8 @@ module Twilio
 
           ##
           # Access the segments
-          # @return [SegmentList] SegmentList
+          # @return [SegmentList] if a(n) SegmentList object was created.
+          # @return [SegmentContext] if a(n) SegmentContext object was created.
           def segments
             unless @segments
               @segments = SegmentList.new(

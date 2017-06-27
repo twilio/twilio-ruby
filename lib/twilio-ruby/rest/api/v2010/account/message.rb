@@ -316,7 +316,8 @@ module Twilio
 
             ##
             # Access the media
-            # @return [MediaList] MediaList
+            # @return [MediaList] if a(n) MediaList object was created.
+            # @return [MediaContext] if a(n) MediaContext object was created.
             def media(sid=:unset)
               if sid != :unset
                 return MediaContext.new(
@@ -340,7 +341,8 @@ module Twilio
 
             ##
             # Access the feedback
-            # @return [FeedbackList] FeedbackList
+            # @return [FeedbackList] if a(n) FeedbackList object was created.
+            # @return [FeedbackContext] if a(n) FeedbackContext object was created.
             def feedback
               unless @feedback
                 @feedback = FeedbackList.new(

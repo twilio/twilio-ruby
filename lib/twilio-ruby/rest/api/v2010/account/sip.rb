@@ -34,7 +34,8 @@ module Twilio
             ##
             # Access the domains
             # @param [String] sid The domain sid that uniquely identifies the resource
-            # @return [DomainList] DomainList
+            # @return [DomainList] if a(n) DomainList object was created.
+            # @return [DomainContext] if a(n) DomainContext object was created.
             def domains(sid=:unset)
               if sid != :unset
                 return DomainContext.new(
@@ -52,7 +53,8 @@ module Twilio
 
             ##
             # Access the regions
-            # @return [RegionList] RegionList
+            # @return [RegionList] if a(n) RegionList object was created.
+            # @return [RegionContext] if a(n) RegionContext object was created.
             def regions
               @regions ||= RegionList.new(
                   @version,
@@ -64,7 +66,8 @@ module Twilio
             # Access the ip_access_control_lists
             # @param [String] sid The ip-access-control-list Sid that uniquely identifies this
             #   resource
-            # @return [IpAccessControlListList] IpAccessControlListList
+            # @return [IpAccessControlListList] if a(n) IpAccessControlListList object was created.
+            # @return [IpAccessControlListContext] if a(n) IpAccessControlListContext object was created.
             def ip_access_control_lists(sid=:unset)
               if sid != :unset
                 return IpAccessControlListContext.new(
@@ -83,7 +86,8 @@ module Twilio
             ##
             # Access the credential_lists
             # @param [String] sid The credential Sid that uniquely identifies this resource
-            # @return [CredentialListList] CredentialListList
+            # @return [CredentialListList] if a(n) CredentialListList object was created.
+            # @return [CredentialListContext] if a(n) CredentialListContext object was created.
             def credential_lists(sid=:unset)
               if sid != :unset
                 return CredentialListContext.new(

@@ -336,7 +336,8 @@ module Twilio
 
             ##
             # Access the reservations
-            # @return [ReservationList] ReservationList
+            # @return [ReservationList] if a(n) ReservationList object was created.
+            # @return [ReservationContext] if a(n) ReservationContext object was created.
             def reservations(sid=:unset)
               if sid != :unset
                 return ReservationContext.new(

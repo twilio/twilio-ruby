@@ -262,7 +262,8 @@ module Twilio
 
           ##
           # Access the sessions
-          # @return [SessionList] SessionList
+          # @return [SessionList] if a(n) SessionList object was created.
+          # @return [SessionContext] if a(n) SessionContext object was created.
           def sessions(sid=:unset)
             if sid != :unset
               return SessionContext.new(
@@ -284,7 +285,8 @@ module Twilio
 
           ##
           # Access the phone_numbers
-          # @return [PhoneNumberList] PhoneNumberList
+          # @return [PhoneNumberList] if a(n) PhoneNumberList object was created.
+          # @return [PhoneNumberContext] if a(n) PhoneNumberContext object was created.
           def phone_numbers(sid=:unset)
             if sid != :unset
               return PhoneNumberContext.new(
@@ -306,7 +308,8 @@ module Twilio
 
           ##
           # Access the short_codes
-          # @return [ShortCodeList] ShortCodeList
+          # @return [ShortCodeList] if a(n) ShortCodeList object was created.
+          # @return [ShortCodeContext] if a(n) ShortCodeContext object was created.
           def short_codes(sid=:unset)
             if sid != :unset
               return ShortCodeContext.new(

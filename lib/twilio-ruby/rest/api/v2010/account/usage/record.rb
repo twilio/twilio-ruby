@@ -179,7 +179,8 @@ module Twilio
 
               ##
               # Access the all_time
-              # @return [AllTimeList] AllTimeList
+              # @return [AllTimeList] if a(n) AllTimeList object was created.
+              # @return [AllTimeContext] if a(n) AllTimeContext object was created.
               def all_time
                 @all_time ||= AllTimeList.new(
                     @version,
@@ -189,7 +190,8 @@ module Twilio
 
               ##
               # Access the daily
-              # @return [DailyList] DailyList
+              # @return [DailyList] if a(n) DailyList object was created.
+              # @return [DailyContext] if a(n) DailyContext object was created.
               def daily
                 @daily ||= DailyList.new(
                     @version,
@@ -199,7 +201,8 @@ module Twilio
 
               ##
               # Access the last_month
-              # @return [LastMonthList] LastMonthList
+              # @return [LastMonthList] if a(n) LastMonthList object was created.
+              # @return [LastMonthContext] if a(n) LastMonthContext object was created.
               def last_month
                 @last_month ||= LastMonthList.new(
                     @version,
@@ -209,7 +212,8 @@ module Twilio
 
               ##
               # Access the monthly
-              # @return [MonthlyList] MonthlyList
+              # @return [MonthlyList] if a(n) MonthlyList object was created.
+              # @return [MonthlyContext] if a(n) MonthlyContext object was created.
               def monthly
                 @monthly ||= MonthlyList.new(
                     @version,
@@ -219,7 +223,8 @@ module Twilio
 
               ##
               # Access the this_month
-              # @return [ThisMonthList] ThisMonthList
+              # @return [ThisMonthList] if a(n) ThisMonthList object was created.
+              # @return [ThisMonthContext] if a(n) ThisMonthContext object was created.
               def this_month
                 @this_month ||= ThisMonthList.new(
                     @version,
@@ -229,7 +234,8 @@ module Twilio
 
               ##
               # Access the today
-              # @return [TodayList] TodayList
+              # @return [TodayList] if a(n) TodayList object was created.
+              # @return [TodayContext] if a(n) TodayContext object was created.
               def today
                 @today ||= TodayList.new(
                     @version,
@@ -239,7 +245,8 @@ module Twilio
 
               ##
               # Access the yearly
-              # @return [YearlyList] YearlyList
+              # @return [YearlyList] if a(n) YearlyList object was created.
+              # @return [YearlyContext] if a(n) YearlyContext object was created.
               def yearly
                 @yearly ||= YearlyList.new(
                     @version,
@@ -249,7 +256,8 @@ module Twilio
 
               ##
               # Access the yesterday
-              # @return [YesterdayList] YesterdayList
+              # @return [YesterdayList] if a(n) YesterdayList object was created.
+              # @return [YesterdayContext] if a(n) YesterdayContext object was created.
               def yesterday
                 @yesterday ||= YesterdayList.new(
                     @version,

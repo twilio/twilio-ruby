@@ -246,7 +246,8 @@ module Twilio
 
             ##
             # Access the transcriptions
-            # @return [TranscriptionList] TranscriptionList
+            # @return [TranscriptionList] if a(n) TranscriptionList object was created.
+            # @return [TranscriptionContext] if a(n) TranscriptionContext object was created.
             def transcriptions(sid=:unset)
               if sid != :unset
                 return TranscriptionContext.new(
@@ -270,7 +271,8 @@ module Twilio
 
             ##
             # Access the add_on_results
-            # @return [AddOnResultList] AddOnResultList
+            # @return [AddOnResultList] if a(n) AddOnResultList object was created.
+            # @return [AddOnResultContext] if a(n) AddOnResultContext object was created.
             def add_on_results(sid=:unset)
               if sid != :unset
                 return AddOnResultContext.new(

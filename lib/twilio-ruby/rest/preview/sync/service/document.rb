@@ -259,7 +259,8 @@ module Twilio
 
             ##
             # Access the document_permissions
-            # @return [DocumentPermissionList] DocumentPermissionList
+            # @return [DocumentPermissionList] if a(n) DocumentPermissionList object was created.
+            # @return [DocumentPermissionContext] if a(n) DocumentPermissionContext object was created.
             def document_permissions(identity=:unset)
               if identity != :unset
                 return DocumentPermissionContext.new(

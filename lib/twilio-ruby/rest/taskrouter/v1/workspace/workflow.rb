@@ -282,7 +282,8 @@ module Twilio
 
             ##
             # Access the statistics
-            # @return [WorkflowStatisticsList] WorkflowStatisticsList
+            # @return [WorkflowStatisticsList] if a(n) WorkflowStatisticsList object was created.
+            # @return [WorkflowStatisticsContext] if a(n) WorkflowStatisticsContext object was created.
             def statistics
               WorkflowStatisticsContext.new(
                   @version,

@@ -269,7 +269,8 @@ module Twilio
 
           ##
           # Access the origination_urls
-          # @return [OriginationUrlList] OriginationUrlList
+          # @return [OriginationUrlList] if a(n) OriginationUrlList object was created.
+          # @return [OriginationUrlContext] if a(n) OriginationUrlContext object was created.
           def origination_urls(sid=:unset)
             if sid != :unset
               return OriginationUrlContext.new(
@@ -291,7 +292,8 @@ module Twilio
 
           ##
           # Access the credentials_lists
-          # @return [CredentialListList] CredentialListList
+          # @return [CredentialListList] if a(n) CredentialListList object was created.
+          # @return [CredentialListContext] if a(n) CredentialListContext object was created.
           def credentials_lists(sid=:unset)
             if sid != :unset
               return CredentialListContext.new(
@@ -313,7 +315,8 @@ module Twilio
 
           ##
           # Access the ip_access_control_lists
-          # @return [IpAccessControlListList] IpAccessControlListList
+          # @return [IpAccessControlListList] if a(n) IpAccessControlListList object was created.
+          # @return [IpAccessControlListContext] if a(n) IpAccessControlListContext object was created.
           def ip_access_control_lists(sid=:unset)
             if sid != :unset
               return IpAccessControlListContext.new(
@@ -335,7 +338,8 @@ module Twilio
 
           ##
           # Access the phone_numbers
-          # @return [PhoneNumberList] PhoneNumberList
+          # @return [PhoneNumberList] if a(n) PhoneNumberList object was created.
+          # @return [PhoneNumberContext] if a(n) PhoneNumberContext object was created.
           def phone_numbers(sid=:unset)
             if sid != :unset
               return PhoneNumberContext.new(

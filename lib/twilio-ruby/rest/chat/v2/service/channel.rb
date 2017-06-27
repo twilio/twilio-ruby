@@ -276,7 +276,8 @@ module Twilio
 
             ##
             # Access the members
-            # @return [MemberList] MemberList
+            # @return [MemberList] if a(n) MemberList object was created.
+            # @return [MemberContext] if a(n) MemberContext object was created.
             def members(sid=:unset)
               if sid != :unset
                 return MemberContext.new(
@@ -300,7 +301,8 @@ module Twilio
 
             ##
             # Access the messages
-            # @return [MessageList] MessageList
+            # @return [MessageList] if a(n) MessageList object was created.
+            # @return [MessageContext] if a(n) MessageContext object was created.
             def messages(sid=:unset)
               if sid != :unset
                 return MessageContext.new(
@@ -324,7 +326,8 @@ module Twilio
 
             ##
             # Access the invites
-            # @return [InviteList] InviteList
+            # @return [InviteList] if a(n) InviteList object was created.
+            # @return [InviteContext] if a(n) InviteContext object was created.
             def invites(sid=:unset)
               if sid != :unset
                 return InviteContext.new(

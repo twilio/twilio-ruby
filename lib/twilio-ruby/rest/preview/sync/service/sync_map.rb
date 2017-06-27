@@ -235,7 +235,8 @@ module Twilio
 
             ##
             # Access the sync_map_items
-            # @return [SyncMapItemList] SyncMapItemList
+            # @return [SyncMapItemList] if a(n) SyncMapItemList object was created.
+            # @return [SyncMapItemContext] if a(n) SyncMapItemContext object was created.
             def sync_map_items(key=:unset)
               if key != :unset
                 return SyncMapItemContext.new(
@@ -259,7 +260,8 @@ module Twilio
 
             ##
             # Access the sync_map_permissions
-            # @return [SyncMapPermissionList] SyncMapPermissionList
+            # @return [SyncMapPermissionList] if a(n) SyncMapPermissionList object was created.
+            # @return [SyncMapPermissionContext] if a(n) SyncMapPermissionContext object was created.
             def sync_map_permissions(identity=:unset)
               if identity != :unset
                 return SyncMapPermissionContext.new(

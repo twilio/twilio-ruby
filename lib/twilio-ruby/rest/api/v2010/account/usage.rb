@@ -31,7 +31,8 @@ module Twilio
 
             ##
             # Access the records
-            # @return [RecordList] RecordList
+            # @return [RecordList] if a(n) RecordList object was created.
+            # @return [RecordContext] if a(n) RecordContext object was created.
             def records
               @records ||= RecordList.new(
                   @version,
@@ -42,7 +43,8 @@ module Twilio
             ##
             # Access the triggers
             # @param [String] sid The usage-trigger Sid that uniquely identifies this resource
-            # @return [TriggerList] TriggerList
+            # @return [TriggerList] if a(n) TriggerList object was created.
+            # @return [TriggerContext] if a(n) TriggerContext object was created.
             def triggers(sid=:unset)
               if sid != :unset
                 return TriggerContext.new(
