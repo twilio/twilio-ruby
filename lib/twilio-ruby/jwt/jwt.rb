@@ -26,8 +26,8 @@ module Twilio
 
       def headers
         headers = self._generate_headers.clone()
-        headers[:typ] = 'JWT'
-        headers[:alg] = @algorithm
+        headers['typ'] = 'JWT'
+        headers['alg'] = @algorithm
         headers
       end
 
