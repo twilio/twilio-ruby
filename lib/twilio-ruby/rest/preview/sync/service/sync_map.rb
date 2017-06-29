@@ -238,6 +238,10 @@ module Twilio
             # @return [SyncMapItemList] if a(n) SyncMapItemList object was created.
             # @return [SyncMapItemContext] if a(n) SyncMapItemContext object was created.
             def sync_map_items(key=:unset)
+              if key.nil?
+                raise ArgumentError, 'key cannot be nil'
+              end
+
               if key != :unset
                 return SyncMapItemContext.new(
                     @version,
@@ -263,6 +267,10 @@ module Twilio
             # @return [SyncMapPermissionList] if a(n) SyncMapPermissionList object was created.
             # @return [SyncMapPermissionContext] if a(n) SyncMapPermissionContext object was created.
             def sync_map_permissions(identity=:unset)
+              if identity.nil?
+                raise ArgumentError, 'identity cannot be nil'
+              end
+
               if identity != :unset
                 return SyncMapPermissionContext.new(
                     @version,

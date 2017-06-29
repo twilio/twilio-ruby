@@ -18,7 +18,9 @@ module Twilio
         end
 
         def exports(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @exports ||= ExportList.new self
           else
             ExportContext.new(self, sid)
@@ -26,7 +28,9 @@ module Twilio
         end
 
         def export_configuration(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @export_configuration ||= ExportConfigurationList.new self
           else
             ExportConfigurationContext.new(self, sid)

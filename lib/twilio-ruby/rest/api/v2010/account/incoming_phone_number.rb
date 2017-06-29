@@ -465,6 +465,10 @@ module Twilio
             # @return [AssignedAddOnList] if a(n) AssignedAddOnList object was created.
             # @return [AssignedAddOnContext] if a(n) AssignedAddOnContext object was created.
             def assigned_add_ons(sid=:unset)
+              if sid.nil?
+                raise ArgumentError, 'sid cannot be nil'
+              end
+
               if sid != :unset
                 return AssignedAddOnContext.new(
                     @version,

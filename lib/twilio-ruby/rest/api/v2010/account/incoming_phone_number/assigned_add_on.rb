@@ -252,6 +252,10 @@ module Twilio
               # @return [AssignedAddOnExtensionList] if a(n) AssignedAddOnExtensionList object was created.
               # @return [AssignedAddOnExtensionContext] if a(n) AssignedAddOnExtensionContext object was created.
               def extensions(sid=:unset)
+                if sid.nil?
+                  raise ArgumentError, 'sid cannot be nil'
+                end
+
                 if sid != :unset
                   return AssignedAddOnExtensionContext.new(
                       @version,

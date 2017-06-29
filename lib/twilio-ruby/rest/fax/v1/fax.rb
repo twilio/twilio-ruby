@@ -177,14 +177,13 @@ module Twilio
           #   alphanumeric string (plus the characters `+`, `_`, `.`, and `-`) to use in the
           #   From header of the SIP request.
           # @param [String] sip_auth_username The username to use for authentication when
-          #   sending to a SIP address. Allowed characters are alphanumeric characters, plus
-          #   `-`, `&`, `=`, `+`, `$`, `,`, `;`, `:`, `?`, `/`, `_`, `.`, `!`, `~`, `*`, `'`,
-          #   `(`, and `)`.
+          #   sending to a SIP address.
           # @param [String] sip_auth_password The password to use for authentication when
-          #   sending to a SIP address. Allowed characters are alphanumeric characters, plus
-          #   `-`, `&`, `=`, `+`, `$`, `_`, `.`, `!`, `~`, `*`, `'`, `(`, and `)`.
+          #   sending to a SIP address.
+          # @param [Boolean] store_media Whether or not to store a copy of the sent media on
+          #   Twilio's servers for later retrieval (defaults to `true`)
           # @return [FaxInstance] Newly created FaxInstance
-          def create(to: nil, media_url: nil, quality: :unset, status_callback: :unset, from: :unset, sip_auth_username: :unset, sip_auth_password: :unset)
+          def create(to: nil, media_url: nil, quality: :unset, status_callback: :unset, from: :unset, sip_auth_username: :unset, sip_auth_password: :unset, store_media: :unset)
             data = Twilio::Values.of({
                 'To' => to,
                 'MediaUrl' => media_url,
@@ -193,6 +192,7 @@ module Twilio
                 'From' => from,
                 'SipAuthUsername' => sip_auth_username,
                 'SipAuthPassword' => sip_auth_password,
+                'StoreMedia' => store_media,
             })
 
             payload = @version.create(
@@ -320,6 +320,10 @@ module Twilio
           # @return [FaxMediaList] if a(n) FaxMediaList object was created.
           # @return [FaxMediaContext] if a(n) FaxMediaContext object was created.
           def media(sid=:unset)
+            if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+            end
+
             if sid != :unset
               return FaxMediaContext.new(
                   @version,

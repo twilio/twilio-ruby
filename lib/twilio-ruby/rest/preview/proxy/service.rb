@@ -265,6 +265,10 @@ module Twilio
           # @return [SessionList] if a(n) SessionList object was created.
           # @return [SessionContext] if a(n) SessionContext object was created.
           def sessions(sid=:unset)
+            if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+            end
+
             if sid != :unset
               return SessionContext.new(
                   @version,
@@ -288,6 +292,10 @@ module Twilio
           # @return [PhoneNumberList] if a(n) PhoneNumberList object was created.
           # @return [PhoneNumberContext] if a(n) PhoneNumberContext object was created.
           def phone_numbers(sid=:unset)
+            if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+            end
+
             if sid != :unset
               return PhoneNumberContext.new(
                   @version,
@@ -311,6 +319,10 @@ module Twilio
           # @return [ShortCodeList] if a(n) ShortCodeList object was created.
           # @return [ShortCodeContext] if a(n) ShortCodeContext object was created.
           def short_codes(sid=:unset)
+            if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+            end
+
             if sid != :unset
               return ShortCodeContext.new(
                   @version,

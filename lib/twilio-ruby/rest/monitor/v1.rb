@@ -18,7 +18,9 @@ module Twilio
         end
 
         def alerts(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @alerts ||= AlertList.new self
           else
             AlertContext.new(self, sid)
@@ -26,7 +28,9 @@ module Twilio
         end
 
         def events(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @events ||= EventList.new self
           else
             EventContext.new(self, sid)

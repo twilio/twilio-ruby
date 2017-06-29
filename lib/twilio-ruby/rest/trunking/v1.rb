@@ -17,7 +17,9 @@ module Twilio
         end
 
         def trunks(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @trunks ||= TrunkList.new self
           else
             TrunkContext.new(self, sid)

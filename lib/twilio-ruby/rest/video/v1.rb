@@ -18,7 +18,9 @@ module Twilio
         end
 
         def recordings(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @recordings ||= RecordingList.new self
           else
             RecordingContext.new(self, sid)
@@ -26,7 +28,9 @@ module Twilio
         end
 
         def rooms(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @rooms ||= RoomList.new self
           else
             RoomContext.new(self, sid)

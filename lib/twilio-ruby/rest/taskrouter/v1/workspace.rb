@@ -285,6 +285,10 @@ module Twilio
           # @return [ActivityList] if a(n) ActivityList object was created.
           # @return [ActivityContext] if a(n) ActivityContext object was created.
           def activities(sid=:unset)
+            if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+            end
+
             if sid != :unset
               return ActivityContext.new(
                   @version,
@@ -308,6 +312,10 @@ module Twilio
           # @return [EventList] if a(n) EventList object was created.
           # @return [EventContext] if a(n) EventContext object was created.
           def events(sid=:unset)
+            if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+            end
+
             if sid != :unset
               return EventContext.new(
                   @version,
@@ -331,6 +339,10 @@ module Twilio
           # @return [TaskList] if a(n) TaskList object was created.
           # @return [TaskContext] if a(n) TaskContext object was created.
           def tasks(sid=:unset)
+            if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+            end
+
             if sid != :unset
               return TaskContext.new(
                   @version,
@@ -354,6 +366,10 @@ module Twilio
           # @return [TaskQueueList] if a(n) TaskQueueList object was created.
           # @return [TaskQueueContext] if a(n) TaskQueueContext object was created.
           def task_queues(sid=:unset)
+            if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+            end
+
             if sid != :unset
               return TaskQueueContext.new(
                   @version,
@@ -377,6 +393,10 @@ module Twilio
           # @return [WorkerList] if a(n) WorkerList object was created.
           # @return [WorkerContext] if a(n) WorkerContext object was created.
           def workers(sid=:unset)
+            if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+            end
+
             if sid != :unset
               return WorkerContext.new(
                   @version,
@@ -400,6 +420,10 @@ module Twilio
           # @return [WorkflowList] if a(n) WorkflowList object was created.
           # @return [WorkflowContext] if a(n) WorkflowContext object was created.
           def workflows(sid=:unset)
+            if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+            end
+
             if sid != :unset
               return WorkflowContext.new(
                   @version,
@@ -434,6 +458,10 @@ module Twilio
           # @return [TaskChannelList] if a(n) TaskChannelList object was created.
           # @return [TaskChannelContext] if a(n) TaskChannelContext object was created.
           def task_channels(sid=:unset)
+            if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+            end
+
             if sid != :unset
               return TaskChannelContext.new(
                   @version,

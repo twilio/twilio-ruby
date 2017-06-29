@@ -311,6 +311,10 @@ module Twilio
           # @return [BindingList] if a(n) BindingList object was created.
           # @return [BindingContext] if a(n) BindingContext object was created.
           def bindings(sid=:unset)
+            if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+            end
+
             if sid != :unset
               return BindingContext.new(
                   @version,
@@ -349,6 +353,10 @@ module Twilio
           # @return [UserList] if a(n) UserList object was created.
           # @return [UserContext] if a(n) UserContext object was created.
           def users(identity=:unset)
+            if identity.nil?
+              raise ArgumentError, 'identity cannot be nil'
+            end
+
             if identity != :unset
               return UserContext.new(
                   @version,

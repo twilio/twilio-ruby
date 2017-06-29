@@ -29,6 +29,10 @@ module Twilio
           # @return [CountryList] if a(n) CountryList object was created.
           # @return [CountryContext] if a(n) CountryContext object was created.
           def countries(iso_country=:unset)
+            if iso_country.nil?
+              raise ArgumentError, 'iso_country cannot be nil'
+            end
+
             if iso_country != :unset
               return CountryContext.new(
                   @version,

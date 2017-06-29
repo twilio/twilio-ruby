@@ -46,6 +46,10 @@ module Twilio
             # @return [TriggerList] if a(n) TriggerList object was created.
             # @return [TriggerContext] if a(n) TriggerContext object was created.
             def triggers(sid=:unset)
+              if sid.nil?
+                raise ArgumentError, 'sid cannot be nil'
+              end
+
               if sid != :unset
                 return TriggerContext.new(
                     @version,

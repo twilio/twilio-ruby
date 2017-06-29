@@ -226,6 +226,10 @@ module Twilio
               # @return [PayloadList] if a(n) PayloadList object was created.
               # @return [PayloadContext] if a(n) PayloadContext object was created.
               def payloads(sid=:unset)
+                if sid.nil?
+                  raise ArgumentError, 'sid cannot be nil'
+                end
+
                 if sid != :unset
                   return PayloadContext.new(
                       @version,
