@@ -20,6 +20,28 @@ describe Twilio::TwiML::MessagingResponse do
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello</Message><Redirect>example.com</Redirect></Response>')
     end
+
+    it 'should allow nesting' do
+      r = Twilio::TwiML::MessagingResponse.new
+      r.message('Hello') do |m|
+        m.media('foobar')
+      end
+
+      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello<Media>foobar</Media></Message></Response>')
+    end
+
+    it 'should allow nesting and chaining' do
+      r = Twilio::TwiML::MessagingResponse.new
+      r.message('Hello') do |m|
+        m.media('foobar')
+      end
+
+      r.redirect('example.com')
+
+      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello<Media>foobar</Media></Message><Redirect>example.com</Redirect></Response>')
+
+
+    end
   end
 
   context 'Testing Message' do

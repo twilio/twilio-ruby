@@ -28,33 +28,37 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Dial> child element
       def dial(
-        number,
-        action: nil,
-        method: nil,
-        timeout: nil,
-        hangup_on_star: nil,
-        time_limit: nil,
-        caller_id: nil,
-        record: nil,
-        trim: nil,
-        recording_status_callback: nil,
-        recording_status_callback_method: nil,
-        **keyword_args)
+          number,
+          action: nil,
+          method: nil,
+          timeout: nil,
+          hangup_on_star: nil,
+          time_limit: nil,
+          caller_id: nil,
+          record: nil,
+          trim: nil,
+          recording_status_callback: nil,
+          recording_status_callback_method: nil,
+          **keyword_args)
 
-        self.append(Dial.new(
-          number: number,
-          action: action,
-          method: method,
-          timeout: timeout,
-          hangup_on_star: hangup_on_star,
-          time_limit: time_limit,
-          caller_id: caller_id,
-          record: record,
-          trim: trim,
-          recording_status_callback: recording_status_callback,
-          recording_status_callback_method: recording_status_callback_method,
-          **keyword_args
-        ))
+        dial = Dial.new(
+            number: number,
+            action: action,
+            method: method,
+            timeout: timeout,
+            hangup_on_star: hangup_on_star,
+            time_limit: time_limit,
+            caller_id: caller_id,
+            record: record,
+            trim: trim,
+            recording_status_callback: recording_status_callback,
+            recording_status_callback_method: recording_status_callback_method,
+            **keyword_args
+        )
+
+        yield(dial) if block_given?
+
+        self.append(dial)
       end
 
       # Create an <Echo> element
@@ -65,7 +69,11 @@ module Twilio
       # == Returns:
       # A <Response> element with an <Echo> child element
       def echo(**keyword_args)
-        self.append(Echo.new(**keyword_args))
+        echo = Echo.new(**keyword_args)
+
+        yield(echo) if block_given?
+
+        self.append(echo)
       end
 
       # Create an <Enqueue> element
@@ -82,23 +90,27 @@ module Twilio
       # == Returns:
       # A <Response> element with an <Enqueue> child element
       def enqueue(
-        name,
-        action: nil,
-        method: nil,
-        wait_url: nil,
-        wait_url_method: nil,
-        workflow_sid: nil,
-        **keyword_args)
-
-        self.append(Enqueue.new(
           name,
-          action: action,
-          method: method,
-          wait_url: wait_url,
-          wait_url_method: wait_url_method,
-          workflow_sid: workflow_sid,
-          **keyword_args
-        ))
+          action: nil,
+          method: nil,
+          wait_url: nil,
+          wait_url_method: nil,
+          workflow_sid: nil,
+          **keyword_args)
+
+        enqueue = Enqueue.new(
+            name,
+            action: action,
+            method: method,
+            wait_url: wait_url,
+            wait_url_method: wait_url_method,
+            workflow_sid: workflow_sid,
+            **keyword_args
+        )
+
+        yield(enqueue) if block_given?
+
+        self.append(enqueue)
       end
 
       # Create a <Gather> element
@@ -120,33 +132,37 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Gather> child element
       def gather(
-        action: nil,
-        method: nil,
-        timeout: nil,
-        finish_on_key: nil,
-        num_digits: nil,
-        partial_result_callback: nil,
-        partial_result_callback_method: nil,
-        language: nil,
-        hints: nil,
-        barge_in: nil,
-        acknowledge_sound_url: nil,
-        **keyword_args)
+          action: nil,
+          method: nil,
+          timeout: nil,
+          finish_on_key: nil,
+          num_digits: nil,
+          partial_result_callback: nil,
+          partial_result_callback_method: nil,
+          language: nil,
+          hints: nil,
+          barge_in: nil,
+          acknowledge_sound_url: nil,
+          **keyword_args)
 
-        self.append(Gather.new(
-          action: action,
-          method: method,
-          timeout: timeout,
-          finish_on_key: finish_on_key,
-          num_digits: num_digits,
-          partial_result_callback: partial_result_callback,
-          partial_result_callback_method: partial_result_callback_method,
-          language: language,
-          hints: hints,
-          barge_in: barge_in,
-          acknowledge_sound_url: acknowledge_sound_url,
-          **keyword_args
-        ))
+        gather = Gather.new(
+            action: action,
+            method: method,
+            timeout: timeout,
+            finish_on_key: finish_on_key,
+            num_digits: num_digits,
+            partial_result_callback: partial_result_callback,
+            partial_result_callback_method: partial_result_callback_method,
+            language: language,
+            hints: hints,
+            barge_in: barge_in,
+            acknowledge_sound_url: acknowledge_sound_url,
+            **keyword_args
+        )
+
+        yield(gather) if block_given?
+
+        self.append(gather)
       end
 
       # Create a <Hangup> element
@@ -154,7 +170,11 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Hangup> child element
       def hangup()
-        self.append(Hangup.new)
+        hangup = Hangup.new
+
+        yield(hangup) if block_given?
+
+        self.append(hangup)
       end
 
       # Create a <Leave> element
@@ -162,7 +182,11 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Leave> child element
       def leave()
-        self.append(Leave.new)
+        leave = Leave.new
+
+        yield(leave) if block_given?
+
+        self.append(leave)
       end
 
       # Create a <Pause> element
@@ -173,7 +197,11 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Pause> child element
       def pause(length: nil)
-        self.append(Pause.new(length: length))
+        pause = Pause.new(length: length)
+
+        yield(pause) if block_given?
+
+        self.append(pause)
       end
 
       # Create a <Play> element
@@ -187,7 +215,11 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Play> child element
       def play(url: nil, loop: nil, digits: nil, **keyword_args)
-        append(Play.new(url: url, loop: loop, digits: digits, **keyword_args))
+        play = Play.new(url: url, loop: loop, digits: digits, **keyword_args)
+
+        yield(play) if block_given?
+
+        self.append(play)
       end
 
       # Create a <Record> element
@@ -209,33 +241,37 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Record> child element
       def record(
-        action: nil,
-        method: nil,
-        timeout: nil,
-        finish_on_key: nil,
-        max_length: nil,
-        play_beep: nil,
-        trim: nil,
-        recording_status_callback: nil,
-        recording_status_callback_method: nil,
-        transcribe: nil,
-        transcribe_callback: nil,
-        **keyword_args)
+          action: nil,
+          method: nil,
+          timeout: nil,
+          finish_on_key: nil,
+          max_length: nil,
+          play_beep: nil,
+          trim: nil,
+          recording_status_callback: nil,
+          recording_status_callback_method: nil,
+          transcribe: nil,
+          transcribe_callback: nil,
+          **keyword_args)
 
-        self.append(Record.new(
-          action: action,
-          method: method,
-          timeout: timeout,
-          finish_on_key: finish_on_key,
-          max_length: max_length,
-          play_beep: play_beep,
-          trim: trim,
-          recording_status_callback: recording_status_callback,
-          recording_status_callback_method: recording_status_callback_method,
-          transcribe: transcribe,
-          transcribe_callback: transcribe_callback,
-          **keyword_args
-        ))
+        record = Record.new(
+            action: action,
+            method: method,
+            timeout: timeout,
+            finish_on_key: finish_on_key,
+            max_length: max_length,
+            play_beep: play_beep,
+            trim: trim,
+            recording_status_callback: recording_status_callback,
+            recording_status_callback_method: recording_status_callback_method,
+            transcribe: transcribe,
+            transcribe_callback: transcribe_callback,
+            **keyword_args
+        )
+
+        yield(record) if block_given?
+
+        self.append(record)
       end
 
       # Create a <Redirect> element
@@ -248,7 +284,11 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Redirect> child element
       def redirect(url, method: nil, **keyword_args)
-        self.append(Redirect.new(url, method: method, **keyword_args))
+        redirect = Redirect.new(url, method: method, **keyword_args)
+
+        yield(redirect) if block_given?
+
+        self.append(redirect)
       end
 
       # Create a <Reject> element
@@ -260,7 +300,11 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Reject> child element
       def reject(reason: nil, **keyword_args)
-        self.append(Reject.new(reason: reason, **keyword_args))
+        reject = Reject.new(reason: reason, **keyword_args)
+
+        yield(reject) if block_given?
+
+        self.append(reject)
       end
 
       # Create a <Say> element
@@ -275,13 +319,17 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Say> child element
       def say(body, loop: nil, language: nil, voice: nil, **keyword_args)
-        self.append(Say.new(
-          body,
-          loop: loop,
-          language: language,
-          voice: voice,
-          **keyword_args
-        ))
+        say = Say.new(
+            body,
+            loop: loop,
+            language: language,
+            voice: voice,
+            **keyword_args
+        )
+
+        yield(say) if block_given?
+
+        self.append(say)
       end
 
       # Create a <Sms> element
@@ -298,23 +346,27 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Sms> child element
       def sms(
-        body,
-        to: nil,
-        from: nil,
-        method: nil,
-        action: nil,
-        status_callback: nil,
-        **keyword_args)
-
-        self.append(Sms.new(
           body,
-          to: to,
-          from: from,
-          method: method,
-          action: action,
-          status_callback: status_callback,
-          **keyword_args
-        ))
+          to: nil,
+          from: nil,
+          method: nil,
+          action: nil,
+          status_callback: nil,
+          **keyword_args)
+
+        sms = Sms.new(
+            body,
+            to: to,
+            from: from,
+            method: method,
+            action: action,
+            status_callback: status_callback,
+            **keyword_args
+        )
+
+        yield(sms) if block_given?
+
+        self.append(sms)
       end
     end
 
@@ -349,23 +401,27 @@ module Twilio
       # == Returns:
       # A <Dial> element with a <Client> child element
       def client(
-        name,
-        method: nil,
-        url: nil,
-        status_callback_event: nil,
-        status_callback_method: nil,
-        status_callback: nil,
-        **keyword_args)
-
-        self.append(Client.new(
           name,
-          method: method,
-          url: url,
-          status_callback_event: status_callback_event,
-          status_callback_method: status_callback_method,
-          status_callback: status_callback,
-          **keyword_args
-        ))
+          method: nil,
+          url: nil,
+          status_callback_event: nil,
+          status_callback_method: nil,
+          status_callback: nil,
+          **keyword_args)
+
+        client = Client.new(
+            name,
+            method: method,
+            url: url,
+            status_callback_event: status_callback_event,
+            status_callback_method: status_callback_method,
+            status_callback: status_callback,
+            **keyword_args
+        )
+
+        yield(client) if block_given?
+
+        self.append(client)
       end
 
       # Create a <Conference> element
@@ -392,43 +448,47 @@ module Twilio
       # == Returns:
       # A <Dial> element with a <Conference> child element
       def conference(
-        name,
-        muted: nil,
-        start_conference_on_enter: nil,
-        end_conference_on_exit: nil,
-        max_participants: nil,
-        beep: nil,
-        record: nil,
-        trim: nil,
-        wait_url: nil,
-        wait_method: nil,
-        event_callback_url: nil,
-        status_callback: nil,
-        status_callback_event: nil,
-        status_callback_method: nil,
-        recording_status_callback: nil,
-        recording_status_callback_method: nil,
-        **keyword_args)
-
-        self.append(Conference.new(
           name,
-          muted: muted,
-          start_conference_on_enter: start_conference_on_enter,
-          end_conference_on_exit: end_conference_on_exit,
-          max_participants: max_participants,
-          beep: beep,
-          record: record,
-          trim: trim,
-          wait_url: wait_url,
-          wait_method: wait_method,
-          event_callback_url: event_callback_url,
-          status_callback: status_callback,
-          status_callback_event: status_callback_event,
-          status_callback_method: status_callback_method,
-          recording_status_callback: recording_status_callback,
-          recording_status_callback_method: recording_status_callback_method,
-          **keyword_args
-        ))
+          muted: nil,
+          start_conference_on_enter: nil,
+          end_conference_on_exit: nil,
+          max_participants: nil,
+          beep: nil,
+          record: nil,
+          trim: nil,
+          wait_url: nil,
+          wait_method: nil,
+          event_callback_url: nil,
+          status_callback: nil,
+          status_callback_event: nil,
+          status_callback_method: nil,
+          recording_status_callback: nil,
+          recording_status_callback_method: nil,
+          **keyword_args)
+
+        conference = Conference.new(
+            name,
+            muted: muted,
+            start_conference_on_enter: start_conference_on_enter,
+            end_conference_on_exit: end_conference_on_exit,
+            max_participants: max_participants,
+            beep: beep,
+            record: record,
+            trim: trim,
+            wait_url: wait_url,
+            wait_method: wait_method,
+            event_callback_url: event_callback_url,
+            status_callback: status_callback,
+            status_callback_event: status_callback_event,
+            status_callback_method: status_callback_method,
+            recording_status_callback: recording_status_callback,
+            recording_status_callback_method: recording_status_callback_method,
+            **keyword_args
+        )
+
+        yield(conference) if block_given?
+
+        self.append(conference)
       end
 
       # Create a <Number> element
@@ -446,25 +506,29 @@ module Twilio
       # == Returns:
       # A <Dial> element with a <Number> child element
       def number(
-        number,
-        send_digits: nil,
-        url: nil,
-        method: nil,
-        status_callback: nil,
-        status_callback_event: nil,
-        status_callback_method: nil,
-        **keyword_args)
-
-        self.append(Number.new(
           number,
-          send_digits: send_digits,
-          url: url,
-          method: method,
-          status_callback: status_callback,
-          status_callback_event: status_callback_event,
-          status_callback_method: status_callback_method,
-          **keyword_args
-        ))
+          send_digits: nil,
+          url: nil,
+          method: nil,
+          status_callback: nil,
+          status_callback_event: nil,
+          status_callback_method: nil,
+          **keyword_args)
+
+        number = Number.new(
+            number,
+            send_digits: send_digits,
+            url: url,
+            method: method,
+            status_callback: status_callback,
+            status_callback_event: status_callback_event,
+            status_callback_method: status_callback_method,
+            **keyword_args
+        )
+
+        yield(number) if block_given?
+
+        self.append(number)
       end
 
       # Create a <Queue> element
@@ -480,21 +544,25 @@ module Twilio
       # == Returns:
       # A <Dial> element with a <Queue> child element
       def queue(
-        queue_name,
-        url: nil,
-        method: nil,
-        reservation_sid: nil,
-        post_work_activity_sid: nil,
-        **keyword_args)
-
-        self.append(Queue.new(
           queue_name,
-          url: url,
-          method: method,
-          reservation_sid: reservation_sid,
-          post_work_activity_sid: post_work_activity_sid,
-          **keyword_args
-        ))
+          url: nil,
+          method: nil,
+          reservation_sid: nil,
+          post_work_activity_sid: nil,
+          **keyword_args)
+
+        queue = Queue.new(
+            queue_name,
+            url: url,
+            method: method,
+            reservation_sid: reservation_sid,
+            post_work_activity_sid: post_work_activity_sid,
+            **keyword_args
+        )
+
+        yield(queue) if block_given?
+
+        self.append(queue)
       end
 
       # Create a <Sim> element
@@ -506,7 +574,11 @@ module Twilio
       # == Returns:
       # A <Dial> element with a <Sim> child element
       def sim(sid, **keyword_args)
-        self.append(Sim.new(sid,**keyword_args))
+        sim = Sim.new(sid, **keyword_args)
+
+        yield(sim) if block_given?
+
+        self.append(sim)
       end
 
       # Create a <Sip> element
@@ -525,27 +597,31 @@ module Twilio
       # == Returns:
       # A <Dial> element with a <Sip> child element
       def sip(
-        uri,
-        username: nil,
-        password: nil,
-        url: nil,
-        method: nil,
-        status_callback: nil,
-        status_callback_event: nil,
-        status_callback_method: nil,
-        **keyword_args)
-
-        self.append(Sip.new(
           uri,
-          username: username,
-          password: password,
-          url: url,
-          method: method,
-          status_callback: status_callback,
-          status_callback_event: status_callback_event,
-          status_callback_method: status_callback_method,
-          **keyword_args
-        ))
+          username: nil,
+          password: nil,
+          url: nil,
+          method: nil,
+          status_callback: nil,
+          status_callback_event: nil,
+          status_callback_method: nil,
+          **keyword_args)
+
+        sip = Sip.new(
+            uri,
+            username: username,
+            password: password,
+            url: url,
+            method: method,
+            status_callback: status_callback,
+            status_callback_event: status_callback_event,
+            status_callback_method: status_callback_method,
+            **keyword_args
+        )
+
+        yield(sip) if block_given?
+
+        self.append(sip)
       end
     end
 
@@ -682,7 +758,11 @@ module Twilio
       # == Returns:
       # An <Enqueue> element with a <Task> child element
       def task(attributes, **keyword_args)
-        self.append(Task.new(attributes, **keyword_args))
+        task = Task.new(attributes, **keyword_args)
+
+        yield(task) if block_given?
+
+        self.append(task)
       end
     end
 
@@ -732,19 +812,23 @@ module Twilio
       # == Returns:
       # A <Gather> element with a <Say> child element
       def say(
-        body,
-        loop: nil,
-        language: nil,
-        voice: nil,
-        **keyword_args)
-
-        self.append(Say.new(
           body,
-          loop: loop,
-          language: language,
-          voice: voice,
-          **keyword_args
-        ))
+          loop: nil,
+          language: nil,
+          voice: nil,
+          **keyword_args)
+
+        say = Say.new(
+            body,
+            loop: loop,
+            language: language,
+            voice: voice,
+            **keyword_args
+        )
+
+        yield(say) if block_given?
+
+        self.append(say)
       end
 
       # Create a <Play> element
@@ -758,7 +842,11 @@ module Twilio
       # == Returns:
       # A <Gather> element with a <Play> child element
       def play(url: nil, loop: nil, digits: nil, **keyword_args)
-        append(Play.new(url: url, loop: loop, digits: digits, **keyword_args))
+        play = Play.new(url: url, loop: loop, digits: digits, **keyword_args)
+
+        yield(play) if block_given?
+
+        self.append(play)
       end
 
       # Create a <Pause> element
@@ -769,7 +857,11 @@ module Twilio
       # == Returns:
       # A <Gather> element with a <Pause> child element
       def pause(length: nil)
-        self.append(Pause.new(length: length))
+        pause = Pause.new(length: length)
+
+        yield(pause) if block_given?
+
+        self.append(pause)
       end
     end
 
