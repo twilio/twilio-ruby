@@ -41,7 +41,7 @@ During the Release Candidate period of this library, please leave all feedback a
 
 ### Setup Work
 
-``` ruby
+```ruby
 require 'twilio-ruby'
 
 # put your own credentials here
@@ -63,7 +63,7 @@ end
 
 ### Make a Call
 
-``` ruby
+```ruby
 @client.api.account.calls.create(
   from: '+14159341234',
   to: '+16105557069',
@@ -73,7 +73,7 @@ end
 
 ### Send an SMS
 
-``` ruby
+```ruby
 @client.api.account.messages.create(
   from: '+14159341234',
   to: '+16105557069',
@@ -93,8 +93,7 @@ twilio-ruby uses [Faraday](https://github.com/lostisland/faraday) to make HTTP r
 If you just need to generate a Capability Token for use with Twilio Client, you
 can do this:
 
-``` ruby
-require 'rubygems' # not necessary with ruby 1.9 but included for completeness
+```ruby
 require 'twilio-ruby'
 
 # put your own account credentials here:
@@ -122,8 +121,7 @@ section of the wiki.
 TwiML support is based on the [Builder][builder] library. You can construct a
 TwiML response like this:
 
-``` ruby
-require 'rubygems' # not necessary with ruby 1.9 but included for completeness
+```ruby
 require 'twilio-ruby'
 
 # build up a response
@@ -135,12 +133,12 @@ response = Twilio::TwiML::Response.new do |r|
 end
 
 # print the result
-puts response.text
+puts response.to_s
 ```
 
 This will print the following (except for the whitespace):
 
-``` xml
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Say voice="alice">hello there</Say>
