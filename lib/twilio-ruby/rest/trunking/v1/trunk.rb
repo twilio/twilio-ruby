@@ -272,9 +272,7 @@ module Twilio
           # @return [OriginationUrlList] if a(n) OriginationUrlList object was created.
           # @return [OriginationUrlContext] if a(n) OriginationUrlContext object was created.
           def origination_urls(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return OriginationUrlContext.new(
@@ -299,9 +297,7 @@ module Twilio
           # @return [CredentialListList] if a(n) CredentialListList object was created.
           # @return [CredentialListContext] if a(n) CredentialListContext object was created.
           def credentials_lists(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return CredentialListContext.new(
@@ -326,9 +322,7 @@ module Twilio
           # @return [IpAccessControlListList] if a(n) IpAccessControlListList object was created.
           # @return [IpAccessControlListContext] if a(n) IpAccessControlListContext object was created.
           def ip_access_control_lists(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return IpAccessControlListContext.new(
@@ -353,9 +347,7 @@ module Twilio
           # @return [PhoneNumberList] if a(n) PhoneNumberList object was created.
           # @return [PhoneNumberContext] if a(n) PhoneNumberContext object was created.
           def phone_numbers(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return PhoneNumberContext.new(

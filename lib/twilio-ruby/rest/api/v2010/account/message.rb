@@ -319,9 +319,7 @@ module Twilio
             # @return [MediaList] if a(n) MediaList object was created.
             # @return [MediaContext] if a(n) MediaContext object was created.
             def media(sid=:unset)
-              if sid.nil?
-                raise ArgumentError, 'sid cannot be nil'
-              end
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
                 return MediaContext.new(

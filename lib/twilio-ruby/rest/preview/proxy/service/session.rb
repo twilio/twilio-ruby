@@ -307,9 +307,7 @@ module Twilio
             # @return [InteractionList] if a(n) InteractionList object was created.
             # @return [InteractionContext] if a(n) InteractionContext object was created.
             def interactions(sid=:unset)
-              if sid.nil?
-                raise ArgumentError, 'sid cannot be nil'
-              end
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
                 return InteractionContext.new(
@@ -336,9 +334,7 @@ module Twilio
             # @return [ParticipantList] if a(n) ParticipantList object was created.
             # @return [ParticipantContext] if a(n) ParticipantContext object was created.
             def participants(sid=:unset)
-              if sid.nil?
-                raise ArgumentError, 'sid cannot be nil'
-              end
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
                 return ParticipantContext.new(

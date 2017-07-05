@@ -283,9 +283,7 @@ module Twilio
           # @return [RoomRecordingList] if a(n) RoomRecordingList object was created.
           # @return [RoomRecordingContext] if a(n) RoomRecordingContext object was created.
           def recordings(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return RoomRecordingContext.new(

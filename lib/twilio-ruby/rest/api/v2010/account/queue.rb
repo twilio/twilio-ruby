@@ -266,9 +266,7 @@ module Twilio
             # @return [MemberList] if a(n) MemberList object was created.
             # @return [MemberContext] if a(n) MemberContext object was created.
             def members(call_sid=:unset)
-              if call_sid.nil?
-                raise ArgumentError, 'call_sid cannot be nil'
-              end
+              raise ArgumentError, 'call_sid cannot be nil' if call_sid.nil?
 
               if call_sid != :unset
                 return MemberContext.new(

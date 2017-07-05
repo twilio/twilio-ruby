@@ -238,9 +238,7 @@ module Twilio
             # @return [SyncListItemList] if a(n) SyncListItemList object was created.
             # @return [SyncListItemContext] if a(n) SyncListItemContext object was created.
             def sync_list_items(index=:unset)
-              if index.nil?
-                raise ArgumentError, 'index cannot be nil'
-              end
+              raise ArgumentError, 'index cannot be nil' if index.nil?
 
               if index != :unset
                 return SyncListItemContext.new(
@@ -267,9 +265,7 @@ module Twilio
             # @return [SyncListPermissionList] if a(n) SyncListPermissionList object was created.
             # @return [SyncListPermissionContext] if a(n) SyncListPermissionContext object was created.
             def sync_list_permissions(identity=:unset)
-              if identity.nil?
-                raise ArgumentError, 'identity cannot be nil'
-              end
+              raise ArgumentError, 'identity cannot be nil' if identity.nil?
 
               if identity != :unset
                 return SyncListPermissionContext.new(

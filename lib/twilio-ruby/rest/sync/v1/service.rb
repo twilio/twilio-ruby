@@ -263,9 +263,7 @@ module Twilio
           # @return [DocumentList] if a(n) DocumentList object was created.
           # @return [DocumentContext] if a(n) DocumentContext object was created.
           def documents(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return DocumentContext.new(
@@ -290,9 +288,7 @@ module Twilio
           # @return [SyncListList] if a(n) SyncListList object was created.
           # @return [SyncListContext] if a(n) SyncListContext object was created.
           def sync_lists(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return SyncListContext.new(
@@ -317,9 +313,7 @@ module Twilio
           # @return [SyncMapList] if a(n) SyncMapList object was created.
           # @return [SyncMapContext] if a(n) SyncMapContext object was created.
           def sync_maps(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return SyncMapContext.new(

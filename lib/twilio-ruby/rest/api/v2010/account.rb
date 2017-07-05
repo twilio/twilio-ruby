@@ -288,9 +288,7 @@ module Twilio
           # @return [AddressList] if a(n) AddressList object was created.
           # @return [AddressContext] if a(n) AddressContext object was created.
           def addresses(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return AddressContext.new(
@@ -315,9 +313,7 @@ module Twilio
           # @return [ApplicationList] if a(n) ApplicationList object was created.
           # @return [ApplicationContext] if a(n) ApplicationContext object was created.
           def applications(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return ApplicationContext.new(
@@ -342,9 +338,7 @@ module Twilio
           # @return [AuthorizedConnectAppList] if a(n) AuthorizedConnectAppList object was created.
           # @return [AuthorizedConnectAppContext] if a(n) AuthorizedConnectAppContext object was created.
           def authorized_connect_apps(connect_app_sid=:unset)
-            if connect_app_sid.nil?
-              raise ArgumentError, 'connect_app_sid cannot be nil'
-            end
+            raise ArgumentError, 'connect_app_sid cannot be nil' if connect_app_sid.nil?
 
             if connect_app_sid != :unset
               return AuthorizedConnectAppContext.new(
@@ -369,9 +363,7 @@ module Twilio
           # @return [AvailablePhoneNumberCountryList] if a(n) AvailablePhoneNumberCountryList object was created.
           # @return [AvailablePhoneNumberCountryContext] if a(n) AvailablePhoneNumberCountryContext object was created.
           def available_phone_numbers(country_code=:unset)
-            if country_code.nil?
-              raise ArgumentError, 'country_code cannot be nil'
-            end
+            raise ArgumentError, 'country_code cannot be nil' if country_code.nil?
 
             if country_code != :unset
               return AvailablePhoneNumberCountryContext.new(
@@ -396,9 +388,7 @@ module Twilio
           # @return [CallList] if a(n) CallList object was created.
           # @return [CallContext] if a(n) CallContext object was created.
           def calls(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return CallContext.new(
@@ -423,9 +413,7 @@ module Twilio
           # @return [ConferenceList] if a(n) ConferenceList object was created.
           # @return [ConferenceContext] if a(n) ConferenceContext object was created.
           def conferences(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return ConferenceContext.new(
@@ -450,9 +438,7 @@ module Twilio
           # @return [ConnectAppList] if a(n) ConnectAppList object was created.
           # @return [ConnectAppContext] if a(n) ConnectAppContext object was created.
           def connect_apps(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return ConnectAppContext.new(
@@ -477,9 +463,7 @@ module Twilio
           # @return [IncomingPhoneNumberList] if a(n) IncomingPhoneNumberList object was created.
           # @return [IncomingPhoneNumberContext] if a(n) IncomingPhoneNumberContext object was created.
           def incoming_phone_numbers(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return IncomingPhoneNumberContext.new(
@@ -504,9 +488,7 @@ module Twilio
           # @return [KeyList] if a(n) KeyList object was created.
           # @return [KeyContext] if a(n) KeyContext object was created.
           def keys(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return KeyContext.new(
@@ -531,9 +513,7 @@ module Twilio
           # @return [MessageList] if a(n) MessageList object was created.
           # @return [MessageContext] if a(n) MessageContext object was created.
           def messages(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return MessageContext.new(
@@ -588,9 +568,7 @@ module Twilio
           # @return [NotificationList] if a(n) NotificationList object was created.
           # @return [NotificationContext] if a(n) NotificationContext object was created.
           def notifications(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return NotificationContext.new(
@@ -615,9 +593,7 @@ module Twilio
           # @return [OutgoingCallerIdList] if a(n) OutgoingCallerIdList object was created.
           # @return [OutgoingCallerIdContext] if a(n) OutgoingCallerIdContext object was created.
           def outgoing_caller_ids(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return OutgoingCallerIdContext.new(
@@ -642,9 +618,7 @@ module Twilio
           # @return [QueueList] if a(n) QueueList object was created.
           # @return [QueueContext] if a(n) QueueContext object was created.
           def queues(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return QueueContext.new(
@@ -669,9 +643,7 @@ module Twilio
           # @return [RecordingList] if a(n) RecordingList object was created.
           # @return [RecordingContext] if a(n) RecordingContext object was created.
           def recordings(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return RecordingContext.new(
@@ -696,9 +668,7 @@ module Twilio
           # @return [SigningKeyList] if a(n) SigningKeyList object was created.
           # @return [SigningKeyContext] if a(n) SigningKeyContext object was created.
           def signing_keys(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return SigningKeyContext.new(
@@ -738,9 +708,7 @@ module Twilio
           # @return [ShortCodeList] if a(n) ShortCodeList object was created.
           # @return [ShortCodeContext] if a(n) ShortCodeContext object was created.
           def short_codes(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return ShortCodeContext.new(
@@ -780,9 +748,7 @@ module Twilio
           # @return [TranscriptionList] if a(n) TranscriptionList object was created.
           # @return [TranscriptionContext] if a(n) TranscriptionContext object was created.
           def transcriptions(sid=:unset)
-            if sid.nil?
-              raise ArgumentError, 'sid cannot be nil'
-            end
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
               return TranscriptionContext.new(

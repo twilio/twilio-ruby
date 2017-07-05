@@ -266,9 +266,7 @@ module Twilio
               # @return [IpAddressList] if a(n) IpAddressList object was created.
               # @return [IpAddressContext] if a(n) IpAddressContext object was created.
               def ip_addresses(sid=:unset)
-                if sid.nil?
-                  raise ArgumentError, 'sid cannot be nil'
-                end
+                raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
                 if sid != :unset
                   return IpAddressContext.new(

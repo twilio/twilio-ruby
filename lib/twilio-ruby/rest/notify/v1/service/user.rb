@@ -254,9 +254,7 @@ module Twilio
             # @return [UserBindingList] if a(n) UserBindingList object was created.
             # @return [UserBindingContext] if a(n) UserBindingContext object was created.
             def bindings(sid=:unset)
-              if sid.nil?
-                raise ArgumentError, 'sid cannot be nil'
-              end
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
                 return UserBindingContext.new(
@@ -283,9 +281,7 @@ module Twilio
             # @return [SegmentMembershipList] if a(n) SegmentMembershipList object was created.
             # @return [SegmentMembershipContext] if a(n) SegmentMembershipContext object was created.
             def segment_memberships(segment=:unset)
-              if segment.nil?
-                raise ArgumentError, 'segment cannot be nil'
-              end
+              raise ArgumentError, 'segment cannot be nil' if segment.nil?
 
               if segment != :unset
                 return SegmentMembershipContext.new(

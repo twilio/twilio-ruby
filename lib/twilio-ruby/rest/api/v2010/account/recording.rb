@@ -249,9 +249,7 @@ module Twilio
             # @return [TranscriptionList] if a(n) TranscriptionList object was created.
             # @return [TranscriptionContext] if a(n) TranscriptionContext object was created.
             def transcriptions(sid=:unset)
-              if sid.nil?
-                raise ArgumentError, 'sid cannot be nil'
-              end
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
                 return TranscriptionContext.new(
@@ -278,9 +276,7 @@ module Twilio
             # @return [AddOnResultList] if a(n) AddOnResultList object was created.
             # @return [AddOnResultContext] if a(n) AddOnResultContext object was created.
             def add_on_results(sid=:unset)
-              if sid.nil?
-                raise ArgumentError, 'sid cannot be nil'
-              end
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
                 return AddOnResultContext.new(
