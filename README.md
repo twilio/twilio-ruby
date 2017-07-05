@@ -1,8 +1,8 @@
-[![Gem Version](http://img.shields.io/gem/v/twilio-ruby.svg)][gem]
-[![Build Status](http://img.shields.io/travis/twilio/twilio-ruby.svg)][travis]
-[![Code Quality](http://img.shields.io/codeclimate/github/twilio/twilio-ruby.svg)][codeclimate]
-
 # twilio-ruby
+
+[![Build Status](http://img.shields.io/travis/twilio/twilio-ruby.svg)][travis]
+[![Gem Version](http://img.shields.io/gem/v/twilio-ruby.svg)][gem]
+[![Code Quality](http://img.shields.io/codeclimate/github/twilio/twilio-ruby.svg)][codeclimate]
 
 A module for using the Twilio REST API and generating valid [TwiML](http://www.twilio.com/docs/api/twiml/ "TwiML - Twilio Markup Language"). [Click here to read the full documentation.][documentation]
 
@@ -11,13 +11,13 @@ A module for using the Twilio REST API and generating valid [TwiML](http://www.t
 To install using [Bundler][bundler] grab the latest stable version:
 
 ```ruby
-gem 'twilio-ruby', '~> 5.0.0.rc21'
+gem 'twilio-ruby', '~> 5.0.0.rc24'
 ```
 
 To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
 
 ```bash
-gem install twilio-ruby -v 5.0.0.rc21
+gem install twilio-ruby -v 5.0.0.rc24
 ```
 
 To build and install the development branch yourself from the latest source:
@@ -155,11 +155,11 @@ This will print the following (except for the whitespace):
 This library supports and is [tested against][travis] the following Ruby
 implementations:
 
+- Ruby 2.4.0
+- Ruby 2.3.0
 - Ruby 2.2.0
 - Ruby 2.1.0
 - Ruby 2.0.0
-- [JRuby][jruby]
-- [Rubinius][rubinius]
 
 [capability]: https://github.com/twilio/twilio-ruby/wiki/Capability
 [builder]: http://builder.rubyforge.org/
@@ -171,7 +171,5 @@ implementations:
 [gem]: https://rubygems.org/gems/twilio
 [travis]: http://travis-ci.org/twilio/twilio-ruby
 [codeclimate]: https://codeclimate.com/github/twilio/twilio-ruby
-[jruby]: http://www.jruby.org
-[rubinius]: http://rubini.us
 [upgrade]: https://github.com/twilio/twilio-ruby/wiki/Ruby-Version-5.x-Upgrade-Guide
 [issues]: https://github.com/twilio/twilio-ruby/issues
