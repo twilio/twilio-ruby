@@ -208,7 +208,8 @@ module Twilio
 
             ##
             # Access the local
-            # @return [LocalList] LocalList
+            # @return [LocalList] if a(n) LocalList object was created.
+            # @return [LocalContext] if a(n) LocalContext object was created.
             def local
               unless @local
                 @local = LocalList.new(
@@ -223,7 +224,8 @@ module Twilio
 
             ##
             # Access the toll_free
-            # @return [TollFreeList] TollFreeList
+            # @return [TollFreeList] if a(n) TollFreeList object was created.
+            # @return [TollFreeContext] if a(n) TollFreeContext object was created.
             def toll_free
               unless @toll_free
                 @toll_free = TollFreeList.new(
@@ -238,7 +240,8 @@ module Twilio
 
             ##
             # Access the mobile
-            # @return [MobileList] MobileList
+            # @return [MobileList] if a(n) MobileList object was created.
+            # @return [MobileContext] if a(n) MobileContext object was created.
             def mobile
               unless @mobile
                 @mobile = MobileList.new(

@@ -282,7 +282,8 @@ module Twilio
 
           ##
           # Access the usage_records
-          # @return [UsageRecordList] UsageRecordList
+          # @return [UsageRecordList] if a(n) UsageRecordList object was created.
+          # @return [UsageRecordContext] if a(n) UsageRecordContext object was created.
           def usage_records
             unless @usage_records
               @usage_records = UsageRecordList.new(

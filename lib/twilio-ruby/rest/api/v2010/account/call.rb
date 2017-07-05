@@ -295,7 +295,8 @@ module Twilio
             ##
             # Access the feedback_summaries
             # @param [String] sid The sid
-            # @return [FeedbackSummaryList] FeedbackSummaryList
+            # @return [FeedbackSummaryList] if a(n) FeedbackSummaryList object was created.
+            # @return [FeedbackSummaryContext] if a(n) FeedbackSummaryContext object was created.
             def feedback_summaries(sid=:unset)
               if sid != :unset
                 return FeedbackSummaryContext.new(
@@ -449,7 +450,8 @@ module Twilio
 
             ##
             # Access the recordings
-            # @return [RecordingList] RecordingList
+            # @return [RecordingList] if a(n) RecordingList object was created.
+            # @return [RecordingContext] if a(n) RecordingContext object was created.
             def recordings(sid=:unset)
               if sid != :unset
                 return RecordingContext.new(
@@ -473,7 +475,8 @@ module Twilio
 
             ##
             # Access the notifications
-            # @return [NotificationList] NotificationList
+            # @return [NotificationList] if a(n) NotificationList object was created.
+            # @return [NotificationContext] if a(n) NotificationContext object was created.
             def notifications(sid=:unset)
               if sid != :unset
                 return NotificationContext.new(
@@ -497,7 +500,8 @@ module Twilio
 
             ##
             # Access the feedback
-            # @return [FeedbackList] FeedbackList
+            # @return [FeedbackList] if a(n) FeedbackList object was created.
+            # @return [FeedbackContext] if a(n) FeedbackContext object was created.
             def feedback
               FeedbackContext.new(
                   @version,

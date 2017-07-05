@@ -282,7 +282,8 @@ module Twilio
 
           ##
           # Access the usage
-          # @return [UsageList] UsageList
+          # @return [UsageList] if a(n) UsageList object was created.
+          # @return [UsageContext] if a(n) UsageContext object was created.
           def usage
             UsageContext.new(
                 @version,

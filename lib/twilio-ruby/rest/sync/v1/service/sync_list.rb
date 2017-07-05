@@ -235,7 +235,8 @@ module Twilio
 
             ##
             # Access the sync_list_items
-            # @return [SyncListItemList] SyncListItemList
+            # @return [SyncListItemList] if a(n) SyncListItemList object was created.
+            # @return [SyncListItemContext] if a(n) SyncListItemContext object was created.
             def sync_list_items(index=:unset)
               if index != :unset
                 return SyncListItemContext.new(
@@ -259,7 +260,8 @@ module Twilio
 
             ##
             # Access the sync_list_permissions
-            # @return [SyncListPermissionList] SyncListPermissionList
+            # @return [SyncListPermissionList] if a(n) SyncListPermissionList object was created.
+            # @return [SyncListPermissionContext] if a(n) SyncListPermissionContext object was created.
             def sync_list_permissions(identity=:unset)
               if identity != :unset
                 return SyncListPermissionContext.new(

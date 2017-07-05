@@ -282,7 +282,8 @@ module Twilio
 
           ##
           # Access the activities
-          # @return [ActivityList] ActivityList
+          # @return [ActivityList] if a(n) ActivityList object was created.
+          # @return [ActivityContext] if a(n) ActivityContext object was created.
           def activities(sid=:unset)
             if sid != :unset
               return ActivityContext.new(
@@ -304,7 +305,8 @@ module Twilio
 
           ##
           # Access the events
-          # @return [EventList] EventList
+          # @return [EventList] if a(n) EventList object was created.
+          # @return [EventContext] if a(n) EventContext object was created.
           def events(sid=:unset)
             if sid != :unset
               return EventContext.new(
@@ -326,7 +328,8 @@ module Twilio
 
           ##
           # Access the tasks
-          # @return [TaskList] TaskList
+          # @return [TaskList] if a(n) TaskList object was created.
+          # @return [TaskContext] if a(n) TaskContext object was created.
           def tasks(sid=:unset)
             if sid != :unset
               return TaskContext.new(
@@ -348,7 +351,8 @@ module Twilio
 
           ##
           # Access the task_queues
-          # @return [TaskQueueList] TaskQueueList
+          # @return [TaskQueueList] if a(n) TaskQueueList object was created.
+          # @return [TaskQueueContext] if a(n) TaskQueueContext object was created.
           def task_queues(sid=:unset)
             if sid != :unset
               return TaskQueueContext.new(
@@ -370,7 +374,8 @@ module Twilio
 
           ##
           # Access the workers
-          # @return [WorkerList] WorkerList
+          # @return [WorkerList] if a(n) WorkerList object was created.
+          # @return [WorkerContext] if a(n) WorkerContext object was created.
           def workers(sid=:unset)
             if sid != :unset
               return WorkerContext.new(
@@ -392,7 +397,8 @@ module Twilio
 
           ##
           # Access the workflows
-          # @return [WorkflowList] WorkflowList
+          # @return [WorkflowList] if a(n) WorkflowList object was created.
+          # @return [WorkflowContext] if a(n) WorkflowContext object was created.
           def workflows(sid=:unset)
             if sid != :unset
               return WorkflowContext.new(
@@ -414,7 +420,8 @@ module Twilio
 
           ##
           # Access the statistics
-          # @return [WorkspaceStatisticsList] WorkspaceStatisticsList
+          # @return [WorkspaceStatisticsList] if a(n) WorkspaceStatisticsList object was created.
+          # @return [WorkspaceStatisticsContext] if a(n) WorkspaceStatisticsContext object was created.
           def statistics
             WorkspaceStatisticsContext.new(
                 @version,
@@ -424,7 +431,8 @@ module Twilio
 
           ##
           # Access the task_channels
-          # @return [TaskChannelList] TaskChannelList
+          # @return [TaskChannelList] if a(n) TaskChannelList object was created.
+          # @return [TaskChannelContext] if a(n) TaskChannelContext object was created.
           def task_channels(sid=:unset)
             if sid != :unset
               return TaskChannelContext.new(

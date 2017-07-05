@@ -267,7 +267,8 @@ module Twilio
 
             ##
             # Access the user_channels
-            # @return [UserChannelList] UserChannelList
+            # @return [UserChannelList] if a(n) UserChannelList object was created.
+            # @return [UserChannelContext] if a(n) UserChannelContext object was created.
             def user_channels
               unless @user_channels
                 @user_channels = UserChannelList.new(

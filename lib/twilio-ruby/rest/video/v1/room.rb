@@ -280,7 +280,8 @@ module Twilio
 
           ##
           # Access the recordings
-          # @return [RoomRecordingList] RoomRecordingList
+          # @return [RoomRecordingList] if a(n) RoomRecordingList object was created.
+          # @return [RoomRecordingContext] if a(n) RoomRecordingContext object was created.
           def recordings(sid=:unset)
             if sid != :unset
               return RoomRecordingContext.new(

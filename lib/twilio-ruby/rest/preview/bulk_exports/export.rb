@@ -99,7 +99,8 @@ module Twilio
 
           ##
           # Access the days
-          # @return [DayList] DayList
+          # @return [DayList] if a(n) DayList object was created.
+          # @return [DayContext] if a(n) DayContext object was created.
           def days
             unless @days
               @days = DayList.new(

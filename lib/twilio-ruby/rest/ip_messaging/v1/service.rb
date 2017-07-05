@@ -434,7 +434,8 @@ module Twilio
 
           ##
           # Access the channels
-          # @return [ChannelList] ChannelList
+          # @return [ChannelList] if a(n) ChannelList object was created.
+          # @return [ChannelContext] if a(n) ChannelContext object was created.
           def channels(sid=:unset)
             if sid != :unset
               return ChannelContext.new(
@@ -456,7 +457,8 @@ module Twilio
 
           ##
           # Access the roles
-          # @return [RoleList] RoleList
+          # @return [RoleList] if a(n) RoleList object was created.
+          # @return [RoleContext] if a(n) RoleContext object was created.
           def roles(sid=:unset)
             if sid != :unset
               return RoleContext.new(
@@ -478,7 +480,8 @@ module Twilio
 
           ##
           # Access the users
-          # @return [UserList] UserList
+          # @return [UserList] if a(n) UserList object was created.
+          # @return [UserContext] if a(n) UserContext object was created.
           def users(sid=:unset)
             if sid != :unset
               return UserContext.new(

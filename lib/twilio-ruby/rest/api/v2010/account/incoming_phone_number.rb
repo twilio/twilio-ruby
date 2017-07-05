@@ -254,7 +254,8 @@ module Twilio
 
             ##
             # Access the local
-            # @return [LocalList] LocalList
+            # @return [LocalList] if a(n) LocalList object was created.
+            # @return [LocalContext] if a(n) LocalContext object was created.
             def local
               @local ||= LocalList.new(
                   @version,
@@ -264,7 +265,8 @@ module Twilio
 
             ##
             # Access the mobile
-            # @return [MobileList] MobileList
+            # @return [MobileList] if a(n) MobileList object was created.
+            # @return [MobileContext] if a(n) MobileContext object was created.
             def mobile
               @mobile ||= MobileList.new(
                   @version,
@@ -274,7 +276,8 @@ module Twilio
 
             ##
             # Access the toll_free
-            # @return [TollFreeList] TollFreeList
+            # @return [TollFreeList] if a(n) TollFreeList object was created.
+            # @return [TollFreeContext] if a(n) TollFreeContext object was created.
             def toll_free
               @toll_free ||= TollFreeList.new(
                   @version,
@@ -459,7 +462,8 @@ module Twilio
 
             ##
             # Access the assigned_add_ons
-            # @return [AssignedAddOnList] AssignedAddOnList
+            # @return [AssignedAddOnList] if a(n) AssignedAddOnList object was created.
+            # @return [AssignedAddOnContext] if a(n) AssignedAddOnContext object was created.
             def assigned_add_ons(sid=:unset)
               if sid != :unset
                 return AssignedAddOnContext.new(

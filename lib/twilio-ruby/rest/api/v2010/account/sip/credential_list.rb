@@ -260,7 +260,8 @@ module Twilio
 
               ##
               # Access the credentials
-              # @return [CredentialList] CredentialList
+              # @return [CredentialList] if a(n) CredentialList object was created.
+              # @return [CredentialContext] if a(n) CredentialContext object was created.
               def credentials(sid=:unset)
                 if sid != :unset
                   return CredentialContext.new(

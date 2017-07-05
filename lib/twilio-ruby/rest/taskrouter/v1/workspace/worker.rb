@@ -201,7 +201,8 @@ module Twilio
 
             ##
             # Access the statistics
-            # @return [WorkersStatisticsList] WorkersStatisticsList
+            # @return [WorkersStatisticsList] if a(n) WorkersStatisticsList object was created.
+            # @return [WorkersStatisticsContext] if a(n) WorkersStatisticsContext object was created.
             def statistics
               return WorkersStatisticsContext.new(
                   @version,
@@ -334,7 +335,8 @@ module Twilio
 
             ##
             # Access the statistics
-            # @return [WorkerStatisticsList] WorkerStatisticsList
+            # @return [WorkerStatisticsList] if a(n) WorkerStatisticsList object was created.
+            # @return [WorkerStatisticsContext] if a(n) WorkerStatisticsContext object was created.
             def statistics
               WorkerStatisticsContext.new(
                   @version,
@@ -345,7 +347,8 @@ module Twilio
 
             ##
             # Access the reservations
-            # @return [ReservationList] ReservationList
+            # @return [ReservationList] if a(n) ReservationList object was created.
+            # @return [ReservationContext] if a(n) ReservationContext object was created.
             def reservations(sid=:unset)
               if sid != :unset
                 return ReservationContext.new(
@@ -369,7 +372,8 @@ module Twilio
 
             ##
             # Access the worker_channels
-            # @return [WorkerChannelList] WorkerChannelList
+            # @return [WorkerChannelList] if a(n) WorkerChannelList object was created.
+            # @return [WorkerChannelContext] if a(n) WorkerChannelContext object was created.
             def worker_channels(sid=:unset)
               if sid != :unset
                 return WorkerChannelContext.new(
