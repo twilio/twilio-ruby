@@ -1,7 +1,7 @@
 AllCops:
   TargetRubyVersion: 2.0
-  Exclude:
-    - 'spec/**/*'
+  # Exclude:
+  #   - 'spec/**/*'
 
 Metrics/LineLength:
   Max: 120

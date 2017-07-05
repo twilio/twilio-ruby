@@ -129,21 +129,21 @@ describe Twilio::TwiML::VoiceResponse do
 
     it 'should allow action and method' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.record action: 'example.com', method: 'GET'
+      r.record(action: 'example.com', method: 'GET')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Record action="example.com" method="GET"/></Response>')
     end
 
     it 'should allow max_length, finish_on_key, and timeout' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.record timeout: 4, finish_on_key: '#', max_length: 30
+      r.record(timeout: 4, finish_on_key: '#', max_length: 30)
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Record finishOnKey="#" maxLength="30" timeout="4"/></Response>')
     end
 
     it 'should allow transcribe' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.record transcribe_callback: 'example.com'
+      r.record(transcribe_callback: 'example.com')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Record transcribeCallback="example.com"/></Response>')
     end
@@ -162,14 +162,14 @@ describe Twilio::TwiML::VoiceResponse do
 
     it 'should allow method' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.redirect 'example.com', method: 'POST'
+      r.redirect('example.com', method: 'POST')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Redirect method="POST">example.com</Redirect></Response>')
     end
 
     it 'should allow method and params' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.redirect 'example.com?id=34&action=hey', method: 'POST'
+      r.redirect('example.com?id=34&action=hey', method: 'POST')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Redirect method="POST">example.com?id=34&amp;action=hey</Redirect></Response>')
     end
@@ -317,7 +317,7 @@ describe Twilio::TwiML::VoiceResponse do
 
     it 'should allow Enqueue.task with a dictionary and appending Enqueue' do
       e = Twilio::TwiML::Enqueue.new(nil, workflow_sid: '123123123')
-      e.task({account_sid: 'AC123123123'})
+      e.task({ account_sid: 'AC123123123' })
 
       r = Twilio::TwiML::VoiceResponse.new
       r.append(e)
