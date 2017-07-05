@@ -23,23 +23,27 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Message> child element
       def message(
-        body,
-        to: nil,
-        from: nil,
-        method: nil,
-        action: nil,
-        status_callback: nil,
-        **keyword_args)
+          body,
+          to: nil,
+          from: nil,
+          method: nil,
+          action: nil,
+          status_callback: nil,
+          **keyword_args)
 
-        self.append(Message.new(
-          body: body,
-          to: to,
-          from: from,
-          method: method,
-          action: action,
-          status_callback: status_callback,
-          **keyword_args
-        ))
+        message = Message.new(
+            body: body,
+            to: to,
+            from: from,
+            method: method,
+            action: action,
+            status_callback: status_callback,
+            **keyword_args
+        )
+
+        yield(message) if block_given?
+
+        self.append(message)
       end
 
       # Create an <Redirect> element
@@ -52,7 +56,11 @@ module Twilio
       # == Returns:
       # A <Response> element with an <Redirect> child element
       def redirect(url, method: nil, **keyword_args)
-        self.append(Redirect.new(url, method: method, **keyword_args))
+        redirect = Redirect.new(url, method: method, **keyword_args)
+
+        yield(redirect) if block_given?
+
+        self.append(redirect)
       end
     end
 
@@ -82,7 +90,11 @@ module Twilio
       # == Returns:
       # A <Message> element with a <Body> child element
       def body(body)
-        self.append(Body.new(body))
+        body = Body.new(body)
+
+        yield(body) if block_given?
+
+        self.append(body)
       end
 
       # Create a <Media> element
@@ -94,7 +106,11 @@ module Twilio
       # == Returns:
       # A <Message> element with a <Media> child element
       def media(url)
-        self.append(Media.new(url))
+        media = Media.new(url)
+
+        yield(media) if block_given?
+
+        self.append(media)
       end
     end
 
