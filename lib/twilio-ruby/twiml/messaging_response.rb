@@ -34,8 +34,7 @@ module Twilio
         )
 
         yield(message) if block_given?
-
-        self.append(message)
+        append(message)
       end
 
       # Create an <Redirect> element

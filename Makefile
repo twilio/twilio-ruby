@@ -8,8 +8,7 @@ install:
 test-install:
 	bundle install
 
-test:
-	lint-changed
+test: lint-changed
 	bundle exec rake spec
 
 docs:

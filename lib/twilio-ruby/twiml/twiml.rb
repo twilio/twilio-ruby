@@ -5,6 +5,7 @@ module Twilio
     class TwiMLError < StandardError
     end
 
+    # TwiML Base Class
     class TwiML
       # Generate getter/setter methods
       attr_accessor :name
@@ -46,11 +47,8 @@ module Twilio
         keys.each do |key|
           value = @attrs[key]
 
-          if value.is_a?(TrueClass) || value.is_a?(FalseClass)
-            elem[key] = value.to_s.downcase
-          else
-            elem[key] = value.to_s
-          end
+          value_is_boolean = value.is_a?(TrueClass) || value.is_a?(FalseClass)
+          elem[key] = value_is_boolean ? value.to_s.downcase : value.to_s
         end
 
         @verbs.each do |verb|
