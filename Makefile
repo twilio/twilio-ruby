@@ -15,8 +15,7 @@ docs:
 	yard doc
 
 lint-changed:
-ifeq ($(CHANGED_RUBY_FILES), )
-else
+ifneq ($(CHANGED_RUBY_FILES), )
 	@rubocop --cache true --parallel $(CHANGED_RUBY_FILES)
 endif
 
