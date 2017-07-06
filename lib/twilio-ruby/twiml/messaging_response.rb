@@ -7,6 +7,7 @@ module Twilio
       def initialize()
         super()
         self.name = 'Response'
+        yield(self) if block_given?
       end
 
       # Create a <Message> element

@@ -25,6 +25,15 @@ describe Twilio::TwiML::VoiceResponse do
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Hangup/><Leave/><Sms from="+10987654321" to="+11234567890">twilio sms</Sms></Response>')
     end
+
+    it 'should allow nesting' do
+      response = Twilio::TwiML::VoiceResponse.new do |r|
+        r.hangup
+        r.leave
+        r.sms('twilio sms', to: '+11234567890', from: '+10987654321')
+      end
+      expect(response.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Hangup/><Leave/><Sms from="+10987654321" to="+11234567890">twilio sms</Sms></Response>')
+    end
   end
 
   context 'Testing Say' do
