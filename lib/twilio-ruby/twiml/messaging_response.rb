@@ -76,6 +76,7 @@ module Twilio
         if !(body.nil?)
           @value = body
         end
+        yield(self) if block_given?
       end
 
       # Create a <Body> element
