@@ -39,8 +39,14 @@ describe Twilio::TwiML::MessagingResponse do
       r.redirect('example.com')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello<Media>foobar</Media></Message><Redirect>example.com</Redirect></Response>')
+    end
 
-
+    it 'should allow nesting from the initializer' do
+      response = Twilio::TwiML::MessagingResponse.new do |r|
+        r.message('Hello')
+        r.redirect('example.com')
+      end
+      expect(response.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello</Message><Redirect>example.com</Redirect></Response>')
     end
   end
 

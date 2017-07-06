@@ -7,6 +7,7 @@ module Twilio
       def initialize()
         super()
         self.name = 'Response'
+        yield(self) if block_given?
       end
 
       # Create a <Dial> element
@@ -348,6 +349,7 @@ module Twilio
         if !(number.nil?)
           @value = number
         end
+        yield(self) if block_given?
       end
 
       # Create a <Client> element
@@ -681,6 +683,7 @@ module Twilio
       def initialize(name, **keyword_args)
         super(**keyword_args)
         @value = name
+        yield(self) if block_given?
       end
 
       # Create a <Task> element
@@ -727,6 +730,7 @@ module Twilio
       # A <Gather> element
       def initialize(**keyword_args)
         super(**keyword_args)
+        yield(self) if block_given?
       end
 
       # Create a <Say> element

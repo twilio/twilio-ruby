@@ -7,6 +7,7 @@ module Twilio
       def initialize()
         super()
         self.name = 'Response'
+        yield(self) if block_given?
       end
 
       # Create a <Message> element
@@ -75,6 +76,7 @@ module Twilio
         if !(body.nil?)
           @value = body
         end
+        yield(self) if block_given?
       end
 
       # Create a <Body> element
