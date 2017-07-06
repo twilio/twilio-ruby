@@ -31,7 +31,7 @@ module Twilio
         status_callback: nil,
         **keyword_args)
 
-        self.append(Message.new(
+        message = Message.new(
           body: body,
           to: to,
           from: from,
@@ -39,7 +39,11 @@ module Twilio
           action: action,
           status_callback: status_callback,
           **keyword_args
-        ))
+        )
+
+        yield(message) if block_given?
+
+        self.append(message)
       end
 
       # Create an <Redirect> element

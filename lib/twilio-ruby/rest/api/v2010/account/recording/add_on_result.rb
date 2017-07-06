@@ -223,7 +223,8 @@ module Twilio
 
               ##
               # Access the payloads
-              # @return [PayloadList] PayloadList
+              # @return [PayloadList] if a(n) PayloadList object was created.
+              # @return [PayloadContext] if a(n) PayloadContext object was created.
               def payloads(sid=:unset)
                 if sid != :unset
                   return PayloadContext.new(

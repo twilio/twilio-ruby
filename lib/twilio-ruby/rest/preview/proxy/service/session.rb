@@ -304,7 +304,8 @@ module Twilio
 
             ##
             # Access the interactions
-            # @return [InteractionList] InteractionList
+            # @return [InteractionList] if a(n) InteractionList object was created.
+            # @return [InteractionContext] if a(n) InteractionContext object was created.
             def interactions(sid=:unset)
               if sid != :unset
                 return InteractionContext.new(
@@ -328,7 +329,8 @@ module Twilio
 
             ##
             # Access the participants
-            # @return [ParticipantList] ParticipantList
+            # @return [ParticipantList] if a(n) ParticipantList object was created.
+            # @return [ParticipantContext] if a(n) ParticipantContext object was created.
             def participants(sid=:unset)
               if sid != :unset
                 return ParticipantContext.new(

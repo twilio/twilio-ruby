@@ -299,7 +299,8 @@ module Twilio
 
             ##
             # Access the task_queues_statistics
-            # @return [TaskQueuesStatisticsList] TaskQueuesStatisticsList
+            # @return [TaskQueuesStatisticsList] if a(n) TaskQueuesStatisticsList object was created.
+            # @return [TaskQueuesStatisticsContext] if a(n) TaskQueuesStatisticsContext object was created.
             def task_queues_statistics
               unless @task_queues_statistics
                 @task_queues_statistics = TaskQueuesStatisticsList.new(
@@ -313,7 +314,8 @@ module Twilio
 
             ##
             # Access the task_queue_statistics
-            # @return [TaskQueueStatisticsList] TaskQueueStatisticsList
+            # @return [TaskQueueStatisticsList] if a(n) TaskQueueStatisticsList object was created.
+            # @return [TaskQueueStatisticsContext] if a(n) TaskQueueStatisticsContext object was created.
             def task_queue_statistics
               TaskQueueStatisticsContext.new(
                   @version,

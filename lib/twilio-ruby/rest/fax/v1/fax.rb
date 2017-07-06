@@ -317,7 +317,8 @@ module Twilio
 
           ##
           # Access the media
-          # @return [FaxMediaList] FaxMediaList
+          # @return [FaxMediaList] if a(n) FaxMediaList object was created.
+          # @return [FaxMediaContext] if a(n) FaxMediaContext object was created.
           def media(sid=:unset)
             if sid != :unset
               return FaxMediaContext.new(

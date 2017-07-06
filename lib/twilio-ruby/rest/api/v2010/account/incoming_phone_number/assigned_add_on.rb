@@ -249,7 +249,8 @@ module Twilio
 
               ##
               # Access the extensions
-              # @return [AssignedAddOnExtensionList] AssignedAddOnExtensionList
+              # @return [AssignedAddOnExtensionList] if a(n) AssignedAddOnExtensionList object was created.
+              # @return [AssignedAddOnExtensionContext] if a(n) AssignedAddOnExtensionContext object was created.
               def extensions(sid=:unset)
                 if sid != :unset
                   return AssignedAddOnExtensionContext.new(

@@ -251,7 +251,8 @@ module Twilio
 
             ##
             # Access the bindings
-            # @return [UserBindingList] UserBindingList
+            # @return [UserBindingList] if a(n) UserBindingList object was created.
+            # @return [UserBindingContext] if a(n) UserBindingContext object was created.
             def bindings(sid=:unset)
               if sid != :unset
                 return UserBindingContext.new(
@@ -275,7 +276,8 @@ module Twilio
 
             ##
             # Access the segment_memberships
-            # @return [SegmentMembershipList] SegmentMembershipList
+            # @return [SegmentMembershipList] if a(n) SegmentMembershipList object was created.
+            # @return [SegmentMembershipContext] if a(n) SegmentMembershipContext object was created.
             def segment_memberships(segment=:unset)
               if segment != :unset
                 return SegmentMembershipContext.new(
