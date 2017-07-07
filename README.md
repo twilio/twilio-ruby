@@ -93,7 +93,7 @@ twilio-ruby uses [Faraday][faraday] to make HTTP requests. You can tell Twilio::
 If you just need to generate a Capability Token for use with Twilio Client, you
 can do this:
 
-``` ruby
+```ruby
 require 'twilio-ruby'
 
 # put your own account credentials here:
@@ -124,18 +124,18 @@ section of the wiki.
 TwiML support is based on the [Builder][builder] library. You can construct a
 TwiML response like this:
 
-``` ruby
+```ruby
 require 'twilio-ruby'
 
 response = Twilio::TwiML::VoiceResponse.new do |r|
   r.say('hello there', voice: 'alice')
-  r.dial('', caller_id: '+14159992222') do |d|
+  r.dial(caller_id: '+14159992222') do |d|
     d.client 'jenny'
   end
 end
 
 # print the result
-puts response.to_s()
+puts response.to_s
 ```
 
 This will print the following (except for the whitespace):
@@ -144,7 +144,7 @@ This will print the following (except for the whitespace):
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Say voice="alice">hello there</Say>
-  <Dial callerid="+14159992222">
+  <Dial callerId="+14159992222">
     <Client>jenny</Client>
   </Dial>
 </Response>
