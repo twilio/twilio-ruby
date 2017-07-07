@@ -1,5 +1,6 @@
 module Twilio
   module REST
+    # Page Base Class
     class Page
       include Enumerable
 
@@ -71,17 +72,17 @@ module Twilio
       end
 
       def previous_page
-        return nil unless @previous_page_url
+        return nil unless previous_page_url
 
-        response = @version.domain.request('GET', self.previous_page_url)
+        response = @version.domain.request('GET', previous_page_url)
 
         self.class.new(@version, response, @solution)
       end
 
       def next_page
-        return nil unless @next_page_url
+        return nil unless next_page_url
 
-        response = @version.domain.request('GET', self.next_page_url)
+        response = @version.domain.request('GET', next_page_url)
 
         self.class.new(@version, response, @solution)
       end

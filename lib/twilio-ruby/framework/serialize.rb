@@ -46,7 +46,7 @@ module Twilio
   def self.flatten(map, result = {}, previous = [])
     map.each do |key, value|
       if value.is_a? Hash
-        flatten(value, result, previous + [key])
+        self.flatten(value, result, previous + [key])
       else
         result[(previous + [key]).join('.')] = value
       end
@@ -58,7 +58,7 @@ module Twilio
   def self.prefixed_collapsible_map(map, prefix)
     result = {}
     if map.is_a? Hash
-      flattened = flatten(map)
+      flattened = self.flatten(map)
       result = {}
       flattened.each do |key, value|
         result[prefix + '.' + key] = value
