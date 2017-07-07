@@ -42,25 +42,23 @@ describe 'TaskRouter ' do
     describe 'policy' do
       it 'initialize' do
         @policy = Twilio::JWT::TaskRouterCapability::Policy.new('test-url',
-                                          'GET',
-                                          true,
-                                          {'test-post-key'=>'test-post-value'},
-                                          {'test-query-key'=>'test-query-value'}
-        )
+                                                                'GET',
+                                                                true,
+                                                                { 'test-post-key' => 'test-post-value' },
+                                                                'test-query-key' => 'test-query-value')
 
-        payload = Hash[@policy._generate_payload.map{ |k, v| [k.to_s, v] }]
+        payload = Hash[@policy._generate_payload.map { |k, v| [k.to_s, v] }]
         check_policy('GET',
                      'test-url',
                      payload,
-                     post_filter: {'test-post-key'=>'test-post-value'},
-                     query_filter: {'test-query-key'=>'test-query-value'},
-                     allow: true )
+                     post_filter: { 'test-post-key' => 'test-post-value' },
+                     query_filter: { 'test-query-key' => 'test-query-value' },
+                     allow: true)
       end
     end
 
     describe Twilio::JWT::TaskRouterCapability::TaskRouterUtils do
       describe 'urls' do
-
         it 'workspaces' do
           expected_url = 'https://taskrouter.twilio.com/v1/Workspaces'
           expect(Twilio::JWT::TaskRouterCapability::TaskRouterUtils.workspaces).to eq(expected_url)
@@ -150,28 +148,25 @@ describe 'TaskRouter ' do
           expected_url = 'https://taskrouter.twilio.com/v1/Workspaces/WK123/Workers/WT123/Reservations/**'
           expect(Twilio::JWT::TaskRouterCapability::TaskRouterUtils.all_reservations('WK123', 'WT123')).to eq(expected_url)
         end
-
       end
 
       describe 'default policies' do
         it 'default web_socket_policies' do
           @policies = Twilio::JWT::TaskRouterCapability::TaskRouterUtils.web_socket_policies('AC123', 'CI123')
-          get, post = @policies.map{|policy| policy._generate_payload}
-          check_policy('GET', 'https://event-bridge.twilio.com/v1/wschannels/AC123/CI123', Hash[get.map{ |k, v| [k.to_s, v]}])
-          check_policy('POST', 'https://event-bridge.twilio.com/v1/wschannels/AC123/CI123', Hash[post.map{ |k, v| [k.to_s, v]}])
+          get, post = @policies.map(&:_generate_payload)
+          check_policy('GET', 'https://event-bridge.twilio.com/v1/wschannels/AC123/CI123', Hash[get.map { |k, v| [k.to_s, v] }])
+          check_policy('POST', 'https://event-bridge.twilio.com/v1/wschannels/AC123/CI123', Hash[post.map { |k, v| [k.to_s, v] }])
         end
 
         it 'default worker policies' do
           @policies = Twilio::JWT::TaskRouterCapability::TaskRouterUtils.worker_policies('WK123', 'WT123')
-          payload = @policies.map{|policy| policy._generate_payload}
-          check_policy('GET', 'https://taskrouter.twilio.com/v1/Workspaces/WK123/Activities', Hash[payload[0].map{ |k, v| [k.to_s, v]}])
-          check_policy('GET', 'https://taskrouter.twilio.com/v1/Workspaces/WK123/Tasks/**', Hash[payload[1].map{ |k, v| [k.to_s, v]}])
-          check_policy('GET', 'https://taskrouter.twilio.com/v1/Workspaces/WK123/Workers/WT123/Reservations/**', Hash[payload[2].map{ |k, v| [k.to_s, v]}])
-          check_policy('GET', 'https://taskrouter.twilio.com/v1/Workspaces/WK123/Workers/WT123', Hash[payload[3].map{ |k, v| [k.to_s, v]}])
+          payload = @policies.map(&:_generate_payload)
+          check_policy('GET', 'https://taskrouter.twilio.com/v1/Workspaces/WK123/Activities', Hash[payload[0].map { |k, v| [k.to_s, v] }])
+          check_policy('GET', 'https://taskrouter.twilio.com/v1/Workspaces/WK123/Tasks/**', Hash[payload[1].map { |k, v| [k.to_s, v] }])
+          check_policy('GET', 'https://taskrouter.twilio.com/v1/Workspaces/WK123/Workers/WT123/Reservations/**', Hash[payload[2].map { |k, v| [k.to_s, v] }])
+          check_policy('GET', 'https://taskrouter.twilio.com/v1/Workspaces/WK123/Workers/WT123', Hash[payload[3].map { |k, v| [k.to_s, v] }])
         end
       end
     end
   end
 end
-
-

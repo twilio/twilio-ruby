@@ -21,36 +21,30 @@ module Twilio
       end
 
       def _generate_payload
-        fail NotImplementedError
+        raise NotImplementedError
       end
 
       def headers
-        headers = self._generate_headers.clone()
+        headers = _generate_headers.clone
         headers['typ'] = 'JWT'
         headers['alg'] = @algorithm
         headers
       end
 
       def payload
-        payload = self._generate_payload.clone()
+        payload = _generate_payload.clone
 
         payload[:iss] = @issuer
         payload[:nbf] = @nbf || Time.now.to_i
-
-        if @valid_until.nil?
-          payload[:exp] = Time.now.to_i + @ttl
-        else
-          payload[:exp] = @valid_until
-        end
-
+        payload[:exp] = @valid_until.nil? ? Time.now.to_i + @ttl : @valid_until
         payload[:sub] = @subject unless @subject.nil?
+        
         payload
       end
 
       def to_jwt
-        ::JWT.encode self.payload, @secret_key, @algorithm, self.headers
+        ::JWT.encode payload, @secret_key, @algorithm, headers
       end
-
     end
   end
 end

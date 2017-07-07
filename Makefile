@@ -8,16 +8,11 @@ install:
 test-install:
 	bundle install
 
-test: lint-changed
+test: lint
 	bundle exec rake spec
 
 docs:
 	yard doc
-
-lint-changed:
-ifneq ($(CHANGED_RUBY_FILES), )
-	@rubocop --cache true --parallel $(CHANGED_RUBY_FILES)
-endif
 
 lint:
 	rubocop --cache true --parallel

@@ -165,7 +165,7 @@ module Twilio
       #
       # == Returns:
       # A <Response> element with a <Hangup> child element
-      def hangup()
+      def hangup
         append(Hangup.new)
       end
 
@@ -173,7 +173,7 @@ module Twilio
       #
       # == Returns:
       # A <Response> element with a <Leave> child element
-      def leave()
+      def leave
         append(Leave.new)
       end
 
@@ -200,10 +200,10 @@ module Twilio
       # A <Response> element with a <Play> child element
       def play(url: nil, loop: nil, digits: nil, **keyword_args)
         append(Play.new(
-          url: url,
-          loop: loop,
-          digits: digits,
-          **keyword_args
+                 url: url,
+                 loop: loop,
+                 digits: digits,
+                 **keyword_args
         ))
       end
 
@@ -240,18 +240,18 @@ module Twilio
         **keyword_args
       )
         append(Record.new(
-          action: action,
-          method: method,
-          timeout: timeout,
-          finish_on_key: finish_on_key,
-          max_length: max_length,
-          play_beep: play_beep,
-          trim: trim,
-          recording_status_callback: recording_status_callback,
-          recording_status_callback_method: recording_status_callback_method,
-          transcribe: transcribe,
-          transcribe_callback: transcribe_callback,
-          **keyword_args
+                 action: action,
+                 method: method,
+                 timeout: timeout,
+                 finish_on_key: finish_on_key,
+                 max_length: max_length,
+                 play_beep: play_beep,
+                 trim: trim,
+                 recording_status_callback: recording_status_callback,
+                 recording_status_callback_method: recording_status_callback_method,
+                 transcribe: transcribe,
+                 transcribe_callback: transcribe_callback,
+                 **keyword_args
         ))
       end
 
@@ -293,11 +293,11 @@ module Twilio
       # A <Response> element with a <Say> child element
       def say(body, loop: nil, language: nil, voice: nil, **keyword_args)
         append(Say.new(
-          body,
-          loop: loop,
-          language: language,
-          voice: voice,
-          **keyword_args
+                 body,
+                 loop: loop,
+                 language: language,
+                 voice: voice,
+                 **keyword_args
         ))
       end
 
@@ -316,13 +316,13 @@ module Twilio
       # A <Response> element with a <Sms> child element
       def sms(body, to: nil, from: nil, method: nil, action: nil, status_callback: nil, **keyword_args)
         append(Sms.new(
-          body,
-          to: to,
-          from: from,
-          method: method,
-          action: action,
-          status_callback: status_callback,
-          **keyword_args
+                 body,
+                 to: to,
+                 from: from,
+                 method: method,
+                 action: action,
+                 status_callback: status_callback,
+                 **keyword_args
         ))
       end
     end
@@ -366,13 +366,13 @@ module Twilio
         **keyword_args
       )
         append(Client.new(
-          name,
-          method: method,
-          url: url,
-          status_callback_event: status_callback_event,
-          status_callback_method: status_callback_method,
-          status_callback: status_callback,
-          **keyword_args
+                 name,
+                 method: method,
+                 url: url,
+                 status_callback_event: status_callback_event,
+                 status_callback_method: status_callback_method,
+                 status_callback: status_callback,
+                 **keyword_args
         ))
       end
 
@@ -419,23 +419,23 @@ module Twilio
         **keyword_args
       )
         append(Conference.new(
-          name,
-          muted: muted,
-          start_conference_on_enter: start_conference_on_enter,
-          end_conference_on_exit: end_conference_on_exit,
-          max_participants: max_participants,
-          beep: beep,
-          record: record,
-          trim: trim,
-          wait_url: wait_url,
-          wait_method: wait_method,
-          event_callback_url: event_callback_url,
-          status_callback: status_callback,
-          status_callback_event: status_callback_event,
-          status_callback_method: status_callback_method,
-          recording_status_callback: recording_status_callback,
-          recording_status_callback_method: recording_status_callback_method,
-          **keyword_args
+                 name,
+                 muted: muted,
+                 start_conference_on_enter: start_conference_on_enter,
+                 end_conference_on_exit: end_conference_on_exit,
+                 max_participants: max_participants,
+                 beep: beep,
+                 record: record,
+                 trim: trim,
+                 wait_url: wait_url,
+                 wait_method: wait_method,
+                 event_callback_url: event_callback_url,
+                 status_callback: status_callback,
+                 status_callback_event: status_callback_event,
+                 status_callback_method: status_callback_method,
+                 recording_status_callback: recording_status_callback,
+                 recording_status_callback_method: recording_status_callback_method,
+                 **keyword_args
         ))
       end
 
@@ -464,14 +464,14 @@ module Twilio
         **keyword_args
       )
         append(Number.new(
-          number,
-          send_digits: send_digits,
-          url: url,
-          method: method,
-          status_callback: status_callback,
-          status_callback_event: status_callback_event,
-          status_callback_method: status_callback_method,
-          **keyword_args
+                 number,
+                 send_digits: send_digits,
+                 url: url,
+                 method: method,
+                 status_callback: status_callback,
+                 status_callback_event: status_callback_event,
+                 status_callback_method: status_callback_method,
+                 **keyword_args
         ))
       end
 
@@ -496,12 +496,12 @@ module Twilio
         **keyword_args
       )
         append(Queue.new(
-          queue_name,
-          url: url,
-          method: method,
-          reservation_sid: reservation_sid,
-          post_work_activity_sid: post_work_activity_sid,
-          **keyword_args
+                 queue_name,
+                 url: url,
+                 method: method,
+                 reservation_sid: reservation_sid,
+                 post_work_activity_sid: post_work_activity_sid,
+                 **keyword_args
         ))
       end
 
@@ -544,15 +544,15 @@ module Twilio
         **keyword_args
       )
         append(Sip.new(
-          uri,
-          username: username,
-          password: password,
-          url: url,
-          method: method,
-          status_callback: status_callback,
-          status_callback_event: status_callback_event,
-          status_callback_method: status_callback_method,
-          **keyword_args
+                 uri,
+                 username: username,
+                 password: password,
+                 url: url,
+                 method: method,
+                 status_callback: status_callback,
+                 status_callback_event: status_callback_event,
+                 status_callback_method: status_callback_method,
+                 **keyword_args
         ))
       end
     end
@@ -740,11 +740,11 @@ module Twilio
       # A <Gather> element with a <Say> child element
       def say(body, loop: nil, language: nil, voice: nil, **keyword_args)
         append(Say.new(
-          body,
-          loop: loop,
-          language: language,
-          voice: voice,
-          **keyword_args
+                 body,
+                 loop: loop,
+                 language: language,
+                 voice: voice,
+                 **keyword_args
         ))
       end
 
@@ -760,10 +760,10 @@ module Twilio
       # A <Gather> element with a <Play> child element
       def play(url: nil, loop: nil, digits: nil, **keyword_args)
         append(Play.new(
-          url: url,
-          loop: loop,
-          digits: digits,
-          **keyword_args
+                 url: url,
+                 loop: loop,
+                 digits: digits,
+                 **keyword_args
         ))
       end
 

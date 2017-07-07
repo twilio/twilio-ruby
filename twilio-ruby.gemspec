@@ -8,8 +8,10 @@ Gem::Specification.new do |spec|
   spec.name          = 'twilio-ruby'
   spec.version       = Twilio::VERSION
   spec.authors	     = ['Twilio API Team']
-  spec.summary       = 'A simple library for communicating with the Twilio REST API, building TwiML, and generating Twilio JWT Capability Tokens'
-  spec.description   = 'A simple library for communicating with the Twilio REST API, building TwiML, and generating Twilio JWT Capability Tokens'
+  spec.summary       = 'A simple library for communicating with the Twilio REST API, '\
+                       'building TwiML, and generating Twilio JWT Capability Tokens'
+  spec.description   = 'A simple library for communicating with the Twilio REST API, '\
+                       'building TwiML, and generating Twilio JWT Capability Tokens'
   spec.homepage      = 'http://github.com/twilio/twilio-ruby'
   spec.license       = 'MIT'
   spec.metadata['yard.run'] = 'yri' # use "yard" to build full HTML docs.

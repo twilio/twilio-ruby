@@ -45,8 +45,8 @@ module Twilio
       end
 
       def request(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
-        url = self.relative_uri(uri)
-        params = params.delete_if { |k, v| v.nil? }
+        url = relative_uri(uri)
+        params = params.delete_if { |_k, v| v.nil? }
         data = data
         @domain.request(method, url, params, data, headers, auth, timeout)
       end
@@ -59,9 +59,7 @@ module Twilio
           message += ": #{response.body['message']}"
         end
 
-        if response.body.key?('code')
-          code = response.body['code']
-        end
+        code = response.body['code'] if response.body.key?('code')
 
         Twilio::REST::RestError.new(message, code, response.status_code)
       end

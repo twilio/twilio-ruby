@@ -8,34 +8,30 @@ describe Twilio do
     end
 
     it 'should serialize a single key' do
-      actual = Twilio.prefixed_collapsible_map({
-        'foo' => 'bar'
-      }, 'Prefix')
-      expect(actual).to eq({ 'Prefix.foo' => 'bar' })
+      actual = Twilio.prefixed_collapsible_map({ 'foo' => 'bar' }, 'Prefix')
+      expect(actual).to eq('Prefix.foo' => 'bar')
     end
 
     it 'should serialize nested key' do
       actual = Twilio.prefixed_collapsible_map({
-        'foo' => {
-          'bar' => 'baz'
-        }
-      }, 'Prefix')
-      expect(actual).to eq({ 'Prefix.foo.bar' => 'baz' })
+                                                 'foo' => {
+                                                   'bar' => 'baz'
+                                                 }
+                                               }, 'Prefix')
+      expect(actual).to eq('Prefix.foo.bar' => 'baz')
     end
 
     it 'should serialize multiple keys' do
       actual = Twilio.prefixed_collapsible_map({
-        'watson' => {
-          'language' => 'en',
-          'alice' => 'bob'
-        },
-          'foo' => 'bar'
-      }, 'Prefix')
-      expect(actual).to eq({
-        'Prefix.watson.language' => 'en',
-        'Prefix.watson.alice' => 'bob',
-        'Prefix.foo' => 'bar'
-      })
+                                                 'watson' => {
+                                                   'language' => 'en',
+                                                   'alice' => 'bob'
+                                                 },
+                                                 'foo' => 'bar'
+                                               }, 'Prefix')
+      expect(actual).to eq('Prefix.watson.language' => 'en',
+                           'Prefix.watson.alice' => 'bob',
+                           'Prefix.foo' => 'bar')
     end
 
     it 'should serialize list' do

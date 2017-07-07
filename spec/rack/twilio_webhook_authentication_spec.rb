@@ -3,33 +3,33 @@ require 'rack/mock'
 
 describe Rack::TwilioWebhookAuthentication do
   before do
-    @app = lambda { |env| [200, { 'Content-Type' => 'text/plain' }, ['Hello']] }
+    @app = ->(_env) { [200, { 'Content-Type' => 'text/plain' }, ['Hello']] }
   end
 
   describe 'new' do
     it 'should initialize with an app, auth token and a path' do
-      expect {
+      expect do
         Rack::TwilioWebhookAuthentication.new(@app, 'ABC', /\/voice/)
-      }.not_to raise_error
+      end.not_to raise_error
     end
 
     it 'should initialize with an app, auth token and paths' do
-      expect {
+      expect do
         Rack::TwilioWebhookAuthentication.new(@app, 'ABC', /\/voice/, /\/sms/)
-      }.not_to raise_error
+      end.not_to raise_error
     end
 
     it 'should initialize with an app, dynamic token and paths' do
-      expect {
+      expect do
         Rack::TwilioWebhookAuthentication.new(@app, nil, /\/voice/, /\/sms/)
-      }.not_to raise_error
+      end.not_to raise_error
     end
   end
 
   describe 'calling against one path with dynamic auth token' do
     it 'should allow a request through if it validates' do
       auth_token = 'qwerty'
-      account_sid = 12345
+      account_sid = 12_345
       expect_any_instance_of(Rack::Request).to receive(:post?).and_return(true)
       expect_any_instance_of(Rack::Request).to receive(:POST).and_return({ 'AccountSid' => account_sid })
       @middleware = Rack::TwilioWebhookAuthentication.new(@app, nil, /\/voice/) { |asid| auth_token }

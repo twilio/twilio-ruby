@@ -11,7 +11,7 @@ module Twilio
       attr_accessor :name
       attr_accessor :indent
 
-      alias_method :to_xml, :to_s
+      alias to_xml to_s
 
       def initialize(indent: false, **keyword_args)
         @name = self.class.name.split('::').last
@@ -32,7 +32,7 @@ module Twilio
       end
 
       def to_s(xml_declaration = true)
-        xml = self.xml.to_s(:indent => self.indent)
+        xml = self.xml.to_s(indent: indent)
 
         return ('<?xml version="1.0" encoding="UTF-8"?>' + xml) if xml_declaration
         xml

@@ -47,7 +47,7 @@ module Twilio
       # == Returns:
       # A <Response> element with an <Redirect> child element
       def redirect(url, method: nil, **keyword_args)
-        self.append(Redirect.new(url, method: method, **keyword_args))
+        append(Redirect.new(url, method: method, **keyword_args))
       end
     end
 
@@ -76,7 +76,7 @@ module Twilio
       # == Returns:
       # A <Message> element with a <Body> child element
       def body(body)
-        self.append(Body.new(body))
+        append(Body.new(body))
       end
 
       # Create a <Media> element
@@ -88,7 +88,7 @@ module Twilio
       # == Returns:
       # A <Message> element with a <Media> child element
       def media(url)
-        self.append(Media.new(url))
+        append(Media.new(url))
       end
     end
 
