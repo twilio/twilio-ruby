@@ -24,7 +24,7 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Message> child element
       def message(
-        body,
+        body: nil,
         to: nil,
         from: nil,
         method: nil,
