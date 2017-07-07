@@ -129,7 +129,7 @@ require 'twilio-ruby'
 
 response = Twilio::TwiML::VoiceResponse.new do |r|
   r.say('hello there', voice: 'alice')
-  r.dial('', callerId: '+14159992222') do |d|
+  r.dial('', caller_id: '+14159992222') do |d|
     d.client 'jenny'
   end
 end
