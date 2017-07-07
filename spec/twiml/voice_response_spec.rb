@@ -329,7 +329,7 @@ describe Twilio::TwiML::VoiceResponse do
   context 'Testing Dial' do
     it 'should allow VoiceResponse.dial' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.dial '1231231234'
+      r.dial(number: '1231231234')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial>1231231234</Dial></Response>')
     end
