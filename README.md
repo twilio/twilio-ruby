@@ -1,8 +1,8 @@
-[![Gem Version](http://img.shields.io/gem/v/twilio-ruby.svg)][gem]
-[![Build Status](http://img.shields.io/travis/twilio/twilio-ruby.svg)][travis]
-[![Code Quality](http://img.shields.io/codeclimate/github/twilio/twilio-ruby.svg)][codeclimate]
-
 # twilio-ruby
+
+[![Build Status](http://img.shields.io/travis/twilio/twilio-ruby.svg)][travis]
+[![Gem Version](http://img.shields.io/gem/v/twilio-ruby.svg)][gem]
+[![Code Quality](http://img.shields.io/codeclimate/github/twilio/twilio-ruby.svg)][codeclimate]
 
 A module for using the Twilio REST API and generating valid [TwiML](http://www.twilio.com/docs/api/twiml/ "TwiML - Twilio Markup Language"). [Click here to read the full documentation.][documentation]
 
@@ -11,13 +11,13 @@ A module for using the Twilio REST API and generating valid [TwiML](http://www.t
 To install using [Bundler][bundler] grab the latest stable version:
 
 ```ruby
-gem 'twilio-ruby', '~> 5.0.0.rc21'
+gem 'twilio-ruby', '~> 5.0.0.rc24'
 ```
 
 To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
 
 ```bash
-gem install twilio-ruby -v 5.0.0.rc21
+gem install twilio-ruby -v 5.0.0.rc24
 ```
 
 To build and install the development branch yourself from the latest source:
@@ -41,7 +41,7 @@ During the Release Candidate period of this library, please leave all feedback a
 
 ### Setup Work
 
-``` ruby
+```ruby
 require 'twilio-ruby'
 
 # put your own credentials here
@@ -63,7 +63,7 @@ end
 
 ### Make a Call
 
-``` ruby
+```ruby
 @client.api.account.calls.create(
   from: '+14159341234',
   to: '+16105557069',
@@ -73,7 +73,7 @@ end
 
 ### Send an SMS
 
-``` ruby
+```ruby
 @client.api.account.messages.create(
   from: '+14159341234',
   to: '+16105557069',
@@ -82,7 +82,7 @@ end
 ```
 
 ### Customizing your HTTP Client
-twilio-ruby uses [Faraday](https://github.com/lostisland/faraday) to make HTTP requests. You can tell Twilio::REST::Client to use any of the Faraday adapters like so:
+twilio-ruby uses [Faraday][faraday] to make HTTP requests. You can tell Twilio::REST::Client to use any of the Faraday adapters like so:
 
 ```ruby
 @client.http_client.adapter = :typhoeus
@@ -94,24 +94,26 @@ If you just need to generate a Capability Token for use with Twilio Client, you
 can do this:
 
 ``` ruby
-require 'rubygems' # not necessary with ruby 1.9 but included for completeness
 require 'twilio-ruby'
 
 # put your own account credentials here:
-account_sid = 'AC043dcf9844e13758bc3a36a84c29761'
-auth_token = '62ea81de3a5b413254eb263595357c69'
+account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 
 # set up
-capability = Twilio::Util::Capability.new account_sid, auth_token
+capability = Twilio::JWT::ClientCapability.new account_sid, auth_token
+
 
 # allow outgoing calls to an application
-capability.allow_client_outgoing 'AP89a0180a1a4ddf1da954efca349b7a20'
+outgoingScope = Twilio::JWT::ClientCapability::OutgoingClientScope.new 'AP11111111111111111111111111111111'
+capability.add_scope(outgoingScope)
 
 # allow incoming calls to 'andrew'
-capability.allow_client_incoming 'andrew'
+incomingScope = Twilio::JWT::ClientCapability::IncomingClientScope.new 'tom'
+capability.add_scope(incomingScope)
 
 # generate the token string
-@token = capability.generate
+@token = capability.to_s
 ```
 
 There is a slightly more detailed document in the [Capability][capability]
@@ -123,28 +125,26 @@ TwiML support is based on the [Builder][builder] library. You can construct a
 TwiML response like this:
 
 ``` ruby
-require 'rubygems' # not necessary with ruby 1.9 but included for completeness
 require 'twilio-ruby'
 
-# build up a response
-response = Twilio::TwiML::Response.new do |r|
-  r.Say 'hello there', voice: 'alice'
-  r.Dial callerId: '+14159992222' do |d|
-    d.Client 'jenny'
+response = Twilio::TwiML::VoiceResponse.new do |r|
+  r.say('hello there', voice: 'alice')
+  r.dial('', caller_id: '+14159992222') do |d|
+    d.client 'jenny'
   end
 end
 
 # print the result
-puts response.text
+puts response.to_s()
 ```
 
 This will print the following (except for the whitespace):
 
-``` xml
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Say voice="alice">hello there</Say>
-  <Dial callerId="+14159992222">
+  <Dial callerid="+14159992222">
     <Client>jenny</Client>
   </Dial>
 </Response>
@@ -155,11 +155,11 @@ This will print the following (except for the whitespace):
 This library supports and is [tested against][travis] the following Ruby
 implementations:
 
+- Ruby 2.4.0
+- Ruby 2.3.0
 - Ruby 2.2.0
 - Ruby 2.1.0
 - Ruby 2.0.0
-- [JRuby][jruby]
-- [Rubinius][rubinius]
 
 [capability]: https://github.com/twilio/twilio-ruby/wiki/Capability
 [builder]: http://builder.rubyforge.org/
@@ -171,7 +171,6 @@ implementations:
 [gem]: https://rubygems.org/gems/twilio
 [travis]: http://travis-ci.org/twilio/twilio-ruby
 [codeclimate]: https://codeclimate.com/github/twilio/twilio-ruby
-[jruby]: http://www.jruby.org
-[rubinius]: http://rubini.us
 [upgrade]: https://github.com/twilio/twilio-ruby/wiki/Ruby-Version-5.x-Upgrade-Guide
 [issues]: https://github.com/twilio/twilio-ruby/issues
+[faraday]: https://github.com/lostisland/faraday
