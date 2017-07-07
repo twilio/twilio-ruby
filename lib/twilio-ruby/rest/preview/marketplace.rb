@@ -18,7 +18,9 @@ module Twilio
         end
 
         def available_add_ons(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @available_add_ons ||= AvailableAddOnList.new self
           else
             AvailableAddOnContext.new(self, sid)
@@ -26,7 +28,9 @@ module Twilio
         end
 
         def installed_add_ons(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @installed_add_ons ||= InstalledAddOnList.new self
           else
             InstalledAddOnContext.new(self, sid)

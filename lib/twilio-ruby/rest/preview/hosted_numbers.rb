@@ -17,7 +17,9 @@ module Twilio
         end
 
         def hosted_number_orders(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @hosted_number_orders ||= HostedNumberOrderList.new self
           else
             HostedNumberOrderContext.new(self, sid)

@@ -437,6 +437,8 @@ module Twilio
           # @return [ChannelList] if a(n) ChannelList object was created.
           # @return [ChannelContext] if a(n) ChannelContext object was created.
           def channels(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
             if sid != :unset
               return ChannelContext.new(
                   @version,
@@ -460,6 +462,8 @@ module Twilio
           # @return [RoleList] if a(n) RoleList object was created.
           # @return [RoleContext] if a(n) RoleContext object was created.
           def roles(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
             if sid != :unset
               return RoleContext.new(
                   @version,
@@ -483,6 +487,8 @@ module Twilio
           # @return [UserList] if a(n) UserList object was created.
           # @return [UserContext] if a(n) UserContext object was created.
           def users(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
             if sid != :unset
               return UserContext.new(
                   @version,

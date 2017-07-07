@@ -19,7 +19,9 @@ module Twilio
         end
 
         def commands(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @commands ||= CommandList.new self
           else
             CommandContext.new(self, sid)
@@ -27,7 +29,9 @@ module Twilio
         end
 
         def rate_plans(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @rate_plans ||= RatePlanList.new self
           else
             RatePlanContext.new(self, sid)
@@ -35,7 +39,9 @@ module Twilio
         end
 
         def sims(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @sims ||= SimList.new self
           else
             SimContext.new(self, sid)

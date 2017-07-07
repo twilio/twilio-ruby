@@ -279,6 +279,8 @@ module Twilio
             # @return [MemberList] if a(n) MemberList object was created.
             # @return [MemberContext] if a(n) MemberContext object was created.
             def members(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
               if sid != :unset
                 return MemberContext.new(
                     @version,
@@ -304,6 +306,8 @@ module Twilio
             # @return [MessageList] if a(n) MessageList object was created.
             # @return [MessageContext] if a(n) MessageContext object was created.
             def messages(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
               if sid != :unset
                 return MessageContext.new(
                     @version,
@@ -329,6 +333,8 @@ module Twilio
             # @return [InviteList] if a(n) InviteList object was created.
             # @return [InviteContext] if a(n) InviteContext object was created.
             def invites(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
               if sid != :unset
                 return InviteContext.new(
                     @version,

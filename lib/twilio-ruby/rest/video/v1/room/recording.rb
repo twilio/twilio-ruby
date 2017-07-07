@@ -29,6 +29,10 @@ module Twilio
             # Lists RoomRecordingInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
+            # @param [room_recording.Status] status The status
+            # @param [String] source_sid The source_sid
+            # @param [Time] date_created_after The date_created_after
+            # @param [Time] date_created_before The date_created_before
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -36,8 +40,12 @@ module Twilio
             #  but a limit is defined, stream() will attempt to read                      the
             #  limit with the most efficient page size,                      i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(limit: nil, page_size: nil)
+            def list(status: :unset, source_sid: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
               self.stream(
+                  status: status,
+                  source_sid: source_sid,
+                  date_created_after: date_created_after,
+                  date_created_before: date_created_before,
                   limit: limit,
                   page_size: page_size
               ).entries
@@ -47,6 +55,10 @@ module Twilio
             # Streams RoomRecordingInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
+            # @param [room_recording.Status] status The status
+            # @param [String] source_sid The source_sid
+            # @param [Time] date_created_after The date_created_after
+            # @param [Time] date_created_before The date_created_before
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -54,10 +66,14 @@ module Twilio
             #                       but a limit is defined, stream() will attempt to                      read the
             #  limit with the most efficient page size,                       i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(limit: nil, page_size: nil)
+            def stream(status: :unset, source_sid: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
+                  status: status,
+                  source_sid: source_sid,
+                  date_created_after: date_created_after,
+                  date_created_before: date_created_before,
                   page_size: limits[:page_size],
               )
 
@@ -68,6 +84,10 @@ module Twilio
             # When passed a block, yields RoomRecordingInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
+            # @param [room_recording.Status] status The status
+            # @param [String] source_sid The source_sid
+            # @param [Time] date_created_after The date_created_after
+            # @param [Time] date_created_before The date_created_before
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
@@ -89,12 +109,20 @@ module Twilio
             ##
             # Retrieve a single page of RoomRecordingInstance records from the API.
             # Request is executed immediately.
+            # @param [room_recording.Status] status The status
+            # @param [String] source_sid The source_sid
+            # @param [Time] date_created_after The date_created_after
+            # @param [Time] date_created_before The date_created_before
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of RoomRecordingInstance
-            def page(page_token: :unset, page_number: :unset, page_size: :unset)
+            def page(status: :unset, source_sid: :unset, date_created_after: :unset, date_created_before: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
+                  'Status' => status,
+                  'SourceSid' => source_sid,
+                  'DateCreatedAfter' => Twilio.serialize_iso8601_datetime(date_created_after),
+                  'DateCreatedBefore' => Twilio.serialize_iso8601_datetime(date_created_before),
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,

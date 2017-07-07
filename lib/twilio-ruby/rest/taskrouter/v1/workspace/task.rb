@@ -339,6 +339,8 @@ module Twilio
             # @return [ReservationList] if a(n) ReservationList object was created.
             # @return [ReservationContext] if a(n) ReservationContext object was created.
             def reservations(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
               if sid != :unset
                 return ReservationContext.new(
                     @version,

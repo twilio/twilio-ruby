@@ -1,5 +1,25 @@
 twilio-ruby changelog
 =====================
+[2017-07-06] Version 5.0.0.rc25
+--------------------------------
+**Messaging**
+- Fix incorrectly typed capabilities property for PhoneNumbers.
+
+**Notify**
+- Add `ToBinding` optional parameter on Notifications resource creation. Accepted values are json strings.
+
+**Preview**
+- [omit] Enabled beta feature flag (api.vault.data-platform) for bulk_exports api
+
+**Video**
+- Filter recordings by date using the parameters `DateCreatedAfter` and `DateCreatedBefore`.
+- Override the default time-to-live of a recording's media URL through the `Ttl` parameter (in seconds, default value is 3600).
+- Add query parameters `SourceSid`, `Status`, `DateCreatedAfter` and `DateCreatedBefore` to the convenience method for retrieving Room recordings.
+
+**Wireless**
+- Added national and international data limits to the RatePlans resource.
+
+
 [2017-06-22] Version 5.0.0.rc24
 -------------------------------
 - Namespaced Policy, Grants, and Scope to their respective Token.

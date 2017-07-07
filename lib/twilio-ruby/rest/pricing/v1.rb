@@ -19,7 +19,9 @@ module Twilio
         end
 
         def messaging(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @messaging ||= MessagingList.new self
           else
             MessagingContext.new(self, sid)
@@ -27,7 +29,9 @@ module Twilio
         end
 
         def phone_numbers(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @phone_numbers ||= PhoneNumberList.new self
           else
             PhoneNumberContext.new(self, sid)
@@ -35,7 +39,9 @@ module Twilio
         end
 
         def voice(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @voice ||= VoiceList.new self
           else
             VoiceContext.new(self, sid)

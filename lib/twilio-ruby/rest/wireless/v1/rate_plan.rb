@@ -128,8 +128,11 @@ module Twilio
           # @param [Boolean] voice_enabled The voice_enabled
           # @param [Boolean] national_roaming_enabled The national_roaming_enabled
           # @param [String] international_roaming The international_roaming
+          # @param [String] national_roaming_data_limit The national_roaming_data_limit
+          # @param [String] international_roaming_data_limit The
+          #   international_roaming_data_limit
           # @return [RatePlanInstance] Newly created RatePlanInstance
-          def create(unique_name: :unset, friendly_name: :unset, data_enabled: :unset, data_limit: :unset, data_metering: :unset, messaging_enabled: :unset, voice_enabled: :unset, national_roaming_enabled: :unset, international_roaming: :unset)
+          def create(unique_name: :unset, friendly_name: :unset, data_enabled: :unset, data_limit: :unset, data_metering: :unset, messaging_enabled: :unset, voice_enabled: :unset, national_roaming_enabled: :unset, international_roaming: :unset, national_roaming_data_limit: :unset, international_roaming_data_limit: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'FriendlyName' => friendly_name,
@@ -140,6 +143,8 @@ module Twilio
                 'VoiceEnabled' => voice_enabled,
                 'NationalRoamingEnabled' => national_roaming_enabled,
                 'InternationalRoaming' => international_roaming,
+                'NationalRoamingDataLimit' => national_roaming_data_limit,
+                'InternationalRoamingDataLimit' => international_roaming_data_limit,
             })
 
             payload = @version.create(
@@ -289,7 +294,9 @@ module Twilio
                 'messaging_enabled' => payload['messaging_enabled'],
                 'voice_enabled' => payload['voice_enabled'],
                 'national_roaming_enabled' => payload['national_roaming_enabled'],
+                'national_roaming_data_limit' => payload['national_roaming_data_limit'].to_i,
                 'international_roaming' => payload['international_roaming'],
+                'international_roaming_data_limit' => payload['international_roaming_data_limit'].to_i,
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
@@ -357,8 +364,16 @@ module Twilio
             @properties['national_roaming_enabled']
           end
 
+          def national_roaming_data_limit
+            @properties['national_roaming_data_limit']
+          end
+
           def international_roaming
             @properties['international_roaming']
+          end
+
+          def international_roaming_data_limit
+            @properties['international_roaming_data_limit']
           end
 
           def date_created

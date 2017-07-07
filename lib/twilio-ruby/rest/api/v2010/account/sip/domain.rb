@@ -302,6 +302,8 @@ module Twilio
               # @return [IpAccessControlListMappingList] if a(n) IpAccessControlListMappingList object was created.
               # @return [IpAccessControlListMappingContext] if a(n) IpAccessControlListMappingContext object was created.
               def ip_access_control_list_mappings(sid=:unset)
+                raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
                 if sid != :unset
                   return IpAccessControlListMappingContext.new(
                       @version,
@@ -327,6 +329,8 @@ module Twilio
               # @return [CredentialListMappingList] if a(n) CredentialListMappingList object was created.
               # @return [CredentialListMappingContext] if a(n) CredentialListMappingContext object was created.
               def credential_list_mappings(sid=:unset)
+                raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
                 if sid != :unset
                   return CredentialListMappingContext.new(
                       @version,

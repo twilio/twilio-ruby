@@ -17,7 +17,9 @@ module Twilio
         end
 
         def services(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @services ||= ServiceList.new self
           else
             ServiceContext.new(self, sid)
