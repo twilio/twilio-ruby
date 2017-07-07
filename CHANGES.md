@@ -1,28 +1,48 @@
 twilio-ruby changelog
 =====================
-[2017-06-22] Version 5.0.0-rc24
+[2017-07-06] Version 5.0.0.rc25
+--------------------------------
+**Messaging**
+- Fix incorrectly typed capabilities property for PhoneNumbers.
+
+**Notify**
+- Add `ToBinding` optional parameter on Notifications resource creation. Accepted values are json strings.
+
+**Preview**
+- [omit] Enabled beta feature flag (api.vault.data-platform) for bulk_exports api
+
+**Video**
+- Filter recordings by date using the parameters `DateCreatedAfter` and `DateCreatedBefore`.
+- Override the default time-to-live of a recording's media URL through the `Ttl` parameter (in seconds, default value is 3600).
+- Add query parameters `SourceSid`, `Status`, `DateCreatedAfter` and `DateCreatedBefore` to the convenience method for retrieving Room recordings.
+
+**Wireless**
+- Added national and international data limits to the RatePlans resource.
+
+
+[2017-06-22] Version 5.0.0.rc24
 -------------------------------
 - Namespaced Policy, Grants, and Scope to their respective Token.
 - Added `announce_url` and `annouce_url_method` to Conference update.
 - Added `store_media` to Fax.
 
-[2017-06-19] Version 5.0.0-rc23
+[2017-06-19] Version 5.0.0.rc23
 -------------------------------
 - Fixed ClientCapability parameter encoded bug.
 - Optional URL parameter for TwiML Play verb. 
 
-[2017-06-15] Version 5.0.0-rc22
+[2017-06-15] Version 5.0.0.rc22
 -------------------------------
 - Refactor JWT token constructors 
 
 
-[2017-05-24] Version 5.0.0-rc21
+[2017-05-24] Version 5.0.0.rc21
 -------------------------------
 - Add HostedNumbers preview support.
 - Add Proxy preview support.
 - Add BulkExports preview support.
 
-[2017-05-22] Version 5.0.0-rc20
+[2017-05-22] Version 5.0.0.rc20
 -------------------------------
 - Add Wireless Domain
 - Add Fax Domain
@@ -31,7 +51,7 @@ twilio-ruby changelog
 - Add `area_code_geomatch`, `validtiy_period`, `fallback_to_long_code` to Messaging Service
 - Converted `TwilioException` to `TwilioError`
 
-[2017-04-27] Version 5.0.0-rc19
+[2017-04-27] Version 5.0.0.rc19
 -------------------------------
 
 - Add chat v2.
@@ -39,28 +59,28 @@ twilio-ruby changelog
 - Message `ValidityPeriod` parameter.
 - New Usage API categories.
 
-Version 5.0.0-rc18
+Version 5.0.0.rc18
 -------------------------------
 
 Release April 17, 2017
 
 - Update VideoGrant access token to accept `room` instead of `configuration_profile_sid`
 
-Version 5.0.0-rc16
+Version 5.0.0.rc16
 -------------------------------
 
 Release September 1, 2016
 
 - Add voice grant.
 
-Version 5.0.0-rc8
+Version 5.0.0.rc8
 -------------
 
 Release July 8, 2016
 
 - Add SMS and Facebook Messenger for Notify
 
-Version 5.0.0-rc7
+Version 5.0.0.rc7
 -------------
 
 Release June 9, 2016
@@ -68,14 +88,14 @@ Release June 9, 2016
 - Add messaging feedback support
 
 
-Version 5.0.0-rc5
+Version 5.0.0.rc5
 -------------
 
 Release May 31, 2016
 
 - Add preview.twilio.com/wireless support
 
-Version 5.0.0-rc4
+Version 5.0.0.rc4
 -------------
 
 Release March 28, 2016

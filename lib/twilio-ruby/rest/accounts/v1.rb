@@ -17,7 +17,9 @@ module Twilio
         end
 
         def credentials(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @credentials ||= CredentialList.new self
           else
             CredentialContext.new(self, sid)

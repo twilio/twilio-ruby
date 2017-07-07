@@ -262,6 +262,8 @@ module Twilio
             # @return [DocumentPermissionList] if a(n) DocumentPermissionList object was created.
             # @return [DocumentPermissionContext] if a(n) DocumentPermissionContext object was created.
             def document_permissions(identity=:unset)
+              raise ArgumentError, 'identity cannot be nil' if identity.nil?
+
               if identity != :unset
                 return DocumentPermissionContext.new(
                     @version,

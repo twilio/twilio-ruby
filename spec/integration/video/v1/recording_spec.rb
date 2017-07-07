@@ -92,6 +92,51 @@ describe 'Recording' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives read_results responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        200,
+      %q[
+      {
+          "recordings": [
+              {
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "status": "completed",
+                  "date_created": "2015-07-30T20:00:00Z",
+                  "sid": "RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "source_sid": "MTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "size": 23,
+                  "type": "audio",
+                  "duration": 10,
+                  "container_format": "mka",
+                  "codec": "OPUS",
+                  "grouping_sids": {
+                      "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "participant_sid": "PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "url": "https://video.twilio.com/v1/Recordings/RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "links": {
+                      "media": "https://video.twilio.com/v1/Recordings/RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media"
+                  }
+              }
+          ],
+          "meta": {
+              "page": 0,
+              "page_size": 50,
+              "first_page_url": "https://video.twilio.com/v1/Recordings?PageSize=50&Page=0",
+              "previous_page_url": null,
+              "url": "https://video.twilio.com/v1/Recordings?PageSize=50&Page=0",
+              "next_page_url": null,
+              "key": "recordings"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.video.v1.recordings.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
 

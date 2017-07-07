@@ -2,6 +2,7 @@ AllCops:
   TargetRubyVersion: 2.0
   Exclude:
     - 'lib/twilio-ruby/rest/**/*'
+    - 'spec/integration/**/*'
 
 Metrics/LineLength:
   Max: 120

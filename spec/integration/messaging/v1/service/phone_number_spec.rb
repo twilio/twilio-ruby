@@ -50,6 +50,34 @@ describe 'PhoneNumber' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives create_with_capabilities responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        201,
+      %q[
+      {
+          "sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "date_created": "2015-07-30T20:12:31Z",
+          "date_updated": "2015-07-30T20:12:33Z",
+          "phone_number": "+987654321",
+          "country_code": "US",
+          "capabilities": [
+              "MMS",
+              "SMS",
+              "Voice"
+          ],
+          "url": "https://messaging.twilio.com/v1/Services/MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+
+    actual = @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                                 .phone_numbers.create(phone_number_sid: "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
 

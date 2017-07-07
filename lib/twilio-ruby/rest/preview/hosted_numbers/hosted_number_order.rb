@@ -26,8 +26,8 @@ module Twilio
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [hosted_number_order.Status] status The Status of this HostedNumberOrder.
-          #   One of `received`, `pending-loa`, `carrier-processing`, `testing`, `completed`,
-          #   `failed`, or `action-required`.
+          #   One of `received`, `pending-verification`, `verified`, `pending-loa`,
+          #   `carrier-processing`, `testing`, `completed`, `failed`, or `action-required`.
           # @param [String] phone_number An E164 formatted phone number hosted by this
           #   HostedNumberOrder.
           # @param [String] incoming_phone_number_sid A 34 character string that uniquely
@@ -61,8 +61,8 @@ module Twilio
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [hosted_number_order.Status] status The Status of this HostedNumberOrder.
-          #   One of `received`, `pending-loa`, `carrier-processing`, `testing`, `completed`,
-          #   `failed`, or `action-required`.
+          #   One of `received`, `pending-verification`, `verified`, `pending-loa`,
+          #   `carrier-processing`, `testing`, `completed`, `failed`, or `action-required`.
           # @param [String] phone_number An E164 formatted phone number hosted by this
           #   HostedNumberOrder.
           # @param [String] incoming_phone_number_sid A 34 character string that uniquely
@@ -99,8 +99,8 @@ module Twilio
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [hosted_number_order.Status] status The Status of this HostedNumberOrder.
-          #   One of `received`, `pending-loa`, `carrier-processing`, `testing`, `completed`,
-          #   `failed`, or `action-required`.
+          #   One of `received`, `pending-verification`, `verified`, `pending-loa`,
+          #   `carrier-processing`, `testing`, `completed`, `failed`, or `action-required`.
           # @param [String] phone_number An E164 formatted phone number hosted by this
           #   HostedNumberOrder.
           # @param [String] incoming_phone_number_sid A 34 character string that uniquely
@@ -132,8 +132,8 @@ module Twilio
           # Retrieve a single page of HostedNumberOrderInstance records from the API.
           # Request is executed immediately.
           # @param [hosted_number_order.Status] status The Status of this HostedNumberOrder.
-          #   One of `received`, `pending-loa`, `carrier-processing`, `testing`, `completed`,
-          #   `failed`, or `action-required`.
+          #   One of `received`, `pending-verification`, `verified`, `pending-loa`,
+          #   `carrier-processing`, `testing`, `completed`, `failed`, or `action-required`.
           # @param [String] phone_number An E164 formatted phone number hosted by this
           #   HostedNumberOrder.
           # @param [String] incoming_phone_number_sid A 34 character string that uniquely
@@ -332,15 +332,18 @@ module Twilio
           # @param [String] cc_emails Optional. A list of emails that LOA document for this
           #   HostedNumberOrder will be carbon copied to.
           # @param [hosted_number_order.Status] status The Status of this HostedNumberOrder.
-          #   User can only update this to `pending-loa`.
+          #   User can only update this to `pending-loa` or `pending-verification`.
+          # @param [String] verification_code A verification code that is given to the user
+          #   via a phone call to the phone number that is being hosted.
           # @return [HostedNumberOrderInstance] Updated HostedNumberOrderInstance
-          def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset)
+          def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset, verification_code: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'UniqueName' => unique_name,
                 'Email' => email,
                 'CcEmails' => cc_emails,
                 'Status' => status,
+                'VerificationCode' => verification_code,
             })
 
             payload = @version.update(
@@ -502,15 +505,18 @@ module Twilio
           # @param [String] cc_emails Optional. A list of emails that LOA document for this
           #   HostedNumberOrder will be carbon copied to.
           # @param [hosted_number_order.Status] status The Status of this HostedNumberOrder.
-          #   User can only update this to `pending-loa`.
+          #   User can only update this to `pending-loa` or `pending-verification`.
+          # @param [String] verification_code A verification code that is given to the user
+          #   via a phone call to the phone number that is being hosted.
           # @return [HostedNumberOrderInstance] Updated HostedNumberOrderInstance
-          def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset)
+          def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset, verification_code: :unset)
             context.update(
                 friendly_name: friendly_name,
                 unique_name: unique_name,
                 email: email,
                 cc_emails: cc_emails,
                 status: status,
+                verification_code: verification_code,
             )
           end
 

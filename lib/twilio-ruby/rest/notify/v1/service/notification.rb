@@ -42,10 +42,11 @@ module Twilio
             # @param [String] fcm The fcm
             # @param [String] segment The segment
             # @param [String] alexa The alexa
+            # @param [String] to_binding The to_binding
             # @param [String] identity The identity
             # @param [String] tag The tag
             # @return [NotificationInstance] Newly created NotificationInstance
-            def create(body: :unset, priority: :unset, ttl: :unset, title: :unset, sound: :unset, action: :unset, data: :unset, apn: :unset, gcm: :unset, sms: :unset, facebook_messenger: :unset, fcm: :unset, segment: :unset, alexa: :unset, identity: :unset, tag: :unset)
+            def create(body: :unset, priority: :unset, ttl: :unset, title: :unset, sound: :unset, action: :unset, data: :unset, apn: :unset, gcm: :unset, sms: :unset, facebook_messenger: :unset, fcm: :unset, segment: :unset, alexa: :unset, to_binding: :unset, identity: :unset, tag: :unset)
               data = Twilio::Values.of({
                   'Identity' => identity,
                   'Tag' => tag,
@@ -63,6 +64,7 @@ module Twilio
                   'Fcm' => fcm,
                   'Segment' => segment,
                   'Alexa' => alexa,
+                  'ToBinding' => to_binding,
               })
 
               payload = @version.create(

@@ -37,6 +37,8 @@ module Twilio
             # @return [DomainList] if a(n) DomainList object was created.
             # @return [DomainContext] if a(n) DomainContext object was created.
             def domains(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
               if sid != :unset
                 return DomainContext.new(
                     @version,
@@ -69,6 +71,8 @@ module Twilio
             # @return [IpAccessControlListList] if a(n) IpAccessControlListList object was created.
             # @return [IpAccessControlListContext] if a(n) IpAccessControlListContext object was created.
             def ip_access_control_lists(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
               if sid != :unset
                 return IpAccessControlListContext.new(
                     @version,
@@ -89,6 +93,8 @@ module Twilio
             # @return [CredentialListList] if a(n) CredentialListList object was created.
             # @return [CredentialListContext] if a(n) CredentialListContext object was created.
             def credential_lists(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
               if sid != :unset
                 return CredentialListContext.new(
                     @version,

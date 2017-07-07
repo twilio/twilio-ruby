@@ -30,6 +30,8 @@ module Twilio
           # @return [NumberList] if a(n) NumberList object was created.
           # @return [NumberContext] if a(n) NumberContext object was created.
           def numbers(number=:unset)
+            raise ArgumentError, 'number cannot be nil' if number.nil?
+
             if number != :unset
               return NumberContext.new(
                   @version,
@@ -48,6 +50,8 @@ module Twilio
           # @return [CountryList] if a(n) CountryList object was created.
           # @return [CountryContext] if a(n) CountryContext object was created.
           def countries(iso_country=:unset)
+            raise ArgumentError, 'iso_country cannot be nil' if iso_country.nil?
+
             if iso_country != :unset
               return CountryContext.new(
                   @version,

@@ -298,6 +298,8 @@ module Twilio
             # @return [FeedbackSummaryList] if a(n) FeedbackSummaryList object was created.
             # @return [FeedbackSummaryContext] if a(n) FeedbackSummaryContext object was created.
             def feedback_summaries(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
               if sid != :unset
                 return FeedbackSummaryContext.new(
                     @version,
@@ -453,6 +455,8 @@ module Twilio
             # @return [RecordingList] if a(n) RecordingList object was created.
             # @return [RecordingContext] if a(n) RecordingContext object was created.
             def recordings(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
               if sid != :unset
                 return RecordingContext.new(
                     @version,
@@ -478,6 +482,8 @@ module Twilio
             # @return [NotificationList] if a(n) NotificationList object was created.
             # @return [NotificationContext] if a(n) NotificationContext object was created.
             def notifications(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
               if sid != :unset
                 return NotificationContext.new(
                     @version,

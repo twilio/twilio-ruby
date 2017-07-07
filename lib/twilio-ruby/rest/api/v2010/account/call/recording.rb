@@ -266,6 +266,8 @@ module Twilio
                     'sid' => payload['sid'],
                     'price' => payload['price'].to_f,
                     'uri' => payload['uri'],
+                    'encryption_type' => payload['encryption_type'],
+                    'encryption_details' => payload['encryption_details'],
                 }
 
                 # Context
@@ -328,6 +330,14 @@ module Twilio
 
               def uri
                 @properties['uri']
+              end
+
+              def encryption_type
+                @properties['encryption_type']
+              end
+
+              def encryption_details
+                @properties['encryption_details']
               end
 
               ##

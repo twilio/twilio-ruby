@@ -320,6 +320,8 @@ module Twilio
           # @return [FaxMediaList] if a(n) FaxMediaList object was created.
           # @return [FaxMediaContext] if a(n) FaxMediaContext object was created.
           def media(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
             if sid != :unset
               return FaxMediaContext.new(
                   @version,

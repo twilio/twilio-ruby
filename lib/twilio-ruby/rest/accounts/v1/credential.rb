@@ -30,6 +30,8 @@ module Twilio
           # @return [PublicKeyList] if a(n) PublicKeyList object was created.
           # @return [PublicKeyContext] if a(n) PublicKeyContext object was created.
           def public_key(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
             if sid != :unset
               return PublicKeyContext.new(
                   @version,

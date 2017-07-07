@@ -17,7 +17,9 @@ module Twilio
         end
 
         def workspaces(sid=:unset)
-          if sid == :unset
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
             @workspaces ||= WorkspaceList.new self
           else
             WorkspaceContext.new(self, sid)

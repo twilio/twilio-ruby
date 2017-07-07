@@ -249,6 +249,8 @@ module Twilio
             # @return [TranscriptionList] if a(n) TranscriptionList object was created.
             # @return [TranscriptionContext] if a(n) TranscriptionContext object was created.
             def transcriptions(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
               if sid != :unset
                 return TranscriptionContext.new(
                     @version,
@@ -274,6 +276,8 @@ module Twilio
             # @return [AddOnResultList] if a(n) AddOnResultList object was created.
             # @return [AddOnResultContext] if a(n) AddOnResultContext object was created.
             def add_on_results(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
               if sid != :unset
                 return AddOnResultContext.new(
                     @version,
@@ -329,6 +333,8 @@ module Twilio
                   'channels' => payload['channels'].to_i,
                   'source' => payload['source'],
                   'uri' => payload['uri'],
+                  'encryption_type' => payload['encryption_type'],
+                  'encryption_details' => payload['encryption_details'],
               }
 
               # Context
@@ -405,6 +411,14 @@ module Twilio
 
             def uri
               @properties['uri']
+            end
+
+            def encryption_type
+              @properties['encryption_type']
+            end
+
+            def encryption_details
+              @properties['encryption_details']
             end
 
             ##

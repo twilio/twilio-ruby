@@ -307,6 +307,8 @@ module Twilio
               # @return [MessageInteractionList] if a(n) MessageInteractionList object was created.
               # @return [MessageInteractionContext] if a(n) MessageInteractionContext object was created.
               def message_interactions(sid=:unset)
+                raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
                 if sid != :unset
                   return MessageInteractionContext.new(
                       @version,

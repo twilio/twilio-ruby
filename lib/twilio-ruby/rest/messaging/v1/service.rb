@@ -38,8 +38,9 @@ module Twilio
           # @param [Boolean] fallback_to_long_code The fallback_to_long_code
           # @param [Boolean] area_code_geomatch The area_code_geomatch
           # @param [String] validity_period The validity_period
+          # @param [Boolean] synchronous_validation The synchronous_validation
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset)
+          def create(friendly_name: nil, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'InboundRequestUrl' => inbound_request_url,
@@ -54,6 +55,7 @@ module Twilio
                 'FallbackToLongCode' => fallback_to_long_code,
                 'AreaCodeGeomatch' => area_code_geomatch,
                 'ValidityPeriod' => validity_period,
+                'SynchronousValidation' => synchronous_validation,
             })
 
             payload = @version.create(
@@ -239,8 +241,9 @@ module Twilio
           # @param [Boolean] fallback_to_long_code The fallback_to_long_code
           # @param [Boolean] area_code_geomatch The area_code_geomatch
           # @param [String] validity_period The validity_period
+          # @param [Boolean] synchronous_validation The synchronous_validation
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset)
+          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'InboundRequestUrl' => inbound_request_url,
@@ -255,6 +258,7 @@ module Twilio
                 'FallbackToLongCode' => fallback_to_long_code,
                 'AreaCodeGeomatch' => area_code_geomatch,
                 'ValidityPeriod' => validity_period,
+                'SynchronousValidation' => synchronous_validation,
             })
 
             payload = @version.update(
@@ -301,6 +305,8 @@ module Twilio
           # @return [PhoneNumberList] if a(n) PhoneNumberList object was created.
           # @return [PhoneNumberContext] if a(n) PhoneNumberContext object was created.
           def phone_numbers(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
             if sid != :unset
               return PhoneNumberContext.new(
                   @version,
@@ -324,6 +330,8 @@ module Twilio
           # @return [ShortCodeList] if a(n) ShortCodeList object was created.
           # @return [ShortCodeContext] if a(n) ShortCodeContext object was created.
           def short_codes(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
             if sid != :unset
               return ShortCodeContext.new(
                   @version,
@@ -347,6 +355,8 @@ module Twilio
           # @return [AlphaSenderList] if a(n) AlphaSenderList object was created.
           # @return [AlphaSenderContext] if a(n) AlphaSenderContext object was created.
           def alpha_senders(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
             if sid != :unset
               return AlphaSenderContext.new(
                   @version,
@@ -401,6 +411,7 @@ module Twilio
                 'scan_message_content' => payload['scan_message_content'],
                 'fallback_to_long_code' => payload['fallback_to_long_code'],
                 'area_code_geomatch' => payload['area_code_geomatch'],
+                'synchronous_validation' => payload['synchronous_validation'],
                 'validity_period' => payload['validity_period'].to_i,
                 'url' => payload['url'],
                 'links' => payload['links'],
@@ -492,6 +503,10 @@ module Twilio
             @properties['area_code_geomatch']
           end
 
+          def synchronous_validation
+            @properties['synchronous_validation']
+          end
+
           def validity_period
             @properties['validity_period']
           end
@@ -520,8 +535,9 @@ module Twilio
           # @param [Boolean] fallback_to_long_code The fallback_to_long_code
           # @param [Boolean] area_code_geomatch The area_code_geomatch
           # @param [String] validity_period The validity_period
+          # @param [Boolean] synchronous_validation The synchronous_validation
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset)
+          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset)
             context.update(
                 friendly_name: friendly_name,
                 inbound_request_url: inbound_request_url,
@@ -536,6 +552,7 @@ module Twilio
                 fallback_to_long_code: fallback_to_long_code,
                 area_code_geomatch: area_code_geomatch,
                 validity_period: validity_period,
+                synchronous_validation: synchronous_validation,
             )
           end
 

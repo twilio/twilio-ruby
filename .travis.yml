@@ -4,22 +4,10 @@ cache: bundler
 bundler_args: --without development
 rvm:
   - ruby-head
-  - ruby
   - 2.4.0
   - 2.3.0
   - 2.2.0
   - 2.1.0
   - 2.0.0
-  - jruby-head
-  - jruby
-  - rbx-head
-  - rbx-2
 matrix:
   fast_finish: true
-  allow_failures:
-    - rvm: ruby-head
-    - rvm: ruby
-    - rvm: jruby-head
-    - rvm: jruby
-    - rvm: rbx-head
-    - rvm: rbx-2

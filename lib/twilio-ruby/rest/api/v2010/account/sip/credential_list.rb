@@ -263,6 +263,8 @@ module Twilio
               # @return [CredentialList] if a(n) CredentialList object was created.
               # @return [CredentialContext] if a(n) CredentialContext object was created.
               def credentials(sid=:unset)
+                raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
                 if sid != :unset
                   return CredentialContext.new(
                       @version,
