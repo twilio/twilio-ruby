@@ -30,10 +30,8 @@ puts(@account.friendly_name)
 end
 
 # get a particular call and list its recording urls
-@client.calls('CAXXXXXXX').fetch do |call|
-  call.recordings().each do |r|
+@client.calls('CAXXXXXXX').recordings.each do |r|
     puts r.wav
-  end
 end
 
 # make a new outgoing call. returns a call object just like calls.get
@@ -80,7 +78,7 @@ puts @client.messages('SMXXXXXXXX').fetch.body
 @client.available_phone_numbers.list
 
 # print some available numbers
-@client.available_phone_numbers('US').local.list().each do |num|
+@client.available_phone_numbers('US').local.list.each do |num|
 
 end
 
@@ -104,7 +102,7 @@ number = numbers[0].sid
 
 # get a particular conference's participants object and stash it
 conference = @client.conferences('CFxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx').fetch
-@participants = conference.participants()
+@participants = conference.participants
 
 # list participants
 @participants.each do |p|
@@ -121,7 +119,7 @@ end
 @queue = @client.queues.create(friendly_name: 'MyQueue', max_size: 50)
 
 # get a list of queues for this account
-@queues = @client.queues.list()
+@queues = @client.queues.list
 
 # get a particular queue and its members
 @queue = @client.queues('QQxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx').fetch
