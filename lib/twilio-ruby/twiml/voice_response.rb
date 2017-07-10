@@ -28,7 +28,7 @@ module Twilio
       # == Returns:
       # A <Response> element with a <Dial> child element
       def dial(
-        number,
+        number: nil,
         action: nil,
         method: nil,
         timeout: nil,

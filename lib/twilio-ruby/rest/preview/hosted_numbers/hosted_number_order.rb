@@ -208,8 +208,12 @@ module Twilio
           #   IncomingPhoneNumber resource.
           # @param [String] sms_fallback_method Optional. The SMS Fallback Method attached
           #   to the IncomingPhoneNumber resource.
+          # @param [String] status_callback_url Optional. The Status Callback URL attached
+          #   to the IncomingPhoneNumber resource.
+          # @param [String] status_callback_method Optional. The Status Callback Method
+          #   attached to the IncomingPhoneNumber resource.
           # @return [HostedNumberOrderInstance] Newly created HostedNumberOrderInstance
-          def create(address_sid: nil, phone_number: nil, iso_country: nil, sms_capability: nil, email: nil, account_sid: :unset, friendly_name: :unset, unique_name: :unset, cc_emails: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset)
+          def create(address_sid: nil, phone_number: nil, iso_country: nil, sms_capability: nil, email: nil, account_sid: :unset, friendly_name: :unset, unique_name: :unset, cc_emails: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, status_callback_url: :unset, status_callback_method: :unset)
             data = Twilio::Values.of({
                 'AddressSid' => address_sid,
                 'PhoneNumber' => phone_number,
@@ -224,6 +228,8 @@ module Twilio
                 'SmsMethod' => sms_method,
                 'SmsFallbackUrl' => sms_fallback_url,
                 'SmsFallbackMethod' => sms_fallback_method,
+                'StatusCallbackUrl' => status_callback_url,
+                'StatusCallbackMethod' => status_callback_method,
             })
 
             payload = @version.create(

@@ -22,7 +22,7 @@ module Twilio
       #
       # == Returns:
       # A <Response> element with a <Message> child element
-      def message(body, to: nil, from: nil, method: nil, action: nil, status_callback: nil, **keyword_args)
+      def message(body: nil, to: nil, from: nil, method: nil, action: nil, status_callback: nil, **keyword_args)
         message = Message.new(
           body: body,
           to: to,

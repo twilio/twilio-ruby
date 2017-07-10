@@ -1,5 +1,14 @@
 twilio-ruby changelog
 =====================
+[2017-07-07] Version 5.0.0.rc26
+--------------------------------
+**Api**
+- [omit] Rachet /Keys and /SigningKeys
+
+**Preview**
+- Add `status_callback_url` and `status_callback_method` to HostedNumberOrders.
+
+
 [2017-07-06] Version 5.0.0.rc25
 --------------------------------
 **Messaging**

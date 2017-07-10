@@ -30,10 +30,8 @@ puts(@account.friendly_name)
 end
 
 # get a particular call and list its recording urls
-@client.calls('CAXXXXXXX').fetch do |call|
-  call.recordings.each do |r|
-    puts r.wav
-  end
+@client.calls('CAXXXXXXX').recordings.each do |r|
+  puts r.wav
 end
 
 # make a new outgoing call. returns a call object just like calls.get
