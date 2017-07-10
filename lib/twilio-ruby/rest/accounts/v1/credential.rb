@@ -27,8 +27,8 @@ module Twilio
           # Access the public_key
           # @param [String] sid The Credential Sid that uniquely identifies the Credential
           #   to fetch
-          # @return [PublicKeyList] if a(n) PublicKeyList object was created.
-          # @return [PublicKeyContext] if a(n) PublicKeyContext object was created.
+          # @return [PublicKeyList]
+          # @return [PublicKeyContext] if sid was passed.
           def public_key(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 

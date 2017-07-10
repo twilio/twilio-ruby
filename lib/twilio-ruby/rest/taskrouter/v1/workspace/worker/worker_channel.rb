@@ -71,12 +71,6 @@ module Twilio
               # When passed a block, yields WorkerChannelInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -136,8 +130,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] worker_sid The worker_sid
               # @return [WorkerChannelPage] WorkerChannelPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -283,7 +275,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [WorkerChannelContext] WorkerChannelContext for this WorkerChannelInstance
               def context
                 unless @instance_context
@@ -297,58 +288,86 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The assigned_tasks
               def assigned_tasks
                 @properties['assigned_tasks']
               end
 
+              ##
+              # @return [Boolean] The available
               def available
                 @properties['available']
               end
 
+              ##
+              # @return [String] The available_capacity_percentage
               def available_capacity_percentage
                 @properties['available_capacity_percentage']
               end
 
+              ##
+              # @return [String] The configured_capacity
               def configured_capacity
                 @properties['configured_capacity']
               end
 
+              ##
+              # @return [Time] The date_created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date_updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The sid
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] The task_channel_sid
               def task_channel_sid
                 @properties['task_channel_sid']
               end
 
+              ##
+              # @return [String] The task_channel_unique_name
               def task_channel_unique_name
                 @properties['task_channel_unique_name']
               end
 
+              ##
+              # @return [String] The worker_sid
               def worker_sid
                 @properties['worker_sid']
               end
 
+              ##
+              # @return [String] The workspace_sid
               def workspace_sid
                 @properties['workspace_sid']
               end
 
+              ##
+              # @return [String] The links
               def links
                 @properties['links']
               end
 
+              ##
+              # @return [String] The url
               def url
                 @properties['url']
               end

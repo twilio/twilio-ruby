@@ -81,16 +81,6 @@ module Twilio
             # When passed a block, yields ShortCodeInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] friendly_name Only show the ShortCode resources with friendly
-            #   names that exactly match this name
-            # @param [String] short_code Only show the ShortCode resources that match this
-            #   pattern. You can specify partial numbers and use '*' as a wildcard for any digit
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -156,8 +146,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] account_sid The unique id of the Account that owns this short
-            #   code.
             # @return [ShortCodePage] ShortCodePage
             def initialize(version, response, solution)
               super(version, response)
@@ -310,7 +298,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [ShortCodeContext] ShortCodeContext for this ShortCodeInstance
             def context
               unless @instance_context
@@ -323,50 +310,74 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The unique sid that identifies this account
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The API version to use
             def api_version
               @properties['api_version']
             end
 
+            ##
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] A human readable description of this resource
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The short code. e.g., 894546.
             def short_code
               @properties['short_code']
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this short-codes
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] HTTP method Twilio will use with sms fallback url
             def sms_fallback_method
               @properties['sms_fallback_method']
             end
 
+            ##
+            # @return [String] URL Twilio will request if an error occurs in executing TwiML
             def sms_fallback_url
               @properties['sms_fallback_url']
             end
 
+            ##
+            # @return [String] HTTP method to use when requesting the sms url
             def sms_method
               @properties['sms_method']
             end
 
+            ##
+            # @return [String] URL Twilio will request when receiving an SMS
             def sms_url
               @properties['sms_url']
             end
 
+            ##
+            # @return [String] The URI for this resource
             def uri
               @properties['uri']
             end

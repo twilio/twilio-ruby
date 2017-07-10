@@ -1,7 +1,6 @@
 module Twilio
   module Security
     class RequestValidator
-
       def initialize(auth_token = nil)
         @auth_token = auth_token || Twilio.auth_token
         raise ArgumentError, 'Auth token is required' if @auth_token.nil?
@@ -31,7 +30,7 @@ module Twilio
 
         res = 0
         b.each_byte { |byte| res |= byte ^ l.shift }
-        res == 0
+        res.zero?
       end
 
       # `ActionController::Parameters` no longer, as of Rails 5, inherits

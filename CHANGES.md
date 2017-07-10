@@ -1,5 +1,9 @@
 twilio-ruby changelog
 =====================
+[2017-07-13] Version 5.1.0
+--------------------------------
+- Moving to General Availability
+
 [2017-07-07] Version 5.0.0.rc26
 --------------------------------
 **Api**

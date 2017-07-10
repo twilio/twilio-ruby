@@ -104,21 +104,6 @@ module Twilio
             # When passed a block, yields EventInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Time] end_date The end_date
-            # @param [String] event_type The event_type
-            # @param [String] minutes The minutes
-            # @param [String] reservation_sid The reservation_sid
-            # @param [Time] start_date The start_date
-            # @param [String] task_queue_sid The task_queue_sid
-            # @param [String] task_sid The task_sid
-            # @param [String] worker_sid The worker_sid
-            # @param [String] workflow_sid The workflow_sid
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -196,7 +181,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] workspace_sid The sid
             # @return [EventPage] EventPage
             def initialize(version, response, solution)
               super(version, response)
@@ -311,7 +295,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [EventContext] EventContext for this EventInstance
             def context
               unless @instance_context
@@ -324,62 +307,92 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The actor_sid
             def actor_sid
               @properties['actor_sid']
             end
 
+            ##
+            # @return [String] The actor_type
             def actor_type
               @properties['actor_type']
             end
 
+            ##
+            # @return [String] The actor_url
             def actor_url
               @properties['actor_url']
             end
 
+            ##
+            # @return [String] The description
             def description
               @properties['description']
             end
 
+            ##
+            # @return [String] The event_data
             def event_data
               @properties['event_data']
             end
 
+            ##
+            # @return [Time] The event_date
             def event_date
               @properties['event_date']
             end
 
+            ##
+            # @return [String] The event_type
             def event_type
               @properties['event_type']
             end
 
+            ##
+            # @return [String] The resource_sid
             def resource_sid
               @properties['resource_sid']
             end
 
+            ##
+            # @return [String] The resource_type
             def resource_type
               @properties['resource_type']
             end
 
+            ##
+            # @return [String] The resource_url
             def resource_url
               @properties['resource_url']
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The source
             def source
               @properties['source']
             end
 
+            ##
+            # @return [String] The source_ip_address
             def source_ip_address
               @properties['source_ip_address']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end

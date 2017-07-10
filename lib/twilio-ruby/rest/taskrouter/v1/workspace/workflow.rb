@@ -72,13 +72,6 @@ module Twilio
             # When passed a block, yields WorkflowInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] friendly_name The friendly_name
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -172,7 +165,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] workspace_sid The workspace_sid
             # @return [WorkflowPage] WorkflowPage
             def initialize(version, response, solution)
               super(version, response)
@@ -282,8 +274,8 @@ module Twilio
 
             ##
             # Access the statistics
-            # @return [WorkflowStatisticsList] if a(n) WorkflowStatisticsList object was created.
-            # @return [WorkflowStatisticsContext] if a(n) WorkflowStatisticsContext object was created.
+            # @return [WorkflowStatisticsList]
+            # @return [WorkflowStatisticsContext]
             def statistics
               WorkflowStatisticsContext.new(
                   @version,
@@ -339,7 +331,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [WorkflowContext] WorkflowContext for this WorkflowInstance
             def context
               unless @instance_context
@@ -352,54 +343,80 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The assignment_callback_url
             def assignment_callback_url
               @properties['assignment_callback_url']
             end
 
+            ##
+            # @return [String] The configuration
             def configuration
               @properties['configuration']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The document_content_type
             def document_content_type
               @properties['document_content_type']
             end
 
+            ##
+            # @return [String] The fallback_assignment_callback_url
             def fallback_assignment_callback_url
               @properties['fallback_assignment_callback_url']
             end
 
+            ##
+            # @return [String] The friendly_name
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The task_reservation_timeout
             def task_reservation_timeout
               @properties['task_reservation_timeout']
             end
 
+            ##
+            # @return [String] The workspace_sid
             def workspace_sid
               @properties['workspace_sid']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end
 
+            ##
+            # @return [String] The links
             def links
               @properties['links']
             end

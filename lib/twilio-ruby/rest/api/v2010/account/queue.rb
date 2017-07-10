@@ -68,12 +68,6 @@ module Twilio
             # When passed a block, yields QueueInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -159,7 +153,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] account_sid The account_sid
             # @return [QueuePage] QueuePage
             def initialize(version, response, solution)
               super(version, response)
@@ -263,8 +256,8 @@ module Twilio
 
             ##
             # Access the members
-            # @return [MemberList] if a(n) MemberList object was created.
-            # @return [MemberContext] if a(n) MemberContext object was created.
+            # @return [MemberList]
+            # @return [MemberContext] if call_sid was passed.
             def members(call_sid=:unset)
               raise ArgumentError, 'call_sid cannot be nil' if call_sid.nil?
 
@@ -331,7 +324,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [QueueContext] QueueContext for this QueueInstance
             def context
               unless @instance_context
@@ -344,38 +336,56 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] Average wait time of members in the queue
             def average_wait_time
               @properties['average_wait_time']
             end
 
+            ##
+            # @return [String] The count of calls currently in the queue.
             def current_size
               @properties['current_size']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] A user-provided string that identifies this queue.
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The max number of calls allowed in the queue
             def max_size
               @properties['max_size']
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this queue
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The uri
             def uri
               @properties['uri']
             end

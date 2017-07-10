@@ -40,8 +40,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] task_queue_sid The task_queue_sid
               # @return [TaskQueueStatisticsPage] TaskQueueStatisticsPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -155,7 +153,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [TaskQueueStatisticsContext] TaskQueueStatisticsContext for this TaskQueueStatisticsInstance
               def context
                 unless @instance_context
@@ -168,26 +165,38 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [Hash] The cumulative
               def cumulative
                 @properties['cumulative']
               end
 
+              ##
+              # @return [Hash] The realtime
               def realtime
                 @properties['realtime']
               end
 
+              ##
+              # @return [String] The task_queue_sid
               def task_queue_sid
                 @properties['task_queue_sid']
               end
 
+              ##
+              # @return [String] The workspace_sid
               def workspace_sid
                 @properties['workspace_sid']
               end
 
+              ##
+              # @return [String] The url
               def url
                 @properties['url']
               end

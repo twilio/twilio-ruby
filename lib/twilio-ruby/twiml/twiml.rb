@@ -5,12 +5,13 @@ module Twilio
     class TwiMLError < StandardError
     end
 
+    # TwiML Base Class
     class TwiML
       # Generate getter/setter methods
       attr_accessor :name
       attr_accessor :indent
 
-      alias_method :to_xml, :to_s
+      alias to_xml to_s
 
       def initialize(indent: false, **keyword_args)
         @name = self.class.name.split('::').last
@@ -20,9 +21,7 @@ module Twilio
         @attrs = {}
 
         keyword_args.each do |key, val|
-          if !(val.nil?)
-            @attrs[TwiML.to_lower_camel_case(key)] = val
-          end
+          @attrs[TwiML.to_lower_camel_case(key)] = val unless val.nil?
         end
       end
 
@@ -33,13 +32,13 @@ module Twilio
       end
 
       def to_s(xml_declaration = true)
-        xml = self.xml.to_s(:indent => self.indent)
+        xml = self.xml.to_s(indent: indent)
 
         return ('<?xml version="1.0" encoding="UTF-8"?>' + xml) if xml_declaration
         xml
       end
 
-      def xml()
+      def xml
         # create XML element
         elem = LibXML::XML::Node.new(@name, @value)
 
@@ -48,11 +47,8 @@ module Twilio
         keys.each do |key|
           value = @attrs[key]
 
-          if (value.is_a?(TrueClass) || value.is_a?(FalseClass))
-            elem[key] = value.to_s.downcase
-          else
-            elem[key] = value.to_s
-          end
+          value_is_boolean = value.is_a?(TrueClass) || value.is_a?(FalseClass)
+          elem[key] = value_is_boolean ? value.to_s.downcase : value.to_s
         end
 
         @verbs.each do |verb|
@@ -63,9 +59,7 @@ module Twilio
       end
 
       def append(verb)
-        if !(verb.is_a?(TwiML))
-          raise TwiMLError.new "Only appending of TwiML is allowed"
-        end
+        raise TwiMLError, 'Only appending of TwiML is allowed' unless verb.is_a?(TwiML)
 
         @verbs << verb
         self

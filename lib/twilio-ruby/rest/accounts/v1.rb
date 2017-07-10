@@ -16,6 +16,8 @@ module Twilio
           @credentials = nil
         end
 
+        ##
+        # @return [Twilio::REST::Accounts::V1::CredentialInstance]
         def credentials(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'

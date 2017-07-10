@@ -31,17 +31,16 @@ module Rack
       params = request.post? ? request.POST : {}
       auth_token = @auth_token || get_auth_token(params['AccountSid'])
       validator = Twilio::Security::RequestValidator.new(auth_token)
-      signature = env['HTTP_X_TWILIO_SIGNATURE'] || ""
+      signature = env['HTTP_X_TWILIO_SIGNATURE'] || ''
       if validator.validate(original_url, params, signature)
         @app.call(env)
       else
         [
           403,
-          {'Content-Type' => 'text/plain'},
+          { 'Content-Type' => 'text/plain' },
           ['Twilio Request Validation Failed.']
         ]
       end
     end
   end
-
 end

@@ -134,7 +134,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [NumberContext] NumberContext for this NumberInstance
             def context
               unless @instance_context
@@ -146,30 +145,44 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The number
             def number
               @properties['number']
             end
 
+            ##
+            # @return [String] The country
             def country
               @properties['country']
             end
 
+            ##
+            # @return [String] The iso_country
             def iso_country
               @properties['iso_country']
             end
 
+            ##
+            # @return [String] The outbound_call_price
             def outbound_call_price
               @properties['outbound_call_price']
             end
 
+            ##
+            # @return [String] The inbound_call_price
             def inbound_call_price
               @properties['inbound_call_price']
             end
 
+            ##
+            # @return [String] The price_unit
             def price_unit
               @properties['price_unit']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end

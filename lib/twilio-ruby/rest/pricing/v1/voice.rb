@@ -27,8 +27,8 @@ module Twilio
           ##
           # Access the numbers
           # @param [String] number The number
-          # @return [NumberList] if a(n) NumberList object was created.
-          # @return [NumberContext] if a(n) NumberContext object was created.
+          # @return [NumberList]
+          # @return [NumberContext] if number was passed.
           def numbers(number=:unset)
             raise ArgumentError, 'number cannot be nil' if number.nil?
 
@@ -47,8 +47,8 @@ module Twilio
           ##
           # Access the countries
           # @param [String] iso_country The iso_country
-          # @return [CountryList] if a(n) CountryList object was created.
-          # @return [CountryContext] if a(n) CountryContext object was created.
+          # @return [CountryList]
+          # @return [CountryContext] if iso_country was passed.
           def countries(iso_country=:unset)
             raise ArgumentError, 'iso_country cannot be nil' if iso_country.nil?
 
@@ -120,14 +120,20 @@ module Twilio
             }
           end
 
+          ##
+          # @return [String] The name
           def name
             @properties['name']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end

@@ -84,17 +84,6 @@ module Twilio
           # When passed a block, yields RecordingInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [recording.Status] status The status
-          # @param [String] source_sid The source_sid
-          # @param [String] grouping_sid The grouping_sid
-          # @param [Time] date_created_after The date_created_after
-          # @param [Time] date_created_before The date_created_before
-          # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-          #  guarantees to never return more than limit.                  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-          #  the default value of 50 records.                      If no page_size is defined
-          #                       but a limit is defined, stream() will attempt to read the
-          #                       limit with the most efficient page size, i.e. min(limit, 1000)
           def each
             limits = @version.read_limits
 
@@ -277,7 +266,6 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @param [Version] version Version that contains the resource
           # @return [RecordingContext] RecordingContext for this RecordingInstance
           def context
             unless @instance_context
@@ -289,54 +277,80 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The account_sid
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [recording.Status] The status
           def status
             @properties['status']
           end
 
+          ##
+          # @return [Time] The date_created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [String] The sid
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] The source_sid
           def source_sid
             @properties['source_sid']
           end
 
+          ##
+          # @return [String] The size
           def size
             @properties['size']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [recording.Type] The type
           def type
             @properties['type']
           end
 
+          ##
+          # @return [String] The duration
           def duration
             @properties['duration']
           end
 
+          ##
+          # @return [recording.Format] The container_format
           def container_format
             @properties['container_format']
           end
 
+          ##
+          # @return [recording.Codec] The codec
           def codec
             @properties['codec']
           end
 
+          ##
+          # @return [Hash] The grouping_sids
           def grouping_sids
             @properties['grouping_sids']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end

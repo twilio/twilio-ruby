@@ -71,7 +71,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] account_sid The account_sid
             # @return [ValidationRequestPage] ValidationRequestPage
             def initialize(version, response, solution)
               super(version, response)
@@ -119,22 +118,32 @@ module Twilio
               }
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The phone_number
             def phone_number
               @properties['phone_number']
             end
 
+            ##
+            # @return [String] The friendly_name
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The validation_code
             def validation_code
               @properties['validation_code']
             end
 
+            ##
+            # @return [String] The call_sid
             def call_sid
               @properties['call_sid']
             end

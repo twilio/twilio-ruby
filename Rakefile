@@ -22,14 +22,10 @@ task :deploy, [:version] => [:spec, :authors] do |t, args|
     increment = version_parts.pop
     increment_prefix = increment.split(/\d/)[0]
 
-    if increment_prefix
-      increment = increment[increment_prefix.length..-1]
-    end
+    increment = increment[increment_prefix.length..-1] if increment_prefix
 
     increment = increment.to_i + 1
-    if increment_prefix
-      increment = "#{increment_prefix}#{increment}"
-    end
+    increment = "#{increment_prefix}#{increment}" if increment_prefix
 
     version = [*version_parts, increment].join('.')
   else

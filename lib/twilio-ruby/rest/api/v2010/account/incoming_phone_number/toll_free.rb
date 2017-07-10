@@ -86,16 +86,6 @@ module Twilio
               # When passed a block, yields TollFreeInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Boolean] beta The beta
-              # @param [String] friendly_name The friendly_name
-              # @param [String] phone_number The phone_number
-              # @param [String] origin The origin
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -216,8 +206,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid The unique id of the Account responsible for this
-              #   phone number.
               # @return [TollFreePage] TollFreePage
               def initialize(version, response, solution)
                 super(version, response)
@@ -287,106 +275,158 @@ module Twilio
                 }
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [toll_free.AddressRequirement] The address_requirements
               def address_requirements
                 @properties['address_requirements']
               end
 
+              ##
+              # @return [String] The api_version
               def api_version
                 @properties['api_version']
               end
 
+              ##
+              # @return [Boolean] The beta
               def beta
                 @properties['beta']
               end
 
+              ##
+              # @return [String] The capabilities
               def capabilities
                 @properties['capabilities']
               end
 
+              ##
+              # @return [Time] The date_created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date_updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The friendly_name
               def friendly_name
                 @properties['friendly_name']
               end
 
+              ##
+              # @return [String] The phone_number
               def phone_number
                 @properties['phone_number']
               end
 
+              ##
+              # @return [String] The origin
               def origin
                 @properties['origin']
               end
 
+              ##
+              # @return [String] The sid
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] The sms_application_sid
               def sms_application_sid
                 @properties['sms_application_sid']
               end
 
+              ##
+              # @return [String] The sms_fallback_method
               def sms_fallback_method
                 @properties['sms_fallback_method']
               end
 
+              ##
+              # @return [String] The sms_fallback_url
               def sms_fallback_url
                 @properties['sms_fallback_url']
               end
 
+              ##
+              # @return [String] The sms_method
               def sms_method
                 @properties['sms_method']
               end
 
+              ##
+              # @return [String] The sms_url
               def sms_url
                 @properties['sms_url']
               end
 
+              ##
+              # @return [String] The status_callback
               def status_callback
                 @properties['status_callback']
               end
 
+              ##
+              # @return [String] The status_callback_method
               def status_callback_method
                 @properties['status_callback_method']
               end
 
+              ##
+              # @return [String] The trunk_sid
               def trunk_sid
                 @properties['trunk_sid']
               end
 
+              ##
+              # @return [String] The uri
               def uri
                 @properties['uri']
               end
 
+              ##
+              # @return [String] The voice_application_sid
               def voice_application_sid
                 @properties['voice_application_sid']
               end
 
+              ##
+              # @return [Boolean] The voice_caller_id_lookup
               def voice_caller_id_lookup
                 @properties['voice_caller_id_lookup']
               end
 
+              ##
+              # @return [String] The voice_fallback_method
               def voice_fallback_method
                 @properties['voice_fallback_method']
               end
 
+              ##
+              # @return [String] The voice_fallback_url
               def voice_fallback_url
                 @properties['voice_fallback_url']
               end
 
+              ##
+              # @return [String] The voice_method
               def voice_method
                 @properties['voice_method']
               end
 
+              ##
+              # @return [String] The voice_url
               def voice_url
                 @properties['voice_url']
               end

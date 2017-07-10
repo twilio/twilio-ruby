@@ -43,8 +43,9 @@ describe Twilio::TwiML::VoiceResponse do
 
       # For Ruby 2.0, 2.1, 2.2 both opening and closing tags are generated
       # Ruby 2.4 generates an empty tag
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Say></Say></Response>')
-                    .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Say/></Response>'))
+      expect(r.to_s)
+        .to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Say></Say></Response>')
+        .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Say/></Response>'))
     end
 
     it 'should allow populated say' do
@@ -90,8 +91,9 @@ describe Twilio::TwiML::VoiceResponse do
 
       # For Ruby 2.0, 2.1, 2.2 both opening and closing tags are generated
       # Ruby 2.4 generates an empty tag
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play></Play></Response>')
-                    .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play/></Response>'))
+      expect(r.to_s)
+        .to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play></Play></Response>')
+        .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play/></Response>'))
     end
 
     it 'should play hello' do
@@ -114,8 +116,9 @@ describe Twilio::TwiML::VoiceResponse do
 
       # For Ruby 2.0, 2.1, 2.2 both opening and closing tags are generated
       # Ruby 2.4 generates an empty tag
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play digits="w123"></Play></Response>')
-                    .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play digits="w123"/></Response>'))
+      expect(r.to_s)
+        .to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play digits="w123"></Play></Response>')
+        .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play digits="w123"/></Response>'))
     end
   end
 
@@ -129,21 +132,21 @@ describe Twilio::TwiML::VoiceResponse do
 
     it 'should allow action and method' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.record action: 'example.com', method: 'GET'
+      r.record(action: 'example.com', method: 'GET')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Record action="example.com" method="GET"/></Response>')
     end
 
     it 'should allow max_length, finish_on_key, and timeout' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.record timeout: 4, finish_on_key: '#', max_length: 30
+      r.record(timeout: 4, finish_on_key: '#', max_length: 30)
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Record finishOnKey="#" maxLength="30" timeout="4"/></Response>')
     end
 
     it 'should allow transcribe' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.record transcribe_callback: 'example.com'
+      r.record(transcribe_callback: 'example.com')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Record transcribeCallback="example.com"/></Response>')
     end
@@ -156,20 +159,21 @@ describe Twilio::TwiML::VoiceResponse do
 
       # For Ruby 2.0, 2.1, 2.2 both opening and closing tags are generated
       # Ruby 2.4 generates an empty tag
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Redirect></Redirect></Response>')
-                    .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Redirect/></Response>'))
+      expect(r.to_s)
+        .to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Redirect></Redirect></Response>')
+        .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Redirect/></Response>'))
     end
 
     it 'should allow method' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.redirect 'example.com', method: 'POST'
+      r.redirect('example.com', method: 'POST')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Redirect method="POST">example.com</Redirect></Response>')
     end
 
     it 'should allow method and params' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.redirect 'example.com?id=34&action=hey', method: 'POST'
+      r.redirect('example.com?id=34&action=hey', method: 'POST')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Redirect method="POST">example.com?id=34&amp;action=hey</Redirect></Response>')
     end
@@ -209,8 +213,9 @@ describe Twilio::TwiML::VoiceResponse do
 
       # For Ruby 2.0, 2.1, 2.2 both opening and closing tags are generated
       # Ruby 2.4 generates an empty tag
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Sms></Sms></Response>')
-                    .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Sms/></Response>'))
+      expect(r.to_s)
+        .to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Sms></Sms></Response>')
+        .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Sms/></Response>'))
     end
 
     it 'should allow SMS body' do
@@ -222,7 +227,7 @@ describe Twilio::TwiML::VoiceResponse do
 
     it 'should allow to, from, action, and status_callback' do
       r = Twilio::TwiML::VoiceResponse.new
-      r.sms('Hello, World', to: 1231231234, from: 3453453456, status_callback: 'example.com?id=34&action=hey')
+      r.sms('Hello, World', to: 1_231_231_234, from: 3_453_453_456, status_callback: 'example.com?id=34&action=hey')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Sms from="3453453456" statusCallback="example.com?id=34&amp;action=hey" to="1231231234">Hello, World</Sms></Response>')
     end
@@ -317,7 +322,7 @@ describe Twilio::TwiML::VoiceResponse do
 
     it 'should allow Enqueue.task with a dictionary and appending Enqueue' do
       e = Twilio::TwiML::Enqueue.new(nil, workflow_sid: '123123123')
-      e.task({account_sid: 'AC123123123'})
+      e.task({ account_sid: 'AC123123123' })
 
       r = Twilio::TwiML::VoiceResponse.new
       r.append(e)
@@ -413,8 +418,9 @@ describe Twilio::TwiML::VoiceResponse do
 
       # For Ruby 2.0, 2.1, 2.2 both opening and closing tags are generated
       # Ruby 2.4 generates an empty tag
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Client></Client></Dial></Response>')
-                    .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Client/></Dial></Response>'))
+      expect(r.to_s)
+        .to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Client></Client></Dial></Response>')
+        .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Client/></Dial></Response>'))
     end
 
     it 'should allow populated Dial.client' do
@@ -455,7 +461,14 @@ describe Twilio::TwiML::VoiceResponse do
       r = Twilio::TwiML::VoiceResponse.new
       r.append(g)
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Gather><Say>Hey</Say><Play>hey.mp3</Play><Pause/></Gather></Response>')
+      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?>' \
+                             '<Response>' \
+                               '<Gather>' \
+                                 '<Say>Hey</Say>' \
+                                 '<Play>hey.mp3</Play>' \
+                                 '<Pause/>' \
+                               '</Gather>' \
+                             '</Response>')
     end
   end
 end

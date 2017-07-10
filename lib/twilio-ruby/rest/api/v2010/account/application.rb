@@ -144,14 +144,6 @@ module Twilio
             # When passed a block, yields ApplicationInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] friendly_name Only return application resources with friendly
-            #   names that match exactly with this name
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -214,8 +206,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] account_sid The unique id of the Account that created this
-            #   application.
             # @return [ApplicationPage] ApplicationPage
             def initialize(version, response, solution)
               super(version, response)
@@ -414,7 +404,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [ApplicationContext] ApplicationContext for this ApplicationInstance
             def context
               unless @instance_context
@@ -427,82 +416,122 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this resource
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The API version to use
             def api_version
               @properties['api_version']
             end
 
+            ##
+            # @return [Time] Date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] Date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] Human readable description of this resource
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] URL to make requests to with status updates
             def message_status_callback
               @properties['message_status_callback']
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this resource
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] HTTP method to use with sms_fallback_method
             def sms_fallback_method
               @properties['sms_fallback_method']
             end
 
+            ##
+            # @return [String] Fallback URL if there's an error parsing TwiML
             def sms_fallback_url
               @properties['sms_fallback_url']
             end
 
+            ##
+            # @return [String] HTTP method to use with sms_url
             def sms_method
               @properties['sms_method']
             end
 
+            ##
+            # @return [String] URL Twilio with request with status updates
             def sms_status_callback
               @properties['sms_status_callback']
             end
 
+            ##
+            # @return [String] URL Twilio will request when receiving an SMS
             def sms_url
               @properties['sms_url']
             end
 
+            ##
+            # @return [String] URL to hit with status updates
             def status_callback
               @properties['status_callback']
             end
 
+            ##
+            # @return [String] HTTP method to use with the status callback
             def status_callback_method
               @properties['status_callback_method']
             end
 
+            ##
+            # @return [String] URI for this resource
             def uri
               @properties['uri']
             end
 
+            ##
+            # @return [Boolean] True or False
             def voice_caller_id_lookup
               @properties['voice_caller_id_lookup']
             end
 
+            ##
+            # @return [String] HTTP method to use with the fallback url
             def voice_fallback_method
               @properties['voice_fallback_method']
             end
 
+            ##
+            # @return [String] Fallback URL
             def voice_fallback_url
               @properties['voice_fallback_url']
             end
 
+            ##
+            # @return [String] HTTP method to use with the URL
             def voice_method
               @properties['voice_method']
             end
 
+            ##
+            # @return [String] URL Twilio will make requests to when relieving a call
             def voice_url
               @properties['voice_url']
             end

@@ -18,6 +18,8 @@ module Twilio
           @voice = nil
         end
 
+        ##
+        # @return [Twilio::REST::Pricing::V1::MessagingInstance]
         def messaging(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'
@@ -28,6 +30,8 @@ module Twilio
           end
         end
 
+        ##
+        # @return [Twilio::REST::Pricing::V1::PhoneNumberInstance]
         def phone_numbers(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'
@@ -38,6 +42,8 @@ module Twilio
           end
         end
 
+        ##
+        # @return [Twilio::REST::Pricing::V1::VoiceInstance]
         def voice(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'

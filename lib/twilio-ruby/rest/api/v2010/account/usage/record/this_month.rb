@@ -83,15 +83,6 @@ module Twilio
                 # When passed a block, yields ThisMonthInstance records from the API.
                 # This operation lazily loads records as efficiently as possible until the limit
                 # is reached.
-                # @param [this_month.Category] category The category
-                # @param [Date] start_date The start_date
-                # @param [Date] end_date The end_date
-                # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-                #  guarantees to never return more than limit.                  Default is no limit
-                # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-                #  the default value of 50 records.                      If no page_size is defined
-                #                       but a limit is defined, stream() will attempt to read the
-                #                       limit with the most efficient page size, i.e. min(limit, 1000)
                 def each
                   limits = @version.read_limits
 
@@ -157,8 +148,6 @@ module Twilio
                 # @param [Version] version Version that contains the resource
                 # @param [Response] response Response from the API
                 # @param [Hash] solution Path solution for the resource
-                # @param [String] account_sid A 34 character string that uniquely identifies this
-                #   resource.
                 # @return [ThisMonthPage] ThisMonthPage
                 def initialize(version, response, solution)
                   super(version, response)
@@ -216,58 +205,86 @@ module Twilio
                   }
                 end
 
+                ##
+                # @return [String] The account_sid
                 def account_sid
                   @properties['account_sid']
                 end
 
+                ##
+                # @return [String] The api_version
                 def api_version
                   @properties['api_version']
                 end
 
+                ##
+                # @return [this_month.Category] The category
                 def category
                   @properties['category']
                 end
 
+                ##
+                # @return [String] The count
                 def count
                   @properties['count']
                 end
 
+                ##
+                # @return [String] The count_unit
                 def count_unit
                   @properties['count_unit']
                 end
 
+                ##
+                # @return [String] The description
                 def description
                   @properties['description']
                 end
 
+                ##
+                # @return [Date] The end_date
                 def end_date
                   @properties['end_date']
                 end
 
+                ##
+                # @return [String] The price
                 def price
                   @properties['price']
                 end
 
+                ##
+                # @return [String] The price_unit
                 def price_unit
                   @properties['price_unit']
                 end
 
+                ##
+                # @return [Date] The start_date
                 def start_date
                   @properties['start_date']
                 end
 
+                ##
+                # @return [String] The subresource_uris
                 def subresource_uris
                   @properties['subresource_uris']
                 end
 
+                ##
+                # @return [String] The uri
                 def uri
                   @properties['uri']
                 end
 
+                ##
+                # @return [String] The usage
                 def usage
                   @properties['usage']
                 end
 
+                ##
+                # @return [String] The usage_unit
                 def usage_unit
                   @properties['usage_unit']
                 end

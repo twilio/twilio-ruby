@@ -31,8 +31,8 @@ module Twilio
 
             ##
             # Access the records
-            # @return [RecordList] if a(n) RecordList object was created.
-            # @return [RecordContext] if a(n) RecordContext object was created.
+            # @return [RecordList]
+            # @return [RecordContext]
             def records
               @records ||= RecordList.new(
                   @version,
@@ -43,8 +43,8 @@ module Twilio
             ##
             # Access the triggers
             # @param [String] sid The usage-trigger Sid that uniquely identifies this resource
-            # @return [TriggerList] if a(n) TriggerList object was created.
-            # @return [TriggerContext] if a(n) TriggerContext object was created.
+            # @return [TriggerList]
+            # @return [TriggerContext] if sid was passed.
             def triggers(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -75,8 +75,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] account_sid A 34 character string that uniquely identifies this
-            #   resource.
             # @return [UsagePage] UsagePage
             def initialize(version, response, solution)
               super(version, response)

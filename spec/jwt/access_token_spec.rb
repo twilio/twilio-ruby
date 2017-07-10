@@ -128,9 +128,3 @@ describe Twilio::JWT::AccessToken do
     end
   end
 end
-
-
-
-
-
-

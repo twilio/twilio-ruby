@@ -1,5 +1,8 @@
 *~
 .*
+!.rubocop_todo.yml
+!.rubocop.yml
+!.travis.yml
 pkg/*
 doc/*
 Gemfile.lock

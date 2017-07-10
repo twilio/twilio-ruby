@@ -80,15 +80,6 @@ module Twilio
             # When passed a block, yields TaskQueueInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] friendly_name The friendly_name
-            # @param [String] evaluate_worker_attributes The evaluate_worker_attributes
-            # @param [String] worker_sid The worker_sid
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -187,7 +178,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] workspace_sid The workspace_sid
             # @return [TaskQueuePage] TaskQueuePage
             def initialize(version, response, solution)
               super(version, response)
@@ -299,8 +289,8 @@ module Twilio
 
             ##
             # Access the task_queues_statistics
-            # @return [TaskQueuesStatisticsList] if a(n) TaskQueuesStatisticsList object was created.
-            # @return [TaskQueuesStatisticsContext] if a(n) TaskQueuesStatisticsContext object was created.
+            # @return [TaskQueuesStatisticsList]
+            # @return [TaskQueuesStatisticsContext]
             def task_queues_statistics
               unless @task_queues_statistics
                 @task_queues_statistics = TaskQueuesStatisticsList.new(
@@ -314,8 +304,8 @@ module Twilio
 
             ##
             # Access the task_queue_statistics
-            # @return [TaskQueueStatisticsList] if a(n) TaskQueueStatisticsList object was created.
-            # @return [TaskQueueStatisticsContext] if a(n) TaskQueueStatisticsContext object was created.
+            # @return [TaskQueueStatisticsList]
+            # @return [TaskQueueStatisticsContext]
             def task_queue_statistics
               TaskQueueStatisticsContext.new(
                   @version,
@@ -373,7 +363,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [TaskQueueContext] TaskQueueContext for this TaskQueueInstance
             def context
               unless @instance_context
@@ -386,62 +375,92 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The assignment_activity_sid
             def assignment_activity_sid
               @properties['assignment_activity_sid']
             end
 
+            ##
+            # @return [String] The assignment_activity_name
             def assignment_activity_name
               @properties['assignment_activity_name']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The friendly_name
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The max_reserved_workers
             def max_reserved_workers
               @properties['max_reserved_workers']
             end
 
+            ##
+            # @return [String] The reservation_activity_sid
             def reservation_activity_sid
               @properties['reservation_activity_sid']
             end
 
+            ##
+            # @return [String] The reservation_activity_name
             def reservation_activity_name
               @properties['reservation_activity_name']
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The target_workers
             def target_workers
               @properties['target_workers']
             end
 
+            ##
+            # @return [task_queue.TaskOrder] The task_order
             def task_order
               @properties['task_order']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end
 
+            ##
+            # @return [String] The workspace_sid
             def workspace_sid
               @properties['workspace_sid']
             end
 
+            ##
+            # @return [String] The links
             def links
               @properties['links']
             end

@@ -81,16 +81,6 @@ module Twilio
             # When passed a block, yields OutgoingCallerIdInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] phone_number Only show the caller id resource that exactly
-            #   matches this phone number
-            # @param [String] friendly_name Only show the caller id resource that exactly
-            #   matches this name
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -156,8 +146,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] account_sid The unique id of the Account responsible for this
-            #   Caller Id.
             # @return [OutgoingCallerIdPage] OutgoingCallerIdPage
             def initialize(version, response, solution)
               super(version, response)
@@ -297,7 +285,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [OutgoingCallerIdContext] OutgoingCallerIdContext for this OutgoingCallerIdInstance
             def context
               unless @instance_context
@@ -310,30 +297,44 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this outgoing-caller-ids
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] A human readable description for this resource
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The unique sid that identifies this account
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The incoming phone number
             def phone_number
               @properties['phone_number']
             end
 
+            ##
+            # @return [String] The URI for this resource
             def uri
               @properties['uri']
             end

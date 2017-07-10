@@ -35,7 +35,7 @@ module Twilio
               # @param [String] log The log
               # @param [Time] message_date_before The message_date
               # @param [Time] message_date The message_date
-              # @param [Time] message_date_after: The message_date
+              # @param [Time] message_date_after The message_date
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -61,7 +61,7 @@ module Twilio
               # @param [String] log The log
               # @param [Time] message_date_before The message_date
               # @param [Time] message_date The message_date
-              # @param [Time] message_date_after: The message_date
+              # @param [Time] message_date_after The message_date
               # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -87,16 +87,6 @@ module Twilio
               # When passed a block, yields NotificationInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] log The log
-              # @param [Time] message_date_before The message_date
-              # @param [Time] message_date The message_date
-              # @param [Time] message_date_after: The message_date
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -115,7 +105,7 @@ module Twilio
               # @param [String] log The log
               # @param [Time] message_date_before The message_date
               # @param [Time] message_date The message_date
-              # @param [Time] message_date_after: The message_date
+              # @param [Time] message_date_after The message_date
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -164,8 +154,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] call_sid The call_sid
               # @return [NotificationPage] NotificationPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -295,7 +283,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [NotificationContext] NotificationContext for this NotificationInstance
               def context
                 unless @instance_context
@@ -309,70 +296,104 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The api_version
               def api_version
                 @properties['api_version']
               end
 
+              ##
+              # @return [String] The call_sid
               def call_sid
                 @properties['call_sid']
               end
 
+              ##
+              # @return [Time] The date_created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date_updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The error_code
               def error_code
                 @properties['error_code']
               end
 
+              ##
+              # @return [String] The log
               def log
                 @properties['log']
               end
 
+              ##
+              # @return [Time] The message_date
               def message_date
                 @properties['message_date']
               end
 
+              ##
+              # @return [String] The message_text
               def message_text
                 @properties['message_text']
               end
 
+              ##
+              # @return [String] The more_info
               def more_info
                 @properties['more_info']
               end
 
+              ##
+              # @return [String] The request_method
               def request_method
                 @properties['request_method']
               end
 
+              ##
+              # @return [String] The request_url
               def request_url
                 @properties['request_url']
               end
 
+              ##
+              # @return [String] The request_variables
               def request_variables
                 @properties['request_variables']
               end
 
+              ##
+              # @return [String] The response_body
               def response_body
                 @properties['response_body']
               end
 
+              ##
+              # @return [String] The response_headers
               def response_headers
                 @properties['response_headers']
               end
 
+              ##
+              # @return [String] The sid
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] The uri
               def uri
                 @properties['uri']
               end

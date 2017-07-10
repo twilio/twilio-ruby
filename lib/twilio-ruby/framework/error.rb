@@ -26,6 +26,5 @@ module Twilio
         "[HTTP #{status_code}] #{code} : #{message}"
       end
     end
-
   end
 end

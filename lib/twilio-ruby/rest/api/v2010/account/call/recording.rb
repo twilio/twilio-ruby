@@ -34,7 +34,7 @@ module Twilio
               # memory before returning.
               # @param [Time] date_created_before The date_created
               # @param [Time] date_created The date_created
-              # @param [Time] date_created_after: The date_created
+              # @param [Time] date_created_after The date_created
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -58,7 +58,7 @@ module Twilio
               # is reached.
               # @param [Time] date_created_before The date_created
               # @param [Time] date_created The date_created
-              # @param [Time] date_created_after: The date_created
+              # @param [Time] date_created_after The date_created
               # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -83,15 +83,6 @@ module Twilio
               # When passed a block, yields RecordingInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Time] date_created_before The date_created
-              # @param [Time] date_created The date_created
-              # @param [Time] date_created_after: The date_created
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -109,7 +100,7 @@ module Twilio
               # Request is executed immediately.
               # @param [Time] date_created_before The date_created
               # @param [Time] date_created The date_created
-              # @param [Time] date_created_after: The date_created
+              # @param [Time] date_created_after The date_created
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -157,8 +148,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] call_sid The call_sid
               # @return [RecordingPage] RecordingPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -282,7 +271,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [RecordingContext] RecordingContext for this RecordingInstance
               def context
                 unless @instance_context
@@ -296,46 +284,68 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The api_version
               def api_version
                 @properties['api_version']
               end
 
+              ##
+              # @return [String] The call_sid
               def call_sid
                 @properties['call_sid']
               end
 
+              ##
+              # @return [Time] The date_created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date_updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The duration
               def duration
                 @properties['duration']
               end
 
+              ##
+              # @return [String] The sid
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] The price
               def price
                 @properties['price']
               end
 
+              ##
+              # @return [String] The uri
               def uri
                 @properties['uri']
               end
 
+              ##
+              # @return [String] The encryption_type
               def encryption_type
                 @properties['encryption_type']
               end
 
+              ##
+              # @return [Hash] The encryption_details
               def encryption_details
                 @properties['encryption_details']
               end
