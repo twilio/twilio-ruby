@@ -1,29 +1,30 @@
 module Twilio
   module REST
+    # Page Base Class
     class Page
       include Enumerable
 
       META_KEYS = [
-          'end',
-          'first_page_uri',
-          'next_page_uri',
-          'last_page_uri',
-          'page',
-          'page_size',
-          'previous_page_uri',
-          'total',
-          'num_pages',
-          'start',
-          'uri'
-      ]
+        'end',
+        'first_page_uri',
+        'next_page_uri',
+        'last_page_uri',
+        'page',
+        'page_size',
+        'previous_page_uri',
+        'total',
+        'num_pages',
+        'start',
+        'uri'
+      ].freeze
 
       def initialize(version, response)
-        payload = self.process_response(response)
+        payload = process_response(response)
 
         @version = version
         @payload = payload
         @solution = {}
-        @records = self.load_page(payload)
+        @records = load_page(payload)
       end
 
       def process_response(response)
@@ -40,12 +41,10 @@ module Twilio
         else
           keys = payload.keys
           key = keys - META_KEYS
-          if key.size == 1
-            return payload[key.first]
-          end
+          return payload[key.first] if key.size == 1
         end
 
-        raise Twilio::REST::TwilioError.new('Page Records can not be deserialized')
+        raise Twilio::REST::TwilioError, 'Page Records can not be deserialized'
       end
 
       def previous_page_url
@@ -69,28 +68,28 @@ module Twilio
       end
 
       def get_instance(payload)
-        raise Twilio::REST::TwilioError.new('Page.get_instance() must be implemented in the derived class')
+        raise Twilio::REST::TwilioError, 'Page.get_instance() must be implemented in the derived class'
       end
 
       def previous_page
-        return nil unless self.previous_page_url
+        return nil unless previous_page_url
 
-        response = @version.domain.request('GET', self.previous_page_url)
+        response = @version.domain.request('GET', previous_page_url)
 
         self.class.new(@version, response, @solution)
       end
 
       def next_page
-        return nil unless self.next_page_url
+        return nil unless next_page_url
 
-        response = @version.domain.request('GET', self.next_page_url)
+        response = @version.domain.request('GET', next_page_url)
 
         self.class.new(@version, response, @solution)
       end
 
       def each
         @records.each do |record|
-          yield self.get_instance(record)
+          yield get_instance(record)
         end
       end
 
@@ -100,4 +99,3 @@ module Twilio
     end
   end
 end
-

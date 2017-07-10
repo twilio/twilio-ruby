@@ -8,13 +8,13 @@ module Twilio
 
     class InstanceContext
       def initialize(version)
-          @version = version
+        @version = version
       end
     end
 
     class InstanceResource
       def initialize(version)
-          @version = version
+        @version = version
       end
     end
   end

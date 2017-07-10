@@ -1,7 +1,6 @@
 module Twilio
   module REST
     class Version
-
       attr_accessor :domain
 
       class RecordStream
@@ -21,10 +20,10 @@ module Twilio
             @page.each do |record|
               yield record
               current_record += 1
-              return if @limit && @limit <= current_record
+              return nil if @limit && @limit <= current_record
             end
 
-            return if @page_limit && @page_limit <= current_page
+            return nil if @page_limit && @page_limit <= current_page
 
             @page = @page.next_page
             current_page += 1
@@ -38,45 +37,35 @@ module Twilio
       end
 
       def absolute_url(uri)
-        @domain.absolute_url(self.relative_uri(uri))
+        @domain.absolute_url(relative_uri(uri))
       end
 
       def relative_uri(uri)
         "#{@version.chomp('/').gsub(/^\//, '')}/#{uri.chomp('/').gsub(/^\//, '')}"
       end
 
-      def request(method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
-        url = self.relative_uri(uri)
-        params = params.delete_if {|k,v| v.nil?}
+      def request(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
+        url = relative_uri(uri)
+        params = params.delete_if { |_k, v| v.nil? }
         data = data
-        @domain.request(
-          method,
-          url,
-          params,
-          data,
-          headers,
-          auth,
-          timeout
-        )
+        @domain.request(method, url, params, data, headers, auth, timeout)
       end
 
       def exception(response, header)
         message = header
         code = response.status_code
 
-        if response.body.has_key?('message')
+        if response.body.key?('message')
           message += ": #{response.body['message']}"
         end
 
-        if response.body.has_key?('code')
-          code = response.body['code']
-        end
+        code = response.body['code'] if response.body.key?('code')
 
         Twilio::REST::RestError.new(message, code, response.status_code)
       end
 
-      def fetch(method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
-        response = self.request(
+      def fetch(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
+        response = request(
           method,
           uri,
           params,
@@ -94,7 +83,7 @@ module Twilio
       end
 
       def update(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = self.request(
+        response = request(
           method,
           uri,
           params,
@@ -111,8 +100,8 @@ module Twilio
         response.body
       end
 
-      def delete(method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
-        response = self.request(
+      def delete(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
+        response = request(
           method,
           uri,
           params,
@@ -129,7 +118,7 @@ module Twilio
         response.status_code == 204
       end
 
-      def read_limits(limit=nil, page_size=nil)
+      def read_limits(limit = nil, page_size = nil)
         page_limit = nil
 
         unless limit.nil?
@@ -141,12 +130,12 @@ module Twilio
         {
           limit: limit || nil,
           page_size: page_size || nil,
-          page_limit: page_limit,
+          page_limit: page_limit
         }
       end
 
-      def page(method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
-        self.request(
+      def page(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
+        request(
           method,
           uri,
           params,
@@ -162,14 +151,7 @@ module Twilio
       end
 
       def create(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = self.request(
-                    method,
-                    uri,
-                    params,
-                    data,
-                    headers,
-                    auth,
-                    timeout)
+        response = request(method, uri, params, data, headers, auth, timeout)
 
         if response.status_code < 200 || response.status_code >= 300
           raise exception(response, 'Unable to create record')

@@ -31,7 +31,7 @@ end
 
 # get a particular call and list its recording urls
 @client.calls('CAXXXXXXX').recordings.each do |r|
-    puts r.wav
+  puts r.wav
 end
 
 # make a new outgoing call. returns a call object just like calls.get
@@ -79,7 +79,7 @@ puts @client.messages('SMXXXXXXXX').fetch.body
 
 # print some available numbers
 @client.available_phone_numbers('US').local.list.each do |num|
-
+  puts num
 end
 
 @numbers = @client.available_phone_numbers('US').local.list(area_code: '908')
@@ -89,9 +89,7 @@ end
 @client.incoming_phone_numbers.create(phone_number: @numbers[0].phone_number)
 
 # update an existing phone number's voice url
-@client.incoming_phone_numbers('PNxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx').update(
-    voice_url: 'http://example.com/voice'
-)
+@client.incoming_phone_numbers('PNxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx').update(voice_url: 'http://example.com/voice')
 
 # decommission an existing phone number
 numbers = @client.incoming_phone_numbers.list(friendly_name: 'A Fabulous Friendly Name')
@@ -110,8 +108,10 @@ conference = @client.conferences('CFxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx').fetch
 end
 
 # update a conference participant
-@client.conferences('CFxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-    .participants('CAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx').update(muted: 'true')
+@client
+  .conferences('CFxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+  .participants('CAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+  .update(muted: 'true')
 
 ################ QUEUES ###################
 
@@ -125,11 +125,13 @@ end
 @queue = @client.queues('QQxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx').fetch
 @members = @queue.members
 
-#list members
+# list members
 @members.list.each do |m|
   puts m.wait_time
 end
 
 # dequeue a particular user and run twiml at a specific url
-@client.queues('QQxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-    .members('CAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx').update(url: 'http://myapp.com/deque', method: 'POST')
+@client
+  .queues('QQxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+  .members('CAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+  .update(url: 'http://myapp.com/deque', method: 'POST')

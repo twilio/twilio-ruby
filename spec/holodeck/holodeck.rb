@@ -21,10 +21,10 @@ class Holodeck
     end
 
     def ==(other)
-      method.upcase == other.method.upcase &&
-      url == other.url &&
-      params == other.params &&
-      data == other.data
+      method.casecmp(other.method.upcase).zero? &&
+        url == other.url &&
+        params == other.params &&
+        data == other.data
     end
 
     def to_s
@@ -43,7 +43,7 @@ class Holodeck
     @response = response
   end
 
-  def request(host, port, method, url, params={}, data={}, headers={}, auth=nil, timeout=nil)
+  def request(host, port, method, url, params = {}, data = {}, headers = {}, auth = nil, _timeout = nil)
     @requests << Request.new(
       method: method,
       url: url,
@@ -52,7 +52,7 @@ class Holodeck
       headers: headers,
       auth: auth
     )
-    return @response
+    @response
   end
 
   def has_request?(request)

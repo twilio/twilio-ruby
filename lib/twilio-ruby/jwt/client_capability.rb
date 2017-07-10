@@ -12,6 +12,8 @@ module Twilio
                     :client_name,
                     :scopes
 
+      alias to_s to_jwt
+
       def initialize(account_sid, auth_token, scopes: [], nbf: nil, ttl: 3600, valid_until: nil)
         super(secret_key: auth_token, issuer: account_sid, nbf: nbf, ttl: ttl, valid_until: valid_until)
         @account_sid = account_sid
@@ -24,20 +26,14 @@ module Twilio
         @scopes.push(scope)
       end
 
-      def to_s
-        self.to_jwt
-      end
-
       protected
-      def _generate_payload
 
+      def _generate_payload
         scope = ''
-        unless @scopes.empty?
-          scope = @scopes.map {|scope| scope._generate_payload}.join(' ')
-        end
+        scope = @scopes.map(&:_generate_payload).join(' ') unless @scopes.empty?
 
         payload = {
-            scope: scope
+          scope: scope
         }
 
         payload
@@ -51,12 +47,11 @@ module Twilio
         end
 
         def _generate_payload
-          prefix = "scope:client:incoming"
-          suffix = "clientName=" + CGI.escape("#{@client_name}")
+          prefix = 'scope:client:incoming'
+          suffix = 'clientName=' + CGI.escape(@client_name.to_s)
 
           [prefix, suffix].join('?')
         end
-
       end
 
       class OutgoingClientScope
@@ -69,13 +64,13 @@ module Twilio
         end
 
         def _generate_payload
-          prefix = "scope:client:outgoing"
+          prefix = 'scope:client:outgoing'
           application_sid = "appSid=#{CGI.escape(@application_sid)}"
           unless @client_name.nil?
             client_name = "clientName=#{CGI.escape(@client_name)}"
           end
           unless @params.empty?
-            params = "appParams=" + @params.map {|k, v| CGI.escape("#{k}=#{v}")}.join('&')
+            params = 'appParams=' + @params.map { |k, v| CGI.escape("#{k}=#{v}") }.join('&')
           end
 
           suffix = [application_sid, client_name, params].compact.join('&')
@@ -92,10 +87,10 @@ module Twilio
         end
 
         def _generate_payload
-          prefix = "scope:stream:subscribe"
+          prefix = 'scope:stream:subscribe'
           path = "path=#{CGI.escape(@path)}"
           unless @filters.empty?
-            filters = "params=" + @filters.map {|k, v| CGI.escape("#{k}=#{v}")}.join('&')
+            filters = 'params=' + @filters.map { |k, v| CGI.escape("#{k}=#{v}") }.join('&')
           end
 
           suffix = [path, filters].compact.join('&')

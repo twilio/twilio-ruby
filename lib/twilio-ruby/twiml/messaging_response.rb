@@ -1,10 +1,9 @@
 module Twilio
   module TwiML
-
     # Messaging TwiML Response
     class MessagingResponse < TwiML
       # Create a new <Response>
-      def initialize()
+      def initialize
         super()
         self.name = 'Response'
         yield(self) if block_given?
@@ -23,15 +22,7 @@ module Twilio
       #
       # == Returns:
       # A <Response> element with a <Message> child element
-      def message(
-        body: nil,
-        to: nil,
-        from: nil,
-        method: nil,
-        action: nil,
-        status_callback: nil,
-        **keyword_args)
-
+      def message(body: nil, to: nil, from: nil, method: nil, action: nil, status_callback: nil, **keyword_args)
         message = Message.new(
           body: body,
           to: to,
@@ -43,8 +34,7 @@ module Twilio
         )
 
         yield(message) if block_given?
-
-        self.append(message)
+        append(message)
       end
 
       # Create an <Redirect> element
@@ -57,7 +47,7 @@ module Twilio
       # == Returns:
       # A <Response> element with an <Redirect> child element
       def redirect(url, method: nil, **keyword_args)
-        self.append(Redirect.new(url, method: method, **keyword_args))
+        append(Redirect.new(url, method: method, **keyword_args))
       end
     end
 
@@ -73,9 +63,7 @@ module Twilio
       # A <Message> element
       def initialize(body: nil, **keyword_args)
         super(**keyword_args)
-        if !(body.nil?)
-          @value = body
-        end
+        @value = body unless body.nil?
         yield(self) if block_given?
       end
 
@@ -88,7 +76,7 @@ module Twilio
       # == Returns:
       # A <Message> element with a <Body> child element
       def body(body)
-        self.append(Body.new(body))
+        append(Body.new(body))
       end
 
       # Create a <Media> element
@@ -100,7 +88,7 @@ module Twilio
       # == Returns:
       # A <Message> element with a <Media> child element
       def media(url)
-        self.append(Media.new(url))
+        append(Media.new(url))
       end
     end
 

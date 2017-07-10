@@ -74,7 +74,7 @@ describe Twilio::JWT::ClientCapability do
     it 'complete payload' do
       @incomingScope = Twilio::JWT::ClientCapability::IncomingClientScope.new('test-client-name')
       @clientCapability.add_scope(@incomingScope)
-      payload, _ = ::JWT.decode @clientCapability.to_s, 'authToken', true, {:algorithm=>'HS256'}
+      payload, _ = ::JWT.decode(@clientCapability.to_s, 'authToken', true, { algorithm: 'HS256' })
       escope = 'scope:client:incoming?clientName=test-client-name'
       expect(payload['iss']).to eq('accountSid')
       expect(payload['scope']).to eq(escope)
@@ -99,6 +99,6 @@ describe Twilio::JWT::Scope do
       include Twilio::JWT::Scope
     end
     @dummyScope = DummyScope.new
-    expect{@dummyScope._generate_payload}.to raise_error(RuntimeError)
+    expect { @dummyScope._generate_payload }.to raise_error(RuntimeError)
   end
 end

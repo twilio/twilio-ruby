@@ -2,11 +2,11 @@ module Twilio
   module JWT
     module AccessTokenGrant
       def _key
-        fail NotImplementedError
+        raise NotImplementedError
       end
 
       def _generate_payload
-        fail NotImplementedError
+        raise NotImplementedError
       end
     end
 
@@ -20,7 +20,16 @@ module Twilio
                     :ttl,
                     :valid_until
 
-      def initialize(account_sid, signing_key_sid, secret, grants=[], identity: nil, nbf: nil, ttl: 3600, valid_until: nil)
+      def initialize(
+        account_sid,
+        signing_key_sid,
+        secret,
+        grants = [],
+        identity: nil,
+        nbf: nil,
+        ttl: 3600,
+        valid_until: nil
+      )
         super(secret_key: secret,
               issuer: signing_key_sid,
               subject: account_sid,
@@ -46,27 +55,27 @@ module Twilio
       end
 
       protected
+
       def _generate_payload
         now = Time.now.to_i
         grants = {}
-        if @identity
-          grants[:identity] = @identity
-        end
+        grants[:identity] = @identity if @identity
 
         @grants.each { |grant| grants[grant._key] = grant._generate_payload } unless @grants.empty?
 
         payload = {
-            jti: "#{@signing_key_sid}-#{now}",
-            grants: grants
+          jti: "#{@signing_key_sid}-#{now}",
+          grants: grants
         }
 
         payload
       end
 
       protected
+
       def _generate_headers
         headers = {
-            cty: 'twilio-fpa;v=1'
+          cty: 'twilio-fpa;v=1'
         }
 
         headers
@@ -79,7 +88,6 @@ module Twilio
                       :deployment_role_sid,
                       :push_credential_sid
 
-
         def _key
           'ip_messaging'
         end
@@ -87,13 +95,9 @@ module Twilio
         def _generate_payload
           payload = {}
 
-          if service_sid
-            payload[:service_sid] = service_sid
-          end
+          payload[:service_sid] = service_sid if service_sid
 
-          if endpoint_id
-            payload[:endpoint_id] = endpoint_id
-          end
+          payload[:endpoint_id] = endpoint_id if endpoint_id
 
           if deployment_role_sid
             payload[:deployment_role_sid] = deployment_role_sid
@@ -105,7 +109,6 @@ module Twilio
 
           payload
         end
-
       end
 
       class VoiceGrant
@@ -136,9 +139,7 @@ module Twilio
             payload[:push_credential_sid] = push_credential_sid
           end
 
-          if endpoint_id
-            payload[:endpoint_id] = endpoint_id
-          end
+          payload[:endpoint_id] = endpoint_id if endpoint_id
 
           payload
         end
@@ -151,18 +152,13 @@ module Twilio
 
         def _key
           'data_sync'
-
         end
 
         def _generate_payload
           payload = {}
 
-          if service_sid
-            payload['service_sid'] = service_sid
-          end
-          if endpoint_id
-            payload['endpoint_id'] = endpoint_id
-          end
+          payload['service_sid'] = service_sid if service_sid
+          payload['endpoint_id'] = endpoint_id if endpoint_id
 
           payload
         end
@@ -190,8 +186,6 @@ module Twilio
           extend Gem::Deprecate
           deprecate :new, 'VideoGrant.new', 2017, 5
         end
-
-
       end
 
       class VideoGrant
@@ -205,9 +199,7 @@ module Twilio
         def _generate_payload
           payload = {}
 
-          if room
-            payload[:room] = room
-          end
+          payload[:room] = room if room
 
           payload
         end
@@ -226,17 +218,11 @@ module Twilio
         def _generate_payload
           payload = {}
 
-          if workspace_sid
-            payload[:workspace_sid] = workspace_sid
-          end
+          payload[:workspace_sid] = workspace_sid if workspace_sid
 
-          if worker_sid
-            payload[:worker_sid] = worker_sid
-          end
+          payload[:worker_sid] = worker_sid if worker_sid
 
-          if role
-            payload[:role] = role
-          end
+          payload[:role] = role if role
 
           payload
         end
