@@ -1,8 +1,7 @@
-.PHONY: test lint-changed lint
-
-CHANGED_RUBY_FILES = $(shell git status --porcelain | grep ".rb" | awk -F ' ' '{print $2}' | tr '\n' ' ')
+.PHONY: test lint
 
 install:
+	@ruby --version || (echo "Ruby is not installed, please install Ruby >= 2"; exit 1);
 	bundle install; bundle exec rake install
 
 test-install:
