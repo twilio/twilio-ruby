@@ -243,6 +243,50 @@ module Twilio
               end
             end
 
+            class RecordingFile < InstanceContext
+              ##
+              # Initialize the RecordingFile
+              # @param [Version] version Version that contains the resource
+              # @param [String] account_sid The account_sid
+              # @param [String] sid The sid
+              # @param [String] format The format (wav, mp3)
+              # @return [RecordingFile] RecordingFile
+              def initialize(version, account_sid, sid, format)
+                super(version)
+
+                # Path Solution
+                @solution = {
+                  account_sid: account_sid,
+                  sid: sid,
+                  format: format
+                }
+                @uri = "/Accounts/#{@solution[:account_sid]}/Recordings/#{@solution[:sid]}.#{@solution[:format]}"
+              end
+
+              ##
+              # Fetch a RecordingFile
+              # @return [binary] Fetched RecordingFile
+              def fetch
+                @payload ||= begin
+                  params = Twilio::Values.of({})
+                  @version.fetch('GET', @uri, params)
+                end
+              end
+
+              ##
+              # @return [string] RecordingFile URL
+              def url
+                @version.absolute_url(@uri)
+              end
+
+              ##
+              # Provide a user friendly representation
+              def to_s
+                context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                "#<Twilio.Api.V2010.RecordingFile #{context}>"
+              end
+            end
+
             class RecordingInstance < InstanceResource
               ##
               # Initialize the RecordingInstance
@@ -265,6 +309,10 @@ module Twilio
                     'duration' => payload['duration'],
                     'sid' => payload['sid'],
                     'price' => payload['price'].to_f,
+                    'price_unit' => payload['price_unit'],
+                    'status' => payload['status'],
+                    'channels' => payload['channels'],
+                    'source' => payload['source'],
                     'uri' => payload['uri'],
                     'encryption_type' => payload['encryption_type'],
                     'encryption_details' => payload['encryption_details'],
@@ -272,6 +320,8 @@ module Twilio
 
                 # Context
                 @instance_context = nil
+                @wav_context = nil
+                @mp3_context = nil
                 @params = {
                     'account_sid' => account_sid,
                     'call_sid' => call_sid,
@@ -294,6 +344,14 @@ module Twilio
                   )
                 end
                 @instance_context
+              end
+
+              def wav_context
+                @wav_context ||= RecordingFile.new(@version, @params['account_sid'], @params['sid'], 'wav')
+              end
+
+              def mp3_context
+                @wav_context ||= RecordingFile.new(@version, @params['account_sid'], @params['sid'], 'mp3')
               end
 
               def account_sid
@@ -332,12 +390,40 @@ module Twilio
                 @properties['uri']
               end
 
+              def status
+                @properties['status']
+              end
+
+              def source
+                @properties['source']
+              end
+
+              def channels
+                @properties['channels']
+              end
+
               def encryption_type
                 @properties['encryption_type']
               end
 
               def encryption_details
                 @properties['encryption_details']
+              end
+
+              def wav_url
+                wav_context.url
+              end
+
+              def wav_binary
+                wav_context.fetch
+              end
+
+              def mp3_url
+                mp3_context.url
+              end
+
+              def mp3_binary
+                mp3_context.fetch
               end
 
               ##
