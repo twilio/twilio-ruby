@@ -61,38 +61,76 @@ module Twilio
         @hosted_numbers ||= HostedNumbers.new self
       end
 
+      ##
+      # @param [String] sid A 34 character string that uniquely identifies this Service.
+      # @return Twilio::REST::Preview::Proxy::ServiceInstance if sid was passed.
+      # @return Twilio::REST::Preview::Proxy::ServiceList
       def services(sid=:unset)
         self.proxy.services(sid)
       end
 
+      ##
+      # @param [String] sid The sid
+      # @return Twilio::REST::Preview::Wireless::CommandInstance if sid was passed.
+      # @return Twilio::REST::Preview::Wireless::CommandList
       def commands(sid=:unset)
         self.wireless.commands(sid)
       end
 
+      ##
+      # @param [String] sid The sid
+      # @return Twilio::REST::Preview::Wireless::RatePlanInstance if sid was passed.
+      # @return Twilio::REST::Preview::Wireless::RatePlanList
       def rate_plans(sid=:unset)
         self.wireless.rate_plans(sid)
       end
 
+      ##
+      # @param [String] sid The sid
+      # @return Twilio::REST::Preview::Wireless::SimInstance if sid was passed.
+      # @return Twilio::REST::Preview::Wireless::SimList
       def sims(sid=:unset)
         self.wireless.sims(sid)
       end
 
+      ##
+      # @param [String] sid A 34 character string that uniquely identifies this Add-on.
+      # @return Twilio::REST::Preview::Marketplace::AvailableAddOnInstance if sid was passed.
+      # @return Twilio::REST::Preview::Marketplace::AvailableAddOnList
       def available_add_ons(sid=:unset)
         self.marketplace.available_add_ons(sid)
       end
 
+      ##
+      # @param [String] sid A 34 character string that uniquely identifies this Add-on
+      #   installation.
+      # @return Twilio::REST::Preview::Marketplace::InstalledAddOnInstance if sid was passed.
+      # @return Twilio::REST::Preview::Marketplace::InstalledAddOnList
       def installed_add_ons(sid=:unset)
         self.marketplace.installed_add_ons(sid)
       end
 
+      ##
+      # @param [String] resource_type The resource_type
+      # @return Twilio::REST::Preview::BulkExports::ExportInstance if resource_type was passed.
+      # @return Twilio::REST::Preview::BulkExports::ExportList
       def exports(resource_type=:unset)
         self.bulk_exports.exports(resource_type)
       end
 
+      ##
+      # @param [String] resource_type The resource_type
+      # @return Twilio::REST::Preview::BulkExports::ExportConfigurationInstance if resource_type was passed.
+      # @return Twilio::REST::Preview::BulkExports::ExportConfigurationList
       def export_configuration(resource_type=:unset)
         self.bulk_exports.export_configuration(resource_type)
       end
 
+      ##
+      # @param [String] sid A 34 character string that uniquely identifies this
+      #   HostedNumberOrder.
+      # @return Twilio::REST::Preview::HostedNumbers::HostedNumberOrderInstance if sid was passed.
+      # @return Twilio::REST::Preview::HostedNumbers::HostedNumberOrderList
       def hosted_number_orders(sid=:unset)
         self.hosted_numbers.hosted_number_orders(sid)
       end

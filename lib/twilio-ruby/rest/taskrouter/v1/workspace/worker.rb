@@ -201,8 +201,8 @@ module Twilio
 
             ##
             # Access the statistics
-            # @return [WorkersStatisticsList] if a(n) WorkersStatisticsList object was created.
-            # @return [WorkersStatisticsContext] if a(n) WorkersStatisticsContext object was created.
+            # @return [WorkersStatisticsList]
+            # @return [WorkersStatisticsContext]
             def statistics
               return WorkersStatisticsContext.new(
                   @version,
@@ -335,8 +335,8 @@ module Twilio
 
             ##
             # Access the statistics
-            # @return [WorkerStatisticsList] if a(n) WorkerStatisticsList object was created.
-            # @return [WorkerStatisticsContext] if a(n) WorkerStatisticsContext object was created.
+            # @return [WorkerStatisticsList]
+            # @return [WorkerStatisticsContext]
             def statistics
               WorkerStatisticsContext.new(
                   @version,
@@ -347,8 +347,8 @@ module Twilio
 
             ##
             # Access the reservations
-            # @return [ReservationList] if a(n) ReservationList object was created.
-            # @return [ReservationContext] if a(n) ReservationContext object was created.
+            # @return [ReservationList]
+            # @return [ReservationContext] if sid was passed.
             def reservations(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -374,8 +374,8 @@ module Twilio
 
             ##
             # Access the worker_channels
-            # @return [WorkerChannelList] if a(n) WorkerChannelList object was created.
-            # @return [WorkerChannelContext] if a(n) WorkerChannelContext object was created.
+            # @return [WorkerChannelList]
+            # @return [WorkerChannelContext] if sid was passed.
             def worker_channels(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -459,54 +459,80 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The activity_name
             def activity_name
               @properties['activity_name']
             end
 
+            ##
+            # @return [String] The activity_sid
             def activity_sid
               @properties['activity_sid']
             end
 
+            ##
+            # @return [String] The attributes
             def attributes
               @properties['attributes']
             end
 
+            ##
+            # @return [Boolean] The available
             def available
               @properties['available']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_status_changed
             def date_status_changed
               @properties['date_status_changed']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The friendly_name
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The workspace_sid
             def workspace_sid
               @properties['workspace_sid']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end
 
+            ##
+            # @return [String] The links
             def links
               @properties['links']
             end

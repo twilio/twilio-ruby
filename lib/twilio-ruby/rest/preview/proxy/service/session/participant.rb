@@ -304,8 +304,8 @@ module Twilio
 
               ##
               # Access the message_interactions
-              # @return [MessageInteractionList] if a(n) MessageInteractionList object was created.
-              # @return [MessageInteractionContext] if a(n) MessageInteractionContext object was created.
+              # @return [MessageInteractionList]
+              # @return [MessageInteractionContext] if sid was passed.
               def message_interactions(sid=:unset)
                 raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -394,50 +394,74 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] A string that uniquely identifies this Participant.
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] Session Sid.
               def session_sid
                 @properties['session_sid']
               end
 
+              ##
+              # @return [String] Service Sid.
               def service_sid
                 @properties['service_sid']
               end
 
+              ##
+              # @return [String] Account Sid.
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] A human readable description of this resource
               def friendly_name
                 @properties['friendly_name']
               end
 
+              ##
+              # @return [participant.ParticipantType] The Type of this Participant
               def participant_type
                 @properties['participant_type']
               end
 
+              ##
+              # @return [String] The Participant's contact identifier, normally a phone number.
               def identifier
                 @properties['identifier']
               end
 
+              ##
+              # @return [String] What this Participant communicates with, normally a phone number.
               def proxy_identifier
                 @properties['proxy_identifier']
               end
 
+              ##
+              # @return [Time] The date this Participant was created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date this Participant was updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The URL of this resource.
               def url
                 @properties['url']
               end
 
+              ##
+              # @return [String] Nested resource URLs.
               def links
                 @properties['links']
               end

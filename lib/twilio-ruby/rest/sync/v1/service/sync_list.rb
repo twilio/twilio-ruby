@@ -235,8 +235,8 @@ module Twilio
 
             ##
             # Access the sync_list_items
-            # @return [SyncListItemList] if a(n) SyncListItemList object was created.
-            # @return [SyncListItemContext] if a(n) SyncListItemContext object was created.
+            # @return [SyncListItemList]
+            # @return [SyncListItemContext] if index was passed.
             def sync_list_items(index=:unset)
               raise ArgumentError, 'index cannot be nil' if index.nil?
 
@@ -262,8 +262,8 @@ module Twilio
 
             ##
             # Access the sync_list_permissions
-            # @return [SyncListPermissionList] if a(n) SyncListPermissionList object was created.
-            # @return [SyncListPermissionContext] if a(n) SyncListPermissionContext object was created.
+            # @return [SyncListPermissionList]
+            # @return [SyncListPermissionContext] if identity was passed.
             def sync_list_permissions(identity=:unset)
               raise ArgumentError, 'identity cannot be nil' if identity.nil?
 
@@ -344,42 +344,62 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The unique_name
             def unique_name
               @properties['unique_name']
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The service_sid
             def service_sid
               @properties['service_sid']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end
 
+            ##
+            # @return [String] The links
             def links
               @properties['links']
             end
 
+            ##
+            # @return [String] The revision
             def revision
               @properties['revision']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The created_by
             def created_by
               @properties['created_by']
             end

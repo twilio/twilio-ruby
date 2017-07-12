@@ -326,46 +326,68 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The trunk_sid
             def trunk_sid
               @properties['trunk_sid']
             end
 
+            ##
+            # @return [String] The weight
             def weight
               @properties['weight']
             end
 
+            ##
+            # @return [Boolean] The enabled
             def enabled
               @properties['enabled']
             end
 
+            ##
+            # @return [String] The sip_url
             def sip_url
               @properties['sip_url']
             end
 
+            ##
+            # @return [String] The friendly_name
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The priority
             def priority
               @properties['priority']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end

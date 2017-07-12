@@ -179,8 +179,8 @@ module Twilio
 
               ##
               # Access the all_time
-              # @return [AllTimeList] if a(n) AllTimeList object was created.
-              # @return [AllTimeContext] if a(n) AllTimeContext object was created.
+              # @return [AllTimeList]
+              # @return [AllTimeContext]
               def all_time
                 @all_time ||= AllTimeList.new(
                     @version,
@@ -190,8 +190,8 @@ module Twilio
 
               ##
               # Access the daily
-              # @return [DailyList] if a(n) DailyList object was created.
-              # @return [DailyContext] if a(n) DailyContext object was created.
+              # @return [DailyList]
+              # @return [DailyContext]
               def daily
                 @daily ||= DailyList.new(
                     @version,
@@ -201,8 +201,8 @@ module Twilio
 
               ##
               # Access the last_month
-              # @return [LastMonthList] if a(n) LastMonthList object was created.
-              # @return [LastMonthContext] if a(n) LastMonthContext object was created.
+              # @return [LastMonthList]
+              # @return [LastMonthContext]
               def last_month
                 @last_month ||= LastMonthList.new(
                     @version,
@@ -212,8 +212,8 @@ module Twilio
 
               ##
               # Access the monthly
-              # @return [MonthlyList] if a(n) MonthlyList object was created.
-              # @return [MonthlyContext] if a(n) MonthlyContext object was created.
+              # @return [MonthlyList]
+              # @return [MonthlyContext]
               def monthly
                 @monthly ||= MonthlyList.new(
                     @version,
@@ -223,8 +223,8 @@ module Twilio
 
               ##
               # Access the this_month
-              # @return [ThisMonthList] if a(n) ThisMonthList object was created.
-              # @return [ThisMonthContext] if a(n) ThisMonthContext object was created.
+              # @return [ThisMonthList]
+              # @return [ThisMonthContext]
               def this_month
                 @this_month ||= ThisMonthList.new(
                     @version,
@@ -234,8 +234,8 @@ module Twilio
 
               ##
               # Access the today
-              # @return [TodayList] if a(n) TodayList object was created.
-              # @return [TodayContext] if a(n) TodayContext object was created.
+              # @return [TodayList]
+              # @return [TodayContext]
               def today
                 @today ||= TodayList.new(
                     @version,
@@ -245,8 +245,8 @@ module Twilio
 
               ##
               # Access the yearly
-              # @return [YearlyList] if a(n) YearlyList object was created.
-              # @return [YearlyContext] if a(n) YearlyContext object was created.
+              # @return [YearlyList]
+              # @return [YearlyContext]
               def yearly
                 @yearly ||= YearlyList.new(
                     @version,
@@ -256,8 +256,8 @@ module Twilio
 
               ##
               # Access the yesterday
-              # @return [YesterdayList] if a(n) YesterdayList object was created.
-              # @return [YesterdayContext] if a(n) YesterdayContext object was created.
+              # @return [YesterdayList]
+              # @return [YesterdayContext]
               def yesterday
                 @yesterday ||= YesterdayList.new(
                     @version,
@@ -337,58 +337,86 @@ module Twilio
                 }
               end
 
+              ##
+              # @return [String] The Account that accrued the usage
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The api_version
               def api_version
                 @properties['api_version']
               end
 
+              ##
+              # @return [yesterday.Category] The category of usage
               def category
                 @properties['category']
               end
 
+              ##
+              # @return [String] The number of usage events (e.g. the number of calls).
               def count
                 @properties['count']
               end
 
+              ##
+              # @return [String] The unit in which `Count` is measured
               def count_unit
                 @properties['count_unit']
               end
 
+              ##
+              # @return [String] A human-readable description of the usage category.
               def description
                 @properties['description']
               end
 
+              ##
+              # @return [Date] The last date usage is included in this record
               def end_date
                 @properties['end_date']
               end
 
+              ##
+              # @return [String] The total price of the usage
               def price
                 @properties['price']
               end
 
+              ##
+              # @return [String] The currency in which `Price` is measured
               def price_unit
                 @properties['price_unit']
               end
 
+              ##
+              # @return [Date] The first date usage is included in this record
               def start_date
                 @properties['start_date']
               end
 
+              ##
+              # @return [String] Subresources Uris for this UsageRecord
               def subresource_uris
                 @properties['subresource_uris']
               end
 
+              ##
+              # @return [String] The URI for this resource
               def uri
                 @properties['uri']
               end
 
+              ##
+              # @return [String] The amount of usage
               def usage
                 @properties['usage']
               end
 
+              ##
+              # @return [String] The units in which `Usage` is measured
               def usage_unit
                 @properties['usage_unit']
               end

@@ -260,8 +260,8 @@ module Twilio
 
               ##
               # Access the credentials
-              # @return [CredentialList] if a(n) CredentialList object was created.
-              # @return [CredentialContext] if a(n) CredentialContext object was created.
+              # @return [CredentialList]
+              # @return [CredentialContext] if sid was passed.
               def credentials(sid=:unset)
                 raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -340,30 +340,44 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The unique sid that identifies this account
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [Time] The date this resource was created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date this resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The friendly_name
               def friendly_name
                 @properties['friendly_name']
               end
 
+              ##
+              # @return [String] A string that uniquely identifies this credential
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] The subresource_uris
               def subresource_uris
                 @properties['subresource_uris']
               end
 
+              ##
+              # @return [String] The URI for this resource
               def uri
                 @properties['uri']
               end

@@ -282,8 +282,8 @@ module Twilio
 
           ##
           # Access the usage_records
-          # @return [UsageRecordList] if a(n) UsageRecordList object was created.
-          # @return [UsageRecordContext] if a(n) UsageRecordContext object was created.
+          # @return [UsageRecordList]
+          # @return [UsageRecordContext]
           def usage_records
             unless @usage_records
               @usage_records = UsageRecordList.new(
@@ -361,90 +361,134 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The sid
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] The unique_name
           def unique_name
             @properties['unique_name']
           end
 
+          ##
+          # @return [String] The account_sid
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [String] The rate_plan_sid
           def rate_plan_sid
             @properties['rate_plan_sid']
           end
 
+          ##
+          # @return [String] The friendly_name
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [String] The iccid
           def iccid
             @properties['iccid']
           end
 
+          ##
+          # @return [String] The e_id
           def e_id
             @properties['e_id']
           end
 
+          ##
+          # @return [sim.Status] The status
           def status
             @properties['status']
           end
 
+          ##
+          # @return [String] The commands_callback_url
           def commands_callback_url
             @properties['commands_callback_url']
           end
 
+          ##
+          # @return [String] The commands_callback_method
           def commands_callback_method
             @properties['commands_callback_method']
           end
 
+          ##
+          # @return [String] The sms_fallback_method
           def sms_fallback_method
             @properties['sms_fallback_method']
           end
 
+          ##
+          # @return [String] The sms_fallback_url
           def sms_fallback_url
             @properties['sms_fallback_url']
           end
 
+          ##
+          # @return [String] The sms_method
           def sms_method
             @properties['sms_method']
           end
 
+          ##
+          # @return [String] The sms_url
           def sms_url
             @properties['sms_url']
           end
 
+          ##
+          # @return [String] The voice_fallback_method
           def voice_fallback_method
             @properties['voice_fallback_method']
           end
 
+          ##
+          # @return [String] The voice_fallback_url
           def voice_fallback_url
             @properties['voice_fallback_url']
           end
 
+          ##
+          # @return [String] The voice_method
           def voice_method
             @properties['voice_method']
           end
 
+          ##
+          # @return [String] The voice_url
           def voice_url
             @properties['voice_url']
           end
 
+          ##
+          # @return [Time] The date_created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date_updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end

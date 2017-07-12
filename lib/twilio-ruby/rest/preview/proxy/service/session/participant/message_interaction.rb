@@ -319,82 +319,122 @@ module Twilio
                   @instance_context
                 end
 
+                ##
+                # @return [String] A string that uniquely identifies this Interaction.
                 def sid
                   @properties['sid']
                 end
 
+                ##
+                # @return [String] Session Sid.
                 def session_sid
                   @properties['session_sid']
                 end
 
+                ##
+                # @return [String] Service Sid.
                 def service_sid
                   @properties['service_sid']
                 end
 
+                ##
+                # @return [String] Account Sid.
                 def account_sid
                   @properties['account_sid']
                 end
 
+                ##
+                # @return [String] What happened in this Interaction.
                 def data
                   @properties['data']
                 end
 
+                ##
+                # @return [message_interaction.Status] The Status of this Interaction
                 def status
                   @properties['status']
                 end
 
+                ##
+                # @return [String] The participant_sid
                 def participant_sid
                   @properties['participant_sid']
                 end
 
+                ##
+                # @return [String] The inbound_participant_sid
                 def inbound_participant_sid
                   @properties['inbound_participant_sid']
                 end
 
+                ##
+                # @return [String] The SID of the inbound resource.
                 def inbound_resource_sid
                   @properties['inbound_resource_sid']
                 end
 
+                ##
+                # @return [message_interaction.ResourceStatus] The Inbound Resource Status of this Interaction
                 def inbound_resource_status
                   @properties['inbound_resource_status']
                 end
 
+                ##
+                # @return [String] The Twilio object type of the inbound resource.
                 def inbound_resource_type
                   @properties['inbound_resource_type']
                 end
 
+                ##
+                # @return [String] The URL of the inbound resource.
                 def inbound_resource_url
                   @properties['inbound_resource_url']
                 end
 
+                ##
+                # @return [String] The outbound_participant_sid
                 def outbound_participant_sid
                   @properties['outbound_participant_sid']
                 end
 
+                ##
+                # @return [String] The SID of the outbound resource.
                 def outbound_resource_sid
                   @properties['outbound_resource_sid']
                 end
 
+                ##
+                # @return [message_interaction.ResourceStatus] The Outbound Resource Status of this Interaction
                 def outbound_resource_status
                   @properties['outbound_resource_status']
                 end
 
+                ##
+                # @return [String] The Twilio object type of the outbound resource.
                 def outbound_resource_type
                   @properties['outbound_resource_type']
                 end
 
+                ##
+                # @return [String] The URL of the outbound resource.
                 def outbound_resource_url
                   @properties['outbound_resource_url']
                 end
 
+                ##
+                # @return [Time] The date this Interaction was created
                 def date_created
                   @properties['date_created']
                 end
 
+                ##
+                # @return [Time] The date this Interaction was updated
                 def date_updated
                   @properties['date_updated']
                 end
 
+                ##
+                # @return [String] The URL of this Interaction.
                 def url
                   @properties['url']
                 end

@@ -198,22 +198,32 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The service_sid
               def service_sid
                 @properties['service_sid']
               end
 
+              ##
+              # @return [String] The identity
               def identity
                 @properties['identity']
               end
 
+              ##
+              # @return [String] The segment
               def segment
                 @properties['segment']
               end
 
+              ##
+              # @return [String] The url
               def url
                 @properties['url']
               end

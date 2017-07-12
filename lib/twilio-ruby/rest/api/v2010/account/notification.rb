@@ -301,70 +301,104 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The unique sid that identifies this account
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The version of the Twilio API in use
             def api_version
               @properties['api_version']
             end
 
+            ##
+            # @return [String] The string that uniquely identifies the call
             def call_sid
               @properties['call_sid']
             end
 
+            ##
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] A unique error code corresponding to the notification
             def error_code
               @properties['error_code']
             end
 
+            ##
+            # @return [String] An integer log level
             def log
               @properties['log']
             end
 
+            ##
+            # @return [Time] The date the notification was generated
             def message_date
               @properties['message_date']
             end
 
+            ##
+            # @return [String] The text of the notification.
             def message_text
               @properties['message_text']
             end
 
+            ##
+            # @return [String] A URL for more information about the error code
             def more_info
               @properties['more_info']
             end
 
+            ##
+            # @return [String] HTTP method used with the request url
             def request_method
               @properties['request_method']
             end
 
+            ##
+            # @return [String] URL of the resource that generated the notification
             def request_url
               @properties['request_url']
             end
 
+            ##
+            # @return [String] Twilio-generated HTTP variables sent to the server
             def request_variables
               @properties['request_variables']
             end
 
+            ##
+            # @return [String] The HTTP body returned by your server.
             def response_body
               @properties['response_body']
             end
 
+            ##
+            # @return [String] The HTTP headers returned by your server.
             def response_headers
               @properties['response_headers']
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this notification
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The URI for this resource
             def uri
               @properties['uri']
             end

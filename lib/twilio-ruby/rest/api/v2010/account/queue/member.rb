@@ -291,22 +291,32 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] Unique string that identifies this resource
               def call_sid
                 @properties['call_sid']
               end
 
+              ##
+              # @return [Time] The date the member was enqueued
               def date_enqueued
                 @properties['date_enqueued']
               end
 
+              ##
+              # @return [String] This member's current position in the queue.
               def position
                 @properties['position']
               end
 
+              ##
+              # @return [String] The uri
               def uri
                 @properties['uri']
               end
 
+              ##
+              # @return [String] The number of seconds the member has been in the queue.
               def wait_time
                 @properties['wait_time']
               end

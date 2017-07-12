@@ -16,6 +16,10 @@ module Twilio
           @phone_numbers = nil
         end
 
+        ##
+        # @param [String] phone_number The phone_number
+        # @return Twilio::REST::Lookups::V1::PhoneNumberInstance if phone_number was passed.
+        # @return Twilio::REST::Lookups::V1::PhoneNumberList
         def phone_numbers(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'

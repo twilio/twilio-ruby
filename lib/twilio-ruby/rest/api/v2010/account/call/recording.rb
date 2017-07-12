@@ -296,46 +296,68 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The api_version
               def api_version
                 @properties['api_version']
               end
 
+              ##
+              # @return [String] The call_sid
               def call_sid
                 @properties['call_sid']
               end
 
+              ##
+              # @return [Time] The date_created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date_updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The duration
               def duration
                 @properties['duration']
               end
 
+              ##
+              # @return [String] The sid
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] The price
               def price
                 @properties['price']
               end
 
+              ##
+              # @return [String] The uri
               def uri
                 @properties['uri']
               end
 
+              ##
+              # @return [String] The encryption_type
               def encryption_type
                 @properties['encryption_type']
               end
 
+              ##
+              # @return [Hash] The encryption_details
               def encryption_details
                 @properties['encryption_details']
               end

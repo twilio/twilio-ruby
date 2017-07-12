@@ -251,8 +251,8 @@ module Twilio
 
             ##
             # Access the bindings
-            # @return [UserBindingList] if a(n) UserBindingList object was created.
-            # @return [UserBindingContext] if a(n) UserBindingContext object was created.
+            # @return [UserBindingList]
+            # @return [UserBindingContext] if sid was passed.
             def bindings(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -278,8 +278,8 @@ module Twilio
 
             ##
             # Access the segment_memberships
-            # @return [SegmentMembershipList] if a(n) SegmentMembershipList object was created.
-            # @return [SegmentMembershipContext] if a(n) SegmentMembershipContext object was created.
+            # @return [SegmentMembershipList]
+            # @return [SegmentMembershipContext] if segment was passed.
             def segment_memberships(segment=:unset)
               raise ArgumentError, 'segment cannot be nil' if segment.nil?
 
@@ -359,38 +359,56 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The service_sid
             def service_sid
               @properties['service_sid']
             end
 
+            ##
+            # @return [String] The identity
             def identity
               @properties['identity']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The segments
             def segments
               @properties['segments']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end
 
+            ##
+            # @return [String] The links
             def links
               @properties['links']
             end

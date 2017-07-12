@@ -304,8 +304,8 @@ module Twilio
 
             ##
             # Access the dependent_phone_numbers
-            # @return [DependentPhoneNumberList] if a(n) DependentPhoneNumberList object was created.
-            # @return [DependentPhoneNumberContext] if a(n) DependentPhoneNumberContext object was created.
+            # @return [DependentPhoneNumberList]
+            # @return [DependentPhoneNumberContext]
             def dependent_phone_numbers
               unless @dependent_phone_numbers
                 @dependent_phone_numbers = DependentPhoneNumberList.new(
@@ -379,58 +379,86 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The city
             def city
               @properties['city']
             end
 
+            ##
+            # @return [String] The customer_name
             def customer_name
               @properties['customer_name']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The friendly_name
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The iso_country
             def iso_country
               @properties['iso_country']
             end
 
+            ##
+            # @return [String] The postal_code
             def postal_code
               @properties['postal_code']
             end
 
+            ##
+            # @return [String] The region
             def region
               @properties['region']
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The street
             def street
               @properties['street']
             end
 
+            ##
+            # @return [String] The uri
             def uri
               @properties['uri']
             end
 
+            ##
+            # @return [Boolean] The emergency_enabled
             def emergency_enabled
               @properties['emergency_enabled']
             end
 
+            ##
+            # @return [Boolean] The validated
             def validated
               @properties['validated']
             end

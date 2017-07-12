@@ -282,8 +282,8 @@ module Twilio
 
           ##
           # Access the activities
-          # @return [ActivityList] if a(n) ActivityList object was created.
-          # @return [ActivityContext] if a(n) ActivityContext object was created.
+          # @return [ActivityList]
+          # @return [ActivityContext] if sid was passed.
           def activities(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -307,8 +307,8 @@ module Twilio
 
           ##
           # Access the events
-          # @return [EventList] if a(n) EventList object was created.
-          # @return [EventContext] if a(n) EventContext object was created.
+          # @return [EventList]
+          # @return [EventContext] if sid was passed.
           def events(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -332,8 +332,8 @@ module Twilio
 
           ##
           # Access the tasks
-          # @return [TaskList] if a(n) TaskList object was created.
-          # @return [TaskContext] if a(n) TaskContext object was created.
+          # @return [TaskList]
+          # @return [TaskContext] if sid was passed.
           def tasks(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -357,8 +357,8 @@ module Twilio
 
           ##
           # Access the task_queues
-          # @return [TaskQueueList] if a(n) TaskQueueList object was created.
-          # @return [TaskQueueContext] if a(n) TaskQueueContext object was created.
+          # @return [TaskQueueList]
+          # @return [TaskQueueContext] if sid was passed.
           def task_queues(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -382,8 +382,8 @@ module Twilio
 
           ##
           # Access the workers
-          # @return [WorkerList] if a(n) WorkerList object was created.
-          # @return [WorkerContext] if a(n) WorkerContext object was created.
+          # @return [WorkerList]
+          # @return [WorkerContext] if sid was passed.
           def workers(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -407,8 +407,8 @@ module Twilio
 
           ##
           # Access the workflows
-          # @return [WorkflowList] if a(n) WorkflowList object was created.
-          # @return [WorkflowContext] if a(n) WorkflowContext object was created.
+          # @return [WorkflowList]
+          # @return [WorkflowContext] if sid was passed.
           def workflows(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -432,8 +432,8 @@ module Twilio
 
           ##
           # Access the statistics
-          # @return [WorkspaceStatisticsList] if a(n) WorkspaceStatisticsList object was created.
-          # @return [WorkspaceStatisticsContext] if a(n) WorkspaceStatisticsContext object was created.
+          # @return [WorkspaceStatisticsList]
+          # @return [WorkspaceStatisticsContext]
           def statistics
             WorkspaceStatisticsContext.new(
                 @version,
@@ -443,8 +443,8 @@ module Twilio
 
           ##
           # Access the task_channels
-          # @return [TaskChannelList] if a(n) TaskChannelList object was created.
-          # @return [TaskChannelContext] if a(n) TaskChannelContext object was created.
+          # @return [TaskChannelList]
+          # @return [TaskChannelContext] if sid was passed.
           def task_channels(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -525,62 +525,92 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The account_sid
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [Time] The date_created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date_updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The default_activity_name
           def default_activity_name
             @properties['default_activity_name']
           end
 
+          ##
+          # @return [String] The default_activity_sid
           def default_activity_sid
             @properties['default_activity_sid']
           end
 
+          ##
+          # @return [String] The event_callback_url
           def event_callback_url
             @properties['event_callback_url']
           end
 
+          ##
+          # @return [String] The events_filter
           def events_filter
             @properties['events_filter']
           end
 
+          ##
+          # @return [String] The friendly_name
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [Boolean] The multi_task_enabled
           def multi_task_enabled
             @properties['multi_task_enabled']
           end
 
+          ##
+          # @return [String] The sid
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] The timeout_activity_name
           def timeout_activity_name
             @properties['timeout_activity_name']
           end
 
+          ##
+          # @return [String] The timeout_activity_sid
           def timeout_activity_sid
             @properties['timeout_activity_sid']
           end
 
+          ##
+          # @return [workspace.QueueOrder] The prioritize_queue_order
           def prioritize_queue_order
             @properties['prioritize_queue_order']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end

@@ -279,70 +279,104 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The account_sid
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [String] The alert_text
           def alert_text
             @properties['alert_text']
           end
 
+          ##
+          # @return [String] The api_version
           def api_version
             @properties['api_version']
           end
 
+          ##
+          # @return [Time] The date_created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date_generated
           def date_generated
             @properties['date_generated']
           end
 
+          ##
+          # @return [Time] The date_updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The error_code
           def error_code
             @properties['error_code']
           end
 
+          ##
+          # @return [String] The log_level
           def log_level
             @properties['log_level']
           end
 
+          ##
+          # @return [String] The more_info
           def more_info
             @properties['more_info']
           end
 
+          ##
+          # @return [String] The request_method
           def request_method
             @properties['request_method']
           end
 
+          ##
+          # @return [String] The request_url
           def request_url
             @properties['request_url']
           end
 
+          ##
+          # @return [String] The request_variables
           def request_variables
             @properties['request_variables']
           end
 
+          ##
+          # @return [String] The resource_sid
           def resource_sid
             @properties['resource_sid']
           end
 
+          ##
+          # @return [String] The response_body
           def response_body
             @properties['response_body']
           end
 
+          ##
+          # @return [String] The response_headers
           def response_headers
             @properties['response_headers']
           end
 
+          ##
+          # @return [String] The sid
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end

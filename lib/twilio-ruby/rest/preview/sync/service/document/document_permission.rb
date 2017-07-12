@@ -312,34 +312,50 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] Twilio Account SID.
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] Sync Service Instance SID.
               def service_sid
                 @properties['service_sid']
               end
 
+              ##
+              # @return [String] Sync Document SID.
               def document_sid
                 @properties['document_sid']
               end
 
+              ##
+              # @return [String] Identity of the user to whom the Sync Document Permission applies.
               def identity
                 @properties['identity']
               end
 
+              ##
+              # @return [Boolean] Read access.
               def read
                 @properties['read']
               end
 
+              ##
+              # @return [Boolean] Write access.
               def write
                 @properties['write']
               end
 
+              ##
+              # @return [Boolean] Manage access.
               def manage
                 @properties['manage']
               end
 
+              ##
+              # @return [String] URL of this Sync Document Permission.
               def url
                 @properties['url']
               end

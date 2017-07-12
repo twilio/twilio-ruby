@@ -269,54 +269,80 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The unique sid that identifies this account
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The api_version
             def api_version
               @properties['api_version']
             end
 
+            ##
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The duration of the transcribed audio, in seconds.
             def duration
               @properties['duration']
             end
 
+            ##
+            # @return [String] The charge for this transcription
             def price
               @properties['price']
             end
 
+            ##
+            # @return [String] The currency in which Price is measured
             def price_unit
               @properties['price_unit']
             end
 
+            ##
+            # @return [String] The string that uniquely identifies the recording
             def recording_sid
               @properties['recording_sid']
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this transcription
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [transcription.Status] The status of the transcription
             def status
               @properties['status']
             end
 
+            ##
+            # @return [String] The text content of the transcription.
             def transcription_text
               @properties['transcription_text']
             end
 
+            ##
+            # @return [String] The type
             def type
               @properties['type']
             end
 
+            ##
+            # @return [String] The URI for this resource
             def uri
               @properties['uri']
             end

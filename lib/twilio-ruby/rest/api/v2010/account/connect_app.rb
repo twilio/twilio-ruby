@@ -304,46 +304,68 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The unique sid that identifies this account
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] URIL Twilio sends requests when users authorize
             def authorize_redirect_url
               @properties['authorize_redirect_url']
             end
 
+            ##
+            # @return [String] The company name set for this Connect App.
             def company_name
               @properties['company_name']
             end
 
+            ##
+            # @return [String] HTTP method Twilio WIll use making requests to the url
             def deauthorize_callback_method
               @properties['deauthorize_callback_method']
             end
 
+            ##
+            # @return [String] URL Twilio will send a request when a user de-authorizes this app
             def deauthorize_callback_url
               @properties['deauthorize_callback_url']
             end
 
+            ##
+            # @return [String] A more detailed human readable description
             def description
               @properties['description']
             end
 
+            ##
+            # @return [String] A human readable name for the Connect App.
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The URL users can obtain more information
             def homepage_url
               @properties['homepage_url']
             end
 
+            ##
+            # @return [connect_app.Permission] The set of permissions that your ConnectApp requests.
             def permissions
               @properties['permissions']
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this connect-apps
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The URI for this resource
             def uri
               @properties['uri']
             end

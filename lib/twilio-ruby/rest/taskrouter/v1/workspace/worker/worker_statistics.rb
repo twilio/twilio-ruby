@@ -167,22 +167,32 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [Hash] The cumulative
               def cumulative
                 @properties['cumulative']
               end
 
+              ##
+              # @return [String] The worker_sid
               def worker_sid
                 @properties['worker_sid']
               end
 
+              ##
+              # @return [String] The workspace_sid
               def workspace_sid
                 @properties['workspace_sid']
               end
 
+              ##
+              # @return [String] The url
               def url
                 @properties['url']
               end

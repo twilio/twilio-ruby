@@ -285,38 +285,56 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this resource
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] Account Sid.
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] Service Sid.
             def service_sid
               @properties['service_sid']
             end
 
+            ##
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The phone number
             def phone_number
               @properties['phone_number']
             end
 
+            ##
+            # @return [String] The ISO 3166-1 alpha-2 country code
             def country_code
               @properties['country_code']
             end
 
+            ##
+            # @return [String] Indicate if a phone can receive calls or messages
             def capabilities
               @properties['capabilities']
             end
 
+            ##
+            # @return [String] The URL of this resource.
             def url
               @properties['url']
             end

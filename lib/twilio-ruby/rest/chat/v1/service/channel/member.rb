@@ -334,46 +334,68 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The sid
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The channel_sid
               def channel_sid
                 @properties['channel_sid']
               end
 
+              ##
+              # @return [String] The service_sid
               def service_sid
                 @properties['service_sid']
               end
 
+              ##
+              # @return [String] The identity
               def identity
                 @properties['identity']
               end
 
+              ##
+              # @return [Time] The date_created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date_updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The role_sid
               def role_sid
                 @properties['role_sid']
               end
 
+              ##
+              # @return [String] The last_consumed_message_index
               def last_consumed_message_index
                 @properties['last_consumed_message_index']
               end
 
+              ##
+              # @return [Time] The last_consumption_timestamp
               def last_consumption_timestamp
                 @properties['last_consumption_timestamp']
               end
 
+              ##
+              # @return [String] The url
               def url
                 @properties['url']
               end

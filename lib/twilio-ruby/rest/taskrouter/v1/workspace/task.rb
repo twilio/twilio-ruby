@@ -336,8 +336,8 @@ module Twilio
 
             ##
             # Access the reservations
-            # @return [ReservationList] if a(n) ReservationList object was created.
-            # @return [ReservationContext] if a(n) ReservationContext object was created.
+            # @return [ReservationList]
+            # @return [ReservationContext] if sid was passed.
             def reservations(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -428,82 +428,122 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The age
             def age
               @properties['age']
             end
 
+            ##
+            # @return [reservation.Status] The assignment_status
             def assignment_status
               @properties['assignment_status']
             end
 
+            ##
+            # @return [String] The attributes
             def attributes
               @properties['attributes']
             end
 
+            ##
+            # @return [String] The addons
             def addons
               @properties['addons']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The priority
             def priority
               @properties['priority']
             end
 
+            ##
+            # @return [String] The reason
             def reason
               @properties['reason']
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The task_queue_sid
             def task_queue_sid
               @properties['task_queue_sid']
             end
 
+            ##
+            # @return [String] The task_queue_friendly_name
             def task_queue_friendly_name
               @properties['task_queue_friendly_name']
             end
 
+            ##
+            # @return [String] The task_channel_sid
             def task_channel_sid
               @properties['task_channel_sid']
             end
 
+            ##
+            # @return [String] The task_channel_unique_name
             def task_channel_unique_name
               @properties['task_channel_unique_name']
             end
 
+            ##
+            # @return [String] The timeout
             def timeout
               @properties['timeout']
             end
 
+            ##
+            # @return [String] The workflow_sid
             def workflow_sid
               @properties['workflow_sid']
             end
 
+            ##
+            # @return [String] The workflow_friendly_name
             def workflow_friendly_name
               @properties['workflow_friendly_name']
             end
 
+            ##
+            # @return [String] The workspace_sid
             def workspace_sid
               @properties['workspace_sid']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end
 
+            ##
+            # @return [String] The links
             def links
               @properties['links']
             end

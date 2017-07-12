@@ -216,26 +216,38 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [Time] The date_created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date_updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [feedback.Issues] The issues
               def issues
                 @properties['issues']
               end
 
+              ##
+              # @return [String] 1 to 5 quality score
               def quality_score
                 @properties['quality_score']
               end
 
+              ##
+              # @return [String] The sid
               def sid
                 @properties['sid']
               end

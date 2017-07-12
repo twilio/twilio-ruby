@@ -299,30 +299,44 @@ module Twilio
                   @instance_context
                 end
 
+                ##
+                # @return [String] The account_sid
                 def account_sid
                   @properties['account_sid']
                 end
 
+                ##
+                # @return [Time] The date_created
                 def date_created
                   @properties['date_created']
                 end
 
+                ##
+                # @return [Time] The date_updated
                 def date_updated
                   @properties['date_updated']
                 end
 
+                ##
+                # @return [String] The friendly_name
                 def friendly_name
                   @properties['friendly_name']
                 end
 
+                ##
+                # @return [String] The sid
                 def sid
                   @properties['sid']
                 end
 
+                ##
+                # @return [String] The uri
                 def uri
                   @properties['uri']
                 end
 
+                ##
+                # @return [String] The subresource_uris
                 def subresource_uris
                   @properties['subresource_uris']
                 end

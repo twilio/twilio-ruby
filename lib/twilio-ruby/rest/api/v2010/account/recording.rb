@@ -246,8 +246,8 @@ module Twilio
 
             ##
             # Access the transcriptions
-            # @return [TranscriptionList] if a(n) TranscriptionList object was created.
-            # @return [TranscriptionContext] if a(n) TranscriptionContext object was created.
+            # @return [TranscriptionList]
+            # @return [TranscriptionContext] if sid was passed.
             def transcriptions(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -273,8 +273,8 @@ module Twilio
 
             ##
             # Access the add_on_results
-            # @return [AddOnResultList] if a(n) AddOnResultList object was created.
-            # @return [AddOnResultContext] if a(n) AddOnResultContext object was created.
+            # @return [AddOnResultList]
+            # @return [AddOnResultContext] if sid was passed.
             def add_on_results(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -361,62 +361,92 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The unique sid that identifies this account
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The version of the API in use during the recording.
             def api_version
               @properties['api_version']
             end
 
+            ##
+            # @return [String] The call during which the recording was made.
             def call_sid
               @properties['call_sid']
             end
 
+            ##
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The length of the recording, in seconds.
             def duration
               @properties['duration']
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this recording
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The price
             def price
               @properties['price']
             end
 
+            ##
+            # @return [String] The price_unit
             def price_unit
               @properties['price_unit']
             end
 
+            ##
+            # @return [transcription.Status] The status
             def status
               @properties['status']
             end
 
+            ##
+            # @return [String] The channels
             def channels
               @properties['channels']
             end
 
+            ##
+            # @return [recording.Source] The source
             def source
               @properties['source']
             end
 
+            ##
+            # @return [String] The URI for this resource
             def uri
               @properties['uri']
             end
 
+            ##
+            # @return [String] The type of encryption used for this resource.
             def encryption_type
               @properties['encryption_type']
             end
 
+            ##
+            # @return [Hash] The encryption_details
             def encryption_details
               @properties['encryption_details']
             end

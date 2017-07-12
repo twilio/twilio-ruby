@@ -241,26 +241,38 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The country
             def country
               @properties['country']
             end
 
+            ##
+            # @return [String] The iso_country
             def iso_country
               @properties['iso_country']
             end
 
+            ##
+            # @return [String] The outbound_sms_prices
             def outbound_sms_prices
               @properties['outbound_sms_prices']
             end
 
+            ##
+            # @return [String] The inbound_sms_prices
             def inbound_sms_prices
               @properties['inbound_sms_prices']
             end
 
+            ##
+            # @return [String] The price_unit
             def price_unit
               @properties['price_unit']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end

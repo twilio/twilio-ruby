@@ -254,8 +254,8 @@ module Twilio
 
             ##
             # Access the local
-            # @return [LocalList] if a(n) LocalList object was created.
-            # @return [LocalContext] if a(n) LocalContext object was created.
+            # @return [LocalList]
+            # @return [LocalContext]
             def local
               @local ||= LocalList.new(
                   @version,
@@ -265,8 +265,8 @@ module Twilio
 
             ##
             # Access the mobile
-            # @return [MobileList] if a(n) MobileList object was created.
-            # @return [MobileContext] if a(n) MobileContext object was created.
+            # @return [MobileList]
+            # @return [MobileContext]
             def mobile
               @mobile ||= MobileList.new(
                   @version,
@@ -276,8 +276,8 @@ module Twilio
 
             ##
             # Access the toll_free
-            # @return [TollFreeList] if a(n) TollFreeList object was created.
-            # @return [TollFreeContext] if a(n) TollFreeContext object was created.
+            # @return [TollFreeList]
+            # @return [TollFreeContext]
             def toll_free
               @toll_free ||= TollFreeList.new(
                   @version,
@@ -462,8 +462,8 @@ module Twilio
 
             ##
             # Access the assigned_add_ons
-            # @return [AssignedAddOnList] if a(n) AssignedAddOnList object was created.
-            # @return [AssignedAddOnContext] if a(n) AssignedAddOnContext object was created.
+            # @return [AssignedAddOnList]
+            # @return [AssignedAddOnContext] if sid was passed.
             def assigned_add_ons(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -564,114 +564,170 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The unique sid that identifies this account
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [toll_free.AddressRequirement] Indicates if the customer requires an address
             def address_requirements
               @properties['address_requirements']
             end
 
+            ##
+            # @return [String] The Twilio REST API version to use
             def api_version
               @properties['api_version']
             end
 
+            ##
+            # @return [Boolean] Indicates if the phone number is a beta number
             def beta
               @properties['beta']
             end
 
+            ##
+            # @return [String] Indicate if a phone can receive calls or messages
             def capabilities
               @properties['capabilities']
             end
 
+            ##
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] A human readable description of this resouce
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The incoming phone number
             def phone_number
               @properties['phone_number']
             end
 
+            ##
+            # @return [String] The origin
             def origin
               @properties['origin']
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this resource
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] Unique string that identifies the application
             def sms_application_sid
               @properties['sms_application_sid']
             end
 
+            ##
+            # @return [String] HTTP method used with sms fallback url
             def sms_fallback_method
               @properties['sms_fallback_method']
             end
 
+            ##
+            # @return [String] URL Twilio will request if an error occurs in executing TwiML
             def sms_fallback_url
               @properties['sms_fallback_url']
             end
 
+            ##
+            # @return [String] HTTP method to use with sms url
             def sms_method
               @properties['sms_method']
             end
 
+            ##
+            # @return [String] URL Twilio will request when receiving an SMS
             def sms_url
               @properties['sms_url']
             end
 
+            ##
+            # @return [String] URL Twilio will use to pass status parameters
             def status_callback
               @properties['status_callback']
             end
 
+            ##
+            # @return [String] HTTP method twilio will use with status callback
             def status_callback_method
               @properties['status_callback_method']
             end
 
+            ##
+            # @return [String] Unique string to identify the trunk
             def trunk_sid
               @properties['trunk_sid']
             end
 
+            ##
+            # @return [String] The URI for this resource
             def uri
               @properties['uri']
             end
 
+            ##
+            # @return [String] The unique sid of the application to handle this number
             def voice_application_sid
               @properties['voice_application_sid']
             end
 
+            ##
+            # @return [Boolean] Look up the caller's caller-ID
             def voice_caller_id_lookup
               @properties['voice_caller_id_lookup']
             end
 
+            ##
+            # @return [String] HTTP method used with fallback_url
             def voice_fallback_method
               @properties['voice_fallback_method']
             end
 
+            ##
+            # @return [String] URL Twilio will request when an error occurs in TwiML
             def voice_fallback_url
               @properties['voice_fallback_url']
             end
 
+            ##
+            # @return [String] HTTP method used with the voice url
             def voice_method
               @properties['voice_method']
             end
 
+            ##
+            # @return [String] URL Twilio will request when receiving a call
             def voice_url
               @properties['voice_url']
             end
 
+            ##
+            # @return [incoming_phone_number.EmergencyStatus] The emergency_status
             def emergency_status
               @properties['emergency_status']
             end
 
+            ##
+            # @return [String] The emergency_address_sid
             def emergency_address_sid
               @properties['emergency_address_sid']
             end

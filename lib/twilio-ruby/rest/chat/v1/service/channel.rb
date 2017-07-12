@@ -276,8 +276,8 @@ module Twilio
 
             ##
             # Access the members
-            # @return [MemberList] if a(n) MemberList object was created.
-            # @return [MemberContext] if a(n) MemberContext object was created.
+            # @return [MemberList]
+            # @return [MemberContext] if sid was passed.
             def members(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -303,8 +303,8 @@ module Twilio
 
             ##
             # Access the messages
-            # @return [MessageList] if a(n) MessageList object was created.
-            # @return [MessageContext] if a(n) MessageContext object was created.
+            # @return [MessageList]
+            # @return [MessageContext] if sid was passed.
             def messages(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -330,8 +330,8 @@ module Twilio
 
             ##
             # Access the invites
-            # @return [InviteList] if a(n) InviteList object was created.
-            # @return [InviteContext] if a(n) InviteContext object was created.
+            # @return [InviteList]
+            # @return [InviteContext] if sid was passed.
             def invites(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -416,58 +416,86 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The service_sid
             def service_sid
               @properties['service_sid']
             end
 
+            ##
+            # @return [String] The friendly_name
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The unique_name
             def unique_name
               @properties['unique_name']
             end
 
+            ##
+            # @return [String] The attributes
             def attributes
               @properties['attributes']
             end
 
+            ##
+            # @return [channel.ChannelType] The type
             def type
               @properties['type']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The created_by
             def created_by
               @properties['created_by']
             end
 
+            ##
+            # @return [String] The members_count
             def members_count
               @properties['members_count']
             end
 
+            ##
+            # @return [String] The messages_count
             def messages_count
               @properties['messages_count']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end
 
+            ##
+            # @return [String] The links
             def links
               @properties['links']
             end

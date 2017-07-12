@@ -310,30 +310,44 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this outgoing-caller-ids
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] A human readable description for this resource
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The unique sid that identifies this account
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The incoming phone number
             def phone_number
               @properties['phone_number']
             end
 
+            ##
+            # @return [String] The URI for this resource
             def uri
               @properties['uri']
             end

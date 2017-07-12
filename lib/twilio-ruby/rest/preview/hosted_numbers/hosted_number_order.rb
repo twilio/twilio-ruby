@@ -208,8 +208,12 @@ module Twilio
           #   IncomingPhoneNumber resource.
           # @param [String] sms_fallback_method Optional. The SMS Fallback Method attached
           #   to the IncomingPhoneNumber resource.
+          # @param [String] status_callback_url Optional. The Status Callback URL attached
+          #   to the IncomingPhoneNumber resource.
+          # @param [String] status_callback_method Optional. The Status Callback Method
+          #   attached to the IncomingPhoneNumber resource.
           # @return [HostedNumberOrderInstance] Newly created HostedNumberOrderInstance
-          def create(address_sid: nil, phone_number: nil, iso_country: nil, sms_capability: nil, email: nil, account_sid: :unset, friendly_name: :unset, unique_name: :unset, cc_emails: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset)
+          def create(address_sid: nil, phone_number: nil, iso_country: nil, sms_capability: nil, email: nil, account_sid: :unset, friendly_name: :unset, unique_name: :unset, cc_emails: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, status_callback_url: :unset, status_callback_method: :unset)
             data = Twilio::Values.of({
                 'AddressSid' => address_sid,
                 'PhoneNumber' => phone_number,
@@ -224,6 +228,8 @@ module Twilio
                 'SmsMethod' => sms_method,
                 'SmsFallbackUrl' => sms_fallback_url,
                 'SmsFallbackMethod' => sms_fallback_method,
+                'StatusCallbackUrl' => status_callback_url,
+                'StatusCallbackMethod' => status_callback_method,
             })
 
             payload = @version.create(
@@ -419,62 +425,92 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] HostedNumberOrder sid.
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] Account Sid.
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [String] IncomingPhoneNumber sid.
           def incoming_phone_number_sid
             @properties['incoming_phone_number_sid']
           end
 
+          ##
+          # @return [String] Address sid.
           def address_sid
             @properties['address_sid']
           end
 
+          ##
+          # @return [String] LOA document sid.
           def signing_document_sid
             @properties['signing_document_sid']
           end
 
+          ##
+          # @return [String] An E164 formatted phone number.
           def phone_number
             @properties['phone_number']
           end
 
+          ##
+          # @return [String] A mapping of phone number capabilities.
           def capabilities
             @properties['capabilities']
           end
 
+          ##
+          # @return [String] A human readable description of this resource.
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [String] A unique, developer assigned name of this HostedNumberOrder.
           def unique_name
             @properties['unique_name']
           end
 
+          ##
+          # @return [hosted_number_order.Status] The Status of this HostedNumberOrder.
           def status
             @properties['status']
           end
 
+          ##
+          # @return [Time] The date this HostedNumberOrder was created.
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date this HostedNumberOrder was updated.
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] Email.
           def email
             @properties['email']
           end
 
+          ##
+          # @return [String] A list of emails.
           def cc_emails
             @properties['cc_emails']
           end
 
+          ##
+          # @return [String] The URL of this HostedNumberOrder.
           def url
             @properties['url']
           end

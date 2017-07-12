@@ -280,8 +280,8 @@ module Twilio
 
           ##
           # Access the recordings
-          # @return [RoomRecordingList] if a(n) RoomRecordingList object was created.
-          # @return [RoomRecordingContext] if a(n) RoomRecordingContext object was created.
+          # @return [RoomRecordingList]
+          # @return [RoomRecordingContext] if sid was passed.
           def recordings(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -363,66 +363,98 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The sid
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [room.RoomStatus] The status
           def status
             @properties['status']
           end
 
+          ##
+          # @return [Time] The date_created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date_updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The account_sid
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [Boolean] The enable_turn
           def enable_turn
             @properties['enable_turn']
           end
 
+          ##
+          # @return [String] The unique_name
           def unique_name
             @properties['unique_name']
           end
 
+          ##
+          # @return [String] The status_callback
           def status_callback
             @properties['status_callback']
           end
 
+          ##
+          # @return [String] The status_callback_method
           def status_callback_method
             @properties['status_callback_method']
           end
 
+          ##
+          # @return [Time] The end_time
           def end_time
             @properties['end_time']
           end
 
+          ##
+          # @return [String] The duration
           def duration
             @properties['duration']
           end
 
+          ##
+          # @return [room.RoomType] The type
           def type
             @properties['type']
           end
 
+          ##
+          # @return [String] The max_participants
           def max_participants
             @properties['max_participants']
           end
 
+          ##
+          # @return [Boolean] The record_participants_on_connect
           def record_participants_on_connect
             @properties['record_participants_on_connect']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end

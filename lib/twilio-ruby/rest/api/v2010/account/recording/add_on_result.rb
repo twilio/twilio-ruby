@@ -223,8 +223,8 @@ module Twilio
 
               ##
               # Access the payloads
-              # @return [PayloadList] if a(n) PayloadList object was created.
-              # @return [PayloadContext] if a(n) PayloadContext object was created.
+              # @return [PayloadList]
+              # @return [PayloadContext] if sid was passed.
               def payloads(sid=:unset)
                 raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -312,42 +312,62 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] A string that uniquely identifies this result
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] The unique sid that identifies this account
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [add_on_result.Status] The status of this result.
               def status
                 @properties['status']
               end
 
+              ##
+              # @return [String] A string that uniquely identifies the Add-on.
               def add_on_sid
                 @properties['add_on_sid']
               end
 
+              ##
+              # @return [String] A string that uniquely identifies the Add-on configuration.
               def add_on_configuration_sid
                 @properties['add_on_configuration_sid']
               end
 
+              ##
+              # @return [Time] The date this resource was created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date this resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [Time] The date this result was completed.
               def date_completed
                 @properties['date_completed']
               end
 
+              ##
+              # @return [String] A string that uniquely identifies the recording.
               def reference_sid
                 @properties['reference_sid']
               end
 
+              ##
+              # @return [String] The subresource_uris
               def subresource_uris
                 @properties['subresource_uris']
               end

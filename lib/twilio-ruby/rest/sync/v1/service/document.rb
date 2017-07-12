@@ -259,8 +259,8 @@ module Twilio
 
             ##
             # Access the document_permissions
-            # @return [DocumentPermissionList] if a(n) DocumentPermissionList object was created.
-            # @return [DocumentPermissionContext] if a(n) DocumentPermissionContext object was created.
+            # @return [DocumentPermissionList]
+            # @return [DocumentPermissionContext] if identity was passed.
             def document_permissions(identity=:unset)
               raise ArgumentError, 'identity cannot be nil' if identity.nil?
 
@@ -342,46 +342,68 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The unique_name
             def unique_name
               @properties['unique_name']
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The service_sid
             def service_sid
               @properties['service_sid']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end
 
+            ##
+            # @return [String] The links
             def links
               @properties['links']
             end
 
+            ##
+            # @return [String] The revision
             def revision
               @properties['revision']
             end
 
+            ##
+            # @return [Hash] The data
             def data
               @properties['data']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The created_by
             def created_by
               @properties['created_by']
             end

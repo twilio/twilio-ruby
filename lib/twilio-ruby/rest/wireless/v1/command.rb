@@ -297,42 +297,62 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The sid
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] The account_sid
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [String] The sim_sid
           def sim_sid
             @properties['sim_sid']
           end
 
+          ##
+          # @return [String] The command
           def command
             @properties['command']
           end
 
+          ##
+          # @return [command.CommandMode] The command_mode
           def command_mode
             @properties['command_mode']
           end
 
+          ##
+          # @return [command.Status] The status
           def status
             @properties['status']
           end
 
+          ##
+          # @return [command.Direction] The direction
           def direction
             @properties['direction']
           end
 
+          ##
+          # @return [Time] The date_created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date_updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end

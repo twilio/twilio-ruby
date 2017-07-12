@@ -260,8 +260,8 @@ module Twilio
 
           ##
           # Access the documents
-          # @return [DocumentList] if a(n) DocumentList object was created.
-          # @return [DocumentContext] if a(n) DocumentContext object was created.
+          # @return [DocumentList]
+          # @return [DocumentContext] if sid was passed.
           def documents(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -285,8 +285,8 @@ module Twilio
 
           ##
           # Access the sync_lists
-          # @return [SyncListList] if a(n) SyncListList object was created.
-          # @return [SyncListContext] if a(n) SyncListContext object was created.
+          # @return [SyncListList]
+          # @return [SyncListContext] if sid was passed.
           def sync_lists(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -310,8 +310,8 @@ module Twilio
 
           ##
           # Access the sync_maps
-          # @return [SyncMapList] if a(n) SyncMapList object was created.
-          # @return [SyncMapContext] if a(n) SyncMapContext object was created.
+          # @return [SyncMapList]
+          # @return [SyncMapContext] if sid was passed.
           def sync_maps(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -387,42 +387,62 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The sid
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] The account_sid
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [String] The friendly_name
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [Time] The date_created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date_updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The webhook_url
           def webhook_url
             @properties['webhook_url']
           end
 
+          ##
+          # @return [Boolean] The reachability_webhooks_enabled
           def reachability_webhooks_enabled
             @properties['reachability_webhooks_enabled']
           end
 
+          ##
+          # @return [Boolean] The acl_enabled
           def acl_enabled
             @properties['acl_enabled']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end

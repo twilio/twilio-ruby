@@ -317,8 +317,8 @@ module Twilio
 
           ##
           # Access the media
-          # @return [FaxMediaList] if a(n) FaxMediaList object was created.
-          # @return [FaxMediaContext] if a(n) FaxMediaContext object was created.
+          # @return [FaxMediaList]
+          # @return [FaxMediaContext] if sid was passed.
           def media(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -402,74 +402,110 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] A string that uniquely identifies this fax.
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] Account SID
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [String] The party that sent the fax
           def from
             @properties['from']
           end
 
+          ##
+          # @return [String] The party that received the fax
           def to
             @properties['to']
           end
 
+          ##
+          # @return [fax.Quality] The quality of this fax
           def quality
             @properties['quality']
           end
 
+          ##
+          # @return [String] Media SID
           def media_sid
             @properties['media_sid']
           end
 
+          ##
+          # @return [String] URL pointing to fax media
           def media_url
             @properties['media_url']
           end
 
+          ##
+          # @return [String] Number of pages
           def num_pages
             @properties['num_pages']
           end
 
+          ##
+          # @return [String] The time taken to transmit the fax
           def duration
             @properties['duration']
           end
 
+          ##
+          # @return [fax.Status] The status of this fax
           def status
             @properties['status']
           end
 
+          ##
+          # @return [fax.Direction] The direction of this fax
           def direction
             @properties['direction']
           end
 
+          ##
+          # @return [String] The API version used
           def api_version
             @properties['api_version']
           end
 
+          ##
+          # @return [String] Fax transmission price
           def price
             @properties['price']
           end
 
+          ##
+          # @return [String] Currency used for billing
           def price_unit
             @properties['price_unit']
           end
 
+          ##
+          # @return [Time] The date this fax was created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date this fax was updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] Nested resource URLs
           def links
             @properties['links']
           end
 
+          ##
+          # @return [String] The URL of this resource
           def url
             @properties['url']
           end

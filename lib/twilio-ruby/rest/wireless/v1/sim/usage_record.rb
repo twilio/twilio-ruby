@@ -202,22 +202,32 @@ module Twilio
               }
             end
 
+            ##
+            # @return [String] The sim_sid
             def sim_sid
               @properties['sim_sid']
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [Hash] The period
             def period
               @properties['period']
             end
 
+            ##
+            # @return [Hash] The commands
             def commands
               @properties['commands']
             end
 
+            ##
+            # @return [Hash] The data
             def data
               @properties['data']
             end

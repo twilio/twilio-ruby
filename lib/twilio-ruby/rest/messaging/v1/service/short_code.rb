@@ -285,38 +285,56 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The service_sid
             def service_sid
               @properties['service_sid']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The short_code
             def short_code
               @properties['short_code']
             end
 
+            ##
+            # @return [String] The country_code
             def country_code
               @properties['country_code']
             end
 
+            ##
+            # @return [Hash] The capabilities
             def capabilities
               @properties['capabilities']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end

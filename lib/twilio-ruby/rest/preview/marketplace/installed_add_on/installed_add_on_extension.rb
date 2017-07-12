@@ -276,30 +276,44 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this Extension
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The installed_add_on_sid
             def installed_add_on_sid
               @properties['installed_add_on_sid']
             end
 
+            ##
+            # @return [String] A human-readable description of this Extension
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] A human-readable description of the Extension's Product
             def product_name
               @properties['product_name']
             end
 
+            ##
+            # @return [String] The string that uniquely identifies this Extension
             def unique_name
               @properties['unique_name']
             end
 
+            ##
+            # @return [Boolean] A Boolean indicating if the Extension will be invoked
             def enabled
               @properties['enabled']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end

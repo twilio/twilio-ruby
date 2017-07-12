@@ -17,6 +17,10 @@ module Twilio
           @export_configuration = nil
         end
 
+        ##
+        # @param [String] resource_type The resource_type
+        # @return Twilio::REST::Preview::BulkExports::ExportInstance if resource_type was passed.
+        # @return Twilio::REST::Preview::BulkExports::ExportList
         def exports(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'
@@ -27,6 +31,10 @@ module Twilio
           end
         end
 
+        ##
+        # @param [String] resource_type The resource_type
+        # @return Twilio::REST::Preview::BulkExports::ExportConfigurationInstance if resource_type was passed.
+        # @return Twilio::REST::Preview::BulkExports::ExportConfigurationList
         def export_configuration(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'

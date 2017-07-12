@@ -302,26 +302,38 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] A 34 character string that uniquely identifies this resource.
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] AccountSid the Credential resource belongs to
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] A human readable description of this resource
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The URI for this resource, relative to `https://accounts.twilio.com`
             def url
               @properties['url']
             end

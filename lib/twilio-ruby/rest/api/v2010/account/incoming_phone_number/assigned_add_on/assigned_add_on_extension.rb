@@ -286,38 +286,56 @@ module Twilio
                   @instance_context
                 end
 
+                ##
+                # @return [String] A string that uniquely identifies this Extension
                 def sid
                   @properties['sid']
                 end
 
+                ##
+                # @return [String] The Account id that has installed this Add-on
                 def account_sid
                   @properties['account_sid']
                 end
 
+                ##
+                # @return [String] The Phone Number id that has installed this Add-on
                 def resource_sid
                   @properties['resource_sid']
                 end
 
+                ##
+                # @return [String] A string that uniquely identifies the assigned Add-on installation
                 def assigned_add_on_sid
                   @properties['assigned_add_on_sid']
                 end
 
+                ##
+                # @return [String] A human-readable description of this Extension
                 def friendly_name
                   @properties['friendly_name']
                 end
 
+                ##
+                # @return [String] A human-readable description of the Extension's Product
                 def product_name
                   @properties['product_name']
                 end
 
+                ##
+                # @return [String] The string that uniquely identifies this Extension
                 def unique_name
                   @properties['unique_name']
                 end
 
+                ##
+                # @return [String] The uri
                 def uri
                   @properties['uri']
                 end
 
+                ##
+                # @return [Boolean] A Boolean indicating if the Extension will be invoked
                 def enabled
                   @properties['enabled']
                 end

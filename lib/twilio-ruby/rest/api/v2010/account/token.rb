@@ -115,30 +115,44 @@ module Twilio
               }
             end
 
+            ##
+            # @return [String] The unique sid that identifies this account
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] An array representing the ephemeral credentials
             def ice_servers
               @properties['ice_servers']
             end
 
+            ##
+            # @return [String] The temporary password used for authenticating
             def password
               @properties['password']
             end
 
+            ##
+            # @return [String] The duration in seconds the credentials are valid
             def ttl
               @properties['ttl']
             end
 
+            ##
+            # @return [String] The temporary username that uniquely identifies a Token.
             def username
               @properties['username']
             end

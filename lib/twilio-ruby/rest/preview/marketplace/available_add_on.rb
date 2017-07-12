@@ -196,8 +196,8 @@ module Twilio
 
           ##
           # Access the extensions
-          # @return [AvailableAddOnExtensionList] if a(n) AvailableAddOnExtensionList object was created.
-          # @return [AvailableAddOnExtensionContext] if a(n) AvailableAddOnExtensionContext object was created.
+          # @return [AvailableAddOnExtensionList]
+          # @return [AvailableAddOnExtensionContext] if sid was passed.
           def extensions(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -271,30 +271,44 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] A string that uniquely identifies this Add-on
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] A description of this Add-on
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [String] A short description of the Add-on functionality
           def description
             @properties['description']
           end
 
+          ##
+          # @return [String] The way customers are charged for using this Add-on
           def pricing_type
             @properties['pricing_type']
           end
 
+          ##
+          # @return [Hash] The JSON Schema describing the Add-on's configuration
           def configuration_schema
             @properties['configuration_schema']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end

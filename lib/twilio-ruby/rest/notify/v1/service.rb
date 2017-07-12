@@ -308,8 +308,8 @@ module Twilio
 
           ##
           # Access the bindings
-          # @return [BindingList] if a(n) BindingList object was created.
-          # @return [BindingContext] if a(n) BindingContext object was created.
+          # @return [BindingList]
+          # @return [BindingContext] if sid was passed.
           def bindings(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -333,8 +333,8 @@ module Twilio
 
           ##
           # Access the notifications
-          # @return [NotificationList] if a(n) NotificationList object was created.
-          # @return [NotificationContext] if a(n) NotificationContext object was created.
+          # @return [NotificationList]
+          # @return [NotificationContext]
           def notifications
             unless @notifications
               @notifications = NotificationList.new(
@@ -348,8 +348,8 @@ module Twilio
 
           ##
           # Access the users
-          # @return [UserList] if a(n) UserList object was created.
-          # @return [UserContext] if a(n) UserContext object was created.
+          # @return [UserList]
+          # @return [UserContext] if identity was passed.
           def users(identity=:unset)
             raise ArgumentError, 'identity cannot be nil' if identity.nil?
 
@@ -373,8 +373,8 @@ module Twilio
 
           ##
           # Access the segments
-          # @return [SegmentList] if a(n) SegmentList object was created.
-          # @return [SegmentContext] if a(n) SegmentContext object was created.
+          # @return [SegmentList]
+          # @return [SegmentContext]
           def segments
             unless @segments
               @segments = SegmentList.new(
@@ -448,74 +448,110 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The sid
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] The account_sid
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [String] The friendly_name
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [Time] The date_created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date_updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The apn_credential_sid
           def apn_credential_sid
             @properties['apn_credential_sid']
           end
 
+          ##
+          # @return [String] The gcm_credential_sid
           def gcm_credential_sid
             @properties['gcm_credential_sid']
           end
 
+          ##
+          # @return [String] The fcm_credential_sid
           def fcm_credential_sid
             @properties['fcm_credential_sid']
           end
 
+          ##
+          # @return [String] The messaging_service_sid
           def messaging_service_sid
             @properties['messaging_service_sid']
           end
 
+          ##
+          # @return [String] The facebook_messenger_page_id
           def facebook_messenger_page_id
             @properties['facebook_messenger_page_id']
           end
 
+          ##
+          # @return [String] The default_apn_notification_protocol_version
           def default_apn_notification_protocol_version
             @properties['default_apn_notification_protocol_version']
           end
 
+          ##
+          # @return [String] The default_gcm_notification_protocol_version
           def default_gcm_notification_protocol_version
             @properties['default_gcm_notification_protocol_version']
           end
 
+          ##
+          # @return [String] The default_fcm_notification_protocol_version
           def default_fcm_notification_protocol_version
             @properties['default_fcm_notification_protocol_version']
           end
 
+          ##
+          # @return [Boolean] The log_enabled
           def log_enabled
             @properties['log_enabled']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end
 
+          ##
+          # @return [String] The alexa_skill_id
           def alexa_skill_id
             @properties['alexa_skill_id']
           end
 
+          ##
+          # @return [String] The default_alexa_notification_protocol_version
           def default_alexa_notification_protocol_version
             @properties['default_alexa_notification_protocol_version']
           end

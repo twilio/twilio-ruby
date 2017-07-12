@@ -180,18 +180,26 @@ module Twilio
               }
             end
 
+            ##
+            # @return [String] The redirect_to
             def redirect_to
               @properties['redirect_to']
             end
 
+            ##
+            # @return [String] The day
             def day
               @properties['day']
             end
 
+            ##
+            # @return [String] The size
             def size
               @properties['size']
             end
 
+            ##
+            # @return [String] The resource_type
             def resource_type
               @properties['resource_type']
             end

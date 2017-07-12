@@ -333,58 +333,86 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The sid
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The service_sid
               def service_sid
                 @properties['service_sid']
               end
 
+              ##
+              # @return [String] The credential_sid
               def credential_sid
                 @properties['credential_sid']
               end
 
+              ##
+              # @return [Time] The date_created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date_updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The notification_protocol_version
               def notification_protocol_version
                 @properties['notification_protocol_version']
               end
 
+              ##
+              # @return [String] The endpoint
               def endpoint
                 @properties['endpoint']
               end
 
+              ##
+              # @return [String] The identity
               def identity
                 @properties['identity']
               end
 
+              ##
+              # @return [String] The binding_type
               def binding_type
                 @properties['binding_type']
               end
 
+              ##
+              # @return [String] The address
               def address
                 @properties['address']
               end
 
+              ##
+              # @return [String] The tags
               def tags
                 @properties['tags']
               end
 
+              ##
+              # @return [String] The url
               def url
                 @properties['url']
               end
 
+              ##
+              # @return [String] The links
               def links
                 @properties['links']
               end

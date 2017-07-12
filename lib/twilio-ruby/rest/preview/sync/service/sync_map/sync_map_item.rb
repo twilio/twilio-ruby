@@ -345,42 +345,62 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The key
               def key
                 @properties['key']
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The service_sid
               def service_sid
                 @properties['service_sid']
               end
 
+              ##
+              # @return [String] The map_sid
               def map_sid
                 @properties['map_sid']
               end
 
+              ##
+              # @return [String] The url
               def url
                 @properties['url']
               end
 
+              ##
+              # @return [String] The revision
               def revision
                 @properties['revision']
               end
 
+              ##
+              # @return [Hash] The data
               def data
                 @properties['data']
               end
 
+              ##
+              # @return [Time] The date_created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date_updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The created_by
               def created_by
                 @properties['created_by']
               end

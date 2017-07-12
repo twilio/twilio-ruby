@@ -190,34 +190,50 @@ module Twilio
                 }
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The service_sid
               def service_sid
                 @properties['service_sid']
               end
 
+              ##
+              # @return [String] The channel_sid
               def channel_sid
                 @properties['channel_sid']
               end
 
+              ##
+              # @return [String] The member_sid
               def member_sid
                 @properties['member_sid']
               end
 
+              ##
+              # @return [user_channel.ChannelStatus] The status
               def status
                 @properties['status']
               end
 
+              ##
+              # @return [String] The last_consumed_message_index
               def last_consumed_message_index
                 @properties['last_consumed_message_index']
               end
 
+              ##
+              # @return [String] The unread_messages_count
               def unread_messages_count
                 @properties['unread_messages_count']
               end
 
+              ##
+              # @return [String] The links
               def links
                 @properties['links']
               end

@@ -323,50 +323,74 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The unique sid that identifies this account
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The API version to use
             def api_version
               @properties['api_version']
             end
 
+            ##
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] A human readable description of this resource
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The short code. e.g., 894546.
             def short_code
               @properties['short_code']
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this short-codes
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] HTTP method Twilio will use with sms fallback url
             def sms_fallback_method
               @properties['sms_fallback_method']
             end
 
+            ##
+            # @return [String] URL Twilio will request if an error occurs in executing TwiML
             def sms_fallback_url
               @properties['sms_fallback_url']
             end
 
+            ##
+            # @return [String] HTTP method to use when requesting the sms url
             def sms_method
               @properties['sms_method']
             end
 
+            ##
+            # @return [String] URL Twilio will request when receiving an SMS
             def sms_url
               @properties['sms_url']
             end
 
+            ##
+            # @return [String] The URI for this resource
             def uri
               @properties['uri']
             end

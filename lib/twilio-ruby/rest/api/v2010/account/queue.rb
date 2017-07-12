@@ -263,8 +263,8 @@ module Twilio
 
             ##
             # Access the members
-            # @return [MemberList] if a(n) MemberList object was created.
-            # @return [MemberContext] if a(n) MemberContext object was created.
+            # @return [MemberList]
+            # @return [MemberContext] if call_sid was passed.
             def members(call_sid=:unset)
               raise ArgumentError, 'call_sid cannot be nil' if call_sid.nil?
 
@@ -344,38 +344,56 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] Average wait time of members in the queue
             def average_wait_time
               @properties['average_wait_time']
             end
 
+            ##
+            # @return [String] The count of calls currently in the queue.
             def current_size
               @properties['current_size']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] A user-provided string that identifies this queue.
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The max number of calls allowed in the queue
             def max_size
               @properties['max_size']
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this queue
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The uri
             def uri
               @properties['uri']
             end

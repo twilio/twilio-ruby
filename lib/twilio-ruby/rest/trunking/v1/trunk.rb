@@ -269,8 +269,8 @@ module Twilio
 
           ##
           # Access the origination_urls
-          # @return [OriginationUrlList] if a(n) OriginationUrlList object was created.
-          # @return [OriginationUrlContext] if a(n) OriginationUrlContext object was created.
+          # @return [OriginationUrlList]
+          # @return [OriginationUrlContext] if sid was passed.
           def origination_urls(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -294,8 +294,8 @@ module Twilio
 
           ##
           # Access the credentials_lists
-          # @return [CredentialListList] if a(n) CredentialListList object was created.
-          # @return [CredentialListContext] if a(n) CredentialListContext object was created.
+          # @return [CredentialListList]
+          # @return [CredentialListContext] if sid was passed.
           def credentials_lists(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -319,8 +319,8 @@ module Twilio
 
           ##
           # Access the ip_access_control_lists
-          # @return [IpAccessControlListList] if a(n) IpAccessControlListList object was created.
-          # @return [IpAccessControlListContext] if a(n) IpAccessControlListContext object was created.
+          # @return [IpAccessControlListList]
+          # @return [IpAccessControlListContext] if sid was passed.
           def ip_access_control_lists(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -344,8 +344,8 @@ module Twilio
 
           ##
           # Access the phone_numbers
-          # @return [PhoneNumberList] if a(n) PhoneNumberList object was created.
-          # @return [PhoneNumberContext] if a(n) PhoneNumberContext object was created.
+          # @return [PhoneNumberList]
+          # @return [PhoneNumberContext] if sid was passed.
           def phone_numbers(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -425,58 +425,86 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The account_sid
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [String] The domain_name
           def domain_name
             @properties['domain_name']
           end
 
+          ##
+          # @return [String] The disaster_recovery_method
           def disaster_recovery_method
             @properties['disaster_recovery_method']
           end
 
+          ##
+          # @return [String] The disaster_recovery_url
           def disaster_recovery_url
             @properties['disaster_recovery_url']
           end
 
+          ##
+          # @return [String] The friendly_name
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [Boolean] The secure
           def secure
             @properties['secure']
           end
 
+          ##
+          # @return [Hash] The recording
           def recording
             @properties['recording']
           end
 
+          ##
+          # @return [String] The auth_type
           def auth_type
             @properties['auth_type']
           end
 
+          ##
+          # @return [String] The auth_type_set
           def auth_type_set
             @properties['auth_type_set']
           end
 
+          ##
+          # @return [Time] The date_created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date_updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The sid
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end

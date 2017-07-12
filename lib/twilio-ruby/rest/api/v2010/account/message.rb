@@ -316,8 +316,8 @@ module Twilio
 
             ##
             # Access the media
-            # @return [MediaList] if a(n) MediaList object was created.
-            # @return [MediaContext] if a(n) MediaContext object was created.
+            # @return [MediaList]
+            # @return [MediaContext] if sid was passed.
             def media(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -343,8 +343,8 @@ module Twilio
 
             ##
             # Access the feedback
-            # @return [FeedbackList] if a(n) FeedbackList object was created.
-            # @return [FeedbackContext] if a(n) FeedbackContext object was created.
+            # @return [FeedbackList]
+            # @return [FeedbackContext]
             def feedback
               unless @feedback
                 @feedback = FeedbackList.new(
@@ -424,82 +424,122 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The unique sid that identifies this account
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The version of the Twilio API used to process the message.
             def api_version
               @properties['api_version']
             end
 
+            ##
+            # @return [String] The text body of the message. Up to 1600 characters long.
             def body
               @properties['body']
             end
 
+            ##
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [Time] The date the message was sent
             def date_sent
               @properties['date_sent']
             end
 
+            ##
+            # @return [message.Direction] The direction of the message
             def direction
               @properties['direction']
             end
 
+            ##
+            # @return [String] The error code associated with the message
             def error_code
               @properties['error_code']
             end
 
+            ##
+            # @return [String] Human readable description of the ErrorCode
             def error_message
               @properties['error_message']
             end
 
+            ##
+            # @return [String] The phone number that initiated the message
             def from
               @properties['from']
             end
 
+            ##
+            # @return [String] The messaging_service_sid
             def messaging_service_sid
               @properties['messaging_service_sid']
             end
 
+            ##
+            # @return [String] Number of media files associated with the message
             def num_media
               @properties['num_media']
             end
 
+            ##
+            # @return [String] Indicates number of messages used to delivery the body
             def num_segments
               @properties['num_segments']
             end
 
+            ##
+            # @return [String] The amount billed for the message
             def price
               @properties['price']
             end
 
+            ##
+            # @return [String] The currency in which Price is measured
             def price_unit
               @properties['price_unit']
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this message
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [message.Status] The status of this message
             def status
               @properties['status']
             end
 
+            ##
+            # @return [String] The URI for any subresources
             def subresource_uris
               @properties['subresource_uris']
             end
 
+            ##
+            # @return [String] The phone number that received the message
             def to
               @properties['to']
             end
 
+            ##
+            # @return [String] The URI for this resource
             def uri
               @properties['uri']
             end

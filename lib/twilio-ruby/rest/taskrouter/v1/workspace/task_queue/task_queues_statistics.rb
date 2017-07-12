@@ -210,22 +210,32 @@ module Twilio
                 }
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [Hash] The cumulative
               def cumulative
                 @properties['cumulative']
               end
 
+              ##
+              # @return [Hash] The realtime
               def realtime
                 @properties['realtime']
               end
 
+              ##
+              # @return [String] The task_queue_sid
               def task_queue_sid
                 @properties['task_queue_sid']
               end
 
+              ##
+              # @return [String] The workspace_sid
               def workspace_sid
                 @properties['workspace_sid']
               end

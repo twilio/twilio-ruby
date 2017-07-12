@@ -304,8 +304,8 @@ module Twilio
 
             ##
             # Access the interactions
-            # @return [InteractionList] if a(n) InteractionList object was created.
-            # @return [InteractionContext] if a(n) InteractionContext object was created.
+            # @return [InteractionList]
+            # @return [InteractionContext] if sid was passed.
             def interactions(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -331,8 +331,8 @@ module Twilio
 
             ##
             # Access the participants
-            # @return [ParticipantList] if a(n) ParticipantList object was created.
-            # @return [ParticipantContext] if a(n) ParticipantContext object was created.
+            # @return [ParticipantList]
+            # @return [ParticipantContext] if sid was passed.
             def participants(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -415,50 +415,74 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this Session.
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] Service Sid.
             def service_sid
               @properties['service_sid']
             end
 
+            ##
+            # @return [String] Account Sid.
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] A unique, developer assigned name of this Session.
             def unique_name
               @properties['unique_name']
             end
 
+            ##
+            # @return [String] How long will this session stay open, in seconds.
             def ttl
               @properties['ttl']
             end
 
+            ##
+            # @return [session.Status] The Status of this Session
             def status
               @properties['status']
             end
 
+            ##
+            # @return [Time] The date this Session was started
             def start_time
               @properties['start_time']
             end
 
+            ##
+            # @return [Time] The date this Session was ended
             def end_time
               @properties['end_time']
             end
 
+            ##
+            # @return [Time] The date this Session was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this Session was updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The URL of this Session.
             def url
               @properties['url']
             end
 
+            ##
+            # @return [String] Nested resource URLs.
             def links
               @properties['links']
             end

@@ -267,8 +267,8 @@ module Twilio
 
             ##
             # Access the user_channels
-            # @return [UserChannelList] if a(n) UserChannelList object was created.
-            # @return [UserChannelContext] if a(n) UserChannelContext object was created.
+            # @return [UserChannelList]
+            # @return [UserChannelContext]
             def user_channels
               unless @user_channels
                 @user_channels = UserChannelList.new(
@@ -342,58 +342,86 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The service_sid
             def service_sid
               @properties['service_sid']
             end
 
+            ##
+            # @return [String] The attributes
             def attributes
               @properties['attributes']
             end
 
+            ##
+            # @return [String] The friendly_name
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The role_sid
             def role_sid
               @properties['role_sid']
             end
 
+            ##
+            # @return [String] The identity
             def identity
               @properties['identity']
             end
 
+            ##
+            # @return [Boolean] The is_online
             def is_online
               @properties['is_online']
             end
 
+            ##
+            # @return [Boolean] The is_notifiable
             def is_notifiable
               @properties['is_notifiable']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The joined_channels_count
             def joined_channels_count
               @properties['joined_channels_count']
             end
 
+            ##
+            # @return [String] The links
             def links
               @properties['links']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end

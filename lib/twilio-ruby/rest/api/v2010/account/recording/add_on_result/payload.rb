@@ -295,46 +295,68 @@ module Twilio
                   @instance_context
                 end
 
+                ##
+                # @return [String] A string that uniquely identifies this payload
                 def sid
                   @properties['sid']
                 end
 
+                ##
+                # @return [String] A string that uniquely identifies the result
                 def add_on_result_sid
                   @properties['add_on_result_sid']
                 end
 
+                ##
+                # @return [String] The unique sid that identifies this account
                 def account_sid
                   @properties['account_sid']
                 end
 
+                ##
+                # @return [String] A string that describes the payload.
                 def label
                   @properties['label']
                 end
 
+                ##
+                # @return [String] A string that uniquely identifies the Add-on.
                 def add_on_sid
                   @properties['add_on_sid']
                 end
 
+                ##
+                # @return [String] A string that uniquely identifies the Add-on configuration.
                 def add_on_configuration_sid
                   @properties['add_on_configuration_sid']
                 end
 
+                ##
+                # @return [String] The MIME type of the payload.
                 def content_type
                   @properties['content_type']
                 end
 
+                ##
+                # @return [Time] The date this resource was created
                 def date_created
                   @properties['date_created']
                 end
 
+                ##
+                # @return [Time] The date this resource was last updated
                 def date_updated
                   @properties['date_updated']
                 end
 
+                ##
+                # @return [String] A string that uniquely identifies the recording.
                 def reference_sid
                   @properties['reference_sid']
                 end
 
+                ##
+                # @return [String] The subresource_uris
                 def subresource_uris
                   @properties['subresource_uris']
                 end

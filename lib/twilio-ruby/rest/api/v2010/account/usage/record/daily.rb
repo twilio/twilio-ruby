@@ -216,58 +216,86 @@ module Twilio
                   }
                 end
 
+                ##
+                # @return [String] The account_sid
                 def account_sid
                   @properties['account_sid']
                 end
 
+                ##
+                # @return [String] The api_version
                 def api_version
                   @properties['api_version']
                 end
 
+                ##
+                # @return [daily.Category] The category
                 def category
                   @properties['category']
                 end
 
+                ##
+                # @return [String] The count
                 def count
                   @properties['count']
                 end
 
+                ##
+                # @return [String] The count_unit
                 def count_unit
                   @properties['count_unit']
                 end
 
+                ##
+                # @return [String] The description
                 def description
                   @properties['description']
                 end
 
+                ##
+                # @return [Date] The end_date
                 def end_date
                   @properties['end_date']
                 end
 
+                ##
+                # @return [String] The price
                 def price
                   @properties['price']
                 end
 
+                ##
+                # @return [String] The price_unit
                 def price_unit
                   @properties['price_unit']
                 end
 
+                ##
+                # @return [Date] The start_date
                 def start_date
                   @properties['start_date']
                 end
 
+                ##
+                # @return [String] The subresource_uris
                 def subresource_uris
                   @properties['subresource_uris']
                 end
 
+                ##
+                # @return [String] The uri
                 def uri
                   @properties['uri']
                 end
 
+                ##
+                # @return [String] The usage
                 def usage
                   @properties['usage']
                 end
 
+                ##
+                # @return [String] The usage_unit
                 def usage_unit
                   @properties['usage_unit']
                 end

@@ -380,66 +380,98 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The account this trigger monitors.
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The api_version
               def api_version
                 @properties['api_version']
               end
 
+              ##
+              # @return [String] HTTP method to use with callback_url
               def callback_method
                 @properties['callback_method']
               end
 
+              ##
+              # @return [String] URL Twilio will request when the trigger fires
               def callback_url
                 @properties['callback_url']
               end
 
+              ##
+              # @return [String] The current value of the field the trigger is watching.
               def current_value
                 @properties['current_value']
               end
 
+              ##
+              # @return [Time] The date this resource was created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date the trigger was last fired
               def date_fired
                 @properties['date_fired']
               end
 
+              ##
+              # @return [Time] The date this resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] A user-specified, human-readable name for the trigger.
               def friendly_name
                 @properties['friendly_name']
               end
 
+              ##
+              # @return [trigger.Recurring] How this trigger recurs
               def recurring
                 @properties['recurring']
               end
 
+              ##
+              # @return [String] The trigger's unique Sid
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [trigger.TriggerField] The field in the UsageRecord that fires the trigger
               def trigger_by
                 @properties['trigger_by']
               end
 
+              ##
+              # @return [String] the value at which the trigger will fire
               def trigger_value
                 @properties['trigger_value']
               end
 
+              ##
+              # @return [String] The URI for this resource
               def uri
                 @properties['uri']
               end
 
+              ##
+              # @return [trigger.UsageCategory] The usage category the trigger watches
               def usage_category
                 @properties['usage_category']
               end
 
+              ##
+              # @return [String] The URI of the UsageRecord this trigger is watching
               def usage_record_uri
                 @properties['usage_record_uri']
               end

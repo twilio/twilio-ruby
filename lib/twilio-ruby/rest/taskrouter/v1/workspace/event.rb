@@ -324,62 +324,92 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The actor_sid
             def actor_sid
               @properties['actor_sid']
             end
 
+            ##
+            # @return [String] The actor_type
             def actor_type
               @properties['actor_type']
             end
 
+            ##
+            # @return [String] The actor_url
             def actor_url
               @properties['actor_url']
             end
 
+            ##
+            # @return [String] The description
             def description
               @properties['description']
             end
 
+            ##
+            # @return [String] The event_data
             def event_data
               @properties['event_data']
             end
 
+            ##
+            # @return [Time] The event_date
             def event_date
               @properties['event_date']
             end
 
+            ##
+            # @return [String] The event_type
             def event_type
               @properties['event_type']
             end
 
+            ##
+            # @return [String] The resource_sid
             def resource_sid
               @properties['resource_sid']
             end
 
+            ##
+            # @return [String] The resource_type
             def resource_type
               @properties['resource_type']
             end
 
+            ##
+            # @return [String] The resource_url
             def resource_url
               @properties['resource_url']
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The source
             def source
               @properties['source']
             end
 
+            ##
+            # @return [String] The source_ip_address
             def source_ip_address
               @properties['source_ip_address']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end

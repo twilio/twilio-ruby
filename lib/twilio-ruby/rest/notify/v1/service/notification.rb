@@ -156,82 +156,122 @@ module Twilio
               }
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The service_sid
             def service_sid
               @properties['service_sid']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [String] The identities
             def identities
               @properties['identities']
             end
 
+            ##
+            # @return [String] The tags
             def tags
               @properties['tags']
             end
 
+            ##
+            # @return [String] The segments
             def segments
               @properties['segments']
             end
 
+            ##
+            # @return [notification.Priority] The priority
             def priority
               @properties['priority']
             end
 
+            ##
+            # @return [String] The ttl
             def ttl
               @properties['ttl']
             end
 
+            ##
+            # @return [String] The title
             def title
               @properties['title']
             end
 
+            ##
+            # @return [String] The body
             def body
               @properties['body']
             end
 
+            ##
+            # @return [String] The sound
             def sound
               @properties['sound']
             end
 
+            ##
+            # @return [String] The action
             def action
               @properties['action']
             end
 
+            ##
+            # @return [Hash] The data
             def data
               @properties['data']
             end
 
+            ##
+            # @return [Hash] The apn
             def apn
               @properties['apn']
             end
 
+            ##
+            # @return [Hash] The gcm
             def gcm
               @properties['gcm']
             end
 
+            ##
+            # @return [Hash] The fcm
             def fcm
               @properties['fcm']
             end
 
+            ##
+            # @return [Hash] The sms
             def sms
               @properties['sms']
             end
 
+            ##
+            # @return [Hash] The facebook_messenger
             def facebook_messenger
               @properties['facebook_messenger']
             end
 
+            ##
+            # @return [Hash] The alexa
             def alexa
               @properties['alexa']
             end

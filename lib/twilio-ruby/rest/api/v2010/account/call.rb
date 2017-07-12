@@ -295,8 +295,8 @@ module Twilio
             ##
             # Access the feedback_summaries
             # @param [String] sid The sid
-            # @return [FeedbackSummaryList] if a(n) FeedbackSummaryList object was created.
-            # @return [FeedbackSummaryContext] if a(n) FeedbackSummaryContext object was created.
+            # @return [FeedbackSummaryList]
+            # @return [FeedbackSummaryContext] if sid was passed.
             def feedback_summaries(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -452,8 +452,8 @@ module Twilio
 
             ##
             # Access the recordings
-            # @return [RecordingList] if a(n) RecordingList object was created.
-            # @return [RecordingContext] if a(n) RecordingContext object was created.
+            # @return [RecordingList]
+            # @return [RecordingContext] if sid was passed.
             def recordings(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -479,8 +479,8 @@ module Twilio
 
             ##
             # Access the notifications
-            # @return [NotificationList] if a(n) NotificationList object was created.
-            # @return [NotificationContext] if a(n) NotificationContext object was created.
+            # @return [NotificationList]
+            # @return [NotificationContext] if sid was passed.
             def notifications(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -506,8 +506,8 @@ module Twilio
 
             ##
             # Access the feedback
-            # @return [FeedbackList] if a(n) FeedbackList object was created.
-            # @return [FeedbackContext] if a(n) FeedbackContext object was created.
+            # @return [FeedbackList]
+            # @return [FeedbackContext]
             def feedback
               FeedbackContext.new(
                   @version,
@@ -589,102 +589,152 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The unique id of the Account responsible for creating this Call
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The annotation provided for the Call
             def annotation
               @properties['annotation']
             end
 
+            ##
+            # @return [String] If this call was initiated with answering machine detection, either `human` or `machine`. Empty otherwise.
             def answered_by
               @properties['answered_by']
             end
 
+            ##
+            # @return [String] The API Version the Call was created through
             def api_version
               @properties['api_version']
             end
 
+            ##
+            # @return [String] If this call was an incoming call to a phone number with Caller ID Lookup enabled, the caller's name. Empty otherwise.
             def caller_name
               @properties['caller_name']
             end
 
+            ##
+            # @return [Time] The date that this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date that this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] A string describing the direction of the call. `inbound` for inbound calls, `outbound-api` for calls initiated via the REST API or `outbound-dial` for calls initiated by a `Dial` verb.
             def direction
               @properties['direction']
             end
 
+            ##
+            # @return [String] The duration
             def duration
               @properties['duration']
             end
 
+            ##
+            # @return [Time] The end time of the Call. Null if the call did not complete successfully.
             def end_time
               @properties['end_time']
             end
 
+            ##
+            # @return [String] If this Call was an incoming call forwarded from another number, the forwarding phone number (depends on carrier supporting forwarding). Empty otherwise.
             def forwarded_from
               @properties['forwarded_from']
             end
 
+            ##
+            # @return [String] The phone number, SIP address or Client identifier that made this Call. Phone numbers are in E.164 format (e.g. +16175551212). SIP addresses are formatted as `name@company.com`. Client identifiers are formatted `client:name`.
             def from
               @properties['from']
             end
 
+            ##
+            # @return [String] The phone number, SIP address or Client identifier that made this Call. Formatted for display.
             def from_formatted
               @properties['from_formatted']
             end
 
+            ##
+            # @return [String] A 34 character Group Sid associated with this Call. Empty if no Group is associated with the Call.
             def group_sid
               @properties['group_sid']
             end
 
+            ##
+            # @return [String] A 34 character string that uniquely identifies the Call that created this leg.
             def parent_call_sid
               @properties['parent_call_sid']
             end
 
+            ##
+            # @return [String] If the call was inbound, this is the Sid of the IncomingPhoneNumber that received the call. If the call was outbound, it is the Sid of the OutgoingCallerId from which the call was placed.
             def phone_number_sid
               @properties['phone_number_sid']
             end
 
+            ##
+            # @return [String] The charge for this call, in the currency associated with the account. Populated after the call is completed. May not be immediately available.
             def price
               @properties['price']
             end
 
+            ##
+            # @return [String] The currency in which `Price` is measured.
             def price_unit
               @properties['price_unit']
             end
 
+            ##
+            # @return [String] A 34 character string that uniquely identifies this resource.
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [Time] The start time of the Call. Null if the call has not yet been dialed.
             def start_time
               @properties['start_time']
             end
 
+            ##
+            # @return [feedback_summary.Status] The status
             def status
               @properties['status']
             end
 
+            ##
+            # @return [String] Call Instance Subresources
             def subresource_uris
               @properties['subresource_uris']
             end
 
+            ##
+            # @return [String] The phone number, SIP address or Client identifier that received this Call. Phone numbers are in E.164 format (e.g. +16175551212). SIP addresses are formatted as `name@company.com`. Client identifiers are formatted `client:name`.
             def to
               @properties['to']
             end
 
+            ##
+            # @return [String] The phone number, SIP address or Client identifier that received this Call. Formatted for display.
             def to_formatted
               @properties['to_formatted']
             end
 
+            ##
+            # @return [String] The URI for this resource, relative to `https://api.twilio.com`
             def uri
               @properties['uri']
             end

@@ -249,8 +249,8 @@ module Twilio
 
               ##
               # Access the extensions
-              # @return [AssignedAddOnExtensionList] if a(n) AssignedAddOnExtensionList object was created.
-              # @return [AssignedAddOnExtensionContext] if a(n) AssignedAddOnExtensionContext object was created.
+              # @return [AssignedAddOnExtensionList]
+              # @return [AssignedAddOnExtensionContext] if sid was passed.
               def extensions(sid=:unset)
                 raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -340,46 +340,68 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] A string that uniquely identifies this assigned Add-on installation
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] The Account id that has installed this Add-on
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The Phone Number id that has installed this Add-on
               def resource_sid
                 @properties['resource_sid']
               end
 
+              ##
+              # @return [String] A description of this Add-on installation
               def friendly_name
                 @properties['friendly_name']
               end
 
+              ##
+              # @return [String] A short description of the Add-on functionality
               def description
                 @properties['description']
               end
 
+              ##
+              # @return [Hash] The JSON object representing the current configuration
               def configuration
                 @properties['configuration']
               end
 
+              ##
+              # @return [String] The string that uniquely identifies this Add-on installation
               def unique_name
                 @properties['unique_name']
               end
 
+              ##
+              # @return [Time] The date this Add-on was installed
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date this Add-on installation was last updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The uri
               def uri
                 @properties['uri']
               end
 
+              ##
+              # @return [String] The subresource_uris
               def subresource_uris
                 @properties['subresource_uris']
               end

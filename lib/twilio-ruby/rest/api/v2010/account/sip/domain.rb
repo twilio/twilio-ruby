@@ -299,8 +299,8 @@ module Twilio
 
               ##
               # Access the ip_access_control_list_mappings
-              # @return [IpAccessControlListMappingList] if a(n) IpAccessControlListMappingList object was created.
-              # @return [IpAccessControlListMappingContext] if a(n) IpAccessControlListMappingContext object was created.
+              # @return [IpAccessControlListMappingList]
+              # @return [IpAccessControlListMappingContext] if sid was passed.
               def ip_access_control_list_mappings(sid=:unset)
                 raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -326,8 +326,8 @@ module Twilio
 
               ##
               # Access the credential_list_mappings
-              # @return [CredentialListMappingList] if a(n) CredentialListMappingList object was created.
-              # @return [CredentialListMappingContext] if a(n) CredentialListMappingContext object was created.
+              # @return [CredentialListMappingList]
+              # @return [CredentialListMappingContext] if sid was passed.
               def credential_list_mappings(sid=:unset)
                 raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -415,66 +415,98 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The unique id of the account that sent the message
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The Twilio API version used to process the message
               def api_version
                 @properties['api_version']
               end
 
+              ##
+              # @return [String] The types of authentication mapped to the domain
               def auth_type
                 @properties['auth_type']
               end
 
+              ##
+              # @return [Time] The date this resource was created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date this resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The unique address on Twilio to route SIP traffic
               def domain_name
                 @properties['domain_name']
               end
 
+              ##
+              # @return [String] A user-specified, human-readable name for the trigger.
               def friendly_name
                 @properties['friendly_name']
               end
 
+              ##
+              # @return [String] A string that uniquely identifies the SIP Domain
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] The URI for this resource
               def uri
                 @properties['uri']
               end
 
+              ##
+              # @return [String] HTTP method used with voice_fallback_url
               def voice_fallback_method
                 @properties['voice_fallback_method']
               end
 
+              ##
+              # @return [String] URL Twilio will request if an error occurs in executing TwiML
               def voice_fallback_url
                 @properties['voice_fallback_url']
               end
 
+              ##
+              # @return [String] HTTP method to use with voice_url
               def voice_method
                 @properties['voice_method']
               end
 
+              ##
+              # @return [String] The voice_status_callback_method
               def voice_status_callback_method
                 @properties['voice_status_callback_method']
               end
 
+              ##
+              # @return [String] URL that Twilio will request with status updates
               def voice_status_callback_url
                 @properties['voice_status_callback_url']
               end
 
+              ##
+              # @return [String] URL Twilio will request when receiving a call
               def voice_url
                 @properties['voice_url']
               end
 
+              ##
+              # @return [String] The subresource_uris
               def subresource_uris
                 @properties['subresource_uris']
               end

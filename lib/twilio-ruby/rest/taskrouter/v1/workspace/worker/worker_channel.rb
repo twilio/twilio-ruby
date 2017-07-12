@@ -297,58 +297,86 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The assigned_tasks
               def assigned_tasks
                 @properties['assigned_tasks']
               end
 
+              ##
+              # @return [Boolean] The available
               def available
                 @properties['available']
               end
 
+              ##
+              # @return [String] The available_capacity_percentage
               def available_capacity_percentage
                 @properties['available_capacity_percentage']
               end
 
+              ##
+              # @return [String] The configured_capacity
               def configured_capacity
                 @properties['configured_capacity']
               end
 
+              ##
+              # @return [Time] The date_created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date_updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The sid
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] The task_channel_sid
               def task_channel_sid
                 @properties['task_channel_sid']
               end
 
+              ##
+              # @return [String] The task_channel_unique_name
               def task_channel_unique_name
                 @properties['task_channel_unique_name']
               end
 
+              ##
+              # @return [String] The worker_sid
               def worker_sid
                 @properties['worker_sid']
               end
 
+              ##
+              # @return [String] The workspace_sid
               def workspace_sid
                 @properties['workspace_sid']
               end
 
+              ##
+              # @return [String] The links
               def links
                 @properties['links']
               end
 
+              ##
+              # @return [String] The url
               def url
                 @properties['url']
               end

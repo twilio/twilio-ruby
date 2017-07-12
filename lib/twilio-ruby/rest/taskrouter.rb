@@ -26,6 +26,10 @@ module Twilio
         @v1 ||= V1.new self
       end
 
+      ##
+      # @param [String] sid The sid
+      # @return Twilio::REST::Taskrouter::V1::WorkspaceInstance if sid was passed.
+      # @return Twilio::REST::Taskrouter::V1::WorkspaceList
       def workspaces(sid=:unset)
         self.v1.workspaces(sid)
       end

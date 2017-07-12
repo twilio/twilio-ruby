@@ -265,30 +265,44 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this fax media
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] Account SID
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] Fax SID
             def fax_sid
               @properties['fax_sid']
             end
 
+            ##
+            # @return [String] Media content type
             def content_type
               @properties['content_type']
             end
 
+            ##
+            # @return [Time] The date this fax media was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this fax media was updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The URL of this resource
             def url
               @properties['url']
             end

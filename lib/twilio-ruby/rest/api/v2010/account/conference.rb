@@ -293,8 +293,8 @@ module Twilio
 
             ##
             # Access the participants
-            # @return [ParticipantList] if a(n) ParticipantList object was created.
-            # @return [ParticipantContext] if a(n) ParticipantContext object was created.
+            # @return [ParticipantList]
+            # @return [ParticipantContext] if call_sid was passed.
             def participants(call_sid=:unset)
               raise ArgumentError, 'call_sid cannot be nil' if call_sid.nil?
 
@@ -376,42 +376,62 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The unique sid that identifies this account
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The api_version
             def api_version
               @properties['api_version']
             end
 
+            ##
+            # @return [String] A human readable description of this resource
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The region
             def region
               @properties['region']
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this conference
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [participant.Status] The status of the conference
             def status
               @properties['status']
             end
 
+            ##
+            # @return [String] The URI for this resource
             def uri
               @properties['uri']
             end
 
+            ##
+            # @return [String] The subresource_uris
             def subresource_uris
               @properties['subresource_uris']
             end

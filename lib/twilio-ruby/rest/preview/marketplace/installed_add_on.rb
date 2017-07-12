@@ -261,8 +261,8 @@ module Twilio
 
           ##
           # Access the extensions
-          # @return [InstalledAddOnExtensionList] if a(n) InstalledAddOnExtensionList object was created.
-          # @return [InstalledAddOnExtensionContext] if a(n) InstalledAddOnExtensionContext object was created.
+          # @return [InstalledAddOnExtensionList]
+          # @return [InstalledAddOnExtensionContext] if sid was passed.
           def extensions(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -339,42 +339,62 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] A string that uniquely identifies this Add-on installation
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] The Account id that has installed this Add-on
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [String] A description of this Add-on installation
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [String] A short description of the Add-on functionality
           def description
             @properties['description']
           end
 
+          ##
+          # @return [Hash] The JSON object representing the current configuration
           def configuration
             @properties['configuration']
           end
 
+          ##
+          # @return [String] The string that uniquely identifies this Add-on installation
           def unique_name
             @properties['unique_name']
           end
 
+          ##
+          # @return [Time] The date this Add-on installation was created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date this Add-on installation was last updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end
