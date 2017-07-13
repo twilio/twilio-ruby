@@ -2,6 +2,8 @@ twilio-ruby changelog
 =====================
 [2017-07-13] Version 5.0.0.alpha1
 ----------------------------------
+- Moving to General Availability
+
 **Api**
 - Update `AnnounceMethod` parameter naming for consistency
 
