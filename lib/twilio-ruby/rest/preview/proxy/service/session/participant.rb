@@ -83,16 +83,6 @@ module Twilio
               # When passed a block, yields ParticipantInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] identifier The Participant's contact identifier, normally a
-              #   phone number.
-              # @param [participant.ParticipantType] participant_type The Type of this
-              #   Participant. One of `sms`, `voice` or `phone`.
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -189,8 +179,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] service_sid The unique SID identifier of the Service.
-              # @param [String] session_sid The unique SID identifier of the Session.
               # @return [ParticipantPage] ParticipantPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -304,8 +292,8 @@ module Twilio
 
               ##
               # Access the message_interactions
-              # @return [MessageInteractionList] if a(n) MessageInteractionList object was created.
-              # @return [MessageInteractionContext] if a(n) MessageInteractionContext object was created.
+              # @return [MessageInteractionList]
+              # @return [MessageInteractionContext] if sid was passed.
               def message_interactions(sid=:unset)
                 raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -380,7 +368,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [ParticipantContext] ParticipantContext for this ParticipantInstance
               def context
                 unless @instance_context
@@ -394,50 +381,74 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] A string that uniquely identifies this Participant.
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] Session Sid.
               def session_sid
                 @properties['session_sid']
               end
 
+              ##
+              # @return [String] Service Sid.
               def service_sid
                 @properties['service_sid']
               end
 
+              ##
+              # @return [String] Account Sid.
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] A human readable description of this resource
               def friendly_name
                 @properties['friendly_name']
               end
 
+              ##
+              # @return [participant.ParticipantType] The Type of this Participant
               def participant_type
                 @properties['participant_type']
               end
 
+              ##
+              # @return [String] The Participant's contact identifier, normally a phone number.
               def identifier
                 @properties['identifier']
               end
 
+              ##
+              # @return [String] What this Participant communicates with, normally a phone number.
               def proxy_identifier
                 @properties['proxy_identifier']
               end
 
+              ##
+              # @return [Time] The date this Participant was created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date this Participant was updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The URL of this resource.
               def url
                 @properties['url']
               end
 
+              ##
+              # @return [String] Nested resource URLs.
               def links
                 @properties['links']
               end

@@ -26,8 +26,8 @@ module Twilio
           ##
           # Access the countries
           # @param [String] iso_country The iso_country
-          # @return [CountryList] if a(n) CountryList object was created.
-          # @return [CountryContext] if a(n) CountryContext object was created.
+          # @return [CountryList]
+          # @return [CountryContext] if iso_country was passed.
           def countries(iso_country=:unset)
             raise ArgumentError, 'iso_country cannot be nil' if iso_country.nil?
 
@@ -99,14 +99,20 @@ module Twilio
             }
           end
 
+          ##
+          # @return [String] The name
           def name
             @properties['name']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end

@@ -32,10 +32,10 @@ module Twilio
             # memory before returning.
             # @param [Time] date_created_before Filter by date created
             # @param [Time] date_created Filter by date created
-            # @param [Time] date_created_after: Filter by date created
+            # @param [Time] date_created_after Filter by date created
             # @param [Time] date_updated_before Filter by date updated
             # @param [Time] date_updated Filter by date updated
-            # @param [Time] date_updated_after: Filter by date updated
+            # @param [Time] date_updated_after Filter by date updated
             # @param [String] friendly_name Only show results who's friendly name exactly
             #   matches the string
             # @param [conference.Status] status A string representing the status of the
@@ -68,10 +68,10 @@ module Twilio
             # is reached.
             # @param [Time] date_created_before Filter by date created
             # @param [Time] date_created Filter by date created
-            # @param [Time] date_created_after: Filter by date created
+            # @param [Time] date_created_after Filter by date created
             # @param [Time] date_updated_before Filter by date updated
             # @param [Time] date_updated Filter by date updated
-            # @param [Time] date_updated_after: Filter by date updated
+            # @param [Time] date_updated_after Filter by date updated
             # @param [String] friendly_name Only show results who's friendly name exactly
             #   matches the string
             # @param [conference.Status] status A string representing the status of the
@@ -105,22 +105,6 @@ module Twilio
             # When passed a block, yields ConferenceInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Time] date_created_before Filter by date created
-            # @param [Time] date_created Filter by date created
-            # @param [Time] date_created_after: Filter by date created
-            # @param [Time] date_updated_before Filter by date updated
-            # @param [Time] date_updated Filter by date updated
-            # @param [Time] date_updated_after: Filter by date updated
-            # @param [String] friendly_name Only show results who's friendly name exactly
-            #   matches the string
-            # @param [conference.Status] status A string representing the status of the
-            #   conference. May be `init`, `in-progress`, or `completed`.
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -138,10 +122,10 @@ module Twilio
             # Request is executed immediately.
             # @param [Time] date_created_before Filter by date created
             # @param [Time] date_created Filter by date created
-            # @param [Time] date_created_after: Filter by date created
+            # @param [Time] date_created_after Filter by date created
             # @param [Time] date_updated_before Filter by date updated
             # @param [Time] date_updated Filter by date updated
-            # @param [Time] date_updated_after: Filter by date updated
+            # @param [Time] date_updated_after Filter by date updated
             # @param [String] friendly_name Only show results who's friendly name exactly
             #   matches the string
             # @param [conference.Status] status A string representing the status of the
@@ -198,8 +182,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] account_sid The unique id of the Account] responsible for
-            #   creating this conference.
             # @return [ConferencePage] ConferencePage
             def initialize(version, response, solution)
               super(version, response)
@@ -293,8 +275,8 @@ module Twilio
 
             ##
             # Access the participants
-            # @return [ParticipantList] if a(n) ParticipantList object was created.
-            # @return [ParticipantContext] if a(n) ParticipantContext object was created.
+            # @return [ParticipantList]
+            # @return [ParticipantContext] if call_sid was passed.
             def participants(call_sid=:unset)
               raise ArgumentError, 'call_sid cannot be nil' if call_sid.nil?
 
@@ -363,7 +345,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [ConferenceContext] ConferenceContext for this ConferenceInstance
             def context
               unless @instance_context
@@ -376,42 +357,62 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The unique sid that identifies this account
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The api_version
             def api_version
               @properties['api_version']
             end
 
+            ##
+            # @return [String] A human readable description of this resource
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The region
             def region
               @properties['region']
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this conference
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [participant.Status] The status of the conference
             def status
               @properties['status']
             end
 
+            ##
+            # @return [String] The URI for this resource
             def uri
               @properties['uri']
             end
 
+            ##
+            # @return [String] The subresource_uris
             def subresource_uris
               @properties['subresource_uris']
             end

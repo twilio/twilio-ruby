@@ -65,8 +65,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] service_sid The service_sid
-              # @param [String] identity The identity
               # @return [SegmentMembershipPage] SegmentMembershipPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -184,7 +182,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [SegmentMembershipContext] SegmentMembershipContext for this SegmentMembershipInstance
               def context
                 unless @instance_context
@@ -198,22 +195,32 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The service_sid
               def service_sid
                 @properties['service_sid']
               end
 
+              ##
+              # @return [String] The identity
               def identity
                 @properties['identity']
               end
 
+              ##
+              # @return [String] The segment
               def segment
                 @properties['segment']
               end
 
+              ##
+              # @return [String] The url
               def url
                 @properties['url']
               end

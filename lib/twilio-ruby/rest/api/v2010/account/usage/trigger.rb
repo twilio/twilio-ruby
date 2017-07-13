@@ -132,18 +132,6 @@ module Twilio
               # When passed a block, yields TriggerInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [trigger.Recurring] recurring Only show UsageTriggers that count over
-              #   this interval. One of daily, monthly, or yearly
-              # @param [trigger.TriggerField] trigger_by Only show UsageTriggers that trigger by
-              #   this field in the UsagRecord
-              # @param [trigger.UsageCategory] usage_category Only show UsageTriggers that watch
-              #   this usage category
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -212,8 +200,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid A 34 character string that uniquely identifies this
-              #   resource.
               # @return [TriggerPage] TriggerPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -367,7 +353,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [TriggerContext] TriggerContext for this TriggerInstance
               def context
                 unless @instance_context
@@ -380,66 +365,98 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The account this trigger monitors.
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The api_version
               def api_version
                 @properties['api_version']
               end
 
+              ##
+              # @return [String] HTTP method to use with callback_url
               def callback_method
                 @properties['callback_method']
               end
 
+              ##
+              # @return [String] URL Twilio will request when the trigger fires
               def callback_url
                 @properties['callback_url']
               end
 
+              ##
+              # @return [String] The current value of the field the trigger is watching.
               def current_value
                 @properties['current_value']
               end
 
+              ##
+              # @return [Time] The date this resource was created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date the trigger was last fired
               def date_fired
                 @properties['date_fired']
               end
 
+              ##
+              # @return [Time] The date this resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] A user-specified, human-readable name for the trigger.
               def friendly_name
                 @properties['friendly_name']
               end
 
+              ##
+              # @return [trigger.Recurring] How this trigger recurs
               def recurring
                 @properties['recurring']
               end
 
+              ##
+              # @return [String] The trigger's unique Sid
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [trigger.TriggerField] The field in the UsageRecord that fires the trigger
               def trigger_by
                 @properties['trigger_by']
               end
 
+              ##
+              # @return [String] the value at which the trigger will fire
               def trigger_value
                 @properties['trigger_value']
               end
 
+              ##
+              # @return [String] The URI for this resource
               def uri
                 @properties['uri']
               end
 
+              ##
+              # @return [trigger.UsageCategory] The usage category the trigger watches
               def usage_category
                 @properties['usage_category']
               end
 
+              ##
+              # @return [String] The URI of the UsageRecord this trigger is watching
               def usage_record_uri
                 @properties['usage_record_uri']
               end

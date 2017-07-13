@@ -65,8 +65,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] message_sid The message_sid
               # @return [FeedbackPage] FeedbackPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -117,26 +115,38 @@ module Twilio
                 }
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The message_sid
               def message_sid
                 @properties['message_sid']
               end
 
+              ##
+              # @return [feedback.Outcome] The outcome
               def outcome
                 @properties['outcome']
               end
 
+              ##
+              # @return [Time] The date_created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date_updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The uri
               def uri
                 @properties['uri']
               end

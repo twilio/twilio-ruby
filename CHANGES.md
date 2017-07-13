@@ -1,5 +1,14 @@
 twilio-ruby changelog
 =====================
+[2017-07-13] Version 5.0.0.alpha1
+----------------------------------
+**Api**
+- Update `AnnounceMethod` parameter naming for consistency
+
+**Preview**
+- Add `verification_attempts` to HostedNumberOrders.
+
+
 [2017-07-07] Version 5.0.0.rc26
 --------------------------------
 **Api**

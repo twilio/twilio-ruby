@@ -37,7 +37,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] sim_sid The sim_sid
             # @return [UsagePage] UsagePage
             def initialize(version, response, solution)
               super(version, response)
@@ -146,7 +145,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [UsageContext] UsageContext for this UsageInstance
             def context
               unless @instance_context
@@ -158,38 +156,56 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The sim_sid
             def sim_sid
               @properties['sim_sid']
             end
 
+            ##
+            # @return [String] The sim_unique_name
             def sim_unique_name
               @properties['sim_unique_name']
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [Hash] The period
             def period
               @properties['period']
             end
 
+            ##
+            # @return [Hash] The commands_usage
             def commands_usage
               @properties['commands_usage']
             end
 
+            ##
+            # @return [Hash] The commands_costs
             def commands_costs
               @properties['commands_costs']
             end
 
+            ##
+            # @return [Hash] The data_usage
             def data_usage
               @properties['data_usage']
             end
 
+            ##
+            # @return [Hash] The data_costs
             def data_costs
               @properties['data_costs']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end

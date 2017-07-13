@@ -164,14 +164,6 @@ module Twilio
               # When passed a block, yields ParticipantInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Boolean] muted Only show participants that are muted or unmuted
-              # @param [Boolean] hold The hold
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -235,10 +227,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid The unique id of the Account that created this
-              #   conference
-              # @param [String] conference_sid A 34 character string that identifies the
-              #   conference this participant is in
               # @return [ParticipantPage] ParticipantPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -316,16 +304,16 @@ module Twilio
               # @param [String] hold_url The hold_url
               # @param [String] hold_method The hold_method
               # @param [String] announce_url The announce_url
-              # @param [String] announce_url_method The announce_url_method
+              # @param [String] announce_method The announce_method
               # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(muted: :unset, hold: :unset, hold_url: :unset, hold_method: :unset, announce_url: :unset, announce_url_method: :unset)
+              def update(muted: :unset, hold: :unset, hold_url: :unset, hold_method: :unset, announce_url: :unset, announce_method: :unset)
                 data = Twilio::Values.of({
                     'Muted' => muted,
                     'Hold' => hold,
                     'HoldUrl' => hold_url,
                     'HoldMethod' => hold_method,
                     'AnnounceUrl' => announce_url,
-                    'AnnounceUrlMethod' => announce_url_method,
+                    'AnnounceMethod' => announce_method,
                 })
 
                 payload = @version.update(
@@ -399,7 +387,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [ParticipantContext] ParticipantContext for this ParticipantInstance
               def context
                 unless @instance_context
@@ -413,46 +400,68 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The unique sid that identifies this account
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] A string that uniquely identifies this call
               def call_sid
                 @properties['call_sid']
               end
 
+              ##
+              # @return [String] A string that uniquely identifies this conference
               def conference_sid
                 @properties['conference_sid']
               end
 
+              ##
+              # @return [Time] The date this resource was created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date this resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [Boolean] Indicates if the endConferenceOnExit was set
               def end_conference_on_exit
                 @properties['end_conference_on_exit']
               end
 
+              ##
+              # @return [Boolean] Indicates if the participant is muted
               def muted
                 @properties['muted']
               end
 
+              ##
+              # @return [Boolean] The hold
               def hold
                 @properties['hold']
               end
 
+              ##
+              # @return [Boolean] Indicates if the startConferenceOnEnter attribute was set
               def start_conference_on_enter
                 @properties['start_conference_on_enter']
               end
 
+              ##
+              # @return [participant.Status] The status
               def status
                 @properties['status']
               end
 
+              ##
+              # @return [String] The URI for this resource
               def uri
                 @properties['uri']
               end
@@ -471,16 +480,16 @@ module Twilio
               # @param [String] hold_url The hold_url
               # @param [String] hold_method The hold_method
               # @param [String] announce_url The announce_url
-              # @param [String] announce_url_method The announce_url_method
+              # @param [String] announce_method The announce_method
               # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(muted: :unset, hold: :unset, hold_url: :unset, hold_method: :unset, announce_url: :unset, announce_url_method: :unset)
+              def update(muted: :unset, hold: :unset, hold_url: :unset, hold_method: :unset, announce_url: :unset, announce_method: :unset)
                 context.update(
                     muted: muted,
                     hold: hold,
                     hold_url: hold_url,
                     hold_method: hold_method,
                     announce_url: announce_url,
-                    announce_url_method: announce_url_method,
+                    announce_method: announce_method,
                 )
               end
 

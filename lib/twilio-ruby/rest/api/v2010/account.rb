@@ -97,15 +97,6 @@ module Twilio
           # When passed a block, yields AccountInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] friendly_name Filter accounts where the friendly name exactly
-          #   matches the desired FriendlyName
-          # @param [account.Status] status Only show accounts with the given Status
-          # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-          #  guarantees to never return more than limit.                  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-          #  the default value of 50 records.                      If no page_size is defined
-          #                       but a limit is defined, stream() will attempt to read the
-          #                       limit with the most efficient page size, i.e. min(limit, 1000)
           def each
             limits = @version.read_limits
 
@@ -285,8 +276,8 @@ module Twilio
 
           ##
           # Access the addresses
-          # @return [AddressList] if a(n) AddressList object was created.
-          # @return [AddressContext] if a(n) AddressContext object was created.
+          # @return [AddressList]
+          # @return [AddressContext] if sid was passed.
           def addresses(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -310,8 +301,8 @@ module Twilio
 
           ##
           # Access the applications
-          # @return [ApplicationList] if a(n) ApplicationList object was created.
-          # @return [ApplicationContext] if a(n) ApplicationContext object was created.
+          # @return [ApplicationList]
+          # @return [ApplicationContext] if sid was passed.
           def applications(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -335,8 +326,8 @@ module Twilio
 
           ##
           # Access the authorized_connect_apps
-          # @return [AuthorizedConnectAppList] if a(n) AuthorizedConnectAppList object was created.
-          # @return [AuthorizedConnectAppContext] if a(n) AuthorizedConnectAppContext object was created.
+          # @return [AuthorizedConnectAppList]
+          # @return [AuthorizedConnectAppContext] if connect_app_sid was passed.
           def authorized_connect_apps(connect_app_sid=:unset)
             raise ArgumentError, 'connect_app_sid cannot be nil' if connect_app_sid.nil?
 
@@ -360,8 +351,8 @@ module Twilio
 
           ##
           # Access the available_phone_numbers
-          # @return [AvailablePhoneNumberCountryList] if a(n) AvailablePhoneNumberCountryList object was created.
-          # @return [AvailablePhoneNumberCountryContext] if a(n) AvailablePhoneNumberCountryContext object was created.
+          # @return [AvailablePhoneNumberCountryList]
+          # @return [AvailablePhoneNumberCountryContext] if country_code was passed.
           def available_phone_numbers(country_code=:unset)
             raise ArgumentError, 'country_code cannot be nil' if country_code.nil?
 
@@ -385,8 +376,8 @@ module Twilio
 
           ##
           # Access the calls
-          # @return [CallList] if a(n) CallList object was created.
-          # @return [CallContext] if a(n) CallContext object was created.
+          # @return [CallList]
+          # @return [CallContext] if sid was passed.
           def calls(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -410,8 +401,8 @@ module Twilio
 
           ##
           # Access the conferences
-          # @return [ConferenceList] if a(n) ConferenceList object was created.
-          # @return [ConferenceContext] if a(n) ConferenceContext object was created.
+          # @return [ConferenceList]
+          # @return [ConferenceContext] if sid was passed.
           def conferences(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -435,8 +426,8 @@ module Twilio
 
           ##
           # Access the connect_apps
-          # @return [ConnectAppList] if a(n) ConnectAppList object was created.
-          # @return [ConnectAppContext] if a(n) ConnectAppContext object was created.
+          # @return [ConnectAppList]
+          # @return [ConnectAppContext] if sid was passed.
           def connect_apps(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -460,8 +451,8 @@ module Twilio
 
           ##
           # Access the incoming_phone_numbers
-          # @return [IncomingPhoneNumberList] if a(n) IncomingPhoneNumberList object was created.
-          # @return [IncomingPhoneNumberContext] if a(n) IncomingPhoneNumberContext object was created.
+          # @return [IncomingPhoneNumberList]
+          # @return [IncomingPhoneNumberContext] if sid was passed.
           def incoming_phone_numbers(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -485,8 +476,8 @@ module Twilio
 
           ##
           # Access the keys
-          # @return [KeyList] if a(n) KeyList object was created.
-          # @return [KeyContext] if a(n) KeyContext object was created.
+          # @return [KeyList]
+          # @return [KeyContext] if sid was passed.
           def keys(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -510,8 +501,8 @@ module Twilio
 
           ##
           # Access the messages
-          # @return [MessageList] if a(n) MessageList object was created.
-          # @return [MessageContext] if a(n) MessageContext object was created.
+          # @return [MessageList]
+          # @return [MessageContext] if sid was passed.
           def messages(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -535,8 +526,8 @@ module Twilio
 
           ##
           # Access the new_keys
-          # @return [NewKeyList] if a(n) NewKeyList object was created.
-          # @return [NewKeyContext] if a(n) NewKeyContext object was created.
+          # @return [NewKeyList]
+          # @return [NewKeyContext]
           def new_keys
             unless @new_keys
               @new_keys = NewKeyList.new(
@@ -550,8 +541,8 @@ module Twilio
 
           ##
           # Access the new_signing_keys
-          # @return [NewSigningKeyList] if a(n) NewSigningKeyList object was created.
-          # @return [NewSigningKeyContext] if a(n) NewSigningKeyContext object was created.
+          # @return [NewSigningKeyList]
+          # @return [NewSigningKeyContext]
           def new_signing_keys
             unless @new_signing_keys
               @new_signing_keys = NewSigningKeyList.new(
@@ -565,8 +556,8 @@ module Twilio
 
           ##
           # Access the notifications
-          # @return [NotificationList] if a(n) NotificationList object was created.
-          # @return [NotificationContext] if a(n) NotificationContext object was created.
+          # @return [NotificationList]
+          # @return [NotificationContext] if sid was passed.
           def notifications(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -590,8 +581,8 @@ module Twilio
 
           ##
           # Access the outgoing_caller_ids
-          # @return [OutgoingCallerIdList] if a(n) OutgoingCallerIdList object was created.
-          # @return [OutgoingCallerIdContext] if a(n) OutgoingCallerIdContext object was created.
+          # @return [OutgoingCallerIdList]
+          # @return [OutgoingCallerIdContext] if sid was passed.
           def outgoing_caller_ids(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -615,8 +606,8 @@ module Twilio
 
           ##
           # Access the queues
-          # @return [QueueList] if a(n) QueueList object was created.
-          # @return [QueueContext] if a(n) QueueContext object was created.
+          # @return [QueueList]
+          # @return [QueueContext] if sid was passed.
           def queues(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -640,8 +631,8 @@ module Twilio
 
           ##
           # Access the recordings
-          # @return [RecordingList] if a(n) RecordingList object was created.
-          # @return [RecordingContext] if a(n) RecordingContext object was created.
+          # @return [RecordingList]
+          # @return [RecordingContext] if sid was passed.
           def recordings(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -665,8 +656,8 @@ module Twilio
 
           ##
           # Access the signing_keys
-          # @return [SigningKeyList] if a(n) SigningKeyList object was created.
-          # @return [SigningKeyContext] if a(n) SigningKeyContext object was created.
+          # @return [SigningKeyList]
+          # @return [SigningKeyContext] if sid was passed.
           def signing_keys(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -690,8 +681,8 @@ module Twilio
 
           ##
           # Access the sip
-          # @return [SipList] if a(n) SipList object was created.
-          # @return [SipContext] if a(n) SipContext object was created.
+          # @return [SipList]
+          # @return [SipContext]
           def sip
             unless @sip
               @sip = SipList.new(
@@ -705,8 +696,8 @@ module Twilio
 
           ##
           # Access the short_codes
-          # @return [ShortCodeList] if a(n) ShortCodeList object was created.
-          # @return [ShortCodeContext] if a(n) ShortCodeContext object was created.
+          # @return [ShortCodeList]
+          # @return [ShortCodeContext] if sid was passed.
           def short_codes(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -730,8 +721,8 @@ module Twilio
 
           ##
           # Access the tokens
-          # @return [TokenList] if a(n) TokenList object was created.
-          # @return [TokenContext] if a(n) TokenContext object was created.
+          # @return [TokenList]
+          # @return [TokenContext]
           def tokens
             unless @tokens
               @tokens = TokenList.new(
@@ -745,8 +736,8 @@ module Twilio
 
           ##
           # Access the transcriptions
-          # @return [TranscriptionList] if a(n) TranscriptionList object was created.
-          # @return [TranscriptionContext] if a(n) TranscriptionContext object was created.
+          # @return [TranscriptionList]
+          # @return [TranscriptionContext] if sid was passed.
           def transcriptions(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -770,8 +761,8 @@ module Twilio
 
           ##
           # Access the usage
-          # @return [UsageList] if a(n) UsageList object was created.
-          # @return [UsageContext] if a(n) UsageContext object was created.
+          # @return [UsageList]
+          # @return [UsageContext]
           def usage
             unless @usage
               @usage = UsageList.new(
@@ -785,8 +776,8 @@ module Twilio
 
           ##
           # Access the validation_requests
-          # @return [ValidationRequestList] if a(n) ValidationRequestList object was created.
-          # @return [ValidationRequestContext] if a(n) ValidationRequestContext object was created.
+          # @return [ValidationRequestList]
+          # @return [ValidationRequestContext]
           def validation_requests
             unless @validation_requests
               @validation_requests = ValidationRequestList.new(
@@ -841,7 +832,6 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @param [Version] version Version that contains the resource
           # @return [AccountContext] AccountContext for this AccountInstance
           def context
             unless @instance_context
@@ -853,42 +843,62 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The authorization token for this account
           def auth_token
             @properties['auth_token']
           end
 
+          ##
+          # @return [Time] The date this account was created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date this account was last updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] A human readable description of this account
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [String] The unique 34 character id representing the parent of this account
           def owner_account_sid
             @properties['owner_account_sid']
           end
 
+          ##
+          # @return [String] A 34 character string that uniquely identifies this resource.
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [account.Status] The status of this account
           def status
             @properties['status']
           end
 
+          ##
+          # @return [String] Account Instance Subresources
           def subresource_uris
             @properties['subresource_uris']
           end
 
+          ##
+          # @return [account.Type] The type of this account
           def type
             @properties['type']
           end
 
+          ##
+          # @return [String] The URI for this resource, relative to `https://api.twilio.com`
           def uri
             @properties['uri']
           end

@@ -73,12 +73,6 @@ module Twilio
               # When passed a block, yields AssignedAddOnInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -163,10 +157,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid The unique id of the Account that has installed this
-              #   Add-on.
-              # @param [String] resource_sid The unique id of the Phone Number to which the
-              #   Add-on is assigned.
               # @return [AssignedAddOnPage] AssignedAddOnPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -249,8 +239,8 @@ module Twilio
 
               ##
               # Access the extensions
-              # @return [AssignedAddOnExtensionList] if a(n) AssignedAddOnExtensionList object was created.
-              # @return [AssignedAddOnExtensionContext] if a(n) AssignedAddOnExtensionContext object was created.
+              # @return [AssignedAddOnExtensionList]
+              # @return [AssignedAddOnExtensionContext] if sid was passed.
               def extensions(sid=:unset)
                 raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -326,7 +316,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [AssignedAddOnContext] AssignedAddOnContext for this AssignedAddOnInstance
               def context
                 unless @instance_context
@@ -340,46 +329,68 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] A string that uniquely identifies this assigned Add-on installation
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] The Account id that has installed this Add-on
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The Phone Number id that has installed this Add-on
               def resource_sid
                 @properties['resource_sid']
               end
 
+              ##
+              # @return [String] A description of this Add-on installation
               def friendly_name
                 @properties['friendly_name']
               end
 
+              ##
+              # @return [String] A short description of the Add-on functionality
               def description
                 @properties['description']
               end
 
+              ##
+              # @return [Hash] The JSON object representing the current configuration
               def configuration
                 @properties['configuration']
               end
 
+              ##
+              # @return [String] The string that uniquely identifies this Add-on installation
               def unique_name
                 @properties['unique_name']
               end
 
+              ##
+              # @return [Time] The date this Add-on was installed
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date this Add-on installation was last updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The uri
               def uri
                 @properties['uri']
               end
 
+              ##
+              # @return [String] The subresource_uris
               def subresource_uris
                 @properties['subresource_uris']
               end

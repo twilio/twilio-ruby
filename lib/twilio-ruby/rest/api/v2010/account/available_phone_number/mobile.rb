@@ -144,31 +144,6 @@ module Twilio
               # When passed a block, yields MobileInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] area_code The area_code
-              # @param [String] contains The contains
-              # @param [Boolean] sms_enabled The sms_enabled
-              # @param [Boolean] mms_enabled The mms_enabled
-              # @param [Boolean] voice_enabled The voice_enabled
-              # @param [Boolean] exclude_all_address_required The exclude_all_address_required
-              # @param [Boolean] exclude_local_address_required The
-              #   exclude_local_address_required
-              # @param [Boolean] exclude_foreign_address_required The
-              #   exclude_foreign_address_required
-              # @param [Boolean] beta The beta
-              # @param [String] near_number The near_number
-              # @param [String] near_lat_long The near_lat_long
-              # @param [String] distance The distance
-              # @param [String] in_postal_code The in_postal_code
-              # @param [String] in_region The in_region
-              # @param [String] in_rate_center The in_rate_center
-              # @param [String] in_lata The in_lata
-              # @param [String] in_locality The in_locality
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -264,9 +239,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid The 34 character string that uniquely identifies
-              #   your account.
-              # @param [String] country_code The ISO Country code to lookup phone numbers for.
               # @return [MobilePage] MobilePage
               def initialize(version, response, solution)
                 super(version, response)
@@ -325,54 +297,80 @@ module Twilio
                 }
               end
 
+              ##
+              # @return [String] The friendly_name
               def friendly_name
                 @properties['friendly_name']
               end
 
+              ##
+              # @return [String] The phone_number
               def phone_number
                 @properties['phone_number']
               end
 
+              ##
+              # @return [String] The lata
               def lata
                 @properties['lata']
               end
 
+              ##
+              # @return [String] The locality
               def locality
                 @properties['locality']
               end
 
+              ##
+              # @return [String] The rate_center
               def rate_center
                 @properties['rate_center']
               end
 
+              ##
+              # @return [String] The latitude
               def latitude
                 @properties['latitude']
               end
 
+              ##
+              # @return [String] The longitude
               def longitude
                 @properties['longitude']
               end
 
+              ##
+              # @return [String] The region
               def region
                 @properties['region']
               end
 
+              ##
+              # @return [String] The postal_code
               def postal_code
                 @properties['postal_code']
               end
 
+              ##
+              # @return [String] The iso_country
               def iso_country
                 @properties['iso_country']
               end
 
+              ##
+              # @return [String] The address_requirements
               def address_requirements
                 @properties['address_requirements']
               end
 
+              ##
+              # @return [Boolean] The beta
               def beta
                 @properties['beta']
               end
 
+              ##
+              # @return [String] The capabilities
               def capabilities
                 @properties['capabilities']
               end

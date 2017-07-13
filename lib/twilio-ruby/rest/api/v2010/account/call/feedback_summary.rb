@@ -71,8 +71,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid The unique id of the Account responsible for
-              #   creating this Call
               # @return [FeedbackSummaryPage] FeedbackSummaryPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -194,7 +192,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [FeedbackSummaryContext] FeedbackSummaryContext for this FeedbackSummaryInstance
               def context
                 unless @instance_context
@@ -207,58 +204,86 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The call_count
               def call_count
                 @properties['call_count']
               end
 
+              ##
+              # @return [String] The call_feedback_count
               def call_feedback_count
                 @properties['call_feedback_count']
               end
 
+              ##
+              # @return [Time] The date_created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date_updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [Time] The end_date
               def end_date
                 @properties['end_date']
               end
 
+              ##
+              # @return [Boolean] The include_subaccounts
               def include_subaccounts
                 @properties['include_subaccounts']
               end
 
+              ##
+              # @return [String] The issues
               def issues
                 @properties['issues']
               end
 
+              ##
+              # @return [String] The quality_score_average
               def quality_score_average
                 @properties['quality_score_average']
               end
 
+              ##
+              # @return [String] The quality_score_median
               def quality_score_median
                 @properties['quality_score_median']
               end
 
+              ##
+              # @return [String] The quality_score_standard_deviation
               def quality_score_standard_deviation
                 @properties['quality_score_standard_deviation']
               end
 
+              ##
+              # @return [String] The sid
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [Time] The start_date
               def start_date
                 @properties['start_date']
               end
 
+              ##
+              # @return [feedback_summary.Status] The status
               def status
                 @properties['status']
               end

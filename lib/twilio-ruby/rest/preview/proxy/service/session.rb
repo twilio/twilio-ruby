@@ -82,17 +82,6 @@ module Twilio
             # When passed a block, yields SessionInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] unique_name Provides a unique and addressable name to be
-            #   assigned to this Session, assigned by the developer, to be optionally used in
-            #   addition to SID.
-            # @param [session.Status] status The Status of this Session. One of `in-progess`
-            #   or `completed`.
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -192,7 +181,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] service_sid The unique SID identifier of the Service.
             # @return [SessionPage] SessionPage
             def initialize(version, response, solution)
               super(version, response)
@@ -304,8 +292,8 @@ module Twilio
 
             ##
             # Access the interactions
-            # @return [InteractionList] if a(n) InteractionList object was created.
-            # @return [InteractionContext] if a(n) InteractionContext object was created.
+            # @return [InteractionList]
+            # @return [InteractionContext] if sid was passed.
             def interactions(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -331,8 +319,8 @@ module Twilio
 
             ##
             # Access the participants
-            # @return [ParticipantList] if a(n) ParticipantList object was created.
-            # @return [ParticipantContext] if a(n) ParticipantContext object was created.
+            # @return [ParticipantList]
+            # @return [ParticipantContext] if sid was passed.
             def participants(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -402,7 +390,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [SessionContext] SessionContext for this SessionInstance
             def context
               unless @instance_context
@@ -415,50 +402,74 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this Session.
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] Service Sid.
             def service_sid
               @properties['service_sid']
             end
 
+            ##
+            # @return [String] Account Sid.
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] A unique, developer assigned name of this Session.
             def unique_name
               @properties['unique_name']
             end
 
+            ##
+            # @return [String] How long will this session stay open, in seconds.
             def ttl
               @properties['ttl']
             end
 
+            ##
+            # @return [session.Status] The Status of this Session
             def status
               @properties['status']
             end
 
+            ##
+            # @return [Time] The date this Session was started
             def start_time
               @properties['start_time']
             end
 
+            ##
+            # @return [Time] The date this Session was ended
             def end_time
               @properties['end_time']
             end
 
+            ##
+            # @return [Time] The date this Session was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this Session was updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The URL of this Session.
             def url
               @properties['url']
             end
 
+            ##
+            # @return [String] Nested resource URLs.
             def links
               @properties['links']
             end

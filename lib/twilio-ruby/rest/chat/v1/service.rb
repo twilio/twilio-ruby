@@ -86,12 +86,6 @@ module Twilio
           # When passed a block, yields ServiceInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-          #  guarantees to never return more than limit.                  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-          #  the default value of 50 records.                      If no page_size is defined
-          #                       but a limit is defined, stream() will attempt to read the
-          #                       limit with the most efficient page size, i.e. min(limit, 1000)
           def each
             limits = @version.read_limits
 
@@ -434,8 +428,8 @@ module Twilio
 
           ##
           # Access the channels
-          # @return [ChannelList] if a(n) ChannelList object was created.
-          # @return [ChannelContext] if a(n) ChannelContext object was created.
+          # @return [ChannelList]
+          # @return [ChannelContext] if sid was passed.
           def channels(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -459,8 +453,8 @@ module Twilio
 
           ##
           # Access the roles
-          # @return [RoleList] if a(n) RoleList object was created.
-          # @return [RoleContext] if a(n) RoleContext object was created.
+          # @return [RoleList]
+          # @return [RoleContext] if sid was passed.
           def roles(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -484,8 +478,8 @@ module Twilio
 
           ##
           # Access the users
-          # @return [UserList] if a(n) UserList object was created.
-          # @return [UserContext] if a(n) UserContext object was created.
+          # @return [UserList]
+          # @return [UserContext] if sid was passed.
           def users(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -560,7 +554,6 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @param [Version] version Version that contains the resource
           # @return [ServiceContext] ServiceContext for this ServiceInstance
           def context
             unless @instance_context
@@ -572,86 +565,128 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The sid
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] The account_sid
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [String] The friendly_name
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [Time] The date_created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date_updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The default_service_role_sid
           def default_service_role_sid
             @properties['default_service_role_sid']
           end
 
+          ##
+          # @return [String] The default_channel_role_sid
           def default_channel_role_sid
             @properties['default_channel_role_sid']
           end
 
+          ##
+          # @return [String] The default_channel_creator_role_sid
           def default_channel_creator_role_sid
             @properties['default_channel_creator_role_sid']
           end
 
+          ##
+          # @return [Boolean] The read_status_enabled
           def read_status_enabled
             @properties['read_status_enabled']
           end
 
+          ##
+          # @return [Boolean] The reachability_enabled
           def reachability_enabled
             @properties['reachability_enabled']
           end
 
+          ##
+          # @return [String] The typing_indicator_timeout
           def typing_indicator_timeout
             @properties['typing_indicator_timeout']
           end
 
+          ##
+          # @return [String] The consumption_report_interval
           def consumption_report_interval
             @properties['consumption_report_interval']
           end
 
+          ##
+          # @return [Hash] The limits
           def limits
             @properties['limits']
           end
 
+          ##
+          # @return [Hash] The webhooks
           def webhooks
             @properties['webhooks']
           end
 
+          ##
+          # @return [String] The pre_webhook_url
           def pre_webhook_url
             @properties['pre_webhook_url']
           end
 
+          ##
+          # @return [String] The post_webhook_url
           def post_webhook_url
             @properties['post_webhook_url']
           end
 
+          ##
+          # @return [String] The webhook_method
           def webhook_method
             @properties['webhook_method']
           end
 
+          ##
+          # @return [String] The webhook_filters
           def webhook_filters
             @properties['webhook_filters']
           end
 
+          ##
+          # @return [Hash] The notifications
           def notifications
             @properties['notifications']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end

@@ -69,12 +69,6 @@ module Twilio
             # When passed a block, yields AvailablePhoneNumberCountryInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -134,8 +128,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] account_sid A 34 character string that uniquely identifies this
-            #   resource.
             # @return [AvailablePhoneNumberCountryPage] AvailablePhoneNumberCountryPage
             def initialize(version, response, solution)
               super(version, response)
@@ -208,8 +200,8 @@ module Twilio
 
             ##
             # Access the local
-            # @return [LocalList] if a(n) LocalList object was created.
-            # @return [LocalContext] if a(n) LocalContext object was created.
+            # @return [LocalList]
+            # @return [LocalContext]
             def local
               unless @local
                 @local = LocalList.new(
@@ -224,8 +216,8 @@ module Twilio
 
             ##
             # Access the toll_free
-            # @return [TollFreeList] if a(n) TollFreeList object was created.
-            # @return [TollFreeContext] if a(n) TollFreeContext object was created.
+            # @return [TollFreeList]
+            # @return [TollFreeContext]
             def toll_free
               unless @toll_free
                 @toll_free = TollFreeList.new(
@@ -240,8 +232,8 @@ module Twilio
 
             ##
             # Access the mobile
-            # @return [MobileList] if a(n) MobileList object was created.
-            # @return [MobileContext] if a(n) MobileContext object was created.
+            # @return [MobileList]
+            # @return [MobileContext]
             def mobile
               unless @mobile
                 @mobile = MobileList.new(
@@ -294,7 +286,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [AvailablePhoneNumberCountryContext] AvailablePhoneNumberCountryContext for this AvailablePhoneNumberCountryInstance
             def context
               unless @instance_context
@@ -307,22 +298,32 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The ISO Country code to lookup phone numbers for.
             def country_code
               @properties['country_code']
             end
 
+            ##
+            # @return [String] The country
             def country
               @properties['country']
             end
 
+            ##
+            # @return [String] The uri
             def uri
               @properties['uri']
             end
 
+            ##
+            # @return [Boolean] The beta
             def beta
               @properties['beta']
             end
 
+            ##
+            # @return [String] The subresource_uris
             def subresource_uris
               @properties['subresource_uris']
             end

@@ -113,12 +113,6 @@ module Twilio
           # When passed a block, yields ServiceInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-          #  guarantees to never return more than limit.                  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-          #  the default value of 50 records.                      If no page_size is defined
-          #                       but a limit is defined, stream() will attempt to read the
-          #                       limit with the most efficient page size, i.e. min(limit, 1000)
           def each
             limits = @version.read_limits
 
@@ -302,8 +296,8 @@ module Twilio
 
           ##
           # Access the phone_numbers
-          # @return [PhoneNumberList] if a(n) PhoneNumberList object was created.
-          # @return [PhoneNumberContext] if a(n) PhoneNumberContext object was created.
+          # @return [PhoneNumberList]
+          # @return [PhoneNumberContext] if sid was passed.
           def phone_numbers(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -327,8 +321,8 @@ module Twilio
 
           ##
           # Access the short_codes
-          # @return [ShortCodeList] if a(n) ShortCodeList object was created.
-          # @return [ShortCodeContext] if a(n) ShortCodeContext object was created.
+          # @return [ShortCodeList]
+          # @return [ShortCodeContext] if sid was passed.
           def short_codes(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -352,8 +346,8 @@ module Twilio
 
           ##
           # Access the alpha_senders
-          # @return [AlphaSenderList] if a(n) AlphaSenderList object was created.
-          # @return [AlphaSenderContext] if a(n) AlphaSenderContext object was created.
+          # @return [AlphaSenderList]
+          # @return [AlphaSenderContext] if sid was passed.
           def alpha_senders(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -427,7 +421,6 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @param [Version] version Version that contains the resource
           # @return [ServiceContext] ServiceContext for this ServiceInstance
           def context
             unless @instance_context
@@ -439,82 +432,122 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The sid
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] The account_sid
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [String] The friendly_name
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [Time] The date_created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date_updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The inbound_request_url
           def inbound_request_url
             @properties['inbound_request_url']
           end
 
+          ##
+          # @return [String] The inbound_method
           def inbound_method
             @properties['inbound_method']
           end
 
+          ##
+          # @return [String] The fallback_url
           def fallback_url
             @properties['fallback_url']
           end
 
+          ##
+          # @return [String] The fallback_method
           def fallback_method
             @properties['fallback_method']
           end
 
+          ##
+          # @return [String] The status_callback
           def status_callback
             @properties['status_callback']
           end
 
+          ##
+          # @return [Boolean] The sticky_sender
           def sticky_sender
             @properties['sticky_sender']
           end
 
+          ##
+          # @return [Boolean] The mms_converter
           def mms_converter
             @properties['mms_converter']
           end
 
+          ##
+          # @return [Boolean] The smart_encoding
           def smart_encoding
             @properties['smart_encoding']
           end
 
+          ##
+          # @return [service.ScanMessageContent] The scan_message_content
           def scan_message_content
             @properties['scan_message_content']
           end
 
+          ##
+          # @return [Boolean] The fallback_to_long_code
           def fallback_to_long_code
             @properties['fallback_to_long_code']
           end
 
+          ##
+          # @return [Boolean] The area_code_geomatch
           def area_code_geomatch
             @properties['area_code_geomatch']
           end
 
+          ##
+          # @return [Boolean] The synchronous_validation
           def synchronous_validation
             @properties['synchronous_validation']
           end
 
+          ##
+          # @return [String] The validity_period
           def validity_period
             @properties['validity_period']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end

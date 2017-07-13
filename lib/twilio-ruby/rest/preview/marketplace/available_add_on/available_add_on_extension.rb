@@ -68,12 +68,6 @@ module Twilio
             # When passed a block, yields AvailableAddOnExtensionInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -133,7 +127,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] available_add_on_sid The available_add_on_sid
             # @return [AvailableAddOnExtensionPage] AvailableAddOnExtensionPage
             def initialize(version, response, solution)
               super(version, response)
@@ -239,7 +232,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [AvailableAddOnExtensionContext] AvailableAddOnExtensionContext for this AvailableAddOnExtensionInstance
             def context
               unless @instance_context
@@ -252,26 +244,38 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this Extension
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The available_add_on_sid
             def available_add_on_sid
               @properties['available_add_on_sid']
             end
 
+            ##
+            # @return [String] A human-readable description of this Extension
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] A human-readable description of the Extension's Product
             def product_name
               @properties['product_name']
             end
 
+            ##
+            # @return [String] The string that uniquely identifies this Extension
             def unique_name
               @properties['unique_name']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end

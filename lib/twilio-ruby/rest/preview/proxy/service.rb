@@ -64,12 +64,6 @@ module Twilio
           # When passed a block, yields ServiceInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-          #  guarantees to never return more than limit.                  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-          #  the default value of 50 records.                      If no page_size is defined
-          #                       but a limit is defined, stream() will attempt to read the
-          #                       limit with the most efficient page size, i.e. min(limit, 1000)
           def each
             limits = @version.read_limits
 
@@ -262,8 +256,8 @@ module Twilio
 
           ##
           # Access the sessions
-          # @return [SessionList] if a(n) SessionList object was created.
-          # @return [SessionContext] if a(n) SessionContext object was created.
+          # @return [SessionList]
+          # @return [SessionContext] if sid was passed.
           def sessions(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -287,8 +281,8 @@ module Twilio
 
           ##
           # Access the phone_numbers
-          # @return [PhoneNumberList] if a(n) PhoneNumberList object was created.
-          # @return [PhoneNumberContext] if a(n) PhoneNumberContext object was created.
+          # @return [PhoneNumberList]
+          # @return [PhoneNumberContext] if sid was passed.
           def phone_numbers(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -312,8 +306,8 @@ module Twilio
 
           ##
           # Access the short_codes
-          # @return [ShortCodeList] if a(n) ShortCodeList object was created.
-          # @return [ShortCodeContext] if a(n) ShortCodeContext object was created.
+          # @return [ShortCodeList]
+          # @return [ShortCodeContext] if sid was passed.
           def short_codes(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -376,7 +370,6 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @param [Version] version Version that contains the resource
           # @return [ServiceContext] ServiceContext for this ServiceInstance
           def context
             unless @instance_context
@@ -388,38 +381,56 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] A string that uniquely identifies this Service.
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] A human readable description of this resource
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [String] Account Sid.
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [Boolean] Boolean flag specifying whether to auto-create threads.
           def auto_create
             @properties['auto_create']
           end
 
+          ##
+          # @return [String] URL Twilio will request for callbacks.
           def callback_url
             @properties['callback_url']
           end
 
+          ##
+          # @return [Time] The date this Service was created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date this Service was updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The URL of this resource.
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] Nested resource URLs.
           def links
             @properties['links']
           end

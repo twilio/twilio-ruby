@@ -68,12 +68,6 @@ module Twilio
             # When passed a block, yields DayInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -133,7 +127,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] resource_type The resource_type
             # @return [DayPage] DayPage
             def initialize(version, response, solution)
               super(version, response)
@@ -180,18 +173,26 @@ module Twilio
               }
             end
 
+            ##
+            # @return [String] The redirect_to
             def redirect_to
               @properties['redirect_to']
             end
 
+            ##
+            # @return [String] The day
             def day
               @properties['day']
             end
 
+            ##
+            # @return [String] The size
             def size
               @properties['size']
             end
 
+            ##
+            # @return [String] The resource_type
             def resource_type
               @properties['resource_type']
             end

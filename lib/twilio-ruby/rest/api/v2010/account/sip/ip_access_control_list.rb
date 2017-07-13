@@ -70,12 +70,6 @@ module Twilio
               # When passed a block, yields IpAccessControlListInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -159,8 +153,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid A 34 character string that uniquely identifies this
-              #   resource.
               # @return [IpAccessControlListPage] IpAccessControlListPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -263,8 +255,8 @@ module Twilio
 
               ##
               # Access the ip_addresses
-              # @return [IpAddressList] if a(n) IpAddressList object was created.
-              # @return [IpAddressContext] if a(n) IpAddressContext object was created.
+              # @return [IpAddressList]
+              # @return [IpAddressContext] if sid was passed.
               def ip_addresses(sid=:unset)
                 raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -331,7 +323,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [IpAccessControlListContext] IpAccessControlListContext for this IpAccessControlListInstance
               def context
                 unless @instance_context
@@ -344,30 +335,44 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] A string that uniquely identifies this resource
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [String] The unique sid that identifies this account
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] A human readable description of this resource
               def friendly_name
                 @properties['friendly_name']
               end
 
+              ##
+              # @return [Time] The date this resource was created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date this resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The subresource_uris
               def subresource_uris
                 @properties['subresource_uris']
               end
 
+              ##
+              # @return [String] The URI for this resource
               def uri
                 @properties['uri']
               end

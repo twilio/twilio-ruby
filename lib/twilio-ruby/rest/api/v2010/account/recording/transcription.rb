@@ -71,12 +71,6 @@ module Twilio
               # When passed a block, yields TranscriptionInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -136,8 +130,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] recording_sid The recording_sid
               # @return [TranscriptionPage] TranscriptionPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -263,7 +255,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [TranscriptionContext] TranscriptionContext for this TranscriptionInstance
               def context
                 unless @instance_context
@@ -277,54 +268,80 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The api_version
               def api_version
                 @properties['api_version']
               end
 
+              ##
+              # @return [Time] The date_created
               def date_created
                 @properties['date_created']
               end
 
+              ##
+              # @return [Time] The date_updated
               def date_updated
                 @properties['date_updated']
               end
 
+              ##
+              # @return [String] The duration
               def duration
                 @properties['duration']
               end
 
+              ##
+              # @return [String] The price
               def price
                 @properties['price']
               end
 
+              ##
+              # @return [String] The price_unit
               def price_unit
                 @properties['price_unit']
               end
 
+              ##
+              # @return [String] The recording_sid
               def recording_sid
                 @properties['recording_sid']
               end
 
+              ##
+              # @return [String] The sid
               def sid
                 @properties['sid']
               end
 
+              ##
+              # @return [transcription.Status] The status
               def status
                 @properties['status']
               end
 
+              ##
+              # @return [String] The transcription_text
               def transcription_text
                 @properties['transcription_text']
               end
 
+              ##
+              # @return [String] The type
               def type
                 @properties['type']
               end
 
+              ##
+              # @return [String] The uri
               def uri
                 @properties['uri']
               end

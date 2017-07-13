@@ -64,12 +64,6 @@ module Twilio
           # When passed a block, yields AvailableAddOnInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-          #  guarantees to never return more than limit.                  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-          #  the default value of 50 records.                      If no page_size is defined
-          #                       but a limit is defined, stream() will attempt to read the
-          #                       limit with the most efficient page size, i.e. min(limit, 1000)
           def each
             limits = @version.read_limits
 
@@ -196,8 +190,8 @@ module Twilio
 
           ##
           # Access the extensions
-          # @return [AvailableAddOnExtensionList] if a(n) AvailableAddOnExtensionList object was created.
-          # @return [AvailableAddOnExtensionContext] if a(n) AvailableAddOnExtensionContext object was created.
+          # @return [AvailableAddOnExtensionList]
+          # @return [AvailableAddOnExtensionContext] if sid was passed.
           def extensions(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -259,7 +253,6 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @param [Version] version Version that contains the resource
           # @return [AvailableAddOnContext] AvailableAddOnContext for this AvailableAddOnInstance
           def context
             unless @instance_context
@@ -271,30 +264,44 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] A string that uniquely identifies this Add-on
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] A description of this Add-on
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [String] A short description of the Add-on functionality
           def description
             @properties['description']
           end
 
+          ##
+          # @return [String] The way customers are charged for using this Add-on
           def pricing_type
             @properties['pricing_type']
           end
 
+          ##
+          # @return [Hash] The JSON Schema describing the Add-on's configuration
           def configuration_schema
             @properties['configuration_schema']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end

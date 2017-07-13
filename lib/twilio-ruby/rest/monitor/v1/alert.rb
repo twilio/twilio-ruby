@@ -76,15 +76,6 @@ module Twilio
           # When passed a block, yields AlertInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] log_level The log_level
-          # @param [Date] start_date The start_date
-          # @param [Date] end_date The end_date
-          # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-          #  guarantees to never return more than limit.                  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-          #  the default value of 50 records.                      If no page_size is defined
-          #                       but a limit is defined, stream() will attempt to read the
-          #                       limit with the most efficient page size, i.e. min(limit, 1000)
           def each
             limits = @version.read_limits
 
@@ -267,7 +258,6 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @param [Version] version Version that contains the resource
           # @return [AlertContext] AlertContext for this AlertInstance
           def context
             unless @instance_context
@@ -279,70 +269,104 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The account_sid
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [String] The alert_text
           def alert_text
             @properties['alert_text']
           end
 
+          ##
+          # @return [String] The api_version
           def api_version
             @properties['api_version']
           end
 
+          ##
+          # @return [Time] The date_created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date_generated
           def date_generated
             @properties['date_generated']
           end
 
+          ##
+          # @return [Time] The date_updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The error_code
           def error_code
             @properties['error_code']
           end
 
+          ##
+          # @return [String] The log_level
           def log_level
             @properties['log_level']
           end
 
+          ##
+          # @return [String] The more_info
           def more_info
             @properties['more_info']
           end
 
+          ##
+          # @return [String] The request_method
           def request_method
             @properties['request_method']
           end
 
+          ##
+          # @return [String] The request_url
           def request_url
             @properties['request_url']
           end
 
+          ##
+          # @return [String] The request_variables
           def request_variables
             @properties['request_variables']
           end
 
+          ##
+          # @return [String] The resource_sid
           def resource_sid
             @properties['resource_sid']
           end
 
+          ##
+          # @return [String] The response_body
           def response_body
             @properties['response_body']
           end
 
+          ##
+          # @return [String] The response_headers
           def response_headers
             @properties['response_headers']
           end
 
+          ##
+          # @return [String] The sid
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end

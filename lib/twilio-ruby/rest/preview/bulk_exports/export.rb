@@ -99,8 +99,8 @@ module Twilio
 
           ##
           # Access the days
-          # @return [DayList] if a(n) DayList object was created.
-          # @return [DayContext] if a(n) DayContext object was created.
+          # @return [DayList]
+          # @return [DayContext]
           def days
             unless @days
               @days = DayList.new(
@@ -147,7 +147,6 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @param [Version] version Version that contains the resource
           # @return [ExportContext] ExportContext for this ExportInstance
           def context
             unless @instance_context
@@ -159,14 +158,20 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The resource_type
           def resource_type
             @properties['resource_type']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end

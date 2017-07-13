@@ -84,17 +84,6 @@ module Twilio
           # When passed a block, yields SimInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] status The status
-          # @param [String] iccid The iccid
-          # @param [String] rate_plan The rate_plan
-          # @param [String] e_id The e_id
-          # @param [String] sim_registration_code The sim_registration_code
-          # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-          #  guarantees to never return more than limit.                  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-          #  the default value of 50 records.                      If no page_size is defined
-          #                       but a limit is defined, stream() will attempt to read the
-          #                       limit with the most efficient page size, i.e. min(limit, 1000)
           def each
             limits = @version.read_limits
 
@@ -282,8 +271,8 @@ module Twilio
 
           ##
           # Access the usage
-          # @return [UsageList] if a(n) UsageList object was created.
-          # @return [UsageContext] if a(n) UsageContext object was created.
+          # @return [UsageList]
+          # @return [UsageContext]
           def usage
             UsageContext.new(
                 @version,
@@ -345,7 +334,6 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @param [Version] version Version that contains the resource
           # @return [SimContext] SimContext for this SimInstance
           def context
             unless @instance_context
@@ -357,90 +345,134 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] The sid
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] The unique_name
           def unique_name
             @properties['unique_name']
           end
 
+          ##
+          # @return [String] The account_sid
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [String] The rate_plan_sid
           def rate_plan_sid
             @properties['rate_plan_sid']
           end
 
+          ##
+          # @return [String] The friendly_name
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [String] The iccid
           def iccid
             @properties['iccid']
           end
 
+          ##
+          # @return [String] The e_id
           def e_id
             @properties['e_id']
           end
 
+          ##
+          # @return [String] The status
           def status
             @properties['status']
           end
 
+          ##
+          # @return [String] The commands_callback_url
           def commands_callback_url
             @properties['commands_callback_url']
           end
 
+          ##
+          # @return [String] The commands_callback_method
           def commands_callback_method
             @properties['commands_callback_method']
           end
 
+          ##
+          # @return [String] The sms_fallback_method
           def sms_fallback_method
             @properties['sms_fallback_method']
           end
 
+          ##
+          # @return [String] The sms_fallback_url
           def sms_fallback_url
             @properties['sms_fallback_url']
           end
 
+          ##
+          # @return [String] The sms_method
           def sms_method
             @properties['sms_method']
           end
 
+          ##
+          # @return [String] The sms_url
           def sms_url
             @properties['sms_url']
           end
 
+          ##
+          # @return [String] The voice_fallback_method
           def voice_fallback_method
             @properties['voice_fallback_method']
           end
 
+          ##
+          # @return [String] The voice_fallback_url
           def voice_fallback_url
             @properties['voice_fallback_url']
           end
 
+          ##
+          # @return [String] The voice_method
           def voice_method
             @properties['voice_method']
           end
 
+          ##
+          # @return [String] The voice_url
           def voice_url
             @properties['voice_url']
           end
 
+          ##
+          # @return [Time] The date_created
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date_updated
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end
 
+          ##
+          # @return [String] The links
           def links
             @properties['links']
           end

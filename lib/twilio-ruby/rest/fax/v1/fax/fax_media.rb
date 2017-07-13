@@ -69,12 +69,6 @@ module Twilio
             # When passed a block, yields FaxMediaInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -134,8 +128,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] fax_sid The unique SID identifier of the fax for which this
-            #   media is associated.
             # @return [FaxMediaPage] FaxMediaPage
             def initialize(version, response, solution)
               super(version, response)
@@ -252,7 +244,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [FaxMediaContext] FaxMediaContext for this FaxMediaInstance
             def context
               unless @instance_context
@@ -265,30 +256,44 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] A string that uniquely identifies this fax media
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] Account SID
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] Fax SID
             def fax_sid
               @properties['fax_sid']
             end
 
+            ##
+            # @return [String] Media content type
             def content_type
               @properties['content_type']
             end
 
+            ##
+            # @return [Time] The date this fax media was created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date this fax media was updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The URL of this resource
             def url
               @properties['url']
             end

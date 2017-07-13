@@ -71,12 +71,6 @@ module Twilio
               # When passed a block, yields UserChannelInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -136,8 +130,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] service_sid The service_sid
-              # @param [String] user_sid The sid
               # @return [UserChannelPage] UserChannelPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -190,34 +182,50 @@ module Twilio
                 }
               end
 
+              ##
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] The service_sid
               def service_sid
                 @properties['service_sid']
               end
 
+              ##
+              # @return [String] The channel_sid
               def channel_sid
                 @properties['channel_sid']
               end
 
+              ##
+              # @return [String] The member_sid
               def member_sid
                 @properties['member_sid']
               end
 
+              ##
+              # @return [user_channel.ChannelStatus] The status
               def status
                 @properties['status']
               end
 
+              ##
+              # @return [String] The last_consumed_message_index
               def last_consumed_message_index
                 @properties['last_consumed_message_index']
               end
 
+              ##
+              # @return [String] The unread_messages_count
               def unread_messages_count
                 @properties['unread_messages_count']
               end
 
+              ##
+              # @return [String] The links
               def links
                 @properties['links']
               end

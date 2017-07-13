@@ -160,7 +160,6 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @param [Version] version Version that contains the resource
           # @return [ExportConfigurationContext] ExportConfigurationContext for this ExportConfigurationInstance
           def context
             unless @instance_context
@@ -172,26 +171,38 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [Boolean] The enabled
           def enabled
             @properties['enabled']
           end
 
+          ##
+          # @return [String] The webhook_url
           def webhook_url
             @properties['webhook_url']
           end
 
+          ##
+          # @return [String] The webhook_method
           def webhook_method
             @properties['webhook_method']
           end
 
+          ##
+          # @return [String] The email
           def email
             @properties['email']
           end
 
+          ##
+          # @return [String] The resource_type
           def resource_type
             @properties['resource_type']
           end
 
+          ##
+          # @return [String] The url
           def url
             @properties['url']
           end

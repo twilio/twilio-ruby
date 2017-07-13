@@ -72,12 +72,6 @@ module Twilio
               # When passed a block, yields MemberInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -137,9 +131,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] queue_sid A 34 character string that uniquely identifies this
-              #   queue.
               # @return [MemberPage] MemberPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -277,7 +268,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [MemberContext] MemberContext for this MemberInstance
               def context
                 unless @instance_context
@@ -291,22 +281,32 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] Unique string that identifies this resource
               def call_sid
                 @properties['call_sid']
               end
 
+              ##
+              # @return [Time] The date the member was enqueued
               def date_enqueued
                 @properties['date_enqueued']
               end
 
+              ##
+              # @return [String] This member's current position in the queue.
               def position
                 @properties['position']
               end
 
+              ##
+              # @return [String] The uri
               def uri
                 @properties['uri']
               end
 
+              ##
+              # @return [String] The number of seconds the member has been in the queue.
               def wait_time
                 @properties['wait_time']
               end

@@ -73,12 +73,6 @@ module Twilio
               # When passed a block, yields SyncMapPermissionInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -138,10 +132,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] service_sid The unique SID identifier of the Sync Service
-              #   Instance.
-              # @param [String] map_sid The unique SID identifier of the Sync Map to which the
-              #   Permission applies.
               # @return [SyncMapPermissionPage] SyncMapPermissionPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -298,7 +288,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [SyncMapPermissionContext] SyncMapPermissionContext for this SyncMapPermissionInstance
               def context
                 unless @instance_context
@@ -312,34 +301,50 @@ module Twilio
                 @instance_context
               end
 
+              ##
+              # @return [String] Twilio Account SID.
               def account_sid
                 @properties['account_sid']
               end
 
+              ##
+              # @return [String] Sync Service Instance SID.
               def service_sid
                 @properties['service_sid']
               end
 
+              ##
+              # @return [String] Sync Map SID.
               def map_sid
                 @properties['map_sid']
               end
 
+              ##
+              # @return [String] Identity of the user to whom the Sync Map Permission applies.
               def identity
                 @properties['identity']
               end
 
+              ##
+              # @return [Boolean] Read access.
               def read
                 @properties['read']
               end
 
+              ##
+              # @return [Boolean] Write access.
               def write
                 @properties['write']
               end
 
+              ##
+              # @return [Boolean] Manage access.
               def manage
                 @properties['manage']
               end
 
+              ##
+              # @return [String] URL of this Sync Map Permission.
               def url
                 @properties['url']
               end

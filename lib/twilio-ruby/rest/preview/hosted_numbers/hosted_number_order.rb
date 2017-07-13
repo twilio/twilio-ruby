@@ -98,24 +98,6 @@ module Twilio
           # When passed a block, yields HostedNumberOrderInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [hosted_number_order.Status] status The Status of this HostedNumberOrder.
-          #   One of `received`, `pending-verification`, `verified`, `pending-loa`,
-          #   `carrier-processing`, `testing`, `completed`, `failed`, or `action-required`.
-          # @param [String] phone_number An E164 formatted phone number hosted by this
-          #   HostedNumberOrder.
-          # @param [String] incoming_phone_number_sid A 34 character string that uniquely
-          #   identifies the IncomingPhoneNumber resource created by this HostedNumberOrder.
-          # @param [String] friendly_name A human readable description of this resource, up
-          #   to 64 characters.
-          # @param [String] unique_name Provides a unique and addressable name to be
-          #   assigned to this HostedNumberOrder, assigned by the developer, to be optionally
-          #   used in addition to SID.
-          # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-          #  guarantees to never return more than limit.                  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-          #  the default value of 50 records.                      If no page_size is defined
-          #                       but a limit is defined, stream() will attempt to read the
-          #                       limit with the most efficient page size, i.e. min(limit, 1000)
           def each
             limits = @version.read_limits
 
@@ -398,6 +380,7 @@ module Twilio
                 'status' => payload['status'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
+                'verification_attempts' => payload['verification_attempts'].to_i,
                 'email' => payload['email'],
                 'cc_emails' => payload['cc_emails'],
                 'url' => payload['url'],
@@ -413,7 +396,6 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @param [Version] version Version that contains the resource
           # @return [HostedNumberOrderContext] HostedNumberOrderContext for this HostedNumberOrderInstance
           def context
             unless @instance_context
@@ -425,62 +407,98 @@ module Twilio
             @instance_context
           end
 
+          ##
+          # @return [String] HostedNumberOrder sid.
           def sid
             @properties['sid']
           end
 
+          ##
+          # @return [String] Account Sid.
           def account_sid
             @properties['account_sid']
           end
 
+          ##
+          # @return [String] IncomingPhoneNumber sid.
           def incoming_phone_number_sid
             @properties['incoming_phone_number_sid']
           end
 
+          ##
+          # @return [String] Address sid.
           def address_sid
             @properties['address_sid']
           end
 
+          ##
+          # @return [String] LOA document sid.
           def signing_document_sid
             @properties['signing_document_sid']
           end
 
+          ##
+          # @return [String] An E164 formatted phone number.
           def phone_number
             @properties['phone_number']
           end
 
+          ##
+          # @return [String] A mapping of phone number capabilities.
           def capabilities
             @properties['capabilities']
           end
 
+          ##
+          # @return [String] A human readable description of this resource.
           def friendly_name
             @properties['friendly_name']
           end
 
+          ##
+          # @return [String] A unique, developer assigned name of this HostedNumberOrder.
           def unique_name
             @properties['unique_name']
           end
 
+          ##
+          # @return [hosted_number_order.Status] The Status of this HostedNumberOrder.
           def status
             @properties['status']
           end
 
+          ##
+          # @return [Time] The date this HostedNumberOrder was created.
           def date_created
             @properties['date_created']
           end
 
+          ##
+          # @return [Time] The date this HostedNumberOrder was updated.
           def date_updated
             @properties['date_updated']
           end
 
+          ##
+          # @return [String] The number of verification attempts made to verify ownership of the phone number.
+          def verification_attempts
+            @properties['verification_attempts']
+          end
+
+          ##
+          # @return [String] Email.
           def email
             @properties['email']
           end
 
+          ##
+          # @return [String] A list of emails.
           def cc_emails
             @properties['cc_emails']
           end
 
+          ##
+          # @return [String] The URL of this HostedNumberOrder.
           def url
             @properties['url']
           end

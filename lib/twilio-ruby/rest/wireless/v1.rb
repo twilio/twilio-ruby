@@ -18,6 +18,10 @@ module Twilio
           @sims = nil
         end
 
+        ##
+        # @param [String] sid The sid
+        # @return [Twilio::REST::Wireless::V1::CommandInstance] if sid was passed.
+        # @return [Twilio::REST::Wireless::V1::CommandList]
         def commands(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'
@@ -28,6 +32,10 @@ module Twilio
           end
         end
 
+        ##
+        # @param [String] sid The sid
+        # @return [Twilio::REST::Wireless::V1::RatePlanInstance] if sid was passed.
+        # @return [Twilio::REST::Wireless::V1::RatePlanList]
         def rate_plans(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'
@@ -38,6 +46,10 @@ module Twilio
           end
         end
 
+        ##
+        # @param [String] sid The sid
+        # @return [Twilio::REST::Wireless::V1::SimInstance] if sid was passed.
+        # @return [Twilio::REST::Wireless::V1::SimList]
         def sims(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'

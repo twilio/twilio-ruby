@@ -99,19 +99,6 @@ module Twilio
             # When passed a block, yields WorkerInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] activity_name The activity_name
-            # @param [String] activity_sid The activity_sid
-            # @param [String] available The available
-            # @param [String] friendly_name The friendly_name
-            # @param [String] target_workers_expression The target_workers_expression
-            # @param [String] task_queue_name The task_queue_name
-            # @param [String] task_queue_sid The task_queue_sid
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -201,8 +188,8 @@ module Twilio
 
             ##
             # Access the statistics
-            # @return [WorkersStatisticsList] if a(n) WorkersStatisticsList object was created.
-            # @return [WorkersStatisticsContext] if a(n) WorkersStatisticsContext object was created.
+            # @return [WorkersStatisticsList]
+            # @return [WorkersStatisticsContext]
             def statistics
               return WorkersStatisticsContext.new(
                   @version,
@@ -228,7 +215,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] workspace_sid The workspace_sid
             # @return [WorkerPage] WorkerPage
             def initialize(version, response, solution)
               super(version, response)
@@ -335,8 +321,8 @@ module Twilio
 
             ##
             # Access the statistics
-            # @return [WorkerStatisticsList] if a(n) WorkerStatisticsList object was created.
-            # @return [WorkerStatisticsContext] if a(n) WorkerStatisticsContext object was created.
+            # @return [WorkerStatisticsList]
+            # @return [WorkerStatisticsContext]
             def statistics
               WorkerStatisticsContext.new(
                   @version,
@@ -347,8 +333,8 @@ module Twilio
 
             ##
             # Access the reservations
-            # @return [ReservationList] if a(n) ReservationList object was created.
-            # @return [ReservationContext] if a(n) ReservationContext object was created.
+            # @return [ReservationList]
+            # @return [ReservationContext] if sid was passed.
             def reservations(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -374,8 +360,8 @@ module Twilio
 
             ##
             # Access the worker_channels
-            # @return [WorkerChannelList] if a(n) WorkerChannelList object was created.
-            # @return [WorkerChannelContext] if a(n) WorkerChannelContext object was created.
+            # @return [WorkerChannelList]
+            # @return [WorkerChannelContext] if sid was passed.
             def worker_channels(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
@@ -446,7 +432,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [WorkerContext] WorkerContext for this WorkerInstance
             def context
               unless @instance_context
@@ -459,54 +444,80 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
+            ##
+            # @return [String] The activity_name
             def activity_name
               @properties['activity_name']
             end
 
+            ##
+            # @return [String] The activity_sid
             def activity_sid
               @properties['activity_sid']
             end
 
+            ##
+            # @return [String] The attributes
             def attributes
               @properties['attributes']
             end
 
+            ##
+            # @return [Boolean] The available
             def available
               @properties['available']
             end
 
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
+            ##
+            # @return [Time] The date_status_changed
             def date_status_changed
               @properties['date_status_changed']
             end
 
+            ##
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
+            ##
+            # @return [String] The friendly_name
             def friendly_name
               @properties['friendly_name']
             end
 
+            ##
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
+            ##
+            # @return [String] The workspace_sid
             def workspace_sid
               @properties['workspace_sid']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end
 
+            ##
+            # @return [String] The links
             def links
               @properties['links']
             end

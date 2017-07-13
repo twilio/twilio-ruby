@@ -65,12 +65,6 @@ module Twilio
             # When passed a block, yields CountryInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -229,7 +223,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [CountryContext] CountryContext for this CountryInstance
             def context
               unless @instance_context
@@ -241,26 +234,38 @@ module Twilio
               @instance_context
             end
 
+            ##
+            # @return [String] The country
             def country
               @properties['country']
             end
 
+            ##
+            # @return [String] The iso_country
             def iso_country
               @properties['iso_country']
             end
 
+            ##
+            # @return [String] The outbound_prefix_prices
             def outbound_prefix_prices
               @properties['outbound_prefix_prices']
             end
 
+            ##
+            # @return [String] The inbound_call_prices
             def inbound_call_prices
               @properties['inbound_call_prices']
             end
 
+            ##
+            # @return [String] The price_unit
             def price_unit
               @properties['price_unit']
             end
 
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end

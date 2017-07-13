@@ -26,14 +26,20 @@ module Twilio
         @v1 ||= V1.new self
       end
 
+      ##
+      # @return [Twilio::REST::Pricing::V1::MessagingInstance]
       def messaging
         self.v1.messaging()
       end
 
+      ##
+      # @return [Twilio::REST::Pricing::V1::PhoneNumberInstance]
       def phone_numbers
         self.v1.phone_numbers()
       end
 
+      ##
+      # @return [Twilio::REST::Pricing::V1::VoiceInstance]
       def voice
         self.v1.voice()
       end
