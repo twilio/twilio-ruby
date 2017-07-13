@@ -28,24 +28,24 @@ module Twilio
 
       ##
       # @param [String] sid The sid
-      # @return Twilio::REST::Wireless::V1::CommandInstance if sid was passed.
-      # @return Twilio::REST::Wireless::V1::CommandList
+      # @return [Twilio::REST::Wireless::V1::CommandInstance] if sid was passed.
+      # @return [Twilio::REST::Wireless::V1::CommandList]
       def commands(sid=:unset)
         self.v1.commands(sid)
       end
 
       ##
       # @param [String] sid The sid
-      # @return Twilio::REST::Wireless::V1::RatePlanInstance if sid was passed.
-      # @return Twilio::REST::Wireless::V1::RatePlanList
+      # @return [Twilio::REST::Wireless::V1::RatePlanInstance] if sid was passed.
+      # @return [Twilio::REST::Wireless::V1::RatePlanList]
       def rate_plans(sid=:unset)
         self.v1.rate_plans(sid)
       end
 
       ##
       # @param [String] sid The sid
-      # @return Twilio::REST::Wireless::V1::SimInstance if sid was passed.
-      # @return Twilio::REST::Wireless::V1::SimList
+      # @return [Twilio::REST::Wireless::V1::SimInstance] if sid was passed.
+      # @return [Twilio::REST::Wireless::V1::SimList]
       def sims(sid=:unset)
         self.v1.sims(sid)
       end

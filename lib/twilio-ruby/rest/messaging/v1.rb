@@ -18,8 +18,8 @@ module Twilio
 
         ##
         # @param [String] sid The sid
-        # @return Twilio::REST::Messaging::V1::ServiceInstance if sid was passed.
-        # @return Twilio::REST::Messaging::V1::ServiceList
+        # @return [Twilio::REST::Messaging::V1::ServiceInstance] if sid was passed.
+        # @return [Twilio::REST::Messaging::V1::ServiceList]
         def services(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'

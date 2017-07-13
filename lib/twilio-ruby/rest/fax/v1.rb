@@ -18,8 +18,8 @@ module Twilio
 
         ##
         # @param [String] sid A 34 character string that uniquely identifies this fax.
-        # @return Twilio::REST::Fax::V1::FaxInstance if sid was passed.
-        # @return Twilio::REST::Fax::V1::FaxList
+        # @return [Twilio::REST::Fax::V1::FaxInstance] if sid was passed.
+        # @return [Twilio::REST::Fax::V1::FaxList]
         def faxes(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'

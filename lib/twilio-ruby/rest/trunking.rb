@@ -28,8 +28,8 @@ module Twilio
 
       ##
       # @param [String] sid The sid
-      # @return Twilio::REST::Trunking::V1::TrunkInstance if sid was passed.
-      # @return Twilio::REST::Trunking::V1::TrunkList
+      # @return [Twilio::REST::Trunking::V1::TrunkInstance] if sid was passed.
+      # @return [Twilio::REST::Trunking::V1::TrunkList]
       def trunks(sid=:unset)
         self.v1.trunks(sid)
       end

@@ -88,20 +88,6 @@ module Twilio
           # When passed a block, yields FaxInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] from Filters the returned list to only include faxes sent from
-          #   the supplied number, given in E.164 format.
-          # @param [String] to Filters the returned list to only include faxes sent to the
-          #   supplied number, given in E.164 format.
-          # @param [Time] date_created_on_or_before Filters the returned list to only
-          #   include faxes created on or before the supplied date, given in ISO 8601 format.
-          # @param [Time] date_created_after Filters the returned list to only include faxes
-          #   created after the supplied date, given in ISO 8601 format.
-          # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-          #  guarantees to never return more than limit.                  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-          #  the default value of 50 records.                      If no page_size is defined
-          #                       but a limit is defined, stream() will attempt to read the
-          #                       limit with the most efficient page size, i.e. min(limit, 1000)
           def each
             limits = @version.read_limits
 
@@ -390,7 +376,6 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @param [Version] version Version that contains the resource
           # @return [FaxContext] FaxContext for this FaxInstance
           def context
             unless @instance_context

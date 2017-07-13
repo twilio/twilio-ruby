@@ -94,18 +94,6 @@ module Twilio
             # When passed a block, yields IncomingPhoneNumberInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Boolean] beta Include phone numbers new to the Twilio platform
-            # @param [String] friendly_name Only show the incoming phone number resources with
-            #   friendly names that exactly match this name
-            # @param [String] phone_number Only show the incoming phone number resources that
-            #   match this pattern
-            # @param [String] origin The origin
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -298,8 +286,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] account_sid The unique id of the Account responsible for this
-            #   phone number.
             # @return [IncomingPhoneNumberPage] IncomingPhoneNumberPage
             def initialize(version, response, solution)
               super(version, response)
@@ -551,7 +537,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [IncomingPhoneNumberContext] IncomingPhoneNumberContext for this IncomingPhoneNumberInstance
             def context
               unless @instance_context

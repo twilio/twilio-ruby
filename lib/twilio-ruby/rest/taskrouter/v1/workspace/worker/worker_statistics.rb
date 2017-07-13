@@ -40,8 +40,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] worker_sid The worker_sid
               # @return [WorkerStatisticsPage] WorkerStatisticsPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -154,7 +152,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [WorkerStatisticsContext] WorkerStatisticsContext for this WorkerStatisticsInstance
               def context
                 unless @instance_context

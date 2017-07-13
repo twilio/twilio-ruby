@@ -28,16 +28,16 @@ module Twilio
 
       ##
       # @param [String] sid The sid
-      # @return Twilio::REST::Notify::V1::CredentialInstance if sid was passed.
-      # @return Twilio::REST::Notify::V1::CredentialList
+      # @return [Twilio::REST::Notify::V1::CredentialInstance] if sid was passed.
+      # @return [Twilio::REST::Notify::V1::CredentialList]
       def credentials(sid=:unset)
         self.v1.credentials(sid)
       end
 
       ##
       # @param [String] sid The sid
-      # @return Twilio::REST::Notify::V1::ServiceInstance if sid was passed.
-      # @return Twilio::REST::Notify::V1::ServiceList
+      # @return [Twilio::REST::Notify::V1::ServiceInstance] if sid was passed.
+      # @return [Twilio::REST::Notify::V1::ServiceList]
       def services(sid=:unset)
         self.v1.services(sid)
       end

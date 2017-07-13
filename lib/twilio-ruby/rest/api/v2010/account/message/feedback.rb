@@ -65,8 +65,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] message_sid The message_sid
               # @return [FeedbackPage] FeedbackPage
               def initialize(version, response, solution)
                 super(version, response)

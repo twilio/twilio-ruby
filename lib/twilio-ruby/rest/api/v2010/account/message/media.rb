@@ -36,7 +36,7 @@ module Twilio
               # memory before returning.
               # @param [Time] date_created_before Filter by date created
               # @param [Time] date_created Filter by date created
-              # @param [Time] date_created_after: Filter by date created
+              # @param [Time] date_created_after Filter by date created
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #                   guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -60,7 +60,7 @@ module Twilio
               # is reached.
               # @param [Time] date_created_before Filter by date created
               # @param [Time] date_created Filter by date created
-              # @param [Time] date_created_after: Filter by date created
+              # @param [Time] date_created_after Filter by date created
               # @param [Integer] limit Upper limit for the number of records to return.                  stream()
               #  guarantees to never return more than limit.                  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -85,15 +85,6 @@ module Twilio
               # When passed a block, yields MediaInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Time] date_created_before Filter by date created
-              # @param [Time] date_created Filter by date created
-              # @param [Time] date_created_after: Filter by date created
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to read the
-              #                       limit with the most efficient page size, i.e. min(limit, 1000)
               def each
                 limits = @version.read_limits
 
@@ -111,7 +102,7 @@ module Twilio
               # Request is executed immediately.
               # @param [Time] date_created_before Filter by date created
               # @param [Time] date_created Filter by date created
-              # @param [Time] date_created_after: Filter by date created
+              # @param [Time] date_created_after Filter by date created
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -159,10 +150,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid The unique id of the Account responsible for this
-              #   media.
-              # @param [String] message_sid A 34 character string that uniquely identifies this
-              #   resource.
               # @return [MediaPage] MediaPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -284,7 +271,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [MediaContext] MediaContext for this MediaInstance
               def context
                 unless @instance_context

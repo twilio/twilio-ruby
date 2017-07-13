@@ -19,29 +19,29 @@ module Twilio
 
         ##
         # @param [String] resource_type The resource_type
-        # @return Twilio::REST::Preview::BulkExports::ExportInstance if resource_type was passed.
-        # @return Twilio::REST::Preview::BulkExports::ExportList
-        def exports(sid=:unset)
+        # @return [Twilio::REST::Preview::BulkExports::ExportInstance] if resource_type was passed.
+        # @return [Twilio::REST::Preview::BulkExports::ExportList]
+        def exports(resource_type=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
+            raise ArgumentError, 'resource_type cannot be nil'
+          elsif resource_type == :unset
             @exports ||= ExportList.new self
           else
-            ExportContext.new(self, sid)
+            ExportContext.new(self, resource_type)
           end
         end
 
         ##
         # @param [String] resource_type The resource_type
-        # @return Twilio::REST::Preview::BulkExports::ExportConfigurationInstance if resource_type was passed.
-        # @return Twilio::REST::Preview::BulkExports::ExportConfigurationList
-        def export_configuration(sid=:unset)
+        # @return [Twilio::REST::Preview::BulkExports::ExportConfigurationInstance] if resource_type was passed.
+        # @return [Twilio::REST::Preview::BulkExports::ExportConfigurationList]
+        def export_configuration(resource_type=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
+            raise ArgumentError, 'resource_type cannot be nil'
+          elsif resource_type == :unset
             @export_configuration ||= ExportConfigurationList.new self
           else
-            ExportConfigurationContext.new(self, sid)
+            ExportConfigurationContext.new(self, resource_type)
           end
         end
 

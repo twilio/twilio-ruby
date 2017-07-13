@@ -28,16 +28,16 @@ module Twilio
 
       ##
       # @param [String] sid The sid
-      # @return Twilio::REST::Video::V1::RecordingInstance if sid was passed.
-      # @return Twilio::REST::Video::V1::RecordingList
+      # @return [Twilio::REST::Video::V1::RecordingInstance] if sid was passed.
+      # @return [Twilio::REST::Video::V1::RecordingList]
       def recordings(sid=:unset)
         self.v1.recordings(sid)
       end
 
       ##
       # @param [String] sid The sid
-      # @return Twilio::REST::Video::V1::RoomInstance if sid was passed.
-      # @return Twilio::REST::Video::V1::RoomList
+      # @return [Twilio::REST::Video::V1::RoomInstance] if sid was passed.
+      # @return [Twilio::REST::Video::V1::RoomList]
       def rooms(sid=:unset)
         self.v1.rooms(sid)
       end

@@ -71,7 +71,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] account_sid The account_sid
             # @return [ValidationRequestPage] ValidationRequestPage
             def initialize(version, response, solution)
               super(version, response)

@@ -27,7 +27,7 @@ module Twilio
       end
 
       ##
-      # @return Twilio::REST::Accounts::V1::CredentialInstance
+      # @return [Twilio::REST::Accounts::V1::CredentialInstance]
       def credentials
         self.v1.credentials()
       end

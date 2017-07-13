@@ -20,8 +20,8 @@ module Twilio
         ##
         # @param [String] sid The Account Sid that uniquely identifies the account to
         #   fetch
-        # @return Twilio::REST::Api::V2010::AccountInstance if sid was passed.
-        # @return Twilio::REST::Api::V2010::AccountList
+        # @return [Twilio::REST::Api::V2010::AccountInstance] if sid was passed.
+        # @return [Twilio::REST::Api::V2010::AccountList]
         def accounts(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'

@@ -20,8 +20,8 @@ module Twilio
         ##
         # @param [String] sid The Available Add-on Sid that uniquely identifies this
         #   resource
-        # @return Twilio::REST::Preview::Marketplace::AvailableAddOnInstance if sid was passed.
-        # @return Twilio::REST::Preview::Marketplace::AvailableAddOnList
+        # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnInstance] if sid was passed.
+        # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnList]
         def available_add_ons(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'
@@ -35,8 +35,8 @@ module Twilio
         ##
         # @param [String] sid The Installed Add-on Sid that uniquely identifies this
         #   resource
-        # @return Twilio::REST::Preview::Marketplace::InstalledAddOnInstance if sid was passed.
-        # @return Twilio::REST::Preview::Marketplace::InstalledAddOnList
+        # @return [Twilio::REST::Preview::Marketplace::InstalledAddOnInstance] if sid was passed.
+        # @return [Twilio::REST::Preview::Marketplace::InstalledAddOnList]
         def installed_add_ons(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'

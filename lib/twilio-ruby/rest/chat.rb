@@ -35,16 +35,16 @@ module Twilio
 
       ##
       # @param [String] sid The sid
-      # @return Twilio::REST::Chat::V2::CredentialInstance if sid was passed.
-      # @return Twilio::REST::Chat::V2::CredentialList
+      # @return [Twilio::REST::Chat::V2::CredentialInstance] if sid was passed.
+      # @return [Twilio::REST::Chat::V2::CredentialList]
       def credentials(sid=:unset)
         self.v2.credentials(sid)
       end
 
       ##
       # @param [String] sid The sid
-      # @return Twilio::REST::Chat::V2::ServiceInstance if sid was passed.
-      # @return Twilio::REST::Chat::V2::ServiceList
+      # @return [Twilio::REST::Chat::V2::ServiceInstance] if sid was passed.
+      # @return [Twilio::REST::Chat::V2::ServiceList]
       def services(sid=:unset)
         self.v2.services(sid)
       end

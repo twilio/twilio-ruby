@@ -19,8 +19,8 @@ module Twilio
 
         ##
         # @param [String] sid The sid
-        # @return Twilio::REST::Chat::V2::CredentialInstance if sid was passed.
-        # @return Twilio::REST::Chat::V2::CredentialList
+        # @return [Twilio::REST::Chat::V2::CredentialInstance] if sid was passed.
+        # @return [Twilio::REST::Chat::V2::CredentialList]
         def credentials(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'
@@ -33,8 +33,8 @@ module Twilio
 
         ##
         # @param [String] sid The sid
-        # @return Twilio::REST::Chat::V2::ServiceInstance if sid was passed.
-        # @return Twilio::REST::Chat::V2::ServiceList
+        # @return [Twilio::REST::Chat::V2::ServiceInstance] if sid was passed.
+        # @return [Twilio::REST::Chat::V2::ServiceList]
         def services(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'

@@ -62,8 +62,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] account_sid A 34 character string that uniquely identifies this
-            #   resource.
             # @return [NewSigningKeyPage] NewSigningKeyPage
             def initialize(version, response, solution)
               super(version, response)

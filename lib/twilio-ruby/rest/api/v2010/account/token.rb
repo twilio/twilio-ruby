@@ -63,8 +63,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] account_sid The unique id of the Account that created this
-            #   Token.
             # @return [TokenPage] TokenPage
             def initialize(version, response, solution)
               super(version, response)

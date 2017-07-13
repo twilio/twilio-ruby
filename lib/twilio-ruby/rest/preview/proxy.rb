@@ -18,8 +18,8 @@ module Twilio
 
         ##
         # @param [String] sid A 34 character string that uniquely identifies this Service.
-        # @return Twilio::REST::Preview::Proxy::ServiceInstance if sid was passed.
-        # @return Twilio::REST::Preview::Proxy::ServiceList
+        # @return [Twilio::REST::Preview::Proxy::ServiceInstance] if sid was passed.
+        # @return [Twilio::REST::Preview::Proxy::ServiceList]
         def services(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'

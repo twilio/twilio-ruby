@@ -88,18 +88,6 @@ module Twilio
           # When passed a block, yields EventInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] actor_sid The actor_sid
-          # @param [String] event_type The event_type
-          # @param [String] resource_sid The resource_sid
-          # @param [String] source_ip_address The source_ip_address
-          # @param [Date] start_date The start_date
-          # @param [Date] end_date The end_date
-          # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-          #  guarantees to never return more than limit.                  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-          #  the default value of 50 records.                      If no page_size is defined
-          #                       but a limit is defined, stream() will attempt to read the
-          #                       limit with the most efficient page size, i.e. min(limit, 1000)
           def each
             limits = @version.read_limits
 
@@ -278,7 +266,6 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @param [Version] version Version that contains the resource
           # @return [EventContext] EventContext for this EventInstance
           def context
             unless @instance_context

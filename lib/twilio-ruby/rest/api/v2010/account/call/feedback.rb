@@ -41,9 +41,6 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] call_sid A 34 character string that uniquely identifies this
-              #   resource.
               # @return [FeedbackPage] FeedbackPage
               def initialize(version, response, solution)
                 super(version, response)
@@ -203,7 +200,6 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @param [Version] version Version that contains the resource
               # @return [FeedbackContext] FeedbackContext for this FeedbackInstance
               def context
                 unless @instance_context

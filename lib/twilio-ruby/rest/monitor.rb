@@ -28,16 +28,16 @@ module Twilio
 
       ##
       # @param [String] sid The sid
-      # @return Twilio::REST::Monitor::V1::AlertInstance if sid was passed.
-      # @return Twilio::REST::Monitor::V1::AlertList
+      # @return [Twilio::REST::Monitor::V1::AlertInstance] if sid was passed.
+      # @return [Twilio::REST::Monitor::V1::AlertList]
       def alerts(sid=:unset)
         self.v1.alerts(sid)
       end
 
       ##
       # @param [String] sid The sid
-      # @return Twilio::REST::Monitor::V1::EventInstance if sid was passed.
-      # @return Twilio::REST::Monitor::V1::EventList
+      # @return [Twilio::REST::Monitor::V1::EventInstance] if sid was passed.
+      # @return [Twilio::REST::Monitor::V1::EventList]
       def events(sid=:unset)
         self.v1.events(sid)
       end

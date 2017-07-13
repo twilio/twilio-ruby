@@ -147,7 +147,6 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @param [Version] version Version that contains the resource
           # @return [ExportContext] ExportContext for this ExportInstance
           def context
             unless @instance_context

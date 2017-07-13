@@ -18,15 +18,15 @@ module Twilio
 
         ##
         # @param [String] phone_number The phone_number
-        # @return Twilio::REST::Lookups::V1::PhoneNumberInstance if phone_number was passed.
-        # @return Twilio::REST::Lookups::V1::PhoneNumberList
-        def phone_numbers(sid=:unset)
+        # @return [Twilio::REST::Lookups::V1::PhoneNumberInstance] if phone_number was passed.
+        # @return [Twilio::REST::Lookups::V1::PhoneNumberList]
+        def phone_numbers(phone_number=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
+            raise ArgumentError, 'phone_number cannot be nil'
+          elsif phone_number == :unset
             @phone_numbers ||= PhoneNumberList.new self
           else
-            PhoneNumberContext.new(self, sid)
+            PhoneNumberContext.new(self, phone_number)
           end
         end
 

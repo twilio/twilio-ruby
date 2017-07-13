@@ -104,21 +104,6 @@ module Twilio
             # When passed a block, yields TaskInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] priority The priority
-            # @param [String] assignment_status The assignment_status
-            # @param [String] workflow_sid The workflow_sid
-            # @param [String] workflow_name The workflow_name
-            # @param [String] task_queue_sid The task_queue_sid
-            # @param [String] task_queue_name The task_queue_name
-            # @param [String] evaluate_task_attributes The evaluate_task_attributes
-            # @param [String] ordering The ordering
-            # @param [Boolean] has_addons The has_addons
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -227,7 +212,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] workspace_sid The workspace_sid
             # @return [TaskPage] TaskPage
             def initialize(version, response, solution)
               super(version, response)
@@ -415,7 +399,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [TaskContext] TaskContext for this TaskInstance
             def context
               unless @instance_context

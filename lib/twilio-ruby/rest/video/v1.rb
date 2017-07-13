@@ -19,8 +19,8 @@ module Twilio
 
         ##
         # @param [String] sid The sid
-        # @return Twilio::REST::Video::V1::RecordingInstance if sid was passed.
-        # @return Twilio::REST::Video::V1::RecordingList
+        # @return [Twilio::REST::Video::V1::RecordingInstance] if sid was passed.
+        # @return [Twilio::REST::Video::V1::RecordingList]
         def recordings(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'
@@ -33,8 +33,8 @@ module Twilio
 
         ##
         # @param [String] sid The sid
-        # @return Twilio::REST::Video::V1::RoomInstance if sid was passed.
-        # @return Twilio::REST::Video::V1::RoomList
+        # @return [Twilio::REST::Video::V1::RoomInstance] if sid was passed.
+        # @return [Twilio::REST::Video::V1::RoomList]
         def rooms(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'

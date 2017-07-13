@@ -37,7 +37,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] sim_sid The sim_sid
             # @return [UsagePage] UsagePage
             def initialize(version, response, solution)
               super(version, response)
@@ -146,7 +145,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [UsageContext] UsageContext for this UsageInstance
             def context
               unless @instance_context

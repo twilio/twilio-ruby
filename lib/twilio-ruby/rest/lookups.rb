@@ -28,8 +28,8 @@ module Twilio
 
       ##
       # @param [String] phone_number The phone_number
-      # @return Twilio::REST::Lookups::V1::PhoneNumberInstance if phone_number was passed.
-      # @return Twilio::REST::Lookups::V1::PhoneNumberList
+      # @return [Twilio::REST::Lookups::V1::PhoneNumberInstance] if phone_number was passed.
+      # @return [Twilio::REST::Lookups::V1::PhoneNumberList]
       def phone_numbers(phone_number=:unset)
         self.v1.phone_numbers(phone_number)
       end

@@ -79,7 +79,7 @@ module Twilio
             # @param [String] from Only show messages from this phone number
             # @param [Time] date_sent_before Filter by date sent
             # @param [Time] date_sent Filter by date sent
-            # @param [Time] date_sent_after: Filter by date sent
+            # @param [Time] date_sent_after Filter by date sent
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #                   guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
@@ -107,7 +107,7 @@ module Twilio
             # @param [String] from Only show messages from this phone number
             # @param [Time] date_sent_before Filter by date sent
             # @param [Time] date_sent Filter by date sent
-            # @param [Time] date_sent_after: Filter by date sent
+            # @param [Time] date_sent_after Filter by date sent
             # @param [Integer] limit Upper limit for the number of records to return.                  stream()
             #  guarantees to never return more than limit.                  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
@@ -134,17 +134,6 @@ module Twilio
             # When passed a block, yields MessageInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] to Filter by messages to this number
-            # @param [String] from Only show messages from this phone number
-            # @param [Time] date_sent_before Filter by date sent
-            # @param [Time] date_sent Filter by date sent
-            # @param [Time] date_sent_after: Filter by date sent
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -164,7 +153,7 @@ module Twilio
             # @param [String] from Only show messages from this phone number
             # @param [Time] date_sent_before Filter by date sent
             # @param [Time] date_sent Filter by date sent
-            # @param [Time] date_sent_after: Filter by date sent
+            # @param [Time] date_sent_after Filter by date sent
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -214,7 +203,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] account_sid The unique id of the Account that sent this message.
             # @return [MessagePage] MessagePage
             def initialize(version, response, solution)
               super(version, response)
@@ -411,7 +399,6 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @param [Version] version Version that contains the resource
             # @return [MessageContext] MessageContext for this MessageInstance
             def context
               unless @instance_context

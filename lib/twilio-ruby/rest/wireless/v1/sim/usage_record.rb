@@ -80,15 +80,6 @@ module Twilio
             # When passed a block, yields UsageRecordInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Time] end_ The end
-            # @param [Time] start The start
-            # @param [usage_record.Granularity] granularity The granularity
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                       not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to read the
-            #                       limit with the most efficient page size, i.e. min(limit, 1000)
             def each
               limits = @version.read_limits
 
@@ -154,7 +145,6 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @param [String] sim_sid The sim_sid
             # @return [UsageRecordPage] UsageRecordPage
             def initialize(version, response, solution)
               super(version, response)

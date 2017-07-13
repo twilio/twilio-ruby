@@ -19,8 +19,8 @@ module Twilio
         ##
         # @param [String] sid A 34 character string that uniquely identifies this
         #   HostedNumberOrder.
-        # @return Twilio::REST::Preview::HostedNumbers::HostedNumberOrderInstance if sid was passed.
-        # @return Twilio::REST::Preview::HostedNumbers::HostedNumberOrderList
+        # @return [Twilio::REST::Preview::HostedNumbers::HostedNumberOrderInstance] if sid was passed.
+        # @return [Twilio::REST::Preview::HostedNumbers::HostedNumberOrderList]
         def hosted_number_orders(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'
