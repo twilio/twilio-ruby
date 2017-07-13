@@ -22,7 +22,7 @@ module Twilio
         # @return [Twilio::REST::Preview::BulkExports::ExportInstance] if resource_type was passed.
         # @return [Twilio::REST::Preview::BulkExports::ExportList]
         def exports(resource_type=:unset)
-          if sid.nil?
+          if resource_type.nil?
             raise ArgumentError, 'resource_type cannot be nil'
           elsif resource_type == :unset
             @exports ||= ExportList.new self
@@ -36,7 +36,7 @@ module Twilio
         # @return [Twilio::REST::Preview::BulkExports::ExportConfigurationInstance] if resource_type was passed.
         # @return [Twilio::REST::Preview::BulkExports::ExportConfigurationList]
         def export_configuration(resource_type=:unset)
-          if sid.nil?
+          if resource_type.nil?
             raise ArgumentError, 'resource_type cannot be nil'
           elsif resource_type == :unset
             @export_configuration ||= ExportConfigurationList.new self

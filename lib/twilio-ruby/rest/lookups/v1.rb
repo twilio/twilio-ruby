@@ -21,7 +21,7 @@ module Twilio
         # @return [Twilio::REST::Lookups::V1::PhoneNumberInstance] if phone_number was passed.
         # @return [Twilio::REST::Lookups::V1::PhoneNumberList]
         def phone_numbers(phone_number=:unset)
-          if sid.nil?
+          if phone_number.nil?
             raise ArgumentError, 'phone_number cannot be nil'
           elsif phone_number == :unset
             @phone_numbers ||= PhoneNumberList.new self
