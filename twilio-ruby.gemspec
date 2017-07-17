@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
                        'building TwiML, and generating Twilio JWT Capability Tokens'
   spec.homepage      = 'http://github.com/twilio/twilio-ruby'
   spec.license       = 'MIT'
-  spec.metadata['yard.run'] = 'yri' # use "yard" to build full HTML docs.
+  spec.metadata      = { 'yard.run' => 'yri' } # use "yard" to build full HTML docs
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
@@ -34,6 +34,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 1.5'
   spec.add_development_dependency 'rubocop', '~> 0.49.1'
   spec.add_development_dependency 'yard', '~> 0.9.9'
-  spec.extra_rdoc_files = ['README.md', 'LICENSE.md']
-  spec.rdoc_options = ['--line-numbers', '--inline-source', '--title', 'twilio-ruby', '--main', 'README.md']
 end
