@@ -35,11 +35,11 @@ module Twilio
             # @param [Time] message_date Filter by date
             # @param [Time] message_date_after Filter by date
             # @param [Integer] limit Upper limit for the number of records to return. stream()
-            #                   guarantees to never return more than limit.  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
-            #  the default value of 50 records.  If no page_size is                      defined
-            #  but a limit is defined, stream() will attempt to read                      the
-            #  limit with the most efficient page size,                      i.e. min(limit, 1000)
+            #    guarantees to never return more than limit.  Default is no limit
+            # @param [Integer] page_size Number of records to fetch per request, when
+            #    not set will use the default value of 50 records.  If no page_size is defined
+            #    but a limit is defined, stream() will attempt to read the limit with the most
+            #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
             def list(log: :unset, message_date_before: :unset, message_date: :unset, message_date_after: :unset, limit: nil, page_size: nil)
               self.stream(
@@ -60,12 +60,12 @@ module Twilio
             # @param [Time] message_date_before Filter by date
             # @param [Time] message_date Filter by date
             # @param [Time] message_date_after Filter by date
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to                      read the
-            #  limit with the most efficient page size,                       i.e. min(limit, 1000)
+            # @param [Integer] limit Upper limit for the number of records to return. stream()
+            #    guarantees to never return more than limit. Default is no limit.
+            # @param [Integer] page_size Number of records to fetch per request, when
+            #    not set will use the default value of 50 records. If no page_size is defined
+            #    but a limit is defined, stream() will attempt to read the limit with the most
+            #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(log: :unset, message_date_before: :unset, message_date: :unset, message_date_after: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)

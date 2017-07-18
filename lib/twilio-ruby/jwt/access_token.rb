@@ -10,6 +10,7 @@ module Twilio
       end
     end
 
+    # A Grant which gives access to a Twilio Resource
     class AccessToken < BaseJWT
       attr_accessor :account_sid,
                     :signing_key_id,
@@ -20,6 +21,14 @@ module Twilio
                     :ttl,
                     :valid_until
 
+      # @param [String] account_sid The account_sid for which the token is generated.
+      # @param [String] signing_key_sid The API Key sid used to sign the token.
+      # @param [String] secret The secret associated with signing_key_sid to sign the token.
+      # @param [Array] grants An array of Grants to be added to the token.
+      # @param [String] identity The identifier for the client of the token.
+      # @param [String] nbf The epoch time in seconds before which the token is valid.
+      # @param [String] ttl Time to live in seconds for which the JWT is valid, default one hour (3600)
+      # @param [String] valid_until The epoch time in seconds for which the JWT is valid , overrides ttl if specified
       def initialize(
         account_sid,
         signing_key_sid,
@@ -46,6 +55,8 @@ module Twilio
         @valid_until = valid_until
       end
 
+      # Adds a Grant to the AccessToken.
+      # @param [Grant] grant to be added to the JWT.
       def add_grant(grant)
         @grants.push(grant)
       end
@@ -81,6 +92,7 @@ module Twilio
         headers
       end
 
+      # Grant to access Twilio IP Messaging
       class IpMessagingGrant
         include AccessTokenGrant
         attr_accessor :service_sid,
@@ -111,6 +123,7 @@ module Twilio
         end
       end
 
+      # Grant to access Twilio Voice
       class VoiceGrant
         include AccessTokenGrant
         attr_accessor :outgoing_application_sid,
@@ -145,6 +158,7 @@ module Twilio
         end
       end
 
+      # Grant to access Twilio Sync
       class SyncGrant
         include AccessTokenGrant
         attr_accessor :service_sid,
@@ -164,6 +178,7 @@ module Twilio
         end
       end
 
+      # Grant to access Twilio Conversations
       class ConversationsGrant
         include AccessTokenGrant
         attr_accessor :configuration_profile_sid
@@ -188,6 +203,7 @@ module Twilio
         end
       end
 
+      # Grant to access Twilio Video
       class VideoGrant
         include AccessTokenGrant
         attr_accessor :room
@@ -205,6 +221,7 @@ module Twilio
         end
       end
 
+      # Grant to access Twilio TaskRouter
       class TaskRouterGrant
         include AccessTokenGrant
         attr_accessor :workspace_sid,

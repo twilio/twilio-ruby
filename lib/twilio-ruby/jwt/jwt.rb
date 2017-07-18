@@ -1,7 +1,13 @@
 module Twilio
   module JWT
     class BaseJWT
-      # valid_until overrides ttl if specified
+      # Base class for creating JWTs.
+      # @param [String] secret_key The secret to encode the JWT.
+      # @param [String] issuer The issuer of the JWT.
+      # @param [String] subject The subject of the JWT, omitted by default
+      # @param [String] nbf The epoch time in seconds before which the token is valid.
+      # @param [String] ttl Time to live in seconds for which the JWT is valid, default one hour (3600)
+      # @param [String] valid_until The epoch time in seconds for which the JWT is valid , overrides ttl if specified
       def initialize(secret_key: nil, issuer: nil, subject: nil, nbf: nil, ttl: 3600, valid_until: nil)
         if secret_key.nil?
           raise ArgumentError, 'JWT does not have a signing key'
@@ -16,10 +22,12 @@ module Twilio
         @valid_until = valid_until
       end
 
+      # @return [Hash] Additional headers to include in the JWT, defaults to empty Hash.
       def _generate_headers
         {}
       end
 
+      # @return [Hash] Payload of the JWT.
       def _generate_payload
         raise NotImplementedError
       end
