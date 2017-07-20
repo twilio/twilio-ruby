@@ -103,14 +103,13 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 # set up
 capability = Twilio::JWT::ClientCapability.new account_sid, auth_token
 
-
 # allow outgoing calls to an application
-outgoingScope = Twilio::JWT::ClientCapability::OutgoingClientScope.new 'AP11111111111111111111111111111111'
-capability.add_scope(outgoingScope)
+outgoing_scope = Twilio::JWT::ClientCapability::OutgoingClientScope.new 'AP11111111111111111111111111111111'
+capability.add_scope(outgoing_scope)
 
 # allow incoming calls to 'andrew'
-incomingScope = Twilio::JWT::ClientCapability::IncomingClientScope.new 'tom'
-capability.add_scope(incomingScope)
+incoming_scope = Twilio::JWT::ClientCapability::IncomingClientScope.new 'andrew'
+capability.add_scope(incoming_scope)
 
 # generate the token string
 @token = capability.to_s
