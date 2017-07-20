@@ -11,13 +11,13 @@ A module for using the Twilio REST API and generating valid [TwiML](http://www.t
 To install using [Bundler][bundler] grab the latest stable version:
 
 ```ruby
-gem 'twilio-ruby', '~> 5.0.0.rc26'
+gem 'twilio-ruby', '~> 5.0.0'
 ```
 
 To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
 
 ```bash
-gem install twilio-ruby -v 5.0.0.rc26
+gem install twilio-ruby -v 5.0.0
 ```
 
 To build and install the development branch yourself from the latest source:
@@ -103,14 +103,13 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 # set up
 capability = Twilio::JWT::ClientCapability.new account_sid, auth_token
 
-
 # allow outgoing calls to an application
-outgoingScope = Twilio::JWT::ClientCapability::OutgoingClientScope.new 'AP11111111111111111111111111111111'
-capability.add_scope(outgoingScope)
+outgoing_scope = Twilio::JWT::ClientCapability::OutgoingClientScope.new 'AP11111111111111111111111111111111'
+capability.add_scope(outgoing_scope)
 
 # allow incoming calls to 'andrew'
-incomingScope = Twilio::JWT::ClientCapability::IncomingClientScope.new 'tom'
-capability.add_scope(incomingScope)
+incoming_scope = Twilio::JWT::ClientCapability::IncomingClientScope.new 'andrew'
+capability.add_scope(incoming_scope)
 
 # generate the token string
 @token = capability.to_s
