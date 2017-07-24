@@ -56,6 +56,21 @@ describe Twilio::JWT::AccessToken do
         expect(payload['grants']['ip_messaging']['deployment_role_sid']).to eq('DR123')
       end
 
+      it 'Chat grant' do
+        chat_grant = Twilio::JWT::AccessToken::ChatGrant.new
+        chat_grant.service_sid = 'SS123'
+        chat_grant.endpoint_id = 'EP123'
+        chat_grant.deployment_role_sid = 'DR123'
+        chat_grant.push_credential_sid = 'PC123'
+        @scat.add_grant(chat_grant)
+        payload, _ = JWT.decode @scat.to_s, 'secret'
+        expect(payload['grants'].count).to eq(1)
+        expect(payload['grants']['chat']['service_sid']).to eq('SS123')
+        expect(payload['grants']['chat']['endpoint_id']).to eq('EP123')
+        expect(payload['grants']['chat']['push_credential_sid']).to eq('PC123')
+        expect(payload['grants']['chat']['deployment_role_sid']).to eq('DR123')
+      end
+
       it 'Voice grant' do
         voice_grant = Twilio::JWT::AccessToken::VoiceGrant.new
         voice_grant.outgoing_application_sid = 'AP123'
