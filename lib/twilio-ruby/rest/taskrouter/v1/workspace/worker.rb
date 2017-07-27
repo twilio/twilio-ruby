@@ -40,11 +40,11 @@ module Twilio
             # @param [String] task_queue_name The task_queue_name
             # @param [String] task_queue_sid The task_queue_sid
             # @param [Integer] limit Upper limit for the number of records to return. stream()
-            #                   guarantees to never return more than limit.  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
-            #  the default value of 50 records.  If no page_size is                      defined
-            #  but a limit is defined, stream() will attempt to read                      the
-            #  limit with the most efficient page size,                      i.e. min(limit, 1000)
+            #    guarantees to never return more than limit.  Default is no limit
+            # @param [Integer] page_size Number of records to fetch per request, when
+            #    not set will use the default value of 50 records.  If no page_size is defined
+            #    but a limit is defined, stream() will attempt to read the limit with the most
+            #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
             def list(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, limit: nil, page_size: nil)
               self.stream(
@@ -71,12 +71,12 @@ module Twilio
             # @param [String] target_workers_expression The target_workers_expression
             # @param [String] task_queue_name The task_queue_name
             # @param [String] task_queue_sid The task_queue_sid
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to                      read the
-            #  limit with the most efficient page size,                       i.e. min(limit, 1000)
+            # @param [Integer] limit Upper limit for the number of records to return. stream()
+            #    guarantees to never return more than limit. Default is no limit.
+            # @param [Integer] page_size Number of records to fetch per request, when
+            #    not set will use the default value of 50 records. If no page_size is defined
+            #    but a limit is defined, stream() will attempt to read the limit with the most
+            #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)

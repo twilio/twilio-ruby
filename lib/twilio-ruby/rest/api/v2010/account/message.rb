@@ -38,13 +38,18 @@ module Twilio
             # @param [String] max_price The max_price
             # @param [Boolean] provide_feedback The provide_feedback
             # @param [String] validity_period The validity_period
+            # @param [String] max_rate The max_rate
+            # @param [Boolean] force_delivery The force_delivery
+            # @param [String] provider_sid The provider_sid
+            # @param [message.ContentRetention] content_retention The content_retention
+            # @param [message.AddressRetention] address_retention The address_retention
             # @param [String] from A Twilio phone number or alphanumeric sender ID enabled for
             #   the type of message you wish to send.
             # @param [String] messaging_service_sid The messaging_service_sid
             # @param [String] body The body
             # @param [String] media_url The media_url
             # @return [MessageInstance] Newly created MessageInstance
-            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
+            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, max_rate: :unset, force_delivery: :unset, provider_sid: :unset, content_retention: :unset, address_retention: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -56,6 +61,11 @@ module Twilio
                   'MaxPrice' => max_price,
                   'ProvideFeedback' => provide_feedback,
                   'ValidityPeriod' => validity_period,
+                  'MaxRate' => max_rate,
+                  'ForceDelivery' => force_delivery,
+                  'ProviderSid' => provider_sid,
+                  'ContentRetention' => content_retention,
+                  'AddressRetention' => address_retention,
               })
 
               payload = @version.create(
@@ -81,11 +91,11 @@ module Twilio
             # @param [Time] date_sent Filter by date sent
             # @param [Time] date_sent_after Filter by date sent
             # @param [Integer] limit Upper limit for the number of records to return. stream()
-            #                   guarantees to never return more than limit.  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
-            #  the default value of 50 records.  If no page_size is                      defined
-            #  but a limit is defined, stream() will attempt to read                      the
-            #  limit with the most efficient page size,                      i.e. min(limit, 1000)
+            #    guarantees to never return more than limit.  Default is no limit
+            # @param [Integer] page_size Number of records to fetch per request, when
+            #    not set will use the default value of 50 records.  If no page_size is defined
+            #    but a limit is defined, stream() will attempt to read the limit with the most
+            #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
             def list(to: :unset, from: :unset, date_sent_before: :unset, date_sent: :unset, date_sent_after: :unset, limit: nil, page_size: nil)
               self.stream(
@@ -108,12 +118,12 @@ module Twilio
             # @param [Time] date_sent_before Filter by date sent
             # @param [Time] date_sent Filter by date sent
             # @param [Time] date_sent_after Filter by date sent
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to                      read the
-            #  limit with the most efficient page size,                       i.e. min(limit, 1000)
+            # @param [Integer] limit Upper limit for the number of records to return. stream()
+            #    guarantees to never return more than limit. Default is no limit.
+            # @param [Integer] page_size Number of records to fetch per request, when
+            #    not set will use the default value of 50 records. If no page_size is defined
+            #    but a limit is defined, stream() will attempt to read the limit with the most
+            #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(to: :unset, from: :unset, date_sent_before: :unset, date_sent: :unset, date_sent_after: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)

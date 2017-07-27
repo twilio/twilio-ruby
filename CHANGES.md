@@ -1,5 +1,26 @@
 twilio-ruby changelog
 =====================
+[2017-07-27] Version 5.1.0
+---------------------------
+**Api**
+- Remove unused `encryption_type` property on Recordings *(breaking change)*
+- Update `status` enum for Messages to include 'accepted'
+- Update `AnnounceMethod` parameter naming for consistency
+
+**Messaging**
+- Fix incorrectly typed capabilities property for PhoneNumbers.
+
+**Notify**
+- Add `ToBinding` optional parameter on Notifications resource creation. Accepted values are json strings.
+
+**Preview**
+- Add `sms_application_sid` to HostedNumberOrders.
+- Add `verification_attempts` to HostedNumberOrders.
+
+**Taskrouter**
+- Fully support conference functionality in reservations.
+
+
 [2017-07-13] Version 5.0.0
 --------------------------------
 - Moving to General Availability

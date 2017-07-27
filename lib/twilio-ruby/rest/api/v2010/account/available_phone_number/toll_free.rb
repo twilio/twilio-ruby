@@ -53,11 +53,11 @@ module Twilio
               # @param [String] in_lata The in_lata
               # @param [String] in_locality The in_locality
               # @param [Integer] limit Upper limit for the number of records to return. stream()
-              #                   guarantees to never return more than limit.  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
-              #  the default value of 50 records.  If no page_size is                      defined
-              #  but a limit is defined, stream() will attempt to read                      the
-              #  limit with the most efficient page size,                      i.e. min(limit, 1000)
+              #    guarantees to never return more than limit.  Default is no limit
+              # @param [Integer] page_size Number of records to fetch per request, when
+              #    not set will use the default value of 50 records.  If no page_size is defined
+              #    but a limit is defined, stream() will attempt to read the limit with the most
+              #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
               def list(area_code: :unset, contains: :unset, sms_enabled: :unset, mms_enabled: :unset, voice_enabled: :unset, exclude_all_address_required: :unset, exclude_local_address_required: :unset, exclude_foreign_address_required: :unset, beta: :unset, near_number: :unset, near_lat_long: :unset, distance: :unset, in_postal_code: :unset, in_region: :unset, in_rate_center: :unset, in_lata: :unset, in_locality: :unset, limit: nil, page_size: nil)
                 self.stream(
@@ -106,12 +106,12 @@ module Twilio
               # @param [String] in_rate_center The in_rate_center
               # @param [String] in_lata The in_lata
               # @param [String] in_locality The in_locality
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to                      read the
-              #  limit with the most efficient page size,                       i.e. min(limit, 1000)
+              # @param [Integer] limit Upper limit for the number of records to return. stream()
+              #    guarantees to never return more than limit. Default is no limit.
+              # @param [Integer] page_size Number of records to fetch per request, when
+              #    not set will use the default value of 50 records. If no page_size is defined
+              #    but a limit is defined, stream() will attempt to read the limit with the most
+              #    efficient page size, i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
               def stream(area_code: :unset, contains: :unset, sms_enabled: :unset, mms_enabled: :unset, voice_enabled: :unset, exclude_all_address_required: :unset, exclude_local_address_required: :unset, exclude_foreign_address_required: :unset, beta: :unset, near_number: :unset, near_lat_long: :unset, distance: :unset, in_postal_code: :unset, in_region: :unset, in_rate_center: :unset, in_lata: :unset, in_locality: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)

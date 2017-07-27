@@ -36,11 +36,11 @@ module Twilio
             # @param [String] call_sid Only show recordings made during the call given by the
             #   indicated sid
             # @param [Integer] limit Upper limit for the number of records to return. stream()
-            #                   guarantees to never return more than limit.  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
-            #  the default value of 50 records.  If no page_size is                      defined
-            #  but a limit is defined, stream() will attempt to read                      the
-            #  limit with the most efficient page size,                      i.e. min(limit, 1000)
+            #    guarantees to never return more than limit.  Default is no limit
+            # @param [Integer] page_size Number of records to fetch per request, when
+            #    not set will use the default value of 50 records.  If no page_size is defined
+            #    but a limit is defined, stream() will attempt to read the limit with the most
+            #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
             def list(date_created_before: :unset, date_created: :unset, date_created_after: :unset, call_sid: :unset, limit: nil, page_size: nil)
               self.stream(
@@ -62,12 +62,12 @@ module Twilio
             # @param [Time] date_created_after Filter by date created
             # @param [String] call_sid Only show recordings made during the call given by the
             #   indicated sid
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to                      read the
-            #  limit with the most efficient page size,                       i.e. min(limit, 1000)
+            # @param [Integer] limit Upper limit for the number of records to return. stream()
+            #    guarantees to never return more than limit. Default is no limit.
+            # @param [Integer] page_size Number of records to fetch per request, when
+            #    not set will use the default value of 50 records. If no page_size is defined
+            #    but a limit is defined, stream() will attempt to read the limit with the most
+            #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(date_created_before: :unset, date_created: :unset, date_created_after: :unset, call_sid: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
@@ -320,7 +320,6 @@ module Twilio
                   'channels' => payload['channels'].to_i,
                   'source' => payload['source'],
                   'uri' => payload['uri'],
-                  'encryption_type' => payload['encryption_type'],
                   'encryption_details' => payload['encryption_details'],
               }
 
@@ -423,12 +422,6 @@ module Twilio
             # @return [String] The URI for this resource
             def uri
               @properties['uri']
-            end
-
-            ##
-            # @return [String] The type of encryption used for this resource.
-            def encryption_type
-              @properties['encryption_type']
             end
 
             ##
