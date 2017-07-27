@@ -8,7 +8,7 @@ A module for using the Twilio REST API and generating valid [TwiML](http://www.t
 
 ## Recent Update
 
-As of release 6.5.0, Beta and Developer Preview products are now exposed via
+As of release 5.1.0, Beta and Developer Preview products are now exposed via
 the main `twilio-java` artifact. Releases of the `alpha` branch have been
 discontinued.
 
