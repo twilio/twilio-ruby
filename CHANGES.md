@@ -2,6 +2,13 @@ twilio-ruby changelog
 =====================
 [2017-07-27] Version 5.1.0
 ---------------------------
+This release adds Beta and Preview products to main artifact.
+
+Previously, Beta and Preview products were only included in the alpha artifact.
+They are now being included in the main artifact to ease product
+discoverability and the collective operational overhead of maintaining multiple
+artifacts per library.
+
 **Api**
 - Remove unused `encryption_type` property on Recordings *(breaking change)*
 - Update `status` enum for Messages to include 'accepted'
@@ -63,11 +70,11 @@ twilio-ruby changelog
 [2017-06-19] Version 5.0.0.rc23
 -------------------------------
 - Fixed ClientCapability parameter encoded bug.
-- Optional URL parameter for TwiML Play verb. 
+- Optional URL parameter for TwiML Play verb.
 
 [2017-06-15] Version 5.0.0.rc22
 -------------------------------
-- Refactor JWT token constructors 
+- Refactor JWT token constructors
 
 
 [2017-05-24] Version 5.0.0.rc21
