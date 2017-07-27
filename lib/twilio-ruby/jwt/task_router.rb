@@ -20,10 +20,6 @@ module Twilio
         @policies.push(policy)
       end
 
-      def to_s
-        to_jwt
-      end
-
       protected
 
       def _generate_payload
