@@ -26,6 +26,7 @@ The following code will print out the :attr:`friendly_name` for each :class:`App
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
+    @apps = @client.api.accounts(account_sid).applications.list()
     @client.applications.each do |app|
       puts app.friendly_name
     end
@@ -45,7 +46,8 @@ You can filter applications by FriendlyName
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @client.applications.list(friendly_name: 'FOO').each do |app|
+    @apps = @client.api.accounts(account_sid).applications.list(friendly_name: 'FOO')
+    @apps.each do |app|
       puts app.sid
     end
 
@@ -66,7 +68,7 @@ accepts many other arguments for url configuration.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @application = @client.applications.create(
+    @application = @client.api.accounts(account_sid).applications.create(
       friendly_name: "My New App"
     )
 
@@ -86,8 +88,8 @@ Updating an Application
     url = "http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient"
     app_sid = 'AP123' # the app you'd like to update
 
-    @application = @client.applications.get(app_sid)
-    @application.update(voice_url: url)
+    @application = @client.api.accounts(account_sid).applications(app_sid)
+                     .update(voice_url: url)
 
 Deleting an Application
 -------------------------
@@ -103,6 +105,4 @@ Deleting an Application
     @client = Twilio::REST::Client.new account_sid, auth_token
 
     app_sid = 'AP123' # the app you'd like to delete
-    @client.applications.get(app_sid)
-    @application.delete()
-
+    @app_deleted = @client.api.accounts(account_sid).applications(app_sid).delete()
