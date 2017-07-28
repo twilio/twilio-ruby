@@ -27,7 +27,7 @@ addition to location information and an optional friendly name.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @address = @client.addresses.create(
+    @address = @client.api.accounts(account_sid).addresses.create(
       friendly_name: "Homer",
       customer_name: "Homer Simpson",
       street: "742 Evergreen Terrace",
@@ -44,7 +44,8 @@ The following code will print out the :attr:`customer_name` for each :class:`Add
 
 .. code-block:: ruby
 
-    @addresses = @client.addresses.list()
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    @addresses = @client.api.accounts(account_sid).addresses.list()
     @addresses.each do |address|
       puts address.customer_name
     end
@@ -57,7 +58,8 @@ The list of Addresses can be filtered on :attr:`friendly_name`,
 
 .. code-block:: ruby
 
-    @addresses = @client.addresses.list(iso_country: 'AU')
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    @addresses = @client.api.accounts(account_sid).addresses.list(iso_country: 'AU')
     @addresses.each do |address|
       puts address.customer_name
     end
@@ -70,8 +72,9 @@ To create an Address with a different country, see the "Creating an Address" sec
 
 .. code-block:: ruby
 
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
     @sid = 'AD123' # the address you'd like to update
-    @address = @client.addresses.get(@sid)
+    @address = @client.api.accounts(account_sid).addresses(@sid).fetch()
     @address.update(customer_name: "Marge Simpson")
 
 Deleting an Address
@@ -79,9 +82,9 @@ Deleting an Address
 
 .. code-block:: ruby
 
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
     address_sid = 'AD123'
-    @address = @client.addresses.get(address_sid)
-    @address.delete()
+    @address_deleted = @client.api.accounts(account_sid).addresses(address_sid).delete()
 
 Listing Dependent Phone Numbers
 -------------------------------
@@ -94,8 +97,11 @@ To see which phone numbers depend on a given address:
 
 .. code-block:: ruby
 
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
     address_sid = 'AD123'
-    @address = @client.addresses.get(address_sid)
-    @address.dependent_phone_numbers.list.each do |number|
+    @dependent_phone_numbers = @client.api.accounts(account_sid).addresses(address_sid)
+                                 .dependent_phone_numbers.list()
+
+    @dependent_phone_numbers.list.each do |number|
       puts number.sid
     end
