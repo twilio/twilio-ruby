@@ -27,8 +27,7 @@ Right now the only valid attribute is :attr:`friendly_name`.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @account = @client.accounts.get(account_sid)
-    @account.update(friendly_name: "My Awesome Account")
+    @client.api.accounts(account_sid).update(friendly_name: "My Awesome Account")
 
 
 Creating Subaccounts
@@ -45,7 +44,7 @@ Subaccounts are easy to make.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @subaccount = @client.accounts.create(name: "My Awesome SubAccount")
+    @subaccount = @client.api.accounts.create(name: "My Awesome SubAccount")
 
 
 Managing Subaccounts
@@ -63,27 +62,23 @@ Say you have a subaccount for Client X with an account sid `AC123`
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    # Client X's subaccount
-    @subaccount = @client.accounts.get('AC123')
-
 Client X hasn't paid you recently, so let's suspend their account.
 
 .. code-block:: ruby
 
-    @subaccount.update(status: 'suspended')
+    @client.api.accounts('AC123').update(status: 'suspended')
 
 If it was just a misunderstanding, reenable their account.
 
 .. code-block:: ruby
 
-    @subaccount.update(status: 'active')
+    @client.api.accounts('AC123').update(status: 'active')
 
 Otherwise, close their account permanently.
 
 .. code-block:: ruby
 
-    @subaccount.update(status: 'closed')
+    @client.api.accounts('AC123').update(status: 'closed')
 
 .. warning::
     This action can't be undone.
-
