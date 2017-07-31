@@ -5,6 +5,7 @@ AllCops:
   Exclude:
     - 'lib/twilio-ruby/rest/**/*'
     - 'spec/integration/**/*'
+    - 'lib/twilio-ruby/version.rb'
 
 Metrics/LineLength:
   Max: 120
