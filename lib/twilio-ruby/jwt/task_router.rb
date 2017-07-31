@@ -1,7 +1,15 @@
 module Twilio
   module JWT
+    ## A JWT for TaskRouter with set capabilities
     class TaskRouterCapability < BaseJWT
       TASK_ROUTER_VERSION = 'v1'.freeze
+      # @param [String] account_sid The account_sid for which the token is generated
+      # @param [String] auth_token The secret_key to sign the token
+      # @param [String] workspace_sid TaskRouter workspace sid
+      # @param [String] channel_id TaskRouter channel sid
+      # @param [String] nbf The epoch time in seconds before which the token is valid.
+      # @param [String] ttl Time to live in seconds for which the JWT is valid, default one hour (3600)
+      # @param [String] valid_until The epoch time in seconds for which the JWT is valid , overrides ttl if specified
       def initialize(account_sid, auth_token, workspace_sid, channel_id, nbf: nil, ttl: 3600, valid_until: nil)
         super(secret_key: auth_token,
               issuer: account_sid,
@@ -16,6 +24,8 @@ module Twilio
         @policies = []
       end
 
+      # Adds a Policy to the TaskRouter Token
+      # @param[Policy] policy Policy to be added to the JWT
       def add_policy(policy)
         @policies.push(policy)
       end
@@ -50,6 +60,8 @@ module Twilio
         payload
       end
 
+      ## Representation of an Access policy rule, which defines what resource can be accessed
+      # and with what parameters
       class Policy
         attr_accessor :url,
                       :method,
@@ -57,6 +69,13 @@ module Twilio
                       :post_filters,
                       :query_filters
 
+        # @param [String] url The URL of the resource
+        # @param [String] method The HTTP method
+        # @param [String] allowed Does this rule allow access?
+        # @param [Hash] post_filters form encoded parameters and values that must match,
+        # if undefined all parameters and values match
+        # @param [Hash] query_filters query_parameters and values that must match,
+        # if undefined all parameters and values match
         def initialize(url, method, allowed, post_filters = {}, query_filters = {})
           @url = url
           @method = method

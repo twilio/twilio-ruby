@@ -1,11 +1,16 @@
 module Twilio
   module REST
+    # Represents an API Version
     class Version
       attr_accessor :domain
 
+      # Generate records one at a time from a page, stopping at limits.
       class RecordStream
         include Enumerable
 
+        # @param [Page] page the page to stream
+        # @param [Integer] limit the max number of records to read
+        # @param [Integer] page_limit the max number of pages to read
         def initialize(page, limit: nil, page_limit: nil)
           @page = page
           @limit = limit
@@ -31,19 +36,23 @@ module Twilio
         end
       end
 
+      # @param [Domain] domain The Domain
       def initialize(domain)
         @domain = domain
         @version = nil
       end
 
+      # Convert a relative uri to an absolute url
       def absolute_url(uri)
         @domain.absolute_url(relative_uri(uri))
       end
 
+      # Converts a relative uri into a versioned relative uri
       def relative_uri(uri)
         "#{@version.chomp('/').gsub(/^\//, '')}/#{uri.chomp('/').gsub(/^\//, '')}"
       end
 
+      # Makes an HTTP Request
       def request(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
         url = relative_uri(uri)
         params = params.delete_if { |_k, v| v.nil? }
@@ -51,6 +60,7 @@ module Twilio
         @domain.request(method, url, params, data, headers, auth, timeout)
       end
 
+      # Wraps an exception response in a Twilio::REST::RestError
       def exception(response, header)
         message = header
         code = response.status_code
@@ -64,6 +74,7 @@ module Twilio
         Twilio::REST::RestError.new(message, code, response.status_code)
       end
 
+      # Fetch a resource instance
       def fetch(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
         response = request(
           method,
@@ -82,6 +93,7 @@ module Twilio
         response.body
       end
 
+      # Update a resource instance.
       def update(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = request(
           method,
@@ -100,6 +112,7 @@ module Twilio
         response.body
       end
 
+      # Delete a resource
       def delete(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
         response = request(
           method,
@@ -118,6 +131,11 @@ module Twilio
         response.status_code == 204
       end
 
+      # Takes a limit of the max number of records to read and the max_page_size and
+      # calculate the max numbers of pages to read.
+      # @param [Integer] limit Max number of records to read
+      # @param [Integer] page_size Max page siz
+      # @return [Hash] The paging limit info
       def read_limits(limit = nil, page_size = nil)
         page_limit = nil
 
@@ -134,6 +152,7 @@ module Twilio
         }
       end
 
+      # Makes an HTTP Request
       def page(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
         request(
           method,
@@ -150,6 +169,7 @@ module Twilio
         RecordStream.new(page, limit: limit, page_limit: page_limit)
       end
 
+      # Create a resource instance
       def create(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = request(method, uri, params, data, headers, auth, timeout)
 

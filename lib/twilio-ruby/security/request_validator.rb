@@ -1,17 +1,28 @@
 module Twilio
   module Security
     class RequestValidator
+      ## Create a new RequestValidator
+      # @param [String] auth_token the associated Twilio Auth Token
       def initialize(auth_token = nil)
         @auth_token = auth_token || Twilio.auth_token
         raise ArgumentError, 'Auth token is required' if @auth_token.nil?
       end
 
+      ## Validate a request from Twilio
+      # @param [String] url for full url that Twilio requested on your server
+      # @param [Hash] params POST values that Twilio sent with the request
+      # @param [String] signature expected signature the X-Twilio-Signature header attached to the request
+      # @return [Boolean] true if the signature validations passes, false otherwise
       def validate(url, params, signature)
         params_hash = params_to_hash(params)
         expected = build_signature_for(url, params_hash)
         secure_compare(expected, signature)
       end
 
+      ## Determine the signature for a request
+      # @param [String] url for full url that Twilio requested on your server
+      # @param [Hash] params POST values that Twilio sent with the request
+      # @return [String] the calculated signature
       def build_signature_for(url, params)
         data = url + params.sort.join
         digest = OpenSSL::Digest.new('sha1')

@@ -1,6 +1,6 @@
 module Twilio
   module REST
-    # Page Base Class
+    # Represents a page of records in a collection
     class Page
       include Enumerable
 
@@ -27,6 +27,8 @@ module Twilio
         @records = load_page(payload)
       end
 
+      # @param [TwilioResponse] response The HTTP response
+      # @return [Array] The JSON-loaded content
       def process_response(response)
         if response.status_code != 200
           raise Twilio::REST::TwilioError.new('Unable to fetch page', response)
@@ -35,6 +37,9 @@ module Twilio
         response.body
       end
 
+      # Parses an array of records out of a list payload
+      # @param [Hash] payload Payload response from the API
+      # @return [Array] the list of records
       def load_page(payload)
         if payload['meta'] && payload['meta']['key']
           return payload[payload['meta']['key']]
@@ -47,6 +52,7 @@ module Twilio
         raise Twilio::REST::TwilioError, 'Page Records can not be deserialized'
       end
 
+      # @return [String] Returns a link to the previous_page_url or nil if it doesn't exist.
       def previous_page_url
         if @payload['meta'] && @payload['meta']['previous_page_url']
           return @version.domain.absolute_url(URI.parse(@payload['meta']['previous_page_url']).request_uri)
@@ -57,6 +63,7 @@ module Twilio
         nil
       end
 
+      # @return [String] Returns a link to the next_page_url or nil if it doesn't exist.
       def next_page_url
         if @payload['meta'] && @payload['meta']['next_page_url']
           return @version.domain.absolute_url(URI.parse(@payload['meta']['next_page_url']).request_uri)
@@ -67,10 +74,14 @@ module Twilio
         nil
       end
 
+      # @param [Hash] payload Payload response from the API
+      # @return A resource dependent object
       def get_instance(payload)
         raise Twilio::REST::TwilioError, 'Page.get_instance() must be implemented in the derived class'
       end
 
+      # Return the page before this one
+      # @return [Page] The previous page
       def previous_page
         return nil unless previous_page_url
 
@@ -79,6 +90,8 @@ module Twilio
         self.class.new(@version, response, @solution)
       end
 
+      # Return the page after this one
+      # @return [Page] The next page
       def next_page
         return nil unless next_page_url
 
@@ -87,6 +100,7 @@ module Twilio
         self.class.new(@version, response, @solution)
       end
 
+      # A Page is an iterator
       def each
         @records.each do |record|
           yield get_instance(record)

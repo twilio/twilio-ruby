@@ -1,5 +1,6 @@
 module Twilio
   module REST
+    # A generic error
     class TwilioError < StandardError
       attr_reader :message, :body
 
@@ -13,9 +14,13 @@ module Twilio
       end
     end
 
+    # A generic 4XX or 5XX error from the Twilio API
     class RestError < TwilioError
       attr_reader :message, :code, :status_code
 
+      # @param [String] message The human readable error message
+      # @param [String] code The Twilio specific error code
+      # @param [String] status_code The HTTP status that was returned
       def initialize(message, code, status_code)
         @message = message
         @code = code

@@ -6,6 +6,7 @@ module Twilio
       end
     end
 
+    ## A JWT of capabilities for Twilio Client
     class ClientCapability < BaseJWT
       attr_accessor :account_sid,
                     :auth_token,
@@ -14,6 +15,12 @@ module Twilio
 
       alias to_s to_jwt
 
+      # @param [String] account_sid The account_sid for which the token is generated
+      # @param [String] auth_token The secret_key to sign the token
+      # @param [Array] scopes An array of Scopes to be added to the token
+      # @param [String] nbf The epoch time in seconds before which the token is valid.
+      # @param [String] ttl Time to live in seconds for which the JWT is valid, default one hour (3600)
+      # @param [String] valid_until The epoch time in seconds for which the JWT is valid , overrides ttl if specified
       def initialize(account_sid, auth_token, scopes: [], nbf: nil, ttl: 3600, valid_until: nil)
         super(secret_key: auth_token, issuer: account_sid, nbf: nbf, ttl: ttl, valid_until: valid_until)
         @account_sid = account_sid
@@ -22,12 +29,15 @@ module Twilio
         @scopes = scopes
       end
 
+      # Adds a Scope, permission, to the Client Capability Token
+      # @param [Scope] scope Scope to be added to the JwT.
       def add_scope(scope)
         @scopes.push(scope)
       end
 
       protected
 
+      # @return [Hash] Payload of the JWT.
       def _generate_payload
         scope = ''
         scope = @scopes.map(&:_generate_payload).join(' ') unless @scopes.empty?
@@ -39,9 +49,11 @@ module Twilio
         payload
       end
 
+      # Allows for Client to accept incoming connections
       class IncomingClientScope
         include Scope
 
+        # @param [String] client_name The client name to accept incoming calls
         def initialize(client_name)
           @client_name = client_name
         end
@@ -54,9 +66,13 @@ module Twilio
         end
       end
 
+      # Allows for making outgoing connections
       class OutgoingClientScope
         include Scope
 
+        # @param [String] application_sid Associated application
+        # @param [String] client_name to accept incoming calls
+        # @param [Hash] params application params
         def initialize(application_sid, client_name = nil, params = {})
           @application_sid = application_sid
           @client_name = client_name
@@ -78,6 +94,7 @@ module Twilio
         end
       end
 
+      # Allows for access to event stream
       class EventStreamScope
         include Scope
 

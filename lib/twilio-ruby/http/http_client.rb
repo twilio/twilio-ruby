@@ -2,6 +2,7 @@ require 'faraday'
 
 module Twilio
   module HTTP
+    # General purpose Client for interacting with the Twilio API
     class Client
       attr_accessor :adapter
 
@@ -17,6 +18,17 @@ module Twilio
         Faraday::Utils.default_params_encoder = Faraday::FlatParamsEncoder
       end
 
+      # Makes an HTTP Request with specified parameters
+      # @param [String] host The host
+      # @param [String] port The port
+      # @param [String] method The HTTP method
+      # @param [String] url The url to request
+      # @param [Hash] params Query parameters appended to the request
+      # @param [Hash] data Body parameters in the request
+      # @param [Hash] headers HTTP headers to send with the request
+      # @param [Array] auth Basic auth arguments
+      # @param [Integer] timeout Socket read timeout for the request
+      # @return [Twilio::TwilioResponse] An http response
       def request(host, port, method, url, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
         @connection = Faraday.new(url: host + ':' + port.to_s, ssl: { verify: true }) do |f|
           f.request :url_encoded
