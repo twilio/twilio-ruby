@@ -1,4 +1,4 @@
-.. module:: twilio.rest.resources.sms_messages
+.. module:: twilio.rest.api.v2010.messages
 
 ============
 Messages
@@ -24,7 +24,7 @@ Send a text message in only a few lines of code.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @message = @client.messages.create(
+    @message = @client.api.account(account_sid).messages.create(
       to: "+13216851234",
       from: "+15555555555",
       body: "Hello!"
@@ -50,7 +50,7 @@ To send a picture, set :attr:`media_url` to the url of the picture you wish to s
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @message = @client.messages.create(
+    @message = @client.api.accounts(account_sid).messages.create(
       to: "+15558676309",
       from: "+15555555555",
       body: "Jenny I need you!",
@@ -62,7 +62,7 @@ an array of urls.
 
 .. code-block:: ruby
 
-    @message = @client.messages.create(
+    @message = @client.api.accounts(account_sid).messages.create(
       to: "+15558676309",
       from: "+15555555555",
       body: "Jenny I need you!",
@@ -85,7 +85,7 @@ Retrieving Sent Messages
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @client.messages.list.each do |message|
+    @client.api.accounts(account_sid).messages.list().each do |message|
       puts message.body
     end
 
@@ -102,12 +102,13 @@ Redacting or Deleting Messages
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     @msg_sid = 'MM123'
-    @msg = @client.messages.get('MM123')
+
+    @msg = @client.api.accounts(account_sid).messages('MM123').fetch()
     # Deletes the Body field contents
-    @msg.redact
+    @msg.body
 
     # Removes the entire Message record
-    @msg.delete
+    @client.api.accounts(account_sid).messages(@msg.sid).delete()
 
 Filtering Your Messages
 -------------------------
@@ -126,7 +127,7 @@ The following will only show messages to "+5466758723" on January 1st, 2011.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @messages = @client.messages.list(
+    @messages = @client.api.accounts(account_sid).messages.list(
       to: "+5466758723",
       date_sent: "2011-01-01"
     )
@@ -134,4 +135,3 @@ The following will only show messages to "+5466758723" on January 1st, 2011.
     @messages.each do |message|
       puts message.body
     end
-
