@@ -1,4 +1,4 @@
-.. module:: twilio.util
+.. module:: twilio.jwt
 
 ===========================
 Generate Capability Tokens
@@ -14,21 +14,21 @@ Twilio Client.
 Capability tokens are used by `Twilio Client
 <http://www.twilio.com/api/client>`_ to provide connection
 security and authorization. The `Capability Token documentation
-<https://www.twilio.com/docs/client/capability-tokens>`_ explains in depth the purpose and
+<https://www.twilio.com/docs/api/client/capability-tokens>`_ explains in depth the purpose and
 features of these tokens.
 
-:class:`Twilio::Util::Capability` is responsible for the creation of these
+:class:`Twilio::JWT::ClientCapability` is responsible for the creation of these
 capability tokens. You'll need your Twilio AccountSid and AuthToken.
 
 .. code-block:: ruby
 
     require 'twilio-ruby'
 
-    # Find these values at twilio.com/user/account
-    account_sid = "AC123123"
-    auth_token = "secret"
+    # Find these values at twilio.com/console
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @capability = Twilio::Util::Capability.new account_sid, auth_token
+    @capability = Twilio::JWT::ClientCapability.new(account_sid, auth_token)
 
 You can also configure capability tokens using the top level configure method,
 like so:
@@ -42,7 +42,7 @@ like so:
       config.auth_token = "YYYYYYYYYYYYYYYYYY"
     end
 
-    @capability = Twilio::Util::Capability.new
+    @capability = Twilio::JWT::ClientCapability.new
 
 
 
@@ -57,7 +57,8 @@ capability token.
 
 .. code-block:: ruby
 
-    @capability.allow_client_incoming("Alice")
+    @incomingScope = Twilio::JWT::ClientCapability::IncomingClientScope.new('Alice')
+    @capability.add_scope(@incomingScope)
 
 
 Allow Outgoing Connections
@@ -74,8 +75,9 @@ for outputting valid TwiML to control phone calls and messages.
 
     # Twilio Application Sid
     application_sid = "APabe7650f654fc34655fc81ae71caa3ff"
-    @capability.allow_client_outgoing(application_sid)
-    
+    @outgoingScope = Twilio::JWT::ClientCapability::OutgoingClientScope.new(application_sid)
+    @capability.add_scope(@outgoingScope)
+
 Add Parameters to an Outgoing Scope
 ===================================
 
@@ -89,7 +91,9 @@ id.
     params = {'user_id' => @user.id}
 
     # Allow outgoing calls to an application and pass the user id to your server.
-    @capability.allow_client_outgoing(application_sid, params)
+    @outgoingScope = Twilio::JWT::ClientCapability::OutgoingClientScope
+      .new(application_sid, nil, params)
+    @capability.add_scope(@outgoingScope)
 
 The :attr:`user_id` parameter and its value will be sent to your Application's
 :attr:`VoiceUrl` along with the other parameters that Twilio usually sends, like
@@ -101,15 +105,20 @@ Generate a Token
 
 .. code-block:: ruby
 
-    @token = @capability.generate()
+    @token = @capability.to_jwt()
 
 By default, this token will expire in one hour. If you'd like to change the
-token expiration, :meth:`generate` takes an optional :attr:`ttl` argument.
+token expiration, the constructor takes an optional :attr:`ttl` argument.
 
 .. code-block:: ruby
 
-    @token = @capability.generate(ttl=600)
+    require 'twilio-ruby'
+
+    # Find these values at twilio.com/console
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
+
+    @capability = Twilio::JWT::ClientCapability.new(account_sid, auth_token, ttl: 600)
 
 This token will now expire in 10 minutes. If you haven't guessed already,
 :attr:`ttl` is expressed in seconds.
-
