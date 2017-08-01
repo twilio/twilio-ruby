@@ -1,4 +1,4 @@
-.. module:: twilio.util
+.. module:: twilio.security
 
 ===========================
 Validate Incoming Requests
@@ -36,7 +36,7 @@ actually from Twilio.
 
     auth_token = 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY'
 
-    @validator = Twilio::Util::RequestValidator.new auth_token
+    @validator = Twilio::Security::RequestValidator.new auth_token
 
     # the callback URL you provided to Twilio
     url = "http://www.example.com/my/callback/url.xml"
