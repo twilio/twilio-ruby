@@ -17,11 +17,11 @@ Listing Queues
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
     @queues = @client.queues.list
 
     @queues.each do |queue|
@@ -39,12 +39,12 @@ represents all current calls in the queue.
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
-    @queue = @client.queues.get("QU123")
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
+    @queue = @client.queues("QU123")
 
     @queue.members.list().each do |member|
       puts member.call_sid
@@ -55,33 +55,34 @@ Getting a specific Queue Member
 -------------------------------
 
 To retrieve information about a specific member in the queue, each
-:class:`Members` has a :attr:`get` method. :attr:`get` accepts one
-argument. The argument can either be a `call_sid` thats in the queue,
-in which case :attr:`get` will return a :class:`Member` instance
-representing that call, or the argument can be 'Front', in which case
-:attr:`Get` will return a :class:`Member` instance representing the
-first call in the queue.
+:class:`Members` can be initialized with a value then followed by
+the method :attr:`fetch`. If :class:`Members` is initialized with
+a `call_sid`, :attr:`fetch` will return a :class:`Member` instance
+representing that call. If, in the other hand, we use 'Front' value
+to initialize the class, :attr:`fetch` will return a :class:`Member`
+instance representing the first call in the queue.
 
 .. code-block:: ruby
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
 
     queue_sid = "QUAAAAAAAAAAAAA"
     call_sid = "CAXXXXXXXXXXXXXX"
 
-    @members = @client.queues.get(queue_sid).members
+    @queue = @client.queues(queue_sid)
 
     # Get the first call in the queue
-    puts members.front.date_enqueued
+    puts @queue.members('Front').fetch.date_enqueued
 
     # Get the call with the given call sid in the queue
-    puts members.get(call_sid).current_position
+    puts @queue.members(call_sid).fetch.current_position
+
 
 
 Dequeueing Queue Members
@@ -98,15 +99,22 @@ default values are 'Front' and 'GET'
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
 
     queue_sid = "QUAAAAAAAAAAAAA"
 
-    @members = @client.queues.get(queue_sid).members
+    @queue = @client.queues(queue_sid)
 
     # Dequeue the first call in the queue
-    puts @members.dequeue('http://www.twilio.com/welcome/call')
+    member = @queue.members('Front').fetch
+
+    @member.update(
+      url: 'http://www.twilio.com/welcome/call',
+      method: 'POST'
+    )
+
+    puts @member.position
