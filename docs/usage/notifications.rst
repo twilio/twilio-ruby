@@ -18,32 +18,32 @@ current :class:`Notification` resources.
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
 
     @client.notifications.list.each do |notification|
       puts notification.more_info
     end
 
 You can filter transcriptions by :attr:`log` and :attr:`message_date`.
-The :attr:`log` value is 0 for `ERROR` and 1 for `WARNING`.
+The :attr:`log` value correspond to log levels such as `ERROR` or `WARNING`.
 
 .. code-block:: ruby
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
 
     ERROR = 0
 
-    @client.notifications.list(log=ERROR).each do |notification|
+    @client.notifications.list(log: 'ERROR').each do |notification|
       puts notification.error_code
     end
 
@@ -63,10 +63,9 @@ you to delete unnecessary notifications.
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
-    @client.notifications.get("NO123").delete()
-
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
+    @client.notifications("NO123").delete()
