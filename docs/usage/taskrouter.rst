@@ -1,4 +1,4 @@
-.. module:: twilio.rest.resources.task_router
+.. module:: twilio.rest.taskrouter
 
 ==========
 TaskRouter
@@ -27,34 +27,32 @@ be shared across Workspaces.
     # To find these visit https://www.twilio.com/user/account
     ACCOUNT_SID = "ACXXXXXXXXXXXXXXXXX"
     AUTH_TOKEN = "YYYYYYYYYYYYYYYYYY"
-    # You can create a workspace through the portal, or put a fake value
-    # here to create your first workspace with the Ruby library
-    WORKSPACE_SID = "WSZZZZZZZZZ"
 
-    @client = Twilio::REST::TaskRouterClient.new ACCOUNT_SID, AUTH_TOKEN, WORKSPACE_SID
+    @client = Twilio::REST::Client.new.new ACCOUNT_SID, AUTH_TOKEN
 
     # creating a workspace
-    @workspace = @client.workspaces.create(
+    @workspace = @client.taskrouter.workspaces.create(
         friendly_name: "Customer Support",
         template: "FIFO",  # Sets up default activities and a FIFO TaskQueue
     )
-    puts @workspace.sid
+
+    workspace_sid = @workspace.sid
 
     # fetching a workspace
-    @workspace = @client.workspace
+    @workspace = @client.taskrouter.workspace(workspace_sid)
     puts @workspace.sid
     puts @workspace.friendly_name
 
     # fetching a list of workspaces
-    @client.workspaces.list.each do |workspace|
+    @client.taskrouter.workspaces.list().each do |workspace|
       puts workspace.friendly_name
     end
 
     # updating a workspace
-    @client.workspace.update(friendly_name: 'MyWorkspace2')
+    @client.taskrouter.workspace(workspace_sid).update(friendly_name: 'MyWorkspace2')
 
     # deleting a workspace
-    @client.workspace.delete
+    @client.taskrouter.workspace(workspace_sid).delete()
 
 
 Workflows
@@ -106,9 +104,9 @@ unique ID:
     }
     EOS
 
-    @client = Twilio::REST::TaskRouterClient.new ACCOUNT_SID, AUTH_TOKEN, WORKSPACE_SID
+    @client = Twilio::REST::Client.new ACCOUNT_SID, AUTH_TOKEN
 
-    @workflow = @client.workspace.workflows.create(
+    @workflow = @client.taskrouter.workspace(WORKSPACE_SID).workflows.create(
         friendly_name: "Incoming Call Flow",
         assignment_callback_url: "https://example.com/callback",
         fallback_assignment_callback_url: "https://example.com/callback2",
@@ -129,21 +127,58 @@ You can also utilize our Workflow Builder to make this process a bit easier util
     # See previous examples to create a Workspace
     WORKSPACE_SID = "WSZZZZZZZZZZZZZZ"
 
-    @client = Twilio::REST::TaskRouterClient.new ACCOUNT_SID, AUTH_TOKEN, WORKSPACE_SID
+    @client = Twilio::REST::Client.new ACCOUNT_SID, AUTH_TOKEN
 
     gold_ticket_queue_sid = 'YourGoldTicketQueueSid'
     default_queue_sid = 'YourDefaultQueueSid'
 
-    gold_ticket_targets = [Twilio::TaskRouter::WorkflowRuleTarget.new(gold_ticket_queue_sid)]
-    gold_ticket_rule = Twilio::TaskRouter::WorkflowRule.new 'customer_value == "Gold" AND type == "ticket"', gold_ticket_targets, 'Gold Tickets'
+    def rule_target(sid)
+      { queue: sid, priority: 5, timeout: QUEUE_TIMEOUT }
+    end
 
-    @rules = [gold_ticket_rule]
-    @default_target = Twilio::TaskRouter::WorkflowRuleTarget.new default_queue_sid
+    def default_rule_target(sid)
+        {
+          queue: sid,
+          priority: 1,
+          timeout: QUEUE_TIMEOUT,
+          expression: '1==1'
+        }
+    end
 
-    @config = Twilio::TaskRouter::WorkflowConfiguration.new @rules, @default_target
+    default_target = default_rule_target(default_queue_sid)
+
+    config = {
+      task_routing: {
+        filters: [
+          {
+            expression: 'customer_value == "Gold" AND type == "ticket"', gold_ticket_targets, 'Gold Tickets',
+            targets: [
+              rule_target(gold_ticket_queue_sid),
+              default_target
+            ]
+          },
+          {
+            expression: 'selected_product=="ProgrammableSMS"',
+            targets: [
+              rule_target(queues[:sms].sid),
+              default_target
+            ]
+          }
+        ],
+        default_filter: default_target
+      }
+    }
+
     puts @config.to_json
 
-    @workflow = @client.workspace.workflows.create(configuration: @config.to_json, friendly_name: 'Incoming Call Flow', assignment_callback_url: 'https://example.com/callback', fallback_assignment_callback_url: 'https://example.com/callback2')
+
+    @workflow = @client.workspace.workflows.create(
+      configuration: @config.to_json,
+      friendly_name: 'Incoming Call Flow',
+      assignment_callback_url: 'https://example.com/callback',
+      fallback_assignment_callback_url: 'https://example.com/callback2'
+    )
+
     puts @workflow.sid
 
 Fetching, Updating, Deleting Workflows
@@ -162,13 +197,14 @@ Fetching, Updating, Deleting Workflows
     WORKFLOW_SID = "WFZZZZZZZZZZZZZZZ"
 
     # fetching a workflow
-    @client = Twilio::REST::TaskRouterClient.new ACCOUNT_SID, AUTH_TOKEN, WORKSPACE_SID
-    @workflow = @client.workspace.workflows.get(WORKFLOW_SID)
+    @client = Twilio::REST::Client.new ACCOUNT_SID, AUTH_TOKEN
+    @workflow = @client.taskrouter.workspace(WORKSPACE_SID).workflows(WORKFLOW_SID).fetch()
+
     puts @workflow.sid
     puts @workflow.friendly_name
 
     # fetching a list of workflows
-    @client.workspace.workflows.list.each do |workflow|
+    @client.taskrouter.workspace(WORKSPACE_SID).workflows.list().each do |workflow|
       puts workflow.friendly_name
     end
 
@@ -196,23 +232,23 @@ to a single Activity.
     # See previous examples to create a Workspace
     WORKSPACE_SID = "WSZZZZZZZZZZZZZZ"
 
-    @client = Twilio::REST::TaskRouterClient.new ACCOUNT_SID, AUTH_TOKEN, WORKSPACE_SID
+    @client = Twilio::REST::Client.new ACCOUNT_SID, AUTH_TOKEN
 
     # creating an activity
-    @activity = @client.workspace.activities.create(
+    @activity = @client.taskrouter.workspaces(WORKSPACE_SID).activities.create(
         friendly_name: "Coffee Break",
         available: false  # Whether workers are available to handle tasks during this activity
     )
     puts @activity.sid
 
     # fetching a list of activities
-    @client.workspace.activities.list.each do |activity|
+    @client.taskrouter.workspaces(WORKSPACE_SID).activities.list().each do |activity|
       puts activity.friendly_name
     end
 
     # fetching an activity
     ACTIVITY_SID = "WAZZZZZZZZZZZZZZZZZ"
-    @activity = @client.workspace.activities.get(ACTIVITY_SID)
+    @activity = @client.taskrouter.workspaces(WORKSPACE_SID).activities(ACTIVITY_SID).fetch()
 
     # updating an activity
     @activity.update(friendly_name: 'NewFriendlyName')
@@ -237,28 +273,28 @@ working in a call center, or a salesperson handling leads.
     # See previous examples to create a Workspace
     WORKSPACE_SID = "WSZZZZZZZZZZZZZZ"
 
-    @client = Twilio::REST::TaskRouterClient.new ACCOUNT_SID, AUTH_TOKEN, WORKSPACE_SID
+    @client = Twilio::REST::Client.new ACCOUNT_SID, AUTH_TOKEN
 
     # creating a worker
-    @worker = @client.workspace.workers.create(
+    @worker = @client.taskrouter.workspace(WORKSPACE_SID).workers.create(
         friendly_name:"Jamie",
         attributes:'{"phone": "+14155551234", "languages": ["EN", "ES"]}'
     )
     puts @worker.sid
 
     # fetching a list of workers
-    @client.workspace.workers.list.each do |worker|
+    @client.taskrouter.workspace(WORKSPACE_SID).workers.list().each do |worker|
       puts worker.friendly_name
     end
 
     # fetching a list of workers based on activity
-    @client.workspace.workers.list(activity_name: 'Offline').each do |worker|
+    @client.taskrouter.workspace(WORKSPACE_SID).workers.list(activity_name: 'Offline').each do |worker|
       puts worker.friendly_name + ' is offline'
     end
 
     # fetching an worker
     WORKER_SID = "WKZZZZZZZZZZZZZZZZZ"
-    @worker = @client.workspace.workers.get(WORKER_SID)
+    @worker = @client.taskrouter.workspace.workers(WORKER_SID).fetch()
 
     # updating an worker
     @worker.update(friendly_name: 'NewFriendlyName')
@@ -286,10 +322,10 @@ and accepted by an eligible Worker.
     # See previous examples to create a Workspace
     WORKSPACE_SID = "WSZZZZZZZZZZZZZZ"
 
-    @client = Twilio::REST::TaskRouterClient.new ACCOUNT_SID, AUTH_TOKEN, WORKSPACE_SID
+    @client = Twilio::REST::Client.new ACCOUNT_SID, AUTH_TOKEN
 
     # creating a task_queue
-    @taskqueue = @client.workspace.task_queues.create(
+    @taskqueue = @client.taskrouter.workspace(WORKSPACE_SID).task_queues.create(
         friendly_name: "Sales",
         # The Activity to assign workers when a task is reserved for them
         reservation_activity_sid: "WA11111111111",
@@ -299,13 +335,13 @@ and accepted by an eligible Worker.
     puts @taskqueue.sid
 
      # fetching a list of task_queues
-    @client.workspace.task_queues.list.each do |task_queue|
+    @client.taskrouter.workspace(WORKSPACE_SID).task_queues.list().each do |task_queue|
       puts task_queue.friendly_name
     end
 
     # fetching an taskqueue
     TASK_QUEUE_SID = "WQZZZZZZZZZZZZZZZZZ"
-    @taskqueue = @client.workspace.task_queues.get(TASK_QUEUE_SID)
+    @taskqueue = @client.taskrouter.workspace(WORKSPACE_SID).task_queues(TASK_QUEUE_SID).fetch()
 
     # updating an taskqueue
     @taskqueue.update(friendly_name: 'NewFriendlyName')
@@ -329,7 +365,7 @@ processed.
     # See previous examples to create a Workspace
     WORKSPACE_SID = "WSZZZZZZZZZZZZZZ"
 
-    @client = Twilio::REST::TaskRouterClient.new ACCOUNT_SID, AUTH_TOKEN, WORKSPACE_SID
+    @client = Twilio::REST::Client.new ACCOUNT_SID, AUTH_TOKEN
 
     # Some JSON containing attributes for this task. User-defined.
     TASK_ATTRIBUTES = <<-EOS
@@ -343,25 +379,25 @@ processed.
     EOS
 
     # creating a task
-    @task = @client.workspace.tasks.create(
+    @task = @client.taskrouter.workspace(WORKSPACE_SID).tasks.create(
         attributes: TASK_ATTRIBUTES,
         assignment_status: 'pending',
     )
     puts @task.sid
 
     # fetching a list of tasks
-    @client.workspace.tasks.list.each do |task|
+    @client.taskrouter.workspace(WORKSPACE_SID).tasks.list().each do |task|
       puts task.sid
     end
 
     # fetching a list of tasks that are pending
-    @client.workspace.tasks.list(assignment_status: 'pending').each do |task|
+    @client.taskrouter.workspace(WORKSPACE_SID).tasks.list(assignment_status: 'pending').each do |task|
       puts task.sid
     end
 
     # fetching an task
     TASK_SID = "WTZZZZZZZZZZZZZZZZZ"
-    @task = @client.workspace.tasks.get(TASK_SID)
+    @task = @client.taskrouter.workspace(WORKSPACE_SID).tasks(TASK_SID).fetch()
 
     # updating an task
     @task.update(friendly_name: 'NewFriendlyName')
@@ -383,14 +419,14 @@ A Reservation instance resource represents a single matching item of work from a
     # See previous examples to create a Workspace
     WORKSPACE_SID = "WSZZZZZZZZZZZZZZ"
 
-    @client = Twilio::REST::TaskRouterClient.new ACCOUNT_SID, AUTH_TOKEN, WORKSPACE_SID
+    @client = Twilio::REST::Client.new ACCOUNT_SID, AUTH_TOKEN
 
     # fetching an task
     TASK_SID = "WTZZZZZZZZZZZZZZZZZ"
-    @task = @client.workspace.tasks.get(TASK_SID)
+    @task = @client.taskrouter.workspace(WORKSPACE_SID).tasks(TASK_SID).fetch()
 
     # fetching reservations for said task
-    @task.reservations.list.each do |reservation|
+    @task.reservations.list().each do |reservation|
         puts reservation.sid
     end
 
@@ -408,10 +444,10 @@ A Statistics resource represents the statistics over a time period for a particu
     # See previous examples to create a Workspace
     WORKSPACE_SID = "WSZZZZZZZZZZZZZZ"
 
-    @client = Twilio::REST::TaskRouterClient.new ACCOUNT_SID, AUTH_TOKEN, WORKSPACE_SID
+    @client = Twilio::REST::Client.new ACCOUNT_SID, AUTH_TOKEN
 
     # fetching statistics based on the last 4 hours
-    @workspace_stats = @client.workspace.statistics(minutes: '240')
+    @workspace_stats = @client.taskrouter.workspace(WORKSPACE_SID).statistics(minutes: '240')
     @cumulative = @workspace_stats.cumulative
     puts 'Avg Task Acceptance Time: ' + @cumulative['avg_task_acceptance_time'].to_s \
          + ' with ' + @cumulative['tasks_created'].to_s + ' tasks created'
@@ -431,10 +467,10 @@ You can query based on time the event occurred, a certain resource or combinatio
     # See previous examples to create a Workspace
     WORKSPACE_SID = "WSZZZZZZZZZZZZZZ"
 
-    @client = Twilio::REST::TaskRouterClient.new ACCOUNT_SID, AUTH_TOKEN, WORKSPACE_SID
+    @client = Twilio::REST::Client.new ACCOUNT_SID, AUTH_TOKEN
 
     # fetching events for a workspace for the last 15 minutes
-    @events = @client.workspace.events.list(minutes: '15')
+    @events = @client.taskrouter.workspace.events.list(minutes: '15')
     @events.each do |event|
       puts event.event_type + ' at ' + event.event_date
     end
