@@ -29,18 +29,18 @@ for each :class:`Recording`.
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
 
     @client.recordings.list().each do |recording|
       puts recording.duration
     end
 
 You can filter recordings by CallSid by passing the Sid as :attr:`call`.
-Filter recordings using :attr:`DateCreated<` and :attr:`DateCreated>` dates.
+Filter recordings using :attr:`date_created_before` and :attr:`date_created_after` dates.
 
 The following will only show recordings made before January 1, 2011.
 
@@ -48,12 +48,12 @@ The following will only show recordings made before January 1, 2011.
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
-    @client.recordings.list('DateCreated<' => '2011-01-01').each do |recording|
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
+    @client.recordings.list(date_created_before: '2011-01-01').each do |recording|
       puts recording.duration
     end
 
@@ -66,12 +66,12 @@ The :class:`Recordings` resource allows you to delete unnecessary recordings.
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
-    @client.recordings.get("RC123").delete()
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
+    @client.recordings("RCXXXXXXXXXXXXXXXXX").delete()
 
 
 Accessing Related Transcptions
@@ -85,14 +85,13 @@ with this recording.
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
-    @recording = @client.recordings.get("RC123")
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
+    @recording = @client.recordings("RCXXXXXXXXXXXXXXXXX")
 
     @recording.transcriptions.list().each do |transcription|
       puts transcription.transcription_text
     end
-
