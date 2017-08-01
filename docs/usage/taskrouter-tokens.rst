@@ -19,7 +19,7 @@ conform to the JSON Web Token (commonly referred to as a JWT and pronounced
 party. Your web server needs to generate a Twilio capability token and provide
 it to your JavaScript application in order to register a TaskRouter worker.
 
-:class:`Capability` is responsible for the creation of these
+:class:`TaskRouterCapability` is responsible for the creation of these
 capability tokens. You'll need your Twilio AccountSid and AuthToken,
 the Sid of the Workspace you want to authorize access to, and the Sid
 of the Worker you're granting authorization for.
@@ -29,15 +29,15 @@ of the Worker you're granting authorization for.
     require 'twilio-ruby'
 
     # Get these values from https://twilio.com/user/account
-    account_sid = "AC123"
-    auth_token = "secret"
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
 
     # Create a Workspace and Worker in the TaskRouter account portal
     # or through the TaskRouter API
-    worker_sid = "WK789"
-    worker_sid = "WK789"
+    workspace_sid = "WKXXXXXXXXXXXXXXXXX"
+    worker_sid = "WTXXXXXXXXXXXXXXXXX"
 
-    @capability = Twilio::TaskRouter::Capability.new account_sid, auth_token, workspace_sid, worker_sid
+    @capability = Twilio::JWT::TaskRouterCapability.new(account_sid, auth_token, workspace_sid, worker_sid)
 
 
 By default, the Capability object will allow the Worker.js process to
@@ -56,7 +56,9 @@ the TaskRouter API.
 
 .. code-block:: ruby
 
-    @capability.allow_worker_fetch_attributes
+    allow_worker_fetch_attributes = Twilio::JWT::TaskRouterCapability::Policy.new(
+      Twilio::JWT::TaskRouterCapability::TaskRouterUtils.worker(workspace_sid, worker_sid), 'GET', true)
+    @capability.add_policy(allow_worker_fetch_attributes)
 
 
 Worker Activity Update
@@ -66,7 +68,9 @@ This authorizes updates to the registered Worker's current Activity.
 
 .. code-block:: ruby
 
-    @capability.allow_worker_activity_updates
+    allow_activity_updates = Twilio::JWT::TaskRouterCapability::Policy.new(
+      Twilio::JWT::TaskRouterCapability::TaskRouterUtils.all_activities(workspace_sid), 'POST', true)
+    @capability.add_policy(allow_activity_updates)
 
 
 Task Reservation Update
@@ -76,7 +80,9 @@ This authorizes updates to a Task's reservation status.
 
 .. code-block:: ruby
 
-    @capability.allow_task_reservation_updates
+    allow_reservation_updates = Twilio::JWT::TaskRouterCapability::Policy.new(
+      Twilio::JWT::TaskRouterCapability::TaskRouterUtils.all_reservations(workspace_sid, worker_sid), 'POST', true)
+    @capability.add_policy(allow_reservation_updates)
 
 
 Generate a Token
@@ -84,15 +90,16 @@ Generate a Token
 
 .. code-block:: ruby
 
-    token = @capability.generate_token
+    token = @capability.to_s
 
 By default, this token will expire in one hour. If you'd like to change the
-token expiration, :meth:`generate_token` takes an optional :attr:`ttl`
+token expiration, :class:`TaskRouterCapability` constructor takes an optional :attr:`ttl`
 argument.
 
 .. code-block:: ruby
 
-    token = @capability.generate_token(600)
+    @capability = Twilio::JWT::TaskRouterCapability.new(account_sid, auth_token,
+      workspace_sid, worker_sid, ttl: 600)
 
 This token will now expire in 10 minutes. If you haven't guessed already,
 :attr:`ttl` is expressed in seconds.

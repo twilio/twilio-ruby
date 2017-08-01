@@ -20,11 +20,11 @@ under sip.twilio.com.
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
 
     @domain = @client.sip.domains.create(
       friendly_name: "The Office Domain",
@@ -44,11 +44,11 @@ to individual ip addresses. To do this, you'll first need to create an
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
 
     @ip_acl = @client.sip.ip_access_control_lists.create(
       friendly_name: "The Office IpAccessControlList"
@@ -64,13 +64,13 @@ Now it's time to add an :class:`IpAddress` to your new :class:`IpAccessControlLi
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
 
-    @ip_address = @client.sip.ip_access_control_lists.get(
+    @ip_address = @client.sip.ip_access_control_lists(
       "AL456",  # IpAccessControlList sid
     ).ip_addresses.create(
       friendly_name: "Dwights's Computer",
@@ -88,17 +88,16 @@ associate them. To do this, create an :class:`IpAccessControlListMapping`.
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
 
-    @ip_acl_mapping = @client.sip.domains.get(
+    @ip_acl_mapping = @client.sip.domains(
       "SD456",  # SIP Domain sid
     ).ip_access_control_list_mappings.create(
       ip_access_control_list_sid: "AL789"
     )
 
     puts @ip_acl_mapping.sid
-
