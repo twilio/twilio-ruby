@@ -25,12 +25,12 @@ outputs valid `TwiML <http://www.twilio.com/docs/api/twiml/>`_.
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @call = @client.calls.create(
+    @call = @client.api.accounts(account_sid).calls.create(
       to: "9991231234",
       from: "9991231234",
       url: "http://foo.com/call.xml"
     )
-    puts @call.length
+    puts @call.duration
     puts @call.sid
 
 
@@ -50,7 +50,7 @@ you can use the client to retrieve that record.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     sid = "CA12341234"
-    @call = @client.calls.get(sid)
+    @call = @client.api.accounts(account_sid).calls(sid).fetch()
 
 Delete a Call Record
 --------------------
@@ -65,16 +65,15 @@ Delete a Call Record
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     sid = "CA12341234"
-    @call = @client.calls.get(sid)
 
     # Removes the entire record from Twilio's storage
-    @call.delete
+    @client.api.accounts(account_sid).calls(sid).delete()
 
 Accessing Specific Call Resources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Each :class:`Call` resource also has access to its `notifications`,
-`recordings`, and `transcriptions`.
+`recordings`, and `feedback`.
 These attributes are :class:`ListResources`,
 just like the :class:`Calls` resource itself.
 
@@ -88,11 +87,11 @@ just like the :class:`Calls` resource itself.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     sid = "CA12341234"
-    @call = @client.calls.get(sid)
+    @call = @client.api.accounts(account_sid).calls(sid).fetch()
 
-    puts @call.notifications.list()
-    puts @call.recordings.list()
-    puts @call.transcriptions.list()
+    puts @call.notifications
+    puts @call.recordings
+    puts @call.feedback
 
 However, what if you only have a `CallSid`, and not the actual
 :class:`Resource`? No worries, as :meth:`list` can be filter based on a given
@@ -107,10 +106,12 @@ However, what if you only have a `CallSid`, and not the actual
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
+
     sid = "CA24234"
-    puts @client.notifications.list(call: sid)
-    puts @client.recordings.list(call: sid)
-    puts @client.transcriptions.list(call: sid)
+
+    puts @client.notifications(sid).list()
+    puts @client.recordings(sid).list()
+    puts @client.transcriptions(sid).list()
 
 
 Modifying Live Calls
@@ -131,7 +132,8 @@ redirect them as necessary
     @calls = @client.calls.list(status: "in-progress")
 
     @calls.each do |call|
-      call.redirect_to("http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient")
+      # redirect each call
+      call.update(url: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient")
     end
 
 
@@ -149,7 +151,8 @@ Ending all live calls is also possible
     @calls = @client.calls.list(status: "in-progress")
 
     @calls.each do |call|
-      call.hangup()
+      # hangup each call
+      call.update(status: 'completed')
     end
 
 Note that :meth:`hangup` will also cancel calls currently queued.
@@ -167,7 +170,7 @@ resource to update the record without having to use :meth:`get` first.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     sid = "CA12341234"
-    @client.calls.get(sid).redirect_to("http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient")
+    @client.calls(sid).update(url: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient")
 
 Hanging up the call also works.
 
@@ -181,5 +184,4 @@ Hanging up the call also works.
 
     @client = Twilio::REST::Client.new account_sid, auth_token
     sid = "CA12341234"
-    @client.calls.get(sid).hangup()
-
+    @client.calls(sid).update(status: 'completed')
