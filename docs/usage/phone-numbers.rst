@@ -22,15 +22,16 @@ Once we find one, we'll purchase it for our account.
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
-    numbers = @client.available_phone_numbers.get('US').list(area_code: "530")
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
+    numbers = @client.available_phone_numbers('US').local.list(area_code: "530")
 
     if numbers.any?
-      numbers[0].purchase()
+      number = numbers[0].phone_number
+      @client.incoming_phone_numbers.create(phone_number: number)
     else
       puts "No numbers in 530 available"
     end
@@ -52,13 +53,13 @@ You can search for numbers for a given type.
 .. code-block:: ruby
 
     # local
-    numbers = @client.available_phone_numbers.get('US').local.list()
+    numbers = @client.available_phone_numbers('US').local.list()
 
     # toll free
-    numbers = @client.available_phone_numbers.get('US').toll_free.list()
+    numbers = @client.available_phone_numbers('US').toll_free.list()
 
     # mobile
-    numbers = @client.available_phone_numbers.get('UK').mobile.list()
+    numbers = @client.available_phone_numbers('UK').mobile.list()
 
 Numbers Containing Words
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -68,13 +69,13 @@ The following example will find any phone number with "FOO" in it.
 
 .. code-block:: ruby
 
-    numbers = @client.available_phone_numbers.get('US').list(contains: "FOO")
+    numbers = @client.available_phone_numbers('US').local.list(contains: "FOO")
 
 You can use the ''*'' wildcard to match any character. The following example finds any phone number that matches the pattern ''D*D''.
 
 .. code-block:: ruby
 
-    numbers = @client.available_phone_numbers.get('US').list(contains: "D*D")
+    numbers = @client.available_phone_numbers('US').local.list(contains: "D*D")
 
 Other Number Searches
 ^^^^^^^^^^^^^^^^^^^^^
@@ -103,13 +104,13 @@ filter these numbers out when searching for phone numbers to purchase.
 .. code-block:: ruby
 
     # Exclude all numbers requiring addresses
-    numbers = @client.available_phone_numbers.get('AU').list(exclude_all_address_required: true)
+    numbers = @client.available_phone_numbers('AU').local.list(exclude_all_address_required: true)
 
     # Exclude numbers requiring local addresses
-    numbers = @client.available_phone_numbers.get('AU').list(exclude_local_address_required: true)
+    numbers = @client.available_phone_numbers('AU').local.list(exclude_local_address_required: true)
 
     # Exclude numbers requiring foreign addresses
-    numbers = @client.available_phone_numbers.get('AU').list(exclude_foreign_address_required: true)
+    numbers = @client.available_phone_numbers('AU').local.list(exclude_foreign_address_required: true)
 
 
 Buying a Number
@@ -121,12 +122,12 @@ If you've found a phone number you want, you can purchase the number.
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
-    @number = @client.available_phone_numbers.purchase(
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
+    @client.incoming_phone_numbers.create(
       phone_number: "+15305431234"
     )
 
@@ -146,12 +147,12 @@ listed in the `IncomingPhoneNumbers Resource documentation
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
-    @client.available_phone_numbers.list.each do |number|
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
+    @client.incoming_phone_numbers.list.each do |number|
       number.update(
         voice_url: "http://twimlets.com/holdmusic?" \
                    "Bucket=com.twilio.music.ambient",
@@ -162,21 +163,22 @@ listed in the `IncomingPhoneNumbers Resource documentation
 Changing Applications
 ----------------------
 
-An :class:`Application` encapsulates all necessary URLs for use with phone numbers. Update an application on a phone number using :meth:`update`.
+An :class:`Application` encapsulates all necessary URLs for use with phone numbers.
+Update an application on a phone number using :meth:`update`.
 
 .. code-block:: ruby
 
     require 'twilio-ruby'
 
-    # To find these visit https://www.twilio.com/user/account
+    # To find these visit https://www.twilio.com/console
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client = Twilio::REST::Client.new(account_sid, auth_token)
 
     phone_sid = "PNXXXXXXXXXXXXXXXXX"
 
-    @number = @client.available_phone_numbers.get(phone_sid)
+    @number = @client.incoming_phone_numbers(phone_sid)
     @number.update(sms_application_sid: "APXXXXXXXXXXXXXXXXXX")
 
 See :doc:`/usage/applications` for instructions on updating and maintaining Applications.
@@ -186,4 +188,3 @@ Validate a Phone Number
 -----------------------
 
 See validation instructions here: :doc:`/usage/caller-ids`:
-
