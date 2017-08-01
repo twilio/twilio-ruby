@@ -5,18 +5,18 @@ Accessing Twilio Pricing API Resources
 ======================================
 
 To access Twilio Pricing resources, you'll first need to instantiate a
-:class:`Twilio::REST::PricingClient`.
+:class:`Twilio::REST::Client`.
 
 
 Authentication
 --------------
 
-The :class:`Twilio::REST::PricingClient` needs your Twilio credentials. To get
+The :class:`Twilio::REST::Client` needs your Twilio credentials. To get
 your credentials, visit `your Twilio account portal
 <https://www.twilio.com/user/account>`_. If you don't have a Twilio account
 yet, go `here <https://www.twilio.com/try-twilio>`_ to get started.
 
-Once you have your credentials, you can create create a new :class:`PricingClient` and get started.
+Once you have your credentials, you can create a new :class:`Client` and get started.
 
 .. code-block:: ruby
 
@@ -26,21 +26,7 @@ Once you have your credentials, you can create create a new :class:`PricingClien
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::PricingClient.new account_sid, auth_token
-
-You can also configure the client using the top level configure method, like so:
-
-.. code-block:: ruby
-
-    require 'twilio-ruby'
-
-    Twilio.configure do |config|
-      config.account_sid = "ACXXXXXXXXXXXXXXXXX"
-      config.auth_token = "YYYYYYYYYYYYYYYYYY"
-    end
-
-    @client = Twilio::REST::PricingClient.new
-
+    @client = Twilio::REST::Client.new account_sid, auth_token
 
 =============
 Voice Pricing
@@ -65,8 +51,8 @@ To retrieve a list of countries where Twilio Voice services are available:
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::PricingClient.new account_sid, auth_token
-    @countries = @client.voice.countries.list
+    @client = Twilio::REST::Client.new account_sid, auth_token
+    @countries = @client.pricing.v1.voice.countries.list()
     @countries.each do |c|
         puts c.country
     end
@@ -83,8 +69,8 @@ for each country you are interested in individually:
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::PricingClient.new account_sid, auth_token
-    @country = @client.voice.countries.get('US')
+    @client = Twilio::REST::Client.new account_sid, auth_token
+    @country = @client.voice.countries('US').fetch()
     puts @country.iso_country
     puts @country.price_unit
 
@@ -117,8 +103,8 @@ number:
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::PricingClient.new account_sid, auth_token
-    @number = @client.voice.phone_numbers.get('+15105551234')
+    @client = Twilio::REST::Client.new account_sid, auth_token
+    @number = @client.voice.numbers('+15105551234').fetch()
     puts @number.iso_country
     puts @number.price_unit
     puts @number.outbound_call_price.base_price
@@ -138,8 +124,8 @@ To retrieve a list of countries where Twilio phone numbers are available:
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::PricingClient.new account_sid, auth_token
-    @countries = @client.phone_numbers.countries.list
+    @client = Twilio::REST::Client.new account_sid, auth_token
+    @countries = @client.phone_numbers.countries.list()
     @countries.each do |c|
         puts c.country
     end
@@ -157,8 +143,8 @@ each country you are interested in individually:
     account_sid = "ACXXXXXXXXXXXXXXXXX"
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
-    @client = Twilio::REST::PricingClient.new account_sid, auth_token
-    @country = @client.phone_numbers.countries.get('US')
+    @client = Twilio::REST::Client.new.new account_sid, auth_token
+    @country = @client.phone_numbers.countries('US').fetch()
     puts @country.iso_country
     puts @country.price_unit
 
@@ -166,4 +152,3 @@ each country you are interested in individually:
         puts p.number_type # 'local', 'mobile', 'national', or 'toll_free'
         puts p.base_price # Price per month before any discounts have been applied
         puts p.current_price # Price per month after any available discounts from the requesting account have applied
-
