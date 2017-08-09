@@ -19,7 +19,7 @@ Make a Call
     auth_token = "YYYYYYYYYYYYYYYYYY"
 
     @client = Twilio::REST::Client.new account_sid, auth_token
-    @call = @client.calls.create(
+    @call = @client.api.calls.create(
       to: "9991231234",
       from: "9991231234",
       url: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient"
@@ -41,7 +41,7 @@ Send an SMS
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @message = @client.messages.create(
+    @message = @client.api.messages.create(
       to: "+12316851234",
       from: "+15555555555",
       body: "Hello there!"
@@ -60,7 +60,7 @@ Send an MMS
 
     @client = Twilio::REST::Client.new account_sid, auth_token
 
-    @message = @client.messages.create(
+    @message = @client.api.messages.create(
       to: "+15558676309",
       from: "+15555555555",
       body: "Jenny I need you!",
@@ -76,7 +76,7 @@ to easily create such responses.
 
 .. code-block:: ruby
 
-    Twilio::TwiML::Response do |r|
+    Twilio::TwiML::VoiceResponse do |r|
         r.Play "https://api.twilio.com/cowbell.mp3", loop: 5
     end.text
 
@@ -103,10 +103,10 @@ Additional resources had off of the workspace object (task_queues, workers, work
     auth_token = "YYYYYYYYYYYYYYYYYY"
     workspace_sid = "WSzzzzzzzzzzzzzzzzzzzzzzzzzzz"
 
-    client = Twilio::REST::TaskRouterClient.new account_sid, auth_token, workspace_sid
+    client = Twilio::REST::Client.new account_sid, auth_token
 
     workflow_sid = "WFzzzzzzzzzzzzz"
-    task = client.workspace.tasks.create(attributes: '{"foo":"bar"}', workflow_sid: workflow_sid)
+    task = client.taskrouter.workspace.tasks.create(attributes: '{"foo":"bar"}', workflow_sid: workflow_sid)
 
 
 Digging Deeper
@@ -114,4 +114,3 @@ Digging Deeper
 
 The full power of the Twilio API is at your fingertips. The :ref:`user-guide`
 explains all the awesome features available to use.
-
