@@ -12,6 +12,13 @@ Metrics/LineLength:
   Exclude:
     - 'spec/**/*'
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/AbcSize:
+  Enabled: false
+
 Metrics/ClassLength:
   Max: 175
 
