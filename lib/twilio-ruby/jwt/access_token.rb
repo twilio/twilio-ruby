@@ -77,6 +77,36 @@ module Twilio
         headers
       end
 
+      class ChatGrant
+        include AccessTokenGrant
+        attr_accessor :service_sid,
+                      :endpoint_id,
+                      :deployment_role_sid,
+                      :push_credential_sid
+
+        def _key
+          'chat'
+        end
+
+        def _generate_payload
+          payload = {}
+
+          payload[:service_sid] = service_sid if service_sid
+
+          payload[:endpoint_id] = endpoint_id if endpoint_id
+
+          if deployment_role_sid
+            payload[:deployment_role_sid] = deployment_role_sid
+          end
+
+          if push_credential_sid
+            payload[:push_credential_sid] = push_credential_sid
+          end
+
+          payload
+        end
+      end
+
       class IpMessagingGrant
         include AccessTokenGrant
         attr_accessor :service_sid,
@@ -104,6 +134,11 @@ module Twilio
           end
 
           payload
+        end
+
+        class << self
+          extend Gem::Deprecate
+          deprecate :new, 'Chat.new', 2017, 7
         end
       end
 
