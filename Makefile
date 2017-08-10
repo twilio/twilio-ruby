@@ -12,7 +12,7 @@ test: lint
 	bundle exec rake spec
 
 docs:
-	yard doc
+	yard doc --output-dir ./doc
 
 lint:
 	rubocop --cache true --parallel
