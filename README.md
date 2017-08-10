@@ -136,8 +136,7 @@ section of the wiki.
 
 ## Getting Started With TwiML
 
-TwiML support is based on the [Builder][builder] library. You can construct a
-TwiML response like this:
+You can construct a TwiML response like this:
 
 ```ruby
 require 'twilio-ruby'
@@ -177,7 +176,6 @@ implementations:
 - Ruby 2.0.0
 
 [capability]: https://github.com/twilio/twilio-ruby/wiki/Capability
-[builder]: http://builder.rubyforge.org/
 [examples]: https://github.com/twilio/twilio-ruby/blob/master/examples
 [documentation]: http://twilio.github.io/twilio-ruby
 [wiki]: https://github.com/twilio/twilio-ruby/wiki
