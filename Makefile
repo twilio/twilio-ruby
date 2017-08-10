@@ -1,4 +1,4 @@
-.PHONY: test lint-changed lint
+.PHONY: test lint-changed lint docs
 
 CHANGED_RUBY_FILES = $(shell git status --porcelain | grep ".rb" | awk -F ' ' '{print $2}' | tr '\n' ' ')
 
