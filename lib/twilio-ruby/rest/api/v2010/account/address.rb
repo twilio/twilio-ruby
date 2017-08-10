@@ -36,8 +36,9 @@ module Twilio
             # @param [String] iso_country The iso_country
             # @param [String] friendly_name The friendly_name
             # @param [Boolean] emergency_enabled The emergency_enabled
+            # @param [Boolean] auto_correct_address The auto_correct_address
             # @return [AddressInstance] Newly created AddressInstance
-            def create(customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil, iso_country: nil, friendly_name: :unset, emergency_enabled: :unset)
+            def create(customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil, iso_country: nil, friendly_name: :unset, emergency_enabled: :unset, auto_correct_address: :unset)
               data = Twilio::Values.of({
                   'CustomerName' => customer_name,
                   'Street' => street,
@@ -47,6 +48,7 @@ module Twilio
                   'IsoCountry' => iso_country,
                   'FriendlyName' => friendly_name,
                   'EmergencyEnabled' => emergency_enabled,
+                  'AutoCorrectAddress' => auto_correct_address,
               })
 
               payload = @version.create(
@@ -266,8 +268,9 @@ module Twilio
             # @param [String] region The region
             # @param [String] postal_code The postal_code
             # @param [Boolean] emergency_enabled The emergency_enabled
+            # @param [Boolean] auto_correct_address The auto_correct_address
             # @return [AddressInstance] Updated AddressInstance
-            def update(friendly_name: :unset, customer_name: :unset, street: :unset, city: :unset, region: :unset, postal_code: :unset, emergency_enabled: :unset)
+            def update(friendly_name: :unset, customer_name: :unset, street: :unset, city: :unset, region: :unset, postal_code: :unset, emergency_enabled: :unset, auto_correct_address: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'CustomerName' => customer_name,
@@ -276,6 +279,7 @@ module Twilio
                   'Region' => region,
                   'PostalCode' => postal_code,
                   'EmergencyEnabled' => emergency_enabled,
+                  'AutoCorrectAddress' => auto_correct_address,
               })
 
               payload = @version.update(
@@ -475,8 +479,9 @@ module Twilio
             # @param [String] region The region
             # @param [String] postal_code The postal_code
             # @param [Boolean] emergency_enabled The emergency_enabled
+            # @param [Boolean] auto_correct_address The auto_correct_address
             # @return [AddressInstance] Updated AddressInstance
-            def update(friendly_name: :unset, customer_name: :unset, street: :unset, city: :unset, region: :unset, postal_code: :unset, emergency_enabled: :unset)
+            def update(friendly_name: :unset, customer_name: :unset, street: :unset, city: :unset, region: :unset, postal_code: :unset, emergency_enabled: :unset, auto_correct_address: :unset)
               context.update(
                   friendly_name: friendly_name,
                   customer_name: customer_name,
@@ -485,6 +490,7 @@ module Twilio
                   region: region,
                   postal_code: postal_code,
                   emergency_enabled: emergency_enabled,
+                  auto_correct_address: auto_correct_address,
               )
             end
 

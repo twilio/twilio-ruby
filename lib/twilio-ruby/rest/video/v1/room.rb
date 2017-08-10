@@ -32,8 +32,9 @@ module Twilio
           # @param [String] max_participants The max_participants
           # @param [Boolean] record_participants_on_connect The
           #   record_participants_on_connect
+          # @param [room.VideoCodec] video_codecs The video_codecs
           # @return [RoomInstance] Newly created RoomInstance
-          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset)
+          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset)
             data = Twilio::Values.of({
                 'EnableTurn' => enable_turn,
                 'Type' => type,
@@ -42,6 +43,7 @@ module Twilio
                 'StatusCallbackMethod' => status_callback_method,
                 'MaxParticipants' => max_participants,
                 'RecordParticipantsOnConnect' => record_participants_on_connect,
+                'VideoCodecs' => video_codecs,
             })
 
             payload = @version.create(
