@@ -50,10 +50,6 @@ module Twilio
         @grants.push(grant)
       end
 
-      def to_s
-        to_jwt
-      end
-
       protected
 
       def _generate_payload
