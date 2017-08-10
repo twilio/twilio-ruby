@@ -1,18 +1,25 @@
 twilio-ruby changelog
 =====================
-[2017-08-10] Version 5.2.1
+
+[2017-08-10] Version 5.1.1
 ---------------------------
+**Library**
+- Don't override Faraday default param encoder. Thanks to @isaacseymour. PR #309
+- Fix incorrectly aliased `to_xml` on TwiML classes. Thanks to @philnash. PR #318
+- Only define `to_s` on BaseJWT instead of subclasses. Thanks to @philnash. PR #321
+- Silence deprecation messages in testing. Thanks to @philnash. PR #323
+
 **Api**
 - Add New wireless usage keys added
 - Add `auto_correct_address` param for Addresses create and update
 
-**Preview**
-- Add AvailableNumbers resource.
-
 **Video**
 - Add `video_codec` enum and `video_codecs` parameter, which can be set to either `VP8` or `H264` during room creation.
 - Restrict recordings page size to 100
-- Add query parameters `SourceSid`, `Status`, `DateCreatedAfter` and `DateCreatedBefore` to the convenience method for retrieving Room recordings.
+
+**Chat**
+- Add ChatGrant to available access tokens.
+- Mark IpMessagingGrant as deprecated in favor of ChatGrant.
 
 
 [2017-07-27] Version 5.1.0
