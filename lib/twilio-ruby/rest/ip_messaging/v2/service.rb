@@ -261,8 +261,9 @@ module Twilio
           # @param [String] webhook_filters The webhook_filters
           # @param [String] limits_channel_members The limits.channel_members
           # @param [String] limits_user_channels The limits.user_channels
+          # @param [String] media_compatibility_message The media.compatibility_message
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, default_service_role_sid: :unset, default_channel_role_sid: :unset, default_channel_creator_role_sid: :unset, read_status_enabled: :unset, reachability_enabled: :unset, typing_indicator_timeout: :unset, consumption_report_interval: :unset, notifications_new_message_enabled: :unset, notifications_new_message_template: :unset, notifications_new_message_sound: :unset, notifications_new_message_badge_count_enabled: :unset, notifications_added_to_channel_enabled: :unset, notifications_added_to_channel_template: :unset, notifications_added_to_channel_sound: :unset, notifications_removed_from_channel_enabled: :unset, notifications_removed_from_channel_template: :unset, notifications_removed_from_channel_sound: :unset, notifications_invited_to_channel_enabled: :unset, notifications_invited_to_channel_template: :unset, notifications_invited_to_channel_sound: :unset, pre_webhook_url: :unset, post_webhook_url: :unset, webhook_method: :unset, webhook_filters: :unset, limits_channel_members: :unset, limits_user_channels: :unset)
+          def update(friendly_name: :unset, default_service_role_sid: :unset, default_channel_role_sid: :unset, default_channel_creator_role_sid: :unset, read_status_enabled: :unset, reachability_enabled: :unset, typing_indicator_timeout: :unset, consumption_report_interval: :unset, notifications_new_message_enabled: :unset, notifications_new_message_template: :unset, notifications_new_message_sound: :unset, notifications_new_message_badge_count_enabled: :unset, notifications_added_to_channel_enabled: :unset, notifications_added_to_channel_template: :unset, notifications_added_to_channel_sound: :unset, notifications_removed_from_channel_enabled: :unset, notifications_removed_from_channel_template: :unset, notifications_removed_from_channel_sound: :unset, notifications_invited_to_channel_enabled: :unset, notifications_invited_to_channel_template: :unset, notifications_invited_to_channel_sound: :unset, pre_webhook_url: :unset, post_webhook_url: :unset, webhook_method: :unset, webhook_filters: :unset, limits_channel_members: :unset, limits_user_channels: :unset, media_compatibility_message: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DefaultServiceRoleSid' => default_service_role_sid,
@@ -291,6 +292,7 @@ module Twilio
                 'WebhookFilters' => webhook_filters,
                 'Limits.ChannelMembers' => limits_channel_members,
                 'Limits.UserChannels' => limits_user_channels,
+                'Media.CompatibilityMessage' => media_compatibility_message,
             })
 
             payload = @version.update(
@@ -419,6 +421,7 @@ module Twilio
                 'webhook_method' => payload['webhook_method'],
                 'webhook_filters' => payload['webhook_filters'],
                 'notifications' => payload['notifications'],
+                'media' => payload['media'],
                 'url' => payload['url'],
                 'links' => payload['links'],
             }
@@ -553,6 +556,12 @@ module Twilio
           end
 
           ##
+          # @return [Hash] The media
+          def media
+            @properties['media']
+          end
+
+          ##
           # @return [String] The url
           def url
             @properties['url']
@@ -621,8 +630,9 @@ module Twilio
           # @param [String] webhook_filters The webhook_filters
           # @param [String] limits_channel_members The limits.channel_members
           # @param [String] limits_user_channels The limits.user_channels
+          # @param [String] media_compatibility_message The media.compatibility_message
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, default_service_role_sid: :unset, default_channel_role_sid: :unset, default_channel_creator_role_sid: :unset, read_status_enabled: :unset, reachability_enabled: :unset, typing_indicator_timeout: :unset, consumption_report_interval: :unset, notifications_new_message_enabled: :unset, notifications_new_message_template: :unset, notifications_new_message_sound: :unset, notifications_new_message_badge_count_enabled: :unset, notifications_added_to_channel_enabled: :unset, notifications_added_to_channel_template: :unset, notifications_added_to_channel_sound: :unset, notifications_removed_from_channel_enabled: :unset, notifications_removed_from_channel_template: :unset, notifications_removed_from_channel_sound: :unset, notifications_invited_to_channel_enabled: :unset, notifications_invited_to_channel_template: :unset, notifications_invited_to_channel_sound: :unset, pre_webhook_url: :unset, post_webhook_url: :unset, webhook_method: :unset, webhook_filters: :unset, limits_channel_members: :unset, limits_user_channels: :unset)
+          def update(friendly_name: :unset, default_service_role_sid: :unset, default_channel_role_sid: :unset, default_channel_creator_role_sid: :unset, read_status_enabled: :unset, reachability_enabled: :unset, typing_indicator_timeout: :unset, consumption_report_interval: :unset, notifications_new_message_enabled: :unset, notifications_new_message_template: :unset, notifications_new_message_sound: :unset, notifications_new_message_badge_count_enabled: :unset, notifications_added_to_channel_enabled: :unset, notifications_added_to_channel_template: :unset, notifications_added_to_channel_sound: :unset, notifications_removed_from_channel_enabled: :unset, notifications_removed_from_channel_template: :unset, notifications_removed_from_channel_sound: :unset, notifications_invited_to_channel_enabled: :unset, notifications_invited_to_channel_template: :unset, notifications_invited_to_channel_sound: :unset, pre_webhook_url: :unset, post_webhook_url: :unset, webhook_method: :unset, webhook_filters: :unset, limits_channel_members: :unset, limits_user_channels: :unset, media_compatibility_message: :unset)
             context.update(
                 friendly_name: friendly_name,
                 default_service_role_sid: default_service_role_sid,
@@ -651,6 +661,7 @@ module Twilio
                 webhook_filters: webhook_filters,
                 limits_channel_members: limits_channel_members,
                 limits_user_channels: limits_user_channels,
+                media_compatibility_message: media_compatibility_message,
             )
           end
 

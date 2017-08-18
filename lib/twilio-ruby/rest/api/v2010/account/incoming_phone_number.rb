@@ -382,8 +382,10 @@ module Twilio
             #   ignore all of the voice urls  and voice applications above and use those set on
             #   the Trunk. Setting a `TrunkSid` will automatically delete your
             #   `VoiceApplicationSid` and vice versa.
+            # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
+            #   voice_receive_mode
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
-            def update(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset)
+            def update(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset)
               data = Twilio::Values.of({
                   'ApiVersion' => api_version,
                   'FriendlyName' => friendly_name,
@@ -403,6 +405,7 @@ module Twilio
                   'EmergencyStatus' => emergency_status,
                   'EmergencyAddressSid' => emergency_address_sid,
                   'TrunkSid' => trunk_sid,
+                  'VoiceReceiveMode' => voice_receive_mode,
               })
 
               payload = @version.update(
@@ -764,8 +767,10 @@ module Twilio
             #   ignore all of the voice urls  and voice applications above and use those set on
             #   the Trunk. Setting a `TrunkSid` will automatically delete your
             #   `VoiceApplicationSid` and vice versa.
+            # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
+            #   voice_receive_mode
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
-            def update(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset)
+            def update(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset)
               context.update(
                   api_version: api_version,
                   friendly_name: friendly_name,
@@ -785,6 +790,7 @@ module Twilio
                   emergency_status: emergency_status,
                   emergency_address_sid: emergency_address_sid,
                   trunk_sid: trunk_sid,
+                  voice_receive_mode: voice_receive_mode,
               )
             end
 
