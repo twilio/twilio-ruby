@@ -19,6 +19,7 @@ module Twilio
         # Versions
         @sync = nil
         @wireless = nil
+        @deployed_devices = nil
         @marketplace = nil
         @bulk_exports = nil
         @proxy = nil
@@ -35,6 +36,12 @@ module Twilio
       # Version wireless of preview
       def wireless
         @wireless ||= Wireless.new self
+      end
+
+      ##
+      # Version deployed_devices of preview
+      def deployed_devices
+        @deployed_devices ||= DeployedDevices.new self
       end
 
       ##
@@ -91,6 +98,15 @@ module Twilio
       # @return [Twilio::REST::Preview::Wireless::SimList]
       def sims(sid=:unset)
         self.wireless.sims(sid)
+      end
+
+      ##
+      # @param [String] sid Contains a 34 character string that uniquely identifies this
+      #   Fleet resource.
+      # @return [Twilio::REST::Preview::DeployedDevices::FleetInstance] if sid was passed.
+      # @return [Twilio::REST::Preview::DeployedDevices::FleetList]
+      def fleets(sid=:unset)
+        self.deployed_devices.fleets(sid)
       end
 
       ##

@@ -300,6 +300,8 @@ module Twilio
                     'from' => payload['from'],
                     'body' => payload['body'],
                     'index' => payload['index'].to_i,
+                    'type' => payload['type'],
+                    'media' => payload['media'],
                     'url' => payload['url'],
                 }
 
@@ -398,6 +400,18 @@ module Twilio
               # @return [String] The index
               def index
                 @properties['index']
+              end
+
+              ##
+              # @return [String] The type
+              def type
+                @properties['type']
+              end
+
+              ##
+              # @return [Hash] The media
+              def media
+                @properties['media']
               end
 
               ##

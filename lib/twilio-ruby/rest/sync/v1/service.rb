@@ -356,6 +356,7 @@ module Twilio
             # Marshaled Properties
             @properties = {
                 'sid' => payload['sid'],
+                'unique_name' => payload['unique_name'],
                 'account_sid' => payload['account_sid'],
                 'friendly_name' => payload['friendly_name'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
@@ -392,6 +393,12 @@ module Twilio
           # @return [String] The sid
           def sid
             @properties['sid']
+          end
+
+          ##
+          # @return [String] The unique_name
+          def unique_name
+            @properties['unique_name']
           end
 
           ##

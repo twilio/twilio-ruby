@@ -105,14 +105,12 @@ module Twilio
           # @param [Boolean] enabled The enabled
           # @param [String] webhook_url The webhook_url
           # @param [String] webhook_method The webhook_method
-          # @param [String] email The email
           # @return [ExportConfigurationInstance] Updated ExportConfigurationInstance
-          def update(enabled: :unset, webhook_url: :unset, webhook_method: :unset, email: :unset)
+          def update(enabled: :unset, webhook_url: :unset, webhook_method: :unset)
             data = Twilio::Values.of({
                 'Enabled' => enabled,
                 'WebhookUrl' => webhook_url,
                 'WebhookMethod' => webhook_method,
-                'Email' => email,
             })
 
             payload = @version.update(
@@ -153,7 +151,6 @@ module Twilio
                 'enabled' => payload['enabled'],
                 'webhook_url' => payload['webhook_url'],
                 'webhook_method' => payload['webhook_method'],
-                'email' => payload['email'],
                 'resource_type' => payload['resource_type'],
                 'url' => payload['url'],
             }
@@ -198,12 +195,6 @@ module Twilio
           end
 
           ##
-          # @return [String] The email
-          def email
-            @properties['email']
-          end
-
-          ##
           # @return [String] The resource_type
           def resource_type
             @properties['resource_type']
@@ -227,14 +218,12 @@ module Twilio
           # @param [Boolean] enabled The enabled
           # @param [String] webhook_url The webhook_url
           # @param [String] webhook_method The webhook_method
-          # @param [String] email The email
           # @return [ExportConfigurationInstance] Updated ExportConfigurationInstance
-          def update(enabled: :unset, webhook_url: :unset, webhook_method: :unset, email: :unset)
+          def update(enabled: :unset, webhook_url: :unset, webhook_method: :unset)
             context.update(
                 enabled: enabled,
                 webhook_url: webhook_url,
                 webhook_method: webhook_method,
-                email: email,
             )
           end
 
