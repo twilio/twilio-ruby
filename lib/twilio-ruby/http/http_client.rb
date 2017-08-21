@@ -4,6 +4,7 @@ module Twilio
   module HTTP
     class Client
       attr_accessor :adapter
+      attr_reader :last_response
 
       def initialize(proxy_addr = nil, proxy_port = nil, proxy_user = nil, proxy_pass = nil, ssl_ca_file = nil)
         @proxy_addr = proxy_addr
