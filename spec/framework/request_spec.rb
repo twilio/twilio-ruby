@@ -26,7 +26,7 @@ describe Twilio::Request do
   end
 
   it 'should be represented correctly' do
-    expected_string = %((a,b) POST url?param-key=param-value&param-keytwo=param-valuetwo\n
+    expected_string = %((a,b) POST url?param-key=param-value&param-keytwo=param-valuetwo
 -d "data-key"="data-value"
 -d "data-keytwo"="data-valuetwo"
 -H "header-key": "header-value"
