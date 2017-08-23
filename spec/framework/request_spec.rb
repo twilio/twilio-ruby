@@ -3,14 +3,14 @@ require 'spec_helper'
 describe Twilio::Request do
   before do
     @request = Twilio::Request.new('host',
-                                'port',
-                                'POST',
-                                'url',
-                                {'param-key'=>'param-value', 'param-keytwo'=>'param-valuetwo'},
-                                {'data-key'=>'data-value', 'data-keytwo'=>'data-valuetwo'},
-                                {'header-key'=>'header-value', 'header-keytwo'=>'header-valuetwo'},
-                                ['a', 'b'],
-                                'timeout')
+                                   'port',
+                                   'POST',
+                                   'url',
+                                   { 'param-key' => 'param-value', 'param-keytwo' => 'param-valuetwo' },
+                                   { 'data-key' => 'data-value', 'data-keytwo' => 'data-valuetwo' },
+                                   { 'header-key' => 'header-value', 'header-keytwo' => 'header-valuetwo' },
+                                   ['a', 'b'],
+                                   'timeout')
   end
 
   it 'should initialize readers correctly' do
@@ -18,15 +18,15 @@ describe Twilio::Request do
     expect(@request.port).to eq('port')
     expect(@request.method).to eq('POST')
     expect(@request.url).to eq('url')
-    expect(@request.params).to eq({'param-key'=>'param-value', 'param-keytwo'=>'param-valuetwo'})
-    expect(@request.data).to eq({'data-key'=>'data-value', 'data-keytwo'=>'data-valuetwo'})
-    expect(@request.headers).to eq({'header-key'=>'header-value', 'header-keytwo'=>'header-valuetwo'})
+    expect(@request.params).to eq('param-key' => 'param-value', 'param-keytwo' => 'param-valuetwo')
+    expect(@request.data).to eq('data-key' => 'data-value', 'data-keytwo' => 'data-valuetwo')
+    expect(@request.headers).to eq('header-key' => 'header-value', 'header-keytwo' => 'header-valuetwo')
     expect(@request.auth).to eq(['a', 'b'])
     expect(@request.timeout).to eq('timeout')
   end
 
   it 'should be represented correctly' do
-    expected_string = %q((a,b) POST url?param-key=param-value&param-keytwo=param-valuetwo
+    expected_string = %((a,b) POST url?param-key=param-value&param-keytwo=param-valuetwo\n
 -d "data-key"="data-value"
 -d "data-keytwo"="data-valuetwo"
 -H "header-key": "header-value"

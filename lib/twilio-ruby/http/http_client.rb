@@ -19,7 +19,7 @@ module Twilio
       end
 
       def _request(request)
-        @connection = Faraday.new(url: request.host + ':' + request.port.to_s, ssl: {verify: true}) do |f|
+        @connection = Faraday.new(url: request.host + ':' + request.port.to_s, ssl: { verify: true }) do |f|
           f.request :url_encoded
           f.adapter @adapter
           f.headers = request.headers
@@ -39,18 +39,18 @@ module Twilio
         if response.body && !response.body.empty?
           object = response.body
         elsif response.status == 400
-          object = {message: 'Bad request', code: 400}.to_json
+          object = { message: 'Bad request', code: 400 }.to_json
         end
 
         twilio_response = Twilio::Response.new(response.status, object)
         @last_response = twilio_response
 
-        return twilio_response
+        twilio_response
       end
 
       def request(host, port, method, url, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
         request = Twilio::Request.new(host, port, method, url, params, data, headers, auth, timeout)
-        return _request(request)
+        _request(request)
       end
     end
   end
