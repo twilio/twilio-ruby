@@ -51,6 +51,15 @@ describe Twilio::HTTP::Client do
 
     @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'])
     expect(@client.last_response).to_not be_nil
+    expect(@client.last_request.host).to eq('host')
+    expect(@client.last_request.port).to eq('port')
+    expect(@client.last_request.method).to eq('GET')
+    expect(@client.last_request.url).to eq('url')
+    expect(@client.last_request.params).to be_nil
+    expect(@client.last_request.data).to be_nil
+    expect(@client.last_request.headers).to eq({})
+    expect(@client.last_request.auth).to eq(['a', 'b'])
+    expect(@client.last_request.timeout).to be_nil
     expect(@client.last_response.is_a?(Twilio::Response)).to be(true)
     expect(@client.last_response.status_code).to eq(500)
     expect(@client.last_response.body).to eq('Unavailable')
@@ -64,5 +73,14 @@ describe Twilio::HTTP::Client do
         .to raise_exception(Faraday::ConnectionFailed)
     expect(@client.last_response).to be_nil
     expect(@client.last_request).to_not be_nil
+    expect(@client.last_request.host).to eq('host')
+    expect(@client.last_request.port).to eq('port')
+    expect(@client.last_request.method).to eq('GET')
+    expect(@client.last_request.url).to eq('url')
+    expect(@client.last_request.params).to be_nil
+    expect(@client.last_request.data).to be_nil
+    expect(@client.last_request.headers).to eq({})
+    expect(@client.last_request.auth).to eq(['a', 'b'])
+    expect(@client.last_request.timeout).to be_nil
   end
 end
