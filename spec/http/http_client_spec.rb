@@ -81,4 +81,14 @@ describe Twilio::HTTP::Client do
     expect(@client.last_request.auth).to eq(['a', 'b'])
     expect(@client.last_request.timeout).to be_nil
   end
+
+  describe 'last_response' do
+    let(:last_response) { Twilio::Response.new(200, 'body') }
+  end
+  it 'previous last_response should be cleared' do
+    expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_raise(Faraday::ConnectionFailed.new('BOOM'))
+    expect { @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b']) }.to raise_exception(Faraday::ConnectionFailed)
+    expect(@client.last_response).to be_nil
+  end
 end

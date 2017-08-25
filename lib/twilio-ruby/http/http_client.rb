@@ -32,6 +32,7 @@ module Twilio
         end
 
         @last_request = request
+        @last_response = nil
         response = @connection.send(request.method.downcase.to_sym,
                                     request.url,
                                     request.method == 'GET' ? request.params : request.data)
