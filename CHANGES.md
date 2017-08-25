@@ -3,6 +3,13 @@ twilio-ruby changelog
 
 [2017-08-25] Version 5.2.0
 ---------------------------
+**Library**
+- Add `last_request`, `last_response` properties to http client for easier debugging.
+- Add `Request` class to abstract http client implementations.
+- Rename `TwilioResponse` to `Response` for consistency, deprecate `TwilioResponse` class.
+- Support libxml 2 and 3. Issue #315. Thanks @malmckay.
+- Add `inspect` methods to all classes. Thanks @malmckay.
+
 **Api**
 - Update `status` enum for Recordings to include 'failed'
 - Add `error_code` property on Recordings
@@ -12,7 +19,6 @@ twilio-ruby changelog
 
 **Video**
 - New `media_region` parameter when creating a room, which controls which region media will be served out of.
-- Add `video_codec` enum and `video_codecs` parameter, which can be set to either `VP8` or `H264` during room creation.
 
 
 [2017-08-18] Version 5.1.2
