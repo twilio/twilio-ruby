@@ -46,7 +46,7 @@ describe Twilio::HTTP::Client do
 
   it 'should contain a last response for 5XX status classes' do
     expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
-    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 500, body: 'Unavailable'.to_json))
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 500, body: {}))
 
     @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'])
     expect(@client.last_response).to_not be_nil
@@ -61,7 +61,6 @@ describe Twilio::HTTP::Client do
     expect(@client.last_request.timeout).to be_nil
     expect(@client.last_response.is_a?(Twilio::Response)).to be(true)
     expect(@client.last_response.status_code).to eq(500)
-    expect(@client.last_response.body).to eq('Unavailable')
   end
 
   it 'should contain a last_response but no response on a connection error' do
