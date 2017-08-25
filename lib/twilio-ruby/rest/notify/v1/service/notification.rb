@@ -286,6 +286,12 @@ module Twilio
             def to_s
               "<Twilio.Notify.V1.NotificationInstance>"
             end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              "<Twilio.Notify.V1.NotificationInstance>"
+            end
           end
         end
       end

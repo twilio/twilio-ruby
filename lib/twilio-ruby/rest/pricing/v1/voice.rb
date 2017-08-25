@@ -143,6 +143,12 @@ module Twilio
           def to_s
             "<Twilio.Pricing.V1.VoiceInstance>"
           end
+
+          ##
+          # Provide a detailed, user friendly representation
+          def inspect
+            "<Twilio.Pricing.V1.VoiceInstance>"
+          end
         end
       end
     end

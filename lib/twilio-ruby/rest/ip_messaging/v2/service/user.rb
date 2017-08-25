@@ -459,6 +459,13 @@ module Twilio
               values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
               "<Twilio.IpMessaging.V2.UserInstance #{values}>"
             end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.IpMessaging.V2.UserInstance #{values}>"
+            end
           end
         end
       end

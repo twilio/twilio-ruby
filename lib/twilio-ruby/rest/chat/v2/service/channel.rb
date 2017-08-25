@@ -32,13 +32,19 @@ module Twilio
             # @param [String] unique_name The unique_name
             # @param [String] attributes The attributes
             # @param [channel.ChannelType] type The type
+            # @param [Time] date_created The date_created
+            # @param [Time] date_updated The date_updated
+            # @param [String] created_by The created_by
             # @return [ChannelInstance] Newly created ChannelInstance
-            def create(friendly_name: :unset, unique_name: :unset, attributes: :unset, type: :unset)
+            def create(friendly_name: :unset, unique_name: :unset, attributes: :unset, type: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'UniqueName' => unique_name,
                   'Attributes' => attributes,
                   'Type' => type,
+                  'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
+                  'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
+                  'CreatedBy' => created_by,
               })
 
               payload = @version.create(
@@ -244,12 +250,18 @@ module Twilio
             # @param [String] friendly_name The friendly_name
             # @param [String] unique_name The unique_name
             # @param [String] attributes The attributes
+            # @param [Time] date_created The date_created
+            # @param [Time] date_updated The date_updated
+            # @param [String] created_by The created_by
             # @return [ChannelInstance] Updated ChannelInstance
-            def update(friendly_name: :unset, unique_name: :unset, attributes: :unset)
+            def update(friendly_name: :unset, unique_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'UniqueName' => unique_name,
                   'Attributes' => attributes,
+                  'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
+                  'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
+                  'CreatedBy' => created_by,
               })
 
               payload = @version.update(
@@ -510,12 +522,18 @@ module Twilio
             # @param [String] friendly_name The friendly_name
             # @param [String] unique_name The unique_name
             # @param [String] attributes The attributes
+            # @param [Time] date_created The date_created
+            # @param [Time] date_updated The date_updated
+            # @param [String] created_by The created_by
             # @return [ChannelInstance] Updated ChannelInstance
-            def update(friendly_name: :unset, unique_name: :unset, attributes: :unset)
+            def update(friendly_name: :unset, unique_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
               context.update(
                   friendly_name: friendly_name,
                   unique_name: unique_name,
                   attributes: attributes,
+                  date_created: date_created,
+                  date_updated: date_updated,
+                  created_by: created_by,
               )
             end
 
@@ -544,6 +562,13 @@ module Twilio
             # Provide a user friendly representation
             def to_s
               values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Chat.V2.ChannelInstance #{values}>"
+            end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
               "<Twilio.Chat.V2.ChannelInstance #{values}>"
             end
           end

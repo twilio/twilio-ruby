@@ -8,7 +8,7 @@ require 'spec_helper.rb'
 
 describe 'RatePlan' do
   it "can read" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.wireless.rate_plans.list()
@@ -23,7 +23,7 @@ describe 'RatePlan' do
   end
 
   it "receives read_empty responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -47,7 +47,7 @@ describe 'RatePlan' do
   end
 
   it "receives read_full responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -92,7 +92,7 @@ describe 'RatePlan' do
   end
 
   it "can fetch" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.wireless.rate_plans("WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
@@ -107,7 +107,7 @@ describe 'RatePlan' do
   end
 
   it "receives fetch responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -139,7 +139,7 @@ describe 'RatePlan' do
   end
 
   it "can create" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.wireless.rate_plans.create()
@@ -154,7 +154,7 @@ describe 'RatePlan' do
   end
 
   it "receives create responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         201,
       %q[
       {
@@ -186,7 +186,7 @@ describe 'RatePlan' do
   end
 
   it "can update" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.wireless.rate_plans("WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
@@ -201,7 +201,7 @@ describe 'RatePlan' do
   end
 
   it "receives update responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -233,7 +233,7 @@ describe 'RatePlan' do
   end
 
   it "can delete" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.wireless.rate_plans("WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
@@ -248,7 +248,7 @@ describe 'RatePlan' do
   end
 
   it "receives delete responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         204,
       nil,
     ))

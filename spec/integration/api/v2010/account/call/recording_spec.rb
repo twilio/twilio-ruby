@@ -8,7 +8,7 @@ require 'spec_helper.rb'
 
 describe 'Recording' do
   it "can fetch" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -25,7 +25,7 @@ describe 'Recording' do
   end
 
   it "receives fetch responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -42,7 +42,8 @@ describe 'Recording' do
               "encryption_public_key_sid": "CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
               "encryption_cek": "OV4h6zrsxMIW7h0Zfqwfn6TI2GCNl54KALlg8wn8YB8KYZhXt6HlgvBWAmQTlfYVeLWydMiCewY0YkDDT1xmNe5huEo9vjuKBS5OmYK4CZkSx1NVv3XOGrZHpd2Pl/5WJHVhUK//AUO87uh5qnUP2E0KoLh1nyCLeGcEkXU0RfpPn/6nxjof/n6m6OzZOyeIRK4Oed5+rEtjqFDfqT0EVKjs6JAxv+f0DCc1xYRHl2yV8bahUPVKs+bHYdy4PVszFKa76M/Uae4jFA9Lv233JqWcxj+K2UoghuGhAFbV/JQIIswY2CBYI8JlVSifSqNEl9vvsTJ8bkVMm3MKbG2P7Q==",
               "encryption_iv": "8I2hhNIYNTrwxfHk"
-          }
+          },
+          "error_code": null
       }
       ]
     ))
@@ -55,7 +56,7 @@ describe 'Recording' do
   end
 
   it "can delete" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -72,7 +73,7 @@ describe 'Recording' do
   end
 
   it "receives delete responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         204,
       nil,
     ))
@@ -85,7 +86,7 @@ describe 'Recording' do
   end
 
   it "can read" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -102,7 +103,7 @@ describe 'Recording' do
   end
 
   it "receives read_full responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -129,7 +130,8 @@ describe 'Recording' do
                       "encryption_public_key_sid": "CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                       "encryption_cek": "OV4h6zrsxMIW7h0Zfqwfn6TI2GCNl54KALlg8wn8YB8KYZhXt6HlgvBWAmQTlfYVeLWydMiCewY0YkDDT1xmNe5huEo9vjuKBS5OmYK4CZkSx1NVv3XOGrZHpd2Pl/5WJHVhUK//AUO87uh5qnUP2E0KoLh1nyCLeGcEkXU0RfpPn/6nxjof/n6m6OzZOyeIRK4Oed5+rEtjqFDfqT0EVKjs6JAxv+f0DCc1xYRHl2yV8bahUPVKs+bHYdy4PVszFKa76M/Uae4jFA9Lv233JqWcxj+K2UoghuGhAFbV/JQIIswY2CBYI8JlVSifSqNEl9vvsTJ8bkVMm3MKbG2P7Q==",
                       "encryption_iv": "8I2hhNIYNTrwxfHk"
-                  }
+                  },
+                  "error_code": null
               }
           ],
           "start": 0,
@@ -147,7 +149,7 @@ describe 'Recording' do
   end
 
   it "receives read_empty responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {

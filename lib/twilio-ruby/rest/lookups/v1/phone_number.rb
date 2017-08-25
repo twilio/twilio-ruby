@@ -217,6 +217,13 @@ module Twilio
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
             "<Twilio.Lookups.V1.PhoneNumberInstance #{values}>"
           end
+
+          ##
+          # Provide a detailed, user friendly representation
+          def inspect
+            values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Lookups.V1.PhoneNumberInstance #{values}>"
+          end
         end
       end
     end

@@ -8,7 +8,7 @@ require 'spec_helper.rb'
 
 describe 'HostedNumberOrder' do
   it "can fetch" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.hosted_numbers.hosted_number_orders("HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
@@ -23,7 +23,7 @@ describe 'HostedNumberOrder' do
   end
 
   it "receives fetch responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -59,7 +59,7 @@ describe 'HostedNumberOrder' do
   end
 
   it "can delete" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.hosted_numbers.hosted_number_orders("HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
@@ -74,7 +74,7 @@ describe 'HostedNumberOrder' do
   end
 
   it "receives delete responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         204,
       nil,
     ))
@@ -85,7 +85,7 @@ describe 'HostedNumberOrder' do
   end
 
   it "can update" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.hosted_numbers.hosted_number_orders("HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
@@ -100,7 +100,7 @@ describe 'HostedNumberOrder' do
   end
 
   it "receives update responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -136,7 +136,7 @@ describe 'HostedNumberOrder' do
   end
 
   it "can read" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.hosted_numbers.hosted_number_orders.list()
@@ -151,7 +151,7 @@ describe 'HostedNumberOrder' do
   end
 
   it "receives read_empty responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -175,7 +175,7 @@ describe 'HostedNumberOrder' do
   end
 
   it "receives read_full responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -224,7 +224,7 @@ describe 'HostedNumberOrder' do
   end
 
   it "can create" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.hosted_numbers.hosted_number_orders.create(address_sid: "ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", phone_number: "+987654321", iso_country: "iso_country", sms_capability: true, email: "email")
@@ -246,7 +246,7 @@ describe 'HostedNumberOrder' do
   end
 
   it "receives create responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         201,
       %q[
       {

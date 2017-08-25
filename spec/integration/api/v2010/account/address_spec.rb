@@ -8,7 +8,7 @@ require 'spec_helper.rb'
 
 describe 'Address' do
   it "can create" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -32,7 +32,7 @@ describe 'Address' do
   end
 
   it "receives create responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         201,
       %q[
       {
@@ -61,7 +61,7 @@ describe 'Address' do
   end
 
   it "can delete" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -77,7 +77,7 @@ describe 'Address' do
   end
 
   it "receives delete responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         204,
       nil,
     ))
@@ -89,7 +89,7 @@ describe 'Address' do
   end
 
   it "can fetch" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -105,7 +105,7 @@ describe 'Address' do
   end
 
   it "receives fetch responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -134,7 +134,7 @@ describe 'Address' do
   end
 
   it "can update" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -150,7 +150,7 @@ describe 'Address' do
   end
 
   it "receives update responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -179,7 +179,7 @@ describe 'Address' do
   end
 
   it "can read" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -195,7 +195,7 @@ describe 'Address' do
   end
 
   it "receives read_full responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -239,7 +239,7 @@ describe 'Address' do
   end
 
   it "receives read_empty responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {

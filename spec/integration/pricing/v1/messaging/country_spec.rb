@@ -8,7 +8,7 @@ require 'spec_helper.rb'
 
 describe 'Country' do
   it "can read" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.pricing.v1.messaging \
@@ -24,7 +24,7 @@ describe 'Country' do
   end
 
   it "receives read_empty responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -49,7 +49,7 @@ describe 'Country' do
   end
 
   it "receives read_full responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -80,7 +80,7 @@ describe 'Country' do
   end
 
   it "can fetch" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.pricing.v1.messaging \
@@ -96,7 +96,7 @@ describe 'Country' do
   end
 
   it "receives fetch responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {

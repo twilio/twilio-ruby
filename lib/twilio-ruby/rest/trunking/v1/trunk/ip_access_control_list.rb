@@ -337,6 +337,13 @@ module Twilio
               values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
               "<Twilio.Trunking.V1.IpAccessControlListInstance #{values}>"
             end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Trunking.V1.IpAccessControlListInstance #{values}>"
+            end
           end
         end
       end

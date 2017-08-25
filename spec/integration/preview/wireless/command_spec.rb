@@ -8,7 +8,7 @@ require 'spec_helper.rb'
 
 describe 'Command' do
   it "can fetch" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.wireless.commands("DCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
@@ -23,7 +23,7 @@ describe 'Command' do
   end
 
   it "receives fetch responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -48,7 +48,7 @@ describe 'Command' do
   end
 
   it "can read" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.wireless.commands.list()
@@ -63,7 +63,7 @@ describe 'Command' do
   end
 
   it "receives read_empty responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -87,7 +87,7 @@ describe 'Command' do
   end
 
   it "receives read_full responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -125,7 +125,7 @@ describe 'Command' do
   end
 
   it "can create" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.wireless.commands.create(command: "command")
@@ -143,7 +143,7 @@ describe 'Command' do
   end
 
   it "receives create responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         201,
       %q[
       {

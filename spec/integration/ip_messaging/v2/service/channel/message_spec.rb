@@ -8,7 +8,7 @@ require 'spec_helper.rb'
 
 describe 'Message' do
   it "can fetch" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -25,7 +25,7 @@ describe 'Message' do
   end
 
   it "receives fetch responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -36,6 +36,7 @@ describe 'Message' do
           "channel_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2016-03-24T20:37:57Z",
           "date_updated": "2016-03-24T20:37:57Z",
+          "last_updated_by": null,
           "was_edited": false,
           "from": "system",
           "attributes": "{}",
@@ -56,7 +57,7 @@ describe 'Message' do
   end
 
   it "receives fetch_media responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -67,6 +68,7 @@ describe 'Message' do
           "channel_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2016-03-24T20:37:57Z",
           "date_updated": "2016-03-24T20:37:57Z",
+          "last_updated_by": null,
           "was_edited": false,
           "from": "system",
           "attributes": "{}",
@@ -92,7 +94,7 @@ describe 'Message' do
   end
 
   it "can create" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -112,7 +114,7 @@ describe 'Message' do
   end
 
   it "receives create responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         201,
       %q[
       {
@@ -124,6 +126,7 @@ describe 'Message' do
           "attributes": null,
           "date_created": "2016-03-24T20:37:57Z",
           "date_updated": "2016-03-24T20:37:57Z",
+          "last_updated_by": "system",
           "was_edited": false,
           "from": "system",
           "body": "Hello",
@@ -142,8 +145,8 @@ describe 'Message' do
     expect(actual).to_not eq(nil)
   end
 
-  it "receives create_with_attributes responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+  it "receives create_with_all responses" do
+    @holodeck.mock(Twilio::Response.new(
         201,
       %q[
       {
@@ -152,11 +155,12 @@ describe 'Message' do
           "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "to": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "channel_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "date_created": "2016-03-24T20:37:57Z",
-          "date_updated": "2016-03-24T20:37:57Z",
-          "was_edited": false,
+          "date_created": "2015-12-16T22:18:37Z",
+          "date_updated": "2015-12-16T22:18:38Z",
+          "last_updated_by": "username",
+          "was_edited": true,
           "from": "system",
-          "attributes": "{}",
+          "attributes": "{\\"test\\": \\"test\\"}",
           "body": "Hello",
           "index": 0,
           "type": "text",
@@ -174,7 +178,7 @@ describe 'Message' do
   end
 
   it "can read" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -191,7 +195,7 @@ describe 'Message' do
   end
 
   it "receives read_full responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -213,6 +217,7 @@ describe 'Message' do
                   "channel_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "date_created": "2016-03-24T20:37:57Z",
                   "date_updated": "2016-03-24T20:37:57Z",
+                  "last_updated_by": null,
                   "was_edited": false,
                   "from": "system",
                   "attributes": "{}",
@@ -230,6 +235,7 @@ describe 'Message' do
                   "channel_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "date_created": "2016-03-24T20:37:57Z",
                   "date_updated": "2016-03-24T20:37:57Z",
+                  "last_updated_by": null,
                   "was_edited": false,
                   "from": "system",
                   "attributes": "{}",
@@ -257,7 +263,7 @@ describe 'Message' do
   end
 
   it "receives read_empty responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -283,7 +289,7 @@ describe 'Message' do
   end
 
   it "can delete" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -300,7 +306,7 @@ describe 'Message' do
   end
 
   it "receives delete responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         204,
       nil,
     ))
@@ -313,7 +319,7 @@ describe 'Message' do
   end
 
   it "can update" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -330,7 +336,7 @@ describe 'Message' do
   end
 
   it "receives update responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -339,10 +345,11 @@ describe 'Message' do
           "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "to": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "channel_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "attributes": "{\\"test\\": \\"test\\"}",
-          "date_created": "2016-03-24T20:37:57Z",
-          "date_updated": "2016-03-24T20:37:57Z",
-          "was_edited": false,
+          "attributes": "{ \\"foo\\": \\"bar\\" }",
+          "date_created": "2015-12-16T22:18:37Z",
+          "date_updated": "2015-12-16T22:18:38Z",
+          "last_updated_by": "username",
+          "was_edited": true,
           "from": "system",
           "body": "Hello",
           "index": 0,

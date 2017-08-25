@@ -234,6 +234,12 @@ module Twilio
               def to_s
                 "<Twilio.Taskrouter.V1.TaskQueuesStatisticsInstance>"
               end
+
+              ##
+              # Provide a detailed, user friendly representation
+              def inspect
+                "<Twilio.Taskrouter.V1.TaskQueuesStatisticsInstance>"
+              end
             end
           end
         end
