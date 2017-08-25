@@ -8,7 +8,7 @@ require 'spec_helper.rb'
 
 describe 'Member' do
   it "can fetch" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -25,7 +25,7 @@ describe 'Member' do
   end
 
   it "receives fetch responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -52,7 +52,7 @@ describe 'Member' do
   end
 
   it "can create" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -72,7 +72,7 @@ describe 'Member' do
   end
 
   it "receives create responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         201,
       %q[
       {
@@ -99,7 +99,7 @@ describe 'Member' do
   end
 
   it "can read" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -116,7 +116,7 @@ describe 'Member' do
   end
 
   it "receives read_full responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -156,7 +156,7 @@ describe 'Member' do
   end
 
   it "receives read_empty responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -182,7 +182,7 @@ describe 'Member' do
   end
 
   it "can delete" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -199,7 +199,7 @@ describe 'Member' do
   end
 
   it "receives delete responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         204,
       nil,
     ))
@@ -212,7 +212,7 @@ describe 'Member' do
   end
 
   it "can update" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -229,7 +229,7 @@ describe 'Member' do
   end
 
   it "receives update_role_sid responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -239,37 +239,10 @@ describe 'Member' do
           "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "identity": "jing",
           "role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "last_consumed_message_index": null,
-          "last_consumption_timestamp": null,
+          "last_consumed_message_index": 20,
+          "last_consumption_timestamp": "2016-03-24T21:05:52Z",
           "date_created": "2016-03-24T21:05:50Z",
-          "date_updated": "2016-03-24T21:05:50Z",
-          "url": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members/MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-      }
-      ]
-    ))
-
-    actual = @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .members("MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
-
-    expect(actual).to_not eq(nil)
-  end
-
-  it "receives update_last_consumed_message_index responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
-        200,
-      %q[
-      {
-          "sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "channel_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "identity": "jing",
-          "role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "last_consumed_message_index": 666,
-          "last_consumption_timestamp": null,
-          "date_created": "2016-03-24T21:05:50Z",
-          "date_updated": "2016-03-24T21:05:50Z",
+          "date_updated": "2016-03-24T21:05:51Z",
           "url": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members/MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]

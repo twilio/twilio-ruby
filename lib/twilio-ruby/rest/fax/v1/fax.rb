@@ -542,6 +542,13 @@ module Twilio
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
             "<Twilio.Fax.V1.FaxInstance #{values}>"
           end
+
+          ##
+          # Provide a detailed, user friendly representation
+          def inspect
+            values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Fax.V1.FaxInstance #{values}>"
+          end
         end
       end
     end

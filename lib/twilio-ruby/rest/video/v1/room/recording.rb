@@ -373,6 +373,13 @@ module Twilio
               values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
               "<Twilio.Video.V1.RoomRecordingInstance #{values}>"
             end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Video.V1.RoomRecordingInstance #{values}>"
+            end
           end
         end
       end

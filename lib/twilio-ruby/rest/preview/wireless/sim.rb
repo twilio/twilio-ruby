@@ -545,6 +545,13 @@ module Twilio
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
             "<Twilio.Preview.Wireless.SimInstance #{values}>"
           end
+
+          ##
+          # Provide a detailed, user friendly representation
+          def inspect
+            values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Preview.Wireless.SimInstance #{values}>"
+          end
         end
       end
     end

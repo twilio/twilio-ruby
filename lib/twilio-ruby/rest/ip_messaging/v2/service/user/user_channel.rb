@@ -235,6 +235,12 @@ module Twilio
               def to_s
                 "<Twilio.IpMessaging.V2.UserChannelInstance>"
               end
+
+              ##
+              # Provide a detailed, user friendly representation
+              def inspect
+                "<Twilio.IpMessaging.V2.UserChannelInstance>"
+              end
             end
           end
         end

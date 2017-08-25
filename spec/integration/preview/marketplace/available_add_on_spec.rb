@@ -8,7 +8,7 @@ require 'spec_helper.rb'
 
 describe 'AvailableAddOn' do
   it "can fetch" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.marketplace.available_add_ons("XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
@@ -23,7 +23,7 @@ describe 'AvailableAddOn' do
   end
 
   it "receives fetch responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -56,7 +56,7 @@ describe 'AvailableAddOn' do
   end
 
   it "can read" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.marketplace.available_add_ons.list()
@@ -71,7 +71,7 @@ describe 'AvailableAddOn' do
   end
 
   it "receives read_full responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -117,7 +117,7 @@ describe 'AvailableAddOn' do
   end
 
   it "receives read_empty responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {

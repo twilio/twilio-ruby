@@ -409,6 +409,12 @@ module Twilio
               def to_s
                 "<Twilio.Api.V2010.RecordInstance>"
               end
+
+              ##
+              # Provide a detailed, user friendly representation
+              def inspect
+                "<Twilio.Api.V2010.RecordInstance>"
+              end
             end
           end
         end

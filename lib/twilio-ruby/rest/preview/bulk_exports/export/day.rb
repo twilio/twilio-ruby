@@ -208,6 +208,12 @@ module Twilio
             def to_s
               "<Twilio.Preview.BulkExports.DayInstance>"
             end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              "<Twilio.Preview.BulkExports.DayInstance>"
+            end
           end
         end
       end

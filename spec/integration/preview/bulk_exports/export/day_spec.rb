@@ -8,7 +8,7 @@ require 'spec_helper.rb'
 
 describe 'Day' do
   it "can read" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.bulk_exports.exports("resource_type") \
@@ -24,7 +24,7 @@ describe 'Day' do
   end
 
   it "receives read responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {

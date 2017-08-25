@@ -98,6 +98,12 @@ module Twilio
           def to_s
             "<Twilio.Accounts.V1.CredentialInstance>"
           end
+
+          ##
+          # Provide a detailed, user friendly representation
+          def inspect
+            "<Twilio.Accounts.V1.CredentialInstance>"
+          end
         end
       end
     end

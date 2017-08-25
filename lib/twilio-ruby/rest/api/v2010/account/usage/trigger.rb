@@ -498,6 +498,13 @@ module Twilio
                 values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
                 "<Twilio.Api.V2010.TriggerInstance #{values}>"
               end
+
+              ##
+              # Provide a detailed, user friendly representation
+              def inspect
+                values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.TriggerInstance #{values}>"
+              end
             end
           end
         end

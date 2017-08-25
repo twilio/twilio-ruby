@@ -256,6 +256,7 @@ module Twilio
                     'price' => payload['price'].to_f,
                     'uri' => payload['uri'],
                     'encryption_details' => payload['encryption_details'],
+                    'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
                 }
 
                 # Context
@@ -344,6 +345,12 @@ module Twilio
               end
 
               ##
+              # @return [String] The error_code
+              def error_code
+                @properties['error_code']
+              end
+
+              ##
               # Fetch a RecordingInstance
               # @return [RecordingInstance] Fetched RecordingInstance
               def fetch
@@ -361,6 +368,13 @@ module Twilio
               # Provide a user friendly representation
               def to_s
                 values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Api.V2010.RecordingInstance #{values}>"
+              end
+
+              ##
+              # Provide a detailed, user friendly representation
+              def inspect
+                values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
                 "<Twilio.Api.V2010.RecordingInstance #{values}>"
               end
             end

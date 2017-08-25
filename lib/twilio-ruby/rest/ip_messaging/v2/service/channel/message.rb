@@ -34,12 +34,18 @@ module Twilio
               # @param [String] body The body
               # @param [String] from The from
               # @param [String] attributes The attributes
+              # @param [Time] date_created The date_created
+              # @param [Time] date_updated The date_updated
+              # @param [String] last_updated_by The last_updated_by
               # @return [MessageInstance] Newly created MessageInstance
-              def create(body: nil, from: :unset, attributes: :unset)
+              def create(body: nil, from: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset)
                 data = Twilio::Values.of({
                     'Body' => body,
                     'From' => from,
                     'Attributes' => attributes,
+                    'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
+                    'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
+                    'LastUpdatedBy' => last_updated_by,
                 })
 
                 payload = @version.create(
@@ -244,11 +250,17 @@ module Twilio
               # Update the MessageInstance
               # @param [String] body The body
               # @param [String] attributes The attributes
+              # @param [Time] date_created The date_created
+              # @param [Time] date_updated The date_updated
+              # @param [String] last_updated_by The last_updated_by
               # @return [MessageInstance] Updated MessageInstance
-              def update(body: :unset, attributes: :unset)
+              def update(body: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset)
                 data = Twilio::Values.of({
                     'Body' => body,
                     'Attributes' => attributes,
+                    'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
+                    'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
+                    'LastUpdatedBy' => last_updated_by,
                 })
 
                 payload = @version.update(
@@ -296,6 +308,7 @@ module Twilio
                     'channel_sid' => payload['channel_sid'],
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
+                    'last_updated_by' => payload['last_updated_by'],
                     'was_edited' => payload['was_edited'],
                     'from' => payload['from'],
                     'body' => payload['body'],
@@ -379,6 +392,12 @@ module Twilio
               end
 
               ##
+              # @return [String] The last_updated_by
+              def last_updated_by
+                @properties['last_updated_by']
+              end
+
+              ##
               # @return [Boolean] The was_edited
               def was_edited
                 @properties['was_edited']
@@ -438,11 +457,17 @@ module Twilio
               # Update the MessageInstance
               # @param [String] body The body
               # @param [String] attributes The attributes
+              # @param [Time] date_created The date_created
+              # @param [Time] date_updated The date_updated
+              # @param [String] last_updated_by The last_updated_by
               # @return [MessageInstance] Updated MessageInstance
-              def update(body: :unset, attributes: :unset)
+              def update(body: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset)
                 context.update(
                     body: body,
                     attributes: attributes,
+                    date_created: date_created,
+                    date_updated: date_updated,
+                    last_updated_by: last_updated_by,
                 )
               end
 
@@ -450,6 +475,13 @@ module Twilio
               # Provide a user friendly representation
               def to_s
                 values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.IpMessaging.V2.MessageInstance #{values}>"
+              end
+
+              ##
+              # Provide a detailed, user friendly representation
+              def inspect
+                values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
                 "<Twilio.IpMessaging.V2.MessageInstance #{values}>"
               end
             end

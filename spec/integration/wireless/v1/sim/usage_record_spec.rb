@@ -8,7 +8,7 @@ require 'spec_helper.rb'
 
 describe 'UsageRecord' do
   it "can read" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.wireless.v1.sims("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
@@ -24,7 +24,7 @@ describe 'UsageRecord' do
   end
 
   it "receives fetch responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {

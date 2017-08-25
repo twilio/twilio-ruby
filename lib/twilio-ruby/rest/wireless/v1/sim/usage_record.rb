@@ -233,6 +233,12 @@ module Twilio
             def to_s
               "<Twilio.Wireless.V1.UsageRecordInstance>"
             end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              "<Twilio.Wireless.V1.UsageRecordInstance>"
+            end
           end
         end
       end

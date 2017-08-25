@@ -33,11 +33,19 @@ module Twilio
               # Request is executed immediately.
               # @param [String] identity The identity
               # @param [String] role_sid The role_sid
+              # @param [String] last_consumed_message_index The last_consumed_message_index
+              # @param [Time] last_consumption_timestamp The last_consumption_timestamp
+              # @param [Time] date_created The date_created
+              # @param [Time] date_updated The date_updated
               # @return [MemberInstance] Newly created MemberInstance
-              def create(identity: nil, role_sid: :unset)
+              def create(identity: nil, role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset)
                 data = Twilio::Values.of({
                     'Identity' => identity,
                     'RoleSid' => role_sid,
+                    'LastConsumedMessageIndex' => last_consumed_message_index,
+                    'LastConsumptionTimestamp' => Twilio.serialize_iso8601_datetime(last_consumption_timestamp),
+                    'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
+                    'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                 })
 
                 payload = @version.create(
@@ -242,11 +250,17 @@ module Twilio
               # Update the MemberInstance
               # @param [String] role_sid The role_sid
               # @param [String] last_consumed_message_index The last_consumed_message_index
+              # @param [Time] last_consumption_timestamp The last_consumption_timestamp
+              # @param [Time] date_created The date_created
+              # @param [Time] date_updated The date_updated
               # @return [MemberInstance] Updated MemberInstance
-              def update(role_sid: :unset, last_consumed_message_index: :unset)
+              def update(role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset)
                 data = Twilio::Values.of({
                     'RoleSid' => role_sid,
                     'LastConsumedMessageIndex' => last_consumed_message_index,
+                    'LastConsumptionTimestamp' => Twilio.serialize_iso8601_datetime(last_consumption_timestamp),
+                    'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
+                    'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                 })
 
                 payload = @version.update(
@@ -408,11 +422,17 @@ module Twilio
               # Update the MemberInstance
               # @param [String] role_sid The role_sid
               # @param [String] last_consumed_message_index The last_consumed_message_index
+              # @param [Time] last_consumption_timestamp The last_consumption_timestamp
+              # @param [Time] date_created The date_created
+              # @param [Time] date_updated The date_updated
               # @return [MemberInstance] Updated MemberInstance
-              def update(role_sid: :unset, last_consumed_message_index: :unset)
+              def update(role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset)
                 context.update(
                     role_sid: role_sid,
                     last_consumed_message_index: last_consumed_message_index,
+                    last_consumption_timestamp: last_consumption_timestamp,
+                    date_created: date_created,
+                    date_updated: date_updated,
                 )
               end
 
@@ -420,6 +440,13 @@ module Twilio
               # Provide a user friendly representation
               def to_s
                 values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Chat.V2.MemberInstance #{values}>"
+              end
+
+              ##
+              # Provide a detailed, user friendly representation
+              def inspect
+                values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
                 "<Twilio.Chat.V2.MemberInstance #{values}>"
               end
             end

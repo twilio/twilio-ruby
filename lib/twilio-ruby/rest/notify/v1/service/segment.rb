@@ -222,6 +222,12 @@ module Twilio
             def to_s
               "<Twilio.Notify.V1.SegmentInstance>"
             end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              "<Twilio.Notify.V1.SegmentInstance>"
+            end
           end
         end
       end

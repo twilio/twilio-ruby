@@ -563,6 +563,13 @@ module Twilio
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
             "<Twilio.Preview.HostedNumbers.HostedNumberOrderInstance #{values}>"
           end
+
+          ##
+          # Provide a detailed, user friendly representation
+          def inspect
+            values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Preview.HostedNumbers.HostedNumberOrderInstance #{values}>"
+          end
         end
       end
     end

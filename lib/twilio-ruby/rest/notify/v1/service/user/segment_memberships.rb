@@ -253,6 +253,13 @@ module Twilio
                 values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
                 "<Twilio.Notify.V1.SegmentMembershipInstance #{values}>"
               end
+
+              ##
+              # Provide a detailed, user friendly representation
+              def inspect
+                values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Notify.V1.SegmentMembershipInstance #{values}>"
+              end
             end
           end
         end

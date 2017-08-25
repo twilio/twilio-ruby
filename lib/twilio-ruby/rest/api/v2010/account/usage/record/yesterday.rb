@@ -294,6 +294,12 @@ module Twilio
                 def to_s
                   "<Twilio.Api.V2010.YesterdayInstance>"
                 end
+
+                ##
+                # Provide a detailed, user friendly representation
+                def inspect
+                  "<Twilio.Api.V2010.YesterdayInstance>"
+                end
               end
             end
           end

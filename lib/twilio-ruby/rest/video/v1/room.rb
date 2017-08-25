@@ -33,8 +33,9 @@ module Twilio
           # @param [Boolean] record_participants_on_connect The
           #   record_participants_on_connect
           # @param [room.VideoCodec] video_codecs The video_codecs
+          # @param [String] media_region The media_region
           # @return [RoomInstance] Newly created RoomInstance
-          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset)
+          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset)
             data = Twilio::Values.of({
                 'EnableTurn' => enable_turn,
                 'Type' => type,
@@ -44,6 +45,7 @@ module Twilio
                 'MaxParticipants' => max_participants,
                 'RecordParticipantsOnConnect' => record_participants_on_connect,
                 'VideoCodecs' => video_codecs,
+                'MediaRegion' => media_region,
             })
 
             payload = @version.create(
@@ -478,6 +480,13 @@ module Twilio
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Video.V1.RoomInstance #{values}>"
+          end
+
+          ##
+          # Provide a detailed, user friendly representation
+          def inspect
+            values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
             "<Twilio.Video.V1.RoomInstance #{values}>"
           end
         end

@@ -8,7 +8,7 @@ require 'spec_helper.rb'
 
 describe 'ExportConfiguration' do
   it "can fetch" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.bulk_exports.export_configuration("resource_type").fetch()
@@ -23,7 +23,7 @@ describe 'ExportConfiguration' do
   end
 
   it "receives fetch responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -42,7 +42,7 @@ describe 'ExportConfiguration' do
   end
 
   it "can update" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.bulk_exports.export_configuration("resource_type").update()
@@ -57,7 +57,7 @@ describe 'ExportConfiguration' do
   end
 
   it "receives update responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {

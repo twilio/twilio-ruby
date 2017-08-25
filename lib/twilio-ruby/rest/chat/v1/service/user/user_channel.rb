@@ -235,6 +235,12 @@ module Twilio
               def to_s
                 "<Twilio.Chat.V1.UserChannelInstance>"
               end
+
+              ##
+              # Provide a detailed, user friendly representation
+              def inspect
+                "<Twilio.Chat.V1.UserChannelInstance>"
+              end
             end
           end
         end

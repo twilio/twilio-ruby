@@ -8,7 +8,7 @@ require 'spec_helper.rb'
 
 describe 'Fax' do
   it "can fetch" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
@@ -23,7 +23,7 @@ describe 'Fax' do
   end
 
   it "receives fetch responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -57,7 +57,7 @@ describe 'Fax' do
   end
 
   it "can read" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.fax.v1.faxes.list()
@@ -72,7 +72,7 @@ describe 'Fax' do
   end
 
   it "receives read_empty responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -96,7 +96,7 @@ describe 'Fax' do
   end
 
   it "receives read_full responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -143,7 +143,7 @@ describe 'Fax' do
   end
 
   it "can create" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.fax.v1.faxes.create(to: "to", media_url: "https://example.com")
@@ -162,7 +162,7 @@ describe 'Fax' do
   end
 
   it "receives create responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         201,
       %q[
       {
@@ -196,7 +196,7 @@ describe 'Fax' do
   end
 
   it "can update" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
@@ -211,7 +211,7 @@ describe 'Fax' do
   end
 
   it "receives update responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
@@ -245,7 +245,7 @@ describe 'Fax' do
   end
 
   it "can delete" do
-    @holodeck.mock(Twilio::TwilioResponse.new(500, ''))
+    @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
@@ -260,7 +260,7 @@ describe 'Fax' do
   end
 
   it "receives delete responses" do
-    @holodeck.mock(Twilio::TwilioResponse.new(
+    @holodeck.mock(Twilio::Response.new(
         204,
       nil,
     ))

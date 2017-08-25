@@ -166,6 +166,12 @@ module Twilio
             def to_s
               "<Twilio.Api.V2010.SipInstance>"
             end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              "<Twilio.Api.V2010.SipInstance>"
+            end
           end
         end
       end
