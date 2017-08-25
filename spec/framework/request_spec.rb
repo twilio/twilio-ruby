@@ -26,11 +26,11 @@ describe Twilio::Request do
   end
 
   it 'should be represented correctly' do
-    expected_string = %((a,b) POST url?param-key=param-value&param-keytwo=param-valuetwo
--d "data-key"="data-value"
--d "data-keytwo"="data-valuetwo"
--H "header-key": "header-value"
--H "header-keytwo": "header-valuetwo")
+    expected_string = %((a,b) POST url?param-key=param-value&param-keytwo=param-valuetwo) +
+                      %(\n-d "data-key"="data-value") +
+                      %(\n-d "data-keytwo"="data-valuetwo") +
+                      %(\n-H "header-key": "header-value") +
+                      %(\n-H "header-keytwo": "header-valuetwo")
     expect(@request.to_s).to eq(expected_string)
   end
 end

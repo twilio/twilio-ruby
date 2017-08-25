@@ -46,8 +46,7 @@ describe Twilio::HTTP::Client do
 
   it 'should contain a last response for 5XX status classes' do
     expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
-    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(
-        double('response', status: 500, body: 'Unavailable'.to_json))
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 500, body: 'Unavailable'.to_json))
 
     @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'])
     expect(@client.last_response).to_not be_nil
@@ -69,8 +68,7 @@ describe Twilio::HTTP::Client do
     expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
     allow_any_instance_of(Faraday::Connection).to receive(:send).and_raise(Faraday::ConnectionFailed.new('BOOM'))
 
-    expect{@client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'])}
-        .to raise_exception(Faraday::ConnectionFailed)
+    expect { @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b']) }.to raise_exception(Faraday::ConnectionFailed)
     expect(@client.last_response).to be_nil
     expect(@client.last_request).to_not be_nil
     expect(@client.last_request.host).to eq('host')
