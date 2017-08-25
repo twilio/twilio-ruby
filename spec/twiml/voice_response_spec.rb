@@ -7,6 +7,11 @@ describe Twilio::TwiML::VoiceResponse do
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response/>')
     end
 
+    it 'should allow using to_xml instead of to_s' do
+      r = Twilio::TwiML::VoiceResponse.new
+      expect(r.to_xml).to eq('<?xml version="1.0" encoding="UTF-8"?><Response/>')
+    end
+
     it 'should allow populated response' do
       r = Twilio::TwiML::VoiceResponse.new
       r.hangup

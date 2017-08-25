@@ -34,11 +34,11 @@ module Twilio
               # memory before returning.
               # @param [reservation.Status] reservation_status The reservation_status
               # @param [Integer] limit Upper limit for the number of records to return. stream()
-              #                   guarantees to never return more than limit.  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
-              #  the default value of 50 records.  If no page_size is                      defined
-              #  but a limit is defined, stream() will attempt to read                      the
-              #  limit with the most efficient page size,                      i.e. min(limit, 1000)
+              #    guarantees to never return more than limit.  Default is no limit
+              # @param [Integer] page_size Number of records to fetch per request, when
+              #    not set will use the default value of 50 records.  If no page_size is defined
+              #    but a limit is defined, stream() will attempt to read the limit with the most
+              #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
               def list(reservation_status: :unset, limit: nil, page_size: nil)
                 self.stream(
@@ -53,12 +53,12 @@ module Twilio
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
               # @param [reservation.Status] reservation_status The reservation_status
-              # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-              #  guarantees to never return more than limit.                  Default is no limit
-              # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
-              #  the default value of 50 records.                      If no page_size is defined
-              #                       but a limit is defined, stream() will attempt to                      read the
-              #  limit with the most efficient page size,                       i.e. min(limit, 1000)
+              # @param [Integer] limit Upper limit for the number of records to return. stream()
+              #    guarantees to never return more than limit. Default is no limit.
+              # @param [Integer] page_size Number of records to fetch per request, when
+              #    not set will use the default value of 50 records. If no page_size is defined
+              #    but a limit is defined, stream() will attempt to read the limit with the most
+              #    efficient page size, i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
               def stream(reservation_status: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
@@ -227,8 +227,43 @@ module Twilio
               # @param [String] redirect_call_sid The redirect_call_sid
               # @param [Boolean] redirect_accept The redirect_accept
               # @param [String] redirect_url The redirect_url
+              # @param [String] to The to
+              # @param [String] from The from
+              # @param [String] status_callback The status_callback
+              # @param [String] status_callback_method The status_callback_method
+              # @param [reservation.CallStatus] status_callback_event The status_callback_event
+              # @param [String] timeout The timeout
+              # @param [Boolean] record The record
+              # @param [Boolean] muted The muted
+              # @param [String] beep The beep
+              # @param [Boolean] start_conference_on_enter The start_conference_on_enter
+              # @param [Boolean] end_conference_on_exit The end_conference_on_exit
+              # @param [String] wait_url The wait_url
+              # @param [String] wait_method The wait_method
+              # @param [Boolean] early_media The early_media
+              # @param [String] max_participants The max_participants
+              # @param [String] conference_status_callback The conference_status_callback
+              # @param [String] conference_status_callback_method The
+              #   conference_status_callback_method
+              # @param [reservation.ConferenceEvent] conference_status_callback_event The
+              #   conference_status_callback_event
+              # @param [String] conference_record The conference_record
+              # @param [String] conference_trim The conference_trim
+              # @param [String] recording_channels The recording_channels
+              # @param [String] recording_status_callback The recording_status_callback
+              # @param [String] recording_status_callback_method The
+              #   recording_status_callback_method
+              # @param [String] conference_recording_status_callback The
+              #   conference_recording_status_callback
+              # @param [String] conference_recording_status_callback_method The
+              #   conference_recording_status_callback_method
+              # @param [String] region The region
+              # @param [String] sip_auth_username The sip_auth_username
+              # @param [String] sip_auth_password The sip_auth_password
+              # @param [String] dequeue_status_callback_event The dequeue_status_callback_event
+              # @param [String] post_work_activity_sid The post_work_activity_sid
               # @return [ReservationInstance] Updated ReservationInstance
-              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset)
+              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset, to: :unset, from: :unset, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, conference_record: :unset, conference_trim: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, region: :unset, sip_auth_username: :unset, sip_auth_password: :unset, dequeue_status_callback_event: :unset, post_work_activity_sid: :unset)
                 data = Twilio::Values.of({
                     'ReservationStatus' => reservation_status,
                     'WorkerActivitySid' => worker_activity_sid,
@@ -249,6 +284,36 @@ module Twilio
                     'RedirectCallSid' => redirect_call_sid,
                     'RedirectAccept' => redirect_accept,
                     'RedirectUrl' => redirect_url,
+                    'To' => to,
+                    'From' => from,
+                    'StatusCallback' => status_callback,
+                    'StatusCallbackMethod' => status_callback_method,
+                    'StatusCallbackEvent' => status_callback_event,
+                    'Timeout' => timeout,
+                    'Record' => record,
+                    'Muted' => muted,
+                    'Beep' => beep,
+                    'StartConferenceOnEnter' => start_conference_on_enter,
+                    'EndConferenceOnExit' => end_conference_on_exit,
+                    'WaitUrl' => wait_url,
+                    'WaitMethod' => wait_method,
+                    'EarlyMedia' => early_media,
+                    'MaxParticipants' => max_participants,
+                    'ConferenceStatusCallback' => conference_status_callback,
+                    'ConferenceStatusCallbackMethod' => conference_status_callback_method,
+                    'ConferenceStatusCallbackEvent' => conference_status_callback_event,
+                    'ConferenceRecord' => conference_record,
+                    'ConferenceTrim' => conference_trim,
+                    'RecordingChannels' => recording_channels,
+                    'RecordingStatusCallback' => recording_status_callback,
+                    'RecordingStatusCallbackMethod' => recording_status_callback_method,
+                    'ConferenceRecordingStatusCallback' => conference_recording_status_callback,
+                    'ConferenceRecordingStatusCallbackMethod' => conference_recording_status_callback_method,
+                    'Region' => region,
+                    'SipAuthUsername' => sip_auth_username,
+                    'SipAuthPassword' => sip_auth_password,
+                    'DequeueStatusCallbackEvent' => dequeue_status_callback_event,
+                    'PostWorkActivitySid' => post_work_activity_sid,
                 })
 
                 payload = @version.update(
@@ -421,8 +486,43 @@ module Twilio
               # @param [String] redirect_call_sid The redirect_call_sid
               # @param [Boolean] redirect_accept The redirect_accept
               # @param [String] redirect_url The redirect_url
+              # @param [String] to The to
+              # @param [String] from The from
+              # @param [String] status_callback The status_callback
+              # @param [String] status_callback_method The status_callback_method
+              # @param [reservation.CallStatus] status_callback_event The status_callback_event
+              # @param [String] timeout The timeout
+              # @param [Boolean] record The record
+              # @param [Boolean] muted The muted
+              # @param [String] beep The beep
+              # @param [Boolean] start_conference_on_enter The start_conference_on_enter
+              # @param [Boolean] end_conference_on_exit The end_conference_on_exit
+              # @param [String] wait_url The wait_url
+              # @param [String] wait_method The wait_method
+              # @param [Boolean] early_media The early_media
+              # @param [String] max_participants The max_participants
+              # @param [String] conference_status_callback The conference_status_callback
+              # @param [String] conference_status_callback_method The
+              #   conference_status_callback_method
+              # @param [reservation.ConferenceEvent] conference_status_callback_event The
+              #   conference_status_callback_event
+              # @param [String] conference_record The conference_record
+              # @param [String] conference_trim The conference_trim
+              # @param [String] recording_channels The recording_channels
+              # @param [String] recording_status_callback The recording_status_callback
+              # @param [String] recording_status_callback_method The
+              #   recording_status_callback_method
+              # @param [String] conference_recording_status_callback The
+              #   conference_recording_status_callback
+              # @param [String] conference_recording_status_callback_method The
+              #   conference_recording_status_callback_method
+              # @param [String] region The region
+              # @param [String] sip_auth_username The sip_auth_username
+              # @param [String] sip_auth_password The sip_auth_password
+              # @param [String] dequeue_status_callback_event The dequeue_status_callback_event
+              # @param [String] post_work_activity_sid The post_work_activity_sid
               # @return [ReservationInstance] Updated ReservationInstance
-              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset)
+              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset, to: :unset, from: :unset, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, conference_record: :unset, conference_trim: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, region: :unset, sip_auth_username: :unset, sip_auth_password: :unset, dequeue_status_callback_event: :unset, post_work_activity_sid: :unset)
                 context.update(
                     reservation_status: reservation_status,
                     worker_activity_sid: worker_activity_sid,
@@ -443,6 +543,36 @@ module Twilio
                     redirect_call_sid: redirect_call_sid,
                     redirect_accept: redirect_accept,
                     redirect_url: redirect_url,
+                    to: to,
+                    from: from,
+                    status_callback: status_callback,
+                    status_callback_method: status_callback_method,
+                    status_callback_event: status_callback_event,
+                    timeout: timeout,
+                    record: record,
+                    muted: muted,
+                    beep: beep,
+                    start_conference_on_enter: start_conference_on_enter,
+                    end_conference_on_exit: end_conference_on_exit,
+                    wait_url: wait_url,
+                    wait_method: wait_method,
+                    early_media: early_media,
+                    max_participants: max_participants,
+                    conference_status_callback: conference_status_callback,
+                    conference_status_callback_method: conference_status_callback_method,
+                    conference_status_callback_event: conference_status_callback_event,
+                    conference_record: conference_record,
+                    conference_trim: conference_trim,
+                    recording_channels: recording_channels,
+                    recording_status_callback: recording_status_callback,
+                    recording_status_callback_method: recording_status_callback_method,
+                    conference_recording_status_callback: conference_recording_status_callback,
+                    conference_recording_status_callback_method: conference_recording_status_callback_method,
+                    region: region,
+                    sip_auth_username: sip_auth_username,
+                    sip_auth_password: sip_auth_password,
+                    dequeue_status_callback_event: dequeue_status_callback_event,
+                    post_work_activity_sid: post_work_activity_sid,
                 )
               end
 

@@ -32,8 +32,9 @@ module Twilio
           # @param [String] max_participants The max_participants
           # @param [Boolean] record_participants_on_connect The
           #   record_participants_on_connect
+          # @param [room.VideoCodec] video_codecs The video_codecs
           # @return [RoomInstance] Newly created RoomInstance
-          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset)
+          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset)
             data = Twilio::Values.of({
                 'EnableTurn' => enable_turn,
                 'Type' => type,
@@ -42,6 +43,7 @@ module Twilio
                 'StatusCallbackMethod' => status_callback_method,
                 'MaxParticipants' => max_participants,
                 'RecordParticipantsOnConnect' => record_participants_on_connect,
+                'VideoCodecs' => video_codecs,
             })
 
             payload = @version.create(
@@ -65,11 +67,11 @@ module Twilio
           # @param [Time] date_created_after The date_created_after
           # @param [Time] date_created_before The date_created_before
           # @param [Integer] limit Upper limit for the number of records to return. stream()
-          #                   guarantees to never return more than limit.  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
-          #  the default value of 50 records.  If no page_size is                      defined
-          #  but a limit is defined, stream() will attempt to read                      the
-          #  limit with the most efficient page size,                      i.e. min(limit, 1000)
+          #    guarantees to never return more than limit.  Default is no limit
+          # @param [Integer] page_size Number of records to fetch per request, when
+          #    not set will use the default value of 50 records.  If no page_size is defined
+          #    but a limit is defined, stream() will attempt to read the limit with the most
+          #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
           def list(status: :unset, unique_name: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
             self.stream(
@@ -90,12 +92,12 @@ module Twilio
           # @param [String] unique_name The unique_name
           # @param [Time] date_created_after The date_created_after
           # @param [Time] date_created_before The date_created_before
-          # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-          #  guarantees to never return more than limit.                  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
-          #  the default value of 50 records.                      If no page_size is defined
-          #                       but a limit is defined, stream() will attempt to                      read the
-          #  limit with the most efficient page size,                       i.e. min(limit, 1000)
+          # @param [Integer] limit Upper limit for the number of records to return. stream()
+          #    guarantees to never return more than limit. Default is no limit.
+          # @param [Integer] page_size Number of records to fetch per request, when
+          #    not set will use the default value of 50 records. If no page_size is defined
+          #    but a limit is defined, stream() will attempt to read the limit with the most
+          #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
           def stream(status: :unset, unique_name: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)

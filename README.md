@@ -6,18 +6,34 @@
 
 A module for using the Twilio REST API and generating valid [TwiML](http://www.twilio.com/docs/api/twiml/ "TwiML - Twilio Markup Language"). [Click here to read the full documentation.][documentation]
 
+## Recent Update
+
+As of release 5.1.0, Beta and Developer Preview products are now exposed via
+the main `twilio-java` artifact. Releases of the `alpha` branch have been
+discontinued.
+
+If you were using the `alpha` release line, you should be able to switch back
+to the normal release line without issue.
+
+If you were using the normal release line, you should now see several new
+product lines that were historically hidden from you due to their Beta or
+Developer Preview status. Such products are explicitly documented as
+Beta/Developer Preview both in the Twilio docs and console, as well as through
+in-line code documentation here in the library.
+
+
 ## Installation
 
 To install using [Bundler][bundler] grab the latest stable version:
 
 ```ruby
-gem 'twilio-ruby', '~> 5.0.0.rc26'
+gem 'twilio-ruby', '~> 5.1.2'
 ```
 
 To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
 
 ```bash
-gem install twilio-ruby -v 5.0.0.rc26
+gem install twilio-ruby -v 5.1.2
 ```
 
 To build and install the development branch yourself from the latest source:
@@ -103,14 +119,13 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 # set up
 capability = Twilio::JWT::ClientCapability.new account_sid, auth_token
 
-
 # allow outgoing calls to an application
-outgoingScope = Twilio::JWT::ClientCapability::OutgoingClientScope.new 'AP11111111111111111111111111111111'
-capability.add_scope(outgoingScope)
+outgoing_scope = Twilio::JWT::ClientCapability::OutgoingClientScope.new 'AP11111111111111111111111111111111'
+capability.add_scope(outgoing_scope)
 
 # allow incoming calls to 'andrew'
-incomingScope = Twilio::JWT::ClientCapability::IncomingClientScope.new 'tom'
-capability.add_scope(incomingScope)
+incoming_scope = Twilio::JWT::ClientCapability::IncomingClientScope.new 'andrew'
+capability.add_scope(incoming_scope)
 
 # generate the token string
 @token = capability.to_s
@@ -121,8 +136,7 @@ section of the wiki.
 
 ## Getting Started With TwiML
 
-TwiML support is based on the [Builder][builder] library. You can construct a
-TwiML response like this:
+You can construct a TwiML response like this:
 
 ```ruby
 require 'twilio-ruby'
@@ -162,7 +176,6 @@ implementations:
 - Ruby 2.0.0
 
 [capability]: https://github.com/twilio/twilio-ruby/wiki/Capability
-[builder]: http://builder.rubyforge.org/
 [examples]: https://github.com/twilio/twilio-ruby/blob/master/examples
 [documentation]: http://twilio.github.io/twilio-ruby
 [wiki]: https://github.com/twilio/twilio-ruby/wiki

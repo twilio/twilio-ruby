@@ -41,6 +41,44 @@ describe 'Message' do
           "attributes": "{}",
           "body": "Hello",
           "index": 0,
+          "type": "text",
+          "media": null,
+          "url": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+
+    actual = @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                                    .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                                    .messages("IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives fetch_media responses" do
+    @holodeck.mock(Twilio::TwilioResponse.new(
+        200,
+      %q[
+      {
+          "sid": "IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "to": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "channel_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "date_created": "2016-03-24T20:37:57Z",
+          "date_updated": "2016-03-24T20:37:57Z",
+          "was_edited": false,
+          "from": "system",
+          "attributes": "{}",
+          "body": "Hello",
+          "index": 0,
+          "type": "media",
+          "media": {
+              "sid": "MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "size": 99999999999999,
+              "content_type": "application/pdf",
+              "filename": "hello.pdf"
+          },
           "url": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -90,6 +128,8 @@ describe 'Message' do
           "from": "system",
           "body": "Hello",
           "index": 0,
+          "type": "text",
+          "media": null,
           "url": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -119,6 +159,8 @@ describe 'Message' do
           "attributes": "{}",
           "body": "Hello",
           "index": 0,
+          "type": "text",
+          "media": null,
           "url": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -176,6 +218,30 @@ describe 'Message' do
                   "attributes": "{}",
                   "body": "Hello",
                   "index": 0,
+                  "type": "text",
+                  "media": null,
+                  "url": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              {
+                  "sid": "IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "to": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "channel_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "date_created": "2016-03-24T20:37:57Z",
+                  "date_updated": "2016-03-24T20:37:57Z",
+                  "was_edited": false,
+                  "from": "system",
+                  "attributes": "{}",
+                  "body": "Hello",
+                  "index": 0,
+                  "type": "media",
+                  "media": {
+                      "sid": "MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "size": 99999999999999,
+                      "content_type": "application/pdf",
+                      "filename": "hello.pdf"
+                  },
                   "url": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
           ]
@@ -280,6 +346,8 @@ describe 'Message' do
           "from": "system",
           "body": "Hello",
           "index": 0,
+          "type": "text",
+          "media": null,
           "url": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]

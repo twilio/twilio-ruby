@@ -42,11 +42,11 @@ module Twilio
             #   match this pattern
             # @param [String] origin The origin
             # @param [Integer] limit Upper limit for the number of records to return. stream()
-            #                   guarantees to never return more than limit.  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
-            #  the default value of 50 records.  If no page_size is                      defined
-            #  but a limit is defined, stream() will attempt to read                      the
-            #  limit with the most efficient page size,                      i.e. min(limit, 1000)
+            #    guarantees to never return more than limit.  Default is no limit
+            # @param [Integer] page_size Number of records to fetch per request, when
+            #    not set will use the default value of 50 records.  If no page_size is defined
+            #    but a limit is defined, stream() will attempt to read the limit with the most
+            #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
             def list(beta: :unset, friendly_name: :unset, phone_number: :unset, origin: :unset, limit: nil, page_size: nil)
               self.stream(
@@ -69,12 +69,12 @@ module Twilio
             # @param [String] phone_number Only show the incoming phone number resources that
             #   match this pattern
             # @param [String] origin The origin
-            # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-            #  guarantees to never return more than limit.                  Default is no limit
-            # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
-            #  the default value of 50 records.                      If no page_size is defined
-            #                       but a limit is defined, stream() will attempt to                      read the
-            #  limit with the most efficient page size,                       i.e. min(limit, 1000)
+            # @param [Integer] limit Upper limit for the number of records to return. stream()
+            #    guarantees to never return more than limit. Default is no limit.
+            # @param [Integer] page_size Number of records to fetch per request, when
+            #    not set will use the default value of 50 records. If no page_size is defined
+            #    but a limit is defined, stream() will attempt to read the limit with the most
+            #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
             def stream(beta: :unset, friendly_name: :unset, phone_number: :unset, origin: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
@@ -330,6 +330,9 @@ module Twilio
                   sid: sid,
               }
               @uri = "/Accounts/#{@solution[:account_sid]}/IncomingPhoneNumbers/#{@solution[:sid]}.json"
+
+              # Dependents
+              @assigned_add_ons = nil
             end
 
             ##
@@ -379,8 +382,10 @@ module Twilio
             #   ignore all of the voice urls  and voice applications above and use those set on
             #   the Trunk. Setting a `TrunkSid` will automatically delete your
             #   `VoiceApplicationSid` and vice versa.
+            # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
+            #   voice_receive_mode
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
-            def update(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset)
+            def update(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset)
               data = Twilio::Values.of({
                   'ApiVersion' => api_version,
                   'FriendlyName' => friendly_name,
@@ -400,6 +405,7 @@ module Twilio
                   'EmergencyStatus' => emergency_status,
                   'EmergencyAddressSid' => emergency_address_sid,
                   'TrunkSid' => trunk_sid,
+                  'VoiceReceiveMode' => voice_receive_mode,
               })
 
               payload = @version.update(
@@ -441,6 +447,33 @@ module Twilio
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               @version.delete('delete', @uri)
+            end
+
+            ##
+            # Access the assigned_add_ons
+            # @return [AssignedAddOnList]
+            # @return [AssignedAddOnContext] if sid was passed.
+            def assigned_add_ons(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return AssignedAddOnContext.new(
+                    @version,
+                    @solution[:account_sid],
+                    @solution[:sid],
+                    sid,
+                )
+              end
+
+              unless @assigned_add_ons
+                @assigned_add_ons = AssignedAddOnList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                    resource_sid: @solution[:sid],
+                )
+              end
+
+              @assigned_add_ons
             end
 
             ##
@@ -734,8 +767,10 @@ module Twilio
             #   ignore all of the voice urls  and voice applications above and use those set on
             #   the Trunk. Setting a `TrunkSid` will automatically delete your
             #   `VoiceApplicationSid` and vice versa.
+            # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
+            #   voice_receive_mode
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
-            def update(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset)
+            def update(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset)
               context.update(
                   api_version: api_version,
                   friendly_name: friendly_name,
@@ -755,6 +790,7 @@ module Twilio
                   emergency_status: emergency_status,
                   emergency_address_sid: emergency_address_sid,
                   trunk_sid: trunk_sid,
+                  voice_receive_mode: voice_receive_mode,
               )
             end
 
@@ -770,6 +806,13 @@ module Twilio
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               context.delete
+            end
+
+            ##
+            # Access the assigned_add_ons
+            # @return [assigned_add_ons] assigned_add_ons
+            def assigned_add_ons
+              context.assigned_add_ons
             end
 
             ##

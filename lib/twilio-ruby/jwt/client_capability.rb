@@ -12,8 +12,6 @@ module Twilio
                     :client_name,
                     :scopes
 
-      alias to_s to_jwt
-
       def initialize(account_sid, auth_token, scopes: [], nbf: nil, ttl: 3600, valid_until: nil)
         super(secret_key: auth_token, issuer: account_sid, nbf: nbf, ttl: ttl, valid_until: valid_until)
         @account_sid = account_sid

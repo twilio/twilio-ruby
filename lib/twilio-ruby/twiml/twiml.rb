@@ -11,8 +11,6 @@ module Twilio
       attr_accessor :name
       attr_accessor :indent
 
-      alias to_xml to_s
-
       def initialize(indent: false, **keyword_args)
         @name = self.class.name.split('::').last
         @indent = indent
@@ -37,6 +35,7 @@ module Twilio
         return ('<?xml version="1.0" encoding="UTF-8"?>' + xml) if xml_declaration
         xml
       end
+      alias to_xml to_s
 
       def xml
         # create XML element

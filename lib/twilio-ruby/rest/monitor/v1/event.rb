@@ -32,11 +32,11 @@ module Twilio
           # @param [Date] start_date The start_date
           # @param [Date] end_date The end_date
           # @param [Integer] limit Upper limit for the number of records to return. stream()
-          #                   guarantees to never return more than limit.  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when not set will                      use
-          #  the default value of 50 records.  If no page_size is                      defined
-          #  but a limit is defined, stream() will attempt to read                      the
-          #  limit with the most efficient page size,                      i.e. min(limit, 1000)
+          #    guarantees to never return more than limit.  Default is no limit
+          # @param [Integer] page_size Number of records to fetch per request, when
+          #    not set will use the default value of 50 records.  If no page_size is defined
+          #    but a limit is defined, stream() will attempt to read the limit with the most
+          #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
           def list(actor_sid: :unset, event_type: :unset, resource_sid: :unset, source_ip_address: :unset, start_date: :unset, end_date: :unset, limit: nil, page_size: nil)
             self.stream(
@@ -61,12 +61,12 @@ module Twilio
           # @param [String] source_ip_address The source_ip_address
           # @param [Date] start_date The start_date
           # @param [Date] end_date The end_date
-          # @param [Integer] limit Upper limit for the number of records to return.                  stream()
-          #  guarantees to never return more than limit.                  Default is no limit
-          # @param [Integer] page_size Number of records to fetch per request, when                      not set will use
-          #  the default value of 50 records.                      If no page_size is defined
-          #                       but a limit is defined, stream() will attempt to                      read the
-          #  limit with the most efficient page size,                       i.e. min(limit, 1000)
+          # @param [Integer] limit Upper limit for the number of records to return. stream()
+          #    guarantees to never return more than limit. Default is no limit.
+          # @param [Integer] page_size Number of records to fetch per request, when
+          #    not set will use the default value of 50 records. If no page_size is defined
+          #    but a limit is defined, stream() will attempt to read the limit with the most
+          #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
           def stream(actor_sid: :unset, event_type: :unset, resource_sid: :unset, source_ip_address: :unset, start_date: :unset, end_date: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)

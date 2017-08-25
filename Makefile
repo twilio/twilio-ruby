@@ -1,4 +1,4 @@
-.PHONY: test lint-changed lint
+.PHONY: test lint-changed lint docs
 
 CHANGED_RUBY_FILES = $(shell git status --porcelain | grep ".rb" | awk -F ' ' '{print $2}' | tr '\n' ' ')
 
@@ -12,7 +12,7 @@ test: lint
 	bundle exec rake spec
 
 docs:
-	yard doc
+	yard doc --output-dir ./doc
 
 lint:
 	rubocop --cache true --parallel

@@ -1,5 +1,72 @@
 twilio-ruby changelog
 =====================
+
+[2017-08-18] Version 5.1.2
+---------------------------
+**Api**
+- Add VoiceReceiveMode {'voice', 'fax'} option to IncomingPhoneNumber UPDATE requests
+
+**Chat**
+- Add channel message media information
+- Add service instance message media information
+
+**Preview**
+- Removed 'email' from bulk_exports configuration api [bi]. No migration plan needed because api has not been used yet.
+- Add DeployedDevices.
+
+**Sync**
+- Add support for Service Instance unique names
+
+
+[2017-08-10] Version 5.1.1
+---------------------------
+**Library**
+- Don't override Faraday default param encoder. Thanks to @isaacseymour. PR #309
+- Fix incorrectly aliased `to_xml` on TwiML classes. Thanks to @philnash. PR #318
+- Only define `to_s` on BaseJWT instead of subclasses. Thanks to @philnash. PR #321
+- Silence deprecation messages in testing. Thanks to @philnash. PR #323
+
+**Api**
+- Add New wireless usage keys added
+- Add `auto_correct_address` param for Addresses create and update
+
+**Video**
+- Add `video_codec` enum and `video_codecs` parameter, which can be set to either `VP8` or `H264` during room creation.
+- Restrict recordings page size to 100
+
+**Chat**
+- Add ChatGrant to available access tokens.
+- Mark IpMessagingGrant as deprecated in favor of ChatGrant.
+
+
+[2017-07-27] Version 5.1.0
+---------------------------
+This release adds Beta and Preview products to main artifact.
+
+Previously, Beta and Preview products were only included in the alpha artifact.
+They are now being included in the main artifact to ease product
+discoverability and the collective operational overhead of maintaining multiple
+artifacts per library.
+
+**Api**
+- Remove unused `encryption_type` property on Recordings *(breaking change)*
+- Update `status` enum for Messages to include 'accepted'
+- Update `AnnounceMethod` parameter naming for consistency
+
+**Messaging**
+- Fix incorrectly typed capabilities property for PhoneNumbers.
+
+**Notify**
+- Add `ToBinding` optional parameter on Notifications resource creation. Accepted values are json strings.
+
+**Preview**
+- Add `sms_application_sid` to HostedNumberOrders.
+- Add `verification_attempts` to HostedNumberOrders.
+
+**Taskrouter**
+- Fully support conference functionality in reservations.
+
+
 [2017-07-13] Version 5.0.0
 --------------------------------
 - Moving to General Availability
@@ -42,11 +109,11 @@ twilio-ruby changelog
 [2017-06-19] Version 5.0.0.rc23
 -------------------------------
 - Fixed ClientCapability parameter encoded bug.
-- Optional URL parameter for TwiML Play verb. 
+- Optional URL parameter for TwiML Play verb.
 
 [2017-06-15] Version 5.0.0.rc22
 -------------------------------
-- Refactor JWT token constructors 
+- Refactor JWT token constructors
 
 
 [2017-05-24] Version 5.0.0.rc21

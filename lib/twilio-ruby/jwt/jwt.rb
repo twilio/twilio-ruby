@@ -38,13 +38,14 @@ module Twilio
         payload[:nbf] = @nbf || Time.now.to_i
         payload[:exp] = @valid_until.nil? ? Time.now.to_i + @ttl : @valid_until
         payload[:sub] = @subject unless @subject.nil?
-        
+
         payload
       end
 
       def to_jwt
         ::JWT.encode payload, @secret_key, @algorithm, headers
       end
+      alias to_s to_jwt
     end
   end
 end
