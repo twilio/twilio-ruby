@@ -43,4 +43,26 @@ describe Twilio::HTTP::Client do
     expect(@client.last_request.auth).to eq(['a', 'b'])
     expect(@client.last_request.timeout).to eq('timeout')
   end
+
+  it 'should contain a last response for 5XX status classes' do
+    expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(
+        double('response', status: 500, body: 'Unavailable'.to_json))
+
+    @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'])
+    expect(@client.last_response).to_not be_nil
+    expect(@client.last_response.is_a?(Twilio::Response)).to be(true)
+    expect(@client.last_response.status_code).to eq(500)
+    expect(@client.last_response.body).to eq('Unavailable')
+  end
+
+  it 'should contain a last_response but no response on a connection error' do
+    expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_raise(Faraday::ConnectionFailed.new('BOOM'))
+
+    expect{@client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'])}
+        .to raise_exception(Faraday::ConnectionFailed)
+    expect(@client.last_response).to be_nil
+    expect(@client.last_request).to_not be_nil
+  end
 end
