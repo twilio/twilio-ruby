@@ -22,9 +22,7 @@ module Twilio
       # method:: Receive action URL method
       # keyword_args:: additional attributes
       def receive(action: nil, method: nil, **keyword_args)
-                append(Receive.new(
-            action: action, method: method, **keyword_args
-        ))
+        append(Receive.new(action: action, method: method, **keyword_args))
       end
     end
 

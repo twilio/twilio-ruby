@@ -25,12 +25,10 @@ module Twilio
       # method:: Action URL Method
       # keyword_args:: additional attributes
       def message(message: nil, to: nil, from: nil, action: nil, method: nil, **keyword_args)
-                message = Message.new(
-            message: message, to: to, from: from, action: action, method: method, **keyword_args
-        )
-            
-                yield(message) if block_given?
-                append(message)
+        message = Message.new(message: message, to: to, from: from, action: action, method: method, **keyword_args)
+
+        yield(message) if block_given?
+        append(message)
       end
 
       ##
@@ -39,9 +37,7 @@ module Twilio
       # method:: Redirect URL method
       # keyword_args:: additional attributes
       def redirect(url, method: nil, **keyword_args)
-                append(Redirect.new(
-            url, method: method, **keyword_args
-        ))
+        append(Redirect.new(url, method: method, **keyword_args))
       end
     end
 
@@ -71,9 +67,7 @@ module Twilio
       # message:: Message Body
       # keyword_args:: additional attributes
       def body(message, **keyword_args)
-                append(Body.new(
-            message, **keyword_args
-        ))
+        append(Body.new(message, **keyword_args))
       end
 
       ##
@@ -81,9 +75,7 @@ module Twilio
       # url:: Media URL
       # keyword_args:: additional attributes
       def media(url, **keyword_args)
-                append(Media.new(
-            url, **keyword_args
-        ))
+        append(Media.new(url, **keyword_args))
       end
     end
 

@@ -31,21 +31,17 @@ module Twilio
       # recording_status_callback_method:: Recording status callback URL method
       # keyword_args:: additional attributes
       def dial(number: nil, action: nil, method: nil, timeout: nil, hangup_on_star: nil, time_limit: nil, caller_id: nil, record: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, **keyword_args)
-                dial = Dial.new(
-            number: number, action: action, method: method, timeout: timeout, hangup_on_star: hangup_on_star, time_limit: time_limit, caller_id: caller_id, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, **keyword_args
-        )
-            
-                yield(dial) if block_given?
-                append(dial)
+        dial = Dial.new(number: number, action: action, method: method, timeout: timeout, hangup_on_star: hangup_on_star, time_limit: time_limit, caller_id: caller_id, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, **keyword_args)
+
+        yield(dial) if block_given?
+        append(dial)
       end
 
       ##
       # Create a new <Echo> element
       # keyword_args:: additional attributes
       def echo(**keyword_args)
-                append(Echo.new(
-            **keyword_args
-        ))
+        append(Echo.new(**keyword_args))
       end
 
       ##
@@ -58,12 +54,10 @@ module Twilio
       # workflow_sid:: TaskRouter Workflow SID
       # keyword_args:: additional attributes
       def enqueue(name: nil, action: nil, method: nil, wait_url: nil, wait_url_method: nil, workflow_sid: nil, **keyword_args)
-                enqueue = Enqueue.new(
-            name: name, action: action, method: method, wait_url: wait_url, wait_url_method: wait_url_method, workflow_sid: workflow_sid, **keyword_args
-        )
-            
-                yield(enqueue) if block_given?
-                append(enqueue)
+        enqueue = Enqueue.new(name: name, action: action, method: method, wait_url: wait_url, wait_url_method: wait_url_method, workflow_sid: workflow_sid, **keyword_args)
+
+        yield(enqueue) if block_given?
+        append(enqueue)
       end
 
       ##
@@ -81,30 +75,24 @@ module Twilio
       # barge_in:: Stop playing media upon speech
       # keyword_args:: additional attributes
       def gather(input: nil, action: nil, method: nil, timeout: nil, finish_on_key: nil, num_digits: nil, partial_result_callback: nil, partial_result_callback_method: nil, language: nil, hints: nil, barge_in: nil, **keyword_args)
-                gather = Gather.new(
-            input: input, action: action, method: method, timeout: timeout, finish_on_key: finish_on_key, num_digits: num_digits, partial_result_callback: partial_result_callback, partial_result_callback_method: partial_result_callback_method, language: language, hints: hints, barge_in: barge_in, **keyword_args
-        )
-            
-                yield(gather) if block_given?
-                append(gather)
+        gather = Gather.new(input: input, action: action, method: method, timeout: timeout, finish_on_key: finish_on_key, num_digits: num_digits, partial_result_callback: partial_result_callback, partial_result_callback_method: partial_result_callback_method, language: language, hints: hints, barge_in: barge_in, **keyword_args)
+
+        yield(gather) if block_given?
+        append(gather)
       end
 
       ##
       # Create a new <Hangup> element
       # keyword_args:: additional attributes
       def hangup(**keyword_args)
-                append(Hangup.new(
-            **keyword_args
-        ))
+        append(Hangup.new(**keyword_args))
       end
 
       ##
       # Create a new <Leave> element
       # keyword_args:: additional attributes
       def leave(**keyword_args)
-                append(Leave.new(
-            **keyword_args
-        ))
+        append(Leave.new(**keyword_args))
       end
 
       ##
@@ -112,9 +100,7 @@ module Twilio
       # length:: Length in seconds to pause
       # keyword_args:: additional attributes
       def pause(length: nil, **keyword_args)
-                append(Pause.new(
-            length: length, **keyword_args
-        ))
+        append(Pause.new(length: length, **keyword_args))
       end
 
       ##
@@ -124,9 +110,7 @@ module Twilio
       # digits:: Play DTMF tones for digits
       # keyword_args:: additional attributes
       def play(url: nil, loop: nil, digits: nil, **keyword_args)
-                append(Play.new(
-            url: url, loop: loop, digits: digits, **keyword_args
-        ))
+        append(Play.new(url: url, loop: loop, digits: digits, **keyword_args))
       end
 
       ##
@@ -138,9 +122,7 @@ module Twilio
       # post_work_activity_sid:: TaskRouter Activity SID
       # keyword_args:: additional attributes
       def queue(name, url: nil, method: nil, reservation_sid: nil, post_work_activity_sid: nil, **keyword_args)
-                append(Queue.new(
-            name, url: url, method: method, reservation_sid: reservation_sid, post_work_activity_sid: post_work_activity_sid, **keyword_args
-        ))
+        append(Queue.new(name, url: url, method: method, reservation_sid: reservation_sid, post_work_activity_sid: post_work_activity_sid, **keyword_args))
       end
 
       ##
@@ -158,9 +140,7 @@ module Twilio
       # transcribe_callback:: Transcribe callback URL
       # keyword_args:: additional attributes
       def record(action: nil, method: nil, timeout: nil, finish_on_key: nil, max_length: nil, play_beep: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, transcribe: nil, transcribe_callback: nil, **keyword_args)
-                append(Record.new(
-            action: action, method: method, timeout: timeout, finish_on_key: finish_on_key, max_length: max_length, play_beep: play_beep, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, transcribe: transcribe, transcribe_callback: transcribe_callback, **keyword_args
-        ))
+        append(Record.new(action: action, method: method, timeout: timeout, finish_on_key: finish_on_key, max_length: max_length, play_beep: play_beep, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, transcribe: transcribe, transcribe_callback: transcribe_callback, **keyword_args))
       end
 
       ##
@@ -169,9 +149,7 @@ module Twilio
       # method:: Redirect URL method
       # keyword_args:: additional attributes
       def redirect(url, method: nil, **keyword_args)
-                append(Redirect.new(
-            url, method: method, **keyword_args
-        ))
+        append(Redirect.new(url, method: method, **keyword_args))
       end
 
       ##
@@ -179,9 +157,7 @@ module Twilio
       # reason:: Rejection reason
       # keyword_args:: additional attributes
       def reject(reason: nil, **keyword_args)
-                append(Reject.new(
-            reason: reason, **keyword_args
-        ))
+        append(Reject.new(reason: reason, **keyword_args))
       end
 
       ##
@@ -192,9 +168,7 @@ module Twilio
       # language:: Message langauge
       # keyword_args:: additional attributes
       def say(message, voice: nil, loop: nil, language: nil, **keyword_args)
-                append(Say.new(
-            message, voice: voice, loop: loop, language: language, **keyword_args
-        ))
+        append(Say.new(message, voice: voice, loop: loop, language: language, **keyword_args))
       end
 
       ##
@@ -207,9 +181,7 @@ module Twilio
       # status_callback:: Status callback URL
       # keyword_args:: additional attributes
       def sms(message, to: nil, from: nil, action: nil, method: nil, status_callback: nil, **keyword_args)
-                append(Sms.new(
-            message, to: to, from: from, action: action, method: method, status_callback: status_callback, **keyword_args
-        ))
+        append(Sms.new(message, to: to, from: from, action: action, method: method, status_callback: status_callback, **keyword_args))
       end
     end
 
@@ -341,9 +313,7 @@ module Twilio
       # language:: Message langauge
       # keyword_args:: additional attributes
       def say(message, voice: nil, loop: nil, language: nil, **keyword_args)
-                append(Say.new(
-            message, voice: voice, loop: loop, language: language, **keyword_args
-        ))
+        append(Say.new(message, voice: voice, loop: loop, language: language, **keyword_args))
       end
 
       ##
@@ -351,9 +321,7 @@ module Twilio
       # length:: Length in seconds to pause
       # keyword_args:: additional attributes
       def pause(length: nil, **keyword_args)
-                append(Pause.new(
-            length: length, **keyword_args
-        ))
+        append(Pause.new(length: length, **keyword_args))
       end
 
       ##
@@ -363,9 +331,7 @@ module Twilio
       # digits:: Play DTMF tones for digits
       # keyword_args:: additional attributes
       def play(url: nil, loop: nil, digits: nil, **keyword_args)
-                append(Play.new(
-            url: url, loop: loop, digits: digits, **keyword_args
-        ))
+        append(Play.new(url: url, loop: loop, digits: digits, **keyword_args))
       end
     end
 
@@ -384,9 +350,7 @@ module Twilio
       # body:: TaskRouter task attributes
       # keyword_args:: additional attributes
       def task(body, **keyword_args)
-                append(Task.new(
-            body, **keyword_args
-        ))
+        append(Task.new(body, **keyword_args))
       end
     end
 
@@ -432,9 +396,7 @@ module Twilio
       # status_callback_method:: Status Callback URL Method
       # keyword_args:: additional attributes
       def client(name, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
-                append(Client.new(
-            name, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args
-        ))
+        append(Client.new(name, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args))
       end
 
       ##
@@ -459,9 +421,7 @@ module Twilio
       # event_callback_url:: Event callback URL
       # keyword_args:: additional attributes
       def conference(name, muted: nil, beep: nil, start_conference_on_enter: nil, end_conference_on_exit: nil, wait_url: nil, wait_method: nil, max_participants: nil, record: nil, region: nil, whisper: nil, trim: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, recording_status_callback: nil, recording_status_callback_method: nil, event_callback_url: nil, **keyword_args)
-                append(Conference.new(
-            name, muted: muted, beep: beep, start_conference_on_enter: start_conference_on_enter, end_conference_on_exit: end_conference_on_exit, wait_url: wait_url, wait_method: wait_method, max_participants: max_participants, record: record, region: region, whisper: whisper, trim: trim, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, event_callback_url: event_callback_url, **keyword_args
-        ))
+        append(Conference.new(name, muted: muted, beep: beep, start_conference_on_enter: start_conference_on_enter, end_conference_on_exit: end_conference_on_exit, wait_url: wait_url, wait_method: wait_method, max_participants: max_participants, record: record, region: region, whisper: whisper, trim: trim, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, event_callback_url: event_callback_url, **keyword_args))
       end
 
       ##
@@ -475,9 +435,7 @@ module Twilio
       # status_callback_method:: Status callback URL method
       # keyword_args:: additional attributes
       def number(number, send_digits: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
-                append(Number.new(
-            number, send_digits: send_digits, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args
-        ))
+        append(Number.new(number, send_digits: send_digits, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args))
       end
 
       ##
@@ -489,9 +447,7 @@ module Twilio
       # post_work_activity_sid:: TaskRouter Activity SID
       # keyword_args:: additional attributes
       def queue(name, url: nil, method: nil, reservation_sid: nil, post_work_activity_sid: nil, **keyword_args)
-                append(Queue.new(
-            name, url: url, method: method, reservation_sid: reservation_sid, post_work_activity_sid: post_work_activity_sid, **keyword_args
-        ))
+        append(Queue.new(name, url: url, method: method, reservation_sid: reservation_sid, post_work_activity_sid: post_work_activity_sid, **keyword_args))
       end
 
       ##
@@ -499,9 +455,7 @@ module Twilio
       # sim_sid:: SIM SID
       # keyword_args:: additional attributes
       def sim(sim_sid, **keyword_args)
-                append(Sim.new(
-            sim_sid, **keyword_args
-        ))
+        append(Sim.new(sim_sid, **keyword_args))
       end
 
       ##
@@ -516,9 +470,7 @@ module Twilio
       # status_callback_method:: Status callback URL method
       # keyword_args:: additional attributes
       def sip(sip_url, username: nil, password: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
-                append(Sip.new(
-            sip_url, username: username, password: password, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args
-        ))
+        append(Sip.new(sip_url, username: username, password: password, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args))
       end
     end
 

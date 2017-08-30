@@ -305,7 +305,7 @@ describe Twilio::TwiML::VoiceResponse do
     it 'should allow VoiceResponse.enqueue' do
       r = Twilio::TwiML::VoiceResponse.new
       r.enqueue(
-        'TestEnqueueAttribute',
+        name: 'TestEnqueueAttribute',
         action: 'act',
         method: 'GET',
         wait_url: 'wait',
@@ -316,7 +316,7 @@ describe Twilio::TwiML::VoiceResponse do
     end
 
     it 'should allow Enqueue.task and appending Enqueue' do
-      e = Twilio::TwiML::Enqueue.new(nil, workflow_sid: '123123123')
+      e = Twilio::TwiML::Enqueue.new(name: nil, workflow_sid: '123123123')
       e.task('{"account_sid": "AC123123123"}')
 
       r = Twilio::TwiML::VoiceResponse.new
@@ -326,7 +326,7 @@ describe Twilio::TwiML::VoiceResponse do
     end
 
     it 'should allow Enqueue.task with a dictionary and appending Enqueue' do
-      e = Twilio::TwiML::Enqueue.new(nil, workflow_sid: '123123123')
+      e = Twilio::TwiML::Enqueue.new(name: nil, workflow_sid: '123123123')
       e.task({ account_sid: 'AC123123123' })
 
       r = Twilio::TwiML::VoiceResponse.new

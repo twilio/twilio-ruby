@@ -40,7 +40,8 @@ module Twilio
 
         def xml
           # create XML element
-          elem = LibXML::XML::Node.new(@name, @value)
+          value = (@value.is_a?(String) or @value == nil) ? @value : JSON.generate(@value)
+          elem = LibXML::XML::Node.new(@name, value)
 
           # set element attributes
           keys = @attrs.keys.sort
