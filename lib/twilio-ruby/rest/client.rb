@@ -14,10 +14,17 @@ module Twilio
       ##
       # Initializes the Twilio Client
       def initialize(username=nil, password=nil, account_sid=nil, region=nil, http_client=Twilio::HTTP::Client.new)
-        @username = username || Twilio.account_sid
-        @password = password || Twilio.auth_token
+        # Prefer API authentication if set in configuration
+        if Twilio.api_sid
+          @username = username || Twilio.api_sid
+          @password = password || Twilio.api_secret
+          @account_sid = account_sid || Twilio.account_sid
+        else
+          @username = username || Twilio.account_sid
+          @password = password || Twilio.auth_token
+          @account_sid = account_sid || @username
+        end
         @region = region
-        @account_sid = account_sid || @username
         @auth_token = @password
         @auth = [@username, @password]
         @http_client = http_client
