@@ -202,6 +202,7 @@ module Twilio
             @documents = nil
             @sync_lists = nil
             @sync_maps = nil
+            @sync_streams = nil
           end
 
           ##
@@ -331,6 +332,31 @@ module Twilio
             end
 
             @sync_maps
+          end
+
+          ##
+          # Access the sync_streams
+          # @return [SyncStreamList]
+          # @return [SyncStreamContext] if sid was passed.
+          def sync_streams(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return SyncStreamContext.new(
+                  @version,
+                  @solution[:sid],
+                  sid,
+              )
+            end
+
+            unless @sync_streams
+              @sync_streams = SyncStreamList.new(
+                  @version,
+                  service_sid: @solution[:sid],
+              )
+            end
+
+            @sync_streams
           end
 
           ##
@@ -504,6 +530,13 @@ module Twilio
           # @return [sync_maps] sync_maps
           def sync_maps
             context.sync_maps
+          end
+
+          ##
+          # Access the sync_streams
+          # @return [sync_streams] sync_streams
+          def sync_streams
+            context.sync_streams
           end
 
           ##

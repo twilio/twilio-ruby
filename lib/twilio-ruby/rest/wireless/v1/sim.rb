@@ -202,6 +202,7 @@ module Twilio
 
             # Dependents
             @usage_records = nil
+            @data_sessions = nil
           end
 
           ##
@@ -288,6 +289,21 @@ module Twilio
             end
 
             @usage_records
+          end
+
+          ##
+          # Access the data_sessions
+          # @return [DataSessionList]
+          # @return [DataSessionContext]
+          def data_sessions
+            unless @data_sessions
+              @data_sessions = DataSessionList.new(
+                  @version,
+                  sim_sid: @solution[:sid],
+              )
+            end
+
+            @data_sessions
           end
 
           ##
@@ -541,6 +557,13 @@ module Twilio
           # @return [usage_records] usage_records
           def usage_records
             context.usage_records
+          end
+
+          ##
+          # Access the data_sessions
+          # @return [data_sessions] data_sessions
+          def data_sessions
+            context.data_sessions
           end
 
           ##

@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+[2017-09-01] Version 5.2.1
+---------------------------
+**Sync**
+- Add support for Streams
+
+**Wireless**
+- Added DataSessions sub-resource to Sims.
+
+
 [2017-08-25] Version 5.2.0
 ---------------------------
 **Library**
