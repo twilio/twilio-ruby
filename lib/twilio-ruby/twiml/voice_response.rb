@@ -66,6 +66,9 @@ module Twilio
       # action:: Action URL
       # method:: Action URL method
       # timeout:: Time to wait to gather input
+      # speech_timeout:: Time to wait to gather speech input and it should be either auto or a positive integer.
+      # max_speech_time:: Max allowed time for speech input
+      # profanity_filter:: Profanity Filter on speech
       # finish_on_key:: Finish gather on key
       # num_digits:: Number of digits to collect
       # partial_result_callback:: Partial result callback URL
@@ -74,8 +77,8 @@ module Twilio
       # hints:: Speech recognition hints
       # barge_in:: Stop playing media upon speech
       # keyword_args:: additional attributes
-      def gather(input: nil, action: nil, method: nil, timeout: nil, finish_on_key: nil, num_digits: nil, partial_result_callback: nil, partial_result_callback_method: nil, language: nil, hints: nil, barge_in: nil, **keyword_args)
-        gather = Gather.new(input: input, action: action, method: method, timeout: timeout, finish_on_key: finish_on_key, num_digits: num_digits, partial_result_callback: partial_result_callback, partial_result_callback_method: partial_result_callback_method, language: language, hints: hints, barge_in: barge_in, **keyword_args)
+      def gather(input: nil, action: nil, method: nil, timeout: nil, speech_timeout: nil, max_speech_time: nil, profanity_filter: nil, finish_on_key: nil, num_digits: nil, partial_result_callback: nil, partial_result_callback_method: nil, language: nil, hints: nil, barge_in: nil, **keyword_args)
+        gather = Gather.new(input: input, action: action, method: method, timeout: timeout, speech_timeout: speech_timeout, max_speech_time: max_speech_time, profanity_filter: profanity_filter, finish_on_key: finish_on_key, num_digits: num_digits, partial_result_callback: partial_result_callback, partial_result_callback_method: partial_result_callback_method, language: language, hints: hints, barge_in: barge_in, **keyword_args)
 
         yield(gather) if block_given?
         append(gather)
