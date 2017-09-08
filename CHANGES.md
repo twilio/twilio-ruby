@@ -1,6 +1,10 @@
 twilio-ruby changelog
 =====================
 
+[2017-09-08] Version 5.2.2
+---------------------------
+- Add configurable timeout to HttpClient
+
 [2017-09-01] Version 5.2.1
 ---------------------------
 **Sync**
