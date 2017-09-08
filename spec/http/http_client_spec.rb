@@ -6,6 +6,34 @@ describe Twilio::HTTP::Client do
     @client = Twilio::HTTP::Client.new
   end
 
+  it 'should allow setting a global timeout' do
+    @client = Twilio::HTTP::Client.new(timeout: 10)
+    @connection = Faraday::Connection.new
+
+    expect(Faraday).to receive(:new).and_yield(@connection).and_return(@connection)
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}))
+
+    @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'])
+
+    expect(@client.timeout).to eq(10)
+    expect(@connection.options.open_timeout).to eq(10)
+    expect(@connection.options.timeout).to eq(10)
+  end
+
+  it 'should allow overriding timeout per request' do
+    @client = Twilio::HTTP::Client.new(timeout: 10)
+    @connection = Faraday::Connection.new
+
+    expect(Faraday).to receive(:new).and_yield(@connection).and_return(@connection)
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}))
+
+    @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'], 20)
+
+    expect(@client.timeout).to eq(10)
+    expect(@connection.options.open_timeout).to eq(20)
+    expect(@connection.options.timeout).to eq(20)
+  end
+
   it 'should contain a last response' do
     expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
     allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}))

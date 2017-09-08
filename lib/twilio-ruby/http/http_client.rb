@@ -4,14 +4,16 @@ module Twilio
   module HTTP
     class Client
       attr_accessor :adapter
-      attr_reader :last_response, :last_request
+      attr_reader :timeout, :last_response, :last_request
 
-      def initialize(proxy_addr = nil, proxy_port = nil, proxy_user = nil, proxy_pass = nil, ssl_ca_file = nil)
+      def initialize(proxy_addr = nil, proxy_port = nil, proxy_user = nil, proxy_pass = nil, ssl_ca_file = nil,
+                     timeout: nil)
         @proxy_addr = proxy_addr
         @proxy_port = proxy_port
         @proxy_user = proxy_user
         @proxy_pass = proxy_pass
         @ssl_ca_file = ssl_ca_file
+        @timeout = timeout
         @adapter = Faraday.default_adapter
       end
 
@@ -25,8 +27,8 @@ module Twilio
           if @proxy_addr
             f.proxy '#{@proxy_user}:#{@proxy_pass}@#{@proxy_addr}:#{@proxy_port}'
           end
-          f.options.open_timeout = request.timeout
-          f.options.timeout = request.timeout
+          f.options.open_timeout = request.timeout || @timeout
+          f.options.timeout = request.timeout || @timeout
         end
 
         @last_request = request
