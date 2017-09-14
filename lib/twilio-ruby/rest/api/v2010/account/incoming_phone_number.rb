@@ -337,6 +337,8 @@ module Twilio
 
             ##
             # Update the IncomingPhoneNumberInstance
+            # @param [String] account_sid The unique id of the Account to which you wish to
+            #   transfer this phnoe number
             # @param [String] api_version Calls to this phone number will start a new TwiML
             #   session with this API version.
             # @param [String] friendly_name A human readable descriptive text for this
@@ -385,7 +387,7 @@ module Twilio
             # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
             #   voice_receive_mode
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
-            def update(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset)
+            def update(account_sid: :unset, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset)
               data = Twilio::Values.of({
                   'ApiVersion' => api_version,
                   'FriendlyName' => friendly_name,
@@ -722,6 +724,8 @@ module Twilio
 
             ##
             # Update the IncomingPhoneNumberInstance
+            # @param [String] account_sid The unique id of the Account to which you wish to
+            #   transfer this phnoe number
             # @param [String] api_version Calls to this phone number will start a new TwiML
             #   session with this API version.
             # @param [String] friendly_name A human readable descriptive text for this
@@ -770,8 +774,9 @@ module Twilio
             # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
             #   voice_receive_mode
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
-            def update(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset)
+            def update(account_sid: :unset, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset)
               context.update(
+                  account_sid: account_sid,
                   api_version: api_version,
                   friendly_name: friendly_name,
                   sms_application_sid: sms_application_sid,
