@@ -6,6 +6,7 @@ twilio-ruby changelog
 **Api**
 - Add `sip_registration` property on SIP Domains
 - Add new video and market usage category keys
+- Add support for transferring IncomingPhoneNumbers between accounts.
 
 
 [2017-09-08] Version 5.2.2
