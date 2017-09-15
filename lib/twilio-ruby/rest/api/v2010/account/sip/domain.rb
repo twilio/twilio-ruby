@@ -135,8 +135,9 @@ module Twilio
               # @param [String] voice_status_callback_url The URL that Twilio will request to
               #   pass status parameters
               # @param [String] voice_status_callback_method The voice_status_callback_method
+              # @param [Boolean] sip_registration The sip_registration
               # @return [DomainInstance] Newly created DomainInstance
-              def create(domain_name: nil, friendly_name: :unset, auth_type: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, voice_status_callback_url: :unset, voice_status_callback_method: :unset)
+              def create(domain_name: nil, friendly_name: :unset, auth_type: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, voice_status_callback_url: :unset, voice_status_callback_method: :unset, sip_registration: :unset)
                 data = Twilio::Values.of({
                     'DomainName' => domain_name,
                     'FriendlyName' => friendly_name,
@@ -147,6 +148,7 @@ module Twilio
                     'VoiceFallbackMethod' => voice_fallback_method,
                     'VoiceStatusCallbackUrl' => voice_status_callback_url,
                     'VoiceStatusCallbackMethod' => voice_status_callback_method,
+                    'SipRegistration' => sip_registration,
                 })
 
                 payload = @version.create(
@@ -255,8 +257,9 @@ module Twilio
               # @param [String] voice_status_callback_method The voice_status_callback_method
               # @param [String] voice_status_callback_url The voice_status_callback_url
               # @param [String] voice_url The voice_url
+              # @param [Boolean] sip_registration The sip_registration
               # @return [DomainInstance] Updated DomainInstance
-              def update(auth_type: :unset, friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset)
+              def update(auth_type: :unset, friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset, sip_registration: :unset)
                 data = Twilio::Values.of({
                     'AuthType' => auth_type,
                     'FriendlyName' => friendly_name,
@@ -266,6 +269,7 @@ module Twilio
                     'VoiceStatusCallbackMethod' => voice_status_callback_method,
                     'VoiceStatusCallbackUrl' => voice_status_callback_url,
                     'VoiceUrl' => voice_url,
+                    'SipRegistration' => sip_registration,
                 })
 
                 payload = @version.update(
@@ -381,6 +385,7 @@ module Twilio
                     'voice_status_callback_url' => payload['voice_status_callback_url'],
                     'voice_url' => payload['voice_url'],
                     'subresource_uris' => payload['subresource_uris'],
+                    'sip_registration' => payload['sip_registration'],
                 }
 
                 # Context
@@ -503,6 +508,12 @@ module Twilio
               end
 
               ##
+              # @return [Boolean] If SIP registration is allowed
+              def sip_registration
+                @properties['sip_registration']
+              end
+
+              ##
               # Fetch a DomainInstance
               # @return [DomainInstance] Fetched DomainInstance
               def fetch
@@ -520,8 +531,9 @@ module Twilio
               # @param [String] voice_status_callback_method The voice_status_callback_method
               # @param [String] voice_status_callback_url The voice_status_callback_url
               # @param [String] voice_url The voice_url
+              # @param [Boolean] sip_registration The sip_registration
               # @return [DomainInstance] Updated DomainInstance
-              def update(auth_type: :unset, friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset)
+              def update(auth_type: :unset, friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset, sip_registration: :unset)
                 context.update(
                     auth_type: auth_type,
                     friendly_name: friendly_name,
@@ -531,6 +543,7 @@ module Twilio
                     voice_status_callback_method: voice_status_callback_method,
                     voice_status_callback_url: voice_status_callback_url,
                     voice_url: voice_url,
+                    sip_registration: sip_registration,
                 )
               end
 
