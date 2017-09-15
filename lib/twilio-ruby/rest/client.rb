@@ -365,5 +365,33 @@ module Twilio
         "#<Twilio::REST::Client #{@account_sid}>"
       end
     end
+
+    ##
+    # Dummy client which provides no functionality. Please use Twilio::REST::Client instead.
+    class BaseClient < ObsoleteClient; end
+
+    ##
+    # Dummy client which provides no functionality. Please use Twilio::REST::Client instead.
+    class IpMessagingClient < ObsoleteClient; end
+
+    ##
+    # Dummy client which provides no functionality. Please use Twilio::REST::Client instead.
+    class LookupsClient < ObsoleteClient; end
+
+    ##
+    # Dummy client which provides no functionality. Please use Twilio::REST::Client instead.
+    class MonitorClient < ObsoleteClient; end
+
+    ##
+    # Dummy client which provides no functionality. Please use Twilio::REST::Client instead.
+    class PricingClient < ObsoleteClient; end
+
+    ##
+    # Dummy client which provides no functionality. Please use Twilio::REST::Client instead.
+    class TaskRouterClient < ObsoleteClient; end
+
+    ##
+    # Dummy client which provides no functionality. Please use Twilio::REST::Client instead.
+    class TrunkingClient < ObsoleteClient; end
   end
 end

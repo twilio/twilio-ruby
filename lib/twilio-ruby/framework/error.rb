@@ -26,5 +26,8 @@ module Twilio
         "[HTTP #{status_code}] #{code} : #{message}"
       end
     end
+
+    class ObsoleteError < StandardError
+    end
   end
 end
