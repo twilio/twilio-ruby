@@ -98,7 +98,8 @@ end
 ```
 
 ### Customizing your HTTP Client
-twilio-ruby uses [Faraday][faraday] to make HTTP requests. You can tell Twilio::REST::Client to use any of the Faraday adapters like so:
+twilio-ruby uses [Faraday][faraday] to make HTTP requests. You can tell
+Twilio::REST::Client to use any of the Faraday adapters like so:
 
 ```ruby
 @client.http_client.adapter = :typhoeus
