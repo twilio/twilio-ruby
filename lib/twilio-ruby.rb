@@ -43,7 +43,7 @@ end
 module Twilio
   extend SingleForwardable
 
-  def_delegators :configuration, :account_sid, :auth_token
+  def_delegators :configuration, :account_sid, :auth_token, :api_sid, :api_secret
 
   ##
   # Pre-configure with account SID and auth token so that you don't need to
