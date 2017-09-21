@@ -9,7 +9,7 @@ A module for using the Twilio REST API and generating valid [TwiML](http://www.t
 ## Recent Update
 
 As of release 5.1.0, Beta and Developer Preview products are now exposed via
-the main `twilio-java` artifact. Releases of the `alpha` branch have been
+the main `twilio-ruby` artifact. Releases of the `alpha` branch have been
 discontinued.
 
 If you were using the `alpha` release line, you should be able to switch back
