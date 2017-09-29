@@ -3,18 +3,16 @@ twilio-ruby changelog
 
 [2017-09-29] Version 5.3.0
 ---------------------------
-**Api**
-- [omit] Added hidden fields for SMS experimentation
-
 **Chat**
 - Make member accessible through identity
 - Make channel subresources accessible by channel unique name
 - Set get list 'max_page_size' parameter to 100
 - Add service instance webhook retry configuration
 - Add media message capability
+- Make `body` an optional parameter on Message creation. *(breaking change)*
 
 **Notify**
-- `data`, `apn`, `gcm`, `fcm`, `sms` parameters in `Notifications` create resource are objects instead of strings. *(breaking change)*
+- `data`, `apn`, `gcm`, `fcm`, `sms` parameters in `Notifications` create resource now accept objects (hashes) instead of strings. Passing manually stringified json will continue to work.
 
 **Taskrouter**
 - Add new query ability by TaskChannelSid or TaskChannelUniqueName
