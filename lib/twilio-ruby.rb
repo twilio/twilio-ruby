@@ -10,7 +10,6 @@ require 'time'
 require 'json'
 
 require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
-require 'rack/twilio_webhook_authentication'
 
 require 'twilio-ruby/util'
 require 'twilio-ruby/jwt/jwt'
@@ -18,7 +17,6 @@ require 'twilio-ruby/jwt/access_token'
 require 'twilio-ruby/jwt/client_capability'
 require 'twilio-ruby/jwt/task_router'
 require 'twilio-ruby/security/request_validator'
-require 'twilio-ruby/util/configuration'
 
 require 'twilio-ruby/twiml/twiml'
 require 'twilio-ruby/twiml/voice_response'
@@ -42,20 +40,4 @@ end
 
 module Twilio
   extend SingleForwardable
-
-  def_delegators :configuration, :account_sid, :auth_token
-
-  ##
-  # Pre-configure with account SID and auth token so that you don't need to
-  # pass them to various initializers each time.
-  def self.configure(&block)
-    yield configuration
-  end
-
-  ##
-  # Returns an existing or instantiates a new configuration object.
-  def self.configuration
-    @configuration ||= Util::Configuration.new
-  end
-  private_class_method :configuration
 end
