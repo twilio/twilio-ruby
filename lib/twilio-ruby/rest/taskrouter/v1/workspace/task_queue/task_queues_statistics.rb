@@ -34,6 +34,8 @@ module Twilio
               # @param [String] friendly_name The friendly_name
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
+              # @param [String] task_channel The task_channel
+              # @param [String] split_by_wait_time The split_by_wait_time
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -41,12 +43,14 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(end_date: :unset, friendly_name: :unset, minutes: :unset, start_date: :unset, limit: nil, page_size: nil)
+              def list(end_date: :unset, friendly_name: :unset, minutes: :unset, start_date: :unset, task_channel: :unset, split_by_wait_time: :unset, limit: nil, page_size: nil)
                 self.stream(
                     end_date: end_date,
                     friendly_name: friendly_name,
                     minutes: minutes,
                     start_date: start_date,
+                    task_channel: task_channel,
+                    split_by_wait_time: split_by_wait_time,
                     limit: limit,
                     page_size: page_size
                 ).entries
@@ -60,6 +64,8 @@ module Twilio
               # @param [String] friendly_name The friendly_name
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
+              # @param [String] task_channel The task_channel
+              # @param [String] split_by_wait_time The split_by_wait_time
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -67,7 +73,7 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(end_date: :unset, friendly_name: :unset, minutes: :unset, start_date: :unset, limit: nil, page_size: nil)
+              def stream(end_date: :unset, friendly_name: :unset, minutes: :unset, start_date: :unset, task_channel: :unset, split_by_wait_time: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
                 page = self.page(
@@ -75,6 +81,8 @@ module Twilio
                     friendly_name: friendly_name,
                     minutes: minutes,
                     start_date: start_date,
+                    task_channel: task_channel,
+                    split_by_wait_time: split_by_wait_time,
                     page_size: limits[:page_size],
                 )
 
@@ -104,16 +112,20 @@ module Twilio
               # @param [String] friendly_name The friendly_name
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
+              # @param [String] task_channel The task_channel
+              # @param [String] split_by_wait_time The split_by_wait_time
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of TaskQueuesStatisticsInstance
-              def page(end_date: :unset, friendly_name: :unset, minutes: :unset, start_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              def page(end_date: :unset, friendly_name: :unset, minutes: :unset, start_date: :unset, task_channel: :unset, split_by_wait_time: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'EndDate' => Twilio.serialize_iso8601_datetime(end_date),
                     'FriendlyName' => friendly_name,
                     'Minutes' => minutes,
                     'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
+                    'TaskChannel' => task_channel,
+                    'SplitByWaitTime' => split_by_wait_time,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,

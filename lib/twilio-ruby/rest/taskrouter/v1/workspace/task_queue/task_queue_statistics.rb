@@ -91,12 +91,16 @@ module Twilio
               # @param [Time] end_date The end_date
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
+              # @param [String] task_channel The task_channel
+              # @param [String] split_by_wait_time The split_by_wait_time
               # @return [TaskQueueStatisticsInstance] Fetched TaskQueueStatisticsInstance
-              def fetch(end_date: :unset, minutes: :unset, start_date: :unset)
+              def fetch(end_date: :unset, minutes: :unset, start_date: :unset, task_channel: :unset, split_by_wait_time: :unset)
                 params = Twilio::Values.of({
                     'EndDate' => Twilio.serialize_iso8601_datetime(end_date),
                     'Minutes' => minutes,
                     'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
+                    'TaskChannel' => task_channel,
+                    'SplitByWaitTime' => split_by_wait_time,
                 })
 
                 payload = @version.fetch(
@@ -206,12 +210,16 @@ module Twilio
               # @param [Time] end_date The end_date
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
+              # @param [String] task_channel The task_channel
+              # @param [String] split_by_wait_time The split_by_wait_time
               # @return [TaskQueueStatisticsInstance] Fetched TaskQueueStatisticsInstance
-              def fetch(end_date: :unset, minutes: :unset, start_date: :unset)
+              def fetch(end_date: :unset, minutes: :unset, start_date: :unset, task_channel: :unset, split_by_wait_time: :unset)
                 context.fetch(
                     end_date: end_date,
                     minutes: minutes,
                     start_date: start_date,
+                    task_channel: task_channel,
+                    split_by_wait_time: split_by_wait_time,
                 )
               end
 

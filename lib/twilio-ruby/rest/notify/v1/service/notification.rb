@@ -36,14 +36,14 @@ module Twilio
             # @param [String] title The title
             # @param [String] sound The sound
             # @param [String] action The action
-            # @param [String] data The data
-            # @param [String] apn The apn
-            # @param [String] gcm The gcm
-            # @param [String] sms The sms
+            # @param [Hash] data The data
+            # @param [Hash] apn The apn
+            # @param [Hash] gcm The gcm
+            # @param [Hash] sms The sms
             # @param [Hash] facebook_messenger The facebook_messenger
-            # @param [String] fcm The fcm
+            # @param [Hash] fcm The fcm
             # @param [String] segment The segment
-            # @param [String] alexa The alexa
+            # @param [Hash] alexa The alexa
             # @param [String] to_binding The to_binding
             # @param [String] identity The identity
             # @param [String] tag The tag
@@ -58,14 +58,14 @@ module Twilio
                   'Title' => title,
                   'Sound' => sound,
                   'Action' => action,
-                  'Data' => data,
-                  'Apn' => apn,
-                  'Gcm' => gcm,
-                  'Sms' => sms,
+                  'Data' => Twilio.serialize_object(data),
+                  'Apn' => Twilio.serialize_object(apn),
+                  'Gcm' => Twilio.serialize_object(gcm),
+                  'Sms' => Twilio.serialize_object(sms),
                   'FacebookMessenger' => Twilio.serialize_object(facebook_messenger),
-                  'Fcm' => fcm,
+                  'Fcm' => Twilio.serialize_object(fcm),
                   'Segment' => segment,
-                  'Alexa' => alexa,
+                  'Alexa' => Twilio.serialize_object(alexa),
                   'ToBinding' => to_binding,
               })
 

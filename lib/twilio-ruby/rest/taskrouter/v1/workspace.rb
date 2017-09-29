@@ -210,6 +210,8 @@ module Twilio
             @workers = nil
             @workflows = nil
             @statistics = nil
+            @workspace_real_time_statistics = nil
+            @workspace_cumulative_statistics = nil
             @task_channels = nil
           end
 
@@ -429,6 +431,28 @@ module Twilio
           # @return [WorkspaceStatisticsContext]
           def statistics
             WorkspaceStatisticsContext.new(
+                @version,
+                @solution[:sid],
+            )
+          end
+
+          ##
+          # Access the workspace_real_time_statistics
+          # @return [WorkspaceRealTimeStatisticsList]
+          # @return [WorkspaceRealTimeStatisticsContext]
+          def workspace_real_time_statistics
+            WorkspaceRealTimeStatisticsContext.new(
+                @version,
+                @solution[:sid],
+            )
+          end
+
+          ##
+          # Access the workspace_cumulative_statistics
+          # @return [WorkspaceCumulativeStatisticsList]
+          # @return [WorkspaceCumulativeStatisticsContext]
+          def workspace_cumulative_statistics
+            WorkspaceCumulativeStatisticsContext.new(
                 @version,
                 @solution[:sid],
             )
@@ -690,6 +714,20 @@ module Twilio
           # @return [statistics] statistics
           def statistics
             context.statistics
+          end
+
+          ##
+          # Access the workspace_real_time_statistics
+          # @return [workspace_real_time_statistics] workspace_real_time_statistics
+          def workspace_real_time_statistics
+            context.workspace_real_time_statistics
+          end
+
+          ##
+          # Access the workspace_cumulative_statistics
+          # @return [workspace_cumulative_statistics] workspace_cumulative_statistics
+          def workspace_cumulative_statistics
+            context.workspace_cumulative_statistics
           end
 
           ##

@@ -338,7 +338,7 @@ module Twilio
             ##
             # Update the IncomingPhoneNumberInstance
             # @param [String] account_sid The unique id of the Account to which you wish to
-            #   transfer this phnoe number
+            #   transfer this phone number
             # @param [String] api_version Calls to this phone number will start a new TwiML
             #   session with this API version.
             # @param [String] friendly_name A human readable descriptive text for this
@@ -726,7 +726,7 @@ module Twilio
             ##
             # Update the IncomingPhoneNumberInstance
             # @param [String] account_sid The unique id of the Account to which you wish to
-            #   transfer this phnoe number
+            #   transfer this phone number
             # @param [String] api_version Calls to this phone number will start a new TwiML
             #   session with this API version.
             # @param [String] friendly_name A human readable descriptive text for this

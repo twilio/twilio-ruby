@@ -99,17 +99,14 @@ describe 'Message' do
     expect {
       @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                      .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .messages.create(body: "body")
+                     .messages.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'Body' => "body",
-    }
+    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages',
-        data: values,
     ))).to eq(true)
   end
 
@@ -140,7 +137,7 @@ describe 'Message' do
 
     actual = @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                             .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .messages.create(body: "body")
+                            .messages.create()
 
     expect(actual).to_not eq(nil)
   end
@@ -172,7 +169,44 @@ describe 'Message' do
 
     actual = @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                             .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .messages.create(body: "body")
+                            .messages.create()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives create_media responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "sid": "IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "to": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "channel_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "attributes": null,
+          "date_created": "2016-03-24T20:37:57Z",
+          "date_updated": "2016-03-24T20:37:57Z",
+          "last_updated_by": "system",
+          "was_edited": false,
+          "from": "system",
+          "body": "Hello",
+          "index": 0,
+          "type": "text",
+          "media": {
+              "sid": "MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "size": 99999999999999,
+              "content_type": "application/pdf",
+              "filename": "hello.pdf"
+          },
+          "url": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+
+    actual = @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                            .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                            .messages.create()
 
     expect(actual).to_not eq(nil)
   end

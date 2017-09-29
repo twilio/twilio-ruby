@@ -31,21 +31,23 @@ module Twilio
               ##
               # Retrieve a single page of MessageInstance records from the API.
               # Request is executed immediately.
-              # @param [String] body The body
               # @param [String] from The from
               # @param [String] attributes The attributes
               # @param [Time] date_created The date_created
               # @param [Time] date_updated The date_updated
               # @param [String] last_updated_by The last_updated_by
+              # @param [String] body The body
+              # @param [String] media_sid The media_sid
               # @return [MessageInstance] Newly created MessageInstance
-              def create(body: nil, from: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset)
+              def create(from: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset, body: :unset, media_sid: :unset)
                 data = Twilio::Values.of({
-                    'Body' => body,
                     'From' => from,
                     'Attributes' => attributes,
                     'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                     'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                     'LastUpdatedBy' => last_updated_by,
+                    'Body' => body,
+                    'MediaSid' => media_sid,
                 })
 
                 payload = @version.create(

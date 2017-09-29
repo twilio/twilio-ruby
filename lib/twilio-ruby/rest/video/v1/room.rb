@@ -331,6 +331,7 @@ module Twilio
                 'type' => payload['type'],
                 'max_participants' => payload['max_participants'].to_i,
                 'record_participants_on_connect' => payload['record_participants_on_connect'],
+                'video_codecs' => payload['video_codecs'],
                 'url' => payload['url'],
                 'links' => payload['links'],
             }
@@ -438,6 +439,12 @@ module Twilio
           # @return [Boolean] The record_participants_on_connect
           def record_participants_on_connect
             @properties['record_participants_on_connect']
+          end
+
+          ##
+          # @return [room.VideoCodec] The video_codecs
+          def video_codecs
+            @properties['video_codecs']
           end
 
           ##

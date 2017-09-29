@@ -89,8 +89,9 @@ module Twilio
               # @param [String] task_queue_sid The task_queue_sid
               # @param [String] task_queue_name The task_queue_name
               # @param [String] friendly_name The friendly_name
+              # @param [String] task_channel The task_channel
               # @return [WorkersStatisticsInstance] Fetched WorkersStatisticsInstance
-              def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_queue_sid: :unset, task_queue_name: :unset, friendly_name: :unset)
+              def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_queue_sid: :unset, task_queue_name: :unset, friendly_name: :unset, task_channel: :unset)
                 params = Twilio::Values.of({
                     'Minutes' => minutes,
                     'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
@@ -98,6 +99,7 @@ module Twilio
                     'TaskQueueSid' => task_queue_sid,
                     'TaskQueueName' => task_queue_name,
                     'FriendlyName' => friendly_name,
+                    'TaskChannel' => task_channel,
                 })
 
                 payload = @version.fetch(
@@ -133,9 +135,9 @@ module Twilio
 
                 # Marshaled Properties
                 @properties = {
-                    'account_sid' => payload['account_sid'],
-                    'cumulative' => payload['cumulative'],
                     'realtime' => payload['realtime'],
+                    'cumulative' => payload['cumulative'],
+                    'account_sid' => payload['account_sid'],
                     'workspace_sid' => payload['workspace_sid'],
                     'url' => payload['url'],
                 }
@@ -162,9 +164,9 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
-              def account_sid
-                @properties['account_sid']
+              # @return [Hash] The realtime
+              def realtime
+                @properties['realtime']
               end
 
               ##
@@ -174,9 +176,9 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The realtime
-              def realtime
-                @properties['realtime']
+              # @return [String] The account_sid
+              def account_sid
+                @properties['account_sid']
               end
 
               ##
@@ -199,8 +201,9 @@ module Twilio
               # @param [String] task_queue_sid The task_queue_sid
               # @param [String] task_queue_name The task_queue_name
               # @param [String] friendly_name The friendly_name
+              # @param [String] task_channel The task_channel
               # @return [WorkersStatisticsInstance] Fetched WorkersStatisticsInstance
-              def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_queue_sid: :unset, task_queue_name: :unset, friendly_name: :unset)
+              def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_queue_sid: :unset, task_queue_name: :unset, friendly_name: :unset, task_channel: :unset)
                 context.fetch(
                     minutes: minutes,
                     start_date: start_date,
@@ -208,6 +211,7 @@ module Twilio
                     task_queue_sid: task_queue_sid,
                     task_queue_name: task_queue_name,
                     friendly_name: friendly_name,
+                    task_channel: task_channel,
                 )
               end
 

@@ -211,6 +211,8 @@ module Twilio
 
               # Dependents
               @statistics = nil
+              @workflow_real_time_statistics = nil
+              @workflow_cumulative_statistics = nil
             end
 
             ##
@@ -278,6 +280,30 @@ module Twilio
             # @return [WorkflowStatisticsContext]
             def statistics
               WorkflowStatisticsContext.new(
+                  @version,
+                  @solution[:workspace_sid],
+                  @solution[:sid],
+              )
+            end
+
+            ##
+            # Access the workflow_real_time_statistics
+            # @return [WorkflowRealTimeStatisticsList]
+            # @return [WorkflowRealTimeStatisticsContext]
+            def workflow_real_time_statistics
+              WorkflowRealTimeStatisticsContext.new(
+                  @version,
+                  @solution[:workspace_sid],
+                  @solution[:sid],
+              )
+            end
+
+            ##
+            # Access the workflow_cumulative_statistics
+            # @return [WorkflowCumulativeStatisticsList]
+            # @return [WorkflowCumulativeStatisticsContext]
+            def workflow_cumulative_statistics
+              WorkflowCumulativeStatisticsContext.new(
                   @version,
                   @solution[:workspace_sid],
                   @solution[:sid],
@@ -459,6 +485,20 @@ module Twilio
             # @return [statistics] statistics
             def statistics
               context.statistics
+            end
+
+            ##
+            # Access the workflow_real_time_statistics
+            # @return [workflow_real_time_statistics] workflow_real_time_statistics
+            def workflow_real_time_statistics
+              context.workflow_real_time_statistics
+            end
+
+            ##
+            # Access the workflow_cumulative_statistics
+            # @return [workflow_cumulative_statistics] workflow_cumulative_statistics
+            def workflow_cumulative_statistics
+              context.workflow_cumulative_statistics
             end
 
             ##

@@ -91,12 +91,14 @@ module Twilio
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
               # @param [Time] end_date The end_date
+              # @param [String] task_channel The task_channel
               # @return [WorkerStatisticsInstance] Fetched WorkerStatisticsInstance
-              def fetch(minutes: :unset, start_date: :unset, end_date: :unset)
+              def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_channel: :unset)
                 params = Twilio::Values.of({
                     'Minutes' => minutes,
                     'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
                     'EndDate' => Twilio.serialize_iso8601_datetime(end_date),
+                    'TaskChannel' => task_channel,
                 })
 
                 payload = @version.fetch(
@@ -199,12 +201,14 @@ module Twilio
               # @param [String] minutes The minutes
               # @param [Time] start_date The start_date
               # @param [Time] end_date The end_date
+              # @param [String] task_channel The task_channel
               # @return [WorkerStatisticsInstance] Fetched WorkerStatisticsInstance
-              def fetch(minutes: :unset, start_date: :unset, end_date: :unset)
+              def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_channel: :unset)
                 context.fetch(
                     minutes: minutes,
                     start_date: start_date,
                     end_date: end_date,
+                    task_channel: task_channel,
                 )
               end
 

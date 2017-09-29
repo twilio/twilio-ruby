@@ -40,6 +40,9 @@ describe 'Room' do
           "status_callback_method": "POST",
           "status_callback": "",
           "record_participants_on_connect": false,
+          "video_codecs": [
+              "VP8"
+          ],
           "end_time": "2015-07-30T20:00:00Z",
           "url": "https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
@@ -87,6 +90,9 @@ describe 'Room' do
           "status_callback_method": "POST",
           "status_callback": "",
           "record_participants_on_connect": false,
+          "video_codecs": [
+              "VP8"
+          ],
           "end_time": "2015-07-30T20:00:00Z",
           "url": "https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
@@ -161,6 +167,9 @@ describe 'Room' do
                   "duration": 2,
                   "max_participants": 10,
                   "record_participants_on_connect": false,
+                  "video_codecs": [
+                      "VP8"
+                  ],
                   "url": "https://video.twilio.com/v1/Rooms/RM4070b618362c1682b2385b1f9982833c",
                   "links": {
                       "recordings": "https://video.twilio.com/v1/Rooms/RM4070b618362c1682b2385b1f9982833c/Recordings"
@@ -220,6 +229,9 @@ describe 'Room' do
           "status_callback_method": "POST",
           "status_callback": "",
           "record_participants_on_connect": false,
+          "video_codecs": [
+              "VP8"
+          ],
           "end_time": "2015-07-30T20:00:00Z",
           "duration": 10,
           "url": "https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
