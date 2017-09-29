@@ -3,6 +3,9 @@ twilio-ruby changelog
 
 [2017-09-29] Version 5.3.0
 ---------------------------
+**Library**
+- Remove left over files from legacy 4.x library
+
 **Chat**
 - Make member accessible through identity
 - Make channel subresources accessible by channel unique name
