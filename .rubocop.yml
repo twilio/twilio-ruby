@@ -7,6 +7,7 @@ AllCops:
     - 'spec/integration/**/*'
     - 'lib/twilio-ruby/version.rb'
     - 'lib/twilio-ruby/twiml/**/*'
+    - 'lib/twilio-ruby/util/configuration.rb'
 
 Metrics/LineLength:
   Max: 120
