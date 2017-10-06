@@ -13,7 +13,7 @@ describe 'WorkflowRealTimeStatistics' do
     expect {
       @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                            .workflows("WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .workflow_real_time_statistics().fetch()
+                           .real_time_statistics().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -48,7 +48,7 @@ describe 'WorkflowRealTimeStatistics' do
 
     actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                                   .workflows("WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .workflow_real_time_statistics().fetch()
+                                  .real_time_statistics().fetch()
 
     expect(actual).to_not eq(nil)
   end

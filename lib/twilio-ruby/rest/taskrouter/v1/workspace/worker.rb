@@ -260,8 +260,8 @@ module Twilio
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers/#{@solution[:sid]}"
 
               # Dependents
-              @workers_real_time_statistics = nil
-              @workers_cumulative_statistics = nil
+              @real_time_statistics = nil
+              @cumulative_statistics = nil
               @statistics = nil
               @reservations = nil
               @worker_channels = nil
@@ -322,10 +322,10 @@ module Twilio
             end
 
             ##
-            # Access the workers_real_time_statistics
+            # Access the real_time_statistics
             # @return [WorkersRealTimeStatisticsList]
             # @return [WorkersRealTimeStatisticsContext]
-            def workers_real_time_statistics
+            def real_time_statistics
               WorkersRealTimeStatisticsContext.new(
                   @version,
                   @solution[:workspace_sid],
@@ -333,10 +333,10 @@ module Twilio
             end
 
             ##
-            # Access the workers_cumulative_statistics
+            # Access the cumulative_statistics
             # @return [WorkersCumulativeStatisticsList]
             # @return [WorkersCumulativeStatisticsContext]
-            def workers_cumulative_statistics
+            def cumulative_statistics
               WorkersCumulativeStatisticsContext.new(
                   @version,
                   @solution[:workspace_sid],
@@ -575,17 +575,17 @@ module Twilio
             end
 
             ##
-            # Access the workers_real_time_statistics
-            # @return [workers_real_time_statistics] workers_real_time_statistics
-            def workers_real_time_statistics
-              context.workers_real_time_statistics
+            # Access the real_time_statistics
+            # @return [real_time_statistics] real_time_statistics
+            def real_time_statistics
+              context.real_time_statistics
             end
 
             ##
-            # Access the workers_cumulative_statistics
-            # @return [workers_cumulative_statistics] workers_cumulative_statistics
-            def workers_cumulative_statistics
-              context.workers_cumulative_statistics
+            # Access the cumulative_statistics
+            # @return [cumulative_statistics] cumulative_statistics
+            def cumulative_statistics
+              context.cumulative_statistics
             end
 
             ##

@@ -9,7 +9,7 @@ module Twilio
     class Taskrouter < Domain
       class V1 < Version
         class WorkspaceContext < InstanceContext
-          class TaskQueueContext < InstanceContext
+          class TaskQueueList < ListResource
             class TaskQueuesStatisticsList < ListResource
               ##
               # Initialize the TaskQueuesStatisticsList

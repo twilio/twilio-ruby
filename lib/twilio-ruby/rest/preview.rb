@@ -22,6 +22,7 @@ module Twilio
         @hosted_numbers = nil
         @marketplace = nil
         @proxy = nil
+        @acc_security = nil
         @sync = nil
         @wireless = nil
       end
@@ -54,6 +55,12 @@ module Twilio
       # Version proxy of preview
       def proxy
         @proxy ||= Proxy.new self
+      end
+
+      ##
+      # Version acc_security of preview
+      def acc_security
+        @acc_security ||= AccSecurity.new self
       end
 
       ##

@@ -210,8 +210,8 @@ module Twilio
             @workers = nil
             @workflows = nil
             @statistics = nil
-            @workspace_real_time_statistics = nil
-            @workspace_cumulative_statistics = nil
+            @real_time_statistics = nil
+            @cumulative_statistics = nil
             @task_channels = nil
           end
 
@@ -437,10 +437,10 @@ module Twilio
           end
 
           ##
-          # Access the workspace_real_time_statistics
+          # Access the real_time_statistics
           # @return [WorkspaceRealTimeStatisticsList]
           # @return [WorkspaceRealTimeStatisticsContext]
-          def workspace_real_time_statistics
+          def real_time_statistics
             WorkspaceRealTimeStatisticsContext.new(
                 @version,
                 @solution[:sid],
@@ -448,10 +448,10 @@ module Twilio
           end
 
           ##
-          # Access the workspace_cumulative_statistics
+          # Access the cumulative_statistics
           # @return [WorkspaceCumulativeStatisticsList]
           # @return [WorkspaceCumulativeStatisticsContext]
-          def workspace_cumulative_statistics
+          def cumulative_statistics
             WorkspaceCumulativeStatisticsContext.new(
                 @version,
                 @solution[:sid],
@@ -717,17 +717,17 @@ module Twilio
           end
 
           ##
-          # Access the workspace_real_time_statistics
-          # @return [workspace_real_time_statistics] workspace_real_time_statistics
-          def workspace_real_time_statistics
-            context.workspace_real_time_statistics
+          # Access the real_time_statistics
+          # @return [real_time_statistics] real_time_statistics
+          def real_time_statistics
+            context.real_time_statistics
           end
 
           ##
-          # Access the workspace_cumulative_statistics
-          # @return [workspace_cumulative_statistics] workspace_cumulative_statistics
-          def workspace_cumulative_statistics
-            context.workspace_cumulative_statistics
+          # Access the cumulative_statistics
+          # @return [cumulative_statistics] cumulative_statistics
+          def cumulative_statistics
+            context.cumulative_statistics
           end
 
           ##

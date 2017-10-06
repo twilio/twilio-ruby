@@ -23,6 +23,9 @@ module Twilio
                   workspace_sid: workspace_sid
               }
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues"
+
+              # Components
+              @statistics = nil
             end
 
             ##
@@ -166,6 +169,17 @@ module Twilio
             end
 
             ##
+            # Access the statistics
+            # @return [TaskQueuesStatisticsList]
+            # @return [TaskQueuesStatisticsContext]
+            def statistics
+              @statistics ||= TaskQueuesStatisticsList.new(
+                  @version,
+                  workspace_sid: @solution[:workspace_sid],
+              )
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Taskrouter.V1.TaskQueueList>'
@@ -223,10 +237,9 @@ module Twilio
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues/#{@solution[:sid]}"
 
               # Dependents
-              @task_queues_statistics = nil
-              @task_queue_statistics = nil
-              @task_queue_real_time_statistics = nil
-              @task_queue_cumulative_statistics = nil
+              @statistics = nil
+              @real_time_statistics = nil
+              @cumulative_statistics = nil
             end
 
             ##
@@ -290,25 +303,10 @@ module Twilio
             end
 
             ##
-            # Access the task_queues_statistics
-            # @return [TaskQueuesStatisticsList]
-            # @return [TaskQueuesStatisticsContext]
-            def task_queues_statistics
-              unless @task_queues_statistics
-                @task_queues_statistics = TaskQueuesStatisticsList.new(
-                    @version,
-                    workspace_sid: @solution[:workspace_sid],
-                )
-              end
-
-              @task_queues_statistics
-            end
-
-            ##
-            # Access the task_queue_statistics
+            # Access the statistics
             # @return [TaskQueueStatisticsList]
             # @return [TaskQueueStatisticsContext]
-            def task_queue_statistics
+            def statistics
               TaskQueueStatisticsContext.new(
                   @version,
                   @solution[:workspace_sid],
@@ -317,10 +315,10 @@ module Twilio
             end
 
             ##
-            # Access the task_queue_real_time_statistics
+            # Access the real_time_statistics
             # @return [TaskQueueRealTimeStatisticsList]
             # @return [TaskQueueRealTimeStatisticsContext]
-            def task_queue_real_time_statistics
+            def real_time_statistics
               TaskQueueRealTimeStatisticsContext.new(
                   @version,
                   @solution[:workspace_sid],
@@ -329,10 +327,10 @@ module Twilio
             end
 
             ##
-            # Access the task_queue_cumulative_statistics
+            # Access the cumulative_statistics
             # @return [TaskQueueCumulativeStatisticsList]
             # @return [TaskQueueCumulativeStatisticsContext]
-            def task_queue_cumulative_statistics
+            def cumulative_statistics
               TaskQueueCumulativeStatisticsContext.new(
                   @version,
                   @solution[:workspace_sid],
@@ -526,31 +524,24 @@ module Twilio
             end
 
             ##
-            # Access the task_queues_statistics
-            # @return [task_queues_statistics] task_queues_statistics
-            def task_queues_statistics
-              context.task_queues_statistics
+            # Access the statistics
+            # @return [statistics] statistics
+            def statistics
+              context.statistics
             end
 
             ##
-            # Access the task_queue_statistics
-            # @return [task_queue_statistics] task_queue_statistics
-            def task_queue_statistics
-              context.task_queue_statistics
+            # Access the real_time_statistics
+            # @return [real_time_statistics] real_time_statistics
+            def real_time_statistics
+              context.real_time_statistics
             end
 
             ##
-            # Access the task_queue_real_time_statistics
-            # @return [task_queue_real_time_statistics] task_queue_real_time_statistics
-            def task_queue_real_time_statistics
-              context.task_queue_real_time_statistics
-            end
-
-            ##
-            # Access the task_queue_cumulative_statistics
-            # @return [task_queue_cumulative_statistics] task_queue_cumulative_statistics
-            def task_queue_cumulative_statistics
-              context.task_queue_cumulative_statistics
+            # Access the cumulative_statistics
+            # @return [cumulative_statistics] cumulative_statistics
+            def cumulative_statistics
+              context.cumulative_statistics
             end
 
             ##

@@ -12,8 +12,8 @@ describe 'TaskQueuesStatistics' do
 
     expect {
       @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .task_queues("WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .task_queues_statistics.list()
+                           .task_queues \
+                           .statistics.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -110,8 +110,8 @@ describe 'TaskQueuesStatistics' do
     ))
 
     actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .task_queues("WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .task_queues_statistics.list()
+                                  .task_queues \
+                                  .statistics.list()
 
     expect(actual).to_not eq(nil)
   end
@@ -136,8 +136,8 @@ describe 'TaskQueuesStatistics' do
     ))
 
     actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .task_queues("WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .task_queues_statistics.list()
+                                  .task_queues \
+                                  .statistics.list()
 
     expect(actual).to_not eq(nil)
   end
