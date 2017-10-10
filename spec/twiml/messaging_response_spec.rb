@@ -14,21 +14,21 @@ describe Twilio::TwiML::MessagingResponse do
 
     it 'should allow populated response' do
       r = Twilio::TwiML::MessagingResponse.new
-      r.message(message: 'Hello')
+      r.message(body: 'Hello')
       r.redirect('example.com')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello</Message><Redirect>example.com</Redirect></Response>')
     end
 
     it 'should allow chaining' do
-      r = Twilio::TwiML::MessagingResponse.new.message(message: 'Hello').redirect('example.com')
+      r = Twilio::TwiML::MessagingResponse.new.message(body: 'Hello').redirect('example.com')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello</Message><Redirect>example.com</Redirect></Response>')
     end
 
     it 'should allow nesting' do
       r = Twilio::TwiML::MessagingResponse.new
-      r.message(message: 'Hello') do |m|
+      r.message(body: 'Hello') do |m|
         m.media('foobar')
       end
 
@@ -37,7 +37,7 @@ describe Twilio::TwiML::MessagingResponse do
 
     it 'should allow nesting and chaining' do
       r = Twilio::TwiML::MessagingResponse.new
-      r.message(message: 'Hello') do |m|
+      r.message(body: 'Hello') do |m|
         m.media('foobar')
       end
 
@@ -48,7 +48,7 @@ describe Twilio::TwiML::MessagingResponse do
 
     it 'should allow nesting from the initializer' do
       response = Twilio::TwiML::MessagingResponse.new do |r|
-        r.message(message: 'Hello')
+        r.message(body: 'Hello')
         r.redirect('example.com')
       end
       expect(response.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello</Message><Redirect>example.com</Redirect></Response>')
@@ -58,7 +58,7 @@ describe Twilio::TwiML::MessagingResponse do
   context 'Testing Message' do
     it 'should allow a body' do
       r = Twilio::TwiML::MessagingResponse.new
-      r.message(message: 'Hello')
+      r.message(body: 'Hello')
 
       expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello</Message></Response>')
     end
