@@ -227,15 +227,13 @@ describe 'HostedNumberOrder' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.hosted_numbers.hosted_number_orders.create(address_sid: "ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", phone_number: "+987654321", iso_country: "iso_country", sms_capability: true, email: "email")
+      @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+987654321", iso_country: "iso_country", sms_capability: true)
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
-        'AddressSid' => "ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         'PhoneNumber' => "+987654321",
         'IsoCountry' => "iso_country",
         'SmsCapability' => true,
-        'Email' => "email",
     }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -273,7 +271,40 @@ describe 'HostedNumberOrder' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.hosted_number_orders.create(address_sid: "ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", phone_number: "+987654321", iso_country: "iso_country", sms_capability: true, email: "email")
+    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+987654321", iso_country: "iso_country", sms_capability: true)
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives create_without_optional_loa_fields responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "address_sid": null,
+          "capabilities": {
+              "sms": true,
+              "voice": false
+          },
+          "cc_emails": [],
+          "date_created": "2017-03-28T20:06:39Z",
+          "date_updated": "2017-03-28T20:06:39Z",
+          "email": null,
+          "friendly_name": null,
+          "incoming_phone_number_sid": "PN11111111111111111111111111111111",
+          "phone_number": "+14153608311",
+          "sid": "HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "signing_document_sid": null,
+          "status": "received",
+          "unique_name": null,
+          "url": "https://preview.twilio.com/HostedNumbers/HostedNumberOrders/HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "verification_attempts": 0
+      }
+      ]
+    ))
+
+    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+987654321", iso_country: "iso_country", sms_capability: true)
 
     expect(actual).to_not eq(nil)
   end

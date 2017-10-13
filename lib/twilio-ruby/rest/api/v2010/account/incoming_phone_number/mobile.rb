@@ -159,8 +159,9 @@ module Twilio
               # @param [String] voice_fallback_url The voice_fallback_url
               # @param [String] voice_method The voice_method
               # @param [String] voice_url The voice_url
+              # @param [String] identity_sid The identity_sid
               # @return [MobileInstance] Newly created MobileInstance
-              def create(phone_number: nil, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset)
+              def create(phone_number: nil, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, identity_sid: :unset)
                 data = Twilio::Values.of({
                     'PhoneNumber' => phone_number,
                     'ApiVersion' => api_version,
@@ -178,6 +179,7 @@ module Twilio
                     'VoiceFallbackUrl' => voice_fallback_url,
                     'VoiceMethod' => voice_method,
                     'VoiceUrl' => voice_url,
+                    'IdentitySid' => identity_sid,
                 })
 
                 payload = @version.create(
@@ -254,6 +256,7 @@ module Twilio
                     'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                     'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                     'friendly_name' => payload['friendly_name'],
+                    'identity_sid' => payload['identity_sid'],
                     'phone_number' => payload['phone_number'],
                     'origin' => payload['origin'],
                     'sid' => payload['sid'],
@@ -321,6 +324,12 @@ module Twilio
               # @return [String] The friendly_name
               def friendly_name
                 @properties['friendly_name']
+              end
+
+              ##
+              # @return [String] The identity_sid
+              def identity_sid
+                @properties['identity_sid']
               end
 
               ##

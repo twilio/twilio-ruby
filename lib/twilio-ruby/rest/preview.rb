@@ -102,6 +102,15 @@ module Twilio
 
       ##
       # @param [String] sid A 34 character string that uniquely identifies this
+      #   AuthorizationDocument.
+      # @return [Twilio::REST::Preview::HostedNumbers::AuthorizationDocumentInstance] if sid was passed.
+      # @return [Twilio::REST::Preview::HostedNumbers::AuthorizationDocumentList]
+      def authorization_documents(sid=:unset)
+        self.hosted_numbers.authorization_documents(sid)
+      end
+
+      ##
+      # @param [String] sid A 34 character string that uniquely identifies this
       #   HostedNumberOrder.
       # @return [Twilio::REST::Preview::HostedNumbers::HostedNumberOrderInstance] if sid was passed.
       # @return [Twilio::REST::Preview::HostedNumbers::HostedNumberOrderList]

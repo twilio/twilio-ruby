@@ -13,7 +13,23 @@ module Twilio
         def initialize(domain)
           super
           @version = 'HostedNumbers'
+          @authorization_documents = nil
           @hosted_number_orders = nil
+        end
+
+        ##
+        # @param [String] sid A 34 character string that uniquely identifies this
+        #   AuthorizationDocument.
+        # @return [Twilio::REST::Preview::HostedNumbers::AuthorizationDocumentInstance] if sid was passed.
+        # @return [Twilio::REST::Preview::HostedNumbers::AuthorizationDocumentList]
+        def authorization_documents(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @authorization_documents ||= AuthorizationDocumentList.new self
+          else
+            AuthorizationDocumentContext.new(self, sid)
+          end
         end
 
         ##

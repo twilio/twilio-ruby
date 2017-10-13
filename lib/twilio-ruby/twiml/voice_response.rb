@@ -29,9 +29,11 @@ module Twilio
       # trim:: Trim the recording
       # recording_status_callback:: Recording status callback URL
       # recording_status_callback_method:: Recording status callback URL method
+      # answer_on_bridge:: Preserve the ringing behavior of the inbound call until the Dialed call picks up
+      # ring_tone:: Ringtone allows you to override the ringback tone that Twilio will play back to the caller while executing the Dial
       # keyword_args:: additional attributes
-      def dial(number: nil, action: nil, method: nil, timeout: nil, hangup_on_star: nil, time_limit: nil, caller_id: nil, record: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, **keyword_args)
-        dial = Dial.new(number: number, action: action, method: method, timeout: timeout, hangup_on_star: hangup_on_star, time_limit: time_limit, caller_id: caller_id, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, **keyword_args)
+      def dial(number: nil, action: nil, method: nil, timeout: nil, hangup_on_star: nil, time_limit: nil, caller_id: nil, record: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, answer_on_bridge: nil, ring_tone: nil, **keyword_args)
+        dial = Dial.new(number: number, action: action, method: method, timeout: timeout, hangup_on_star: hangup_on_star, time_limit: time_limit, caller_id: caller_id, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, answer_on_bridge: answer_on_bridge, ring_tone: ring_tone, **keyword_args)
 
         yield(dial) if block_given?
         append(dial)
@@ -429,7 +431,7 @@ module Twilio
 
       ##
       # Create a new <Number> element
-      # number:: Phone Number to dial
+      # phone_number:: Phone Number to dial
       # send_digits:: DTMF tones to play when the call is answered
       # url:: TwiML URL
       # method:: TwiML URL method
@@ -437,8 +439,8 @@ module Twilio
       # status_callback:: Status callback URL
       # status_callback_method:: Status callback URL method
       # keyword_args:: additional attributes
-      def number(number, send_digits: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
-        append(Number.new(number, send_digits: send_digits, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args))
+      def number(phone_number, send_digits: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
+        append(Number.new(phone_number, send_digits: send_digits, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args))
       end
 
       ##
@@ -502,10 +504,10 @@ module Twilio
     ##
     # <Number> TwiML Noun
     class Number < TwiML
-      def initialize(number, **keyword_args)
+      def initialize(phone_number, **keyword_args)
         super(**keyword_args)
         @name = 'Number'
-        @value = number
+        @value = phone_number
         yield(self) if block_given?
       end
     end

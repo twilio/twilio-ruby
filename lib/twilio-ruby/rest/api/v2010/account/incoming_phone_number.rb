@@ -198,12 +198,15 @@ module Twilio
             #   ignore all of the voice urls  and voice applications above and use those set on
             #   the Trunk. Setting a `TrunkSid` will automatically delete your
             #   `VoiceApplicationSid` and vice versa.
+            # @param [String] identity_sid The 34 character sid of the identity Twilio should
+            #   use to associate with the number. Identities are required in some regions to
+            #   meet local regulations
             # @param [String] phone_number The phone number to purchase. e.g., +16175551212
             #   (E.164 format)
             # @param [String] area_code The desired area code for the new phone number. Any
             #   three digit US or Canada rea code is valid
             # @return [IncomingPhoneNumberInstance] Newly created IncomingPhoneNumberInstance
-            def create(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, phone_number: :unset, area_code: :unset)
+            def create(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, identity_sid: :unset, phone_number: :unset, area_code: :unset)
               data = Twilio::Values.of({
                   'PhoneNumber' => phone_number,
                   'AreaCode' => area_code,
@@ -225,6 +228,7 @@ module Twilio
                   'EmergencyStatus' => emergency_status,
                   'EmergencyAddressSid' => emergency_address_sid,
                   'TrunkSid' => trunk_sid,
+                  'IdentitySid' => identity_sid,
               })
 
               payload = @version.create(
@@ -386,8 +390,11 @@ module Twilio
             #   `VoiceApplicationSid` and vice versa.
             # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
             #   voice_receive_mode
+            # @param [String] identity_sid The 34 character sid of the identity Twilio should
+            #   use to associate with the number. Identities are required in some regions to
+            #   meet local regulations
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
-            def update(account_sid: :unset, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset)
+            def update(account_sid: :unset, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset, identity_sid: :unset)
               data = Twilio::Values.of({
                   'AccountSid' => account_sid,
                   'ApiVersion' => api_version,
@@ -409,6 +416,7 @@ module Twilio
                   'EmergencyAddressSid' => emergency_address_sid,
                   'TrunkSid' => trunk_sid,
                   'VoiceReceiveMode' => voice_receive_mode,
+                  'IdentitySid' => identity_sid,
               })
 
               payload = @version.update(
@@ -510,6 +518,7 @@ module Twilio
                   'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                   'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                   'friendly_name' => payload['friendly_name'],
+                  'identity_sid' => payload['identity_sid'],
                   'phone_number' => payload['phone_number'],
                   'origin' => payload['origin'],
                   'sid' => payload['sid'],
@@ -601,6 +610,12 @@ module Twilio
             # @return [String] A human readable description of this resouce
             def friendly_name
               @properties['friendly_name']
+            end
+
+            ##
+            # @return [String] Unique string that identifies the identity associated with number
+            def identity_sid
+              @properties['identity_sid']
             end
 
             ##
@@ -774,8 +789,11 @@ module Twilio
             #   `VoiceApplicationSid` and vice versa.
             # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
             #   voice_receive_mode
+            # @param [String] identity_sid The 34 character sid of the identity Twilio should
+            #   use to associate with the number. Identities are required in some regions to
+            #   meet local regulations
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
-            def update(account_sid: :unset, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset)
+            def update(account_sid: :unset, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset, identity_sid: :unset)
               context.update(
                   account_sid: account_sid,
                   api_version: api_version,
@@ -797,6 +815,7 @@ module Twilio
                   emergency_address_sid: emergency_address_sid,
                   trunk_sid: trunk_sid,
                   voice_receive_mode: voice_receive_mode,
+                  identity_sid: identity_sid,
               )
             end
 

@@ -18,14 +18,14 @@ module Twilio
 
       ##
       # Create a new <Message> element
-      # message:: Message Body
+      # body:: Message Body
       # to:: Phone Number to send Message to
       # from:: Phone Number to send Message from
       # action:: Action URL
       # method:: Action URL Method
       # keyword_args:: additional attributes
-      def message(message: nil, to: nil, from: nil, action: nil, method: nil, **keyword_args)
-        message = Message.new(message: message, to: to, from: from, action: action, method: method, **keyword_args)
+      def message(body: nil, to: nil, from: nil, action: nil, method: nil, **keyword_args)
+        message = Message.new(body: body, to: to, from: from, action: action, method: method, **keyword_args)
 
         yield(message) if block_given?
         append(message)
@@ -55,10 +55,10 @@ module Twilio
     ##
     # <Message> TwiML Verb
     class Message < TwiML
-      def initialize(message: nil, **keyword_args)
+      def initialize(body: nil, **keyword_args)
         super(**keyword_args)
         @name = 'Message'
-        @value = message unless message.nil?
+        @value = body unless body.nil?
         yield(self) if block_given?
       end
 

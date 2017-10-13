@@ -43,13 +43,14 @@ module Twilio
             # @param [String] provider_sid The provider_sid
             # @param [message.ContentRetention] content_retention The content_retention
             # @param [message.AddressRetention] address_retention The address_retention
+            # @param [Boolean] smart_encoded The smart_encoded
             # @param [String] from A Twilio phone number or alphanumeric sender ID enabled for
             #   the type of message you wish to send.
             # @param [String] messaging_service_sid The messaging_service_sid
             # @param [String] body The body
             # @param [String] media_url The media_url
             # @return [MessageInstance] Newly created MessageInstance
-            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, max_rate: :unset, force_delivery: :unset, provider_sid: :unset, content_retention: :unset, address_retention: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
+            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, max_rate: :unset, force_delivery: :unset, provider_sid: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -66,6 +67,7 @@ module Twilio
                   'ProviderSid' => provider_sid,
                   'ContentRetention' => content_retention,
                   'AddressRetention' => address_retention,
+                  'SmartEncoded' => smart_encoded,
               })
 
               payload = @version.create(

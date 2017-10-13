@@ -33,6 +33,7 @@ module Twilio
         @notify = nil
         @preview = nil
         @pricing = nil
+        @proxy = nil
         @taskrouter = nil
         @trunking = nil
         @video = nil
@@ -138,6 +139,12 @@ module Twilio
       # Access the Pricing Twilio Domain
       def pricing
         @pricing ||= Pricing.new self
+      end
+
+      ##
+      # Access the Proxy Twilio Domain
+      def proxy
+        @proxy ||= Proxy.new self
       end
 
       ##

@@ -350,6 +350,7 @@ module Twilio
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
                 'links' => payload['links'],
+                'ip_address' => payload['ip_address'],
             }
 
             # Context
@@ -503,6 +504,12 @@ module Twilio
           # @return [String] The links
           def links
             @properties['links']
+          end
+
+          ##
+          # @return [String] The ip_address
+          def ip_address
+            @properties['ip_address']
           end
 
           ##

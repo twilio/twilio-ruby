@@ -166,15 +166,11 @@ module Twilio
           ##
           # Retrieve a single page of HostedNumberOrderInstance records from the API.
           # Request is executed immediately.
-          # @param [String] address_sid A 34 character string that uniquely identifies the
-          #   Address resource that represents the address of the owner of this phone number.
           # @param [String] phone_number An E164 formatted phone number hosted by this
           #   HostedNumberOrder.
           # @param [String] iso_country The ISO country code of the phone_number.
           # @param [Boolean] sms_capability Used to specify that the SMS capability will be
           #   hosted on Twilio's platform.
-          # @param [String] email Email of the owner of this phone number that is being
-          #   hosted.
           # @param [String] account_sid Optional. The unique SID identifier of the Account
           #   or Sub-Account to create this HostedNumberOrder on.
           # @param [String] friendly_name Optional. A human readable description of this
@@ -200,14 +196,17 @@ module Twilio
           #   application Twilio should use to handle SMS messages sent to this number. If a
           #   `SmsApplicationSid` is present, Twilio will ignore all of the SMS urls above and
           #   use those set on the application.
+          # @param [String] address_sid Optional. A 34 character string that uniquely
+          #   identifies the Address resource that represents the address of the owner of this
+          #   phone number.
+          # @param [String] email Optional. Email of the owner of this phone number that is
+          #   being hosted.
           # @return [HostedNumberOrderInstance] Newly created HostedNumberOrderInstance
-          def create(address_sid: nil, phone_number: nil, iso_country: nil, sms_capability: nil, email: nil, account_sid: :unset, friendly_name: :unset, unique_name: :unset, cc_emails: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, status_callback_url: :unset, status_callback_method: :unset, sms_application_sid: :unset)
+          def create(phone_number: nil, iso_country: nil, sms_capability: nil, account_sid: :unset, friendly_name: :unset, unique_name: :unset, cc_emails: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, status_callback_url: :unset, status_callback_method: :unset, sms_application_sid: :unset, address_sid: :unset, email: :unset)
             data = Twilio::Values.of({
-                'AddressSid' => address_sid,
                 'PhoneNumber' => phone_number,
                 'IsoCountry' => iso_country,
                 'SmsCapability' => sms_capability,
-                'Email' => email,
                 'AccountSid' => account_sid,
                 'FriendlyName' => friendly_name,
                 'UniqueName' => unique_name,
@@ -219,6 +218,8 @@ module Twilio
                 'StatusCallbackUrl' => status_callback_url,
                 'StatusCallbackMethod' => status_callback_method,
                 'SmsApplicationSid' => sms_application_sid,
+                'AddressSid' => address_sid,
+                'Email' => email,
             })
 
             payload = @version.create(

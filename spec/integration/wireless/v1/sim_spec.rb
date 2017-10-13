@@ -52,7 +52,8 @@ describe 'Sim' do
           "iccid": "iccid",
           "e_id": "e_id",
           "status": "new",
-          "url": "https://wireless.twilio.com/v1/Sims/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://wireless.twilio.com/v1/Sims/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "ip_address": "192.168.1.1"
       }
       ]
     ))
@@ -133,7 +134,8 @@ describe 'Sim' do
                   "voice_fallback_url": "http://www.example.com",
                   "voice_method": "http_method",
                   "voice_url": "http://www.example.com",
-                  "url": "https://wireless.twilio.com/v1/Sims/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  "url": "https://wireless.twilio.com/v1/Sims/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "ip_address": "192.168.1.30"
               }
           ],
           "meta": {
@@ -199,7 +201,8 @@ describe 'Sim' do
           "voice_fallback_url": "http://www.example.com",
           "voice_method": "http_method",
           "voice_url": "http://www.example.com",
-          "url": "https://wireless.twilio.com/v1/Sims/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://wireless.twilio.com/v1/Sims/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "ip_address": "192.168.1.30"
       }
       ]
     ))
