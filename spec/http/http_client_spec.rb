@@ -118,4 +118,14 @@ describe Twilio::HTTP::Client do
     expect { @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b']) }.to raise_exception(Faraday::ConnectionFailed)
     expect(@client.last_response).to be_nil
   end
+
+  it '#after_request callback is called after request' do
+    response = double('response', status: 301, body: {})
+
+    expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(response)
+    expect(@client).to receive(:after_request).with(response)
+
+    @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'])
+  end
 end
