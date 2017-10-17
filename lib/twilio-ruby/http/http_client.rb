@@ -37,6 +37,8 @@ module Twilio
                                     request.url,
                                     request.method == 'GET' ? request.params : request.data)
 
+        after_request(response)
+
         if response.body && !response.body.empty?
           object = response.body
         elsif response.status == 400
@@ -52,6 +54,11 @@ module Twilio
       def request(host, port, method, url, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
         request = Twilio::Request.new(host, port, method, url, params, data, headers, auth, timeout)
         _request(request)
+      end
+
+      private
+
+      def after_request(response)
       end
     end
   end
