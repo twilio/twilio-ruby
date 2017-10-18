@@ -43,7 +43,7 @@ module Twilio
           object = { message: 'Bad request', code: 400 }.to_json
         end
 
-        twilio_response = Twilio::Response.new(response.status, object)
+        twilio_response = Twilio::Response.new(response.status, object, headers: response.headers)
         @last_response = twilio_response
 
         twilio_response

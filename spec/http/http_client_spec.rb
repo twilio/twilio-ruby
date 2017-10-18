@@ -11,7 +11,7 @@ describe Twilio::HTTP::Client do
     @connection = Faraday::Connection.new
 
     expect(Faraday).to receive(:new).and_yield(@connection).and_return(@connection)
-    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}))
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}, headers: {}))
 
     @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'])
 
@@ -25,7 +25,7 @@ describe Twilio::HTTP::Client do
     @connection = Faraday::Connection.new
 
     expect(Faraday).to receive(:new).and_yield(@connection).and_return(@connection)
-    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}))
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}, headers: {}))
 
     @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'], 20)
 
@@ -36,18 +36,19 @@ describe Twilio::HTTP::Client do
 
   it 'should contain a last response' do
     expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
-    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}))
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}, headers: { something: '1' }))
 
     @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'])
 
     expect(@client.last_response).to_not be_nil
     expect(@client.last_response.is_a?(Twilio::Response)).to be(true)
     expect(@client.last_response.status_code).to eq(301)
+    expect(@client.last_response.headers).to eq(something: '1')
   end
 
   it 'should contain a last request' do
     expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
-    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}))
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}, headers: {}))
 
     @client.request('host',
                     'port',
@@ -74,7 +75,7 @@ describe Twilio::HTTP::Client do
 
   it 'should contain a last response for 5XX status classes' do
     expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
-    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 500, body: {}))
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 500, body: {}, headers: {}))
 
     @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'])
     expect(@client.last_response).to_not be_nil
