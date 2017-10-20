@@ -160,8 +160,9 @@ module Twilio
               # @param [String] voice_method The voice_method
               # @param [String] voice_url The voice_url
               # @param [String] identity_sid The identity_sid
+              # @param [String] address_sid The address_sid
               # @return [LocalInstance] Newly created LocalInstance
-              def create(phone_number: nil, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, identity_sid: :unset)
+              def create(phone_number: nil, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, identity_sid: :unset, address_sid: :unset)
                 data = Twilio::Values.of({
                     'PhoneNumber' => phone_number,
                     'ApiVersion' => api_version,
@@ -180,6 +181,7 @@ module Twilio
                     'VoiceMethod' => voice_method,
                     'VoiceUrl' => voice_url,
                     'IdentitySid' => identity_sid,
+                    'AddressSid' => address_sid,
                 })
 
                 payload = @version.create(
@@ -249,6 +251,7 @@ module Twilio
                 # Marshaled Properties
                 @properties = {
                     'account_sid' => payload['account_sid'],
+                    'address_sid' => payload['address_sid'],
                     'address_requirements' => payload['address_requirements'],
                     'api_version' => payload['api_version'],
                     'beta' => payload['beta'],
@@ -282,6 +285,12 @@ module Twilio
               # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
+              end
+
+              ##
+              # @return [String] The address_sid
+              def address_sid
+                @properties['address_sid']
               end
 
               ##

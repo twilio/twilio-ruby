@@ -27,10 +27,7 @@ module Twilio
 
         def self.to_lower_camel_case(symbol)
           # Symbols don't have the .split method, so convert to string first
-          result = symbol.to_s
-          if result.include? '_'
-            result = result.split('_').map(&:capitalize).join
-          end
+          result = symbol.to_s.split('_').map(&:capitalize).join
           result[0].downcase + result[1..result.length]
         end
 
