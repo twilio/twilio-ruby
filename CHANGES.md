@@ -3,6 +3,10 @@ twilio-ruby changelog
 
 [2017-10-20] Version 5.4.1
 ---------------------------
+**Library**
+- #359 Correctly set headers on Twilio::Response
+- #360 Fix downcasing twiml parameters that are not snake_case
+
 **Api**
 - Add `address_sid` param to IncomingPhoneNumbers create and update
 - Add 'fax_enabled' option for Phone Number Search
