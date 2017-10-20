@@ -167,7 +167,7 @@ implementations:
 - Ruby 2.1.0
 - Ruby 2.0.0
 
-[capability]: https://github.com/twilio/twilio-ruby/wiki/Capability
+[capability]: https://github.com/twilio/twilio-ruby/wiki/JWT-Tokens
 [examples]: https://github.com/twilio/twilio-ruby/blob/master/examples
 [documentation]: http://twilio.github.io/twilio-ruby
 [wiki]: https://github.com/twilio/twilio-ruby/wiki
