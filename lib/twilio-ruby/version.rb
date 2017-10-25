@@ -1,3 +1,9 @@
 module Twilio
-    VERSION = '5.4.2'
+  module VERSION
+    MAJOR = 5
+    MINOR = 4
+    TINY  = 2
+
+    STRING = [MAJOR, MINOR, TINY].compact.join(".")
+  end
 end

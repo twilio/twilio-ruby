@@ -48,7 +48,7 @@ module Twilio
       def request(host, port, method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
         auth ||= @auth
 
-        headers['User-Agent'] = "twilio-ruby/#{Twilio::VERSION}" +
+        headers['User-Agent'] = "twilio-ruby/#{Twilio::VERSION::STRING}" +
                                 " (#{RUBY_ENGINE}/#{RUBY_PLATFORM}" +
                                 " #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL})"
         headers['Accept-Charset'] = 'utf-8'

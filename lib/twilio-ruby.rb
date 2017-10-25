@@ -9,7 +9,7 @@ require 'jwt'
 require 'time'
 require 'json'
 
-require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
+require 'twilio-ruby/version' unless defined?(Twilio::VERSION::STRING)
 require 'rack/twilio_webhook_authentication'
 
 require 'twilio-ruby/util'

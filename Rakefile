@@ -14,10 +14,10 @@ task :authors do
 end
 
 task :deploy, [:version] => [:spec, :authors] do |t, args|
-  current_version = Twilio::VERSION
+  current_version = Twilio::VERSION::STRING
 
   if args.version.nil?
-    version = Twilio::VERSION
+    version = Twilio::VERSION::STRING
     version_parts = version.split('.')
     increment = version_parts.pop
     increment_prefix = increment.split(/\d/)[0]
