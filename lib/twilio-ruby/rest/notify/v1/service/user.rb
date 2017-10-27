@@ -21,9 +21,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  service_sid: service_sid
-              }
+              @solution = {service_sid: service_sid}
               @uri = "/Services/#{@solution[:service_sid]}/Users"
             end
 
@@ -34,10 +32,7 @@ module Twilio
             # @param [String] segment The segment
             # @return [UserInstance] Newly created UserInstance
             def create(identity: nil, segment: :unset)
-              data = Twilio::Values.of({
-                  'Identity' => identity,
-                  'Segment' => segment,
-              })
+              data = Twilio::Values.of({'Identity' => identity, 'Segment' => segment,})
 
               payload = @version.create(
                   'POST',
@@ -45,11 +40,7 @@ module Twilio
                   data: data
               )
 
-              UserInstance.new(
-                  @version,
-                  payload,
-                  service_sid: @solution[:service_sid],
-              )
+              UserInstance.new(@version, payload, service_sid: @solution[:service_sid],)
             end
 
             ##
@@ -66,12 +57,7 @@ module Twilio
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
             def list(identity: :unset, segment: :unset, limit: nil, page_size: nil)
-              self.stream(
-                  identity: identity,
-                  segment: segment,
-                  limit: limit,
-                  page_size: page_size
-              ).entries
+              self.stream(identity: identity, segment: segment, limit: limit, page_size: page_size).entries
             end
 
             ##
@@ -90,11 +76,7 @@ module Twilio
             def stream(identity: :unset, segment: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(
-                  identity: identity,
-                  segment: segment,
-                  page_size: limits[:page_size],
-              )
+              page = self.page(identity: identity, segment: segment, page_size: limits[:page_size],)
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -106,9 +88,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size],)
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -181,11 +161,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [UserInstance] UserInstance
             def get_instance(payload)
-              UserInstance.new(
-                  @version,
-                  payload,
-                  service_sid: @solution[:service_sid],
-              )
+              UserInstance.new(@version, payload, service_sid: @solution[:service_sid],)
             end
 
             ##
@@ -208,10 +184,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  service_sid: service_sid,
-                  identity: identity,
-              }
+              @solution = {service_sid: service_sid, identity: identity,}
               @uri = "/Services/#{@solution[:service_sid]}/Users/#{@solution[:identity]}"
 
               # Dependents
@@ -254,12 +227,7 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return UserBindingContext.new(
-                    @version,
-                    @solution[:service_sid],
-                    @solution[:identity],
-                    sid,
-                )
+                return UserBindingContext.new(@version, @solution[:service_sid], @solution[:identity], sid,)
               end
 
               unless @bindings
@@ -281,12 +249,7 @@ module Twilio
               raise ArgumentError, 'segment cannot be nil' if segment.nil?
 
               if segment != :unset
-                return SegmentMembershipContext.new(
-                    @version,
-                    @solution[:service_sid],
-                    @solution[:identity],
-                    segment,
-                )
+                return SegmentMembershipContext.new(@version, @solution[:service_sid], @solution[:identity], segment,)
               end
 
               unless @segment_memberships
@@ -336,10 +299,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {
-                  'service_sid' => service_sid,
-                  'identity' => identity || @properties['identity'],
-              }
+              @params = {'service_sid' => service_sid, 'identity' => identity || @properties['identity'],}
             end
 
             ##
@@ -348,11 +308,7 @@ module Twilio
             # @return [UserContext] UserContext for this UserInstance
             def context
               unless @instance_context
-                @instance_context = UserContext.new(
-                    @version,
-                    @params['service_sid'],
-                    @params['identity'],
-                )
+                @instance_context = UserContext.new(@version, @params['service_sid'], @params['identity'],)
               end
               @instance_context
             end

@@ -21,10 +21,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    service_sid: service_sid,
-                    channel_sid: channel_sid
-                }
+                @solution = {service_sid: service_sid, channel_sid: channel_sid}
                 @uri = "/Services/#{@solution[:service_sid]}/Channels/#{@solution[:channel_sid]}/Members"
               end
 
@@ -75,11 +72,7 @@ module Twilio
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
               def list(identity: :unset, limit: nil, page_size: nil)
-                self.stream(
-                    identity: identity,
-                    limit: limit,
-                    page_size: page_size
-                ).entries
+                self.stream(identity: identity, limit: limit, page_size: page_size).entries
               end
 
               ##
@@ -97,10 +90,7 @@ module Twilio
               def stream(identity: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(
-                    identity: identity,
-                    page_size: limits[:page_size],
-                )
+                page = self.page(identity: identity, page_size: limits[:page_size],)
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -112,9 +102,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(
-                    page_size: limits[:page_size],
-                )
+                page = self.page(page_size: limits[:page_size],)
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -210,11 +198,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    service_sid: service_sid,
-                    channel_sid: channel_sid,
-                    sid: sid,
-                }
+                @solution = {service_sid: service_sid, channel_sid: channel_sid, sid: sid,}
                 @uri = "/Services/#{@solution[:service_sid]}/Channels/#{@solution[:channel_sid]}/Members/#{@solution[:sid]}"
               end
 

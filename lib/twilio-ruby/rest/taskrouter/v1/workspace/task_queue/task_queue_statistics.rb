@@ -21,10 +21,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    workspace_sid: workspace_sid,
-                    task_queue_sid: task_queue_sid
-                }
+                @solution = {workspace_sid: workspace_sid, task_queue_sid: task_queue_sid}
               end
 
               ##
@@ -79,10 +76,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    workspace_sid: workspace_sid,
-                    task_queue_sid: task_queue_sid,
-                }
+                @solution = {workspace_sid: workspace_sid, task_queue_sid: task_queue_sid,}
                 @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues/#{@solution[:task_queue_sid]}/Statistics"
               end
 
@@ -148,10 +142,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {
-                    'workspace_sid' => workspace_sid,
-                    'task_queue_sid' => task_queue_sid,
-                }
+                @params = {'workspace_sid' => workspace_sid, 'task_queue_sid' => task_queue_sid,}
               end
 
               ##

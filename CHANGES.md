@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+[2017-10-27] Version 5.4.3
+---------------------------
+**Chat**
+- Add Binding resource
+- Add UserBinding resource
+
+
 [2017-10-20] Version 5.4.2
 ---------------------------
 **Library**

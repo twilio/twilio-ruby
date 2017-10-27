@@ -124,9 +124,7 @@ describe 'Local' do
                        .local.create(phone_number: "+987654321")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'PhoneNumber' => "+987654321",
-    }
+    values = {'PhoneNumber' => "+987654321",}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

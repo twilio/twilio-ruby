@@ -45,10 +45,7 @@ module Twilio
                 data: data
             )
 
-            ServiceInstance.new(
-                @version,
-                payload,
-            )
+            ServiceInstance.new(@version, payload,)
           end
 
           ##
@@ -63,10 +60,7 @@ module Twilio
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
           def list(limit: nil, page_size: nil)
-            self.stream(
-                limit: limit,
-                page_size: page_size
-            ).entries
+            self.stream(limit: limit, page_size: page_size).entries
           end
 
           ##
@@ -83,9 +77,7 @@ module Twilio
           def stream(limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(
-                page_size: limits[:page_size],
-            )
+            page = self.page(page_size: limits[:page_size],)
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -97,9 +89,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(
-                page_size: limits[:page_size],
-            )
+            page = self.page(page_size: limits[:page_size],)
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -168,10 +158,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [ServiceInstance] ServiceInstance
           def get_instance(payload)
-            ServiceInstance.new(
-                @version,
-                payload,
-            )
+            ServiceInstance.new(@version, payload,)
           end
 
           ##
@@ -193,9 +180,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {
-                sid: sid,
-            }
+            @solution = {sid: sid,}
             @uri = "/Services/#{@solution[:sid]}"
 
             # Dependents
@@ -217,11 +202,7 @@ module Twilio
                 params,
             )
 
-            ServiceInstance.new(
-                @version,
-                payload,
-                sid: @solution[:sid],
-            )
+            ServiceInstance.new(@version, payload, sid: @solution[:sid],)
           end
 
           ##
@@ -252,11 +233,7 @@ module Twilio
                 data: data,
             )
 
-            ServiceInstance.new(
-                @version,
-                payload,
-                sid: @solution[:sid],
-            )
+            ServiceInstance.new(@version, payload, sid: @solution[:sid],)
           end
 
           ##
@@ -267,18 +244,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return DocumentContext.new(
-                  @version,
-                  @solution[:sid],
-                  sid,
-              )
+              return DocumentContext.new(@version, @solution[:sid], sid,)
             end
 
             unless @documents
-              @documents = DocumentList.new(
-                  @version,
-                  service_sid: @solution[:sid],
-              )
+              @documents = DocumentList.new(@version, service_sid: @solution[:sid],)
             end
 
             @documents
@@ -292,18 +262,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return SyncListContext.new(
-                  @version,
-                  @solution[:sid],
-                  sid,
-              )
+              return SyncListContext.new(@version, @solution[:sid], sid,)
             end
 
             unless @sync_lists
-              @sync_lists = SyncListList.new(
-                  @version,
-                  service_sid: @solution[:sid],
-              )
+              @sync_lists = SyncListList.new(@version, service_sid: @solution[:sid],)
             end
 
             @sync_lists
@@ -317,18 +280,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return SyncMapContext.new(
-                  @version,
-                  @solution[:sid],
-                  sid,
-              )
+              return SyncMapContext.new(@version, @solution[:sid], sid,)
             end
 
             unless @sync_maps
-              @sync_maps = SyncMapList.new(
-                  @version,
-                  service_sid: @solution[:sid],
-              )
+              @sync_maps = SyncMapList.new(@version, service_sid: @solution[:sid],)
             end
 
             @sync_maps
@@ -342,18 +298,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return SyncStreamContext.new(
-                  @version,
-                  @solution[:sid],
-                  sid,
-              )
+              return SyncStreamContext.new(@version, @solution[:sid], sid,)
             end
 
             unless @sync_streams
-              @sync_streams = SyncStreamList.new(
-                  @version,
-                  service_sid: @solution[:sid],
-              )
+              @sync_streams = SyncStreamList.new(@version, service_sid: @solution[:sid],)
             end
 
             @sync_streams
@@ -396,9 +345,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {
-                'sid' => sid || @properties['sid'],
-            }
+            @params = {'sid' => sid || @properties['sid'],}
           end
 
           ##
@@ -407,10 +354,7 @@ module Twilio
           # @return [ServiceContext] ServiceContext for this ServiceInstance
           def context
             unless @instance_context
-              @instance_context = ServiceContext.new(
-                  @version,
-                  @params['sid'],
-              )
+              @instance_context = ServiceContext.new(@version, @params['sid'],)
             end
             @instance_context
           end

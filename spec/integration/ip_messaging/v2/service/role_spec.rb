@@ -88,11 +88,7 @@ describe 'Role' do
                              .roles.create(friendly_name: "friendly_name", type: "channel", permission: ['permission'])
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'FriendlyName' => "friendly_name",
-        'Type' => "channel",
-        'Permission' => ['permission'],
-    }
+    values = {'FriendlyName' => "friendly_name", 'Type' => "channel", 'Permission' => ['permission'],}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -221,9 +217,7 @@ describe 'Role' do
                              .roles("RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(permission: ['permission'])
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'Permission' => ['permission'],
-    }
+    values = {'Permission' => ['permission'],}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

@@ -62,9 +62,7 @@ describe 'Message' do
                      .messages.create(body: "body")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'Body' => "body",
-    }
+    values = {'Body' => "body",}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

@@ -19,9 +19,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  workspace_sid: workspace_sid
-              }
+              @solution = {workspace_sid: workspace_sid}
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers"
 
               # Components
@@ -102,9 +100,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size],)
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -179,11 +175,7 @@ module Twilio
                   data: data
               )
 
-              WorkerInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-              )
+              WorkerInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
             end
 
             ##
@@ -191,15 +183,9 @@ module Twilio
             # @return [WorkersStatisticsList]
             # @return [WorkersStatisticsContext]
             def statistics
-              return WorkersStatisticsContext.new(
-                  @version,
-                  @solution[:workspace_sid],
-              )
+              return WorkersStatisticsContext.new(@version, @solution[:workspace_sid],)
 
-              @statistics ||= WorkersStatisticsList.new(
-                  @version,
-                  workspace_sid: @solution[:workspace_sid],
-              )
+              @statistics ||= WorkersStatisticsList.new(@version, workspace_sid: @solution[:workspace_sid],)
             end
 
             ##
@@ -228,11 +214,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [WorkerInstance] WorkerInstance
             def get_instance(payload)
-              WorkerInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-              )
+              WorkerInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
             end
 
             ##
@@ -253,10 +235,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  workspace_sid: workspace_sid,
-                  sid: sid,
-              }
+              @solution = {workspace_sid: workspace_sid, sid: sid,}
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers/#{@solution[:sid]}"
 
               # Dependents
@@ -279,12 +258,7 @@ module Twilio
                   params,
               )
 
-              WorkerInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-                  sid: @solution[:sid],
-              )
+              WorkerInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid],)
             end
 
             ##
@@ -306,12 +280,7 @@ module Twilio
                   data: data,
               )
 
-              WorkerInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-                  sid: @solution[:sid],
-              )
+              WorkerInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid],)
             end
 
             ##
@@ -326,10 +295,7 @@ module Twilio
             # @return [WorkersRealTimeStatisticsList]
             # @return [WorkersRealTimeStatisticsContext]
             def real_time_statistics
-              WorkersRealTimeStatisticsContext.new(
-                  @version,
-                  @solution[:workspace_sid],
-              )
+              WorkersRealTimeStatisticsContext.new(@version, @solution[:workspace_sid],)
             end
 
             ##
@@ -337,10 +303,7 @@ module Twilio
             # @return [WorkersCumulativeStatisticsList]
             # @return [WorkersCumulativeStatisticsContext]
             def cumulative_statistics
-              WorkersCumulativeStatisticsContext.new(
-                  @version,
-                  @solution[:workspace_sid],
-              )
+              WorkersCumulativeStatisticsContext.new(@version, @solution[:workspace_sid],)
             end
 
             ##
@@ -348,11 +311,7 @@ module Twilio
             # @return [WorkerStatisticsList]
             # @return [WorkerStatisticsContext]
             def statistics
-              WorkerStatisticsContext.new(
-                  @version,
-                  @solution[:workspace_sid],
-                  @solution[:sid],
-              )
+              WorkerStatisticsContext.new(@version, @solution[:workspace_sid], @solution[:sid],)
             end
 
             ##
@@ -363,12 +322,7 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return ReservationContext.new(
-                    @version,
-                    @solution[:workspace_sid],
-                    @solution[:sid],
-                    sid,
-                )
+                return ReservationContext.new(@version, @solution[:workspace_sid], @solution[:sid], sid,)
               end
 
               unless @reservations
@@ -390,12 +344,7 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return WorkerChannelContext.new(
-                    @version,
-                    @solution[:workspace_sid],
-                    @solution[:sid],
-                    sid,
-                )
+                return WorkerChannelContext.new(@version, @solution[:workspace_sid], @solution[:sid], sid,)
               end
 
               unless @worker_channels
@@ -447,10 +396,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {
-                  'workspace_sid' => workspace_sid,
-                  'sid' => sid || @properties['sid'],
-              }
+              @params = {'workspace_sid' => workspace_sid, 'sid' => sid || @properties['sid'],}
             end
 
             ##
@@ -459,11 +405,7 @@ module Twilio
             # @return [WorkerContext] WorkerContext for this WorkerInstance
             def context
               unless @instance_context
-                @instance_context = WorkerContext.new(
-                    @version,
-                    @params['workspace_sid'],
-                    @params['sid'],
-                )
+                @instance_context = WorkerContext.new(@version, @params['workspace_sid'], @params['sid'],)
               end
               @instance_context
             end
@@ -560,11 +502,7 @@ module Twilio
             # @param [String] friendly_name The friendly_name
             # @return [WorkerInstance] Updated WorkerInstance
             def update(activity_sid: :unset, attributes: :unset, friendly_name: :unset)
-              context.update(
-                  activity_sid: activity_sid,
-                  attributes: attributes,
-                  friendly_name: friendly_name,
-              )
+              context.update(activity_sid: activity_sid, attributes: attributes, friendly_name: friendly_name,)
             end
 
             ##

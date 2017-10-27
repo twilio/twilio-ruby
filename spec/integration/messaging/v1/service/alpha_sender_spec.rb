@@ -15,9 +15,7 @@ describe 'AlphaSender' do
                           .alpha_senders.create(alpha_sender: "alpha_sender")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'AlphaSender' => "alpha_sender",
-    }
+    values = {'AlphaSender' => "alpha_sender",}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

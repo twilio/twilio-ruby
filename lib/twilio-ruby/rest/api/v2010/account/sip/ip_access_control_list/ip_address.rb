@@ -22,10 +22,7 @@ module Twilio
                   super(version)
 
                   # Path Solution
-                  @solution = {
-                      account_sid: account_sid,
-                      ip_access_control_list_sid: ip_access_control_list_sid
-                  }
+                  @solution = {account_sid: account_sid, ip_access_control_list_sid: ip_access_control_list_sid}
                   @uri = "/Accounts/#{@solution[:account_sid]}/SIP/IpAccessControlLists/#{@solution[:ip_access_control_list_sid]}/IpAddresses.json"
                 end
 
@@ -41,10 +38,7 @@ module Twilio
                 #    efficient page size, i.e. min(limit, 1000)
                 # @return [Array] Array of up to limit results
                 def list(limit: nil, page_size: nil)
-                  self.stream(
-                      limit: limit,
-                      page_size: page_size
-                  ).entries
+                  self.stream(limit: limit, page_size: page_size).entries
                 end
 
                 ##
@@ -61,9 +55,7 @@ module Twilio
                 def stream(limit: nil, page_size: nil)
                   limits = @version.read_limits(limit, page_size)
 
-                  page = self.page(
-                      page_size: limits[:page_size],
-                  )
+                  page = self.page(page_size: limits[:page_size],)
 
                   @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
                 end
@@ -75,9 +67,7 @@ module Twilio
                 def each
                   limits = @version.read_limits
 
-                  page = self.page(
-                      page_size: limits[:page_size],
-                  )
+                  page = self.page(page_size: limits[:page_size],)
 
                   @version.stream(page,
                                   limit: limits[:limit],
@@ -125,10 +115,7 @@ module Twilio
                 # @param [String] ip_address The ip_address
                 # @return [IpAddressInstance] Newly created IpAddressInstance
                 def create(friendly_name: nil, ip_address: nil)
-                  data = Twilio::Values.of({
-                      'FriendlyName' => friendly_name,
-                      'IpAddress' => ip_address,
-                  })
+                  data = Twilio::Values.of({'FriendlyName' => friendly_name, 'IpAddress' => ip_address,})
 
                   payload = @version.create(
                       'POST',
@@ -232,10 +219,7 @@ module Twilio
                 # @param [String] friendly_name The friendly_name
                 # @return [IpAddressInstance] Updated IpAddressInstance
                 def update(ip_address: :unset, friendly_name: :unset)
-                  data = Twilio::Values.of({
-                      'IpAddress' => ip_address,
-                      'FriendlyName' => friendly_name,
-                  })
+                  data = Twilio::Values.of({'IpAddress' => ip_address, 'FriendlyName' => friendly_name,})
 
                   payload = @version.update(
                       'POST',
@@ -377,10 +361,7 @@ module Twilio
                 # @param [String] friendly_name The friendly_name
                 # @return [IpAddressInstance] Updated IpAddressInstance
                 def update(ip_address: :unset, friendly_name: :unset)
-                  context.update(
-                      ip_address: ip_address,
-                      friendly_name: friendly_name,
-                  )
+                  context.update(ip_address: ip_address, friendly_name: friendly_name,)
                 end
 
                 ##

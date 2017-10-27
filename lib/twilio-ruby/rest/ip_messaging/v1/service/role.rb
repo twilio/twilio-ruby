@@ -19,9 +19,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  service_sid: service_sid
-              }
+              @solution = {service_sid: service_sid}
               @uri = "/Services/#{@solution[:service_sid]}/Roles"
             end
 
@@ -45,11 +43,7 @@ module Twilio
                   data: data
               )
 
-              RoleInstance.new(
-                  @version,
-                  payload,
-                  service_sid: @solution[:service_sid],
-              )
+              RoleInstance.new(@version, payload, service_sid: @solution[:service_sid],)
             end
 
             ##
@@ -64,10 +58,7 @@ module Twilio
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
             def list(limit: nil, page_size: nil)
-              self.stream(
-                  limit: limit,
-                  page_size: page_size
-              ).entries
+              self.stream(limit: limit, page_size: page_size).entries
             end
 
             ##
@@ -84,9 +75,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size],)
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -98,9 +87,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size],)
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -167,11 +154,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [RoleInstance] RoleInstance
             def get_instance(payload)
-              RoleInstance.new(
-                  @version,
-                  payload,
-                  service_sid: @solution[:service_sid],
-              )
+              RoleInstance.new(@version, payload, service_sid: @solution[:service_sid],)
             end
 
             ##
@@ -192,10 +175,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  service_sid: service_sid,
-                  sid: sid,
-              }
+              @solution = {service_sid: service_sid, sid: sid,}
               @uri = "/Services/#{@solution[:service_sid]}/Roles/#{@solution[:sid]}"
             end
 
@@ -211,12 +191,7 @@ module Twilio
                   params,
               )
 
-              RoleInstance.new(
-                  @version,
-                  payload,
-                  service_sid: @solution[:service_sid],
-                  sid: @solution[:sid],
-              )
+              RoleInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid],)
             end
 
             ##
@@ -231,9 +206,7 @@ module Twilio
             # @param [String] permission The permission
             # @return [RoleInstance] Updated RoleInstance
             def update(permission: nil)
-              data = Twilio::Values.of({
-                  'Permission' => permission,
-              })
+              data = Twilio::Values.of({'Permission' => permission,})
 
               payload = @version.update(
                   'POST',
@@ -241,12 +214,7 @@ module Twilio
                   data: data,
               )
 
-              RoleInstance.new(
-                  @version,
-                  payload,
-                  service_sid: @solution[:service_sid],
-                  sid: @solution[:sid],
-              )
+              RoleInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid],)
             end
 
             ##
@@ -283,10 +251,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {
-                  'service_sid' => service_sid,
-                  'sid' => sid || @properties['sid'],
-              }
+              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'],}
             end
 
             ##
@@ -295,11 +260,7 @@ module Twilio
             # @return [RoleContext] RoleContext for this RoleInstance
             def context
               unless @instance_context
-                @instance_context = RoleContext.new(
-                    @version,
-                    @params['service_sid'],
-                    @params['sid'],
-                )
+                @instance_context = RoleContext.new(@version, @params['service_sid'], @params['sid'],)
               end
               @instance_context
             end
@@ -377,9 +338,7 @@ module Twilio
             # @param [String] permission The permission
             # @return [RoleInstance] Updated RoleInstance
             def update(permission: nil)
-              context.update(
-                  permission: permission,
-              )
+              context.update(permission: permission,)
             end
 
             ##

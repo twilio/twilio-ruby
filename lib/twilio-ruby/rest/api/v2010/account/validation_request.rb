@@ -19,9 +19,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  account_sid: account_sid
-              }
+              @solution = {account_sid: account_sid}
               @uri = "/Accounts/#{@solution[:account_sid]}/OutgoingCallerIds.json"
             end
 
@@ -51,11 +49,7 @@ module Twilio
                   data: data
               )
 
-              ValidationRequestInstance.new(
-                  @version,
-                  payload,
-                  account_sid: @solution[:account_sid],
-              )
+              ValidationRequestInstance.new(@version, payload, account_sid: @solution[:account_sid],)
             end
 
             ##
@@ -84,11 +78,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ValidationRequestInstance] ValidationRequestInstance
             def get_instance(payload)
-              ValidationRequestInstance.new(
-                  @version,
-                  payload,
-                  account_sid: @solution[:account_sid],
-              )
+              ValidationRequestInstance.new(@version, payload, account_sid: @solution[:account_sid],)
             end
 
             ##

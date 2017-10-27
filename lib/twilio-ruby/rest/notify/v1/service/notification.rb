@@ -21,9 +21,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  service_sid: service_sid
-              }
+              @solution = {service_sid: service_sid}
               @uri = "/Services/#{@solution[:service_sid]}/Notifications"
             end
 
@@ -75,11 +73,7 @@ module Twilio
                   data: data
               )
 
-              NotificationInstance.new(
-                  @version,
-                  payload,
-                  service_sid: @solution[:service_sid],
-              )
+              NotificationInstance.new(@version, payload, service_sid: @solution[:service_sid],)
             end
 
             ##
@@ -110,11 +104,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [NotificationInstance] NotificationInstance
             def get_instance(payload)
-              NotificationInstance.new(
-                  @version,
-                  payload,
-                  service_sid: @solution[:service_sid],
-              )
+              NotificationInstance.new(@version, payload, service_sid: @solution[:service_sid],)
             end
 
             ##

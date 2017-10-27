@@ -22,9 +22,7 @@ module Twilio
                   super(version)
 
                   # Path Solution
-                  @solution = {
-                      account_sid: account_sid
-                  }
+                  @solution = {account_sid: account_sid}
                   @uri = "/Accounts/#{@solution[:account_sid]}/Usage/Records/LastMonth.json"
                 end
 
@@ -86,9 +84,7 @@ module Twilio
                 def each
                   limits = @version.read_limits
 
-                  page = self.page(
-                      page_size: limits[:page_size],
-                  )
+                  page = self.page(page_size: limits[:page_size],)
 
                   @version.stream(page,
                                   limit: limits[:limit],
@@ -161,11 +157,7 @@ module Twilio
                 # @param [Hash] payload Payload response from the API
                 # @return [LastMonthInstance] LastMonthInstance
                 def get_instance(payload)
-                  LastMonthInstance.new(
-                      @version,
-                      payload,
-                      account_sid: @solution[:account_sid],
-                  )
+                  LastMonthInstance.new(@version, payload, account_sid: @solution[:account_sid],)
                 end
 
                 ##

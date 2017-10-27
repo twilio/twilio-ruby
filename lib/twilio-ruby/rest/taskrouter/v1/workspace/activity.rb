@@ -19,9 +19,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  workspace_sid: workspace_sid
-              }
+              @solution = {workspace_sid: workspace_sid}
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/Activities"
             end
 
@@ -63,11 +61,7 @@ module Twilio
             def stream(friendly_name: :unset, available: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(
-                  friendly_name: friendly_name,
-                  available: available,
-                  page_size: limits[:page_size],
-              )
+              page = self.page(friendly_name: friendly_name, available: available, page_size: limits[:page_size],)
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -79,9 +73,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size],)
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -133,10 +125,7 @@ module Twilio
             # @param [Boolean] available The available
             # @return [ActivityInstance] Newly created ActivityInstance
             def create(friendly_name: nil, available: :unset)
-              data = Twilio::Values.of({
-                  'FriendlyName' => friendly_name,
-                  'Available' => available,
-              })
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'Available' => available,})
 
               payload = @version.create(
                   'POST',
@@ -144,11 +133,7 @@ module Twilio
                   data: data
               )
 
-              ActivityInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-              )
+              ActivityInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
             end
 
             ##
@@ -177,11 +162,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ActivityInstance] ActivityInstance
             def get_instance(payload)
-              ActivityInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-              )
+              ActivityInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
             end
 
             ##
@@ -202,10 +183,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  workspace_sid: workspace_sid,
-                  sid: sid,
-              }
+              @solution = {workspace_sid: workspace_sid, sid: sid,}
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/Activities/#{@solution[:sid]}"
             end
 
@@ -221,12 +199,7 @@ module Twilio
                   params,
               )
 
-              ActivityInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-                  sid: @solution[:sid],
-              )
+              ActivityInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid],)
             end
 
             ##
@@ -234,9 +207,7 @@ module Twilio
             # @param [String] friendly_name The friendly_name
             # @return [ActivityInstance] Updated ActivityInstance
             def update(friendly_name: :unset)
-              data = Twilio::Values.of({
-                  'FriendlyName' => friendly_name,
-              })
+              data = Twilio::Values.of({'FriendlyName' => friendly_name,})
 
               payload = @version.update(
                   'POST',
@@ -244,12 +215,7 @@ module Twilio
                   data: data,
               )
 
-              ActivityInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-                  sid: @solution[:sid],
-              )
+              ActivityInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid],)
             end
 
             ##
@@ -292,10 +258,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {
-                  'workspace_sid' => workspace_sid,
-                  'sid' => sid || @properties['sid'],
-              }
+              @params = {'workspace_sid' => workspace_sid, 'sid' => sid || @properties['sid'],}
             end
 
             ##
@@ -304,11 +267,7 @@ module Twilio
             # @return [ActivityContext] ActivityContext for this ActivityInstance
             def context
               unless @instance_context
-                @instance_context = ActivityContext.new(
-                    @version,
-                    @params['workspace_sid'],
-                    @params['sid'],
-                )
+                @instance_context = ActivityContext.new(@version, @params['workspace_sid'], @params['sid'],)
               end
               @instance_context
             end
@@ -373,9 +332,7 @@ module Twilio
             # @param [String] friendly_name The friendly_name
             # @return [ActivityInstance] Updated ActivityInstance
             def update(friendly_name: :unset)
-              context.update(
-                  friendly_name: friendly_name,
-              )
+              context.update(friendly_name: friendly_name,)
             end
 
             ##

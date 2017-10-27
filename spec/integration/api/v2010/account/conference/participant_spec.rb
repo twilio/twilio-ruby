@@ -104,10 +104,7 @@ describe 'Participant' do
                        .participants.create(from: "+987654321", to: "+123456789")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'From' => "+987654321",
-        'To' => "+123456789",
-    }
+    values = {'From' => "+987654321", 'To' => "+123456789",}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

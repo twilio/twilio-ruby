@@ -53,9 +53,7 @@ describe 'InstalledAddOnExtension' do
                                  .extensions("XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(enabled: true)
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'Enabled' => true,
-    }
+    values = {'Enabled' => true,}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

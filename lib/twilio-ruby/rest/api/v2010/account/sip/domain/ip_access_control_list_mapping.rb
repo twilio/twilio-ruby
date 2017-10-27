@@ -23,10 +23,7 @@ module Twilio
                   super(version)
 
                   # Path Solution
-                  @solution = {
-                      account_sid: account_sid,
-                      domain_sid: domain_sid
-                  }
+                  @solution = {account_sid: account_sid, domain_sid: domain_sid}
                   @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:domain_sid]}/IpAccessControlListMappings.json"
                 end
 
@@ -36,9 +33,7 @@ module Twilio
                 # @param [String] ip_access_control_list_sid The ip_access_control_list_sid
                 # @return [IpAccessControlListMappingInstance] Newly created IpAccessControlListMappingInstance
                 def create(ip_access_control_list_sid: nil)
-                  data = Twilio::Values.of({
-                      'IpAccessControlListSid' => ip_access_control_list_sid,
-                  })
+                  data = Twilio::Values.of({'IpAccessControlListSid' => ip_access_control_list_sid,})
 
                   payload = @version.create(
                       'POST',
@@ -66,10 +61,7 @@ module Twilio
                 #    efficient page size, i.e. min(limit, 1000)
                 # @return [Array] Array of up to limit results
                 def list(limit: nil, page_size: nil)
-                  self.stream(
-                      limit: limit,
-                      page_size: page_size
-                  ).entries
+                  self.stream(limit: limit, page_size: page_size).entries
                 end
 
                 ##
@@ -86,9 +78,7 @@ module Twilio
                 def stream(limit: nil, page_size: nil)
                   limits = @version.read_limits(limit, page_size)
 
-                  page = self.page(
-                      page_size: limits[:page_size],
-                  )
+                  page = self.page(page_size: limits[:page_size],)
 
                   @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
                 end
@@ -100,9 +90,7 @@ module Twilio
                 def each
                   limits = @version.read_limits
 
-                  page = self.page(
-                      page_size: limits[:page_size],
-                  )
+                  page = self.page(page_size: limits[:page_size],)
 
                   @version.stream(page,
                                   limit: limits[:limit],
@@ -196,11 +184,7 @@ module Twilio
                   super(version)
 
                   # Path Solution
-                  @solution = {
-                      account_sid: account_sid,
-                      domain_sid: domain_sid,
-                      sid: sid,
-                  }
+                  @solution = {account_sid: account_sid, domain_sid: domain_sid, sid: sid,}
                   @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:domain_sid]}/IpAccessControlListMappings/#{@solution[:sid]}.json"
                 end
 

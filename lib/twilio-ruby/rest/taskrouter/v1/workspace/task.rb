@@ -19,9 +19,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  workspace_sid: workspace_sid
-              }
+              @solution = {workspace_sid: workspace_sid}
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/Tasks"
             end
 
@@ -107,9 +105,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size],)
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -192,11 +188,7 @@ module Twilio
                   data: data
               )
 
-              TaskInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-              )
+              TaskInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
             end
 
             ##
@@ -225,11 +217,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [TaskInstance] TaskInstance
             def get_instance(payload)
-              TaskInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-              )
+              TaskInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
             end
 
             ##
@@ -250,10 +238,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  workspace_sid: workspace_sid,
-                  sid: sid,
-              }
+              @solution = {workspace_sid: workspace_sid, sid: sid,}
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/Tasks/#{@solution[:sid]}"
 
               # Dependents
@@ -272,12 +257,7 @@ module Twilio
                   params,
               )
 
-              TaskInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-                  sid: @solution[:sid],
-              )
+              TaskInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid],)
             end
 
             ##
@@ -303,12 +283,7 @@ module Twilio
                   data: data,
               )
 
-              TaskInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-                  sid: @solution[:sid],
-              )
+              TaskInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid],)
             end
 
             ##
@@ -326,12 +301,7 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return ReservationContext.new(
-                    @version,
-                    @solution[:workspace_sid],
-                    @solution[:sid],
-                    sid,
-                )
+                return ReservationContext.new(@version, @solution[:workspace_sid], @solution[:sid], sid,)
               end
 
               unless @reservations
@@ -390,10 +360,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {
-                  'workspace_sid' => workspace_sid,
-                  'sid' => sid || @properties['sid'],
-              }
+              @params = {'workspace_sid' => workspace_sid, 'sid' => sid || @properties['sid'],}
             end
 
             ##
@@ -402,11 +369,7 @@ module Twilio
             # @return [TaskContext] TaskContext for this TaskInstance
             def context
               unless @instance_context
-                @instance_context = TaskContext.new(
-                    @version,
-                    @params['workspace_sid'],
-                    @params['sid'],
-                )
+                @instance_context = TaskContext.new(@version, @params['workspace_sid'], @params['sid'],)
               end
               @instance_context
             end

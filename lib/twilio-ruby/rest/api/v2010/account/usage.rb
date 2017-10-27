@@ -20,9 +20,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  account_sid: account_sid
-              }
+              @solution = {account_sid: account_sid}
 
               # Components
               @records = nil
@@ -34,10 +32,7 @@ module Twilio
             # @return [RecordList]
             # @return [RecordContext]
             def records
-              @records ||= RecordList.new(
-                  @version,
-                  account_sid: @solution[:account_sid],
-              )
+              @records ||= RecordList.new(@version, account_sid: @solution[:account_sid],)
             end
 
             ##
@@ -49,17 +44,10 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return TriggerContext.new(
-                    @version,
-                    @solution[:account_sid],
-                    sid,
-                )
+                return TriggerContext.new(@version, @solution[:account_sid], sid,)
               end
 
-                @triggers ||= TriggerList.new(
-                    @version,
-                    account_sid: @solution[:account_sid],
-                )
+                @triggers ||= TriggerList.new(@version, account_sid: @solution[:account_sid],)
             end
 
             ##
@@ -88,11 +76,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [UsageInstance] UsageInstance
             def get_instance(payload)
-              UsageInstance.new(
-                  @version,
-                  payload,
-                  account_sid: @solution[:account_sid],
-              )
+              UsageInstance.new(@version, payload, account_sid: @solution[:account_sid],)
             end
 
             ##

@@ -38,13 +38,7 @@ module Twilio
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
           def list(sim: :unset, status: :unset, direction: :unset, limit: nil, page_size: nil)
-            self.stream(
-                sim: sim,
-                status: status,
-                direction: direction,
-                limit: limit,
-                page_size: page_size
-            ).entries
+            self.stream(sim: sim, status: status, direction: direction, limit: limit, page_size: page_size).entries
           end
 
           ##
@@ -64,12 +58,7 @@ module Twilio
           def stream(sim: :unset, status: :unset, direction: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(
-                sim: sim,
-                status: status,
-                direction: direction,
-                page_size: limits[:page_size],
-            )
+            page = self.page(sim: sim, status: status, direction: direction, page_size: limits[:page_size],)
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -81,9 +70,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(
-                page_size: limits[:page_size],
-            )
+            page = self.page(page_size: limits[:page_size],)
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -156,10 +143,7 @@ module Twilio
                 data: data
             )
 
-            CommandInstance.new(
-                @version,
-                payload,
-            )
+            CommandInstance.new(@version, payload,)
           end
 
           ##
@@ -190,10 +174,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [CommandInstance] CommandInstance
           def get_instance(payload)
-            CommandInstance.new(
-                @version,
-                payload,
-            )
+            CommandInstance.new(@version, payload,)
           end
 
           ##
@@ -215,9 +196,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {
-                sid: sid,
-            }
+            @solution = {sid: sid,}
             @uri = "/Commands/#{@solution[:sid]}"
           end
 
@@ -233,11 +212,7 @@ module Twilio
                 params,
             )
 
-            CommandInstance.new(
-                @version,
-                payload,
-                sid: @solution[:sid],
-            )
+            CommandInstance.new(@version, payload, sid: @solution[:sid],)
           end
 
           ##
@@ -276,9 +251,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {
-                'sid' => sid || @properties['sid'],
-            }
+            @params = {'sid' => sid || @properties['sid'],}
           end
 
           ##
@@ -287,10 +260,7 @@ module Twilio
           # @return [CommandContext] CommandContext for this CommandInstance
           def context
             unless @instance_context
-              @instance_context = CommandContext.new(
-                  @version,
-                  @params['sid'],
-              )
+              @instance_context = CommandContext.new(@version, @params['sid'],)
             end
             @instance_context
           end

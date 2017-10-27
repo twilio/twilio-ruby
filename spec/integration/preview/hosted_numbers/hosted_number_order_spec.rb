@@ -230,11 +230,7 @@ describe 'HostedNumberOrder' do
       @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+987654321", iso_country: "iso_country", sms_capability: true)
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'PhoneNumber' => "+987654321",
-        'IsoCountry' => "iso_country",
-        'SmsCapability' => true,
-    }
+    values = {'PhoneNumber' => "+987654321", 'IsoCountry' => "iso_country", 'SmsCapability' => true,}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

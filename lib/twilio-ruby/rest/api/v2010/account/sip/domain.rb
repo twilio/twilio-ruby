@@ -21,9 +21,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    account_sid: account_sid
-                }
+                @solution = {account_sid: account_sid}
                 @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains.json"
               end
 
@@ -39,10 +37,7 @@ module Twilio
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
               def list(limit: nil, page_size: nil)
-                self.stream(
-                    limit: limit,
-                    page_size: page_size
-                ).entries
+                self.stream(limit: limit, page_size: page_size).entries
               end
 
               ##
@@ -59,9 +54,7 @@ module Twilio
               def stream(limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(
-                    page_size: limits[:page_size],
-                )
+                page = self.page(page_size: limits[:page_size],)
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -73,9 +66,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(
-                    page_size: limits[:page_size],
-                )
+                page = self.page(page_size: limits[:page_size],)
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -157,11 +148,7 @@ module Twilio
                     data: data
                 )
 
-                DomainInstance.new(
-                    @version,
-                    payload,
-                    account_sid: @solution[:account_sid],
-                )
+                DomainInstance.new(@version, payload, account_sid: @solution[:account_sid],)
               end
 
               ##
@@ -190,11 +177,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [DomainInstance] DomainInstance
               def get_instance(payload)
-                DomainInstance.new(
-                    @version,
-                    payload,
-                    account_sid: @solution[:account_sid],
-                )
+                DomainInstance.new(@version, payload, account_sid: @solution[:account_sid],)
               end
 
               ##
@@ -215,10 +198,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    account_sid: account_sid,
-                    sid: sid,
-                }
+                @solution = {account_sid: account_sid, sid: sid,}
                 @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:sid]}.json"
 
                 # Dependents
@@ -238,12 +218,7 @@ module Twilio
                     params,
                 )
 
-                DomainInstance.new(
-                    @version,
-                    payload,
-                    account_sid: @solution[:account_sid],
-                    sid: @solution[:sid],
-                )
+                DomainInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid],)
               end
 
               ##
@@ -278,12 +253,7 @@ module Twilio
                     data: data,
                 )
 
-                DomainInstance.new(
-                    @version,
-                    payload,
-                    account_sid: @solution[:account_sid],
-                    sid: @solution[:sid],
-                )
+                DomainInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid],)
               end
 
               ##
@@ -301,12 +271,7 @@ module Twilio
                 raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
                 if sid != :unset
-                  return IpAccessControlListMappingContext.new(
-                      @version,
-                      @solution[:account_sid],
-                      @solution[:sid],
-                      sid,
-                  )
+                  return IpAccessControlListMappingContext.new(@version, @solution[:account_sid], @solution[:sid], sid,)
                 end
 
                 unless @ip_access_control_list_mappings
@@ -328,12 +293,7 @@ module Twilio
                 raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
                 if sid != :unset
-                  return CredentialListMappingContext.new(
-                      @version,
-                      @solution[:account_sid],
-                      @solution[:sid],
-                      sid,
-                  )
+                  return CredentialListMappingContext.new(@version, @solution[:account_sid], @solution[:sid], sid,)
                 end
 
                 unless @credential_list_mappings
@@ -390,10 +350,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {
-                    'account_sid' => account_sid,
-                    'sid' => sid || @properties['sid'],
-                }
+                @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid'],}
               end
 
               ##
@@ -402,11 +359,7 @@ module Twilio
               # @return [DomainContext] DomainContext for this DomainInstance
               def context
                 unless @instance_context
-                  @instance_context = DomainContext.new(
-                      @version,
-                      @params['account_sid'],
-                      @params['sid'],
-                  )
+                  @instance_context = DomainContext.new(@version, @params['account_sid'], @params['sid'],)
                 end
                 @instance_context
               end

@@ -20,9 +20,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  account_sid: account_sid
-              }
+              @solution = {account_sid: account_sid}
               @uri = "/Accounts/#{@solution[:account_sid]}/SigningKeys.json"
             end
 
@@ -32,9 +30,7 @@ module Twilio
             # @param [String] friendly_name The friendly_name
             # @return [NewSigningKeyInstance] Newly created NewSigningKeyInstance
             def create(friendly_name: :unset)
-              data = Twilio::Values.of({
-                  'FriendlyName' => friendly_name,
-              })
+              data = Twilio::Values.of({'FriendlyName' => friendly_name,})
 
               payload = @version.create(
                   'POST',
@@ -42,11 +38,7 @@ module Twilio
                   data: data
               )
 
-              NewSigningKeyInstance.new(
-                  @version,
-                  payload,
-                  account_sid: @solution[:account_sid],
-              )
+              NewSigningKeyInstance.new(@version, payload, account_sid: @solution[:account_sid],)
             end
 
             ##
@@ -75,11 +67,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [NewSigningKeyInstance] NewSigningKeyInstance
             def get_instance(payload)
-              NewSigningKeyInstance.new(
-                  @version,
-                  payload,
-                  account_sid: @solution[:account_sid],
-              )
+              NewSigningKeyInstance.new(@version, payload, account_sid: @solution[:account_sid],)
             end
 
             ##

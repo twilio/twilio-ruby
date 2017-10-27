@@ -21,9 +21,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    account_sid: account_sid
-                }
+                @solution = {account_sid: account_sid}
                 @uri = "/Accounts/#{@solution[:account_sid]}/Usage/Triggers.json"
               end
 
@@ -64,11 +62,7 @@ module Twilio
                     data: data
                 )
 
-                TriggerInstance.new(
-                    @version,
-                    payload,
-                    account_sid: @solution[:account_sid],
-                )
+                TriggerInstance.new(@version, payload, account_sid: @solution[:account_sid],)
               end
 
               ##
@@ -135,9 +129,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(
-                    page_size: limits[:page_size],
-                )
+                page = self.page(page_size: limits[:page_size],)
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -213,11 +205,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [TriggerInstance] TriggerInstance
               def get_instance(payload)
-                TriggerInstance.new(
-                    @version,
-                    payload,
-                    account_sid: @solution[:account_sid],
-                )
+                TriggerInstance.new(@version, payload, account_sid: @solution[:account_sid],)
               end
 
               ##
@@ -238,10 +226,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    account_sid: account_sid,
-                    sid: sid,
-                }
+                @solution = {account_sid: account_sid, sid: sid,}
                 @uri = "/Accounts/#{@solution[:account_sid]}/Usage/Triggers/#{@solution[:sid]}.json"
               end
 
@@ -257,12 +242,7 @@ module Twilio
                     params,
                 )
 
-                TriggerInstance.new(
-                    @version,
-                    payload,
-                    account_sid: @solution[:account_sid],
-                    sid: @solution[:sid],
-                )
+                TriggerInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid],)
               end
 
               ##
@@ -287,12 +267,7 @@ module Twilio
                     data: data,
                 )
 
-                TriggerInstance.new(
-                    @version,
-                    payload,
-                    account_sid: @solution[:account_sid],
-                    sid: @solution[:sid],
-                )
+                TriggerInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid],)
               end
 
               ##
@@ -344,10 +319,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {
-                    'account_sid' => account_sid,
-                    'sid' => sid || @properties['sid'],
-                }
+                @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid'],}
               end
 
               ##
@@ -356,11 +328,7 @@ module Twilio
               # @return [TriggerContext] TriggerContext for this TriggerInstance
               def context
                 unless @instance_context
-                  @instance_context = TriggerContext.new(
-                      @version,
-                      @params['account_sid'],
-                      @params['sid'],
-                  )
+                  @instance_context = TriggerContext.new(@version, @params['account_sid'], @params['sid'],)
                 end
                 @instance_context
               end

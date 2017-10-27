@@ -49,10 +49,7 @@ module Twilio
                 data: data
             )
 
-            InstalledAddOnInstance.new(
-                @version,
-                payload,
-            )
+            InstalledAddOnInstance.new(@version, payload,)
           end
 
           ##
@@ -67,10 +64,7 @@ module Twilio
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
           def list(limit: nil, page_size: nil)
-            self.stream(
-                limit: limit,
-                page_size: page_size
-            ).entries
+            self.stream(limit: limit, page_size: page_size).entries
           end
 
           ##
@@ -87,9 +81,7 @@ module Twilio
           def stream(limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(
-                page_size: limits[:page_size],
-            )
+            page = self.page(page_size: limits[:page_size],)
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -101,9 +93,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(
-                page_size: limits[:page_size],
-            )
+            page = self.page(page_size: limits[:page_size],)
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -172,10 +162,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [InstalledAddOnInstance] InstalledAddOnInstance
           def get_instance(payload)
-            InstalledAddOnInstance.new(
-                @version,
-                payload,
-            )
+            InstalledAddOnInstance.new(@version, payload,)
           end
 
           ##
@@ -198,9 +185,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {
-                sid: sid,
-            }
+            @solution = {sid: sid,}
             @uri = "/InstalledAddOns/#{@solution[:sid]}"
 
             # Dependents
@@ -226,11 +211,7 @@ module Twilio
                 params,
             )
 
-            InstalledAddOnInstance.new(
-                @version,
-                payload,
-                sid: @solution[:sid],
-            )
+            InstalledAddOnInstance.new(@version, payload, sid: @solution[:sid],)
           end
 
           ##
@@ -252,11 +233,7 @@ module Twilio
                 data: data,
             )
 
-            InstalledAddOnInstance.new(
-                @version,
-                payload,
-                sid: @solution[:sid],
-            )
+            InstalledAddOnInstance.new(@version, payload, sid: @solution[:sid],)
           end
 
           ##
@@ -267,18 +244,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return InstalledAddOnExtensionContext.new(
-                  @version,
-                  @solution[:sid],
-                  sid,
-              )
+              return InstalledAddOnExtensionContext.new(@version, @solution[:sid], sid,)
             end
 
             unless @extensions
-              @extensions = InstalledAddOnExtensionList.new(
-                  @version,
-                  installed_add_on_sid: @solution[:sid],
-              )
+              @extensions = InstalledAddOnExtensionList.new(@version, installed_add_on_sid: @solution[:sid],)
             end
 
             @extensions
@@ -321,9 +291,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {
-                'sid' => sid || @properties['sid'],
-            }
+            @params = {'sid' => sid || @properties['sid'],}
           end
 
           ##
@@ -332,10 +300,7 @@ module Twilio
           # @return [InstalledAddOnContext] InstalledAddOnContext for this InstalledAddOnInstance
           def context
             unless @instance_context
-              @instance_context = InstalledAddOnContext.new(
-                  @version,
-                  @params['sid'],
-              )
+              @instance_context = InstalledAddOnContext.new(@version, @params['sid'],)
             end
             @instance_context
           end
@@ -422,10 +387,7 @@ module Twilio
           #   this Add-on installation for an Account.
           # @return [InstalledAddOnInstance] Updated InstalledAddOnInstance
           def update(configuration: :unset, unique_name: :unset)
-            context.update(
-                configuration: configuration,
-                unique_name: unique_name,
-            )
+            context.update(configuration: configuration, unique_name: unique_name,)
           end
 
           ##

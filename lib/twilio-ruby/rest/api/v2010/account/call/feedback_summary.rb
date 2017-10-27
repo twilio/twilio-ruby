@@ -21,9 +21,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    account_sid: account_sid
-                }
+                @solution = {account_sid: account_sid}
                 @uri = "/Accounts/#{@solution[:account_sid]}/Calls/FeedbackSummary.json"
               end
 
@@ -51,11 +49,7 @@ module Twilio
                     data: data
                 )
 
-                FeedbackSummaryInstance.new(
-                    @version,
-                    payload,
-                    account_sid: @solution[:account_sid],
-                )
+                FeedbackSummaryInstance.new(@version, payload, account_sid: @solution[:account_sid],)
               end
 
               ##
@@ -84,11 +78,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [FeedbackSummaryInstance] FeedbackSummaryInstance
               def get_instance(payload)
-                FeedbackSummaryInstance.new(
-                    @version,
-                    payload,
-                    account_sid: @solution[:account_sid],
-                )
+                FeedbackSummaryInstance.new(@version, payload, account_sid: @solution[:account_sid],)
               end
 
               ##
@@ -109,10 +99,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    account_sid: account_sid,
-                    sid: sid,
-                }
+                @solution = {account_sid: account_sid, sid: sid,}
                 @uri = "/Accounts/#{@solution[:account_sid]}/Calls/FeedbackSummary/#{@solution[:sid]}.json"
               end
 
@@ -183,10 +170,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {
-                    'account_sid' => account_sid,
-                    'sid' => sid || @properties['sid'],
-                }
+                @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid'],}
               end
 
               ##
@@ -195,11 +179,7 @@ module Twilio
               # @return [FeedbackSummaryContext] FeedbackSummaryContext for this FeedbackSummaryInstance
               def context
                 unless @instance_context
-                  @instance_context = FeedbackSummaryContext.new(
-                      @version,
-                      @params['account_sid'],
-                      @params['sid'],
-                  )
+                  @instance_context = FeedbackSummaryContext.new(@version, @params['account_sid'], @params['sid'],)
                 end
                 @instance_context
               end

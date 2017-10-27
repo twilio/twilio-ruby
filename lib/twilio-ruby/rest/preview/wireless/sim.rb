@@ -89,9 +89,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(
-                page_size: limits[:page_size],
-            )
+            page = self.page(page_size: limits[:page_size],)
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -170,10 +168,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [SimInstance] SimInstance
           def get_instance(payload)
-            SimInstance.new(
-                @version,
-                payload,
-            )
+            SimInstance.new(@version, payload,)
           end
 
           ##
@@ -195,9 +190,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {
-                sid: sid,
-            }
+            @solution = {sid: sid,}
             @uri = "/Sims/#{@solution[:sid]}"
 
             # Dependents
@@ -216,11 +209,7 @@ module Twilio
                 params,
             )
 
-            SimInstance.new(
-                @version,
-                payload,
-                sid: @solution[:sid],
-            )
+            SimInstance.new(@version, payload, sid: @solution[:sid],)
           end
 
           ##
@@ -268,11 +257,7 @@ module Twilio
                 data: data,
             )
 
-            SimInstance.new(
-                @version,
-                payload,
-                sid: @solution[:sid],
-            )
+            SimInstance.new(@version, payload, sid: @solution[:sid],)
           end
 
           ##
@@ -280,10 +265,7 @@ module Twilio
           # @return [UsageList]
           # @return [UsageContext]
           def usage
-            UsageContext.new(
-                @version,
-                @solution[:sid],
-            )
+            UsageContext.new(@version, @solution[:sid],)
           end
 
           ##
@@ -334,9 +316,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {
-                'sid' => sid || @properties['sid'],
-            }
+            @params = {'sid' => sid || @properties['sid'],}
           end
 
           ##
@@ -345,10 +325,7 @@ module Twilio
           # @return [SimContext] SimContext for this SimInstance
           def context
             unless @instance_context
-              @instance_context = SimContext.new(
-                  @version,
-                  @params['sid'],
-              )
+              @instance_context = SimContext.new(@version, @params['sid'],)
             end
             @instance_context
           end

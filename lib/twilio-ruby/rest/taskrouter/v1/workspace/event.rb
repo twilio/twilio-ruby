@@ -19,9 +19,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  workspace_sid: workspace_sid
-              }
+              @solution = {workspace_sid: workspace_sid}
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/Events"
             end
 
@@ -107,9 +105,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size],)
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -194,11 +190,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [EventInstance] EventInstance
             def get_instance(payload)
-              EventInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-              )
+              EventInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
             end
 
             ##
@@ -219,10 +211,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  workspace_sid: workspace_sid,
-                  sid: sid,
-              }
+              @solution = {workspace_sid: workspace_sid, sid: sid,}
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/Events/#{@solution[:sid]}"
             end
 
@@ -238,12 +227,7 @@ module Twilio
                   params,
               )
 
-              EventInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-                  sid: @solution[:sid],
-              )
+              EventInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid],)
             end
 
             ##
@@ -286,10 +270,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {
-                  'workspace_sid' => workspace_sid,
-                  'sid' => sid || @properties['sid'],
-              }
+              @params = {'workspace_sid' => workspace_sid, 'sid' => sid || @properties['sid'],}
             end
 
             ##
@@ -298,11 +279,7 @@ module Twilio
             # @return [EventContext] EventContext for this EventInstance
             def context
               unless @instance_context
-                @instance_context = EventContext.new(
-                    @version,
-                    @params['workspace_sid'],
-                    @params['sid'],
-                )
+                @instance_context = EventContext.new(@version, @params['workspace_sid'], @params['sid'],)
               end
               @instance_context
             end

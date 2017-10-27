@@ -21,10 +21,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    workspace_sid: workspace_sid,
-                    worker_sid: worker_sid
-                }
+                @solution = {workspace_sid: workspace_sid, worker_sid: worker_sid}
                 @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers/#{@solution[:worker_sid]}/Channels"
               end
 
@@ -40,10 +37,7 @@ module Twilio
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
               def list(limit: nil, page_size: nil)
-                self.stream(
-                    limit: limit,
-                    page_size: page_size
-                ).entries
+                self.stream(limit: limit, page_size: page_size).entries
               end
 
               ##
@@ -60,9 +54,7 @@ module Twilio
               def stream(limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(
-                    page_size: limits[:page_size],
-                )
+                page = self.page(page_size: limits[:page_size],)
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -74,9 +66,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(
-                    page_size: limits[:page_size],
-                )
+                page = self.page(page_size: limits[:page_size],)
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -170,11 +160,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    workspace_sid: workspace_sid,
-                    worker_sid: worker_sid,
-                    sid: sid,
-                }
+                @solution = {workspace_sid: workspace_sid, worker_sid: worker_sid, sid: sid,}
                 @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers/#{@solution[:worker_sid]}/Channels/#{@solution[:sid]}"
               end
 
@@ -205,10 +191,7 @@ module Twilio
               # @param [Boolean] available The available
               # @return [WorkerChannelInstance] Updated WorkerChannelInstance
               def update(capacity: :unset, available: :unset)
-                data = Twilio::Values.of({
-                    'Capacity' => capacity,
-                    'Available' => available,
-                })
+                data = Twilio::Values.of({'Capacity' => capacity, 'Available' => available,})
 
                 payload = @version.update(
                     'POST',
@@ -385,10 +368,7 @@ module Twilio
               # @param [Boolean] available The available
               # @return [WorkerChannelInstance] Updated WorkerChannelInstance
               def update(capacity: :unset, available: :unset)
-                context.update(
-                    capacity: capacity,
-                    available: available,
-                )
+                context.update(capacity: capacity, available: available,)
               end
 
               ##

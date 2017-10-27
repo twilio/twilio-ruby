@@ -21,9 +21,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  service_sid: service_sid
-              }
+              @solution = {service_sid: service_sid}
               @uri = "/Services/#{@solution[:service_sid]}/Maps"
             end
 
@@ -33,9 +31,7 @@ module Twilio
             # @param [String] unique_name The unique_name
             # @return [SyncMapInstance] Newly created SyncMapInstance
             def create(unique_name: :unset)
-              data = Twilio::Values.of({
-                  'UniqueName' => unique_name,
-              })
+              data = Twilio::Values.of({'UniqueName' => unique_name,})
 
               payload = @version.create(
                   'POST',
@@ -43,11 +39,7 @@ module Twilio
                   data: data
               )
 
-              SyncMapInstance.new(
-                  @version,
-                  payload,
-                  service_sid: @solution[:service_sid],
-              )
+              SyncMapInstance.new(@version, payload, service_sid: @solution[:service_sid],)
             end
 
             ##
@@ -62,10 +54,7 @@ module Twilio
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
             def list(limit: nil, page_size: nil)
-              self.stream(
-                  limit: limit,
-                  page_size: page_size
-              ).entries
+              self.stream(limit: limit, page_size: page_size).entries
             end
 
             ##
@@ -82,9 +71,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size],)
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -96,9 +83,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size],)
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -167,11 +152,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [SyncMapInstance] SyncMapInstance
             def get_instance(payload)
-              SyncMapInstance.new(
-                  @version,
-                  payload,
-                  service_sid: @solution[:service_sid],
-              )
+              SyncMapInstance.new(@version, payload, service_sid: @solution[:service_sid],)
             end
 
             ##
@@ -194,10 +175,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  service_sid: service_sid,
-                  sid: sid,
-              }
+              @solution = {service_sid: service_sid, sid: sid,}
               @uri = "/Services/#{@solution[:service_sid]}/Maps/#{@solution[:sid]}"
 
               # Dependents
@@ -217,12 +195,7 @@ module Twilio
                   params,
               )
 
-              SyncMapInstance.new(
-                  @version,
-                  payload,
-                  service_sid: @solution[:service_sid],
-                  sid: @solution[:sid],
-              )
+              SyncMapInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid],)
             end
 
             ##
@@ -240,12 +213,7 @@ module Twilio
               raise ArgumentError, 'key cannot be nil' if key.nil?
 
               if key != :unset
-                return SyncMapItemContext.new(
-                    @version,
-                    @solution[:service_sid],
-                    @solution[:sid],
-                    key,
-                )
+                return SyncMapItemContext.new(@version, @solution[:service_sid], @solution[:sid], key,)
               end
 
               unless @sync_map_items
@@ -267,12 +235,7 @@ module Twilio
               raise ArgumentError, 'identity cannot be nil' if identity.nil?
 
               if identity != :unset
-                return SyncMapPermissionContext.new(
-                    @version,
-                    @solution[:service_sid],
-                    @solution[:sid],
-                    identity,
-                )
+                return SyncMapPermissionContext.new(@version, @solution[:service_sid], @solution[:sid], identity,)
               end
 
               unless @sync_map_permissions
@@ -323,10 +286,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {
-                  'service_sid' => service_sid,
-                  'sid' => sid || @properties['sid'],
-              }
+              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'],}
             end
 
             ##
@@ -335,11 +295,7 @@ module Twilio
             # @return [SyncMapContext] SyncMapContext for this SyncMapInstance
             def context
               unless @instance_context
-                @instance_context = SyncMapContext.new(
-                    @version,
-                    @params['service_sid'],
-                    @params['sid'],
-                )
+                @instance_context = SyncMapContext.new(@version, @params['service_sid'], @params['sid'],)
               end
               @instance_context
             end

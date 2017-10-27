@@ -23,10 +23,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    service_sid: service_sid,
-                    session_sid: session_sid
-                }
+                @solution = {service_sid: service_sid, session_sid: session_sid}
                 @uri = "/Services/#{@solution[:service_sid]}/Sessions/#{@solution[:session_sid]}/Interactions"
               end
 
@@ -100,9 +97,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(
-                    page_size: limits[:page_size],
-                )
+                page = self.page(page_size: limits[:page_size],)
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -213,11 +208,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    service_sid: service_sid,
-                    session_sid: session_sid,
-                    sid: sid,
-                }
+                @solution = {service_sid: service_sid, session_sid: session_sid, sid: sid,}
                 @uri = "/Services/#{@solution[:service_sid]}/Sessions/#{@solution[:session_sid]}/Interactions/#{@solution[:sid]}"
               end
 

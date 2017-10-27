@@ -20,9 +20,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    workspace_sid: workspace_sid
-                }
+                @solution = {workspace_sid: workspace_sid}
                 @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues/Statistics"
               end
 
@@ -96,9 +94,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(
-                    page_size: limits[:page_size],
-                )
+                page = self.page(page_size: limits[:page_size],)
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -177,11 +173,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [TaskQueuesStatisticsInstance] TaskQueuesStatisticsInstance
               def get_instance(payload)
-                TaskQueuesStatisticsInstance.new(
-                    @version,
-                    payload,
-                    workspace_sid: @solution[:workspace_sid],
-                )
+                TaskQueuesStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
               end
 
               ##

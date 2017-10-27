@@ -103,9 +103,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(
-                page_size: limits[:page_size],
-            )
+            page = self.page(page_size: limits[:page_size],)
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -228,10 +226,7 @@ module Twilio
                 data: data
             )
 
-            HostedNumberOrderInstance.new(
-                @version,
-                payload,
-            )
+            HostedNumberOrderInstance.new(@version, payload,)
           end
 
           ##
@@ -262,10 +257,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [HostedNumberOrderInstance] HostedNumberOrderInstance
           def get_instance(payload)
-            HostedNumberOrderInstance.new(
-                @version,
-                payload,
-            )
+            HostedNumberOrderInstance.new(@version, payload,)
           end
 
           ##
@@ -288,9 +280,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {
-                sid: sid,
-            }
+            @solution = {sid: sid,}
             @uri = "/HostedNumberOrders/#{@solution[:sid]}"
           end
 
@@ -306,11 +296,7 @@ module Twilio
                 params,
             )
 
-            HostedNumberOrderInstance.new(
-                @version,
-                payload,
-                sid: @solution[:sid],
-            )
+            HostedNumberOrderInstance.new(@version, payload, sid: @solution[:sid],)
           end
 
           ##
@@ -352,11 +338,7 @@ module Twilio
                 data: data,
             )
 
-            HostedNumberOrderInstance.new(
-                @version,
-                payload,
-                sid: @solution[:sid],
-            )
+            HostedNumberOrderInstance.new(@version, payload, sid: @solution[:sid],)
           end
 
           ##
@@ -402,9 +384,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {
-                'sid' => sid || @properties['sid'],
-            }
+            @params = {'sid' => sid || @properties['sid'],}
           end
 
           ##
@@ -413,10 +393,7 @@ module Twilio
           # @return [HostedNumberOrderContext] HostedNumberOrderContext for this HostedNumberOrderInstance
           def context
             unless @instance_context
-              @instance_context = HostedNumberOrderContext.new(
-                  @version,
-                  @params['sid'],
-              )
+              @instance_context = HostedNumberOrderContext.new(@version, @params['sid'],)
             end
             @instance_context
           end

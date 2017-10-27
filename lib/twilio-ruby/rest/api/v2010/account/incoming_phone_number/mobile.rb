@@ -21,9 +21,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    account_sid: account_sid
-                }
+                @solution = {account_sid: account_sid}
                 @uri = "/Accounts/#{@solution[:account_sid]}/IncomingPhoneNumbers/Mobile.json"
               end
 
@@ -89,9 +87,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(
-                    page_size: limits[:page_size],
-                )
+                page = self.page(page_size: limits[:page_size],)
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -190,11 +186,7 @@ module Twilio
                     data: data
                 )
 
-                MobileInstance.new(
-                    @version,
-                    payload,
-                    account_sid: @solution[:account_sid],
-                )
+                MobileInstance.new(@version, payload, account_sid: @solution[:account_sid],)
               end
 
               ##
@@ -223,11 +215,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [MobileInstance] MobileInstance
               def get_instance(payload)
-                MobileInstance.new(
-                    @version,
-                    payload,
-                    account_sid: @solution[:account_sid],
-                )
+                MobileInstance.new(@version, payload, account_sid: @solution[:account_sid],)
               end
 
               ##

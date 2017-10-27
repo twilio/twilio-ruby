@@ -87,9 +87,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(
-                page_size: limits[:page_size],
-            )
+            page = self.page(page_size: limits[:page_size],)
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -166,10 +164,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [RecordingInstance] RecordingInstance
           def get_instance(payload)
-            RecordingInstance.new(
-                @version,
-                payload,
-            )
+            RecordingInstance.new(@version, payload,)
           end
 
           ##
@@ -189,9 +184,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {
-                sid: sid,
-            }
+            @solution = {sid: sid,}
             @uri = "/Recordings/#{@solution[:sid]}"
           end
 
@@ -207,11 +200,7 @@ module Twilio
                 params,
             )
 
-            RecordingInstance.new(
-                @version,
-                payload,
-                sid: @solution[:sid],
-            )
+            RecordingInstance.new(@version, payload, sid: @solution[:sid],)
           end
 
           ##
@@ -258,9 +247,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {
-                'sid' => sid || @properties['sid'],
-            }
+            @params = {'sid' => sid || @properties['sid'],}
           end
 
           ##
@@ -269,10 +256,7 @@ module Twilio
           # @return [RecordingContext] RecordingContext for this RecordingInstance
           def context
             unless @instance_context
-              @instance_context = RecordingContext.new(
-                  @version,
-                  @params['sid'],
-              )
+              @instance_context = RecordingContext.new(@version, @params['sid'],)
             end
             @instance_context
           end

@@ -15,10 +15,7 @@ describe 'Verification' do
                                   .verifications.create(to: "to", channel: "channel")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'To' => "to",
-        'Channel' => "channel",
-    }
+    values = {'To' => "to", 'Channel' => "channel",}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

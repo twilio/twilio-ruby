@@ -19,9 +19,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  workspace_sid: workspace_sid
-              }
+              @solution = {workspace_sid: workspace_sid}
             end
 
             ##
@@ -50,11 +48,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [WorkspaceStatisticsInstance] WorkspaceStatisticsInstance
             def get_instance(payload)
-              WorkspaceStatisticsInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-              )
+              WorkspaceStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
             end
 
             ##
@@ -74,9 +68,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  workspace_sid: workspace_sid,
-              }
+              @solution = {workspace_sid: workspace_sid,}
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/Statistics"
             end
 
@@ -103,11 +95,7 @@ module Twilio
                   params,
               )
 
-              WorkspaceStatisticsInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-              )
+              WorkspaceStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
             end
 
             ##
@@ -139,9 +127,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {
-                  'workspace_sid' => workspace_sid,
-              }
+              @params = {'workspace_sid' => workspace_sid,}
             end
 
             ##
@@ -150,10 +136,7 @@ module Twilio
             # @return [WorkspaceStatisticsContext] WorkspaceStatisticsContext for this WorkspaceStatisticsInstance
             def context
               unless @instance_context
-                @instance_context = WorkspaceStatisticsContext.new(
-                    @version,
-                    @params['workspace_sid'],
-                )
+                @instance_context = WorkspaceStatisticsContext.new(@version, @params['workspace_sid'],)
               end
               @instance_context
             end

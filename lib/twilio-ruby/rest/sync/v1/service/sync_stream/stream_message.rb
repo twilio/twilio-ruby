@@ -23,10 +23,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    service_sid: service_sid,
-                    stream_sid: stream_sid
-                }
+                @solution = {service_sid: service_sid, stream_sid: stream_sid}
                 @uri = "/Services/#{@solution[:service_sid]}/Streams/#{@solution[:stream_sid]}/Messages"
               end
 
@@ -37,9 +34,7 @@ module Twilio
               #   maximum size 4KB.
               # @return [StreamMessageInstance] Newly created StreamMessageInstance
               def create(data: nil)
-                data = Twilio::Values.of({
-                    'Data' => Twilio.serialize_object(data),
-                })
+                data = Twilio::Values.of({'Data' => Twilio.serialize_object(data),})
 
                 payload = @version.create(
                     'POST',
@@ -112,10 +107,7 @@ module Twilio
                 super(version)
 
                 # Marshaled Properties
-                @properties = {
-                    'sid' => payload['sid'],
-                    'data' => payload['data'],
-                }
+                @properties = {'sid' => payload['sid'], 'data' => payload['data'],}
               end
 
               ##

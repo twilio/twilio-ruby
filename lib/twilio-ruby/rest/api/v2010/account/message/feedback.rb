@@ -21,10 +21,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    account_sid: account_sid,
-                    message_sid: message_sid
-                }
+                @solution = {account_sid: account_sid, message_sid: message_sid}
                 @uri = "/Accounts/#{@solution[:account_sid]}/Messages/#{@solution[:message_sid]}/Feedback.json"
               end
 
@@ -34,9 +31,7 @@ module Twilio
               # @param [feedback.Outcome] outcome The outcome
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(outcome: :unset)
-                data = Twilio::Values.of({
-                    'Outcome' => outcome,
-                })
+                data = Twilio::Values.of({'Outcome' => outcome,})
 
                 payload = @version.create(
                     'POST',

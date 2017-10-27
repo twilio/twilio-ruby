@@ -19,9 +19,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  workspace_sid: workspace_sid
-              }
+              @solution = {workspace_sid: workspace_sid}
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workflows"
             end
 
@@ -38,11 +36,7 @@ module Twilio
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
             def list(friendly_name: :unset, limit: nil, page_size: nil)
-              self.stream(
-                  friendly_name: friendly_name,
-                  limit: limit,
-                  page_size: page_size
-              ).entries
+              self.stream(friendly_name: friendly_name, limit: limit, page_size: page_size).entries
             end
 
             ##
@@ -60,10 +54,7 @@ module Twilio
             def stream(friendly_name: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(
-                  friendly_name: friendly_name,
-                  page_size: limits[:page_size],
-              )
+              page = self.page(friendly_name: friendly_name, page_size: limits[:page_size],)
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -75,9 +66,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size],)
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -145,11 +134,7 @@ module Twilio
                   data: data
               )
 
-              WorkflowInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-              )
+              WorkflowInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
             end
 
             ##
@@ -178,11 +163,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [WorkflowInstance] WorkflowInstance
             def get_instance(payload)
-              WorkflowInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-              )
+              WorkflowInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
             end
 
             ##
@@ -203,10 +184,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  workspace_sid: workspace_sid,
-                  sid: sid,
-              }
+              @solution = {workspace_sid: workspace_sid, sid: sid,}
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workflows/#{@solution[:sid]}"
 
               # Dependents
@@ -227,12 +205,7 @@ module Twilio
                   params,
               )
 
-              WorkflowInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-                  sid: @solution[:sid],
-              )
+              WorkflowInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid],)
             end
 
             ##
@@ -259,12 +232,7 @@ module Twilio
                   data: data,
               )
 
-              WorkflowInstance.new(
-                  @version,
-                  payload,
-                  workspace_sid: @solution[:workspace_sid],
-                  sid: @solution[:sid],
-              )
+              WorkflowInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid],)
             end
 
             ##
@@ -279,11 +247,7 @@ module Twilio
             # @return [WorkflowStatisticsList]
             # @return [WorkflowStatisticsContext]
             def statistics
-              WorkflowStatisticsContext.new(
-                  @version,
-                  @solution[:workspace_sid],
-                  @solution[:sid],
-              )
+              WorkflowStatisticsContext.new(@version, @solution[:workspace_sid], @solution[:sid],)
             end
 
             ##
@@ -291,11 +255,7 @@ module Twilio
             # @return [WorkflowRealTimeStatisticsList]
             # @return [WorkflowRealTimeStatisticsContext]
             def real_time_statistics
-              WorkflowRealTimeStatisticsContext.new(
-                  @version,
-                  @solution[:workspace_sid],
-                  @solution[:sid],
-              )
+              WorkflowRealTimeStatisticsContext.new(@version, @solution[:workspace_sid], @solution[:sid],)
             end
 
             ##
@@ -303,11 +263,7 @@ module Twilio
             # @return [WorkflowCumulativeStatisticsList]
             # @return [WorkflowCumulativeStatisticsContext]
             def cumulative_statistics
-              WorkflowCumulativeStatisticsContext.new(
-                  @version,
-                  @solution[:workspace_sid],
-                  @solution[:sid],
-              )
+              WorkflowCumulativeStatisticsContext.new(@version, @solution[:workspace_sid], @solution[:sid],)
             end
 
             ##
@@ -348,10 +304,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {
-                  'workspace_sid' => workspace_sid,
-                  'sid' => sid || @properties['sid'],
-              }
+              @params = {'workspace_sid' => workspace_sid, 'sid' => sid || @properties['sid'],}
             end
 
             ##
@@ -360,11 +313,7 @@ module Twilio
             # @return [WorkflowContext] WorkflowContext for this WorkflowInstance
             def context
               unless @instance_context
-                @instance_context = WorkflowContext.new(
-                    @version,
-                    @params['workspace_sid'],
-                    @params['sid'],
-                )
+                @instance_context = WorkflowContext.new(@version, @params['workspace_sid'], @params['sid'],)
               end
               @instance_context
             end

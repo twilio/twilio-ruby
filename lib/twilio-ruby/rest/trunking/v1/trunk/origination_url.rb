@@ -19,9 +19,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  trunk_sid: trunk_sid
-              }
+              @solution = {trunk_sid: trunk_sid}
               @uri = "/Trunks/#{@solution[:trunk_sid]}/OriginationUrls"
             end
 
@@ -49,11 +47,7 @@ module Twilio
                   data: data
               )
 
-              OriginationUrlInstance.new(
-                  @version,
-                  payload,
-                  trunk_sid: @solution[:trunk_sid],
-              )
+              OriginationUrlInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid],)
             end
 
             ##
@@ -68,10 +62,7 @@ module Twilio
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
             def list(limit: nil, page_size: nil)
-              self.stream(
-                  limit: limit,
-                  page_size: page_size
-              ).entries
+              self.stream(limit: limit, page_size: page_size).entries
             end
 
             ##
@@ -88,9 +79,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size],)
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -102,9 +91,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size],)
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -171,11 +158,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [OriginationUrlInstance] OriginationUrlInstance
             def get_instance(payload)
-              OriginationUrlInstance.new(
-                  @version,
-                  payload,
-                  trunk_sid: @solution[:trunk_sid],
-              )
+              OriginationUrlInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid],)
             end
 
             ##
@@ -196,10 +179,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  trunk_sid: trunk_sid,
-                  sid: sid,
-              }
+              @solution = {trunk_sid: trunk_sid, sid: sid,}
               @uri = "/Trunks/#{@solution[:trunk_sid]}/OriginationUrls/#{@solution[:sid]}"
             end
 
@@ -215,12 +195,7 @@ module Twilio
                   params,
               )
 
-              OriginationUrlInstance.new(
-                  @version,
-                  payload,
-                  trunk_sid: @solution[:trunk_sid],
-                  sid: @solution[:sid],
-              )
+              OriginationUrlInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid], sid: @solution[:sid],)
             end
 
             ##
@@ -253,12 +228,7 @@ module Twilio
                   data: data,
               )
 
-              OriginationUrlInstance.new(
-                  @version,
-                  payload,
-                  trunk_sid: @solution[:trunk_sid],
-                  sid: @solution[:sid],
-              )
+              OriginationUrlInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid], sid: @solution[:sid],)
             end
 
             ##
@@ -297,10 +267,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {
-                  'trunk_sid' => trunk_sid,
-                  'sid' => sid || @properties['sid'],
-              }
+              @params = {'trunk_sid' => trunk_sid, 'sid' => sid || @properties['sid'],}
             end
 
             ##
@@ -309,11 +276,7 @@ module Twilio
             # @return [OriginationUrlContext] OriginationUrlContext for this OriginationUrlInstance
             def context
               unless @instance_context
-                @instance_context = OriginationUrlContext.new(
-                    @version,
-                    @params['trunk_sid'],
-                    @params['sid'],
-                )
+                @instance_context = OriginationUrlContext.new(@version, @params['trunk_sid'], @params['sid'],)
               end
               @instance_context
             end

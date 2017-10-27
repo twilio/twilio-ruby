@@ -23,10 +23,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    service_sid: service_sid,
-                    identity: identity
-                }
+                @solution = {service_sid: service_sid, identity: identity}
                 @uri = "/Services/#{@solution[:service_sid]}/Users/#{@solution[:identity]}/Bindings"
               end
 
@@ -105,12 +102,7 @@ module Twilio
               def stream(start_date: :unset, end_date: :unset, tag: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(
-                    start_date: start_date,
-                    end_date: end_date,
-                    tag: tag,
-                    page_size: limits[:page_size],
-                )
+                page = self.page(start_date: start_date, end_date: end_date, tag: tag, page_size: limits[:page_size],)
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -122,9 +114,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(
-                    page_size: limits[:page_size],
-                )
+                page = self.page(page_size: limits[:page_size],)
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -228,11 +218,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    service_sid: service_sid,
-                    identity: identity,
-                    sid: sid,
-                }
+                @solution = {service_sid: service_sid, identity: identity, sid: sid,}
                 @uri = "/Services/#{@solution[:service_sid]}/Users/#{@solution[:identity]}/Bindings/#{@solution[:sid]}"
               end
 
@@ -306,11 +292,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {
-                    'service_sid' => service_sid,
-                    'identity' => identity,
-                    'sid' => sid || @properties['sid'],
-                }
+                @params = {'service_sid' => service_sid, 'identity' => identity, 'sid' => sid || @properties['sid'],}
               end
 
               ##

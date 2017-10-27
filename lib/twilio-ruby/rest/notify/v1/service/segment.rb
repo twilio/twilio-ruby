@@ -21,9 +21,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  service_sid: service_sid
-              }
+              @solution = {service_sid: service_sid}
               @uri = "/Services/#{@solution[:service_sid]}/Segments"
             end
 
@@ -39,10 +37,7 @@ module Twilio
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
             def list(limit: nil, page_size: nil)
-              self.stream(
-                  limit: limit,
-                  page_size: page_size
-              ).entries
+              self.stream(limit: limit, page_size: page_size).entries
             end
 
             ##
@@ -59,9 +54,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size],)
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -73,9 +66,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size],)
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -144,11 +135,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [SegmentInstance] SegmentInstance
             def get_instance(payload)
-              SegmentInstance.new(
-                  @version,
-                  payload,
-                  service_sid: @solution[:service_sid],
-              )
+              SegmentInstance.new(@version, payload, service_sid: @solution[:service_sid],)
             end
 
             ##

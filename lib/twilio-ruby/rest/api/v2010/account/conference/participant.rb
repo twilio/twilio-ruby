@@ -23,10 +23,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    account_sid: account_sid,
-                    conference_sid: conference_sid
-                }
+                @solution = {account_sid: account_sid, conference_sid: conference_sid}
                 @uri = "/Accounts/#{@solution[:account_sid]}/Conferences/#{@solution[:conference_sid]}/Participants.json"
               end
 
@@ -127,12 +124,7 @@ module Twilio
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
               def list(muted: :unset, hold: :unset, limit: nil, page_size: nil)
-                self.stream(
-                    muted: muted,
-                    hold: hold,
-                    limit: limit,
-                    page_size: page_size
-                ).entries
+                self.stream(muted: muted, hold: hold, limit: limit, page_size: page_size).entries
               end
 
               ##
@@ -151,11 +143,7 @@ module Twilio
               def stream(muted: :unset, hold: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(
-                    muted: muted,
-                    hold: hold,
-                    page_size: limits[:page_size],
-                )
+                page = self.page(muted: muted, hold: hold, page_size: limits[:page_size],)
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -167,9 +155,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(
-                    page_size: limits[:page_size],
-                )
+                page = self.page(page_size: limits[:page_size],)
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -268,11 +254,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    account_sid: account_sid,
-                    conference_sid: conference_sid,
-                    call_sid: call_sid,
-                }
+                @solution = {account_sid: account_sid, conference_sid: conference_sid, call_sid: call_sid,}
                 @uri = "/Accounts/#{@solution[:account_sid]}/Conferences/#{@solution[:conference_sid]}/Participants/#{@solution[:call_sid]}.json"
               end
 

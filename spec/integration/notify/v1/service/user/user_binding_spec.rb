@@ -97,10 +97,7 @@ describe 'UserBinding' do
                        .bindings.create(binding_type: "apn", address: "address")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'BindingType' => "apn",
-        'Address' => "address",
-    }
+    values = {'BindingType' => "apn", 'Address' => "address",}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

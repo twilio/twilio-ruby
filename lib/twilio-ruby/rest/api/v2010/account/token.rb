@@ -20,9 +20,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {
-                  account_sid: account_sid
-              }
+              @solution = {account_sid: account_sid}
               @uri = "/Accounts/#{@solution[:account_sid]}/Tokens.json"
             end
 
@@ -33,9 +31,7 @@ module Twilio
             #   are valid
             # @return [TokenInstance] Newly created TokenInstance
             def create(ttl: :unset)
-              data = Twilio::Values.of({
-                  'Ttl' => ttl,
-              })
+              data = Twilio::Values.of({'Ttl' => ttl,})
 
               payload = @version.create(
                   'POST',
@@ -43,11 +39,7 @@ module Twilio
                   data: data
               )
 
-              TokenInstance.new(
-                  @version,
-                  payload,
-                  account_sid: @solution[:account_sid],
-              )
+              TokenInstance.new(@version, payload, account_sid: @solution[:account_sid],)
             end
 
             ##
@@ -76,11 +68,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [TokenInstance] TokenInstance
             def get_instance(payload)
-              TokenInstance.new(
-                  @version,
-                  payload,
-                  account_sid: @solution[:account_sid],
-              )
+              TokenInstance.new(@version, payload, account_sid: @solution[:account_sid],)
             end
 
             ##

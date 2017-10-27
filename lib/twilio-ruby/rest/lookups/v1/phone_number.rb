@@ -46,10 +46,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [PhoneNumberInstance] PhoneNumberInstance
           def get_instance(payload)
-            PhoneNumberInstance.new(
-                @version,
-                payload,
-            )
+            PhoneNumberInstance.new(@version, payload,)
           end
 
           ##
@@ -69,9 +66,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {
-                phone_number: phone_number,
-            }
+            @solution = {phone_number: phone_number,}
             @uri = "/PhoneNumbers/#{@solution[:phone_number]}"
           end
 
@@ -83,11 +78,7 @@ module Twilio
           # @param [Hash] add_ons_data The add_ons_data
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
           def fetch(country_code: :unset, type: :unset, add_ons: :unset, add_ons_data: :unset)
-            params = Twilio::Values.of({
-                'CountryCode' => country_code,
-                'Type' => type,
-                'AddOns' => add_ons,
-            })
+            params = Twilio::Values.of({'CountryCode' => country_code, 'Type' => type, 'AddOns' => add_ons,})
 
             params.merge!(Twilio.prefixed_collapsible_map(add_ons_data, 'AddOns'))
             payload = @version.fetch(
@@ -96,11 +87,7 @@ module Twilio
                 params,
             )
 
-            PhoneNumberInstance.new(
-                @version,
-                payload,
-                phone_number: @solution[:phone_number],
-            )
+            PhoneNumberInstance.new(@version, payload, phone_number: @solution[:phone_number],)
           end
 
           ##
@@ -134,9 +121,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {
-                'phone_number' => phone_number || @properties['phone_number'],
-            }
+            @params = {'phone_number' => phone_number || @properties['phone_number'],}
           end
 
           ##
@@ -145,10 +130,7 @@ module Twilio
           # @return [PhoneNumberContext] PhoneNumberContext for this PhoneNumberInstance
           def context
             unless @instance_context
-              @instance_context = PhoneNumberContext.new(
-                  @version,
-                  @params['phone_number'],
-              )
+              @instance_context = PhoneNumberContext.new(@version, @params['phone_number'],)
             end
             @instance_context
           end
@@ -203,12 +185,7 @@ module Twilio
           # @param [Hash] add_ons_data The add_ons_data
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
           def fetch(country_code: :unset, type: :unset, add_ons: :unset, add_ons_data: :unset)
-            context.fetch(
-                country_code: country_code,
-                type: type,
-                add_ons: add_ons,
-                add_ons_data: add_ons_data,
-            )
+            context.fetch(country_code: country_code, type: type, add_ons: add_ons, add_ons_data: add_ons_data,)
           end
 
           ##

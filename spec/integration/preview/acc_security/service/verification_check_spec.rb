@@ -15,9 +15,7 @@ describe 'VerificationCheck' do
                                   .verification_checks.create(code: "code")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'Code' => "code",
-    }
+    values = {'Code' => "code",}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

@@ -89,10 +89,7 @@ describe 'SyncMapItem' do
                      .sync_map_items.create(key: "key", data: "{}")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'Key' => "key",
-        'Data' => Twilio.serialize_object("{}"),
-    }
+    values = {'Key' => "key", 'Data' => Twilio.serialize_object("{}"),}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -218,9 +215,7 @@ describe 'SyncMapItem' do
                      .sync_map_items("key").update(data: "{}")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'Data' => Twilio.serialize_object("{}"),
-    }
+    values = {'Data' => Twilio.serialize_object("{}"),}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

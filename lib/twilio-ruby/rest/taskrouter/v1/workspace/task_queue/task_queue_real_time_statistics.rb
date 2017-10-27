@@ -21,10 +21,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    workspace_sid: workspace_sid,
-                    task_queue_sid: task_queue_sid
-                }
+                @solution = {workspace_sid: workspace_sid, task_queue_sid: task_queue_sid}
               end
 
               ##
@@ -79,10 +76,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {
-                    workspace_sid: workspace_sid,
-                    task_queue_sid: task_queue_sid,
-                }
+                @solution = {workspace_sid: workspace_sid, task_queue_sid: task_queue_sid,}
                 @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues/#{@solution[:task_queue_sid]}/RealTimeStatistics"
               end
 
@@ -91,9 +85,7 @@ module Twilio
               # @param [String] task_channel The task_channel
               # @return [TaskQueueRealTimeStatisticsInstance] Fetched TaskQueueRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
-                params = Twilio::Values.of({
-                    'TaskChannel' => task_channel,
-                })
+                params = Twilio::Values.of({'TaskChannel' => task_channel,})
 
                 payload = @version.fetch(
                     'GET',
@@ -145,10 +137,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {
-                    'workspace_sid' => workspace_sid,
-                    'task_queue_sid' => task_queue_sid,
-                }
+                @params = {'workspace_sid' => workspace_sid, 'task_queue_sid' => task_queue_sid,}
               end
 
               ##
@@ -237,9 +226,7 @@ module Twilio
               # @param [String] task_channel The task_channel
               # @return [TaskQueueRealTimeStatisticsInstance] Fetched TaskQueueRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
-                context.fetch(
-                    task_channel: task_channel,
-                )
+                context.fetch(task_channel: task_channel,)
               end
 
               ##
