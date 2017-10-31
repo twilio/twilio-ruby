@@ -56,4 +56,22 @@ describe Twilio do
       expect(actual).to eq(123)
     end
   end
+
+  describe 'serialize_list' do
+    it 'should only operate on things with .each method' do
+      actual = Twilio.serialize_list(nil)
+      expect(actual).to eq(nil)
+
+      actual = Twilio.serialize_list("something")
+      expect(actual).to eq("something")
+
+      actual = Twilio.serialize_list(1)
+      expect(actual).to eq(1)
+    end
+
+    it 'should apply block to every element in list' do
+      actual = Twilio.serialize_list([1, 2, 3, 4]) { |e| e * 2 }
+      expect(actual).to eq([2, 4, 6, 8])
+    end
+  end
 end
