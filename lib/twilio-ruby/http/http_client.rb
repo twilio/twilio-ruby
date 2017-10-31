@@ -25,7 +25,7 @@ module Twilio
           f.headers = request.headers
           f.basic_auth(request.auth[0], request.auth[1])
           if @proxy_addr
-            f.proxy '#{@proxy_user}:#{@proxy_pass}@#{@proxy_addr}:#{@proxy_port}'
+            f.proxy "#{@proxy_user}:#{@proxy_pass}@#{@proxy_addr}:#{@proxy_port}"
           end
           f.options.open_timeout = request.timeout || @timeout
           f.options.timeout = request.timeout || @timeout
