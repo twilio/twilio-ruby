@@ -67,6 +67,9 @@ describe Twilio do
 
       actual = Twilio.serialize_list(1)
       expect(actual).to eq(1)
+
+      actual = Twilio.serialize_list({ some_obj: 'some_val' })
+      expect(actual).to eq({ some_obj: 'some_val' })
     end
 
     it 'should apply block to every element in list' do

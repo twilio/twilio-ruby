@@ -69,7 +69,7 @@ module Twilio
   end
 
   def self.serialize_list(input_list)
-    return input_list unless input_list.respond_to? 'each'
+    return input_list unless input_list.is_a? Array
     result = []
     input_list.each do |e|
       result.push yield e
