@@ -143,7 +143,7 @@ module Twilio
                   'DateExpiry' => Twilio.serialize_iso8601_datetime(date_expiry),
                   'Ttl' => ttl,
                   'Status' => status,
-                  'Participants' => participants,
+                  'Participants' => Twilio.serialize_list(participants) { |e| e },
               })
 
               payload = @version.create(
@@ -254,7 +254,7 @@ module Twilio
                   'DateExpiry' => Twilio.serialize_iso8601_datetime(date_expiry),
                   'Ttl' => ttl,
                   'Status' => status,
-                  'Participants' => participants,
+                  'Participants' => Twilio.serialize_list(participants) { |e| e },
               })
 
               payload = @version.update(

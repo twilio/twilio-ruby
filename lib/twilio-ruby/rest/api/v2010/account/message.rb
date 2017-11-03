@@ -54,7 +54,7 @@ module Twilio
                   'From' => from,
                   'MessagingServiceSid' => messaging_service_sid,
                   'Body' => body,
-                  'MediaUrl' => media_url,
+                  'MediaUrl' => Twilio.serialize_list(media_url) { |e| e },
                   'StatusCallback' => status_callback,
                   'ApplicationSid' => application_sid,
                   'MaxPrice' => max_price,

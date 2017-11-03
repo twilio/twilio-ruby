@@ -120,10 +120,10 @@ module Twilio
           # @return [AuthorizationDocumentInstance] Newly created AuthorizationDocumentInstance
           def create(hosted_number_order_sids: nil, address_sid: nil, email: nil, cc_emails: :unset)
             data = Twilio::Values.of({
-                'HostedNumberOrderSids' => hosted_number_order_sids,
+                'HostedNumberOrderSids' => Twilio.serialize_list(hosted_number_order_sids) { |e| e },
                 'AddressSid' => address_sid,
                 'Email' => email,
-                'CcEmails' => cc_emails,
+                'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
             })
 
             payload = @version.create(
@@ -223,10 +223,10 @@ module Twilio
           # @return [AuthorizationDocumentInstance] Updated AuthorizationDocumentInstance
           def update(hosted_number_order_sids: :unset, address_sid: :unset, email: :unset, cc_emails: :unset, status: :unset)
             data = Twilio::Values.of({
-                'HostedNumberOrderSids' => hosted_number_order_sids,
+                'HostedNumberOrderSids' => Twilio.serialize_list(hosted_number_order_sids) { |e| e },
                 'AddressSid' => address_sid,
                 'Email' => email,
-                'CcEmails' => cc_emails,
+                'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
                 'Status' => status,
             })
 

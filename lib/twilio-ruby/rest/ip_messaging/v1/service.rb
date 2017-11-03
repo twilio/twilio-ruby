@@ -339,7 +339,7 @@ module Twilio
                 'PreWebhookUrl' => pre_webhook_url,
                 'PostWebhookUrl' => post_webhook_url,
                 'WebhookMethod' => webhook_method,
-                'WebhookFilters' => webhook_filters,
+                'WebhookFilters' => Twilio.serialize_list(webhook_filters) { |e| e },
                 'Webhooks.OnMessageSend.Url' => webhooks_on_message_send_url,
                 'Webhooks.OnMessageSend.Method' => webhooks_on_message_send_method,
                 'Webhooks.OnMessageSend.Format' => webhooks_on_message_send_format,

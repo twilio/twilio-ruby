@@ -199,7 +199,7 @@ module Twilio
                   'Description' => description,
                   'FriendlyName' => friendly_name,
                   'HomepageUrl' => homepage_url,
-                  'Permissions' => permissions,
+                  'Permissions' => Twilio.serialize_list(permissions) { |e| e },
               })
 
               payload = @version.update(

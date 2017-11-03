@@ -172,7 +172,7 @@ describe 'AuthorizationDocument' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
-        'HostedNumberOrderSids' => ['hosted_number_order_sids'],
+        'HostedNumberOrderSids' => Twilio.serialize_list(['hosted_number_order_sids']) { |e| e },
         'AddressSid' => "ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         'Email' => "email",
     }

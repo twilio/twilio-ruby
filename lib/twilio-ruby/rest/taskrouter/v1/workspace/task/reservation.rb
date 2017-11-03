@@ -272,7 +272,7 @@ module Twilio
                     'From' => from,
                     'StatusCallback' => status_callback,
                     'StatusCallbackMethod' => status_callback_method,
-                    'StatusCallbackEvent' => status_callback_event,
+                    'StatusCallbackEvent' => Twilio.serialize_list(status_callback_event) { |e| e },
                     'Timeout' => timeout,
                     'Record' => record,
                     'Muted' => muted,
@@ -285,7 +285,7 @@ module Twilio
                     'MaxParticipants' => max_participants,
                     'ConferenceStatusCallback' => conference_status_callback,
                     'ConferenceStatusCallbackMethod' => conference_status_callback_method,
-                    'ConferenceStatusCallbackEvent' => conference_status_callback_event,
+                    'ConferenceStatusCallbackEvent' => Twilio.serialize_list(conference_status_callback_event) { |e| e },
                     'ConferenceRecord' => conference_record,
                     'ConferenceTrim' => conference_trim,
                     'RecordingChannels' => recording_channels,
@@ -296,7 +296,7 @@ module Twilio
                     'Region' => region,
                     'SipAuthUsername' => sip_auth_username,
                     'SipAuthPassword' => sip_auth_password,
-                    'DequeueStatusCallbackEvent' => dequeue_status_callback_event,
+                    'DequeueStatusCallbackEvent' => Twilio.serialize_list(dequeue_status_callback_event) { |e| e },
                     'PostWorkActivitySid' => post_work_activity_sid,
                 })
 

@@ -110,7 +110,7 @@ module Twilio
             params = Twilio::Values.of({
                 'Status' => status,
                 'SourceSid' => source_sid,
-                'GroupingSid' => grouping_sid,
+                'GroupingSid' => Twilio.serialize_list(grouping_sid) { |e| e },
                 'DateCreatedAfter' => Twilio.serialize_iso8601_datetime(date_created_after),
                 'DateCreatedBefore' => Twilio.serialize_iso8601_datetime(date_created_before),
                 'PageToken' => page_token,

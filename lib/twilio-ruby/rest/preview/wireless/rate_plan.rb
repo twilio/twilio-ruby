@@ -130,7 +130,7 @@ module Twilio
                 'VoiceEnabled' => voice_enabled,
                 'CommandsEnabled' => commands_enabled,
                 'NationalRoamingEnabled' => national_roaming_enabled,
-                'InternationalRoaming' => international_roaming,
+                'InternationalRoaming' => Twilio.serialize_list(international_roaming) { |e| e },
             })
 
             payload = @version.create(

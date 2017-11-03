@@ -141,7 +141,7 @@ module Twilio
                   'UniqueName' => unique_name,
                   'Ttl' => ttl,
                   'Status' => status,
-                  'Participants' => participants,
+                  'Participants' => Twilio.serialize_list(participants) { |e| e },
               })
 
               payload = @version.create(
@@ -250,7 +250,7 @@ module Twilio
                   'UniqueName' => unique_name,
                   'Ttl' => ttl,
                   'Status' => status,
-                  'Participants' => participants,
+                  'Participants' => Twilio.serialize_list(participants) { |e| e },
               })
 
               payload = @version.update(

@@ -88,7 +88,10 @@ module Twilio
               # @param [feedback.Issues] issue The issue
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(quality_score: nil, issue: :unset)
-                data = Twilio::Values.of({'QualityScore' => quality_score, 'Issue' => issue,})
+                data = Twilio::Values.of({
+                    'QualityScore' => quality_score,
+                    'Issue' => Twilio.serialize_list(issue) { |e| e },
+                })
 
                 payload = @version.create(
                     'POST',
@@ -131,7 +134,10 @@ module Twilio
               #   call
               # @return [FeedbackInstance] Updated FeedbackInstance
               def update(quality_score: nil, issue: :unset)
-                data = Twilio::Values.of({'QualityScore' => quality_score, 'Issue' => issue,})
+                data = Twilio::Values.of({
+                    'QualityScore' => quality_score,
+                    'Issue' => Twilio.serialize_list(issue) { |e| e },
+                })
 
                 payload = @version.update(
                     'POST',

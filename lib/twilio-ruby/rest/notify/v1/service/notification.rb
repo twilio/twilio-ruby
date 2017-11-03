@@ -48,8 +48,8 @@ module Twilio
             # @return [NotificationInstance] Newly created NotificationInstance
             def create(body: :unset, priority: :unset, ttl: :unset, title: :unset, sound: :unset, action: :unset, data: :unset, apn: :unset, gcm: :unset, sms: :unset, facebook_messenger: :unset, fcm: :unset, segment: :unset, alexa: :unset, to_binding: :unset, identity: :unset, tag: :unset)
               data = Twilio::Values.of({
-                  'Identity' => identity,
-                  'Tag' => tag,
+                  'Identity' => Twilio.serialize_list(identity) { |e| e },
+                  'Tag' => Twilio.serialize_list(tag) { |e| e },
                   'Body' => body,
                   'Priority' => priority,
                   'Ttl' => ttl,
@@ -62,9 +62,9 @@ module Twilio
                   'Sms' => Twilio.serialize_object(sms),
                   'FacebookMessenger' => Twilio.serialize_object(facebook_messenger),
                   'Fcm' => Twilio.serialize_object(fcm),
-                  'Segment' => segment,
+                  'Segment' => Twilio.serialize_list(segment) { |e| e },
                   'Alexa' => Twilio.serialize_object(alexa),
-                  'ToBinding' => to_binding,
+                  'ToBinding' => Twilio.serialize_list(to_binding) { |e| e },
               })
 
               payload = @version.create(

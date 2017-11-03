@@ -44,7 +44,7 @@ module Twilio
                 'StatusCallbackMethod' => status_callback_method,
                 'MaxParticipants' => max_participants,
                 'RecordParticipantsOnConnect' => record_participants_on_connect,
-                'VideoCodecs' => video_codecs,
+                'VideoCodecs' => Twilio.serialize_list(video_codecs) { |e| e },
                 'MediaRegion' => media_region,
             })
 
@@ -219,6 +219,7 @@ module Twilio
 
             # Dependents
             @recordings = nil
+            @participants = nil
           end
 
           ##
@@ -268,6 +269,24 @@ module Twilio
             end
 
             @recordings
+          end
+
+          ##
+          # Access the participants
+          # @return [RoomParticipantList]
+          # @return [RoomParticipantContext] if sid was passed.
+          def participants(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return RoomParticipantContext.new(@version, @solution[:sid], sid,)
+            end
+
+            unless @participants
+              @participants = RoomParticipantList.new(@version, room_sid: @solution[:sid],)
+            end
+
+            @participants
           end
 
           ##
@@ -447,6 +466,13 @@ module Twilio
           # @return [recordings] recordings
           def recordings
             context.recordings
+          end
+
+          ##
+          # Access the participants
+          # @return [participants] participants
+          def participants
+            context.participants
           end
 
           ##

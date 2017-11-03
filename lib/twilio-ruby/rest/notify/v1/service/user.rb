@@ -32,7 +32,10 @@ module Twilio
             # @param [String] segment The segment
             # @return [UserInstance] Newly created UserInstance
             def create(identity: nil, segment: :unset)
-              data = Twilio::Values.of({'Identity' => identity, 'Segment' => segment,})
+              data = Twilio::Values.of({
+                  'Identity' => identity,
+                  'Segment' => Twilio.serialize_list(segment) { |e| e },
+              })
 
               payload = @version.create(
                   'POST',
@@ -106,7 +109,7 @@ module Twilio
             # @return [Page] Page of UserInstance
             def page(identity: :unset, segment: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
-                  'Identity' => identity,
+                  'Identity' => Twilio.serialize_list(identity) { |e| e },
                   'Segment' => segment,
                   'PageToken' => page_token,
                   'Page' => page_number,

@@ -271,7 +271,7 @@ module Twilio
                 'PreWebhookUrl' => pre_webhook_url,
                 'PostWebhookUrl' => post_webhook_url,
                 'WebhookMethod' => webhook_method,
-                'WebhookFilters' => webhook_filters,
+                'WebhookFilters' => Twilio.serialize_list(webhook_filters) { |e| e },
                 'Limits.ChannelMembers' => limits_channel_members,
                 'Limits.UserChannels' => limits_user_channels,
                 'Media.CompatibilityMessage' => media_compatibility_message,

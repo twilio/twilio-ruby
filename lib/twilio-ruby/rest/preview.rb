@@ -24,6 +24,7 @@ module Twilio
         @proxy = nil
         @acc_security = nil
         @sync = nil
+        @understand = nil
         @wireless = nil
       end
 
@@ -67,6 +68,12 @@ module Twilio
       # Version sync of preview
       def sync
         @sync ||= Sync.new self
+      end
+
+      ##
+      # Version understand of preview
+      def understand
+        @understand ||= Understand.new self
       end
 
       ##
@@ -137,10 +144,10 @@ module Twilio
 
       ##
       # @param [String] sid The sid
-      # @return [Twilio::REST::Preview::Sync::ServiceInstance] if sid was passed.
-      # @return [Twilio::REST::Preview::Sync::ServiceList]
+      # @return [Twilio::REST::Preview::Understand::ServiceInstance] if sid was passed.
+      # @return [Twilio::REST::Preview::Understand::ServiceList]
       def services(sid=:unset)
-        self.sync.services(sid)
+        self.understand.services(sid)
       end
 
       ##

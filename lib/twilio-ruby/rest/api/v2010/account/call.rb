@@ -93,7 +93,7 @@ module Twilio
                   'FallbackUrl' => fallback_url,
                   'FallbackMethod' => fallback_method,
                   'StatusCallback' => status_callback,
-                  'StatusCallbackEvent' => status_callback_event,
+                  'StatusCallbackEvent' => Twilio.serialize_list(status_callback_event) { |e| e },
                   'StatusCallbackMethod' => status_callback_method,
                   'SendDigits' => send_digits,
                   'IfMachine' => if_machine,

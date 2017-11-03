@@ -78,7 +78,11 @@ module Twilio
           # @param [Hash] add_ons_data The add_ons_data
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
           def fetch(country_code: :unset, type: :unset, add_ons: :unset, add_ons_data: :unset)
-            params = Twilio::Values.of({'CountryCode' => country_code, 'Type' => type, 'AddOns' => add_ons,})
+            params = Twilio::Values.of({
+                'CountryCode' => country_code,
+                'Type' => Twilio.serialize_list(type) { |e| e },
+                'AddOns' => Twilio.serialize_list(add_ons) { |e| e },
+            })
 
             params.merge!(Twilio.prefixed_collapsible_map(add_ons_data, 'AddOns'))
             payload = @version.fetch(

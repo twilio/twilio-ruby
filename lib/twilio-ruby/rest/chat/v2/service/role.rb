@@ -34,7 +34,7 @@ module Twilio
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'Type' => type,
-                  'Permission' => permission,
+                  'Permission' => Twilio.serialize_list(permission) { |e| e },
               })
 
               payload = @version.create(
@@ -206,7 +206,7 @@ module Twilio
             # @param [String] permission The permission
             # @return [RoleInstance] Updated RoleInstance
             def update(permission: nil)
-              data = Twilio::Values.of({'Permission' => permission,})
+              data = Twilio::Values.of({'Permission' => Twilio.serialize_list(permission) { |e| e },})
 
               payload = @version.update(
                   'POST',

@@ -131,7 +131,7 @@ module Twilio
                 'MessagingEnabled' => messaging_enabled,
                 'VoiceEnabled' => voice_enabled,
                 'NationalRoamingEnabled' => national_roaming_enabled,
-                'InternationalRoaming' => international_roaming,
+                'InternationalRoaming' => Twilio.serialize_list(international_roaming) { |e| e },
                 'NationalRoamingDataLimit' => national_roaming_data_limit,
                 'InternationalRoamingDataLimit' => international_roaming_data_limit,
             })

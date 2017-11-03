@@ -208,7 +208,7 @@ module Twilio
                 'AccountSid' => account_sid,
                 'FriendlyName' => friendly_name,
                 'UniqueName' => unique_name,
-                'CcEmails' => cc_emails,
+                'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
                 'SmsUrl' => sms_url,
                 'SmsMethod' => sms_method,
                 'SmsFallbackUrl' => sms_fallback_url,
@@ -327,7 +327,7 @@ module Twilio
                 'FriendlyName' => friendly_name,
                 'UniqueName' => unique_name,
                 'Email' => email,
-                'CcEmails' => cc_emails,
+                'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
                 'Status' => status,
                 'VerificationCode' => verification_code,
             })

@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+[2017-11-03] Version 5.4.4
+---------------------------
+**Api**
+- Add programmable video keys
+
+**Video**
+- Add `Participants`
+
+
 [2017-10-27] Version 5.4.3
 ---------------------------
 **Chat**

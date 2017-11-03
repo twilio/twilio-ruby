@@ -36,7 +36,7 @@ module Twilio
                 # @param [String] media_url The media_url
                 # @return [MessageInteractionInstance] Newly created MessageInteractionInstance
                 def create(body: :unset, media_url: :unset)
-                  data = Twilio::Values.of({'Body' => body, 'MediaUrl' => media_url,})
+                  data = Twilio::Values.of({'Body' => body, 'MediaUrl' => Twilio.serialize_list(media_url) { |e| e },})
 
                   payload = @version.create(
                       'POST',
