@@ -3,6 +3,9 @@ twilio-ruby changelog
 
 [2017-11-03] Version 5.4.4
 ---------------------------
+**Library**
+- PR #365: Fixed proxy interpolation. Thanks @ankane.
+
 **Api**
 - Add programmable video keys
 
