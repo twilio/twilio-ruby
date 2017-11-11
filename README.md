@@ -88,6 +88,20 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 )
 ```
 
+### List your SMS Messages
+
+```ruby
+@client.api.account.messages.list
+```
+
+### Fetch a single SMS message by Sid
+
+```ruby
+# put the message sid you want to retrieve here:
+message_sid = 'SMxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+@client.api.account.messages(message_sid).fetch
+```
+
 ### Customizing your HTTP Client
 twilio-ruby uses [Faraday][faraday] to make HTTP requests. You can tell
 Twilio::REST::Client to use any of the Faraday adapters like so:
