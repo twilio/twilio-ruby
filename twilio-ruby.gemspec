@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.rdoc_options = ['--line-numbers', '--inline-source', '--title', 'twilio-ruby', '--main', 'README.md']
 
   spec.add_dependency('libxml-ruby', '>= 2.0', '< 4.0')
-  spec.add_dependency('jwt', '~> 1.5')
+  spec.add_dependency('jwt', '>= 1.5', '<= 2.5')
   spec.add_dependency('faraday', '~>0.9')
   spec.add_dependency('jruby-openssl') if RUBY_PLATFORM == 'java'
   # Workaround for RBX <= 2.2.1, should be fixed in next version
