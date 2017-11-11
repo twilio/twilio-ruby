@@ -47,7 +47,7 @@ module Twilio
                 data: data
             )
 
-            TrunkInstance.new(@version, payload,)
+            TrunkInstance.new(@version, payload)
           end
 
           ##
@@ -79,7 +79,7 @@ module Twilio
           def stream(limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -91,7 +91,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -158,7 +158,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [TrunkInstance] TrunkInstance
           def get_instance(payload)
-            TrunkInstance.new(@version, payload,)
+            TrunkInstance.new(@version, payload)
           end
 
           ##
@@ -178,7 +178,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid,}
+            @solution = {sid: sid}
             @uri = "/Trunks/#{@solution[:sid]}"
 
             # Dependents
@@ -200,7 +200,7 @@ module Twilio
                 params,
             )
 
-            TrunkInstance.new(@version, payload, sid: @solution[:sid],)
+            TrunkInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -235,7 +235,7 @@ module Twilio
                 data: data,
             )
 
-            TrunkInstance.new(@version, payload, sid: @solution[:sid],)
+            TrunkInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -246,11 +246,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return OriginationUrlContext.new(@version, @solution[:sid], sid,)
+              return OriginationUrlContext.new(@version, @solution[:sid], sid)
             end
 
             unless @origination_urls
-              @origination_urls = OriginationUrlList.new(@version, trunk_sid: @solution[:sid],)
+              @origination_urls = OriginationUrlList.new(@version, trunk_sid: @solution[:sid])
             end
 
             @origination_urls
@@ -264,11 +264,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return CredentialListContext.new(@version, @solution[:sid], sid,)
+              return CredentialListContext.new(@version, @solution[:sid], sid)
             end
 
             unless @credentials_lists
-              @credentials_lists = CredentialListList.new(@version, trunk_sid: @solution[:sid],)
+              @credentials_lists = CredentialListList.new(@version, trunk_sid: @solution[:sid])
             end
 
             @credentials_lists
@@ -282,11 +282,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return IpAccessControlListContext.new(@version, @solution[:sid], sid,)
+              return IpAccessControlListContext.new(@version, @solution[:sid], sid)
             end
 
             unless @ip_access_control_lists
-              @ip_access_control_lists = IpAccessControlListList.new(@version, trunk_sid: @solution[:sid],)
+              @ip_access_control_lists = IpAccessControlListList.new(@version, trunk_sid: @solution[:sid])
             end
 
             @ip_access_control_lists
@@ -300,11 +300,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return PhoneNumberContext.new(@version, @solution[:sid], sid,)
+              return PhoneNumberContext.new(@version, @solution[:sid], sid)
             end
 
             unless @phone_numbers
-              @phone_numbers = PhoneNumberList.new(@version, trunk_sid: @solution[:sid],)
+              @phone_numbers = PhoneNumberList.new(@version, trunk_sid: @solution[:sid])
             end
 
             @phone_numbers
@@ -348,7 +348,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid'],}
+            @params = {'sid' => sid || @properties['sid']}
           end
 
           ##
@@ -357,7 +357,7 @@ module Twilio
           # @return [TrunkContext] TrunkContext for this TrunkInstance
           def context
             unless @instance_context
-              @instance_context = TrunkContext.new(@version, @params['sid'],)
+              @instance_context = TrunkContext.new(@version, @params['sid'])
             end
             @instance_context
           end

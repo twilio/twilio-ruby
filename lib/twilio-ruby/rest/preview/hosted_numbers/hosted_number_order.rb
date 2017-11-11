@@ -103,7 +103,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -166,7 +166,6 @@ module Twilio
           # Request is executed immediately.
           # @param [String] phone_number An E164 formatted phone number hosted by this
           #   HostedNumberOrder.
-          # @param [String] iso_country The ISO country code of the phone_number.
           # @param [Boolean] sms_capability Used to specify that the SMS capability will be
           #   hosted on Twilio's platform.
           # @param [String] account_sid Optional. The unique SID identifier of the Account
@@ -200,10 +199,9 @@ module Twilio
           # @param [String] email Optional. Email of the owner of this phone number that is
           #   being hosted.
           # @return [HostedNumberOrderInstance] Newly created HostedNumberOrderInstance
-          def create(phone_number: nil, iso_country: nil, sms_capability: nil, account_sid: :unset, friendly_name: :unset, unique_name: :unset, cc_emails: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, status_callback_url: :unset, status_callback_method: :unset, sms_application_sid: :unset, address_sid: :unset, email: :unset)
+          def create(phone_number: nil, sms_capability: nil, account_sid: :unset, friendly_name: :unset, unique_name: :unset, cc_emails: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, status_callback_url: :unset, status_callback_method: :unset, sms_application_sid: :unset, address_sid: :unset, email: :unset)
             data = Twilio::Values.of({
                 'PhoneNumber' => phone_number,
-                'IsoCountry' => iso_country,
                 'SmsCapability' => sms_capability,
                 'AccountSid' => account_sid,
                 'FriendlyName' => friendly_name,
@@ -226,7 +224,7 @@ module Twilio
                 data: data
             )
 
-            HostedNumberOrderInstance.new(@version, payload,)
+            HostedNumberOrderInstance.new(@version, payload)
           end
 
           ##
@@ -257,7 +255,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [HostedNumberOrderInstance] HostedNumberOrderInstance
           def get_instance(payload)
-            HostedNumberOrderInstance.new(@version, payload,)
+            HostedNumberOrderInstance.new(@version, payload)
           end
 
           ##
@@ -280,7 +278,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid,}
+            @solution = {sid: sid}
             @uri = "/HostedNumberOrders/#{@solution[:sid]}"
           end
 
@@ -296,7 +294,7 @@ module Twilio
                 params,
             )
 
-            HostedNumberOrderInstance.new(@version, payload, sid: @solution[:sid],)
+            HostedNumberOrderInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -338,7 +336,7 @@ module Twilio
                 data: data,
             )
 
-            HostedNumberOrderInstance.new(@version, payload, sid: @solution[:sid],)
+            HostedNumberOrderInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -384,7 +382,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid'],}
+            @params = {'sid' => sid || @properties['sid']}
           end
 
           ##
@@ -393,7 +391,7 @@ module Twilio
           # @return [HostedNumberOrderContext] HostedNumberOrderContext for this HostedNumberOrderInstance
           def context
             unless @instance_context
-              @instance_context = HostedNumberOrderContext.new(@version, @params['sid'],)
+              @instance_context = HostedNumberOrderContext.new(@version, @params['sid'])
             end
             @instance_context
           end

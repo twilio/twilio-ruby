@@ -141,7 +141,7 @@ describe 'Intent' do
                                 .intents.create(unique_name: "unique_name")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'UniqueName' => "unique_name",}
+    values = {'UniqueName' => "unique_name"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

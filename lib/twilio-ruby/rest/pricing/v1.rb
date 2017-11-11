@@ -19,39 +19,21 @@ module Twilio
         end
 
         ##
-        # @return [Twilio::REST::Pricing::V1::MessagingInstance]
-        def messaging(sid=:unset)
-          if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @messaging ||= MessagingList.new self
-          else
-            MessagingContext.new(self, sid)
-          end
+        # @return [Twilio::REST::Pricing::V1::MessagingContext]
+        def messaging
+          @messaging ||= MessagingList.new self
         end
 
         ##
-        # @return [Twilio::REST::Pricing::V1::PhoneNumberInstance]
-        def phone_numbers(sid=:unset)
-          if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @phone_numbers ||= PhoneNumberList.new self
-          else
-            PhoneNumberContext.new(self, sid)
-          end
+        # @return [Twilio::REST::Pricing::V1::PhoneNumberContext]
+        def phone_numbers
+          @phone_numbers ||= PhoneNumberList.new self
         end
 
         ##
-        # @return [Twilio::REST::Pricing::V1::VoiceInstance]
-        def voice(sid=:unset)
-          if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @voice ||= VoiceList.new self
-          else
-            VoiceContext.new(self, sid)
-          end
+        # @return [Twilio::REST::Pricing::V1::VoiceContext]
+        def voice
+          @voice ||= VoiceList.new self
         end
 
         ##

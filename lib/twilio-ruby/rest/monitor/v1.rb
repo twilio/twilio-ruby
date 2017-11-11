@@ -19,7 +19,7 @@ module Twilio
 
         ##
         # @param [String] sid The sid
-        # @return [Twilio::REST::Monitor::V1::AlertInstance] if sid was passed.
+        # @return [Twilio::REST::Monitor::V1::AlertContext] if sid was passed.
         # @return [Twilio::REST::Monitor::V1::AlertList]
         def alerts(sid=:unset)
           if sid.nil?
@@ -33,7 +33,7 @@ module Twilio
 
         ##
         # @param [String] sid The sid
-        # @return [Twilio::REST::Monitor::V1::EventInstance] if sid was passed.
+        # @return [Twilio::REST::Monitor::V1::EventContext] if sid was passed.
         # @return [Twilio::REST::Monitor::V1::EventList]
         def events(sid=:unset)
           if sid.nil?

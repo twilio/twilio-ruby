@@ -53,7 +53,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -65,7 +65,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -132,7 +132,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [AuthorizedConnectAppInstance] AuthorizedConnectAppInstance
             def get_instance(payload)
-              AuthorizedConnectAppInstance.new(@version, payload, account_sid: @solution[:account_sid],)
+              AuthorizedConnectAppInstance.new(@version, payload, account_sid: @solution[:account_sid])
             end
 
             ##
@@ -153,7 +153,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {account_sid: account_sid, connect_app_sid: connect_app_sid,}
+              @solution = {account_sid: account_sid, connect_app_sid: connect_app_sid}
               @uri = "/Accounts/#{@solution[:account_sid]}/AuthorizedConnectApps/#{@solution[:connect_app_sid]}.json"
             end
 

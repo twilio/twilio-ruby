@@ -104,7 +104,7 @@ describe 'IpAddress' do
                        .ip_addresses.create(friendly_name: "friendly_name", ip_address: "ip_address")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'FriendlyName' => "friendly_name", 'IpAddress' => "ip_address",}
+    values = {'FriendlyName' => "friendly_name", 'IpAddress' => "ip_address"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

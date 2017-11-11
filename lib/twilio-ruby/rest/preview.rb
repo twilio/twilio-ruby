@@ -22,6 +22,7 @@ module Twilio
         @hosted_numbers = nil
         @marketplace = nil
         @proxy = nil
+        @studio = nil
         @acc_security = nil
         @sync = nil
         @understand = nil
@@ -56,6 +57,12 @@ module Twilio
       # Version proxy of preview
       def proxy
         @proxy ||= Proxy.new self
+      end
+
+      ##
+      # Version studio of preview
+      def studio
+        @studio ||= Studio.new self
       end
 
       ##
@@ -148,6 +155,14 @@ module Twilio
       # @return [Twilio::REST::Preview::Understand::ServiceList]
       def services(sid=:unset)
         self.understand.services(sid)
+      end
+
+      ##
+      # @param [String] sid A 34 character string that uniquely identifies this Flow.
+      # @return [Twilio::REST::Preview::Studio::FlowInstance] if sid was passed.
+      # @return [Twilio::REST::Preview::Studio::FlowList]
+      def flows(sid=:unset)
+        self.studio.flows(sid)
       end
 
       ##

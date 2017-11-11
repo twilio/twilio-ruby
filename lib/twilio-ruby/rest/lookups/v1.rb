@@ -18,7 +18,7 @@ module Twilio
 
         ##
         # @param [String] phone_number The phone_number
-        # @return [Twilio::REST::Lookups::V1::PhoneNumberInstance] if phone_number was passed.
+        # @return [Twilio::REST::Lookups::V1::PhoneNumberContext] if phone_number was passed.
         # @return [Twilio::REST::Lookups::V1::PhoneNumberList]
         def phone_numbers(phone_number=:unset)
           if phone_number.nil?

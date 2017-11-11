@@ -52,7 +52,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -64,7 +64,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -113,7 +113,7 @@ module Twilio
             #   The default is 100. The maximum is 1000.
             # @return [QueueInstance] Newly created QueueInstance
             def create(friendly_name: nil, max_size: :unset)
-              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'MaxSize' => max_size,})
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'MaxSize' => max_size})
 
               payload = @version.create(
                   'POST',
@@ -121,7 +121,7 @@ module Twilio
                   data: data
               )
 
-              QueueInstance.new(@version, payload, account_sid: @solution[:account_sid],)
+              QueueInstance.new(@version, payload, account_sid: @solution[:account_sid])
             end
 
             ##
@@ -150,7 +150,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [QueueInstance] QueueInstance
             def get_instance(payload)
-              QueueInstance.new(@version, payload, account_sid: @solution[:account_sid],)
+              QueueInstance.new(@version, payload, account_sid: @solution[:account_sid])
             end
 
             ##
@@ -171,7 +171,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {account_sid: account_sid, sid: sid,}
+              @solution = {account_sid: account_sid, sid: sid}
               @uri = "/Accounts/#{@solution[:account_sid]}/Queues/#{@solution[:sid]}.json"
 
               # Dependents
@@ -190,7 +190,7 @@ module Twilio
                   params,
               )
 
-              QueueInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid],)
+              QueueInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid])
             end
 
             ##
@@ -200,7 +200,7 @@ module Twilio
             #   at a time
             # @return [QueueInstance] Updated QueueInstance
             def update(friendly_name: :unset, max_size: :unset)
-              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'MaxSize' => max_size,})
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'MaxSize' => max_size})
 
               payload = @version.update(
                   'POST',
@@ -208,7 +208,7 @@ module Twilio
                   data: data,
               )
 
-              QueueInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid],)
+              QueueInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid])
             end
 
             ##
@@ -226,11 +226,11 @@ module Twilio
               raise ArgumentError, 'call_sid cannot be nil' if call_sid.nil?
 
               if call_sid != :unset
-                return MemberContext.new(@version, @solution[:account_sid], @solution[:sid], call_sid,)
+                return MemberContext.new(@version, @solution[:account_sid], @solution[:sid], call_sid)
               end
 
               unless @members
-                @members = MemberList.new(@version, account_sid: @solution[:account_sid], queue_sid: @solution[:sid],)
+                @members = MemberList.new(@version, account_sid: @solution[:account_sid], queue_sid: @solution[:sid])
               end
 
               @members
@@ -270,7 +270,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid'],}
+              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid']}
             end
 
             ##
@@ -279,7 +279,7 @@ module Twilio
             # @return [QueueContext] QueueContext for this QueueInstance
             def context
               unless @instance_context
-                @instance_context = QueueContext.new(@version, @params['account_sid'], @params['sid'],)
+                @instance_context = QueueContext.new(@version, @params['account_sid'], @params['sid'])
               end
               @instance_context
             end
@@ -352,7 +352,7 @@ module Twilio
             #   at a time
             # @return [QueueInstance] Updated QueueInstance
             def update(friendly_name: :unset, max_size: :unset)
-              context.update(friendly_name: friendly_name, max_size: max_size,)
+              context.update(friendly_name: friendly_name, max_size: max_size)
             end
 
             ##

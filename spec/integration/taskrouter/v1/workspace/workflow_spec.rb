@@ -227,7 +227,7 @@ describe 'Workflow' do
                            .workflows.create(friendly_name: "friendly_name", configuration: "configuration")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'FriendlyName' => "friendly_name", 'Configuration' => "configuration",}
+    values = {'FriendlyName' => "friendly_name", 'Configuration' => "configuration"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

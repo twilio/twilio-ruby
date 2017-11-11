@@ -19,7 +19,7 @@ module Twilio
 
         ##
         # @param [String] sid The sid
-        # @return [Twilio::REST::Video::V1::RecordingInstance] if sid was passed.
+        # @return [Twilio::REST::Video::V1::RecordingContext] if sid was passed.
         # @return [Twilio::REST::Video::V1::RecordingList]
         def recordings(sid=:unset)
           if sid.nil?
@@ -33,7 +33,7 @@ module Twilio
 
         ##
         # @param [String] sid The sid
-        # @return [Twilio::REST::Video::V1::RoomInstance] if sid was passed.
+        # @return [Twilio::REST::Video::V1::RoomContext] if sid was passed.
         # @return [Twilio::REST::Video::V1::RoomList]
         def rooms(sid=:unset)
           if sid.nil?

@@ -53,7 +53,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -65,7 +65,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -132,7 +132,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [TranscriptionInstance] TranscriptionInstance
             def get_instance(payload)
-              TranscriptionInstance.new(@version, payload, account_sid: @solution[:account_sid],)
+              TranscriptionInstance.new(@version, payload, account_sid: @solution[:account_sid])
             end
 
             ##
@@ -153,7 +153,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {account_sid: account_sid, sid: sid,}
+              @solution = {account_sid: account_sid, sid: sid}
               @uri = "/Accounts/#{@solution[:account_sid]}/Transcriptions/#{@solution[:sid]}.json"
             end
 
@@ -223,7 +223,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid'],}
+              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid']}
             end
 
             ##
@@ -232,7 +232,7 @@ module Twilio
             # @return [TranscriptionContext] TranscriptionContext for this TranscriptionInstance
             def context
               unless @instance_context
-                @instance_context = TranscriptionContext.new(@version, @params['account_sid'], @params['sid'],)
+                @instance_context = TranscriptionContext.new(@version, @params['account_sid'], @params['sid'])
               end
               @instance_context
             end

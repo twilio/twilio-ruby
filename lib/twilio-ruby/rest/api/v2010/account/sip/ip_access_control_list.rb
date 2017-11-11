@@ -54,7 +54,7 @@ module Twilio
               def stream(limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(page_size: limits[:page_size],)
+                page = self.page(page_size: limits[:page_size])
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -66,7 +66,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(page_size: limits[:page_size],)
+                page = self.page(page_size: limits[:page_size])
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -114,7 +114,7 @@ module Twilio
               #   characters long.
               # @return [IpAccessControlListInstance] Newly created IpAccessControlListInstance
               def create(friendly_name: nil)
-                data = Twilio::Values.of({'FriendlyName' => friendly_name,})
+                data = Twilio::Values.of({'FriendlyName' => friendly_name})
 
                 payload = @version.create(
                     'POST',
@@ -122,7 +122,7 @@ module Twilio
                     data: data
                 )
 
-                IpAccessControlListInstance.new(@version, payload, account_sid: @solution[:account_sid],)
+                IpAccessControlListInstance.new(@version, payload, account_sid: @solution[:account_sid])
               end
 
               ##
@@ -151,7 +151,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [IpAccessControlListInstance] IpAccessControlListInstance
               def get_instance(payload)
-                IpAccessControlListInstance.new(@version, payload, account_sid: @solution[:account_sid],)
+                IpAccessControlListInstance.new(@version, payload, account_sid: @solution[:account_sid])
               end
 
               ##
@@ -173,7 +173,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {account_sid: account_sid, sid: sid,}
+                @solution = {account_sid: account_sid, sid: sid}
                 @uri = "/Accounts/#{@solution[:account_sid]}/SIP/IpAccessControlLists/#{@solution[:sid]}.json"
 
                 # Dependents
@@ -206,7 +206,7 @@ module Twilio
               #   characters long.
               # @return [IpAccessControlListInstance] Updated IpAccessControlListInstance
               def update(friendly_name: nil)
-                data = Twilio::Values.of({'FriendlyName' => friendly_name,})
+                data = Twilio::Values.of({'FriendlyName' => friendly_name})
 
                 payload = @version.update(
                     'POST',
@@ -237,7 +237,7 @@ module Twilio
                 raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
                 if sid != :unset
-                  return IpAddressContext.new(@version, @solution[:account_sid], @solution[:sid], sid,)
+                  return IpAddressContext.new(@version, @solution[:account_sid], @solution[:sid], sid)
                 end
 
                 unless @ip_addresses
@@ -285,7 +285,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid'],}
+                @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid']}
               end
 
               ##
@@ -294,7 +294,7 @@ module Twilio
               # @return [IpAccessControlListContext] IpAccessControlListContext for this IpAccessControlListInstance
               def context
                 unless @instance_context
-                  @instance_context = IpAccessControlListContext.new(@version, @params['account_sid'], @params['sid'],)
+                  @instance_context = IpAccessControlListContext.new(@version, @params['account_sid'], @params['sid'])
                 end
                 @instance_context
               end
@@ -354,7 +354,7 @@ module Twilio
               #   characters long.
               # @return [IpAccessControlListInstance] Updated IpAccessControlListInstance
               def update(friendly_name: nil)
-                context.update(friendly_name: friendly_name,)
+                context.update(friendly_name: friendly_name)
               end
 
               ##

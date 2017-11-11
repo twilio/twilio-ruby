@@ -52,7 +52,7 @@ module Twilio
           def stream(limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -64,7 +64,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -142,7 +142,7 @@ module Twilio
                 data: data
             )
 
-            RatePlanInstance.new(@version, payload,)
+            RatePlanInstance.new(@version, payload)
           end
 
           ##
@@ -173,7 +173,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [RatePlanInstance] RatePlanInstance
           def get_instance(payload)
-            RatePlanInstance.new(@version, payload,)
+            RatePlanInstance.new(@version, payload)
           end
 
           ##
@@ -195,7 +195,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid,}
+            @solution = {sid: sid}
             @uri = "/RatePlans/#{@solution[:sid]}"
           end
 
@@ -211,7 +211,7 @@ module Twilio
                 params,
             )
 
-            RatePlanInstance.new(@version, payload, sid: @solution[:sid],)
+            RatePlanInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -220,7 +220,7 @@ module Twilio
           # @param [String] friendly_name The friendly_name
           # @return [RatePlanInstance] Updated RatePlanInstance
           def update(unique_name: :unset, friendly_name: :unset)
-            data = Twilio::Values.of({'UniqueName' => unique_name, 'FriendlyName' => friendly_name,})
+            data = Twilio::Values.of({'UniqueName' => unique_name, 'FriendlyName' => friendly_name})
 
             payload = @version.update(
                 'POST',
@@ -228,7 +228,7 @@ module Twilio
                 data: data,
             )
 
-            RatePlanInstance.new(@version, payload, sid: @solution[:sid],)
+            RatePlanInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -280,7 +280,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid'],}
+            @params = {'sid' => sid || @properties['sid']}
           end
 
           ##
@@ -289,7 +289,7 @@ module Twilio
           # @return [RatePlanContext] RatePlanContext for this RatePlanInstance
           def context
             unless @instance_context
-              @instance_context = RatePlanContext.new(@version, @params['sid'],)
+              @instance_context = RatePlanContext.new(@version, @params['sid'])
             end
             @instance_context
           end
@@ -403,7 +403,7 @@ module Twilio
           # @param [String] friendly_name The friendly_name
           # @return [RatePlanInstance] Updated RatePlanInstance
           def update(unique_name: :unset, friendly_name: :unset)
-            context.update(unique_name: unique_name, friendly_name: friendly_name,)
+            context.update(unique_name: unique_name, friendly_name: friendly_name)
           end
 
           ##

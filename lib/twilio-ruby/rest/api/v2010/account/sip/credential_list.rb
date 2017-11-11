@@ -54,7 +54,7 @@ module Twilio
               def stream(limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(page_size: limits[:page_size],)
+                page = self.page(page_size: limits[:page_size])
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -66,7 +66,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(page_size: limits[:page_size],)
+                page = self.page(page_size: limits[:page_size])
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -113,7 +113,7 @@ module Twilio
               # @param [String] friendly_name The friendly_name
               # @return [CredentialListInstance] Newly created CredentialListInstance
               def create(friendly_name: nil)
-                data = Twilio::Values.of({'FriendlyName' => friendly_name,})
+                data = Twilio::Values.of({'FriendlyName' => friendly_name})
 
                 payload = @version.create(
                     'POST',
@@ -121,7 +121,7 @@ module Twilio
                     data: data
                 )
 
-                CredentialListInstance.new(@version, payload, account_sid: @solution[:account_sid],)
+                CredentialListInstance.new(@version, payload, account_sid: @solution[:account_sid])
               end
 
               ##
@@ -150,7 +150,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [CredentialListInstance] CredentialListInstance
               def get_instance(payload)
-                CredentialListInstance.new(@version, payload, account_sid: @solution[:account_sid],)
+                CredentialListInstance.new(@version, payload, account_sid: @solution[:account_sid])
               end
 
               ##
@@ -171,7 +171,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {account_sid: account_sid, sid: sid,}
+                @solution = {account_sid: account_sid, sid: sid}
                 @uri = "/Accounts/#{@solution[:account_sid]}/SIP/CredentialLists/#{@solution[:sid]}.json"
 
                 # Dependents
@@ -203,7 +203,7 @@ module Twilio
               # @param [String] friendly_name The friendly_name
               # @return [CredentialListInstance] Updated CredentialListInstance
               def update(friendly_name: nil)
-                data = Twilio::Values.of({'FriendlyName' => friendly_name,})
+                data = Twilio::Values.of({'FriendlyName' => friendly_name})
 
                 payload = @version.update(
                     'POST',
@@ -234,7 +234,7 @@ module Twilio
                 raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
                 if sid != :unset
-                  return CredentialContext.new(@version, @solution[:account_sid], @solution[:sid], sid,)
+                  return CredentialContext.new(@version, @solution[:account_sid], @solution[:sid], sid)
                 end
 
                 unless @credentials
@@ -281,7 +281,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid'],}
+                @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid']}
               end
 
               ##
@@ -290,7 +290,7 @@ module Twilio
               # @return [CredentialListContext] CredentialListContext for this CredentialListInstance
               def context
                 unless @instance_context
-                  @instance_context = CredentialListContext.new(@version, @params['account_sid'], @params['sid'],)
+                  @instance_context = CredentialListContext.new(@version, @params['account_sid'], @params['sid'])
                 end
                 @instance_context
               end
@@ -349,7 +349,7 @@ module Twilio
               # @param [String] friendly_name The friendly_name
               # @return [CredentialListInstance] Updated CredentialListInstance
               def update(friendly_name: nil)
-                context.update(friendly_name: friendly_name,)
+                context.update(friendly_name: friendly_name)
               end
 
               ##

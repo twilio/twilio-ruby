@@ -16,7 +16,7 @@ describe 'SegmentMembership' do
                        .segment_memberships.create(segment: "segment")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Segment' => "segment",}
+    values = {'Segment' => "segment"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

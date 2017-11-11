@@ -1,6 +1,18 @@
 twilio-ruby changelog
 =====================
 
+[2017-11-10] Version 5.4.5
+---------------------------
+**Accounts**
+- Add AWS credential type
+
+**Preview**
+- Removed `iso_country` as required field for creating a HostedNumberOrder.
+
+**Proxy**
+- Added new fields to Service: geo_match_level, number_selection_behavior, intercept_callback_url, out_of_session_callback_url
+
+
 [2017-11-03] Version 5.4.4
 ---------------------------
 **Library**

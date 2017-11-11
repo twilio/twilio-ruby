@@ -106,7 +106,7 @@ describe 'PhoneNumber' do
                          .phone_numbers.create(phone_number_sid: "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'PhoneNumberSid' => "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",}
+    values = {'PhoneNumberSid' => "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

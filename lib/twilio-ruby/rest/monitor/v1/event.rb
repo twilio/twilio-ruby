@@ -91,7 +91,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -170,7 +170,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [EventInstance] EventInstance
           def get_instance(payload)
-            EventInstance.new(@version, payload,)
+            EventInstance.new(@version, payload)
           end
 
           ##
@@ -190,7 +190,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid,}
+            @solution = {sid: sid}
             @uri = "/Events/#{@solution[:sid]}"
           end
 
@@ -206,7 +206,7 @@ module Twilio
                 params,
             )
 
-            EventInstance.new(@version, payload, sid: @solution[:sid],)
+            EventInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -247,7 +247,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid'],}
+            @params = {'sid' => sid || @properties['sid']}
           end
 
           ##
@@ -256,7 +256,7 @@ module Twilio
           # @return [EventContext] EventContext for this EventInstance
           def context
             unless @instance_context
-              @instance_context = EventContext.new(@version, @params['sid'],)
+              @instance_context = EventContext.new(@version, @params['sid'])
             end
             @instance_context
           end

@@ -81,7 +81,7 @@ describe 'IpAccessControlList' do
                          .ip_access_control_lists.create(ip_access_control_list_sid: "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'IpAccessControlListSid' => "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",}
+    values = {'IpAccessControlListSid' => "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

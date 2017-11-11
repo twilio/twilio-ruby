@@ -89,7 +89,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -168,7 +168,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [SimInstance] SimInstance
           def get_instance(payload)
-            SimInstance.new(@version, payload,)
+            SimInstance.new(@version, payload)
           end
 
           ##
@@ -190,7 +190,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid,}
+            @solution = {sid: sid}
             @uri = "/Sims/#{@solution[:sid]}"
 
             # Dependents
@@ -210,7 +210,7 @@ module Twilio
                 params,
             )
 
-            SimInstance.new(@version, payload, sid: @solution[:sid],)
+            SimInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -258,7 +258,7 @@ module Twilio
                 data: data,
             )
 
-            SimInstance.new(@version, payload, sid: @solution[:sid],)
+            SimInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -267,7 +267,7 @@ module Twilio
           # @return [UsageRecordContext]
           def usage_records
             unless @usage_records
-              @usage_records = UsageRecordList.new(@version, sim_sid: @solution[:sid],)
+              @usage_records = UsageRecordList.new(@version, sim_sid: @solution[:sid])
             end
 
             @usage_records
@@ -279,7 +279,7 @@ module Twilio
           # @return [DataSessionContext]
           def data_sessions
             unless @data_sessions
-              @data_sessions = DataSessionList.new(@version, sim_sid: @solution[:sid],)
+              @data_sessions = DataSessionList.new(@version, sim_sid: @solution[:sid])
             end
 
             @data_sessions
@@ -334,7 +334,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid'],}
+            @params = {'sid' => sid || @properties['sid']}
           end
 
           ##
@@ -343,7 +343,7 @@ module Twilio
           # @return [SimContext] SimContext for this SimInstance
           def context
             unless @instance_context
-              @instance_context = SimContext.new(@version, @params['sid'],)
+              @instance_context = SimContext.new(@version, @params['sid'])
             end
             @instance_context
           end

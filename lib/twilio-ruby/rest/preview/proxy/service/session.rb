@@ -64,7 +64,7 @@ module Twilio
             def stream(unique_name: :unset, status: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(unique_name: unique_name, status: status, page_size: limits[:page_size],)
+              page = self.page(unique_name: unique_name, status: status, page_size: limits[:page_size])
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -76,7 +76,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -150,7 +150,7 @@ module Twilio
                   data: data
               )
 
-              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid],)
+              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid])
             end
 
             ##
@@ -181,7 +181,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [SessionInstance] SessionInstance
             def get_instance(payload)
-              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid],)
+              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid])
             end
 
             ##
@@ -204,7 +204,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid, sid: sid,}
+              @solution = {service_sid: service_sid, sid: sid}
               @uri = "/Services/#{@solution[:service_sid]}/Sessions/#{@solution[:sid]}"
 
               # Dependents
@@ -224,7 +224,7 @@ module Twilio
                   params,
               )
 
-              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid],)
+              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
             end
 
             ##
@@ -259,7 +259,7 @@ module Twilio
                   data: data,
               )
 
-              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid],)
+              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
             end
 
             ##
@@ -270,7 +270,7 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return InteractionContext.new(@version, @solution[:service_sid], @solution[:sid], sid,)
+                return InteractionContext.new(@version, @solution[:service_sid], @solution[:sid], sid)
               end
 
               unless @interactions
@@ -292,7 +292,7 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return ParticipantContext.new(@version, @solution[:service_sid], @solution[:sid], sid,)
+                return ParticipantContext.new(@version, @solution[:service_sid], @solution[:sid], sid)
               end
 
               unless @participants
@@ -345,7 +345,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'],}
+              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid']}
             end
 
             ##
@@ -354,7 +354,7 @@ module Twilio
             # @return [SessionContext] SessionContext for this SessionInstance
             def context
               unless @instance_context
-                @instance_context = SessionContext.new(@version, @params['service_sid'], @params['sid'],)
+                @instance_context = SessionContext.new(@version, @params['service_sid'], @params['sid'])
               end
               @instance_context
             end
@@ -457,7 +457,7 @@ module Twilio
             # @param [String] participants The participants
             # @return [SessionInstance] Updated SessionInstance
             def update(unique_name: :unset, ttl: :unset, status: :unset, participants: :unset)
-              context.update(unique_name: unique_name, ttl: ttl, status: status, participants: participants,)
+              context.update(unique_name: unique_name, ttl: ttl, status: status, participants: participants)
             end
 
             ##

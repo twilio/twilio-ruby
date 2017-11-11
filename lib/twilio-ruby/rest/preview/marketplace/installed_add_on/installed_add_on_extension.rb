@@ -54,7 +54,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -66,7 +66,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -162,7 +162,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {installed_add_on_sid: installed_add_on_sid, sid: sid,}
+              @solution = {installed_add_on_sid: installed_add_on_sid, sid: sid}
               @uri = "/InstalledAddOns/#{@solution[:installed_add_on_sid]}/Extensions/#{@solution[:sid]}"
             end
 
@@ -191,7 +191,7 @@ module Twilio
             # @param [Boolean] enabled A Boolean indicating if the Extension will be invoked.
             # @return [InstalledAddOnExtensionInstance] Updated InstalledAddOnExtensionInstance
             def update(enabled: nil)
-              data = Twilio::Values.of({'Enabled' => enabled,})
+              data = Twilio::Values.of({'Enabled' => enabled})
 
               payload = @version.update(
                   'POST',
@@ -241,7 +241,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'installed_add_on_sid' => installed_add_on_sid, 'sid' => sid || @properties['sid'],}
+              @params = {'installed_add_on_sid' => installed_add_on_sid, 'sid' => sid || @properties['sid']}
             end
 
             ##
@@ -313,7 +313,7 @@ module Twilio
             # @param [Boolean] enabled A Boolean indicating if the Extension will be invoked.
             # @return [InstalledAddOnExtensionInstance] Updated InstalledAddOnExtensionInstance
             def update(enabled: nil)
-              context.update(enabled: enabled,)
+              context.update(enabled: enabled)
             end
 
             ##

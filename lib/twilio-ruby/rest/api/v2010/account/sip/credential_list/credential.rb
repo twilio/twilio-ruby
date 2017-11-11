@@ -55,7 +55,7 @@ module Twilio
                 def stream(limit: nil, page_size: nil)
                   limits = @version.read_limits(limit, page_size)
 
-                  page = self.page(page_size: limits[:page_size],)
+                  page = self.page(page_size: limits[:page_size])
 
                   @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
                 end
@@ -67,7 +67,7 @@ module Twilio
                 def each
                   limits = @version.read_limits
 
-                  page = self.page(page_size: limits[:page_size],)
+                  page = self.page(page_size: limits[:page_size])
 
                   @version.stream(page,
                                   limit: limits[:limit],
@@ -115,7 +115,7 @@ module Twilio
                 # @param [String] password The password
                 # @return [CredentialInstance] Newly created CredentialInstance
                 def create(username: nil, password: nil)
-                  data = Twilio::Values.of({'Username' => username, 'Password' => password,})
+                  data = Twilio::Values.of({'Username' => username, 'Password' => password})
 
                   payload = @version.create(
                       'POST',
@@ -184,7 +184,7 @@ module Twilio
                   super(version)
 
                   # Path Solution
-                  @solution = {account_sid: account_sid, credential_list_sid: credential_list_sid, sid: sid,}
+                  @solution = {account_sid: account_sid, credential_list_sid: credential_list_sid, sid: sid}
                   @uri = "/Accounts/#{@solution[:account_sid]}/SIP/CredentialLists/#{@solution[:credential_list_sid]}/Credentials/#{@solution[:sid]}.json"
                 end
 
@@ -214,7 +214,7 @@ module Twilio
                 # @param [String] password The password
                 # @return [CredentialInstance] Updated CredentialInstance
                 def update(password: :unset)
-                  data = Twilio::Values.of({'Password' => password,})
+                  data = Twilio::Values.of({'Password' => password})
 
                   payload = @version.update(
                       'POST',
@@ -348,7 +348,7 @@ module Twilio
                 # @param [String] password The password
                 # @return [CredentialInstance] Updated CredentialInstance
                 def update(password: :unset)
-                  context.update(password: password,)
+                  context.update(password: password)
                 end
 
                 ##

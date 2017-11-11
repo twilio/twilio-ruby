@@ -52,7 +52,7 @@ module Twilio
           def stream(friendly_name: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(friendly_name: friendly_name, page_size: limits[:page_size],)
+            page = self.page(friendly_name: friendly_name, page_size: limits[:page_size])
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -64,7 +64,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -133,7 +133,7 @@ module Twilio
                 data: data
             )
 
-            WorkspaceInstance.new(@version, payload,)
+            WorkspaceInstance.new(@version, payload)
           end
 
           ##
@@ -162,7 +162,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [WorkspaceInstance] WorkspaceInstance
           def get_instance(payload)
-            WorkspaceInstance.new(@version, payload,)
+            WorkspaceInstance.new(@version, payload)
           end
 
           ##
@@ -182,7 +182,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid,}
+            @solution = {sid: sid}
             @uri = "/Workspaces/#{@solution[:sid]}"
 
             # Dependents
@@ -210,7 +210,7 @@ module Twilio
                 params,
             )
 
-            WorkspaceInstance.new(@version, payload, sid: @solution[:sid],)
+            WorkspaceInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -240,7 +240,7 @@ module Twilio
                 data: data,
             )
 
-            WorkspaceInstance.new(@version, payload, sid: @solution[:sid],)
+            WorkspaceInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -258,11 +258,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return ActivityContext.new(@version, @solution[:sid], sid,)
+              return ActivityContext.new(@version, @solution[:sid], sid)
             end
 
             unless @activities
-              @activities = ActivityList.new(@version, workspace_sid: @solution[:sid],)
+              @activities = ActivityList.new(@version, workspace_sid: @solution[:sid])
             end
 
             @activities
@@ -276,11 +276,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return EventContext.new(@version, @solution[:sid], sid,)
+              return EventContext.new(@version, @solution[:sid], sid)
             end
 
             unless @events
-              @events = EventList.new(@version, workspace_sid: @solution[:sid],)
+              @events = EventList.new(@version, workspace_sid: @solution[:sid])
             end
 
             @events
@@ -294,11 +294,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return TaskContext.new(@version, @solution[:sid], sid,)
+              return TaskContext.new(@version, @solution[:sid], sid)
             end
 
             unless @tasks
-              @tasks = TaskList.new(@version, workspace_sid: @solution[:sid],)
+              @tasks = TaskList.new(@version, workspace_sid: @solution[:sid])
             end
 
             @tasks
@@ -312,11 +312,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return TaskQueueContext.new(@version, @solution[:sid], sid,)
+              return TaskQueueContext.new(@version, @solution[:sid], sid)
             end
 
             unless @task_queues
-              @task_queues = TaskQueueList.new(@version, workspace_sid: @solution[:sid],)
+              @task_queues = TaskQueueList.new(@version, workspace_sid: @solution[:sid])
             end
 
             @task_queues
@@ -330,11 +330,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return WorkerContext.new(@version, @solution[:sid], sid,)
+              return WorkerContext.new(@version, @solution[:sid], sid)
             end
 
             unless @workers
-              @workers = WorkerList.new(@version, workspace_sid: @solution[:sid],)
+              @workers = WorkerList.new(@version, workspace_sid: @solution[:sid])
             end
 
             @workers
@@ -348,11 +348,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return WorkflowContext.new(@version, @solution[:sid], sid,)
+              return WorkflowContext.new(@version, @solution[:sid], sid)
             end
 
             unless @workflows
-              @workflows = WorkflowList.new(@version, workspace_sid: @solution[:sid],)
+              @workflows = WorkflowList.new(@version, workspace_sid: @solution[:sid])
             end
 
             @workflows
@@ -363,7 +363,7 @@ module Twilio
           # @return [WorkspaceStatisticsList]
           # @return [WorkspaceStatisticsContext]
           def statistics
-            WorkspaceStatisticsContext.new(@version, @solution[:sid],)
+            WorkspaceStatisticsContext.new(@version, @solution[:sid])
           end
 
           ##
@@ -371,7 +371,7 @@ module Twilio
           # @return [WorkspaceRealTimeStatisticsList]
           # @return [WorkspaceRealTimeStatisticsContext]
           def real_time_statistics
-            WorkspaceRealTimeStatisticsContext.new(@version, @solution[:sid],)
+            WorkspaceRealTimeStatisticsContext.new(@version, @solution[:sid])
           end
 
           ##
@@ -379,7 +379,7 @@ module Twilio
           # @return [WorkspaceCumulativeStatisticsList]
           # @return [WorkspaceCumulativeStatisticsContext]
           def cumulative_statistics
-            WorkspaceCumulativeStatisticsContext.new(@version, @solution[:sid],)
+            WorkspaceCumulativeStatisticsContext.new(@version, @solution[:sid])
           end
 
           ##
@@ -390,11 +390,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return TaskChannelContext.new(@version, @solution[:sid], sid,)
+              return TaskChannelContext.new(@version, @solution[:sid], sid)
             end
 
             unless @task_channels
-              @task_channels = TaskChannelList.new(@version, workspace_sid: @solution[:sid],)
+              @task_channels = TaskChannelList.new(@version, workspace_sid: @solution[:sid])
             end
 
             @task_channels
@@ -439,7 +439,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid'],}
+            @params = {'sid' => sid || @properties['sid']}
           end
 
           ##
@@ -448,7 +448,7 @@ module Twilio
           # @return [WorkspaceContext] WorkspaceContext for this WorkspaceInstance
           def context
             unless @instance_context
-              @instance_context = WorkspaceContext.new(@version, @params['sid'],)
+              @instance_context = WorkspaceContext.new(@version, @params['sid'])
             end
             @instance_context
           end

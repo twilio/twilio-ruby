@@ -85,7 +85,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -160,7 +160,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [RoomRecordingInstance] RoomRecordingInstance
             def get_instance(payload)
-              RoomRecordingInstance.new(@version, payload, room_sid: @solution[:room_sid],)
+              RoomRecordingInstance.new(@version, payload, room_sid: @solution[:room_sid])
             end
 
             ##
@@ -181,7 +181,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {room_sid: room_sid, sid: sid,}
+              @solution = {room_sid: room_sid, sid: sid}
               @uri = "/Rooms/#{@solution[:room_sid]}/Recordings/#{@solution[:sid]}"
             end
 
@@ -197,7 +197,7 @@ module Twilio
                   params,
               )
 
-              RoomRecordingInstance.new(@version, payload, room_sid: @solution[:room_sid], sid: @solution[:sid],)
+              RoomRecordingInstance.new(@version, payload, room_sid: @solution[:room_sid], sid: @solution[:sid])
             end
 
             ##
@@ -239,7 +239,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'room_sid' => room_sid, 'sid' => sid || @properties['sid'],}
+              @params = {'room_sid' => room_sid, 'sid' => sid || @properties['sid']}
             end
 
             ##
@@ -248,7 +248,7 @@ module Twilio
             # @return [RoomRecordingContext] RoomRecordingContext for this RoomRecordingInstance
             def context
               unless @instance_context
-                @instance_context = RoomRecordingContext.new(@version, @params['room_sid'], @params['sid'],)
+                @instance_context = RoomRecordingContext.new(@version, @params['room_sid'], @params['sid'])
               end
               @instance_context
             end

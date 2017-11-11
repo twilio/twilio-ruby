@@ -90,7 +90,7 @@ describe 'PublicKey' do
                          .public_key.create(public_key: "publickey")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'PublicKey' => "publickey",}
+    values = {'PublicKey' => "publickey"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

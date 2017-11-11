@@ -64,7 +64,7 @@ module Twilio
             def stream(unique_name: :unset, status: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(unique_name: unique_name, status: status, page_size: limits[:page_size],)
+              page = self.page(unique_name: unique_name, status: status, page_size: limits[:page_size])
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -76,7 +76,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -133,17 +133,20 @@ module Twilio
             # @param [Time] date_expiry The date that this Session was expiry, given in ISO
             #   8601 format.
             # @param [String] ttl The Time to Live for a Session, in seconds.
+            # @param [session.Mode] mode The Mode of this Session. One of `message-only`,
+            #   `voice-only` or `voice-and-message`.
             # @param [session.Status] status The Status of this Session. One of `in-progess`,
             #   `closed`, `failed`, `unknown` or `completed`.
-            # @param [String] participants A list of phone numbers to add to this Session.
+            # @param [Hash] participants A list of phone numbers to add to this Session.
             # @return [SessionInstance] Newly created SessionInstance
-            def create(unique_name: :unset, date_expiry: :unset, ttl: :unset, status: :unset, participants: :unset)
+            def create(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
               data = Twilio::Values.of({
                   'UniqueName' => unique_name,
                   'DateExpiry' => Twilio.serialize_iso8601_datetime(date_expiry),
                   'Ttl' => ttl,
+                  'Mode' => mode,
                   'Status' => status,
-                  'Participants' => Twilio.serialize_list(participants) { |e| e },
+                  'Participants' => Twilio.serialize_list(participants) { |e| Twilio.serialize_object(e) },
               })
 
               payload = @version.create(
@@ -152,7 +155,7 @@ module Twilio
                   data: data
               )
 
-              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid],)
+              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid])
             end
 
             ##
@@ -183,7 +186,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [SessionInstance] SessionInstance
             def get_instance(payload)
-              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid],)
+              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid])
             end
 
             ##
@@ -206,7 +209,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid, sid: sid,}
+              @solution = {service_sid: service_sid, sid: sid}
               @uri = "/Services/#{@solution[:service_sid]}/Sessions/#{@solution[:sid]}"
 
               # Dependents
@@ -226,7 +229,7 @@ module Twilio
                   params,
               )
 
-              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid],)
+              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
             end
 
             ##
@@ -244,17 +247,20 @@ module Twilio
             # @param [Time] date_expiry The date that this Session was expiry, given in ISO
             #   8601 format.
             # @param [String] ttl The Time to Live for a Session, in seconds.
+            # @param [session.Mode] mode The Mode of this Session. One of `message-only`,
+            #   `voice-only` or `voice-and-message`.
             # @param [session.Status] status The Status of this Session. One of `in-progess`,
             #   `closed`, `failed`, `unknown` or `completed`.
-            # @param [String] participants A list of phone numbers to add to this Session.
+            # @param [Hash] participants A list of phone numbers to add to this Session.
             # @return [SessionInstance] Updated SessionInstance
-            def update(unique_name: :unset, date_expiry: :unset, ttl: :unset, status: :unset, participants: :unset)
+            def update(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
               data = Twilio::Values.of({
                   'UniqueName' => unique_name,
                   'DateExpiry' => Twilio.serialize_iso8601_datetime(date_expiry),
                   'Ttl' => ttl,
+                  'Mode' => mode,
                   'Status' => status,
-                  'Participants' => Twilio.serialize_list(participants) { |e| e },
+                  'Participants' => Twilio.serialize_list(participants) { |e| Twilio.serialize_object(e) },
               })
 
               payload = @version.update(
@@ -263,7 +269,7 @@ module Twilio
                   data: data,
               )
 
-              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid],)
+              SessionInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
             end
 
             ##
@@ -274,7 +280,7 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return InteractionContext.new(@version, @solution[:service_sid], @solution[:sid], sid,)
+                return InteractionContext.new(@version, @solution[:service_sid], @solution[:sid], sid)
               end
 
               unless @interactions
@@ -296,7 +302,7 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return ParticipantContext.new(@version, @solution[:service_sid], @solution[:sid], sid,)
+                return ParticipantContext.new(@version, @solution[:service_sid], @solution[:sid], sid)
               end
 
               unless @participants
@@ -344,6 +350,7 @@ module Twilio
                   'status' => payload['status'],
                   'closed_reason' => payload['closed_reason'],
                   'ttl' => payload['ttl'].to_i,
+                  'mode' => payload['mode'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
@@ -352,7 +359,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'],}
+              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid']}
             end
 
             ##
@@ -361,7 +368,7 @@ module Twilio
             # @return [SessionContext] SessionContext for this SessionInstance
             def context
               unless @instance_context
-                @instance_context = SessionContext.new(@version, @params['service_sid'], @params['sid'],)
+                @instance_context = SessionContext.new(@version, @params['service_sid'], @params['sid'])
               end
               @instance_context
             end
@@ -433,6 +440,12 @@ module Twilio
             end
 
             ##
+            # @return [session.Mode] The Mode of this Session
+            def mode
+              @properties['mode']
+            end
+
+            ##
             # @return [Time] The date this Session was created
             def date_created
               @properties['date_created']
@@ -478,15 +491,18 @@ module Twilio
             # @param [Time] date_expiry The date that this Session was expiry, given in ISO
             #   8601 format.
             # @param [String] ttl The Time to Live for a Session, in seconds.
+            # @param [session.Mode] mode The Mode of this Session. One of `message-only`,
+            #   `voice-only` or `voice-and-message`.
             # @param [session.Status] status The Status of this Session. One of `in-progess`,
             #   `closed`, `failed`, `unknown` or `completed`.
-            # @param [String] participants A list of phone numbers to add to this Session.
+            # @param [Hash] participants A list of phone numbers to add to this Session.
             # @return [SessionInstance] Updated SessionInstance
-            def update(unique_name: :unset, date_expiry: :unset, ttl: :unset, status: :unset, participants: :unset)
+            def update(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
               context.update(
                   unique_name: unique_name,
                   date_expiry: date_expiry,
                   ttl: ttl,
+                  mode: mode,
                   status: status,
                   participants: participants,
               )

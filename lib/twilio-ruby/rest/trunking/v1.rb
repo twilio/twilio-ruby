@@ -18,7 +18,7 @@ module Twilio
 
         ##
         # @param [String] sid The sid
-        # @return [Twilio::REST::Trunking::V1::TrunkInstance] if sid was passed.
+        # @return [Twilio::REST::Trunking::V1::TrunkContext] if sid was passed.
         # @return [Twilio::REST::Trunking::V1::TrunkList]
         def trunks(sid=:unset)
           if sid.nil?

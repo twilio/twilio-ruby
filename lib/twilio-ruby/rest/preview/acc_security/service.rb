@@ -31,7 +31,7 @@ module Twilio
           #   Must be an integer value between 4-10
           # @return [ServiceInstance] Newly created ServiceInstance
           def create(name: nil, code_length: :unset)
-            data = Twilio::Values.of({'Name' => name, 'CodeLength' => code_length,})
+            data = Twilio::Values.of({'Name' => name, 'CodeLength' => code_length})
 
             payload = @version.create(
                 'POST',
@@ -39,7 +39,7 @@ module Twilio
                 data: data
             )
 
-            ServiceInstance.new(@version, payload,)
+            ServiceInstance.new(@version, payload)
           end
 
           ##
@@ -71,7 +71,7 @@ module Twilio
           def stream(limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -83,7 +83,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -152,7 +152,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [ServiceInstance] ServiceInstance
           def get_instance(payload)
-            ServiceInstance.new(@version, payload,)
+            ServiceInstance.new(@version, payload)
           end
 
           ##
@@ -174,7 +174,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid,}
+            @solution = {sid: sid}
             @uri = "/Services/#{@solution[:sid]}"
 
             # Dependents
@@ -194,7 +194,7 @@ module Twilio
                 params,
             )
 
-            ServiceInstance.new(@version, payload, sid: @solution[:sid],)
+            ServiceInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -204,7 +204,7 @@ module Twilio
           #   Must be an integer value between 4-10
           # @return [ServiceInstance] Updated ServiceInstance
           def update(name: :unset, code_length: :unset)
-            data = Twilio::Values.of({'Name' => name, 'CodeLength' => code_length,})
+            data = Twilio::Values.of({'Name' => name, 'CodeLength' => code_length})
 
             payload = @version.update(
                 'POST',
@@ -212,7 +212,7 @@ module Twilio
                 data: data,
             )
 
-            ServiceInstance.new(@version, payload, sid: @solution[:sid],)
+            ServiceInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -221,7 +221,7 @@ module Twilio
           # @return [VerificationContext]
           def verifications
             unless @verifications
-              @verifications = VerificationList.new(@version, service_sid: @solution[:sid],)
+              @verifications = VerificationList.new(@version, service_sid: @solution[:sid])
             end
 
             @verifications
@@ -233,7 +233,7 @@ module Twilio
           # @return [VerificationCheckContext]
           def verification_checks
             unless @verification_checks
-              @verification_checks = VerificationCheckList.new(@version, service_sid: @solution[:sid],)
+              @verification_checks = VerificationCheckList.new(@version, service_sid: @solution[:sid])
             end
 
             @verification_checks
@@ -273,7 +273,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid'],}
+            @params = {'sid' => sid || @properties['sid']}
           end
 
           ##
@@ -282,7 +282,7 @@ module Twilio
           # @return [ServiceContext] ServiceContext for this ServiceInstance
           def context
             unless @instance_context
-              @instance_context = ServiceContext.new(@version, @params['sid'],)
+              @instance_context = ServiceContext.new(@version, @params['sid'])
             end
             @instance_context
           end
@@ -349,7 +349,7 @@ module Twilio
           #   Must be an integer value between 4-10
           # @return [ServiceInstance] Updated ServiceInstance
           def update(name: :unset, code_length: :unset)
-            context.update(name: name, code_length: code_length,)
+            context.update(name: name, code_length: code_length)
           end
 
           ##

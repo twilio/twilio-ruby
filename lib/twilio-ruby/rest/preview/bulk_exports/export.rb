@@ -50,7 +50,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [ExportInstance] ExportInstance
           def get_instance(payload)
-            ExportInstance.new(@version, payload,)
+            ExportInstance.new(@version, payload)
           end
 
           ##
@@ -72,7 +72,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {resource_type: resource_type,}
+            @solution = {resource_type: resource_type}
             @uri = "/Exports/#{@solution[:resource_type]}"
 
             # Dependents
@@ -91,7 +91,7 @@ module Twilio
                 params,
             )
 
-            ExportInstance.new(@version, payload, resource_type: @solution[:resource_type],)
+            ExportInstance.new(@version, payload, resource_type: @solution[:resource_type])
           end
 
           ##
@@ -100,7 +100,7 @@ module Twilio
           # @return [DayContext]
           def days
             unless @days
-              @days = DayList.new(@version, resource_type: @solution[:resource_type],)
+              @days = DayList.new(@version, resource_type: @solution[:resource_type])
             end
 
             @days
@@ -135,7 +135,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'resource_type' => resource_type || @properties['resource_type'],}
+            @params = {'resource_type' => resource_type || @properties['resource_type']}
           end
 
           ##
@@ -144,7 +144,7 @@ module Twilio
           # @return [ExportContext] ExportContext for this ExportInstance
           def context
             unless @instance_context
-              @instance_context = ExportContext.new(@version, @params['resource_type'],)
+              @instance_context = ExportContext.new(@version, @params['resource_type'])
             end
             @instance_context
           end

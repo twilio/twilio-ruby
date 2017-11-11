@@ -15,7 +15,7 @@ describe 'ShortCode' do
                       .short_codes.create(sid: "SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Sid' => "SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",}
+    values = {'Sid' => "SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -36,7 +36,10 @@ describe 'ShortCode' do
           "date_updated": "2015-07-30T20:00:00Z",
           "short_code": "12345",
           "iso_country": "US",
-          "capabilities": [],
+          "capabilities": {
+              "sms_outbound": true,
+              "voice_inbound": false
+          },
           "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -115,7 +118,10 @@ describe 'ShortCode' do
                   "date_updated": "2015-07-30T20:00:00Z",
                   "short_code": "12345",
                   "iso_country": "US",
-                  "capabilities": [],
+                  "capabilities": {
+                      "sms_outbound": true,
+                      "voice_inbound": false
+                  },
                   "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
           ]
@@ -157,7 +163,10 @@ describe 'ShortCode' do
           "date_updated": "2015-07-30T20:00:00Z",
           "short_code": "12345",
           "iso_country": "US",
-          "capabilities": [],
+          "capabilities": {
+              "sms_outbound": true,
+              "voice_inbound": false
+          },
           "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]

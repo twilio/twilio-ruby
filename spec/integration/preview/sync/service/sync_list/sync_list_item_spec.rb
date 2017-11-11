@@ -89,7 +89,7 @@ describe 'SyncListItem' do
                           .sync_list_items.create(data: "{}")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Data' => Twilio.serialize_object("{}"),}
+    values = {'Data' => Twilio.serialize_object("{}")}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -215,7 +215,7 @@ describe 'SyncListItem' do
                           .sync_list_items(1).update(data: "{}")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Data' => Twilio.serialize_object("{}"),}
+    values = {'Data' => Twilio.serialize_object("{}")}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

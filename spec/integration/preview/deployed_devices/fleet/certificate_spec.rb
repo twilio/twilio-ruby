@@ -83,7 +83,7 @@ describe 'Certificate' do
                                       .certificates.create(certificate_data: "certificate_data")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'CertificateData' => "certificate_data",}
+    values = {'CertificateData' => "certificate_data"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

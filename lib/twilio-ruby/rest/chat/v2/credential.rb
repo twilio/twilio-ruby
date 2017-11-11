@@ -50,7 +50,7 @@ module Twilio
           def stream(limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -62,7 +62,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -131,7 +131,7 @@ module Twilio
                 data: data
             )
 
-            CredentialInstance.new(@version, payload,)
+            CredentialInstance.new(@version, payload)
           end
 
           ##
@@ -160,7 +160,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [CredentialInstance] CredentialInstance
           def get_instance(payload)
-            CredentialInstance.new(@version, payload,)
+            CredentialInstance.new(@version, payload)
           end
 
           ##
@@ -180,7 +180,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid,}
+            @solution = {sid: sid}
             @uri = "/Credentials/#{@solution[:sid]}"
           end
 
@@ -196,7 +196,7 @@ module Twilio
                 params,
             )
 
-            CredentialInstance.new(@version, payload, sid: @solution[:sid],)
+            CredentialInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -224,7 +224,7 @@ module Twilio
                 data: data,
             )
 
-            CredentialInstance.new(@version, payload, sid: @solution[:sid],)
+            CredentialInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -266,7 +266,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid'],}
+            @params = {'sid' => sid || @properties['sid']}
           end
 
           ##
@@ -275,7 +275,7 @@ module Twilio
           # @return [CredentialContext] CredentialContext for this CredentialInstance
           def context
             unless @instance_context
-              @instance_context = CredentialContext.new(@version, @params['sid'],)
+              @instance_context = CredentialContext.new(@version, @params['sid'])
             end
             @instance_context
           end

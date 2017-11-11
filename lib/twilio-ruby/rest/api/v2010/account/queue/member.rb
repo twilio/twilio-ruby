@@ -55,7 +55,7 @@ module Twilio
               def stream(limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(page_size: limits[:page_size],)
+                page = self.page(page_size: limits[:page_size])
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -67,7 +67,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(page_size: limits[:page_size],)
+                page = self.page(page_size: limits[:page_size])
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -161,7 +161,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {account_sid: account_sid, queue_sid: queue_sid, call_sid: call_sid,}
+                @solution = {account_sid: account_sid, queue_sid: queue_sid, call_sid: call_sid}
                 @uri = "/Accounts/#{@solution[:account_sid]}/Queues/#{@solution[:queue_sid]}/Members/#{@solution[:call_sid]}.json"
               end
 
@@ -192,7 +192,7 @@ module Twilio
               # @param [String] method The method
               # @return [MemberInstance] Updated MemberInstance
               def update(url: nil, method: nil)
-                data = Twilio::Values.of({'Url' => url, 'Method' => method,})
+                data = Twilio::Values.of({'Url' => url, 'Method' => method})
 
                 payload = @version.update(
                     'POST',
@@ -307,7 +307,7 @@ module Twilio
               # @param [String] method The method
               # @return [MemberInstance] Updated MemberInstance
               def update(url: nil, method: nil)
-                context.update(url: url, method: method,)
+                context.update(url: url, method: method)
               end
 
               ##

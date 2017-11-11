@@ -106,7 +106,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -191,7 +191,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ConferenceInstance] ConferenceInstance
             def get_instance(payload)
-              ConferenceInstance.new(@version, payload, account_sid: @solution[:account_sid],)
+              ConferenceInstance.new(@version, payload, account_sid: @solution[:account_sid])
             end
 
             ##
@@ -212,7 +212,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {account_sid: account_sid, sid: sid,}
+              @solution = {account_sid: account_sid, sid: sid}
               @uri = "/Accounts/#{@solution[:account_sid]}/Conferences/#{@solution[:sid]}.json"
 
               # Dependents
@@ -231,7 +231,7 @@ module Twilio
                   params,
               )
 
-              ConferenceInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid],)
+              ConferenceInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid])
             end
 
             ##
@@ -239,7 +239,7 @@ module Twilio
             # @param [conference.UpdateStatus] status The status
             # @return [ConferenceInstance] Updated ConferenceInstance
             def update(status: :unset)
-              data = Twilio::Values.of({'Status' => status,})
+              data = Twilio::Values.of({'Status' => status})
 
               payload = @version.update(
                   'POST',
@@ -247,7 +247,7 @@ module Twilio
                   data: data,
               )
 
-              ConferenceInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid],)
+              ConferenceInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid])
             end
 
             ##
@@ -258,7 +258,7 @@ module Twilio
               raise ArgumentError, 'call_sid cannot be nil' if call_sid.nil?
 
               if call_sid != :unset
-                return ParticipantContext.new(@version, @solution[:account_sid], @solution[:sid], call_sid,)
+                return ParticipantContext.new(@version, @solution[:account_sid], @solution[:sid], call_sid)
               end
 
               unless @participants
@@ -308,7 +308,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid'],}
+              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid']}
             end
 
             ##
@@ -317,7 +317,7 @@ module Twilio
             # @return [ConferenceContext] ConferenceContext for this ConferenceInstance
             def context
               unless @instance_context
-                @instance_context = ConferenceContext.new(@version, @params['account_sid'], @params['sid'],)
+                @instance_context = ConferenceContext.new(@version, @params['account_sid'], @params['sid'])
               end
               @instance_context
             end
@@ -394,7 +394,7 @@ module Twilio
             # @param [conference.UpdateStatus] status The status
             # @return [ConferenceInstance] Updated ConferenceInstance
             def update(status: :unset)
-              context.update(status: status,)
+              context.update(status: status)
             end
 
             ##

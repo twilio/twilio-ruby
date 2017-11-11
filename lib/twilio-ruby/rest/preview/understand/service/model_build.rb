@@ -54,7 +54,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -66,7 +66,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -114,7 +114,7 @@ module Twilio
             # @param [String] unique_name The unique_name
             # @return [ModelBuildInstance] Newly created ModelBuildInstance
             def create(status_callback: :unset, unique_name: :unset)
-              data = Twilio::Values.of({'StatusCallback' => status_callback, 'UniqueName' => unique_name,})
+              data = Twilio::Values.of({'StatusCallback' => status_callback, 'UniqueName' => unique_name})
 
               payload = @version.create(
                   'POST',
@@ -122,7 +122,7 @@ module Twilio
                   data: data
               )
 
-              ModelBuildInstance.new(@version, payload, service_sid: @solution[:service_sid],)
+              ModelBuildInstance.new(@version, payload, service_sid: @solution[:service_sid])
             end
 
             ##
@@ -153,7 +153,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ModelBuildInstance] ModelBuildInstance
             def get_instance(payload)
-              ModelBuildInstance.new(@version, payload, service_sid: @solution[:service_sid],)
+              ModelBuildInstance.new(@version, payload, service_sid: @solution[:service_sid])
             end
 
             ##
@@ -176,7 +176,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid, sid: sid,}
+              @solution = {service_sid: service_sid, sid: sid}
               @uri = "/Services/#{@solution[:service_sid]}/ModelBuilds/#{@solution[:sid]}"
             end
 
@@ -192,7 +192,7 @@ module Twilio
                   params,
               )
 
-              ModelBuildInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid],)
+              ModelBuildInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
             end
 
             ##
@@ -200,7 +200,7 @@ module Twilio
             # @param [String] unique_name The unique_name
             # @return [ModelBuildInstance] Updated ModelBuildInstance
             def update(unique_name: :unset)
-              data = Twilio::Values.of({'UniqueName' => unique_name,})
+              data = Twilio::Values.of({'UniqueName' => unique_name})
 
               payload = @version.update(
                   'POST',
@@ -208,7 +208,7 @@ module Twilio
                   data: data,
               )
 
-              ModelBuildInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid],)
+              ModelBuildInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
             end
 
             ##
@@ -253,7 +253,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'],}
+              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid']}
             end
 
             ##
@@ -262,7 +262,7 @@ module Twilio
             # @return [ModelBuildContext] ModelBuildContext for this ModelBuildInstance
             def context
               unless @instance_context
-                @instance_context = ModelBuildContext.new(@version, @params['service_sid'], @params['sid'],)
+                @instance_context = ModelBuildContext.new(@version, @params['service_sid'], @params['sid'])
               end
               @instance_context
             end
@@ -327,7 +327,7 @@ module Twilio
             # @param [String] unique_name The unique_name
             # @return [ModelBuildInstance] Updated ModelBuildInstance
             def update(unique_name: :unset)
-              context.update(unique_name: unique_name,)
+              context.update(unique_name: unique_name)
             end
 
             ##

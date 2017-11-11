@@ -18,7 +18,7 @@ module Twilio
 
         ##
         # @param [String] sid The sid
-        # @return [Twilio::REST::Preview::Understand::ServiceInstance] if sid was passed.
+        # @return [Twilio::REST::Preview::Understand::ServiceContext] if sid was passed.
         # @return [Twilio::REST::Preview::Understand::ServiceList]
         def services(sid=:unset)
           if sid.nil?

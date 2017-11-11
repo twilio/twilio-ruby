@@ -52,7 +52,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [UsageInstance] UsageInstance
             def get_instance(payload)
-              UsageInstance.new(@version, payload, sim_sid: @solution[:sim_sid],)
+              UsageInstance.new(@version, payload, sim_sid: @solution[:sim_sid])
             end
 
             ##
@@ -74,7 +74,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {sim_sid: sim_sid,}
+              @solution = {sim_sid: sim_sid}
               @uri = "/Sims/#{@solution[:sim_sid]}/Usage"
             end
 
@@ -84,7 +84,7 @@ module Twilio
             # @param [String] start The start
             # @return [UsageInstance] Fetched UsageInstance
             def fetch(end_: :unset, start: :unset)
-              params = Twilio::Values.of({'End' => end_, 'Start' => start,})
+              params = Twilio::Values.of({'End' => end_, 'Start' => start})
 
               payload = @version.fetch(
                   'GET',
@@ -92,7 +92,7 @@ module Twilio
                   params,
               )
 
-              UsageInstance.new(@version, payload, sim_sid: @solution[:sim_sid],)
+              UsageInstance.new(@version, payload, sim_sid: @solution[:sim_sid])
             end
 
             ##
@@ -130,7 +130,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'sim_sid' => sim_sid,}
+              @params = {'sim_sid' => sim_sid}
             end
 
             ##
@@ -139,7 +139,7 @@ module Twilio
             # @return [UsageContext] UsageContext for this UsageInstance
             def context
               unless @instance_context
-                @instance_context = UsageContext.new(@version, @params['sim_sid'],)
+                @instance_context = UsageContext.new(@version, @params['sim_sid'])
               end
               @instance_context
             end
@@ -204,7 +204,7 @@ module Twilio
             # @param [String] start The start
             # @return [UsageInstance] Fetched UsageInstance
             def fetch(end_: :unset, start: :unset)
-              context.fetch(end_: end_, start: start,)
+              context.fetch(end_: end_, start: start)
             end
 
             ##

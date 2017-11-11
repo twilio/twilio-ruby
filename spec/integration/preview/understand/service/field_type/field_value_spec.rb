@@ -139,7 +139,7 @@ describe 'FieldValue' do
                                 .field_values.create(language: "language", value: "value")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Language' => "language", 'Value' => "value",}
+    values = {'Language' => "language", 'Value' => "value"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

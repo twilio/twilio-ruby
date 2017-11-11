@@ -49,7 +49,7 @@ module Twilio
                   data: data
               )
 
-              CertificateInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid],)
+              CertificateInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid])
             end
 
             ##
@@ -85,7 +85,7 @@ module Twilio
             def stream(device_sid: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(device_sid: device_sid, page_size: limits[:page_size],)
+              page = self.page(device_sid: device_sid, page_size: limits[:page_size])
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -97,7 +97,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -169,7 +169,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [CertificateInstance] CertificateInstance
             def get_instance(payload)
-              CertificateInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid],)
+              CertificateInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid])
             end
 
             ##
@@ -193,7 +193,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {fleet_sid: fleet_sid, sid: sid,}
+              @solution = {fleet_sid: fleet_sid, sid: sid}
               @uri = "/Fleets/#{@solution[:fleet_sid]}/Certificates/#{@solution[:sid]}"
             end
 
@@ -209,7 +209,7 @@ module Twilio
                   params,
               )
 
-              CertificateInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid],)
+              CertificateInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid])
             end
 
             ##
@@ -227,7 +227,7 @@ module Twilio
             #   Device to become authenticated with this Certificate credential.
             # @return [CertificateInstance] Updated CertificateInstance
             def update(friendly_name: :unset, device_sid: :unset)
-              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'DeviceSid' => device_sid,})
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'DeviceSid' => device_sid})
 
               payload = @version.update(
                   'POST',
@@ -235,7 +235,7 @@ module Twilio
                   data: data,
               )
 
-              CertificateInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid],)
+              CertificateInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid])
             end
 
             ##
@@ -276,7 +276,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'fleet_sid' => fleet_sid, 'sid' => sid || @properties['sid'],}
+              @params = {'fleet_sid' => fleet_sid, 'sid' => sid || @properties['sid']}
             end
 
             ##
@@ -285,7 +285,7 @@ module Twilio
             # @return [CertificateContext] CertificateContext for this CertificateInstance
             def context
               unless @instance_context
-                @instance_context = CertificateContext.new(@version, @params['fleet_sid'], @params['sid'],)
+                @instance_context = CertificateContext.new(@version, @params['fleet_sid'], @params['sid'])
               end
               @instance_context
             end
@@ -366,7 +366,7 @@ module Twilio
             #   Device to become authenticated with this Certificate credential.
             # @return [CertificateInstance] Updated CertificateInstance
             def update(friendly_name: :unset, device_sid: :unset)
-              context.update(friendly_name: friendly_name, device_sid: device_sid,)
+              context.update(friendly_name: friendly_name, device_sid: device_sid)
             end
 
             ##

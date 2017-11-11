@@ -32,7 +32,7 @@ module Twilio
               # @param [String] role_sid The role_sid
               # @return [MemberInstance] Newly created MemberInstance
               def create(identity: nil, role_sid: :unset)
-                data = Twilio::Values.of({'Identity' => identity, 'RoleSid' => role_sid,})
+                data = Twilio::Values.of({'Identity' => identity, 'RoleSid' => role_sid})
 
                 payload = @version.create(
                     'POST',
@@ -79,7 +79,7 @@ module Twilio
               def stream(identity: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(identity: identity, page_size: limits[:page_size],)
+                page = self.page(identity: identity, page_size: limits[:page_size])
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -91,7 +91,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(page_size: limits[:page_size],)
+                page = self.page(page_size: limits[:page_size])
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -187,7 +187,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {service_sid: service_sid, channel_sid: channel_sid, sid: sid,}
+                @solution = {service_sid: service_sid, channel_sid: channel_sid, sid: sid}
                 @uri = "/Services/#{@solution[:service_sid]}/Channels/#{@solution[:channel_sid]}/Members/#{@solution[:sid]}"
               end
 
@@ -391,7 +391,7 @@ module Twilio
               # @param [String] last_consumed_message_index The last_consumed_message_index
               # @return [MemberInstance] Updated MemberInstance
               def update(role_sid: :unset, last_consumed_message_index: :unset)
-                context.update(role_sid: role_sid, last_consumed_message_index: last_consumed_message_index,)
+                context.update(role_sid: role_sid, last_consumed_message_index: last_consumed_message_index)
               end
 
               ##

@@ -52,7 +52,7 @@ module Twilio
           def stream(limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -64,7 +64,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -127,7 +127,7 @@ module Twilio
                 data: data
             )
 
-            ServiceInstance.new(@version, payload,)
+            ServiceInstance.new(@version, payload)
           end
 
           ##
@@ -158,7 +158,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [ServiceInstance] ServiceInstance
           def get_instance(payload)
-            ServiceInstance.new(@version, payload,)
+            ServiceInstance.new(@version, payload)
           end
 
           ##
@@ -180,7 +180,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid,}
+            @solution = {sid: sid}
             @uri = "/Services/#{@solution[:sid]}"
 
             # Dependents
@@ -202,7 +202,7 @@ module Twilio
                 params,
             )
 
-            ServiceInstance.new(@version, payload, sid: @solution[:sid],)
+            ServiceInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -226,7 +226,7 @@ module Twilio
                 data: data,
             )
 
-            ServiceInstance.new(@version, payload, sid: @solution[:sid],)
+            ServiceInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -244,11 +244,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return FieldTypeContext.new(@version, @solution[:sid], sid,)
+              return FieldTypeContext.new(@version, @solution[:sid], sid)
             end
 
             unless @field_types
-              @field_types = FieldTypeList.new(@version, service_sid: @solution[:sid],)
+              @field_types = FieldTypeList.new(@version, service_sid: @solution[:sid])
             end
 
             @field_types
@@ -262,11 +262,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return IntentContext.new(@version, @solution[:sid], sid,)
+              return IntentContext.new(@version, @solution[:sid], sid)
             end
 
             unless @intents
-              @intents = IntentList.new(@version, service_sid: @solution[:sid],)
+              @intents = IntentList.new(@version, service_sid: @solution[:sid])
             end
 
             @intents
@@ -280,11 +280,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return ModelBuildContext.new(@version, @solution[:sid], sid,)
+              return ModelBuildContext.new(@version, @solution[:sid], sid)
             end
 
             unless @model_builds
-              @model_builds = ModelBuildList.new(@version, service_sid: @solution[:sid],)
+              @model_builds = ModelBuildList.new(@version, service_sid: @solution[:sid])
             end
 
             @model_builds
@@ -298,11 +298,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return QueryContext.new(@version, @solution[:sid], sid,)
+              return QueryContext.new(@version, @solution[:sid], sid)
             end
 
             unless @queries
-              @queries = QueryList.new(@version, service_sid: @solution[:sid],)
+              @queries = QueryList.new(@version, service_sid: @solution[:sid])
             end
 
             @queries
@@ -345,7 +345,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid'],}
+            @params = {'sid' => sid || @properties['sid']}
           end
 
           ##
@@ -354,7 +354,7 @@ module Twilio
           # @return [ServiceContext] ServiceContext for this ServiceInstance
           def context
             unless @instance_context
-              @instance_context = ServiceContext.new(@version, @params['sid'],)
+              @instance_context = ServiceContext.new(@version, @params['sid'])
             end
             @instance_context
           end

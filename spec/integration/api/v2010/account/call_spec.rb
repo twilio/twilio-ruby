@@ -15,7 +15,7 @@ describe 'Call' do
                        .calls.create(to: "+123456789", from: "+987654321")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'To' => "+123456789", 'From' => "+987654321",}
+    values = {'To' => "+123456789", 'From' => "+987654321"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

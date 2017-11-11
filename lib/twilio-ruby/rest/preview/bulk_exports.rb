@@ -19,7 +19,7 @@ module Twilio
 
         ##
         # @param [String] resource_type The resource_type
-        # @return [Twilio::REST::Preview::BulkExports::ExportInstance] if resource_type was passed.
+        # @return [Twilio::REST::Preview::BulkExports::ExportContext] if resource_type was passed.
         # @return [Twilio::REST::Preview::BulkExports::ExportList]
         def exports(resource_type=:unset)
           if resource_type.nil?
@@ -33,7 +33,7 @@ module Twilio
 
         ##
         # @param [String] resource_type The resource_type
-        # @return [Twilio::REST::Preview::BulkExports::ExportConfigurationInstance] if resource_type was passed.
+        # @return [Twilio::REST::Preview::BulkExports::ExportConfigurationContext] if resource_type was passed.
         # @return [Twilio::REST::Preview::BulkExports::ExportConfigurationList]
         def export_configuration(resource_type=:unset)
           if resource_type.nil?

@@ -83,7 +83,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -156,7 +156,7 @@ module Twilio
                   data: data
               )
 
-              QueryInstance.new(@version, payload, service_sid: @solution[:service_sid],)
+              QueryInstance.new(@version, payload, service_sid: @solution[:service_sid])
             end
 
             ##
@@ -187,7 +187,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [QueryInstance] QueryInstance
             def get_instance(payload)
-              QueryInstance.new(@version, payload, service_sid: @solution[:service_sid],)
+              QueryInstance.new(@version, payload, service_sid: @solution[:service_sid])
             end
 
             ##
@@ -210,7 +210,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid, sid: sid,}
+              @solution = {service_sid: service_sid, sid: sid}
               @uri = "/Services/#{@solution[:service_sid]}/Queries/#{@solution[:sid]}"
             end
 
@@ -226,7 +226,7 @@ module Twilio
                   params,
               )
 
-              QueryInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid],)
+              QueryInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
             end
 
             ##
@@ -235,7 +235,7 @@ module Twilio
             # @param [String] status The status
             # @return [QueryInstance] Updated QueryInstance
             def update(sample_sid: :unset, status: :unset)
-              data = Twilio::Values.of({'SampleSid' => sample_sid, 'Status' => status,})
+              data = Twilio::Values.of({'SampleSid' => sample_sid, 'Status' => status})
 
               payload = @version.update(
                   'POST',
@@ -243,7 +243,7 @@ module Twilio
                   data: data,
               )
 
-              QueryInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid],)
+              QueryInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
             end
 
             ##
@@ -292,7 +292,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'],}
+              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid']}
             end
 
             ##
@@ -301,7 +301,7 @@ module Twilio
             # @return [QueryContext] QueryContext for this QueryInstance
             def context
               unless @instance_context
-                @instance_context = QueryContext.new(@version, @params['service_sid'], @params['sid'],)
+                @instance_context = QueryContext.new(@version, @params['service_sid'], @params['sid'])
               end
               @instance_context
             end
@@ -391,7 +391,7 @@ module Twilio
             # @param [String] status The status
             # @return [QueryInstance] Updated QueryInstance
             def update(sample_sid: :unset, status: :unset)
-              context.update(sample_sid: sample_sid, status: status,)
+              context.update(sample_sid: sample_sid, status: status)
             end
 
             ##

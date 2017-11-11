@@ -31,7 +31,6 @@ module Twilio
               # Lists ParticipantInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [participant.ParticipantType] participant_type The participant_type
               # @param [String] identifier The identifier
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
@@ -40,20 +39,14 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(participant_type: :unset, identifier: :unset, limit: nil, page_size: nil)
-                self.stream(
-                    participant_type: participant_type,
-                    identifier: identifier,
-                    limit: limit,
-                    page_size: page_size
-                ).entries
+              def list(identifier: :unset, limit: nil, page_size: nil)
+                self.stream(identifier: identifier, limit: limit, page_size: page_size).entries
               end
 
               ##
               # Streams ParticipantInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [participant.ParticipantType] participant_type The participant_type
               # @param [String] identifier The identifier
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
@@ -62,14 +55,10 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(participant_type: :unset, identifier: :unset, limit: nil, page_size: nil)
+              def stream(identifier: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(
-                    participant_type: participant_type,
-                    identifier: identifier,
-                    page_size: limits[:page_size],
-                )
+                page = self.page(identifier: identifier, page_size: limits[:page_size])
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -81,7 +70,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(page_size: limits[:page_size],)
+                page = self.page(page_size: limits[:page_size])
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -91,15 +80,13 @@ module Twilio
               ##
               # Retrieve a single page of ParticipantInstance records from the API.
               # Request is executed immediately.
-              # @param [participant.ParticipantType] participant_type The participant_type
               # @param [String] identifier The identifier
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of ParticipantInstance
-              def page(participant_type: :unset, identifier: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              def page(identifier: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
-                    'ParticipantType' => participant_type,
                     'Identifier' => identifier,
                     'PageToken' => page_token,
                     'Page' => page_number,
@@ -132,17 +119,14 @@ module Twilio
               # @param [String] identifier The phone number of this Participant.
               # @param [String] friendly_name A human readable description of this resource, up
               #   to 64 characters.
-              # @param [participant.ParticipantType] participant_type The Participant Type of
-              #   this Participant. One of `message-only`, `voice-only` or `voice-and-message`.
               # @param [String] proxy_identifier The proxy phone number for this Participant.
               # @param [String] proxy_identifier_sid The unique SID identifier of the Proxy
               #   Identifier.
               # @return [ParticipantInstance] Newly created ParticipantInstance
-              def create(identifier: nil, friendly_name: :unset, participant_type: :unset, proxy_identifier: :unset, proxy_identifier_sid: :unset)
+              def create(identifier: nil, friendly_name: :unset, proxy_identifier: :unset, proxy_identifier_sid: :unset)
                 data = Twilio::Values.of({
                     'Identifier' => identifier,
                     'FriendlyName' => friendly_name,
-                    'ParticipantType' => participant_type,
                     'ProxyIdentifier' => proxy_identifier,
                     'ProxyIdentifierSid' => proxy_identifier_sid,
                 })
@@ -219,7 +203,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {service_sid: service_sid, session_sid: session_sid, sid: sid,}
+                @solution = {service_sid: service_sid, session_sid: session_sid, sid: sid}
                 @uri = "/Services/#{@solution[:service_sid]}/Sessions/#{@solution[:session_sid]}/Participants/#{@solution[:sid]}"
 
                 # Dependents
@@ -256,8 +240,6 @@ module Twilio
 
               ##
               # Update the ParticipantInstance
-              # @param [participant.ParticipantType] participant_type The Participant Type of
-              #   this Participant. One of `message-only`, `voice-only` or `voice-and-message`.
               # @param [String] identifier The phone number of this Participant.
               # @param [String] friendly_name A human readable description of this resource, up
               #   to 64 characters.
@@ -265,9 +247,8 @@ module Twilio
               # @param [String] proxy_identifier_sid The unique SID identifier of the Proxy
               #   Identifier.
               # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(participant_type: :unset, identifier: :unset, friendly_name: :unset, proxy_identifier: :unset, proxy_identifier_sid: :unset)
+              def update(identifier: :unset, friendly_name: :unset, proxy_identifier: :unset, proxy_identifier_sid: :unset)
                 data = Twilio::Values.of({
-                    'ParticipantType' => participant_type,
                     'Identifier' => identifier,
                     'FriendlyName' => friendly_name,
                     'ProxyIdentifier' => proxy_identifier,
@@ -348,7 +329,6 @@ module Twilio
                     'service_sid' => payload['service_sid'],
                     'account_sid' => payload['account_sid'],
                     'friendly_name' => payload['friendly_name'],
-                    'participant_type' => payload['participant_type'],
                     'identifier' => payload['identifier'],
                     'proxy_identifier' => payload['proxy_identifier'],
                     'proxy_identifier_sid' => payload['proxy_identifier_sid'],
@@ -415,19 +395,13 @@ module Twilio
               end
 
               ##
-              # @return [participant.ParticipantType] The Participant Type of this Participant
-              def participant_type
-                @properties['participant_type']
-              end
-
-              ##
               # @return [String] The phone number of this Participant.
               def identifier
                 @properties['identifier']
               end
 
               ##
-              # @return [String] The proxy phone number for this Participant.
+              # @return [String] The proxy_identifier
               def proxy_identifier
                 @properties['proxy_identifier']
               end
@@ -484,8 +458,6 @@ module Twilio
 
               ##
               # Update the ParticipantInstance
-              # @param [participant.ParticipantType] participant_type The Participant Type of
-              #   this Participant. One of `message-only`, `voice-only` or `voice-and-message`.
               # @param [String] identifier The phone number of this Participant.
               # @param [String] friendly_name A human readable description of this resource, up
               #   to 64 characters.
@@ -493,9 +465,8 @@ module Twilio
               # @param [String] proxy_identifier_sid The unique SID identifier of the Proxy
               #   Identifier.
               # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(participant_type: :unset, identifier: :unset, friendly_name: :unset, proxy_identifier: :unset, proxy_identifier_sid: :unset)
+              def update(identifier: :unset, friendly_name: :unset, proxy_identifier: :unset, proxy_identifier_sid: :unset)
                 context.update(
-                    participant_type: participant_type,
                     identifier: identifier,
                     friendly_name: friendly_name,
                     proxy_identifier: proxy_identifier,

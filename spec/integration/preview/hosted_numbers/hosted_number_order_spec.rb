@@ -227,10 +227,10 @@ describe 'HostedNumberOrder' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+987654321", iso_country: "iso_country", sms_capability: true)
+      @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+987654321", sms_capability: true)
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'PhoneNumber' => "+987654321", 'IsoCountry' => "iso_country", 'SmsCapability' => true,}
+    values = {'PhoneNumber' => "+987654321", 'SmsCapability' => true}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -267,7 +267,7 @@ describe 'HostedNumberOrder' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+987654321", iso_country: "iso_country", sms_capability: true)
+    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+987654321", sms_capability: true)
 
     expect(actual).to_not eq(nil)
   end
@@ -300,7 +300,7 @@ describe 'HostedNumberOrder' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+987654321", iso_country: "iso_country", sms_capability: true)
+    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+987654321", sms_capability: true)
 
     expect(actual).to_not eq(nil)
   end

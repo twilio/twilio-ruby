@@ -12,15 +12,14 @@ describe 'PhoneNumber' do
 
     expect {
       @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .phone_numbers.create(sid: "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                      .phone_numbers.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Sid' => "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",}
+    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers',
-        data: values,
     ))).to eq(true)
   end
 
@@ -37,14 +36,17 @@ describe 'PhoneNumber' do
           "phone_number": "+987654321",
           "friendly_name": "Friendly Name",
           "iso_country": "US",
-          "capabilities": [],
+          "capabilities": {
+              "sms_outbound": true,
+              "voice_inbound": false
+          },
           "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
     ))
 
     actual = @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .phone_numbers.create(sid: "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                             .phone_numbers.create()
 
     expect(actual).to_not eq(nil)
   end
@@ -117,7 +119,10 @@ describe 'PhoneNumber' do
                   "phone_number": "+987654321",
                   "friendly_name": "Friendly Name",
                   "iso_country": "US",
-                  "capabilities": [],
+                  "capabilities": {
+                      "sms_outbound": true,
+                      "voice_inbound": false
+                  },
                   "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
           ]
@@ -160,7 +165,10 @@ describe 'PhoneNumber' do
           "phone_number": "12345",
           "friendly_name": "Friendly Name",
           "iso_country": "US",
-          "capabilities": [],
+          "capabilities": {
+              "sms_outbound": true,
+              "voice_inbound": false
+          },
           "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]

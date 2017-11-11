@@ -15,7 +15,7 @@ describe 'Message' do
                        .messages.create(to: "+123456789")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'To' => "+123456789",}
+    values = {'To' => "+123456789"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -245,7 +245,7 @@ describe 'Message' do
                        .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(body: "body")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Body' => "body",}
+    values = {'Body' => "body"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

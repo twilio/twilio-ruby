@@ -58,7 +58,7 @@ module Twilio
               def stream(language: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(language: language, page_size: limits[:page_size],)
+                page = self.page(language: language, page_size: limits[:page_size])
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -70,7 +70,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(page_size: limits[:page_size],)
+                page = self.page(page_size: limits[:page_size])
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -120,7 +120,7 @@ module Twilio
               # @param [String] tagged_text The tagged_text
               # @return [SampleInstance] Newly created SampleInstance
               def create(language: nil, tagged_text: nil)
-                data = Twilio::Values.of({'Language' => language, 'TaggedText' => tagged_text,})
+                data = Twilio::Values.of({'Language' => language, 'TaggedText' => tagged_text})
 
                 payload = @version.create(
                     'POST',
@@ -193,7 +193,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {service_sid: service_sid, intent_sid: intent_sid, sid: sid,}
+                @solution = {service_sid: service_sid, intent_sid: intent_sid, sid: sid}
                 @uri = "/Services/#{@solution[:service_sid]}/Intents/#{@solution[:intent_sid]}/Samples/#{@solution[:sid]}"
               end
 
@@ -224,7 +224,7 @@ module Twilio
               # @param [String] tagged_text The tagged_text
               # @return [SampleInstance] Updated SampleInstance
               def update(language: :unset, tagged_text: :unset)
-                data = Twilio::Values.of({'Language' => language, 'TaggedText' => tagged_text,})
+                data = Twilio::Values.of({'Language' => language, 'TaggedText' => tagged_text})
 
                 payload = @version.update(
                     'POST',
@@ -375,7 +375,7 @@ module Twilio
               # @param [String] tagged_text The tagged_text
               # @return [SampleInstance] Updated SampleInstance
               def update(language: :unset, tagged_text: :unset)
-                context.update(language: language, tagged_text: tagged_text,)
+                context.update(language: language, tagged_text: tagged_text)
               end
 
               ##

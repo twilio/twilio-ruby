@@ -31,7 +31,7 @@ module Twilio
               # @param [feedback.Outcome] outcome The outcome
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(outcome: :unset)
-                data = Twilio::Values.of({'Outcome' => outcome,})
+                data = Twilio::Values.of({'Outcome' => outcome})
 
                 payload = @version.create(
                     'POST',

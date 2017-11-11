@@ -102,7 +102,7 @@ describe 'Domain' do
                        .domains.create(domain_name: "domain_name")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'DomainName' => "domain_name",}
+    values = {'DomainName' => "domain_name"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

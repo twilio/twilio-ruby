@@ -35,7 +35,7 @@ module Twilio
             #   for this verification
             # @return [VerificationInstance] Newly created VerificationInstance
             def create(to: nil, channel: nil, custom_message: :unset)
-              data = Twilio::Values.of({'To' => to, 'Channel' => channel, 'CustomMessage' => custom_message,})
+              data = Twilio::Values.of({'To' => to, 'Channel' => channel, 'CustomMessage' => custom_message})
 
               payload = @version.create(
                   'POST',
@@ -43,7 +43,7 @@ module Twilio
                   data: data
               )
 
-              VerificationInstance.new(@version, payload, service_sid: @solution[:service_sid],)
+              VerificationInstance.new(@version, payload, service_sid: @solution[:service_sid])
             end
 
             ##
@@ -74,7 +74,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [VerificationInstance] VerificationInstance
             def get_instance(payload)
-              VerificationInstance.new(@version, payload, service_sid: @solution[:service_sid],)
+              VerificationInstance.new(@version, payload, service_sid: @solution[:service_sid])
             end
 
             ##

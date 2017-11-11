@@ -85,7 +85,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -160,7 +160,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [RoomParticipantInstance] RoomParticipantInstance
             def get_instance(payload)
-              RoomParticipantInstance.new(@version, payload, room_sid: @solution[:room_sid],)
+              RoomParticipantInstance.new(@version, payload, room_sid: @solution[:room_sid])
             end
 
             ##
@@ -181,7 +181,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {room_sid: room_sid, sid: sid,}
+              @solution = {room_sid: room_sid, sid: sid}
               @uri = "/Rooms/#{@solution[:room_sid]}/Participants/#{@solution[:sid]}"
 
               # Dependents
@@ -200,7 +200,7 @@ module Twilio
                   params,
               )
 
-              RoomParticipantInstance.new(@version, payload, room_sid: @solution[:room_sid], sid: @solution[:sid],)
+              RoomParticipantInstance.new(@version, payload, room_sid: @solution[:room_sid], sid: @solution[:sid])
             end
 
             ##
@@ -208,7 +208,7 @@ module Twilio
             # @param [room_participant.Status] status The status
             # @return [RoomParticipantInstance] Updated RoomParticipantInstance
             def update(status: :unset)
-              data = Twilio::Values.of({'Status' => status,})
+              data = Twilio::Values.of({'Status' => status})
 
               payload = @version.update(
                   'POST',
@@ -216,7 +216,7 @@ module Twilio
                   data: data,
               )
 
-              RoomParticipantInstance.new(@version, payload, room_sid: @solution[:room_sid], sid: @solution[:sid],)
+              RoomParticipantInstance.new(@version, payload, room_sid: @solution[:room_sid], sid: @solution[:sid])
             end
 
             ##
@@ -227,7 +227,7 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return PublishedTrackContext.new(@version, @solution[:room_sid], @solution[:sid], sid,)
+                return PublishedTrackContext.new(@version, @solution[:room_sid], @solution[:sid], sid)
               end
 
               unless @published_tracks
@@ -278,7 +278,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'room_sid' => room_sid, 'sid' => sid || @properties['sid'],}
+              @params = {'room_sid' => room_sid, 'sid' => sid || @properties['sid']}
             end
 
             ##
@@ -287,7 +287,7 @@ module Twilio
             # @return [RoomParticipantContext] RoomParticipantContext for this RoomParticipantInstance
             def context
               unless @instance_context
-                @instance_context = RoomParticipantContext.new(@version, @params['room_sid'], @params['sid'],)
+                @instance_context = RoomParticipantContext.new(@version, @params['room_sid'], @params['sid'])
               end
               @instance_context
             end
@@ -376,7 +376,7 @@ module Twilio
             # @param [room_participant.Status] status The status
             # @return [RoomParticipantInstance] Updated RoomParticipantInstance
             def update(status: :unset)
-              context.update(status: status,)
+              context.update(status: status)
             end
 
             ##

@@ -15,7 +15,7 @@ describe 'ShortCode' do
                            .short_codes.create(sid: "SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Sid' => "SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",}
+    values = {'Sid' => "SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

@@ -49,7 +49,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [WorkersRealTimeStatisticsInstance] WorkersRealTimeStatisticsInstance
               def get_instance(payload)
-                WorkersRealTimeStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
+                WorkersRealTimeStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid])
               end
 
               ##
@@ -69,7 +69,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {workspace_sid: workspace_sid,}
+                @solution = {workspace_sid: workspace_sid}
                 @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers/RealTimeStatistics"
               end
 
@@ -78,7 +78,7 @@ module Twilio
               # @param [String] task_channel The task_channel
               # @return [WorkersRealTimeStatisticsInstance] Fetched WorkersRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
-                params = Twilio::Values.of({'TaskChannel' => task_channel,})
+                params = Twilio::Values.of({'TaskChannel' => task_channel})
 
                 payload = @version.fetch(
                     'GET',
@@ -86,7 +86,7 @@ module Twilio
                     params,
                 )
 
-                WorkersRealTimeStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
+                WorkersRealTimeStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid])
               end
 
               ##
@@ -118,7 +118,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {'workspace_sid' => workspace_sid,}
+                @params = {'workspace_sid' => workspace_sid}
               end
 
               ##
@@ -127,7 +127,7 @@ module Twilio
               # @return [WorkersRealTimeStatisticsContext] WorkersRealTimeStatisticsContext for this WorkersRealTimeStatisticsInstance
               def context
                 unless @instance_context
-                  @instance_context = WorkersRealTimeStatisticsContext.new(@version, @params['workspace_sid'],)
+                  @instance_context = WorkersRealTimeStatisticsContext.new(@version, @params['workspace_sid'])
                 end
                 @instance_context
               end
@@ -167,7 +167,7 @@ module Twilio
               # @param [String] task_channel The task_channel
               # @return [WorkersRealTimeStatisticsInstance] Fetched WorkersRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
-                context.fetch(task_channel: task_channel,)
+                context.fetch(task_channel: task_channel)
               end
 
               ##

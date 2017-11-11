@@ -18,7 +18,7 @@ module Twilio
 
         ##
         # @param [String] sid The sid
-        # @return [Twilio::REST::Taskrouter::V1::WorkspaceInstance] if sid was passed.
+        # @return [Twilio::REST::Taskrouter::V1::WorkspaceContext] if sid was passed.
         # @return [Twilio::REST::Taskrouter::V1::WorkspaceList]
         def workspaces(sid=:unset)
           if sid.nil?

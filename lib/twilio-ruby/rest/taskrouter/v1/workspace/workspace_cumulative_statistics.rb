@@ -48,7 +48,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [WorkspaceCumulativeStatisticsInstance] WorkspaceCumulativeStatisticsInstance
             def get_instance(payload)
-              WorkspaceCumulativeStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
+              WorkspaceCumulativeStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid])
             end
 
             ##
@@ -68,7 +68,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {workspace_sid: workspace_sid,}
+              @solution = {workspace_sid: workspace_sid}
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/CumulativeStatistics"
             end
 
@@ -95,7 +95,7 @@ module Twilio
                   params,
               )
 
-              WorkspaceCumulativeStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
+              WorkspaceCumulativeStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid])
             end
 
             ##
@@ -143,7 +143,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'workspace_sid' => workspace_sid,}
+              @params = {'workspace_sid' => workspace_sid}
             end
 
             ##
@@ -152,7 +152,7 @@ module Twilio
             # @return [WorkspaceCumulativeStatisticsContext] WorkspaceCumulativeStatisticsContext for this WorkspaceCumulativeStatisticsInstance
             def context
               unless @instance_context
-                @instance_context = WorkspaceCumulativeStatisticsContext.new(@version, @params['workspace_sid'],)
+                @instance_context = WorkspaceCumulativeStatisticsContext.new(@version, @params['workspace_sid'])
               end
               @instance_context
             end

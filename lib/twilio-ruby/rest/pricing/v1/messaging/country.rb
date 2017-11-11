@@ -51,7 +51,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -63,7 +63,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size],)
+              page = self.page(page_size: limits[:page_size])
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -130,7 +130,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [CountryInstance] CountryInstance
             def get_instance(payload)
-              CountryInstance.new(@version, payload,)
+              CountryInstance.new(@version, payload)
             end
 
             ##
@@ -150,7 +150,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {iso_country: iso_country,}
+              @solution = {iso_country: iso_country}
               @uri = "/Messaging/Countries/#{@solution[:iso_country]}"
             end
 
@@ -166,7 +166,7 @@ module Twilio
                   params,
               )
 
-              CountryInstance.new(@version, payload, iso_country: @solution[:iso_country],)
+              CountryInstance.new(@version, payload, iso_country: @solution[:iso_country])
             end
 
             ##
@@ -199,7 +199,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'iso_country' => iso_country || @properties['iso_country'],}
+              @params = {'iso_country' => iso_country || @properties['iso_country']}
             end
 
             ##
@@ -208,7 +208,7 @@ module Twilio
             # @return [CountryContext] CountryContext for this CountryInstance
             def context
               unless @instance_context
-                @instance_context = CountryContext.new(@version, @params['iso_country'],)
+                @instance_context = CountryContext.new(@version, @params['iso_country'])
               end
               @instance_context
             end

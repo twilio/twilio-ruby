@@ -19,7 +19,7 @@ module Twilio
         ##
         # @param [String] sid Provides a 34 character string that uniquely identifies the
         #   requested Fleet resource.
-        # @return [Twilio::REST::Preview::DeployedDevices::FleetInstance] if sid was passed.
+        # @return [Twilio::REST::Preview::DeployedDevices::FleetContext] if sid was passed.
         # @return [Twilio::REST::Preview::DeployedDevices::FleetList]
         def fleets(sid=:unset)
           if sid.nil?

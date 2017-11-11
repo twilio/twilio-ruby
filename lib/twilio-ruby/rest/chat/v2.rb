@@ -19,7 +19,7 @@ module Twilio
 
         ##
         # @param [String] sid The sid
-        # @return [Twilio::REST::Chat::V2::CredentialInstance] if sid was passed.
+        # @return [Twilio::REST::Chat::V2::CredentialContext] if sid was passed.
         # @return [Twilio::REST::Chat::V2::CredentialList]
         def credentials(sid=:unset)
           if sid.nil?
@@ -33,7 +33,7 @@ module Twilio
 
         ##
         # @param [String] sid The sid
-        # @return [Twilio::REST::Chat::V2::ServiceInstance] if sid was passed.
+        # @return [Twilio::REST::Chat::V2::ServiceContext] if sid was passed.
         # @return [Twilio::REST::Chat::V2::ServiceList]
         def services(sid=:unset)
           if sid.nil?

@@ -49,7 +49,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [WorkersStatisticsInstance] WorkersStatisticsInstance
               def get_instance(payload)
-                WorkersStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
+                WorkersStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid])
               end
 
               ##
@@ -69,7 +69,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {workspace_sid: workspace_sid,}
+                @solution = {workspace_sid: workspace_sid}
                 @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers/Statistics"
               end
 
@@ -100,7 +100,7 @@ module Twilio
                     params,
                 )
 
-                WorkersStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid],)
+                WorkersStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid])
               end
 
               ##
@@ -132,7 +132,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {'workspace_sid' => workspace_sid,}
+                @params = {'workspace_sid' => workspace_sid}
               end
 
               ##
@@ -141,7 +141,7 @@ module Twilio
               # @return [WorkersStatisticsContext] WorkersStatisticsContext for this WorkersStatisticsInstance
               def context
                 unless @instance_context
-                  @instance_context = WorkersStatisticsContext.new(@version, @params['workspace_sid'],)
+                  @instance_context = WorkersStatisticsContext.new(@version, @params['workspace_sid'])
                 end
                 @instance_context
               end

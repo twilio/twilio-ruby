@@ -18,7 +18,7 @@ module Twilio
 
         ##
         # @param [String] sid The unique SID identifier of Verification Service Instance.
-        # @return [Twilio::REST::Preview::AccSecurity::ServiceInstance] if sid was passed.
+        # @return [Twilio::REST::Preview::AccSecurity::ServiceContext] if sid was passed.
         # @return [Twilio::REST::Preview::AccSecurity::ServiceList]
         def services(sid=:unset)
           if sid.nil?

@@ -52,7 +52,7 @@ module Twilio
           def stream(limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -64,7 +64,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size],)
+            page = self.page(page_size: limits[:page_size])
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -112,12 +112,24 @@ module Twilio
           #   to 64 characters.
           # @param [String] default_ttl The default Time to Live for a Session, in seconds.
           # @param [String] callback_url The URL Twilio will send callbacks to.
+          # @param [service.GeoMatchLevel] geo_match_level Whether to find proxy numbers in
+          #   the same areacode.
+          # @param [service.NumberSelectionBehavior] number_selection_behavior What behavior
+          #   to use when choosing a proxy number.
+          # @param [String] intercept_callback_url A URL for Twilio call before each
+          #   Interaction. An error status code will prevent the interaction from continuing.
+          # @param [String] out_of_session_callback_url A URL for Twilio call when a new
+          #   Interaction has no Session.
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: :unset, default_ttl: :unset, callback_url: :unset)
+          def create(friendly_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DefaultTtl' => default_ttl,
                 'CallbackUrl' => callback_url,
+                'GeoMatchLevel' => geo_match_level,
+                'NumberSelectionBehavior' => number_selection_behavior,
+                'InterceptCallbackUrl' => intercept_callback_url,
+                'OutOfSessionCallbackUrl' => out_of_session_callback_url,
             })
 
             payload = @version.create(
@@ -126,7 +138,7 @@ module Twilio
                 data: data
             )
 
-            ServiceInstance.new(@version, payload,)
+            ServiceInstance.new(@version, payload)
           end
 
           ##
@@ -157,7 +169,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [ServiceInstance] ServiceInstance
           def get_instance(payload)
-            ServiceInstance.new(@version, payload,)
+            ServiceInstance.new(@version, payload)
           end
 
           ##
@@ -179,7 +191,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid,}
+            @solution = {sid: sid}
             @uri = "/Services/#{@solution[:sid]}"
 
             # Dependents
@@ -200,7 +212,7 @@ module Twilio
                 params,
             )
 
-            ServiceInstance.new(@version, payload, sid: @solution[:sid],)
+            ServiceInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -216,12 +228,24 @@ module Twilio
           #   to 64 characters.
           # @param [String] default_ttl The default Time to Live for a Session, in seconds.
           # @param [String] callback_url The URL Twilio will send callbacks to.
+          # @param [service.GeoMatchLevel] geo_match_level Whether to find proxy numbers in
+          #   the same areacode.
+          # @param [service.NumberSelectionBehavior] number_selection_behavior What behavior
+          #   to use when choosing a proxy number.
+          # @param [String] intercept_callback_url A URL for Twilio call before each
+          #   Interaction. An error status code will prevent the interaction from continuing.
+          # @param [String] out_of_session_callback_url A URL for Twilio call when a new
+          #   Interaction has no Session.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, default_ttl: :unset, callback_url: :unset)
+          def update(friendly_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DefaultTtl' => default_ttl,
                 'CallbackUrl' => callback_url,
+                'GeoMatchLevel' => geo_match_level,
+                'NumberSelectionBehavior' => number_selection_behavior,
+                'InterceptCallbackUrl' => intercept_callback_url,
+                'OutOfSessionCallbackUrl' => out_of_session_callback_url,
             })
 
             payload = @version.update(
@@ -230,7 +254,7 @@ module Twilio
                 data: data,
             )
 
-            ServiceInstance.new(@version, payload, sid: @solution[:sid],)
+            ServiceInstance.new(@version, payload, sid: @solution[:sid])
           end
 
           ##
@@ -241,11 +265,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return SessionContext.new(@version, @solution[:sid], sid,)
+              return SessionContext.new(@version, @solution[:sid], sid)
             end
 
             unless @sessions
-              @sessions = SessionList.new(@version, service_sid: @solution[:sid],)
+              @sessions = SessionList.new(@version, service_sid: @solution[:sid])
             end
 
             @sessions
@@ -259,11 +283,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return PhoneNumberContext.new(@version, @solution[:sid], sid,)
+              return PhoneNumberContext.new(@version, @solution[:sid], sid)
             end
 
             unless @phone_numbers
-              @phone_numbers = PhoneNumberList.new(@version, service_sid: @solution[:sid],)
+              @phone_numbers = PhoneNumberList.new(@version, service_sid: @solution[:sid])
             end
 
             @phone_numbers
@@ -277,11 +301,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return ShortCodeContext.new(@version, @solution[:sid], sid,)
+              return ShortCodeContext.new(@version, @solution[:sid], sid)
             end
 
             unless @short_codes
-              @short_codes = ShortCodeList.new(@version, service_sid: @solution[:sid],)
+              @short_codes = ShortCodeList.new(@version, service_sid: @solution[:sid])
             end
 
             @short_codes
@@ -314,6 +338,10 @@ module Twilio
                 'account_sid' => payload['account_sid'],
                 'callback_url' => payload['callback_url'],
                 'default_ttl' => payload['default_ttl'].to_i,
+                'number_selection_behavior' => payload['number_selection_behavior'],
+                'geo_match_level' => payload['geo_match_level'],
+                'intercept_callback_url' => payload['intercept_callback_url'],
+                'out_of_session_callback_url' => payload['out_of_session_callback_url'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
@@ -322,7 +350,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid'],}
+            @params = {'sid' => sid || @properties['sid']}
           end
 
           ##
@@ -331,7 +359,7 @@ module Twilio
           # @return [ServiceContext] ServiceContext for this ServiceInstance
           def context
             unless @instance_context
-              @instance_context = ServiceContext.new(@version, @params['sid'],)
+              @instance_context = ServiceContext.new(@version, @params['sid'])
             end
             @instance_context
           end
@@ -364,6 +392,30 @@ module Twilio
           # @return [String] Default TTL for a Session, in seconds.
           def default_ttl
             @properties['default_ttl']
+          end
+
+          ##
+          # @return [service.NumberSelectionBehavior] What behavior to use when choosing a proxy number.
+          def number_selection_behavior
+            @properties['number_selection_behavior']
+          end
+
+          ##
+          # @return [service.GeoMatchLevel] Whether to find proxy numbers in the same areacode.
+          def geo_match_level
+            @properties['geo_match_level']
+          end
+
+          ##
+          # @return [String] A URL for Twilio call before each Interaction.
+          def intercept_callback_url
+            @properties['intercept_callback_url']
+          end
+
+          ##
+          # @return [String] A URL for Twilio call when a new Interaction has no Session.
+          def out_of_session_callback_url
+            @properties['out_of_session_callback_url']
           end
 
           ##
@@ -410,9 +462,25 @@ module Twilio
           #   to 64 characters.
           # @param [String] default_ttl The default Time to Live for a Session, in seconds.
           # @param [String] callback_url The URL Twilio will send callbacks to.
+          # @param [service.GeoMatchLevel] geo_match_level Whether to find proxy numbers in
+          #   the same areacode.
+          # @param [service.NumberSelectionBehavior] number_selection_behavior What behavior
+          #   to use when choosing a proxy number.
+          # @param [String] intercept_callback_url A URL for Twilio call before each
+          #   Interaction. An error status code will prevent the interaction from continuing.
+          # @param [String] out_of_session_callback_url A URL for Twilio call when a new
+          #   Interaction has no Session.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, default_ttl: :unset, callback_url: :unset)
-            context.update(friendly_name: friendly_name, default_ttl: default_ttl, callback_url: callback_url,)
+          def update(friendly_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
+            context.update(
+                friendly_name: friendly_name,
+                default_ttl: default_ttl,
+                callback_url: callback_url,
+                geo_match_level: geo_match_level,
+                number_selection_behavior: number_selection_behavior,
+                intercept_callback_url: intercept_callback_url,
+                out_of_session_callback_url: out_of_session_callback_url,
+            )
           end
 
           ##

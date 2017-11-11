@@ -83,7 +83,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(page_size: limits[:page_size],)
+                page = self.page(page_size: limits[:page_size])
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -183,7 +183,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {account_sid: account_sid, call_sid: call_sid, sid: sid,}
+                @solution = {account_sid: account_sid, call_sid: call_sid, sid: sid}
                 @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/Recordings/#{@solution[:sid]}.json"
               end
 
@@ -252,7 +252,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {'account_sid' => account_sid, 'call_sid' => call_sid, 'sid' => sid || @properties['sid'],}
+                @params = {'account_sid' => account_sid, 'call_sid' => call_sid, 'sid' => sid || @properties['sid']}
               end
 
               ##

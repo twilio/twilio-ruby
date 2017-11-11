@@ -103,7 +103,7 @@ describe 'Credential' do
                        .credentials.create(username: "username", password: "password")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Username' => "username", 'Password' => "password",}
+    values = {'Username' => "username", 'Password' => "password"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

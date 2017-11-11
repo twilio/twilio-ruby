@@ -17,15 +17,9 @@ module Twilio
         end
 
         ##
-        # @return [Twilio::REST::Accounts::V1::CredentialInstance]
-        def credentials(sid=:unset)
-          if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @credentials ||= CredentialList.new self
-          else
-            CredentialContext.new(self, sid)
-          end
+        # @return [Twilio::REST::Accounts::V1::CredentialContext]
+        def credentials
+          @credentials ||= CredentialList.new self
         end
 
         ##

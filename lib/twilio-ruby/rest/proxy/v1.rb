@@ -18,7 +18,7 @@ module Twilio
 
         ##
         # @param [String] sid A 34 character string that uniquely identifies this Service.
-        # @return [Twilio::REST::Proxy::V1::ServiceInstance] if sid was passed.
+        # @return [Twilio::REST::Proxy::V1::ServiceContext] if sid was passed.
         # @return [Twilio::REST::Proxy::V1::ServiceList]
         def services(sid=:unset)
           if sid.nil?

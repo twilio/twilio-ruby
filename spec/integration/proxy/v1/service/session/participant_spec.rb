@@ -33,7 +33,6 @@ describe 'Participant' do
           "session_sid": "KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "service_sid": "KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "participant_type": "message-only",
           "identifier": "identifier",
           "proxy_identifier": "proxy_identifier",
           "proxy_identifier_sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -108,7 +107,7 @@ describe 'Participant' do
                       .participants.create(identifier: "identifier")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Identifier' => "identifier",}
+    values = {'Identifier' => "identifier"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -126,7 +125,6 @@ describe 'Participant' do
           "session_sid": "KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "service_sid": "KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "participant_type": "message-only",
           "identifier": "identifier",
           "proxy_identifier": "proxy_identifier",
           "proxy_identifier_sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -205,7 +203,6 @@ describe 'Participant' do
           "session_sid": "KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "service_sid": "KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "participant_type": "message-only",
           "identifier": "identifier",
           "proxy_identifier": "proxy_identifier",
           "proxy_identifier_sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
