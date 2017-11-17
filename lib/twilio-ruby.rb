@@ -1,6 +1,6 @@
 require 'net/http'
 require 'net/https'
-require 'libxml'
+require 'nokogiri'
 require 'cgi'
 require 'openssl'
 require 'base64'
