@@ -9,7 +9,7 @@ module Twilio
     class Video < Domain
       class V1 < Version
         class RoomContext < InstanceContext
-          class RoomParticipantContext < InstanceContext
+          class ParticipantContext < InstanceContext
             class PublishedTrackList < ListResource
               ##
               # Initialize the PublishedTrackList

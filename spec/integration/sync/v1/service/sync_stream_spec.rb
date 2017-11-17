@@ -30,6 +30,7 @@ describe 'SyncStream' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "created_by": "created_by",
+          "date_expires": "2015-07-30T21:00:00Z",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "links": {
@@ -100,6 +101,7 @@ describe 'SyncStream' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "created_by": "created_by",
+          "date_expires": "2015-07-30T21:00:00Z",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "links": {
@@ -115,6 +117,49 @@ describe 'SyncStream' do
 
     actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                             .sync_streams.create()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "can update" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                     .sync_streams("TOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {}
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Streams/TOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    ))).to eq(true)
+  end
+
+  it "receives update responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "created_by": "created_by",
+          "date_expires": "2015-07-30T21:00:00Z",
+          "date_created": "2015-07-30T20:00:00Z",
+          "date_updated": "2015-07-30T20:00:00Z",
+          "links": {
+              "messages": "https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Streams/TOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages"
+          },
+          "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sid": "TOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "unique_name": "unique_name",
+          "url": "https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Streams/TOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+
+    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                            .sync_streams("TOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
 
     expect(actual).to_not eq(nil)
   end
@@ -169,6 +214,7 @@ describe 'SyncStream' do
               {
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "created_by": "created_by",
+                  "date_expires": "2015-07-30T21:00:00Z",
                   "date_created": "2015-07-30T20:00:00Z",
                   "date_updated": "2015-07-30T20:00:00Z",
                   "links": {

@@ -32,9 +32,10 @@ module Twilio
               # Request is executed immediately.
               # @param [String] key The key
               # @param [Hash] data The data
+              # @param [String] ttl The ttl
               # @return [SyncMapItemInstance] Newly created SyncMapItemInstance
-              def create(key: nil, data: nil)
-                data = Twilio::Values.of({'Key' => key, 'Data' => Twilio.serialize_object(data)})
+              def create(key: nil, data: nil, ttl: :unset)
+                data = Twilio::Values.of({'Key' => key, 'Data' => Twilio.serialize_object(data), 'Ttl' => ttl})
 
                 payload = @version.create(
                     'POST',
@@ -236,9 +237,10 @@ module Twilio
               ##
               # Update the SyncMapItemInstance
               # @param [Hash] data The data
+              # @param [String] ttl The ttl
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
-              def update(data: nil)
-                data = Twilio::Values.of({'Data' => Twilio.serialize_object(data)})
+              def update(data: :unset, ttl: :unset)
+                data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), 'Ttl' => ttl})
 
                 payload = @version.update(
                     'POST',
@@ -286,6 +288,7 @@ module Twilio
                     'url' => payload['url'],
                     'revision' => payload['revision'],
                     'data' => payload['data'],
+                    'date_expires' => Twilio.deserialize_iso8601_datetime(payload['date_expires']),
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                     'created_by' => payload['created_by'],
@@ -355,6 +358,12 @@ module Twilio
               end
 
               ##
+              # @return [Time] The date_expires
+              def date_expires
+                @properties['date_expires']
+              end
+
+              ##
               # @return [Time] The date_created
               def date_created
                 @properties['date_created']
@@ -389,9 +398,10 @@ module Twilio
               ##
               # Update the SyncMapItemInstance
               # @param [Hash] data The data
+              # @param [String] ttl The ttl
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
-              def update(data: nil)
-                context.update(data: data)
+              def update(data: :unset, ttl: :unset)
+                context.update(data: data, ttl: ttl)
               end
 
               ##

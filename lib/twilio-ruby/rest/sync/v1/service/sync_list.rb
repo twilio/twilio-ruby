@@ -29,9 +29,10 @@ module Twilio
             # Retrieve a single page of SyncListInstance records from the API.
             # Request is executed immediately.
             # @param [String] unique_name The unique_name
+            # @param [String] ttl The ttl
             # @return [SyncListInstance] Newly created SyncListInstance
-            def create(unique_name: :unset)
-              data = Twilio::Values.of({'UniqueName' => unique_name})
+            def create(unique_name: :unset, ttl: :unset)
+              data = Twilio::Values.of({'UniqueName' => unique_name, 'Ttl' => ttl})
 
               payload = @version.create(
                   'POST',
@@ -206,6 +207,22 @@ module Twilio
             end
 
             ##
+            # Update the SyncListInstance
+            # @param [String] ttl The ttl
+            # @return [SyncListInstance] Updated SyncListInstance
+            def update(ttl: :unset)
+              data = Twilio::Values.of({'Ttl' => ttl})
+
+              payload = @version.update(
+                  'POST',
+                  @uri,
+                  data: data,
+              )
+
+              SyncListInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
+            end
+
+            ##
             # Access the sync_list_items
             # @return [SyncListItemList]
             # @return [SyncListItemContext] if index was passed.
@@ -279,6 +296,7 @@ module Twilio
                   'url' => payload['url'],
                   'links' => payload['links'],
                   'revision' => payload['revision'],
+                  'date_expires' => Twilio.deserialize_iso8601_datetime(payload['date_expires']),
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'created_by' => payload['created_by'],
@@ -343,6 +361,12 @@ module Twilio
             end
 
             ##
+            # @return [Time] The date_expires
+            def date_expires
+              @properties['date_expires']
+            end
+
+            ##
             # @return [Time] The date_created
             def date_created
               @properties['date_created']
@@ -372,6 +396,14 @@ module Twilio
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               context.delete
+            end
+
+            ##
+            # Update the SyncListInstance
+            # @param [String] ttl The ttl
+            # @return [SyncListInstance] Updated SyncListInstance
+            def update(ttl: :unset)
+              context.update(ttl: ttl)
             end
 
             ##

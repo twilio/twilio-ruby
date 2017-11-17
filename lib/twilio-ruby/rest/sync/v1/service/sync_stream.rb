@@ -30,9 +30,11 @@ module Twilio
             # Request is executed immediately.
             # @param [String] unique_name The unique and addressable name of this Stream.
             #   Optional, up to 256 characters long.
+            # @param [String] ttl Optional time-to-live of this Stream in seconds. In the
+            #   range [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [SyncStreamInstance] Newly created SyncStreamInstance
-            def create(unique_name: :unset)
-              data = Twilio::Values.of({'UniqueName' => unique_name})
+            def create(unique_name: :unset, ttl: :unset)
+              data = Twilio::Values.of({'UniqueName' => unique_name, 'Ttl' => ttl})
 
               payload = @version.create(
                   'POST',
@@ -206,6 +208,23 @@ module Twilio
             end
 
             ##
+            # Update the SyncStreamInstance
+            # @param [String] ttl Time-to-live of this Stream in seconds. In the range [1, 31
+            #   536 000 (1 year)], or 0 for infinity.
+            # @return [SyncStreamInstance] Updated SyncStreamInstance
+            def update(ttl: :unset)
+              data = Twilio::Values.of({'Ttl' => ttl})
+
+              payload = @version.update(
+                  'POST',
+                  @uri,
+                  data: data,
+              )
+
+              SyncStreamInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
+            end
+
+            ##
             # Access the stream_messages
             # @return [StreamMessageList]
             # @return [StreamMessageContext]
@@ -250,6 +269,7 @@ module Twilio
                   'service_sid' => payload['service_sid'],
                   'url' => payload['url'],
                   'links' => payload['links'],
+                  'date_expires' => Twilio.deserialize_iso8601_datetime(payload['date_expires']),
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'created_by' => payload['created_by'],
@@ -308,6 +328,12 @@ module Twilio
             end
 
             ##
+            # @return [Time] The date this Stream expires.
+            def date_expires
+              @properties['date_expires']
+            end
+
+            ##
             # @return [Time] The date this Stream was created.
             def date_created
               @properties['date_created']
@@ -337,6 +363,15 @@ module Twilio
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               context.delete
+            end
+
+            ##
+            # Update the SyncStreamInstance
+            # @param [String] ttl Time-to-live of this Stream in seconds. In the range [1, 31
+            #   536 000 (1 year)], or 0 for infinity.
+            # @return [SyncStreamInstance] Updated SyncStreamInstance
+            def update(ttl: :unset)
+              context.update(ttl: ttl)
             end
 
             ##

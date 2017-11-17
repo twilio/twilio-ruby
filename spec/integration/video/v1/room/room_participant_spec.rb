@@ -6,7 +6,7 @@
 
 require 'spec_helper.rb'
 
-describe 'RoomParticipant' do
+describe 'Participant' do
   it "can fetch" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

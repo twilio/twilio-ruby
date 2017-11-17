@@ -273,17 +273,17 @@ module Twilio
 
           ##
           # Access the participants
-          # @return [RoomParticipantList]
-          # @return [RoomParticipantContext] if sid was passed.
+          # @return [ParticipantList]
+          # @return [ParticipantContext] if sid was passed.
           def participants(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return RoomParticipantContext.new(@version, @solution[:sid], sid)
+              return ParticipantContext.new(@version, @solution[:sid], sid)
             end
 
             unless @participants
-              @participants = RoomParticipantList.new(@version, room_sid: @solution[:sid])
+              @participants = ParticipantList.new(@version, room_sid: @solution[:sid])
             end
 
             @participants

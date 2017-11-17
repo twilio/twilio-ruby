@@ -31,6 +31,7 @@ describe 'Document' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "created_by": "created_by",
           "data": {},
+          "date_expires": "2015-07-30T21:00:00Z",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "revision": "revision",
@@ -103,6 +104,7 @@ describe 'Document' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "created_by": "created_by",
           "data": {},
+          "date_expires": "2015-07-30T21:00:00Z",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "revision": "revision",
@@ -174,6 +176,7 @@ describe 'Document' do
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "created_by": "created_by",
                   "data": {},
+                  "date_expires": "2015-07-30T21:00:00Z",
                   "date_created": "2015-07-30T20:00:00Z",
                   "date_updated": "2015-07-30T20:00:00Z",
                   "revision": "revision",
@@ -210,15 +213,14 @@ describe 'Document' do
 
     expect {
       @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(data: "{}")
+                     .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Data' => Twilio.serialize_object("{}")}
+    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Documents/ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-        data: values,
     ))).to eq(true)
   end
 
@@ -230,6 +232,7 @@ describe 'Document' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "created_by": "created_by",
           "data": {},
+          "date_expires": "2015-07-30T21:00:00Z",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "revision": "revision",
@@ -245,7 +248,7 @@ describe 'Document' do
     ))
 
     actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(data: "{}")
+                            .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
 
     expect(actual).to_not eq(nil)
   end

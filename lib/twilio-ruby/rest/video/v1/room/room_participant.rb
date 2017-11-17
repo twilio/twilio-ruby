@@ -9,12 +9,12 @@ module Twilio
     class Video < Domain
       class V1 < Version
         class RoomContext < InstanceContext
-          class RoomParticipantList < ListResource
+          class ParticipantList < ListResource
             ##
-            # Initialize the RoomParticipantList
+            # Initialize the ParticipantList
             # @param [Version] version Version that contains the resource
             # @param [String] room_sid The room_sid
-            # @return [RoomParticipantList] RoomParticipantList
+            # @return [ParticipantList] ParticipantList
             def initialize(version, room_sid: nil)
               super(version)
 
@@ -24,10 +24,10 @@ module Twilio
             end
 
             ##
-            # Lists RoomParticipantInstance records from the API as a list.
+            # Lists ParticipantInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [room_participant.Status] status The status
+            # @param [participant.Status] status The status
             # @param [String] identity The identity
             # @param [Time] date_created_after The date_created_after
             # @param [Time] date_created_before The date_created_before
@@ -50,10 +50,10 @@ module Twilio
             end
 
             ##
-            # Streams RoomParticipantInstance records from the API as an Enumerable.
+            # Streams ParticipantInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [room_participant.Status] status The status
+            # @param [participant.Status] status The status
             # @param [String] identity The identity
             # @param [Time] date_created_after The date_created_after
             # @param [Time] date_created_before The date_created_before
@@ -79,7 +79,7 @@ module Twilio
             end
 
             ##
-            # When passed a block, yields RoomParticipantInstance records from the API.
+            # When passed a block, yields ParticipantInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             def each
@@ -93,16 +93,16 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of RoomParticipantInstance records from the API.
+            # Retrieve a single page of ParticipantInstance records from the API.
             # Request is executed immediately.
-            # @param [room_participant.Status] status The status
+            # @param [participant.Status] status The status
             # @param [String] identity The identity
             # @param [Time] date_created_after The date_created_after
             # @param [Time] date_created_before The date_created_before
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            # @return [Page] Page of RoomParticipantInstance
+            # @return [Page] Page of ParticipantInstance
             def page(status: :unset, identity: :unset, date_created_after: :unset, date_created_before: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'Status' => status,
@@ -118,36 +118,36 @@ module Twilio
                   @uri,
                   params
               )
-              RoomParticipantPage.new(@version, response, @solution)
+              ParticipantPage.new(@version, response, @solution)
             end
 
             ##
-            # Retrieve a single page of RoomParticipantInstance records from the API.
+            # Retrieve a single page of ParticipantInstance records from the API.
             # Request is executed immediately.
             # @param [String] target_url API-generated URL for the requested results page
-            # @return [Page] Page of RoomParticipantInstance
+            # @return [Page] Page of ParticipantInstance
             def get_page(target_url)
               response = @version.domain.request(
                   'GET',
                   target_url
               )
-              RoomParticipantPage.new(@version, response, @solution)
+              ParticipantPage.new(@version, response, @solution)
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '#<Twilio.Video.V1.RoomParticipantList>'
+              '#<Twilio.Video.V1.ParticipantList>'
             end
           end
 
-          class RoomParticipantPage < Page
+          class ParticipantPage < Page
             ##
-            # Initialize the RoomParticipantPage
+            # Initialize the ParticipantPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @return [RoomParticipantPage] RoomParticipantPage
+            # @return [ParticipantPage] ParticipantPage
             def initialize(version, response, solution)
               super(version, response)
 
@@ -156,27 +156,27 @@ module Twilio
             end
 
             ##
-            # Build an instance of RoomParticipantInstance
+            # Build an instance of ParticipantInstance
             # @param [Hash] payload Payload response from the API
-            # @return [RoomParticipantInstance] RoomParticipantInstance
+            # @return [ParticipantInstance] ParticipantInstance
             def get_instance(payload)
-              RoomParticipantInstance.new(@version, payload, room_sid: @solution[:room_sid])
+              ParticipantInstance.new(@version, payload, room_sid: @solution[:room_sid])
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '<Twilio.Video.V1.RoomParticipantPage>'
+              '<Twilio.Video.V1.ParticipantPage>'
             end
           end
 
-          class RoomParticipantContext < InstanceContext
+          class ParticipantContext < InstanceContext
             ##
-            # Initialize the RoomParticipantContext
+            # Initialize the ParticipantContext
             # @param [Version] version Version that contains the resource
             # @param [String] room_sid The room_sid
             # @param [String] sid The sid
-            # @return [RoomParticipantContext] RoomParticipantContext
+            # @return [ParticipantContext] ParticipantContext
             def initialize(version, room_sid, sid)
               super(version)
 
@@ -189,8 +189,8 @@ module Twilio
             end
 
             ##
-            # Fetch a RoomParticipantInstance
-            # @return [RoomParticipantInstance] Fetched RoomParticipantInstance
+            # Fetch a ParticipantInstance
+            # @return [ParticipantInstance] Fetched ParticipantInstance
             def fetch
               params = Twilio::Values.of({})
 
@@ -200,13 +200,13 @@ module Twilio
                   params,
               )
 
-              RoomParticipantInstance.new(@version, payload, room_sid: @solution[:room_sid], sid: @solution[:sid])
+              ParticipantInstance.new(@version, payload, room_sid: @solution[:room_sid], sid: @solution[:sid])
             end
 
             ##
-            # Update the RoomParticipantInstance
-            # @param [room_participant.Status] status The status
-            # @return [RoomParticipantInstance] Updated RoomParticipantInstance
+            # Update the ParticipantInstance
+            # @param [participant.Status] status The status
+            # @return [ParticipantInstance] Updated ParticipantInstance
             def update(status: :unset)
               data = Twilio::Values.of({'Status' => status})
 
@@ -216,7 +216,7 @@ module Twilio
                   data: data,
               )
 
-              RoomParticipantInstance.new(@version, payload, room_sid: @solution[:room_sid], sid: @solution[:sid])
+              ParticipantInstance.new(@version, payload, room_sid: @solution[:room_sid], sid: @solution[:sid])
             end
 
             ##
@@ -245,18 +245,18 @@ module Twilio
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Video.V1.RoomParticipantContext #{context}>"
+              "#<Twilio.Video.V1.ParticipantContext #{context}>"
             end
           end
 
-          class RoomParticipantInstance < InstanceResource
+          class ParticipantInstance < InstanceResource
             ##
-            # Initialize the RoomParticipantInstance
+            # Initialize the ParticipantInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] room_sid The room_sid
             # @param [String] sid The sid
-            # @return [RoomParticipantInstance] RoomParticipantInstance
+            # @return [ParticipantInstance] ParticipantInstance
             def initialize(version, payload, room_sid: nil, sid: nil)
               super(version)
 
@@ -284,10 +284,10 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return [RoomParticipantContext] RoomParticipantContext for this RoomParticipantInstance
+            # @return [ParticipantContext] ParticipantContext for this ParticipantInstance
             def context
               unless @instance_context
-                @instance_context = RoomParticipantContext.new(@version, @params['room_sid'], @params['sid'])
+                @instance_context = ParticipantContext.new(@version, @params['room_sid'], @params['sid'])
               end
               @instance_context
             end
@@ -311,7 +311,7 @@ module Twilio
             end
 
             ##
-            # @return [room_participant.Status] The status
+            # @return [participant.Status] The status
             def status
               @properties['status']
             end
@@ -365,16 +365,16 @@ module Twilio
             end
 
             ##
-            # Fetch a RoomParticipantInstance
-            # @return [RoomParticipantInstance] Fetched RoomParticipantInstance
+            # Fetch a ParticipantInstance
+            # @return [ParticipantInstance] Fetched ParticipantInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Update the RoomParticipantInstance
-            # @param [room_participant.Status] status The status
-            # @return [RoomParticipantInstance] Updated RoomParticipantInstance
+            # Update the ParticipantInstance
+            # @param [participant.Status] status The status
+            # @return [ParticipantInstance] Updated ParticipantInstance
             def update(status: :unset)
               context.update(status: status)
             end
@@ -390,14 +390,14 @@ module Twilio
             # Provide a user friendly representation
             def to_s
               values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Video.V1.RoomParticipantInstance #{values}>"
+              "<Twilio.Video.V1.ParticipantInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
               values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Video.V1.RoomParticipantInstance #{values}>"
+              "<Twilio.Video.V1.ParticipantInstance #{values}>"
             end
           end
         end
