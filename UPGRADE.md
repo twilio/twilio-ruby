@@ -3,6 +3,28 @@
 _After `5.0.0` all `MINOR` and `MAJOR` version bumps will have upgrade notes
 posted here._
 
+[2017-11-20] 5.5.x to 5.6.x
+---------------------------
+
+### CHANGED - `name` parameter on `Enqueue` TwiML changed to `queue_name`
+
+#### 5.5.x
+```ruby
+require 'twilio-ruby'
+
+r = Twilio::TwiML::VoiceResponse.new
+r.enqueue(name: 'QueueName')
+```
+
+#### 5.6.x
+```ruby
+require 'twilio-ruby'
+
+r = Twilio::TwiML::VoiceResponse.new
+r.enqueue(queue_name: 'QueueName')
+```
+
+
 [2017-09-29] 5.x.x to 5.3.x
 ---------------------------
 
