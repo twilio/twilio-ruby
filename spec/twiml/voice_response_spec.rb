@@ -305,7 +305,7 @@ describe Twilio::TwiML::VoiceResponse do
     it 'should allow VoiceResponse.enqueue' do
       r = Twilio::TwiML::VoiceResponse.new
       r.enqueue(
-        name: 'TestEnqueueAttribute',
+        queue_name: 'TestEnqueueAttribute',
         action: 'act',
         method: 'GET',
         wait_url: 'wait',
