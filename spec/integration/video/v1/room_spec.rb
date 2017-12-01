@@ -43,6 +43,7 @@ describe 'Room' do
           "video_codecs": [
               "VP8"
           ],
+          "media_region": "us1",
           "end_time": "2015-07-30T20:00:00Z",
           "url": "https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
@@ -94,6 +95,7 @@ describe 'Room' do
           "video_codecs": [
               "VP8"
           ],
+          "media_region": "us1",
           "end_time": "2015-07-30T20:00:00Z",
           "url": "https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
@@ -172,6 +174,7 @@ describe 'Room' do
                   "video_codecs": [
                       "VP8"
                   ],
+                  "media_region": "us1",
                   "url": "https://video.twilio.com/v1/Rooms/RM4070b618362c1682b2385b1f9982833c",
                   "links": {
                       "participants": "https://video.twilio.com/v1/Rooms/RM4070b618362c1682b2385b1f9982833c/Participants",
@@ -233,6 +236,7 @@ describe 'Room' do
           "video_codecs": [
               "VP8"
           ],
+          "media_region": "us1",
           "end_time": "2015-07-30T20:00:00Z",
           "duration": 10,
           "url": "https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",

@@ -324,6 +324,7 @@ module Twilio
                 'max_participants' => payload['max_participants'].to_i,
                 'record_participants_on_connect' => payload['record_participants_on_connect'],
                 'video_codecs' => payload['video_codecs'],
+                'media_region' => payload['media_region'],
                 'url' => payload['url'],
                 'links' => payload['links'],
             }
@@ -432,6 +433,12 @@ module Twilio
           # @return [room.VideoCodec] The video_codecs
           def video_codecs
             @properties['video_codecs']
+          end
+
+          ##
+          # @return [String] The media_region
+          def media_region
+            @properties['media_region']
           end
 
           ##

@@ -29,7 +29,7 @@ describe 'Service' do
       {
           "sid": "KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "friendly_name": "friendly_name",
+          "unique_name": "unique_name",
           "default_ttl": 3600,
           "callback_url": "http://www.example.com",
           "geo_match_level": "country",
@@ -96,14 +96,15 @@ describe 'Service' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services.create()
+      @client.proxy.v1.services.create(unique_name: "unique_name")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    values = {'UniqueName' => "unique_name"}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://proxy.twilio.com/v1/Services',
+        data: values,
     ))).to eq(true)
   end
 
@@ -114,7 +115,7 @@ describe 'Service' do
       {
           "sid": "KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "friendly_name": "friendly_name",
+          "unique_name": "unique_name",
           "default_ttl": 3600,
           "callback_url": "http://www.example.com",
           "geo_match_level": "country",
@@ -133,7 +134,7 @@ describe 'Service' do
       ]
     ))
 
-    actual = @client.proxy.v1.services.create()
+    actual = @client.proxy.v1.services.create(unique_name: "unique_name")
 
     expect(actual).to_not eq(nil)
   end
@@ -186,7 +187,7 @@ describe 'Service' do
       {
           "sid": "KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "friendly_name": "friendly_name",
+          "unique_name": "unique_name",
           "default_ttl": 3600,
           "callback_url": "http://www.example.com",
           "geo_match_level": "country",

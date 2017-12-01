@@ -161,18 +161,45 @@ module Twilio
 
                 # Marshaled Properties
                 @properties = {
+                    'sid' => payload['sid'],
+                    'account_sid' => payload['account_sid'],
                     'friendly_name' => payload['friendly_name'],
                     'phone_number' => payload['phone_number'],
-                    'lata' => payload['lata'],
-                    'rate_center' => payload['rate_center'],
-                    'latitude' => payload['latitude'].to_f,
-                    'longitude' => payload['longitude'].to_f,
-                    'region' => payload['region'],
-                    'postal_code' => payload['postal_code'],
-                    'iso_country' => payload['iso_country'],
+                    'voice_url' => payload['voice_url'],
+                    'voice_method' => payload['voice_method'],
+                    'voice_fallback_method' => payload['voice_fallback_method'],
+                    'voice_fallback_url' => payload['voice_fallback_url'],
+                    'voice_caller_id_lookup' => payload['voice_caller_id_lookup'],
+                    'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
+                    'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
+                    'sms_fallback_method' => payload['sms_fallback_method'],
+                    'sms_fallback_url' => payload['sms_fallback_url'],
+                    'sms_method' => payload['sms_method'],
+                    'sms_url' => payload['sms_url'],
                     'address_requirements' => payload['address_requirements'],
                     'capabilities' => payload['capabilities'],
+                    'status_callback' => payload['status_callback'],
+                    'status_callback_method' => payload['status_callback_method'],
+                    'api_version' => payload['api_version'],
+                    'sms_application_sid' => payload['sms_application_sid'],
+                    'voice_application_sid' => payload['voice_application_sid'],
+                    'trunk_sid' => payload['trunk_sid'],
+                    'emergency_status' => payload['emergency_status'],
+                    'emergency_address_sid' => payload['emergency_address_sid'],
+                    'uri' => payload['uri'],
                 }
+              end
+
+              ##
+              # @return [String] The sid
+              def sid
+                @properties['sid']
+              end
+
+              ##
+              # @return [String] The account_sid
+              def account_sid
+                @properties['account_sid']
               end
 
               ##
@@ -188,57 +215,135 @@ module Twilio
               end
 
               ##
-              # @return [String] The lata
-              def lata
-                @properties['lata']
+              # @return [String] The voice_url
+              def voice_url
+                @properties['voice_url']
               end
 
               ##
-              # @return [String] The rate_center
-              def rate_center
-                @properties['rate_center']
+              # @return [String] The voice_method
+              def voice_method
+                @properties['voice_method']
               end
 
               ##
-              # @return [String] The latitude
-              def latitude
-                @properties['latitude']
+              # @return [String] The voice_fallback_method
+              def voice_fallback_method
+                @properties['voice_fallback_method']
               end
 
               ##
-              # @return [String] The longitude
-              def longitude
-                @properties['longitude']
+              # @return [String] The voice_fallback_url
+              def voice_fallback_url
+                @properties['voice_fallback_url']
               end
 
               ##
-              # @return [String] The region
-              def region
-                @properties['region']
+              # @return [Boolean] The voice_caller_id_lookup
+              def voice_caller_id_lookup
+                @properties['voice_caller_id_lookup']
               end
 
               ##
-              # @return [String] The postal_code
-              def postal_code
-                @properties['postal_code']
+              # @return [Time] The date_created
+              def date_created
+                @properties['date_created']
               end
 
               ##
-              # @return [String] The iso_country
-              def iso_country
-                @properties['iso_country']
+              # @return [Time] The date_updated
+              def date_updated
+                @properties['date_updated']
               end
 
               ##
-              # @return [String] The address_requirements
+              # @return [String] The sms_fallback_method
+              def sms_fallback_method
+                @properties['sms_fallback_method']
+              end
+
+              ##
+              # @return [String] The sms_fallback_url
+              def sms_fallback_url
+                @properties['sms_fallback_url']
+              end
+
+              ##
+              # @return [String] The sms_method
+              def sms_method
+                @properties['sms_method']
+              end
+
+              ##
+              # @return [String] The sms_url
+              def sms_url
+                @properties['sms_url']
+              end
+
+              ##
+              # @return [dependent_phone_number.AddressRequirement] The address_requirements
               def address_requirements
                 @properties['address_requirements']
               end
 
               ##
-              # @return [String] The capabilities
+              # @return [Hash] The capabilities
               def capabilities
                 @properties['capabilities']
+              end
+
+              ##
+              # @return [String] The status_callback
+              def status_callback
+                @properties['status_callback']
+              end
+
+              ##
+              # @return [String] The status_callback_method
+              def status_callback_method
+                @properties['status_callback_method']
+              end
+
+              ##
+              # @return [String] The api_version
+              def api_version
+                @properties['api_version']
+              end
+
+              ##
+              # @return [String] The sms_application_sid
+              def sms_application_sid
+                @properties['sms_application_sid']
+              end
+
+              ##
+              # @return [String] The voice_application_sid
+              def voice_application_sid
+                @properties['voice_application_sid']
+              end
+
+              ##
+              # @return [String] The trunk_sid
+              def trunk_sid
+                @properties['trunk_sid']
+              end
+
+              ##
+              # @return [dependent_phone_number.EmergencyStatus] The emergency_status
+              def emergency_status
+                @properties['emergency_status']
+              end
+
+              ##
+              # @return [String] The emergency_address_sid
+              def emergency_address_sid
+                @properties['emergency_address_sid']
+              end
+
+              ##
+              # @return [String] The uri
+              def uri
+                @properties['uri']
               end
 
               ##

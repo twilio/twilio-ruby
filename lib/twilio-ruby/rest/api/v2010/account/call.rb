@@ -637,7 +637,7 @@ module Twilio
             end
 
             ##
-            # @return [feedback_summary.Status] The status
+            # @return [recording.Status] The status
             def status
               @properties['status']
             end

@@ -108,8 +108,8 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name A human readable description of this resource, up
-          #   to 64 characters.
+          # @param [String] unique_name The human-readable string that uniquely identifies
+          #   this Service, up to 64 characters.
           # @param [String] default_ttl The default Time to Live for a Session, in seconds.
           # @param [String] callback_url The URL Twilio will send callbacks to.
           # @param [service.GeoMatchLevel] geo_match_level Whether to find proxy numbers in
@@ -121,9 +121,9 @@ module Twilio
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
           #   Interaction has no Session.
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
+          def create(unique_name: nil, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
             data = Twilio::Values.of({
-                'FriendlyName' => friendly_name,
+                'UniqueName' => unique_name,
                 'DefaultTtl' => default_ttl,
                 'CallbackUrl' => callback_url,
                 'GeoMatchLevel' => geo_match_level,
@@ -224,8 +224,8 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] friendly_name A human readable description of this resource, up
-          #   to 64 characters.
+          # @param [String] unique_name A human readable description of this resource, up to
+          #   64 characters.
           # @param [String] default_ttl The default Time to Live for a Session, in seconds.
           # @param [String] callback_url The URL Twilio will send callbacks to.
           # @param [service.GeoMatchLevel] geo_match_level Whether to find proxy numbers in
@@ -237,9 +237,9 @@ module Twilio
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
           #   Interaction has no Session.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
+          def update(unique_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
             data = Twilio::Values.of({
-                'FriendlyName' => friendly_name,
+                'UniqueName' => unique_name,
                 'DefaultTtl' => default_ttl,
                 'CallbackUrl' => callback_url,
                 'GeoMatchLevel' => geo_match_level,
@@ -334,7 +334,7 @@ module Twilio
             # Marshaled Properties
             @properties = {
                 'sid' => payload['sid'],
-                'friendly_name' => payload['friendly_name'],
+                'unique_name' => payload['unique_name'],
                 'account_sid' => payload['account_sid'],
                 'callback_url' => payload['callback_url'],
                 'default_ttl' => payload['default_ttl'].to_i,
@@ -372,8 +372,8 @@ module Twilio
 
           ##
           # @return [String] A human readable description of this resource.
-          def friendly_name
-            @properties['friendly_name']
+          def unique_name
+            @properties['unique_name']
           end
 
           ##
@@ -458,8 +458,8 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] friendly_name A human readable description of this resource, up
-          #   to 64 characters.
+          # @param [String] unique_name A human readable description of this resource, up to
+          #   64 characters.
           # @param [String] default_ttl The default Time to Live for a Session, in seconds.
           # @param [String] callback_url The URL Twilio will send callbacks to.
           # @param [service.GeoMatchLevel] geo_match_level Whether to find proxy numbers in
@@ -471,9 +471,9 @@ module Twilio
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
           #   Interaction has no Session.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
+          def update(unique_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
             context.update(
-                friendly_name: friendly_name,
+                unique_name: unique_name,
                 default_ttl: default_ttl,
                 callback_url: callback_url,
                 geo_match_level: geo_match_level,

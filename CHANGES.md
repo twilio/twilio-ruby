@@ -1,6 +1,27 @@
 twilio-ruby changelog
 =====================
 
+[2017-12-01] Version 5.5.1
+---------------------------
+**Api**
+- Use the correct properties for Dependent Phone Numbers of an Address *(breaking change)*
+- Update Call Recordings with the correct properties
+
+**Preview**
+- Add `status` and `email` query param filters for AuthorizationDocument list endpoint
+
+**Proxy**
+- Added DELETE support to Interaction
+- Standardized enum values to dash-case
+- Rename Service#friendly_name to Service#unique_name
+
+**Video**
+- Remove beta flag from `media_region` and `video_codecs`
+
+**Wireless**
+- Bug fix: Changed `operator_mcc` and `operator_mnc` in `DataSessions` subresource from `integer` to `string`
+
+
 [2017-11-17] Version 5.5.0
 ---------------------------
 **Sync**

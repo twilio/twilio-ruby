@@ -101,4 +101,34 @@ describe 'Interaction' do
 
     expect(actual).to_not eq(nil)
   end
+
+  it "can delete" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                      .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                      .interactions("KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {}
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'delete',
+        url: 'https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Sessions/KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Interactions/KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    ))).to eq(true)
+  end
+
+  it "receives delete responses" do
+    @holodeck.mock(Twilio::Response.new(
+        204,
+      nil,
+    ))
+
+    actual = @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                             .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                             .interactions("KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+
+    expect(actual).to eq(true)
+  end
 end
