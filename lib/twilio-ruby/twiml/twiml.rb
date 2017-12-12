@@ -34,9 +34,9 @@ module Twilio
         end
 
         def to_s(xml_declaration = true)
-          opts = { encoding: 'UTF-8', indent: 0 }
+          opts = { encoding: 'UTF-8', indent: 0, save_with: Nokogiri::XML::Node::SaveOptions::AS_XML | Nokogiri::XML::Node::SaveOptions::NO_DECLARATION }
           document = Nokogiri::XML::Document.new
-          xml = self.xml(document).to_xml(opts).gsub(/>\n</, '><')
+          xml = self.xml(document).to_xml(opts).strip
           return ('<?xml version="1.0" encoding="UTF-8"?>' + xml) if xml_declaration
           xml
         end
