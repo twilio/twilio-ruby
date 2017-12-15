@@ -30,3 +30,9 @@ end
 def auth_token
   ENV['AUTH_TOKEN']
 end
+
+def parse(twiml_response)
+  Nokogiri::XML::Document.parse(twiml_response.to_s) do |options|
+    options.noblanks
+  end
+end
