@@ -160,6 +160,10 @@ module Twilio
               @local = nil
               @toll_free = nil
               @mobile = nil
+              @national = nil
+              @voip = nil
+              @shared_cost = nil
+              @machine_to_machine = nil
             end
 
             ##
@@ -228,6 +232,70 @@ module Twilio
               end
 
               @mobile
+            end
+
+            ##
+            # Access the national
+            # @return [NationalList]
+            # @return [NationalContext]
+            def national
+              unless @national
+                @national = NationalList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                    country_code: @solution[:country_code],
+                )
+              end
+
+              @national
+            end
+
+            ##
+            # Access the voip
+            # @return [VoipList]
+            # @return [VoipContext]
+            def voip
+              unless @voip
+                @voip = VoipList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                    country_code: @solution[:country_code],
+                )
+              end
+
+              @voip
+            end
+
+            ##
+            # Access the shared_cost
+            # @return [SharedCostList]
+            # @return [SharedCostContext]
+            def shared_cost
+              unless @shared_cost
+                @shared_cost = SharedCostList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                    country_code: @solution[:country_code],
+                )
+              end
+
+              @shared_cost
+            end
+
+            ##
+            # Access the machine_to_machine
+            # @return [MachineToMachineList]
+            # @return [MachineToMachineContext]
+            def machine_to_machine
+              unless @machine_to_machine
+                @machine_to_machine = MachineToMachineList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                    country_code: @solution[:country_code],
+                )
+              end
+
+              @machine_to_machine
             end
 
             ##
@@ -338,6 +406,34 @@ module Twilio
             # @return [mobile] mobile
             def mobile
               context.mobile
+            end
+
+            ##
+            # Access the national
+            # @return [national] national
+            def national
+              context.national
+            end
+
+            ##
+            # Access the voip
+            # @return [voip] voip
+            def voip
+              context.voip
+            end
+
+            ##
+            # Access the shared_cost
+            # @return [shared_cost] shared_cost
+            def shared_cost
+              context.shared_cost
+            end
+
+            ##
+            # Access the machine_to_machine
+            # @return [machine_to_machine] machine_to_machine
+            def machine_to_machine
+              context.machine_to_machine
             end
 
             ##

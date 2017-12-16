@@ -23,9 +23,10 @@ module Twilio
       # from:: Phone Number to send Message from
       # action:: Action URL
       # method:: Action URL Method
+      # status_callback:: Status callback URL. Deprecated in favor of action.
       # keyword_args:: additional attributes
-      def message(body: nil, to: nil, from: nil, action: nil, method: nil, **keyword_args)
-        message = Message.new(body: body, to: to, from: from, action: action, method: method, **keyword_args)
+      def message(body: nil, to: nil, from: nil, action: nil, method: nil, status_callback: nil, **keyword_args)
+        message = Message.new(body: body, to: to, from: from, action: action, method: method, status_callback: status_callback, **keyword_args)
 
         yield(message) if block_given?
         append(message)

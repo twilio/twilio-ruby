@@ -198,8 +198,14 @@ module Twilio
           #   phone number.
           # @param [String] email Optional. Email of the owner of this phone number that is
           #   being hosted.
+          # @param [hosted_number_order.VerificationType] verification_type Optional. The
+          #   method used for verifying ownership of the number to be hosted. One of
+          #   phone-call (default) or phone-bill.
+          # @param [String] verification_document_sid Optional. The unique sid identifier of
+          #   the Identity Document that represents the document for verifying ownership of
+          #   the number to be hosted. Required when VerificationType is phone-bill.
           # @return [HostedNumberOrderInstance] Newly created HostedNumberOrderInstance
-          def create(phone_number: nil, sms_capability: nil, account_sid: :unset, friendly_name: :unset, unique_name: :unset, cc_emails: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, status_callback_url: :unset, status_callback_method: :unset, sms_application_sid: :unset, address_sid: :unset, email: :unset)
+          def create(phone_number: nil, sms_capability: nil, account_sid: :unset, friendly_name: :unset, unique_name: :unset, cc_emails: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, status_callback_url: :unset, status_callback_method: :unset, sms_application_sid: :unset, address_sid: :unset, email: :unset, verification_type: :unset, verification_document_sid: :unset)
             data = Twilio::Values.of({
                 'PhoneNumber' => phone_number,
                 'SmsCapability' => sms_capability,
@@ -216,6 +222,8 @@ module Twilio
                 'SmsApplicationSid' => sms_application_sid,
                 'AddressSid' => address_sid,
                 'Email' => email,
+                'VerificationType' => verification_type,
+                'VerificationDocumentSid' => verification_document_sid,
             })
 
             payload = @version.create(
@@ -319,8 +327,14 @@ module Twilio
           #   User can only update this to `pending-loa` or `pending-verification`.
           # @param [String] verification_code A verification code that is given to the user
           #   via a phone call to the phone number that is being hosted.
+          # @param [hosted_number_order.VerificationType] verification_type Optional. The
+          #   method used for verifying ownership of the number to be hosted. One of
+          #   phone-call (default) or phone-bill.
+          # @param [String] verification_document_sid Optional. The unique sid identifier of
+          #   the Identity Document that represents the document for verifying ownership of
+          #   the number to be hosted. Required when VerificationType is phone-bill.
           # @return [HostedNumberOrderInstance] Updated HostedNumberOrderInstance
-          def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset, verification_code: :unset)
+          def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset, verification_code: :unset, verification_type: :unset, verification_document_sid: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'UniqueName' => unique_name,
@@ -328,6 +342,8 @@ module Twilio
                 'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
                 'Status' => status,
                 'VerificationCode' => verification_code,
+                'VerificationType' => verification_type,
+                'VerificationDocumentSid' => verification_document_sid,
             })
 
             payload = @version.update(
@@ -378,6 +394,8 @@ module Twilio
                 'email' => payload['email'],
                 'cc_emails' => payload['cc_emails'],
                 'url' => payload['url'],
+                'verification_type' => payload['verification_type'],
+                'verification_document_sid' => payload['verification_document_sid'],
             }
 
             # Context
@@ -493,6 +511,18 @@ module Twilio
           end
 
           ##
+          # @return [hosted_number_order.VerificationType] The method used for verifying ownership of the number to be hosted.
+          def verification_type
+            @properties['verification_type']
+          end
+
+          ##
+          # @return [String] Verification Document Sid.
+          def verification_document_sid
+            @properties['verification_document_sid']
+          end
+
+          ##
           # Fetch a HostedNumberOrderInstance
           # @return [HostedNumberOrderInstance] Fetched HostedNumberOrderInstance
           def fetch
@@ -521,8 +551,14 @@ module Twilio
           #   User can only update this to `pending-loa` or `pending-verification`.
           # @param [String] verification_code A verification code that is given to the user
           #   via a phone call to the phone number that is being hosted.
+          # @param [hosted_number_order.VerificationType] verification_type Optional. The
+          #   method used for verifying ownership of the number to be hosted. One of
+          #   phone-call (default) or phone-bill.
+          # @param [String] verification_document_sid Optional. The unique sid identifier of
+          #   the Identity Document that represents the document for verifying ownership of
+          #   the number to be hosted. Required when VerificationType is phone-bill.
           # @return [HostedNumberOrderInstance] Updated HostedNumberOrderInstance
-          def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset, verification_code: :unset)
+          def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset, verification_code: :unset, verification_type: :unset, verification_document_sid: :unset)
             context.update(
                 friendly_name: friendly_name,
                 unique_name: unique_name,
@@ -530,6 +566,8 @@ module Twilio
                 cc_emails: cc_emails,
                 status: status,
                 verification_code: verification_code,
+                verification_type: verification_type,
+                verification_document_sid: verification_document_sid,
             )
           end
 

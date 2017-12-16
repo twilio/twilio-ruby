@@ -247,11 +247,11 @@ module Twilio
                     'price' => payload['price'].to_f,
                     'uri' => payload['uri'],
                     'encryption_details' => payload['encryption_details'],
-                    'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
-                    'status' => payload['status'],
-                    'source' => payload['source'],
-                    'channels' => payload['channels'].to_i,
                     'price_unit' => payload['price_unit'],
+                    'status' => payload['status'],
+                    'channels' => payload['channels'].to_i,
+                    'source' => payload['source'],
+                    'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
                 }
 
                 # Context
@@ -336,9 +336,9 @@ module Twilio
               end
 
               ##
-              # @return [String] The error_code
-              def error_code
-                @properties['error_code']
+              # @return [String] The price_unit
+              def price_unit
+                @properties['price_unit']
               end
 
               ##
@@ -348,21 +348,21 @@ module Twilio
               end
 
               ##
-              # @return [recording.Source] The source
-              def source
-                @properties['source']
-              end
-
-              ##
               # @return [String] The channels
               def channels
                 @properties['channels']
               end
 
               ##
-              # @return [String] The price_unit
-              def price_unit
-                @properties['price_unit']
+              # @return [recording.Source] The source
+              def source
+                @properties['source']
+              end
+
+              ##
+              # @return [String] The error_code
+              def error_code
+                @properties['error_code']
               end
 
               ##

@@ -32,7 +32,7 @@ module Twilio
             # @param [String] unique_name Provides a unique and addressable name to be
             #   assigned to this Session, assigned by the developer, to be optionally used in
             #   addition to SID.
-            # @param [session.Status] status The Status of this Session. One of `in-progess`,
+            # @param [session.Status] status The Status of this Session. One of `in-progress`,
             #   `closed`, `failed`, `unknown` or `completed`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
@@ -52,7 +52,7 @@ module Twilio
             # @param [String] unique_name Provides a unique and addressable name to be
             #   assigned to this Session, assigned by the developer, to be optionally used in
             #   addition to SID.
-            # @param [session.Status] status The Status of this Session. One of `in-progess`,
+            # @param [session.Status] status The Status of this Session. One of `in-progress`,
             #   `closed`, `failed`, `unknown` or `completed`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
@@ -89,7 +89,7 @@ module Twilio
             # @param [String] unique_name Provides a unique and addressable name to be
             #   assigned to this Session, assigned by the developer, to be optionally used in
             #   addition to SID.
-            # @param [session.Status] status The Status of this Session. One of `in-progess`,
+            # @param [session.Status] status The Status of this Session. One of `in-progress`,
             #   `closed`, `failed`, `unknown` or `completed`.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
@@ -135,7 +135,7 @@ module Twilio
             # @param [String] ttl The Time to Live for a Session, in seconds.
             # @param [session.Mode] mode The Mode of this Session. One of `message-only`,
             #   `voice-only` or `voice-and-message`.
-            # @param [session.Status] status The Status of this Session. One of `in-progess`,
+            # @param [session.Status] status The Status of this Session. One of `in-progress`,
             #   `closed`, `failed`, `unknown` or `completed`.
             # @param [Hash] participants A list of phone numbers to add to this Session.
             # @return [SessionInstance] Newly created SessionInstance
@@ -249,7 +249,7 @@ module Twilio
             # @param [String] ttl The Time to Live for a Session, in seconds.
             # @param [session.Mode] mode The Mode of this Session. One of `message-only`,
             #   `voice-only` or `voice-and-message`.
-            # @param [session.Status] status The Status of this Session. One of `in-progess`,
+            # @param [session.Status] status The Status of this Session. One of `in-progress`,
             #   `closed`, `failed`, `unknown` or `completed`.
             # @param [Hash] participants A list of phone numbers to add to this Session.
             # @return [SessionInstance] Updated SessionInstance
@@ -493,7 +493,7 @@ module Twilio
             # @param [String] ttl The Time to Live for a Session, in seconds.
             # @param [session.Mode] mode The Mode of this Session. One of `message-only`,
             #   `voice-only` or `voice-and-message`.
-            # @param [session.Status] status The Status of this Session. One of `in-progess`,
+            # @param [session.Status] status The Status of this Session. One of `in-progress`,
             #   `closed`, `failed`, `unknown` or `completed`.
             # @param [Hash] participants A list of phone numbers to add to this Session.
             # @return [SessionInstance] Updated SessionInstance

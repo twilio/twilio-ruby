@@ -365,7 +365,7 @@ module Twilio
             end
 
             ##
-            # @return [participant.Status] The status of the conference
+            # @return [recording.Status] The status of the conference
             def status
               @properties['status']
             end

@@ -293,9 +293,10 @@ module Twilio
                   'status' => payload['status'],
                   'channels' => payload['channels'].to_i,
                   'source' => payload['source'],
+                  'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
                   'uri' => payload['uri'],
                   'encryption_details' => payload['encryption_details'],
-                  'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
+                  'subresource_uris' => payload['subresource_uris'],
               }
 
               # Context
@@ -327,7 +328,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The call during which the recording was made.
+            # @return [String] The unique id for the call leg that corresponds to the recording.
             def call_sid
               @properties['call_sid']
             end
@@ -357,33 +358,39 @@ module Twilio
             end
 
             ##
-            # @return [String] The price
+            # @return [String] The one-time cost of creating this recording.
             def price
               @properties['price']
             end
 
             ##
-            # @return [String] The price_unit
+            # @return [String] The currency used in the Price property.
             def price_unit
               @properties['price_unit']
             end
 
             ##
-            # @return [transcription.Status] The status
+            # @return [transcription.Status] The status of the recording.
             def status
               @properties['status']
             end
 
             ##
-            # @return [String] The channels
+            # @return [String] The number of channels in the final recording file as an integer.
             def channels
               @properties['channels']
             end
 
             ##
-            # @return [recording.Source] The source
+            # @return [recording.Source] The way in which this recording was created.
             def source
               @properties['source']
+            end
+
+            ##
+            # @return [String] More information about the recording failure, if Status is failed.
+            def error_code
+              @properties['error_code']
             end
 
             ##
@@ -399,9 +406,9 @@ module Twilio
             end
 
             ##
-            # @return [String] More information about the recording failure, if Status is failed.
-            def error_code
-              @properties['error_code']
+            # @return [String] The subresource_uris
+            def subresource_uris
+              @properties['subresource_uris']
             end
 
             ##
