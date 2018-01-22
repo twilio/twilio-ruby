@@ -20,9 +20,6 @@ twilio-ruby changelog
 - Add `failure_reason` to HostedNumberOrders.
 - Add DependentHostedNumberOrders endpoint for AuthorizationDocuments preview API.
 
-**Taskrouter**
-- Less verbose naming of cumulative and real time statistics *(breaking change)*
-
 
 [2017-12-15] Version 5.6.0
 ---------------------------
