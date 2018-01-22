@@ -221,7 +221,7 @@ describe 'Role' do
                      .roles("RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(permission: ['permission'])
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Permission' => Twilio.serialize_list(['permission']) { |e| e }}
+    values = {'Permission' => Twilio.serialize_list(['permission']) { |e| e }, }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

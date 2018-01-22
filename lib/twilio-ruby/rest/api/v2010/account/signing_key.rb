@@ -53,7 +53,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -65,7 +65,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -132,7 +132,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [SigningKeyInstance] SigningKeyInstance
             def get_instance(payload)
-              SigningKeyInstance.new(@version, payload, account_sid: @solution[:account_sid])
+              SigningKeyInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
 
             ##
@@ -153,7 +153,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {account_sid: account_sid, sid: sid}
+              @solution = {account_sid: account_sid, sid: sid, }
               @uri = "/Accounts/#{@solution[:account_sid]}/SigningKeys/#{@solution[:sid]}.json"
             end
 
@@ -169,7 +169,7 @@ module Twilio
                   params,
               )
 
-              SigningKeyInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid])
+              SigningKeyInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -177,7 +177,7 @@ module Twilio
             # @param [String] friendly_name The friendly_name
             # @return [SigningKeyInstance] Updated SigningKeyInstance
             def update(friendly_name: :unset)
-              data = Twilio::Values.of({'FriendlyName' => friendly_name})
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
               payload = @version.update(
                   'POST',
@@ -185,7 +185,7 @@ module Twilio
                   data: data,
               )
 
-              SigningKeyInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid])
+              SigningKeyInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -225,7 +225,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid']}
+              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -234,7 +234,7 @@ module Twilio
             # @return [SigningKeyContext] SigningKeyContext for this SigningKeyInstance
             def context
               unless @instance_context
-                @instance_context = SigningKeyContext.new(@version, @params['account_sid'], @params['sid'])
+                @instance_context = SigningKeyContext.new(@version, @params['account_sid'], @params['sid'], )
               end
               @instance_context
             end
@@ -275,7 +275,7 @@ module Twilio
             # @param [String] friendly_name The friendly_name
             # @return [SigningKeyInstance] Updated SigningKeyInstance
             def update(friendly_name: :unset)
-              context.update(friendly_name: friendly_name)
+              context.update(friendly_name: friendly_name, )
             end
 
             ##

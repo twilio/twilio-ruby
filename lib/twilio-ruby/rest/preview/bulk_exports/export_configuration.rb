@@ -50,7 +50,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [ExportConfigurationInstance] ExportConfigurationInstance
           def get_instance(payload)
-            ExportConfigurationInstance.new(@version, payload)
+            ExportConfigurationInstance.new(@version, payload, )
           end
 
           ##
@@ -72,7 +72,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {resource_type: resource_type}
+            @solution = {resource_type: resource_type, }
             @uri = "/Exports/#{@solution[:resource_type]}/Configuration"
           end
 
@@ -88,7 +88,7 @@ module Twilio
                 params,
             )
 
-            ExportConfigurationInstance.new(@version, payload, resource_type: @solution[:resource_type])
+            ExportConfigurationInstance.new(@version, payload, resource_type: @solution[:resource_type], )
           end
 
           ##
@@ -110,7 +110,7 @@ module Twilio
                 data: data,
             )
 
-            ExportConfigurationInstance.new(@version, payload, resource_type: @solution[:resource_type])
+            ExportConfigurationInstance.new(@version, payload, resource_type: @solution[:resource_type], )
           end
 
           ##
@@ -144,7 +144,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'resource_type' => resource_type || @properties['resource_type']}
+            @params = {'resource_type' => resource_type || @properties['resource_type'], }
           end
 
           ##
@@ -153,7 +153,7 @@ module Twilio
           # @return [ExportConfigurationContext] ExportConfigurationContext for this ExportConfigurationInstance
           def context
             unless @instance_context
-              @instance_context = ExportConfigurationContext.new(@version, @params['resource_type'])
+              @instance_context = ExportConfigurationContext.new(@version, @params['resource_type'], )
             end
             @instance_context
           end
@@ -202,7 +202,7 @@ module Twilio
           # @param [String] webhook_method The webhook_method
           # @return [ExportConfigurationInstance] Updated ExportConfigurationInstance
           def update(enabled: :unset, webhook_url: :unset, webhook_method: :unset)
-            context.update(enabled: enabled, webhook_url: webhook_url, webhook_method: webhook_method)
+            context.update(enabled: enabled, webhook_url: webhook_url, webhook_method: webhook_method, )
           end
 
           ##

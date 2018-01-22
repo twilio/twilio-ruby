@@ -52,7 +52,7 @@ module Twilio
           def stream(limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(page_size: limits[:page_size])
+            page = self.page(page_size: limits[:page_size], )
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -64,7 +64,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size])
+            page = self.page(page_size: limits[:page_size], )
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -133,7 +133,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [FlowInstance] FlowInstance
           def get_instance(payload)
-            FlowInstance.new(@version, payload)
+            FlowInstance.new(@version, payload, )
           end
 
           ##
@@ -155,7 +155,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid}
+            @solution = {sid: sid, }
             @uri = "/Flows/#{@solution[:sid]}"
 
             # Dependents
@@ -174,7 +174,7 @@ module Twilio
                 params,
             )
 
-            FlowInstance.new(@version, payload, sid: @solution[:sid])
+            FlowInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
@@ -192,11 +192,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return EngagementContext.new(@version, @solution[:sid], sid)
+              return EngagementContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @engagements
-              @engagements = EngagementList.new(@version, flow_sid: @solution[:sid])
+              @engagements = EngagementList.new(@version, flow_sid: @solution[:sid], )
             end
 
             @engagements
@@ -238,7 +238,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid']}
+            @params = {'sid' => sid || @properties['sid'], }
           end
 
           ##
@@ -247,7 +247,7 @@ module Twilio
           # @return [FlowContext] FlowContext for this FlowInstance
           def context
             unless @instance_context
-              @instance_context = FlowContext.new(@version, @params['sid'])
+              @instance_context = FlowContext.new(@version, @params['sid'], )
             end
             @instance_context
           end

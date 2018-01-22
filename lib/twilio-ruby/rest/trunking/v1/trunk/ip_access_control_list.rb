@@ -29,7 +29,7 @@ module Twilio
             # @param [String] ip_access_control_list_sid The ip_access_control_list_sid
             # @return [IpAccessControlListInstance] Newly created IpAccessControlListInstance
             def create(ip_access_control_list_sid: nil)
-              data = Twilio::Values.of({'IpAccessControlListSid' => ip_access_control_list_sid})
+              data = Twilio::Values.of({'IpAccessControlListSid' => ip_access_control_list_sid, })
 
               payload = @version.create(
                   'POST',
@@ -37,7 +37,7 @@ module Twilio
                   data: data
               )
 
-              IpAccessControlListInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid])
+              IpAccessControlListInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid], )
             end
 
             ##
@@ -69,7 +69,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -81,7 +81,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -148,7 +148,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [IpAccessControlListInstance] IpAccessControlListInstance
             def get_instance(payload)
-              IpAccessControlListInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid])
+              IpAccessControlListInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid], )
             end
 
             ##
@@ -169,7 +169,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {trunk_sid: trunk_sid, sid: sid}
+              @solution = {trunk_sid: trunk_sid, sid: sid, }
               @uri = "/Trunks/#{@solution[:trunk_sid]}/IpAccessControlLists/#{@solution[:sid]}"
             end
 
@@ -232,7 +232,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'trunk_sid' => trunk_sid, 'sid' => sid || @properties['sid']}
+              @params = {'trunk_sid' => trunk_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -241,7 +241,7 @@ module Twilio
             # @return [IpAccessControlListContext] IpAccessControlListContext for this IpAccessControlListInstance
             def context
               unless @instance_context
-                @instance_context = IpAccessControlListContext.new(@version, @params['trunk_sid'], @params['sid'])
+                @instance_context = IpAccessControlListContext.new(@version, @params['trunk_sid'], @params['sid'], )
               end
               @instance_context
             end

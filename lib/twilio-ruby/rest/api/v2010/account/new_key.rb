@@ -30,7 +30,7 @@ module Twilio
             # @param [String] friendly_name The friendly_name
             # @return [NewKeyInstance] Newly created NewKeyInstance
             def create(friendly_name: :unset)
-              data = Twilio::Values.of({'FriendlyName' => friendly_name})
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
               payload = @version.create(
                   'POST',
@@ -38,7 +38,7 @@ module Twilio
                   data: data
               )
 
-              NewKeyInstance.new(@version, payload, account_sid: @solution[:account_sid])
+              NewKeyInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
 
             ##
@@ -67,7 +67,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [NewKeyInstance] NewKeyInstance
             def get_instance(payload)
-              NewKeyInstance.new(@version, payload, account_sid: @solution[:account_sid])
+              NewKeyInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
 
             ##

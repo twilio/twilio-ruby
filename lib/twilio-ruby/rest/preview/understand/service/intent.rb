@@ -54,7 +54,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -66,7 +66,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -114,7 +114,7 @@ module Twilio
             # @param [String] friendly_name The friendly_name
             # @return [IntentInstance] Newly created IntentInstance
             def create(unique_name: nil, friendly_name: :unset)
-              data = Twilio::Values.of({'UniqueName' => unique_name, 'FriendlyName' => friendly_name})
+              data = Twilio::Values.of({'UniqueName' => unique_name, 'FriendlyName' => friendly_name, })
 
               payload = @version.create(
                   'POST',
@@ -122,7 +122,7 @@ module Twilio
                   data: data
               )
 
-              IntentInstance.new(@version, payload, service_sid: @solution[:service_sid])
+              IntentInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
 
             ##
@@ -153,7 +153,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [IntentInstance] IntentInstance
             def get_instance(payload)
-              IntentInstance.new(@version, payload, service_sid: @solution[:service_sid])
+              IntentInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
 
             ##
@@ -176,7 +176,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid, sid: sid}
+              @solution = {service_sid: service_sid, sid: sid, }
               @uri = "/Services/#{@solution[:service_sid]}/Intents/#{@solution[:sid]}"
 
               # Dependents
@@ -196,7 +196,7 @@ module Twilio
                   params,
               )
 
-              IntentInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
+              IntentInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -205,7 +205,7 @@ module Twilio
             # @param [String] unique_name The unique_name
             # @return [IntentInstance] Updated IntentInstance
             def update(friendly_name: :unset, unique_name: :unset)
-              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'UniqueName' => unique_name})
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'UniqueName' => unique_name, })
 
               payload = @version.update(
                   'POST',
@@ -213,7 +213,7 @@ module Twilio
                   data: data,
               )
 
-              IntentInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
+              IntentInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -231,11 +231,11 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return FieldContext.new(@version, @solution[:service_sid], @solution[:sid], sid)
+                return FieldContext.new(@version, @solution[:service_sid], @solution[:sid], sid, )
               end
 
               unless @fields
-                @fields = FieldList.new(@version, service_sid: @solution[:service_sid], intent_sid: @solution[:sid])
+                @fields = FieldList.new(@version, service_sid: @solution[:service_sid], intent_sid: @solution[:sid], )
               end
 
               @fields
@@ -249,11 +249,11 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return SampleContext.new(@version, @solution[:service_sid], @solution[:sid], sid)
+                return SampleContext.new(@version, @solution[:service_sid], @solution[:sid], sid, )
               end
 
               unless @samples
-                @samples = SampleList.new(@version, service_sid: @solution[:service_sid], intent_sid: @solution[:sid])
+                @samples = SampleList.new(@version, service_sid: @solution[:service_sid], intent_sid: @solution[:sid], )
               end
 
               @samples
@@ -295,7 +295,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid']}
+              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -304,7 +304,7 @@ module Twilio
             # @return [IntentContext] IntentContext for this IntentInstance
             def context
               unless @instance_context
-                @instance_context = IntentContext.new(@version, @params['service_sid'], @params['sid'])
+                @instance_context = IntentContext.new(@version, @params['service_sid'], @params['sid'], )
               end
               @instance_context
             end
@@ -376,7 +376,7 @@ module Twilio
             # @param [String] unique_name The unique_name
             # @return [IntentInstance] Updated IntentInstance
             def update(friendly_name: :unset, unique_name: :unset)
-              context.update(friendly_name: friendly_name, unique_name: unique_name)
+              context.update(friendly_name: friendly_name, unique_name: unique_name, )
             end
 
             ##

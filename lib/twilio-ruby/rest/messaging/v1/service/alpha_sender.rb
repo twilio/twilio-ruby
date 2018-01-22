@@ -31,7 +31,7 @@ module Twilio
             # @param [String] alpha_sender The alpha_sender
             # @return [AlphaSenderInstance] Newly created AlphaSenderInstance
             def create(alpha_sender: nil)
-              data = Twilio::Values.of({'AlphaSender' => alpha_sender})
+              data = Twilio::Values.of({'AlphaSender' => alpha_sender, })
 
               payload = @version.create(
                   'POST',
@@ -39,7 +39,7 @@ module Twilio
                   data: data
               )
 
-              AlphaSenderInstance.new(@version, payload, service_sid: @solution[:service_sid])
+              AlphaSenderInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
 
             ##
@@ -71,7 +71,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -83,7 +83,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -152,7 +152,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [AlphaSenderInstance] AlphaSenderInstance
             def get_instance(payload)
-              AlphaSenderInstance.new(@version, payload, service_sid: @solution[:service_sid])
+              AlphaSenderInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
 
             ##
@@ -175,7 +175,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid, sid: sid}
+              @solution = {service_sid: service_sid, sid: sid, }
               @uri = "/Services/#{@solution[:service_sid]}/AlphaSenders/#{@solution[:sid]}"
             end
 
@@ -191,7 +191,7 @@ module Twilio
                   params,
               )
 
-              AlphaSenderInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
+              AlphaSenderInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -236,7 +236,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid']}
+              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -245,7 +245,7 @@ module Twilio
             # @return [AlphaSenderContext] AlphaSenderContext for this AlphaSenderInstance
             def context
               unless @instance_context
-                @instance_context = AlphaSenderContext.new(@version, @params['service_sid'], @params['sid'])
+                @instance_context = AlphaSenderContext.new(@version, @params['service_sid'], @params['sid'], )
               end
               @instance_context
             end

@@ -149,7 +149,7 @@ describe 'AssignedAddOn' do
                        .assigned_add_ons.create(installed_add_on_sid: "XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'InstalledAddOnSid' => "XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+    values = {'InstalledAddOnSid' => "XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

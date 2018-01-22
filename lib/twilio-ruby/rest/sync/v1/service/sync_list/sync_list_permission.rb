@@ -58,7 +58,7 @@ module Twilio
               def stream(limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(page_size: limits[:page_size])
+                page = self.page(page_size: limits[:page_size], )
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -70,7 +70,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(page_size: limits[:page_size])
+                page = self.page(page_size: limits[:page_size], )
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -170,7 +170,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {service_sid: service_sid, list_sid: list_sid, identity: identity}
+                @solution = {service_sid: service_sid, list_sid: list_sid, identity: identity, }
                 @uri = "/Services/#{@solution[:service_sid]}/Lists/#{@solution[:list_sid]}/Permissions/#{@solution[:identity]}"
               end
 
@@ -212,7 +212,7 @@ module Twilio
               #   the Sync List.
               # @return [SyncListPermissionInstance] Updated SyncListPermissionInstance
               def update(read: nil, write: nil, manage: nil)
-                data = Twilio::Values.of({'Read' => read, 'Write' => write, 'Manage' => manage})
+                data = Twilio::Values.of({'Read' => read, 'Write' => write, 'Manage' => manage, })
 
                 payload = @version.update(
                     'POST',
@@ -363,7 +363,7 @@ module Twilio
               #   the Sync List.
               # @return [SyncListPermissionInstance] Updated SyncListPermissionInstance
               def update(read: nil, write: nil, manage: nil)
-                context.update(read: read, write: write, manage: manage)
+                context.update(read: read, write: write, manage: manage, )
               end
 
               ##

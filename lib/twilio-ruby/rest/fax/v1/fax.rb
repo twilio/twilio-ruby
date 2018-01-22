@@ -93,7 +93,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size])
+            page = self.page(page_size: limits[:page_size], )
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -168,8 +168,10 @@ module Twilio
           #   sending to a SIP address.
           # @param [Boolean] store_media Whether or not to store a copy of the sent media on
           #   Twilio's servers for later retrieval (defaults to `true`)
+          # @param [String] ttl How many minutes from when a fax was initiated should Twilio
+          #   attempt to send a fax.
           # @return [FaxInstance] Newly created FaxInstance
-          def create(to: nil, media_url: nil, quality: :unset, status_callback: :unset, from: :unset, sip_auth_username: :unset, sip_auth_password: :unset, store_media: :unset)
+          def create(to: nil, media_url: nil, quality: :unset, status_callback: :unset, from: :unset, sip_auth_username: :unset, sip_auth_password: :unset, store_media: :unset, ttl: :unset)
             data = Twilio::Values.of({
                 'To' => to,
                 'MediaUrl' => media_url,
@@ -179,6 +181,7 @@ module Twilio
                 'SipAuthUsername' => sip_auth_username,
                 'SipAuthPassword' => sip_auth_password,
                 'StoreMedia' => store_media,
+                'Ttl' => ttl,
             })
 
             payload = @version.create(
@@ -187,7 +190,7 @@ module Twilio
                 data: data
             )
 
-            FaxInstance.new(@version, payload)
+            FaxInstance.new(@version, payload, )
           end
 
           ##
@@ -218,7 +221,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [FaxInstance] FaxInstance
           def get_instance(payload)
-            FaxInstance.new(@version, payload)
+            FaxInstance.new(@version, payload, )
           end
 
           ##
@@ -240,7 +243,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid}
+            @solution = {sid: sid, }
             @uri = "/Faxes/#{@solution[:sid]}"
 
             # Dependents
@@ -259,7 +262,7 @@ module Twilio
                 params,
             )
 
-            FaxInstance.new(@version, payload, sid: @solution[:sid])
+            FaxInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
@@ -269,7 +272,7 @@ module Twilio
           #   transmission.
           # @return [FaxInstance] Updated FaxInstance
           def update(status: :unset)
-            data = Twilio::Values.of({'Status' => status})
+            data = Twilio::Values.of({'Status' => status, })
 
             payload = @version.update(
                 'POST',
@@ -277,7 +280,7 @@ module Twilio
                 data: data,
             )
 
-            FaxInstance.new(@version, payload, sid: @solution[:sid])
+            FaxInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
@@ -295,11 +298,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return FaxMediaContext.new(@version, @solution[:sid], sid)
+              return FaxMediaContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @media
-              @media = FaxMediaList.new(@version, fax_sid: @solution[:sid])
+              @media = FaxMediaList.new(@version, fax_sid: @solution[:sid], )
             end
 
             @media
@@ -349,7 +352,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid']}
+            @params = {'sid' => sid || @properties['sid'], }
           end
 
           ##
@@ -358,7 +361,7 @@ module Twilio
           # @return [FaxContext] FaxContext for this FaxInstance
           def context
             unless @instance_context
-              @instance_context = FaxContext.new(@version, @params['sid'])
+              @instance_context = FaxContext.new(@version, @params['sid'], )
             end
             @instance_context
           end
@@ -485,7 +488,7 @@ module Twilio
           #   transmission.
           # @return [FaxInstance] Updated FaxInstance
           def update(status: :unset)
-            context.update(status: status)
+            context.update(status: status, )
           end
 
           ##

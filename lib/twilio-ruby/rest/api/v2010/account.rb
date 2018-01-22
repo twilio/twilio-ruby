@@ -28,7 +28,7 @@ module Twilio
           #   create, defaults to `SubAccount Created at {YYYY-MM-DD HH:MM meridian}`
           # @return [AccountInstance] Newly created AccountInstance
           def create(friendly_name: :unset)
-            data = Twilio::Values.of({'FriendlyName' => friendly_name})
+            data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
             payload = @version.create(
                 'POST',
@@ -36,7 +36,7 @@ module Twilio
                 data: data
             )
 
-            AccountInstance.new(@version, payload)
+            AccountInstance.new(@version, payload, )
           end
 
           ##
@@ -74,7 +74,7 @@ module Twilio
           def stream(friendly_name: :unset, status: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(friendly_name: friendly_name, status: status, page_size: limits[:page_size])
+            page = self.page(friendly_name: friendly_name, status: status, page_size: limits[:page_size], )
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -86,7 +86,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size])
+            page = self.page(page_size: limits[:page_size], )
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -158,7 +158,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [AccountInstance] AccountInstance
           def get_instance(payload)
-            AccountInstance.new(@version, payload)
+            AccountInstance.new(@version, payload, )
           end
 
           ##
@@ -179,7 +179,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid}
+            @solution = {sid: sid, }
             @uri = "/Accounts/#{@solution[:sid]}.json"
 
             # Dependents
@@ -220,7 +220,7 @@ module Twilio
                 params,
             )
 
-            AccountInstance.new(@version, payload, sid: @solution[:sid])
+            AccountInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
@@ -231,7 +231,7 @@ module Twilio
           #   Status
           # @return [AccountInstance] Updated AccountInstance
           def update(friendly_name: :unset, status: :unset)
-            data = Twilio::Values.of({'FriendlyName' => friendly_name, 'Status' => status})
+            data = Twilio::Values.of({'FriendlyName' => friendly_name, 'Status' => status, })
 
             payload = @version.update(
                 'POST',
@@ -239,7 +239,7 @@ module Twilio
                 data: data,
             )
 
-            AccountInstance.new(@version, payload, sid: @solution[:sid])
+            AccountInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
@@ -250,11 +250,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return AddressContext.new(@version, @solution[:sid], sid)
+              return AddressContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @addresses
-              @addresses = AddressList.new(@version, account_sid: @solution[:sid])
+              @addresses = AddressList.new(@version, account_sid: @solution[:sid], )
             end
 
             @addresses
@@ -268,11 +268,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return ApplicationContext.new(@version, @solution[:sid], sid)
+              return ApplicationContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @applications
-              @applications = ApplicationList.new(@version, account_sid: @solution[:sid])
+              @applications = ApplicationList.new(@version, account_sid: @solution[:sid], )
             end
 
             @applications
@@ -286,11 +286,11 @@ module Twilio
             raise ArgumentError, 'connect_app_sid cannot be nil' if connect_app_sid.nil?
 
             if connect_app_sid != :unset
-              return AuthorizedConnectAppContext.new(@version, @solution[:sid], connect_app_sid)
+              return AuthorizedConnectAppContext.new(@version, @solution[:sid], connect_app_sid, )
             end
 
             unless @authorized_connect_apps
-              @authorized_connect_apps = AuthorizedConnectAppList.new(@version, account_sid: @solution[:sid])
+              @authorized_connect_apps = AuthorizedConnectAppList.new(@version, account_sid: @solution[:sid], )
             end
 
             @authorized_connect_apps
@@ -304,7 +304,7 @@ module Twilio
             raise ArgumentError, 'country_code cannot be nil' if country_code.nil?
 
             if country_code != :unset
-              return AvailablePhoneNumberCountryContext.new(@version, @solution[:sid], country_code)
+              return AvailablePhoneNumberCountryContext.new(@version, @solution[:sid], country_code, )
             end
 
             unless @available_phone_numbers
@@ -325,11 +325,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return CallContext.new(@version, @solution[:sid], sid)
+              return CallContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @calls
-              @calls = CallList.new(@version, account_sid: @solution[:sid])
+              @calls = CallList.new(@version, account_sid: @solution[:sid], )
             end
 
             @calls
@@ -343,11 +343,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return ConferenceContext.new(@version, @solution[:sid], sid)
+              return ConferenceContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @conferences
-              @conferences = ConferenceList.new(@version, account_sid: @solution[:sid])
+              @conferences = ConferenceList.new(@version, account_sid: @solution[:sid], )
             end
 
             @conferences
@@ -361,11 +361,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return ConnectAppContext.new(@version, @solution[:sid], sid)
+              return ConnectAppContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @connect_apps
-              @connect_apps = ConnectAppList.new(@version, account_sid: @solution[:sid])
+              @connect_apps = ConnectAppList.new(@version, account_sid: @solution[:sid], )
             end
 
             @connect_apps
@@ -379,11 +379,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return IncomingPhoneNumberContext.new(@version, @solution[:sid], sid)
+              return IncomingPhoneNumberContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @incoming_phone_numbers
-              @incoming_phone_numbers = IncomingPhoneNumberList.new(@version, account_sid: @solution[:sid])
+              @incoming_phone_numbers = IncomingPhoneNumberList.new(@version, account_sid: @solution[:sid], )
             end
 
             @incoming_phone_numbers
@@ -397,11 +397,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return KeyContext.new(@version, @solution[:sid], sid)
+              return KeyContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @keys
-              @keys = KeyList.new(@version, account_sid: @solution[:sid])
+              @keys = KeyList.new(@version, account_sid: @solution[:sid], )
             end
 
             @keys
@@ -415,11 +415,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return MessageContext.new(@version, @solution[:sid], sid)
+              return MessageContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @messages
-              @messages = MessageList.new(@version, account_sid: @solution[:sid])
+              @messages = MessageList.new(@version, account_sid: @solution[:sid], )
             end
 
             @messages
@@ -431,7 +431,7 @@ module Twilio
           # @return [NewKeyContext]
           def new_keys
             unless @new_keys
-              @new_keys = NewKeyList.new(@version, account_sid: @solution[:sid])
+              @new_keys = NewKeyList.new(@version, account_sid: @solution[:sid], )
             end
 
             @new_keys
@@ -443,7 +443,7 @@ module Twilio
           # @return [NewSigningKeyContext]
           def new_signing_keys
             unless @new_signing_keys
-              @new_signing_keys = NewSigningKeyList.new(@version, account_sid: @solution[:sid])
+              @new_signing_keys = NewSigningKeyList.new(@version, account_sid: @solution[:sid], )
             end
 
             @new_signing_keys
@@ -457,11 +457,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return NotificationContext.new(@version, @solution[:sid], sid)
+              return NotificationContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @notifications
-              @notifications = NotificationList.new(@version, account_sid: @solution[:sid])
+              @notifications = NotificationList.new(@version, account_sid: @solution[:sid], )
             end
 
             @notifications
@@ -475,11 +475,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return OutgoingCallerIdContext.new(@version, @solution[:sid], sid)
+              return OutgoingCallerIdContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @outgoing_caller_ids
-              @outgoing_caller_ids = OutgoingCallerIdList.new(@version, account_sid: @solution[:sid])
+              @outgoing_caller_ids = OutgoingCallerIdList.new(@version, account_sid: @solution[:sid], )
             end
 
             @outgoing_caller_ids
@@ -493,11 +493,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return QueueContext.new(@version, @solution[:sid], sid)
+              return QueueContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @queues
-              @queues = QueueList.new(@version, account_sid: @solution[:sid])
+              @queues = QueueList.new(@version, account_sid: @solution[:sid], )
             end
 
             @queues
@@ -511,11 +511,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return RecordingContext.new(@version, @solution[:sid], sid)
+              return RecordingContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @recordings
-              @recordings = RecordingList.new(@version, account_sid: @solution[:sid])
+              @recordings = RecordingList.new(@version, account_sid: @solution[:sid], )
             end
 
             @recordings
@@ -529,11 +529,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return SigningKeyContext.new(@version, @solution[:sid], sid)
+              return SigningKeyContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @signing_keys
-              @signing_keys = SigningKeyList.new(@version, account_sid: @solution[:sid])
+              @signing_keys = SigningKeyList.new(@version, account_sid: @solution[:sid], )
             end
 
             @signing_keys
@@ -545,7 +545,7 @@ module Twilio
           # @return [SipContext]
           def sip
             unless @sip
-              @sip = SipList.new(@version, account_sid: @solution[:sid])
+              @sip = SipList.new(@version, account_sid: @solution[:sid], )
             end
 
             @sip
@@ -559,11 +559,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return ShortCodeContext.new(@version, @solution[:sid], sid)
+              return ShortCodeContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @short_codes
-              @short_codes = ShortCodeList.new(@version, account_sid: @solution[:sid])
+              @short_codes = ShortCodeList.new(@version, account_sid: @solution[:sid], )
             end
 
             @short_codes
@@ -575,7 +575,7 @@ module Twilio
           # @return [TokenContext]
           def tokens
             unless @tokens
-              @tokens = TokenList.new(@version, account_sid: @solution[:sid])
+              @tokens = TokenList.new(@version, account_sid: @solution[:sid], )
             end
 
             @tokens
@@ -589,11 +589,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return TranscriptionContext.new(@version, @solution[:sid], sid)
+              return TranscriptionContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @transcriptions
-              @transcriptions = TranscriptionList.new(@version, account_sid: @solution[:sid])
+              @transcriptions = TranscriptionList.new(@version, account_sid: @solution[:sid], )
             end
 
             @transcriptions
@@ -605,7 +605,7 @@ module Twilio
           # @return [UsageContext]
           def usage
             unless @usage
-              @usage = UsageList.new(@version, account_sid: @solution[:sid])
+              @usage = UsageList.new(@version, account_sid: @solution[:sid], )
             end
 
             @usage
@@ -617,7 +617,7 @@ module Twilio
           # @return [ValidationRequestContext]
           def validation_requests
             unless @validation_requests
-              @validation_requests = ValidationRequestList.new(@version, account_sid: @solution[:sid])
+              @validation_requests = ValidationRequestList.new(@version, account_sid: @solution[:sid], )
             end
 
             @validation_requests
@@ -658,7 +658,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid']}
+            @params = {'sid' => sid || @properties['sid'], }
           end
 
           ##
@@ -667,7 +667,7 @@ module Twilio
           # @return [AccountContext] AccountContext for this AccountInstance
           def context
             unless @instance_context
-              @instance_context = AccountContext.new(@version, @params['sid'])
+              @instance_context = AccountContext.new(@version, @params['sid'], )
             end
             @instance_context
           end
@@ -747,7 +747,7 @@ module Twilio
           #   Status
           # @return [AccountInstance] Updated AccountInstance
           def update(friendly_name: :unset, status: :unset)
-            context.update(friendly_name: friendly_name, status: status)
+            context.update(friendly_name: friendly_name, status: status, )
           end
 
           ##

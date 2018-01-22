@@ -33,6 +33,7 @@ module Twilio
             # @param [Time] date_created_after Filter by date created
             # @param [String] call_sid Only show recordings made during the call given by the
             #   indicated sid
+            # @param [String] conference_sid The conference_sid
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -40,12 +41,13 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(date_created_before: :unset, date_created: :unset, date_created_after: :unset, call_sid: :unset, limit: nil, page_size: nil)
+            def list(date_created_before: :unset, date_created: :unset, date_created_after: :unset, call_sid: :unset, conference_sid: :unset, limit: nil, page_size: nil)
               self.stream(
                   date_created_before: date_created_before,
                   date_created: date_created,
                   date_created_after: date_created_after,
                   call_sid: call_sid,
+                  conference_sid: conference_sid,
                   limit: limit,
                   page_size: page_size
               ).entries
@@ -60,6 +62,7 @@ module Twilio
             # @param [Time] date_created_after Filter by date created
             # @param [String] call_sid Only show recordings made during the call given by the
             #   indicated sid
+            # @param [String] conference_sid The conference_sid
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -67,7 +70,7 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(date_created_before: :unset, date_created: :unset, date_created_after: :unset, call_sid: :unset, limit: nil, page_size: nil)
+            def stream(date_created_before: :unset, date_created: :unset, date_created_after: :unset, call_sid: :unset, conference_sid: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -75,6 +78,7 @@ module Twilio
                   date_created: date_created,
                   date_created_after: date_created_after,
                   call_sid: call_sid,
+                  conference_sid: conference_sid,
                   page_size: limits[:page_size],
               )
 
@@ -88,7 +92,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -103,16 +107,18 @@ module Twilio
             # @param [Time] date_created_after Filter by date created
             # @param [String] call_sid Only show recordings made during the call given by the
             #   indicated sid
+            # @param [String] conference_sid The conference_sid
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of RecordingInstance
-            def page(date_created_before: :unset, date_created: :unset, date_created_after: :unset, call_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            def page(date_created_before: :unset, date_created: :unset, date_created_after: :unset, call_sid: :unset, conference_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'DateCreated<' => Twilio.serialize_iso8601_datetime(date_created_before),
                   'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                   'DateCreated>' => Twilio.serialize_iso8601_datetime(date_created_after),
                   'CallSid' => call_sid,
+                  'ConferenceSid' => conference_sid,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
@@ -164,7 +170,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [RecordingInstance] RecordingInstance
             def get_instance(payload)
-              RecordingInstance.new(@version, payload, account_sid: @solution[:account_sid])
+              RecordingInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
 
             ##
@@ -185,7 +191,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {account_sid: account_sid, sid: sid}
+              @solution = {account_sid: account_sid, sid: sid, }
               @uri = "/Accounts/#{@solution[:account_sid]}/Recordings/#{@solution[:sid]}.json"
 
               # Dependents
@@ -205,7 +211,7 @@ module Twilio
                   params,
               )
 
-              RecordingInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid])
+              RecordingInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -223,7 +229,7 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return TranscriptionContext.new(@version, @solution[:account_sid], @solution[:sid], sid)
+                return TranscriptionContext.new(@version, @solution[:account_sid], @solution[:sid], sid, )
               end
 
               unless @transcriptions
@@ -245,7 +251,7 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return AddOnResultContext.new(@version, @solution[:account_sid], @solution[:sid], sid)
+                return AddOnResultContext.new(@version, @solution[:account_sid], @solution[:sid], sid, )
               end
 
               unless @add_on_results
@@ -284,6 +290,7 @@ module Twilio
                   'account_sid' => payload['account_sid'],
                   'api_version' => payload['api_version'],
                   'call_sid' => payload['call_sid'],
+                  'conference_sid' => payload['conference_sid'],
                   'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                   'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                   'duration' => payload['duration'],
@@ -301,7 +308,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid']}
+              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -310,7 +317,7 @@ module Twilio
             # @return [RecordingContext] RecordingContext for this RecordingInstance
             def context
               unless @instance_context
-                @instance_context = RecordingContext.new(@version, @params['account_sid'], @params['sid'])
+                @instance_context = RecordingContext.new(@version, @params['account_sid'], @params['sid'], )
               end
               @instance_context
             end
@@ -331,6 +338,12 @@ module Twilio
             # @return [String] The unique id for the call leg that corresponds to the recording.
             def call_sid
               @properties['call_sid']
+            end
+
+            ##
+            # @return [String] The unique id for the conference associated with the recording, if a conference recording.
+            def conference_sid
+              @properties['conference_sid']
             end
 
             ##
@@ -370,7 +383,7 @@ module Twilio
             end
 
             ##
-            # @return [transcription.Status] The status of the recording.
+            # @return [recording.Status] The status of the recording.
             def status
               @properties['status']
             end

@@ -77,7 +77,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {account_sid: account_sid, call_sid: call_sid}
+                @solution = {account_sid: account_sid, call_sid: call_sid, }
                 @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/Feedback.json"
               end
 
@@ -185,7 +185,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {'account_sid' => account_sid, 'call_sid' => call_sid}
+                @params = {'account_sid' => account_sid, 'call_sid' => call_sid, }
               end
 
               ##
@@ -194,7 +194,7 @@ module Twilio
               # @return [FeedbackContext] FeedbackContext for this FeedbackInstance
               def context
                 unless @instance_context
-                  @instance_context = FeedbackContext.new(@version, @params['account_sid'], @params['call_sid'])
+                  @instance_context = FeedbackContext.new(@version, @params['account_sid'], @params['call_sid'], )
                 end
                 @instance_context
               end
@@ -242,7 +242,7 @@ module Twilio
               # @param [feedback.Issues] issue The issue
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(quality_score: nil, issue: :unset)
-                context.create(quality_score: quality_score, issue: issue)
+                context.create(quality_score: quality_score, issue: issue, )
               end
 
               ##
@@ -259,7 +259,7 @@ module Twilio
               #   call
               # @return [FeedbackInstance] Updated FeedbackInstance
               def update(quality_score: nil, issue: :unset)
-                context.update(quality_score: quality_score, issue: issue)
+                context.update(quality_score: quality_score, issue: issue, )
               end
 
               ##

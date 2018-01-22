@@ -86,7 +86,7 @@ module Twilio
                   data: data
               )
 
-              ApplicationInstance.new(@version, payload, account_sid: @solution[:account_sid])
+              ApplicationInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
 
             ##
@@ -122,7 +122,7 @@ module Twilio
             def stream(friendly_name: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(friendly_name: friendly_name, page_size: limits[:page_size])
+              page = self.page(friendly_name: friendly_name, page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -134,7 +134,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -204,7 +204,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ApplicationInstance] ApplicationInstance
             def get_instance(payload)
-              ApplicationInstance.new(@version, payload, account_sid: @solution[:account_sid])
+              ApplicationInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
 
             ##
@@ -226,7 +226,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {account_sid: account_sid, sid: sid}
+              @solution = {account_sid: account_sid, sid: sid, }
               @uri = "/Accounts/#{@solution[:account_sid]}/Applications/#{@solution[:sid]}.json"
             end
 
@@ -249,7 +249,7 @@ module Twilio
                   params,
               )
 
-              ApplicationInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid])
+              ApplicationInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -313,7 +313,7 @@ module Twilio
                   data: data,
               )
 
-              ApplicationInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid])
+              ApplicationInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -363,7 +363,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid']}
+              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -372,7 +372,7 @@ module Twilio
             # @return [ApplicationContext] ApplicationContext for this ApplicationInstance
             def context
               unless @instance_context
-                @instance_context = ApplicationContext.new(@version, @params['account_sid'], @params['sid'])
+                @instance_context = ApplicationContext.new(@version, @params['account_sid'], @params['sid'], )
               end
               @instance_context
             end

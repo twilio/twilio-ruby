@@ -74,7 +74,7 @@ module Twilio
                   data: data
               )
 
-              MessageInstance.new(@version, payload, account_sid: @solution[:account_sid])
+              MessageInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
 
             ##
@@ -143,7 +143,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -220,7 +220,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [MessageInstance] MessageInstance
             def get_instance(payload)
-              MessageInstance.new(@version, payload, account_sid: @solution[:account_sid])
+              MessageInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
 
             ##
@@ -241,7 +241,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {account_sid: account_sid, sid: sid}
+              @solution = {account_sid: account_sid, sid: sid, }
               @uri = "/Accounts/#{@solution[:account_sid]}/Messages/#{@solution[:sid]}.json"
 
               # Dependents
@@ -268,7 +268,7 @@ module Twilio
                   params,
               )
 
-              MessageInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid])
+              MessageInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -276,7 +276,7 @@ module Twilio
             # @param [String] body The body
             # @return [MessageInstance] Updated MessageInstance
             def update(body: nil)
-              data = Twilio::Values.of({'Body' => body})
+              data = Twilio::Values.of({'Body' => body, })
 
               payload = @version.update(
                   'POST',
@@ -284,7 +284,7 @@ module Twilio
                   data: data,
               )
 
-              MessageInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid])
+              MessageInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -295,11 +295,11 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return MediaContext.new(@version, @solution[:account_sid], @solution[:sid], sid)
+                return MediaContext.new(@version, @solution[:account_sid], @solution[:sid], sid, )
               end
 
               unless @media
-                @media = MediaList.new(@version, account_sid: @solution[:account_sid], message_sid: @solution[:sid])
+                @media = MediaList.new(@version, account_sid: @solution[:account_sid], message_sid: @solution[:sid], )
               end
 
               @media
@@ -366,7 +366,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid']}
+              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -375,7 +375,7 @@ module Twilio
             # @return [MessageContext] MessageContext for this MessageInstance
             def context
               unless @instance_context
-                @instance_context = MessageContext.new(@version, @params['account_sid'], @params['sid'])
+                @instance_context = MessageContext.new(@version, @params['account_sid'], @params['sid'], )
               end
               @instance_context
             end
@@ -519,7 +519,7 @@ module Twilio
             # @param [String] body The body
             # @return [MessageInstance] Updated MessageInstance
             def update(body: nil)
-              context.update(body: body)
+              context.update(body: body, )
             end
 
             ##

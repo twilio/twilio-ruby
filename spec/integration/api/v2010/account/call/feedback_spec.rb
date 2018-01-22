@@ -16,7 +16,7 @@ describe 'Feedback' do
                        .feedback().create(quality_score: 1)
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'QualityScore' => 1}
+    values = {'QualityScore' => 1, }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -101,7 +101,7 @@ describe 'Feedback' do
                        .feedback().update(quality_score: 1)
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'QualityScore' => 1}
+    values = {'QualityScore' => 1, }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

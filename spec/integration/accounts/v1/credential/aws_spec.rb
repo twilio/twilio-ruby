@@ -90,7 +90,7 @@ describe 'Aws' do
                          .aws.create(credentials: "AKIAIOSFODNN7EXAMPLE:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Credentials' => "AKIAIOSFODNN7EXAMPLE:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"}
+    values = {'Credentials' => "AKIAIOSFODNN7EXAMPLE:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

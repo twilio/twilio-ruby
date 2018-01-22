@@ -11,14 +11,14 @@ describe 'PhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.lookups.v1.phone_numbers("+987654321").fetch()
+      @client.lookups.v1.phone_numbers("+15017122661").fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://lookups.twilio.com/v1/PhoneNumbers/+987654321',
+        url: 'https://lookups.twilio.com/v1/PhoneNumbers/+15017122661',
     ))).to eq(true)
   end
 
@@ -53,7 +53,7 @@ describe 'PhoneNumber' do
       ]
     ))
 
-    actual = @client.lookups.v1.phone_numbers("+987654321").fetch()
+    actual = @client.lookups.v1.phone_numbers("+15017122661").fetch()
 
     expect(actual).to_not eq(nil)
   end

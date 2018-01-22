@@ -139,7 +139,7 @@ describe 'Sample' do
                                 .samples.create(language: "language", tagged_text: "tagged_text")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Language' => "language", 'TaggedText' => "tagged_text"}
+    values = {'Language' => "language", 'TaggedText' => "tagged_text", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

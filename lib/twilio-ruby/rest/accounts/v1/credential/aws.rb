@@ -51,7 +51,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -63,7 +63,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -124,7 +124,7 @@ module Twilio
                   data: data
               )
 
-              AwsInstance.new(@version, payload)
+              AwsInstance.new(@version, payload, )
             end
 
             ##
@@ -153,7 +153,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [AwsInstance] AwsInstance
             def get_instance(payload)
-              AwsInstance.new(@version, payload)
+              AwsInstance.new(@version, payload, )
             end
 
             ##
@@ -173,7 +173,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {sid: sid}
+              @solution = {sid: sid, }
               @uri = "/Credentials/AWS/#{@solution[:sid]}"
             end
 
@@ -189,7 +189,7 @@ module Twilio
                   params,
               )
 
-              AwsInstance.new(@version, payload, sid: @solution[:sid])
+              AwsInstance.new(@version, payload, sid: @solution[:sid], )
             end
 
             ##
@@ -197,7 +197,7 @@ module Twilio
             # @param [String] friendly_name The friendly_name
             # @return [AwsInstance] Updated AwsInstance
             def update(friendly_name: :unset)
-              data = Twilio::Values.of({'FriendlyName' => friendly_name})
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
               payload = @version.update(
                   'POST',
@@ -205,7 +205,7 @@ module Twilio
                   data: data,
               )
 
-              AwsInstance.new(@version, payload, sid: @solution[:sid])
+              AwsInstance.new(@version, payload, sid: @solution[:sid], )
             end
 
             ##
@@ -245,7 +245,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'sid' => sid || @properties['sid']}
+              @params = {'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -254,7 +254,7 @@ module Twilio
             # @return [AwsContext] AwsContext for this AwsInstance
             def context
               unless @instance_context
-                @instance_context = AwsContext.new(@version, @params['sid'])
+                @instance_context = AwsContext.new(@version, @params['sid'], )
               end
               @instance_context
             end
@@ -307,7 +307,7 @@ module Twilio
             # @param [String] friendly_name The friendly_name
             # @return [AwsInstance] Updated AwsInstance
             def update(friendly_name: :unset)
-              context.update(friendly_name: friendly_name)
+              context.update(friendly_name: friendly_name, )
             end
 
             ##

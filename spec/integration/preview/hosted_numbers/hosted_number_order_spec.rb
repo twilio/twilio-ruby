@@ -29,6 +29,7 @@ describe 'HostedNumberOrder' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "address_sid": "AD11111111111111111111111111111111",
+          "call_delay": 15,
           "capabilities": {
               "sms": true,
               "voice": false
@@ -40,6 +41,8 @@ describe 'HostedNumberOrder' do
           "date_created": "2017-03-28T20:06:39Z",
           "date_updated": "2017-03-28T20:06:39Z",
           "email": "test@twilio.com",
+          "extension": "5105",
+          "failure_reason": "",
           "friendly_name": "friendly_name",
           "incoming_phone_number_sid": "PN11111111111111111111111111111111",
           "phone_number": "+14153608311",
@@ -49,8 +52,13 @@ describe 'HostedNumberOrder' do
           "unique_name": "foobar",
           "url": "https://preview.twilio.com/HostedNumbers/HostedNumberOrders/HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "verification_attempts": 0,
-          "verification_type": "phone-call",
-          "verification_document_sid": null
+          "verification_call_sids": [
+              "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
+          ],
+          "verification_code": "8794",
+          "verification_document_sid": null,
+          "verification_type": "phone-call"
       }
       ]
     ))
@@ -108,6 +116,7 @@ describe 'HostedNumberOrder' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "address_sid": "AD11111111111111111111111111111111",
+          "call_delay": 15,
           "capabilities": {
               "sms": true,
               "voice": false
@@ -119,6 +128,8 @@ describe 'HostedNumberOrder' do
           "date_created": "2017-03-28T20:06:39Z",
           "date_updated": "2017-03-28T20:06:39Z",
           "email": "test+hosted@twilio.com",
+          "extension": "1234",
+          "failure_reason": "",
           "friendly_name": "new friendly name",
           "incoming_phone_number_sid": "PN11111111111111111111111111111111",
           "phone_number": "+14153608311",
@@ -128,8 +139,13 @@ describe 'HostedNumberOrder' do
           "unique_name": "new unique name",
           "url": "https://preview.twilio.com/HostedNumbers/HostedNumberOrders/HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "verification_attempts": 1,
-          "verification_type": "phone-call",
-          "verification_document_sid": null
+          "verification_call_sids": [
+              "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
+          ],
+          "verification_code": "8794",
+          "verification_document_sid": null,
+          "verification_type": "phone-call"
       }
       ]
     ))
@@ -196,6 +212,7 @@ describe 'HostedNumberOrder' do
               {
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "address_sid": "AD11111111111111111111111111111111",
+                  "call_delay": 15,
                   "capabilities": {
                       "sms": true,
                       "voice": false
@@ -207,6 +224,8 @@ describe 'HostedNumberOrder' do
                   "date_created": "2017-03-28T20:06:39Z",
                   "date_updated": "2017-03-28T20:06:39Z",
                   "email": "test@twilio.com",
+                  "extension": "1234",
+                  "failure_reason": "",
                   "friendly_name": "friendly_name",
                   "incoming_phone_number_sid": "PN11111111111111111111111111111111",
                   "phone_number": "+14153608311",
@@ -216,8 +235,13 @@ describe 'HostedNumberOrder' do
                   "unique_name": "foobar",
                   "url": "https://preview.twilio.com/HostedNumbers/HostedNumberOrders/HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "verification_attempts": 0,
-                  "verification_type": "phone-call",
-                  "verification_document_sid": null
+                  "verification_call_sids": [
+                      "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
+                  ],
+                  "verification_code": "8794",
+                  "verification_document_sid": null,
+                  "verification_type": "phone-call"
               }
           ]
       }
@@ -233,10 +257,10 @@ describe 'HostedNumberOrder' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+987654321", sms_capability: true)
+      @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+15017122661", sms_capability: true)
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'PhoneNumber' => "+987654321", 'SmsCapability' => true}
+    values = {'PhoneNumber' => "+15017122661", 'SmsCapability' => true, }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -252,6 +276,7 @@ describe 'HostedNumberOrder' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "address_sid": "AD11111111111111111111111111111111",
+          "call_delay": 0,
           "capabilities": {
               "sms": true,
               "voice": false
@@ -260,6 +285,8 @@ describe 'HostedNumberOrder' do
           "date_created": "2017-03-28T20:06:39Z",
           "date_updated": "2017-03-28T20:06:39Z",
           "email": "test@twilio.com",
+          "extension": null,
+          "failure_reason": "",
           "friendly_name": null,
           "incoming_phone_number_sid": "PN11111111111111111111111111111111",
           "phone_number": "+14153608311",
@@ -269,13 +296,15 @@ describe 'HostedNumberOrder' do
           "unique_name": null,
           "url": "https://preview.twilio.com/HostedNumbers/HostedNumberOrders/HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "verification_attempts": 0,
-          "verification_type": "phone-call",
-          "verification_document_sid": null
+          "verification_call_sids": null,
+          "verification_code": null,
+          "verification_document_sid": null,
+          "verification_type": "phone-call"
       }
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+987654321", sms_capability: true)
+    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+15017122661", sms_capability: true)
 
     expect(actual).to_not eq(nil)
   end
@@ -287,6 +316,7 @@ describe 'HostedNumberOrder' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "address_sid": null,
+          "call_delay": 0,
           "capabilities": {
               "sms": true,
               "voice": false
@@ -295,6 +325,8 @@ describe 'HostedNumberOrder' do
           "date_created": "2017-03-28T20:06:39Z",
           "date_updated": "2017-03-28T20:06:39Z",
           "email": null,
+          "extension": null,
+          "failure_reason": "",
           "friendly_name": null,
           "incoming_phone_number_sid": "PN11111111111111111111111111111111",
           "phone_number": "+14153608311",
@@ -304,13 +336,15 @@ describe 'HostedNumberOrder' do
           "unique_name": null,
           "url": "https://preview.twilio.com/HostedNumbers/HostedNumberOrders/HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "verification_attempts": 0,
-          "verification_type": "phone-call",
-          "verification_document_sid": null
+          "verification_call_sids": null,
+          "verification_code": null,
+          "verification_document_sid": null,
+          "verification_type": "phone-call"
       }
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+987654321", sms_capability: true)
+    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+15017122661", sms_capability: true)
 
     expect(actual).to_not eq(nil)
   end
@@ -322,6 +356,7 @@ describe 'HostedNumberOrder' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "address_sid": null,
+          "call_delay": 0,
           "capabilities": {
               "sms": true,
               "voice": false
@@ -330,6 +365,8 @@ describe 'HostedNumberOrder' do
           "date_created": "2017-03-28T20:06:39Z",
           "date_updated": "2017-03-28T20:06:39Z",
           "email": null,
+          "extension": null,
+          "failure_reason": "",
           "friendly_name": null,
           "incoming_phone_number_sid": "PN11111111111111111111111111111111",
           "phone_number": "+14153608311",
@@ -339,13 +376,15 @@ describe 'HostedNumberOrder' do
           "unique_name": null,
           "url": "https://preview.twilio.com/HostedNumbers/HostedNumberOrders/HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "verification_attempts": 0,
-          "verification_type": "phone-bill",
-          "verification_document_sid": "RIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "verification_call_sids": null,
+          "verification_code": null,
+          "verification_document_sid": "RIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "verification_type": "phone-bill"
       }
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+987654321", sms_capability: true)
+    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+15017122661", sms_capability: true)
 
     expect(actual).to_not eq(nil)
   end

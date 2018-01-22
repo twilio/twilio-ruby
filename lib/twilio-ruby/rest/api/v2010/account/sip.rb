@@ -38,10 +38,10 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return DomainContext.new(@version, @solution[:account_sid], sid)
+                return DomainContext.new(@version, @solution[:account_sid], sid, )
               end
 
-                @domains ||= DomainList.new(@version, account_sid: @solution[:account_sid])
+                @domains ||= DomainList.new(@version, account_sid: @solution[:account_sid], )
             end
 
             ##
@@ -49,7 +49,7 @@ module Twilio
             # @return [RegionList]
             # @return [RegionContext]
             def regions
-              @regions ||= RegionList.new(@version, account_sid: @solution[:account_sid])
+              @regions ||= RegionList.new(@version, account_sid: @solution[:account_sid], )
             end
 
             ##
@@ -62,7 +62,7 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return IpAccessControlListContext.new(@version, @solution[:account_sid], sid)
+                return IpAccessControlListContext.new(@version, @solution[:account_sid], sid, )
               end
 
                 @ip_access_control_lists ||= IpAccessControlListList.new(
@@ -80,10 +80,10 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return CredentialListContext.new(@version, @solution[:account_sid], sid)
+                return CredentialListContext.new(@version, @solution[:account_sid], sid, )
               end
 
-                @credential_lists ||= CredentialListList.new(@version, account_sid: @solution[:account_sid])
+                @credential_lists ||= CredentialListList.new(@version, account_sid: @solution[:account_sid], )
             end
 
             ##
@@ -112,7 +112,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [SipInstance] SipInstance
             def get_instance(payload)
-              SipInstance.new(@version, payload, account_sid: @solution[:account_sid])
+              SipInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
 
             ##

@@ -56,7 +56,7 @@ module Twilio
               def stream(limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(page_size: limits[:page_size])
+                page = self.page(page_size: limits[:page_size], )
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -68,7 +68,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(page_size: limits[:page_size])
+                page = self.page(page_size: limits[:page_size], )
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -116,7 +116,7 @@ module Twilio
               # @param [String] unique_name The unique_name
               # @return [FieldInstance] Newly created FieldInstance
               def create(field_type: nil, unique_name: nil)
-                data = Twilio::Values.of({'FieldType' => field_type, 'UniqueName' => unique_name})
+                data = Twilio::Values.of({'FieldType' => field_type, 'UniqueName' => unique_name, })
 
                 payload = @version.create(
                     'POST',
@@ -189,7 +189,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {service_sid: service_sid, intent_sid: intent_sid, sid: sid}
+                @solution = {service_sid: service_sid, intent_sid: intent_sid, sid: sid, }
                 @uri = "/Services/#{@solution[:service_sid]}/Intents/#{@solution[:intent_sid]}/Fields/#{@solution[:sid]}"
               end
 

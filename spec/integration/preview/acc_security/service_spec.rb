@@ -14,7 +14,7 @@ describe 'Service' do
       @client.preview.acc_security.services.create(name: "name")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Name' => "name"}
+    values = {'Name' => "name", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

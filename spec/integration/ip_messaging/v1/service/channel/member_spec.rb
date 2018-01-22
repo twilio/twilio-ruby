@@ -60,7 +60,7 @@ describe 'Member' do
                              .members.create(identity: "identity")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Identity' => "identity"}
+    values = {'Identity' => "identity", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

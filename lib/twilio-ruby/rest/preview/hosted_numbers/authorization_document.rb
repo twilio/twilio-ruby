@@ -62,7 +62,7 @@ module Twilio
           def stream(email: :unset, status: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(email: email, status: status, page_size: limits[:page_size])
+            page = self.page(email: email, status: status, page_size: limits[:page_size], )
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -74,7 +74,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size])
+            page = self.page(page_size: limits[:page_size], )
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -149,7 +149,7 @@ module Twilio
                 data: data
             )
 
-            AuthorizationDocumentInstance.new(@version, payload)
+            AuthorizationDocumentInstance.new(@version, payload, )
           end
 
           ##
@@ -180,7 +180,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [AuthorizationDocumentInstance] AuthorizationDocumentInstance
           def get_instance(payload)
-            AuthorizationDocumentInstance.new(@version, payload)
+            AuthorizationDocumentInstance.new(@version, payload, )
           end
 
           ##
@@ -203,8 +203,11 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid}
+            @solution = {sid: sid, }
             @uri = "/AuthorizationDocuments/#{@solution[:sid]}"
+
+            # Dependents
+            @dependent_hosted_number_orders = nil
           end
 
           ##
@@ -219,7 +222,7 @@ module Twilio
                 params,
             )
 
-            AuthorizationDocumentInstance.new(@version, payload, sid: @solution[:sid])
+            AuthorizationDocumentInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
@@ -253,7 +256,22 @@ module Twilio
                 data: data,
             )
 
-            AuthorizationDocumentInstance.new(@version, payload, sid: @solution[:sid])
+            AuthorizationDocumentInstance.new(@version, payload, sid: @solution[:sid], )
+          end
+
+          ##
+          # Access the dependent_hosted_number_orders
+          # @return [DependentHostedNumberOrderList]
+          # @return [DependentHostedNumberOrderContext]
+          def dependent_hosted_number_orders
+            unless @dependent_hosted_number_orders
+              @dependent_hosted_number_orders = DependentHostedNumberOrderList.new(
+                  @version,
+                  signing_document_sid: @solution[:sid],
+              )
+            end
+
+            @dependent_hosted_number_orders
           end
 
           ##
@@ -287,11 +305,12 @@ module Twilio
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
+                'links' => payload['links'],
             }
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid']}
+            @params = {'sid' => sid || @properties['sid'], }
           end
 
           ##
@@ -300,7 +319,7 @@ module Twilio
           # @return [AuthorizationDocumentContext] AuthorizationDocumentContext for this AuthorizationDocumentInstance
           def context
             unless @instance_context
-              @instance_context = AuthorizationDocumentContext.new(@version, @params['sid'])
+              @instance_context = AuthorizationDocumentContext.new(@version, @params['sid'], )
             end
             @instance_context
           end
@@ -354,6 +373,12 @@ module Twilio
           end
 
           ##
+          # @return [String] The links
+          def links
+            @properties['links']
+          end
+
+          ##
           # Fetch a AuthorizationDocumentInstance
           # @return [AuthorizationDocumentInstance] Fetched AuthorizationDocumentInstance
           def fetch
@@ -384,6 +409,13 @@ module Twilio
                 cc_emails: cc_emails,
                 status: status,
             )
+          end
+
+          ##
+          # Access the dependent_hosted_number_orders
+          # @return [dependent_hosted_number_orders] dependent_hosted_number_orders
+          def dependent_hosted_number_orders
+            context.dependent_hosted_number_orders
           end
 
           ##

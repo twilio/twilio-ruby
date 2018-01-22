@@ -34,10 +34,10 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return PublicKeyContext.new(@version, sid)
+              return PublicKeyContext.new(@version, sid, )
             end
 
-              @public_key ||= PublicKeyList.new(@version)
+              @public_key ||= PublicKeyList.new(@version, )
           end
 
           ##
@@ -49,10 +49,10 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return AwsContext.new(@version, sid)
+              return AwsContext.new(@version, sid, )
             end
 
-              @aws ||= AwsList.new(@version)
+              @aws ||= AwsList.new(@version, )
           end
 
           ##
@@ -81,7 +81,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [CredentialInstance] CredentialInstance
           def get_instance(payload)
-            CredentialInstance.new(@version, payload)
+            CredentialInstance.new(@version, payload, )
           end
 
           ##

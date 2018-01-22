@@ -165,7 +165,7 @@ describe 'Query' do
                                 .queries.create(language: "language", query: "query")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Language' => "language", 'Query' => "query"}
+    values = {'Language' => "language", 'Query' => "query", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

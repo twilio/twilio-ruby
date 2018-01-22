@@ -167,7 +167,7 @@ describe 'DocumentPermission' do
                      .document_permissions("identity").update(read: true, write: true, manage: true)
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Read' => true, 'Write' => true, 'Manage' => true}
+    values = {'Read' => true, 'Write' => true, 'Manage' => true, }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

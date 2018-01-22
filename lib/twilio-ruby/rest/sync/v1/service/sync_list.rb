@@ -32,7 +32,7 @@ module Twilio
             # @param [String] ttl The ttl
             # @return [SyncListInstance] Newly created SyncListInstance
             def create(unique_name: :unset, ttl: :unset)
-              data = Twilio::Values.of({'UniqueName' => unique_name, 'Ttl' => ttl})
+              data = Twilio::Values.of({'UniqueName' => unique_name, 'Ttl' => ttl, })
 
               payload = @version.create(
                   'POST',
@@ -40,7 +40,7 @@ module Twilio
                   data: data
               )
 
-              SyncListInstance.new(@version, payload, service_sid: @solution[:service_sid])
+              SyncListInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
 
             ##
@@ -72,7 +72,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -84,7 +84,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -153,7 +153,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [SyncListInstance] SyncListInstance
             def get_instance(payload)
-              SyncListInstance.new(@version, payload, service_sid: @solution[:service_sid])
+              SyncListInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
 
             ##
@@ -176,7 +176,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid, sid: sid}
+              @solution = {service_sid: service_sid, sid: sid, }
               @uri = "/Services/#{@solution[:service_sid]}/Lists/#{@solution[:sid]}"
 
               # Dependents
@@ -196,7 +196,7 @@ module Twilio
                   params,
               )
 
-              SyncListInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
+              SyncListInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -211,7 +211,7 @@ module Twilio
             # @param [String] ttl The ttl
             # @return [SyncListInstance] Updated SyncListInstance
             def update(ttl: :unset)
-              data = Twilio::Values.of({'Ttl' => ttl})
+              data = Twilio::Values.of({'Ttl' => ttl, })
 
               payload = @version.update(
                   'POST',
@@ -219,7 +219,7 @@ module Twilio
                   data: data,
               )
 
-              SyncListInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
+              SyncListInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -230,7 +230,7 @@ module Twilio
               raise ArgumentError, 'index cannot be nil' if index.nil?
 
               if index != :unset
-                return SyncListItemContext.new(@version, @solution[:service_sid], @solution[:sid], index)
+                return SyncListItemContext.new(@version, @solution[:service_sid], @solution[:sid], index, )
               end
 
               unless @sync_list_items
@@ -252,7 +252,7 @@ module Twilio
               raise ArgumentError, 'identity cannot be nil' if identity.nil?
 
               if identity != :unset
-                return SyncListPermissionContext.new(@version, @solution[:service_sid], @solution[:sid], identity)
+                return SyncListPermissionContext.new(@version, @solution[:service_sid], @solution[:sid], identity, )
               end
 
               unless @sync_list_permissions
@@ -304,7 +304,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid']}
+              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -313,7 +313,7 @@ module Twilio
             # @return [SyncListContext] SyncListContext for this SyncListInstance
             def context
               unless @instance_context
-                @instance_context = SyncListContext.new(@version, @params['service_sid'], @params['sid'])
+                @instance_context = SyncListContext.new(@version, @params['service_sid'], @params['sid'], )
               end
               @instance_context
             end
@@ -403,7 +403,7 @@ module Twilio
             # @param [String] ttl The ttl
             # @return [SyncListInstance] Updated SyncListInstance
             def update(ttl: :unset)
-              context.update(ttl: ttl)
+              context.update(ttl: ttl, )
             end
 
             ##

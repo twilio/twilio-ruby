@@ -66,7 +66,7 @@ module Twilio
             def stream(friendly_name: :unset, short_code: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(friendly_name: friendly_name, short_code: short_code, page_size: limits[:page_size])
+              page = self.page(friendly_name: friendly_name, short_code: short_code, page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -78,7 +78,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -151,7 +151,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [ShortCodeInstance] ShortCodeInstance
             def get_instance(payload)
-              ShortCodeInstance.new(@version, payload, account_sid: @solution[:account_sid])
+              ShortCodeInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
 
             ##
@@ -172,7 +172,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {account_sid: account_sid, sid: sid}
+              @solution = {account_sid: account_sid, sid: sid, }
               @uri = "/Accounts/#{@solution[:account_sid]}/SMS/ShortCodes/#{@solution[:sid]}.json"
             end
 
@@ -188,7 +188,7 @@ module Twilio
                   params,
               )
 
-              ShortCodeInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid])
+              ShortCodeInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -223,7 +223,7 @@ module Twilio
                   data: data,
               )
 
-              ShortCodeInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid])
+              ShortCodeInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -264,7 +264,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid']}
+              @params = {'account_sid' => account_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -273,7 +273,7 @@ module Twilio
             # @return [ShortCodeContext] ShortCodeContext for this ShortCodeInstance
             def context
               unless @instance_context
-                @instance_context = ShortCodeContext.new(@version, @params['account_sid'], @params['sid'])
+                @instance_context = ShortCodeContext.new(@version, @params['account_sid'], @params['sid'], )
               end
               @instance_context
             end

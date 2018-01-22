@@ -103,7 +103,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size])
+            page = self.page(page_size: limits[:page_size], )
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -175,8 +175,8 @@ module Twilio
           # @param [String] unique_name Optional. Provides a unique and addressable name to
           #   be assigned to this HostedNumberOrder, assigned by the developer, to be
           #   optionally used in addition to SID.
-          # @param [String] cc_emails Optional. A list of emails that LOA document for this
-          #   HostedNumberOrder will be carbon copied to.
+          # @param [String] cc_emails Optional. A list of emails that the LOA document for
+          #   this HostedNumberOrder will be carbon copied to.
           # @param [String] sms_url Optional. The SMS URL attached to the
           #   IncomingPhoneNumber resource.
           # @param [String] sms_method Optional. The SMS Method attached to the
@@ -232,7 +232,7 @@ module Twilio
                 data: data
             )
 
-            HostedNumberOrderInstance.new(@version, payload)
+            HostedNumberOrderInstance.new(@version, payload, )
           end
 
           ##
@@ -263,7 +263,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [HostedNumberOrderInstance] HostedNumberOrderInstance
           def get_instance(payload)
-            HostedNumberOrderInstance.new(@version, payload)
+            HostedNumberOrderInstance.new(@version, payload, )
           end
 
           ##
@@ -286,7 +286,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid}
+            @solution = {sid: sid, }
             @uri = "/HostedNumberOrders/#{@solution[:sid]}"
           end
 
@@ -302,7 +302,7 @@ module Twilio
                 params,
             )
 
-            HostedNumberOrderInstance.new(@version, payload, sid: @solution[:sid])
+            HostedNumberOrderInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
@@ -333,8 +333,10 @@ module Twilio
           # @param [String] verification_document_sid Optional. The unique sid identifier of
           #   the Identity Document that represents the document for verifying ownership of
           #   the number to be hosted. Required when VerificationType is phone-bill.
+          # @param [String] extension The extension
+          # @param [String] call_delay The call_delay
           # @return [HostedNumberOrderInstance] Updated HostedNumberOrderInstance
-          def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset, verification_code: :unset, verification_type: :unset, verification_document_sid: :unset)
+          def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset, verification_code: :unset, verification_type: :unset, verification_document_sid: :unset, extension: :unset, call_delay: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'UniqueName' => unique_name,
@@ -344,6 +346,8 @@ module Twilio
                 'VerificationCode' => verification_code,
                 'VerificationType' => verification_type,
                 'VerificationDocumentSid' => verification_document_sid,
+                'Extension' => extension,
+                'CallDelay' => call_delay,
             })
 
             payload = @version.update(
@@ -352,7 +356,7 @@ module Twilio
                 data: data,
             )
 
-            HostedNumberOrderInstance.new(@version, payload, sid: @solution[:sid])
+            HostedNumberOrderInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
@@ -388,6 +392,7 @@ module Twilio
                 'friendly_name' => payload['friendly_name'],
                 'unique_name' => payload['unique_name'],
                 'status' => payload['status'],
+                'failure_reason' => payload['failure_reason'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'verification_attempts' => payload['verification_attempts'].to_i,
@@ -396,11 +401,15 @@ module Twilio
                 'url' => payload['url'],
                 'verification_type' => payload['verification_type'],
                 'verification_document_sid' => payload['verification_document_sid'],
+                'extension' => payload['extension'],
+                'call_delay' => payload['call_delay'].to_i,
+                'verification_code' => payload['verification_code'],
+                'verification_call_sids' => payload['verification_call_sids'],
             }
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid']}
+            @params = {'sid' => sid || @properties['sid'], }
           end
 
           ##
@@ -409,7 +418,7 @@ module Twilio
           # @return [HostedNumberOrderContext] HostedNumberOrderContext for this HostedNumberOrderInstance
           def context
             unless @instance_context
-              @instance_context = HostedNumberOrderContext.new(@version, @params['sid'])
+              @instance_context = HostedNumberOrderContext.new(@version, @params['sid'], )
             end
             @instance_context
           end
@@ -475,6 +484,12 @@ module Twilio
           end
 
           ##
+          # @return [String] Why a hosted_number_order reached status "action-required"
+          def failure_reason
+            @properties['failure_reason']
+          end
+
+          ##
           # @return [Time] The date this HostedNumberOrder was created.
           def date_created
             @properties['date_created']
@@ -487,7 +502,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The number of verification attempts made to verify ownership of the phone number.
+          # @return [String] The number of attempts made to verify ownership of the phone number.
           def verification_attempts
             @properties['verification_attempts']
           end
@@ -520,6 +535,30 @@ module Twilio
           # @return [String] Verification Document Sid.
           def verification_document_sid
             @properties['verification_document_sid']
+          end
+
+          ##
+          # @return [String] Phone extension to use for ownership verification call.
+          def extension
+            @properties['extension']
+          end
+
+          ##
+          # @return [String] Seconds (0-30) to delay ownership verification call by.
+          def call_delay
+            @properties['call_delay']
+          end
+
+          ##
+          # @return [String] The digits passed during the ownership verification call.
+          def verification_code
+            @properties['verification_code']
+          end
+
+          ##
+          # @return [String] List of IDs for ownership verification calls.
+          def verification_call_sids
+            @properties['verification_call_sids']
           end
 
           ##
@@ -557,8 +596,10 @@ module Twilio
           # @param [String] verification_document_sid Optional. The unique sid identifier of
           #   the Identity Document that represents the document for verifying ownership of
           #   the number to be hosted. Required when VerificationType is phone-bill.
+          # @param [String] extension The extension
+          # @param [String] call_delay The call_delay
           # @return [HostedNumberOrderInstance] Updated HostedNumberOrderInstance
-          def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset, verification_code: :unset, verification_type: :unset, verification_document_sid: :unset)
+          def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset, verification_code: :unset, verification_type: :unset, verification_document_sid: :unset, extension: :unset, call_delay: :unset)
             context.update(
                 friendly_name: friendly_name,
                 unique_name: unique_name,
@@ -568,6 +609,8 @@ module Twilio
                 verification_code: verification_code,
                 verification_type: verification_type,
                 verification_document_sid: verification_document_sid,
+                extension: extension,
+                call_delay: call_delay,
             )
           end
 

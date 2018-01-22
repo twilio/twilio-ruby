@@ -131,7 +131,7 @@ describe 'Command' do
       @client.preview.wireless.commands.create(command: "command")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Command' => "command"}
+    values = {'Command' => "command", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

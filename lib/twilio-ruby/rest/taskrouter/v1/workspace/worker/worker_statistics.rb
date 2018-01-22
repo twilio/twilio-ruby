@@ -76,7 +76,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {workspace_sid: workspace_sid, worker_sid: worker_sid}
+                @solution = {workspace_sid: workspace_sid, worker_sid: worker_sid, }
                 @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers/#{@solution[:worker_sid]}/Statistics"
               end
 
@@ -139,7 +139,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {'workspace_sid' => workspace_sid, 'worker_sid' => worker_sid}
+                @params = {'workspace_sid' => workspace_sid, 'worker_sid' => worker_sid, }
               end
 
               ##
@@ -195,7 +195,7 @@ module Twilio
               # @param [String] task_channel The task_channel
               # @return [WorkerStatisticsInstance] Fetched WorkerStatisticsInstance
               def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_channel: :unset)
-                context.fetch(minutes: minutes, start_date: start_date, end_date: end_date, task_channel: task_channel)
+                context.fetch(minutes: minutes, start_date: start_date, end_date: end_date, task_channel: task_channel, )
               end
 
               ##

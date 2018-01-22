@@ -34,7 +34,7 @@ module Twilio
               # @param [Hash] data The data
               # @return [SyncMapItemInstance] Newly created SyncMapItemInstance
               def create(key: nil, data: nil)
-                data = Twilio::Values.of({'Key' => key, 'Data' => Twilio.serialize_object(data)})
+                data = Twilio::Values.of({'Key' => key, 'Data' => Twilio.serialize_object(data), })
 
                 payload = @version.create(
                     'POST',
@@ -85,7 +85,7 @@ module Twilio
               def stream(order: :unset, from: :unset, bounds: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(order: order, from: from, bounds: bounds, page_size: limits[:page_size])
+                page = self.page(order: order, from: from, bounds: bounds, page_size: limits[:page_size], )
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -97,7 +97,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(page_size: limits[:page_size])
+                page = self.page(page_size: limits[:page_size], )
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -201,7 +201,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {service_sid: service_sid, map_sid: map_sid, key: key}
+                @solution = {service_sid: service_sid, map_sid: map_sid, key: key, }
                 @uri = "/Services/#{@solution[:service_sid]}/Maps/#{@solution[:map_sid]}/Items/#{@solution[:key]}"
               end
 
@@ -238,7 +238,7 @@ module Twilio
               # @param [Hash] data The data
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
               def update(data: nil)
-                data = Twilio::Values.of({'Data' => Twilio.serialize_object(data)})
+                data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), })
 
                 payload = @version.update(
                     'POST',
@@ -293,7 +293,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {'service_sid' => service_sid, 'map_sid' => map_sid, 'key' => key || @properties['key']}
+                @params = {'service_sid' => service_sid, 'map_sid' => map_sid, 'key' => key || @properties['key'], }
               end
 
               ##
@@ -391,7 +391,7 @@ module Twilio
               # @param [Hash] data The data
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
               def update(data: nil)
-                context.update(data: data)
+                context.update(data: data, )
               end
 
               ##

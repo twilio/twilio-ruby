@@ -32,7 +32,7 @@ module Twilio
             # @param [String] to The To phonenumber of the phone being verified
             # @return [VerificationCheckInstance] Newly created VerificationCheckInstance
             def create(code: nil, to: :unset)
-              data = Twilio::Values.of({'Code' => code, 'To' => to})
+              data = Twilio::Values.of({'Code' => code, 'To' => to, })
 
               payload = @version.create(
                   'POST',
@@ -40,7 +40,7 @@ module Twilio
                   data: data
               )
 
-              VerificationCheckInstance.new(@version, payload, service_sid: @solution[:service_sid])
+              VerificationCheckInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
 
             ##
@@ -71,7 +71,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [VerificationCheckInstance] VerificationCheckInstance
             def get_instance(payload)
-              VerificationCheckInstance.new(@version, payload, service_sid: @solution[:service_sid])
+              VerificationCheckInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
 
             ##

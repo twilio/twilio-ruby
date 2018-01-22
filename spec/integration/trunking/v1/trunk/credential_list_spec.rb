@@ -81,7 +81,7 @@ describe 'CredentialList' do
                          .credentials_lists.create(credential_list_sid: "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'CredentialListSid' => "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+    values = {'CredentialListSid' => "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

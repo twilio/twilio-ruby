@@ -47,7 +47,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [NumberInstance] NumberInstance
             def get_instance(payload)
-              NumberInstance.new(@version, payload)
+              NumberInstance.new(@version, payload, )
             end
 
             ##
@@ -67,7 +67,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {number: number}
+              @solution = {number: number, }
               @uri = "/Voice/Numbers/#{@solution[:number]}"
             end
 
@@ -83,7 +83,7 @@ module Twilio
                   params,
               )
 
-              NumberInstance.new(@version, payload, number: @solution[:number])
+              NumberInstance.new(@version, payload, number: @solution[:number], )
             end
 
             ##
@@ -117,7 +117,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'number' => number || @properties['number']}
+              @params = {'number' => number || @properties['number'], }
             end
 
             ##
@@ -126,7 +126,7 @@ module Twilio
             # @return [NumberContext] NumberContext for this NumberInstance
             def context
               unless @instance_context
-                @instance_context = NumberContext.new(@version, @params['number'])
+                @instance_context = NumberContext.new(@version, @params['number'], )
               end
               @instance_context
             end

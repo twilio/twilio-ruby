@@ -36,7 +36,7 @@ module Twilio
             #   Deployment.
             # @return [DeploymentInstance] Newly created DeploymentInstance
             def create(friendly_name: :unset, sync_service_sid: :unset)
-              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'SyncServiceSid' => sync_service_sid})
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'SyncServiceSid' => sync_service_sid, })
 
               payload = @version.create(
                   'POST',
@@ -44,7 +44,7 @@ module Twilio
                   data: data
               )
 
-              DeploymentInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid])
+              DeploymentInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], )
             end
 
             ##
@@ -76,7 +76,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -88,7 +88,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -157,7 +157,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [DeploymentInstance] DeploymentInstance
             def get_instance(payload)
-              DeploymentInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid])
+              DeploymentInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], )
             end
 
             ##
@@ -181,7 +181,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {fleet_sid: fleet_sid, sid: sid}
+              @solution = {fleet_sid: fleet_sid, sid: sid, }
               @uri = "/Fleets/#{@solution[:fleet_sid]}/Deployments/#{@solution[:sid]}"
             end
 
@@ -197,7 +197,7 @@ module Twilio
                   params,
               )
 
-              DeploymentInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid])
+              DeploymentInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -216,7 +216,7 @@ module Twilio
             #   Deployment.
             # @return [DeploymentInstance] Updated DeploymentInstance
             def update(friendly_name: :unset, sync_service_sid: :unset)
-              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'SyncServiceSid' => sync_service_sid})
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'SyncServiceSid' => sync_service_sid, })
 
               payload = @version.update(
                   'POST',
@@ -224,7 +224,7 @@ module Twilio
                   data: data,
               )
 
-              DeploymentInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid])
+              DeploymentInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -264,7 +264,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'fleet_sid' => fleet_sid, 'sid' => sid || @properties['sid']}
+              @params = {'fleet_sid' => fleet_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -273,7 +273,7 @@ module Twilio
             # @return [DeploymentContext] DeploymentContext for this DeploymentInstance
             def context
               unless @instance_context
-                @instance_context = DeploymentContext.new(@version, @params['fleet_sid'], @params['sid'])
+                @instance_context = DeploymentContext.new(@version, @params['fleet_sid'], @params['sid'], )
               end
               @instance_context
             end
@@ -349,7 +349,7 @@ module Twilio
             #   Deployment.
             # @return [DeploymentInstance] Updated DeploymentInstance
             def update(friendly_name: :unset, sync_service_sid: :unset)
-              context.update(friendly_name: friendly_name, sync_service_sid: sync_service_sid)
+              context.update(friendly_name: friendly_name, sync_service_sid: sync_service_sid, )
             end
 
             ##

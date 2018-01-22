@@ -88,7 +88,7 @@ describe 'Credential' do
       @client.ip_messaging.v2.credentials.create(type: "gcm")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Type' => "gcm"}
+    values = {'Type' => "gcm", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

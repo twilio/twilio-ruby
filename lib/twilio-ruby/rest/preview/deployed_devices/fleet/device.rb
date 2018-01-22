@@ -55,7 +55,7 @@ module Twilio
                   data: data
               )
 
-              DeviceInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid])
+              DeviceInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], )
             end
 
             ##
@@ -91,7 +91,7 @@ module Twilio
             def stream(deployment_sid: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(deployment_sid: deployment_sid, page_size: limits[:page_size])
+              page = self.page(deployment_sid: deployment_sid, page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -103,7 +103,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -175,7 +175,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [DeviceInstance] DeviceInstance
             def get_instance(payload)
-              DeviceInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid])
+              DeviceInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], )
             end
 
             ##
@@ -199,7 +199,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {fleet_sid: fleet_sid, sid: sid}
+              @solution = {fleet_sid: fleet_sid, sid: sid, }
               @uri = "/Fleets/#{@solution[:fleet_sid]}/Devices/#{@solution[:sid]}"
             end
 
@@ -215,7 +215,7 @@ module Twilio
                   params,
               )
 
-              DeviceInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid])
+              DeviceInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -249,7 +249,7 @@ module Twilio
                   data: data,
               )
 
-              DeviceInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid])
+              DeviceInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -293,7 +293,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'fleet_sid' => fleet_sid, 'sid' => sid || @properties['sid']}
+              @params = {'fleet_sid' => fleet_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -302,7 +302,7 @@ module Twilio
             # @return [DeviceContext] DeviceContext for this DeviceInstance
             def context
               unless @instance_context
-                @instance_context = DeviceContext.new(@version, @params['fleet_sid'], @params['sid'])
+                @instance_context = DeviceContext.new(@version, @params['fleet_sid'], @params['sid'], )
               end
               @instance_context
             end

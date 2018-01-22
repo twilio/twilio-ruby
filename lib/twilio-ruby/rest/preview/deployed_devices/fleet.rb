@@ -30,7 +30,7 @@ module Twilio
           #   this Fleet, up to 256 characters long.
           # @return [FleetInstance] Newly created FleetInstance
           def create(friendly_name: :unset)
-            data = Twilio::Values.of({'FriendlyName' => friendly_name})
+            data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
             payload = @version.create(
                 'POST',
@@ -38,7 +38,7 @@ module Twilio
                 data: data
             )
 
-            FleetInstance.new(@version, payload)
+            FleetInstance.new(@version, payload, )
           end
 
           ##
@@ -70,7 +70,7 @@ module Twilio
           def stream(limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(page_size: limits[:page_size])
+            page = self.page(page_size: limits[:page_size], )
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -82,7 +82,7 @@ module Twilio
           def each
             limits = @version.read_limits
 
-            page = self.page(page_size: limits[:page_size])
+            page = self.page(page_size: limits[:page_size], )
 
             @version.stream(page,
                             limit: limits[:limit],
@@ -151,7 +151,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [FleetInstance] FleetInstance
           def get_instance(payload)
-            FleetInstance.new(@version, payload)
+            FleetInstance.new(@version, payload, )
           end
 
           ##
@@ -174,7 +174,7 @@ module Twilio
             super(version)
 
             # Path Solution
-            @solution = {sid: sid}
+            @solution = {sid: sid, }
             @uri = "/Fleets/#{@solution[:sid]}"
 
             # Dependents
@@ -196,7 +196,7 @@ module Twilio
                 params,
             )
 
-            FleetInstance.new(@version, payload, sid: @solution[:sid])
+            FleetInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
@@ -225,7 +225,7 @@ module Twilio
                 data: data,
             )
 
-            FleetInstance.new(@version, payload, sid: @solution[:sid])
+            FleetInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
@@ -236,11 +236,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return DeviceContext.new(@version, @solution[:sid], sid)
+              return DeviceContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @devices
-              @devices = DeviceList.new(@version, fleet_sid: @solution[:sid])
+              @devices = DeviceList.new(@version, fleet_sid: @solution[:sid], )
             end
 
             @devices
@@ -254,11 +254,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return DeploymentContext.new(@version, @solution[:sid], sid)
+              return DeploymentContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @deployments
-              @deployments = DeploymentList.new(@version, fleet_sid: @solution[:sid])
+              @deployments = DeploymentList.new(@version, fleet_sid: @solution[:sid], )
             end
 
             @deployments
@@ -272,11 +272,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return CertificateContext.new(@version, @solution[:sid], sid)
+              return CertificateContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @certificates
-              @certificates = CertificateList.new(@version, fleet_sid: @solution[:sid])
+              @certificates = CertificateList.new(@version, fleet_sid: @solution[:sid], )
             end
 
             @certificates
@@ -290,11 +290,11 @@ module Twilio
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return KeyContext.new(@version, @solution[:sid], sid)
+              return KeyContext.new(@version, @solution[:sid], sid, )
             end
 
             unless @keys
-              @keys = KeyList.new(@version, fleet_sid: @solution[:sid])
+              @keys = KeyList.new(@version, fleet_sid: @solution[:sid], )
             end
 
             @keys
@@ -336,7 +336,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid']}
+            @params = {'sid' => sid || @properties['sid'], }
           end
 
           ##
@@ -345,7 +345,7 @@ module Twilio
           # @return [FleetContext] FleetContext for this FleetInstance
           def context
             unless @instance_context
-              @instance_context = FleetContext.new(@version, @params['sid'])
+              @instance_context = FleetContext.new(@version, @params['sid'], )
             end
             @instance_context
           end
@@ -426,7 +426,7 @@ module Twilio
           #   Deployment that is going to be used as a default one for this Fleet.
           # @return [FleetInstance] Updated FleetInstance
           def update(friendly_name: :unset, default_deployment_sid: :unset)
-            context.update(friendly_name: friendly_name, default_deployment_sid: default_deployment_sid)
+            context.update(friendly_name: friendly_name, default_deployment_sid: default_deployment_sid, )
           end
 
           ##

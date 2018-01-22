@@ -32,7 +32,7 @@ module Twilio
               # @param [String] role_sid The role_sid
               # @return [InviteInstance] Newly created InviteInstance
               def create(identity: nil, role_sid: :unset)
-                data = Twilio::Values.of({'Identity' => identity, 'RoleSid' => role_sid})
+                data = Twilio::Values.of({'Identity' => identity, 'RoleSid' => role_sid, })
 
                 payload = @version.create(
                     'POST',
@@ -79,7 +79,7 @@ module Twilio
               def stream(identity: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(identity: identity, page_size: limits[:page_size])
+                page = self.page(identity: identity, page_size: limits[:page_size], )
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -91,7 +91,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(page_size: limits[:page_size])
+                page = self.page(page_size: limits[:page_size], )
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -187,7 +187,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {service_sid: service_sid, channel_sid: channel_sid, sid: sid}
+                @solution = {service_sid: service_sid, channel_sid: channel_sid, sid: sid, }
                 @uri = "/Services/#{@solution[:service_sid]}/Channels/#{@solution[:channel_sid]}/Invites/#{@solution[:sid]}"
               end
 

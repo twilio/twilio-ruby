@@ -83,7 +83,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(page_size: limits[:page_size])
+                page = self.page(page_size: limits[:page_size], )
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -183,7 +183,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {account_sid: account_sid, call_sid: call_sid, sid: sid}
+                @solution = {account_sid: account_sid, call_sid: call_sid, sid: sid, }
                 @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/Recordings/#{@solution[:sid]}.json"
               end
 
@@ -240,6 +240,7 @@ module Twilio
                     'account_sid' => payload['account_sid'],
                     'api_version' => payload['api_version'],
                     'call_sid' => payload['call_sid'],
+                    'conference_sid' => payload['conference_sid'],
                     'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                     'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                     'duration' => payload['duration'],
@@ -256,7 +257,7 @@ module Twilio
 
                 # Context
                 @instance_context = nil
-                @params = {'account_sid' => account_sid, 'call_sid' => call_sid, 'sid' => sid || @properties['sid']}
+                @params = {'account_sid' => account_sid, 'call_sid' => call_sid, 'sid' => sid || @properties['sid'], }
               end
 
               ##
@@ -291,6 +292,12 @@ module Twilio
               # @return [String] The call_sid
               def call_sid
                 @properties['call_sid']
+              end
+
+              ##
+              # @return [String] The conference_sid
+              def conference_sid
+                @properties['conference_sid']
               end
 
               ##

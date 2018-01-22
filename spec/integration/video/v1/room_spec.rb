@@ -207,7 +207,7 @@ describe 'Room' do
       @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(status: "in-progress")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Status' => "in-progress"}
+    values = {'Status' => "in-progress", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

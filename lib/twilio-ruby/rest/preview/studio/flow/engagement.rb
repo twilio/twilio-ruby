@@ -54,7 +54,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -66,7 +66,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -115,7 +115,7 @@ module Twilio
             # @param [String] parameters The parameters
             # @return [EngagementInstance] Newly created EngagementInstance
             def create(to: nil, from: nil, parameters: :unset)
-              data = Twilio::Values.of({'To' => to, 'From' => from, 'Parameters' => parameters})
+              data = Twilio::Values.of({'To' => to, 'From' => from, 'Parameters' => parameters, })
 
               payload = @version.create(
                   'POST',
@@ -123,7 +123,7 @@ module Twilio
                   data: data
               )
 
-              EngagementInstance.new(@version, payload, flow_sid: @solution[:flow_sid])
+              EngagementInstance.new(@version, payload, flow_sid: @solution[:flow_sid], )
             end
 
             ##
@@ -154,7 +154,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [EngagementInstance] EngagementInstance
             def get_instance(payload)
-              EngagementInstance.new(@version, payload, flow_sid: @solution[:flow_sid])
+              EngagementInstance.new(@version, payload, flow_sid: @solution[:flow_sid], )
             end
 
             ##
@@ -177,7 +177,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {flow_sid: flow_sid, sid: sid}
+              @solution = {flow_sid: flow_sid, sid: sid, }
               @uri = "/Flows/#{@solution[:flow_sid]}/Engagements/#{@solution[:sid]}"
 
               # Dependents
@@ -196,7 +196,7 @@ module Twilio
                   params,
               )
 
-              EngagementInstance.new(@version, payload, flow_sid: @solution[:flow_sid], sid: @solution[:sid])
+              EngagementInstance.new(@version, payload, flow_sid: @solution[:flow_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -214,11 +214,11 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return StepContext.new(@version, @solution[:flow_sid], @solution[:sid], sid)
+                return StepContext.new(@version, @solution[:flow_sid], @solution[:sid], sid, )
               end
 
               unless @steps
-                @steps = StepList.new(@version, flow_sid: @solution[:flow_sid], engagement_sid: @solution[:sid])
+                @steps = StepList.new(@version, flow_sid: @solution[:flow_sid], engagement_sid: @solution[:sid], )
               end
 
               @steps
@@ -262,7 +262,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'flow_sid' => flow_sid, 'sid' => sid || @properties['sid']}
+              @params = {'flow_sid' => flow_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -271,7 +271,7 @@ module Twilio
             # @return [EngagementContext] EngagementContext for this EngagementInstance
             def context
               unless @instance_context
-                @instance_context = EngagementContext.new(@version, @params['flow_sid'], @params['sid'])
+                @instance_context = EngagementContext.new(@version, @params['flow_sid'], @params['sid'], )
               end
               @instance_context
             end

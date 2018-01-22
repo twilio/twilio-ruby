@@ -149,7 +149,7 @@ describe 'Fax' do
       @client.fax.v1.faxes.create(to: "to", media_url: "https://example.com")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'To' => "to", 'MediaUrl' => "https://example.com"}
+    values = {'To' => "to", 'MediaUrl' => "https://example.com", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

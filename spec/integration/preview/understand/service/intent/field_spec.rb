@@ -139,7 +139,7 @@ describe 'Field' do
                                 .fields.create(field_type: "field_type", unique_name: "unique_name")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'FieldType' => "field_type", 'UniqueName' => "unique_name"}
+    values = {'FieldType' => "field_type", 'UniqueName' => "unique_name", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

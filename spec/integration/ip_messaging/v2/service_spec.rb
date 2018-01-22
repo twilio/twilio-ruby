@@ -105,7 +105,7 @@ describe 'Service' do
       @client.ip_messaging.v2.services.create(friendly_name: "friendly_name")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'FriendlyName' => "friendly_name"}
+    values = {'FriendlyName' => "friendly_name", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -305,6 +305,7 @@ describe 'Service' do
               "bindings": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings"
           },
           "notifications": {
+              "log_enabled": true,
               "added_to_channel": {
                   "enabled": false,
                   "template": "notifications.added_to_channel.template"

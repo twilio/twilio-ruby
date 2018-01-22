@@ -45,7 +45,7 @@ module Twilio
                   data: data
               )
 
-              UserInstance.new(@version, payload, service_sid: @solution[:service_sid])
+              UserInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
 
             ##
@@ -77,7 +77,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -89,7 +89,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -156,7 +156,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [UserInstance] UserInstance
             def get_instance(payload)
-              UserInstance.new(@version, payload, service_sid: @solution[:service_sid])
+              UserInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
 
             ##
@@ -177,7 +177,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid, sid: sid}
+              @solution = {service_sid: service_sid, sid: sid, }
               @uri = "/Services/#{@solution[:service_sid]}/Users/#{@solution[:sid]}"
 
               # Dependents
@@ -196,7 +196,7 @@ module Twilio
                   params,
               )
 
-              UserInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
+              UserInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -225,7 +225,7 @@ module Twilio
                   data: data,
               )
 
-              UserInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid])
+              UserInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -283,7 +283,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid']}
+              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -292,7 +292,7 @@ module Twilio
             # @return [UserContext] UserContext for this UserInstance
             def context
               unless @instance_context
-                @instance_context = UserContext.new(@version, @params['service_sid'], @params['sid'])
+                @instance_context = UserContext.new(@version, @params['service_sid'], @params['sid'], )
               end
               @instance_context
             end
@@ -402,7 +402,7 @@ module Twilio
             # @param [String] friendly_name The friendly_name
             # @return [UserInstance] Updated UserInstance
             def update(role_sid: :unset, attributes: :unset, friendly_name: :unset)
-              context.update(role_sid: role_sid, attributes: attributes, friendly_name: friendly_name)
+              context.update(role_sid: role_sid, attributes: attributes, friendly_name: friendly_name, )
             end
 
             ##

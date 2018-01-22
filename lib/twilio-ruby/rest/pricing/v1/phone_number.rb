@@ -32,10 +32,10 @@ module Twilio
             raise ArgumentError, 'iso_country cannot be nil' if iso_country.nil?
 
             if iso_country != :unset
-              return CountryContext.new(@version, iso_country)
+              return CountryContext.new(@version, iso_country, )
             end
 
-              @countries ||= CountryList.new(@version)
+              @countries ||= CountryList.new(@version, )
           end
 
           ##
@@ -64,7 +64,7 @@ module Twilio
           # @param [Hash] payload Payload response from the API
           # @return [PhoneNumberInstance] PhoneNumberInstance
           def get_instance(payload)
-            PhoneNumberInstance.new(@version, payload)
+            PhoneNumberInstance.new(@version, payload, )
           end
 
           ##
@@ -84,7 +84,7 @@ module Twilio
             super(version)
 
             # Marshaled Properties
-            @properties = {'name' => payload['name'], 'url' => payload['url'], 'links' => payload['links']}
+            @properties = {'name' => payload['name'], 'url' => payload['url'], 'links' => payload['links'], }
           end
 
           ##

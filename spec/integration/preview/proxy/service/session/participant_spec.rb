@@ -106,7 +106,7 @@ describe 'Participant' do
                            .participants.create(identifier: "identifier")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Identifier' => "identifier"}
+    values = {'Identifier' => "identifier", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

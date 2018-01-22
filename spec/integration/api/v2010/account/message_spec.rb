@@ -12,10 +12,10 @@ describe 'Message' do
 
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .messages.create(to: "+123456789")
+                       .messages.create(to: "+15558675310")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'To' => "+123456789"}
+    values = {'To' => "+15558675310", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -56,7 +56,7 @@ describe 'Message' do
     ))
 
     actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .messages.create(to: "+123456789")
+                              .messages.create(to: "+15558675310")
 
     expect(actual).to_not eq(nil)
   end
@@ -245,7 +245,7 @@ describe 'Message' do
                        .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(body: "body")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Body' => "body"}
+    values = {'Body' => "body", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

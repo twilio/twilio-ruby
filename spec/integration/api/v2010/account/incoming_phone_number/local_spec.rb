@@ -121,10 +121,10 @@ describe 'Local' do
     expect {
       @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                        .incoming_phone_numbers \
-                       .local.create(phone_number: "+987654321")
+                       .local.create(phone_number: "+15017122661")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'PhoneNumber' => "+987654321"}
+    values = {'PhoneNumber' => "+15017122661", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -176,7 +176,7 @@ describe 'Local' do
 
     actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
                               .incoming_phone_numbers \
-                              .local.create(phone_number: "+987654321")
+                              .local.create(phone_number: "+15017122661")
 
     expect(actual).to_not eq(nil)
   end

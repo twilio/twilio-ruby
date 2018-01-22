@@ -97,10 +97,10 @@ describe 'Engagement' do
 
     expect {
       @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .engagements.create(to: "+123456789", from: "+987654321")
+                            .engagements.create(to: "+15558675310", from: "+15017122661")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'To' => "+123456789", 'From' => "+987654321"}
+    values = {'To' => "+15558675310", 'From' => "+15017122661", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -136,7 +136,7 @@ describe 'Engagement' do
     ))
 
     actual = @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                   .engagements.create(to: "+123456789", from: "+987654321")
+                                   .engagements.create(to: "+15558675310", from: "+15017122661")
 
     expect(actual).to_not eq(nil)
   end

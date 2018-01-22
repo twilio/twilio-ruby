@@ -84,7 +84,7 @@ module Twilio
                 def each
                   limits = @version.read_limits
 
-                  page = self.page(page_size: limits[:page_size])
+                  page = self.page(page_size: limits[:page_size], )
 
                   @version.stream(page,
                                   limit: limits[:limit],
@@ -157,7 +157,7 @@ module Twilio
                 # @param [Hash] payload Payload response from the API
                 # @return [YearlyInstance] YearlyInstance
                 def get_instance(payload)
-                  YearlyInstance.new(@version, payload, account_sid: @solution[:account_sid])
+                  YearlyInstance.new(@version, payload, account_sid: @solution[:account_sid], )
                 end
 
                 ##

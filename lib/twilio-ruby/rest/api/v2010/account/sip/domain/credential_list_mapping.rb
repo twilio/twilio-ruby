@@ -33,7 +33,7 @@ module Twilio
                 # @param [String] credential_list_sid The credential_list_sid
                 # @return [CredentialListMappingInstance] Newly created CredentialListMappingInstance
                 def create(credential_list_sid: nil)
-                  data = Twilio::Values.of({'CredentialListSid' => credential_list_sid})
+                  data = Twilio::Values.of({'CredentialListSid' => credential_list_sid, })
 
                   payload = @version.create(
                       'POST',
@@ -78,7 +78,7 @@ module Twilio
                 def stream(limit: nil, page_size: nil)
                   limits = @version.read_limits(limit, page_size)
 
-                  page = self.page(page_size: limits[:page_size])
+                  page = self.page(page_size: limits[:page_size], )
 
                   @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
                 end
@@ -90,7 +90,7 @@ module Twilio
                 def each
                   limits = @version.read_limits
 
-                  page = self.page(page_size: limits[:page_size])
+                  page = self.page(page_size: limits[:page_size], )
 
                   @version.stream(page,
                                   limit: limits[:limit],
@@ -184,7 +184,7 @@ module Twilio
                   super(version)
 
                   # Path Solution
-                  @solution = {account_sid: account_sid, domain_sid: domain_sid, sid: sid}
+                  @solution = {account_sid: account_sid, domain_sid: domain_sid, sid: sid, }
                   @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:domain_sid]}/CredentialListMappings/#{@solution[:sid]}.json"
                 end
 

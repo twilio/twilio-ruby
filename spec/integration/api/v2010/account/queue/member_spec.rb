@@ -54,7 +54,7 @@ describe 'Member' do
                        .members("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(url: "https://example.com", method: "GET")
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Url' => "https://example.com", 'Method' => "GET"}
+    values = {'Url' => "https://example.com", 'Method' => "GET", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

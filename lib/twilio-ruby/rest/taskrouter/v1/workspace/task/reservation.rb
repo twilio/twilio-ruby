@@ -56,7 +56,7 @@ module Twilio
               def stream(reservation_status: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(reservation_status: reservation_status, page_size: limits[:page_size])
+                page = self.page(reservation_status: reservation_status, page_size: limits[:page_size], )
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -68,7 +68,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(page_size: limits[:page_size])
+                page = self.page(page_size: limits[:page_size], )
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -164,7 +164,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {workspace_sid: workspace_sid, task_sid: task_sid, sid: sid}
+                @solution = {workspace_sid: workspace_sid, task_sid: task_sid, sid: sid, }
                 @uri = "/Workspaces/#{@solution[:workspace_sid]}/Tasks/#{@solution[:task_sid]}/Reservations/#{@solution[:sid]}"
               end
 

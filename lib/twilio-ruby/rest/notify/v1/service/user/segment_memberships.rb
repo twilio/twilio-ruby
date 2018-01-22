@@ -33,7 +33,7 @@ module Twilio
               # @param [String] segment The segment
               # @return [SegmentMembershipInstance] Newly created SegmentMembershipInstance
               def create(segment: nil)
-                data = Twilio::Values.of({'Segment' => segment})
+                data = Twilio::Values.of({'Segment' => segment, })
 
                 payload = @version.create(
                     'POST',
@@ -106,7 +106,7 @@ module Twilio
                 super(version)
 
                 # Path Solution
-                @solution = {service_sid: service_sid, identity: identity, segment: segment}
+                @solution = {service_sid: service_sid, identity: identity, segment: segment, }
                 @uri = "/Services/#{@solution[:service_sid]}/Users/#{@solution[:identity]}/SegmentMemberships/#{@solution[:segment]}"
               end
 

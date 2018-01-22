@@ -52,7 +52,7 @@ module Twilio
             def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -64,7 +64,7 @@ module Twilio
             def each
               limits = @version.read_limits
 
-              page = self.page(page_size: limits[:page_size])
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page,
                               limit: limits[:limit],
@@ -131,7 +131,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [TaskChannelInstance] TaskChannelInstance
             def get_instance(payload)
-              TaskChannelInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid])
+              TaskChannelInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], )
             end
 
             ##
@@ -152,7 +152,7 @@ module Twilio
               super(version)
 
               # Path Solution
-              @solution = {workspace_sid: workspace_sid, sid: sid}
+              @solution = {workspace_sid: workspace_sid, sid: sid, }
               @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskChannels/#{@solution[:sid]}"
             end
 
@@ -209,7 +209,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'workspace_sid' => workspace_sid, 'sid' => sid || @properties['sid']}
+              @params = {'workspace_sid' => workspace_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -218,7 +218,7 @@ module Twilio
             # @return [TaskChannelContext] TaskChannelContext for this TaskChannelInstance
             def context
               unless @instance_context
-                @instance_context = TaskChannelContext.new(@version, @params['workspace_sid'], @params['sid'])
+                @instance_context = TaskChannelContext.new(@version, @params['workspace_sid'], @params['sid'], )
               end
               @instance_context
             end

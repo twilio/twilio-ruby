@@ -39,7 +39,7 @@ module Twilio
               # Lists RecordInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [yesterday.Category] category Only include usage of a given category
+              # @param [record.Category] category Only include usage of a given category
               # @param [Date] start_date Only include usage that has occurred on or after this
               #   date. Format is YYYY-MM-DD in GTM. As a convenience, you can also specify
               #   offsets to today, for example, StartDate=-30days, which will make StartDate 30
@@ -69,7 +69,7 @@ module Twilio
               # Streams RecordInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [yesterday.Category] category Only include usage of a given category
+              # @param [record.Category] category Only include usage of a given category
               # @param [Date] start_date Only include usage that has occurred on or after this
               #   date. Format is YYYY-MM-DD in GTM. As a convenience, you can also specify
               #   offsets to today, for example, StartDate=-30days, which will make StartDate 30
@@ -105,7 +105,7 @@ module Twilio
               def each
                 limits = @version.read_limits
 
-                page = self.page(page_size: limits[:page_size])
+                page = self.page(page_size: limits[:page_size], )
 
                 @version.stream(page,
                                 limit: limits[:limit],
@@ -115,7 +115,7 @@ module Twilio
               ##
               # Retrieve a single page of RecordInstance records from the API.
               # Request is executed immediately.
-              # @param [yesterday.Category] category Only include usage of a given category
+              # @param [record.Category] category Only include usage of a given category
               # @param [Date] start_date Only include usage that has occurred on or after this
               #   date. Format is YYYY-MM-DD in GTM. As a convenience, you can also specify
               #   offsets to today, for example, StartDate=-30days, which will make StartDate 30
@@ -163,7 +163,7 @@ module Twilio
               # @return [AllTimeList]
               # @return [AllTimeContext]
               def all_time
-                @all_time ||= AllTimeList.new(@version, account_sid: @solution[:account_sid])
+                @all_time ||= AllTimeList.new(@version, account_sid: @solution[:account_sid], )
               end
 
               ##
@@ -171,7 +171,7 @@ module Twilio
               # @return [DailyList]
               # @return [DailyContext]
               def daily
-                @daily ||= DailyList.new(@version, account_sid: @solution[:account_sid])
+                @daily ||= DailyList.new(@version, account_sid: @solution[:account_sid], )
               end
 
               ##
@@ -179,7 +179,7 @@ module Twilio
               # @return [LastMonthList]
               # @return [LastMonthContext]
               def last_month
-                @last_month ||= LastMonthList.new(@version, account_sid: @solution[:account_sid])
+                @last_month ||= LastMonthList.new(@version, account_sid: @solution[:account_sid], )
               end
 
               ##
@@ -187,7 +187,7 @@ module Twilio
               # @return [MonthlyList]
               # @return [MonthlyContext]
               def monthly
-                @monthly ||= MonthlyList.new(@version, account_sid: @solution[:account_sid])
+                @monthly ||= MonthlyList.new(@version, account_sid: @solution[:account_sid], )
               end
 
               ##
@@ -195,7 +195,7 @@ module Twilio
               # @return [ThisMonthList]
               # @return [ThisMonthContext]
               def this_month
-                @this_month ||= ThisMonthList.new(@version, account_sid: @solution[:account_sid])
+                @this_month ||= ThisMonthList.new(@version, account_sid: @solution[:account_sid], )
               end
 
               ##
@@ -203,7 +203,7 @@ module Twilio
               # @return [TodayList]
               # @return [TodayContext]
               def today
-                @today ||= TodayList.new(@version, account_sid: @solution[:account_sid])
+                @today ||= TodayList.new(@version, account_sid: @solution[:account_sid], )
               end
 
               ##
@@ -211,7 +211,7 @@ module Twilio
               # @return [YearlyList]
               # @return [YearlyContext]
               def yearly
-                @yearly ||= YearlyList.new(@version, account_sid: @solution[:account_sid])
+                @yearly ||= YearlyList.new(@version, account_sid: @solution[:account_sid], )
               end
 
               ##
@@ -219,7 +219,7 @@ module Twilio
               # @return [YesterdayList]
               # @return [YesterdayContext]
               def yesterday
-                @yesterday ||= YesterdayList.new(@version, account_sid: @solution[:account_sid])
+                @yesterday ||= YesterdayList.new(@version, account_sid: @solution[:account_sid], )
               end
 
               ##
@@ -248,7 +248,7 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [RecordInstance] RecordInstance
               def get_instance(payload)
-                RecordInstance.new(@version, payload, account_sid: @solution[:account_sid])
+                RecordInstance.new(@version, payload, account_sid: @solution[:account_sid], )
               end
 
               ##
@@ -301,7 +301,7 @@ module Twilio
               end
 
               ##
-              # @return [yesterday.Category] The category of usage
+              # @return [record.Category] The category of usage
               def category
                 @properties['category']
               end

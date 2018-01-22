@@ -12,14 +12,14 @@ describe 'Number' do
 
     expect {
       @client.pricing.v1.voice \
-                        .numbers("+987654321").fetch()
+                        .numbers("+15017122661").fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://pricing.twilio.com/v1/Voice/Numbers/+987654321',
+        url: 'https://pricing.twilio.com/v1/Voice/Numbers/+15017122661',
     ))).to eq(true)
   end
 
@@ -47,7 +47,7 @@ describe 'Number' do
     ))
 
     actual = @client.pricing.v1.voice \
-                               .numbers("+987654321").fetch()
+                               .numbers("+15017122661").fetch()
 
     expect(actual).to_not eq(nil)
   end
