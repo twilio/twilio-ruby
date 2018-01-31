@@ -12,7 +12,7 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 # set up a client
 client = Twilio::REST::Client.new(account_sid, auth_token)
 
-calls = client.calls.page
+calls = client.calls.list
 
 loop do
   calls.each do |call|
