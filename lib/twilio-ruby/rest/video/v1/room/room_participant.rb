@@ -186,6 +186,7 @@ module Twilio
 
               # Dependents
               @published_tracks = nil
+              @subscribed_tracks = nil
             end
 
             ##
@@ -239,6 +240,22 @@ module Twilio
               end
 
               @published_tracks
+            end
+
+            ##
+            # Access the subscribed_tracks
+            # @return [SubscribedTrackList]
+            # @return [SubscribedTrackContext]
+            def subscribed_tracks
+              unless @subscribed_tracks
+                @subscribed_tracks = SubscribedTrackList.new(
+                    @version,
+                    room_sid: @solution[:room_sid],
+                    subscriber_sid: @solution[:sid],
+                )
+              end
+
+              @subscribed_tracks
             end
 
             ##
@@ -384,6 +401,13 @@ module Twilio
             # @return [published_tracks] published_tracks
             def published_tracks
               context.published_tracks
+            end
+
+            ##
+            # Access the subscribed_tracks
+            # @return [subscribed_tracks] subscribed_tracks
+            def subscribed_tracks
+              context.subscribed_tracks
             end
 
             ##

@@ -13,8 +13,23 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @compositions = nil
           @recordings = nil
           @rooms = nil
+        end
+
+        ##
+        # @param [String] sid The sid
+        # @return [Twilio::REST::Video::V1::CompositionContext] if sid was passed.
+        # @return [Twilio::REST::Video::V1::CompositionList]
+        def compositions(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @compositions ||= CompositionList.new self
+          else
+            CompositionContext.new(self, sid)
+          end
         end
 
         ##

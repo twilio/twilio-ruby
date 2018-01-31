@@ -6,16 +6,16 @@
 
 module Twilio
   module REST
-    class Preview < Domain
-      class Studio < Version
+    class Studio < Domain
+      class V1 < Version
         class FlowContext < InstanceContext
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class EngagementList < ListResource
             ##
             # Initialize the EngagementList
             # @param [Version] version Version that contains the resource
-            # @param [String] flow_sid The unique SID identifier of the Flow.
+            # @param [String] flow_sid The flow_sid
             # @return [EngagementList] EngagementList
             def initialize(version, flow_sid: nil)
               super(version)
@@ -129,12 +129,12 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              '#<Twilio.Preview.Studio.EngagementList>'
+              '#<Twilio.Studio.V1.EngagementList>'
             end
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class EngagementPage < Page
             ##
             # Initialize the EngagementPage
@@ -160,12 +160,12 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              '<Twilio.Preview.Studio.EngagementPage>'
+              '<Twilio.Studio.V1.EngagementPage>'
             end
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class EngagementContext < InstanceContext
             ##
             # Initialize the EngagementContext
@@ -221,18 +221,18 @@ module Twilio
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Preview.Studio.EngagementContext #{context}>"
+              "#<Twilio.Studio.V1.EngagementContext #{context}>"
             end
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class EngagementInstance < InstanceResource
             ##
             # Initialize the EngagementInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] flow_sid The unique SID identifier of the Flow.
+            # @param [String] flow_sid The flow_sid
             # @param [String] sid The sid
             # @return [EngagementInstance] EngagementInstance
             def initialize(version, payload, flow_sid: nil, sid: nil)
@@ -270,67 +270,67 @@ module Twilio
             end
 
             ##
-            # @return [String] A string that uniquely identifies this Engagement.
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] Account Sid.
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] Flow Sid.
+            # @return [String] The flow_sid
             def flow_sid
               @properties['flow_sid']
             end
 
             ##
-            # @return [String] Contact Sid.
+            # @return [String] The contact_sid
             def contact_sid
               @properties['contact_sid']
             end
 
             ##
-            # @return [String] The phone number, SIP address or Client identifier that triggered this Engagement.
+            # @return [String] The contact_channel_address
             def contact_channel_address
               @properties['contact_channel_address']
             end
 
             ##
-            # @return [engagement.Status] The Status of this Engagement
+            # @return [engagement.Status] The status
             def status
               @properties['status']
             end
 
             ##
-            # @return [Hash] Nested resource URLs.
+            # @return [Hash] The context
             def context
               @properties['context']
             end
 
             ##
-            # @return [Time] The date this Engagement was created
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this Engagement was updated
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The URL of this resource.
+            # @return [String] The url
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] Nested resource URLs.
+            # @return [String] The links
             def links
               @properties['links']
             end
@@ -353,14 +353,14 @@ module Twilio
             # Provide a user friendly representation
             def to_s
               values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Preview.Studio.EngagementInstance #{values}>"
+              "<Twilio.Studio.V1.EngagementInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
               values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Preview.Studio.EngagementInstance #{values}>"
+              "<Twilio.Studio.V1.EngagementInstance #{values}>"
             end
           end
         end

@@ -11,15 +11,15 @@ describe 'Engagement' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .engagements.list()
+      @client.studio.v1.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .engagements.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/Studio/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements',
+        url: 'https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements',
     ))).to eq(true)
   end
 
@@ -31,9 +31,9 @@ describe 'Engagement' do
           "meta": {
               "previous_page_url": null,
               "next_page_url": null,
-              "url": "https://preview.twilio.com/Studio/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements?PageSize=50&Page=0",
+              "url": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements?PageSize=50&Page=0",
               "page": 0,
-              "first_page_url": "https://preview.twilio.com/Studio/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements?PageSize=50&Page=0",
+              "first_page_url": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements?PageSize=50&Page=0",
               "page_size": 50,
               "key": "engagements"
           },
@@ -42,8 +42,8 @@ describe 'Engagement' do
       ]
     ))
 
-    actual = @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                   .engagements.list()
+    actual = @client.studio.v1.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                              .engagements.list()
 
     expect(actual).to_not eq(nil)
   end
@@ -52,15 +52,15 @@ describe 'Engagement' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .engagements("FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.studio.v1.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .engagements("FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/Studio/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     ))).to eq(true)
   end
 
@@ -78,16 +78,16 @@ describe 'Engagement' do
           "context": {},
           "date_created": "2017-11-06T12:00:00Z",
           "date_updated": null,
-          "url": "https://preview.twilio.com/Studio/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
-              "steps": "https://preview.twilio.com/Studio/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Steps"
+              "steps": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Steps"
           }
       }
       ]
     ))
 
-    actual = @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                   .engagements("FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.studio.v1.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                              .engagements("FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -96,15 +96,15 @@ describe 'Engagement' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .engagements.create(to: "+15558675310", from: "+15017122661")
+      @client.studio.v1.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .engagements.create(to: "+15558675310", from: "+15017122661")
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'To' => "+15558675310", 'From' => "+15017122661", }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/Studio/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements',
+        url: 'https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements',
         data: values,
     ))).to eq(true)
   end
@@ -114,7 +114,7 @@ describe 'Engagement' do
         201,
       %q[
       {
-          "url": "https://preview.twilio.com/Studio/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "sid": "FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "flow_sid": "FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -129,14 +129,14 @@ describe 'Engagement' do
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "links": {
-              "steps": "https://preview.twilio.com/Studio/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Steps"
+              "steps": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Steps"
           }
       }
       ]
     ))
 
-    actual = @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                   .engagements.create(to: "+15558675310", from: "+15017122661")
+    actual = @client.studio.v1.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                              .engagements.create(to: "+15558675310", from: "+15017122661")
 
     expect(actual).to_not eq(nil)
   end

@@ -8,26 +8,26 @@ module Twilio
   module REST
     class Video < Domain
       class V1 < Version
-        class RecordingList < ListResource
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        class CompositionList < ListResource
           ##
-          # Initialize the RecordingList
+          # Initialize the CompositionList
           # @param [Version] version Version that contains the resource
-          # @return [RecordingList] RecordingList
+          # @return [CompositionList] CompositionList
           def initialize(version)
             super(version)
 
             # Path Solution
             @solution = {}
-            @uri = "/Recordings"
+            @uri = "/Compositions"
           end
 
           ##
-          # Lists RecordingInstance records from the API as a list.
+          # Lists CompositionInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [recording.Status] status The status
-          # @param [String] source_sid The source_sid
-          # @param [String] grouping_sid The grouping_sid
+          # @param [composition.Status] status The status
           # @param [Time] date_created_after The date_created_after
           # @param [Time] date_created_before The date_created_before
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -37,11 +37,9 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(status: :unset, source_sid: :unset, grouping_sid: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
+          def list(status: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
             self.stream(
                 status: status,
-                source_sid: source_sid,
-                grouping_sid: grouping_sid,
                 date_created_after: date_created_after,
                 date_created_before: date_created_before,
                 limit: limit,
@@ -50,12 +48,10 @@ module Twilio
           end
 
           ##
-          # Streams RecordingInstance records from the API as an Enumerable.
+          # Streams CompositionInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [recording.Status] status The status
-          # @param [String] source_sid The source_sid
-          # @param [String] grouping_sid The grouping_sid
+          # @param [composition.Status] status The status
           # @param [Time] date_created_after The date_created_after
           # @param [Time] date_created_before The date_created_before
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -65,13 +61,11 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(status: :unset, source_sid: :unset, grouping_sid: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
+          def stream(status: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
                 status: status,
-                source_sid: source_sid,
-                grouping_sid: grouping_sid,
                 date_created_after: date_created_after,
                 date_created_before: date_created_before,
                 page_size: limits[:page_size],
@@ -81,7 +75,7 @@ module Twilio
           end
 
           ##
-          # When passed a block, yields RecordingInstance records from the API.
+          # When passed a block, yields CompositionInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           def each
@@ -95,22 +89,18 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of RecordingInstance records from the API.
+          # Retrieve a single page of CompositionInstance records from the API.
           # Request is executed immediately.
-          # @param [recording.Status] status The status
-          # @param [String] source_sid The source_sid
-          # @param [String] grouping_sid The grouping_sid
+          # @param [composition.Status] status The status
           # @param [Time] date_created_after The date_created_after
           # @param [Time] date_created_before The date_created_before
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          # @return [Page] Page of RecordingInstance
-          def page(status: :unset, source_sid: :unset, grouping_sid: :unset, date_created_after: :unset, date_created_before: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+          # @return [Page] Page of CompositionInstance
+          def page(status: :unset, date_created_after: :unset, date_created_before: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'Status' => status,
-                'SourceSid' => source_sid,
-                'GroupingSid' => Twilio.serialize_list(grouping_sid) { |e| e },
                 'DateCreatedAfter' => Twilio.serialize_iso8601_datetime(date_created_after),
                 'DateCreatedBefore' => Twilio.serialize_iso8601_datetime(date_created_before),
                 'PageToken' => page_token,
@@ -122,36 +112,73 @@ module Twilio
                 @uri,
                 params
             )
-            RecordingPage.new(@version, response, @solution)
+            CompositionPage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of RecordingInstance records from the API.
+          # Retrieve a single page of CompositionInstance records from the API.
           # Request is executed immediately.
           # @param [String] target_url API-generated URL for the requested results page
-          # @return [Page] Page of RecordingInstance
+          # @return [Page] Page of CompositionInstance
           def get_page(target_url)
             response = @version.domain.request(
                 'GET',
                 target_url
             )
-            RecordingPage.new(@version, response, @solution)
+            CompositionPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of CompositionInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] audio_sources The audio_sources
+          # @param [String] video_sources The video_sources
+          # @param [composition.VideoLayout] video_layout The video_layout
+          # @param [String] resolution The resolution
+          # @param [composition.Format] format The format
+          # @param [String] desired_bitrate The desired_bitrate
+          # @param [String] desired_max_duration The desired_max_duration
+          # @param [String] status_callback The status_callback
+          # @param [String] status_callback_method The status_callback_method
+          # @return [CompositionInstance] Newly created CompositionInstance
+          def create(audio_sources: :unset, video_sources: :unset, video_layout: :unset, resolution: :unset, format: :unset, desired_bitrate: :unset, desired_max_duration: :unset, status_callback: :unset, status_callback_method: :unset)
+            data = Twilio::Values.of({
+                'AudioSources' => Twilio.serialize_list(audio_sources) { |e| e },
+                'VideoSources' => Twilio.serialize_list(video_sources) { |e| e },
+                'VideoLayout' => video_layout,
+                'Resolution' => resolution,
+                'Format' => format,
+                'DesiredBitrate' => desired_bitrate,
+                'DesiredMaxDuration' => desired_max_duration,
+                'StatusCallback' => status_callback,
+                'StatusCallbackMethod' => status_callback_method,
+            })
+
+            payload = @version.create(
+                'POST',
+                @uri,
+                data: data
+            )
+
+            CompositionInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Video.V1.RecordingList>'
+            '#<Twilio.Video.V1.CompositionList>'
           end
         end
 
-        class RecordingPage < Page
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        class CompositionPage < Page
           ##
-          # Initialize the RecordingPage
+          # Initialize the CompositionPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [RecordingPage] RecordingPage
+          # @return [CompositionPage] CompositionPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -160,37 +187,39 @@ module Twilio
           end
 
           ##
-          # Build an instance of RecordingInstance
+          # Build an instance of CompositionInstance
           # @param [Hash] payload Payload response from the API
-          # @return [RecordingInstance] RecordingInstance
+          # @return [CompositionInstance] CompositionInstance
           def get_instance(payload)
-            RecordingInstance.new(@version, payload, )
+            CompositionInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Video.V1.RecordingPage>'
+            '<Twilio.Video.V1.CompositionPage>'
           end
         end
 
-        class RecordingContext < InstanceContext
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        class CompositionContext < InstanceContext
           ##
-          # Initialize the RecordingContext
+          # Initialize the CompositionContext
           # @param [Version] version Version that contains the resource
           # @param [String] sid The sid
-          # @return [RecordingContext] RecordingContext
+          # @return [CompositionContext] CompositionContext
           def initialize(version, sid)
             super(version)
 
             # Path Solution
             @solution = {sid: sid, }
-            @uri = "/Recordings/#{@solution[:sid]}"
+            @uri = "/Compositions/#{@solution[:sid]}"
           end
 
           ##
-          # Fetch a RecordingInstance
-          # @return [RecordingInstance] Fetched RecordingInstance
+          # Fetch a CompositionInstance
+          # @return [CompositionInstance] Fetched CompositionInstance
           def fetch
             params = Twilio::Values.of({})
 
@@ -200,11 +229,11 @@ module Twilio
                 params,
             )
 
-            RecordingInstance.new(@version, payload, sid: @solution[:sid], )
+            CompositionInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the RecordingInstance
+          # Deletes the CompositionInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
             @version.delete('delete', @uri)
@@ -214,17 +243,19 @@ module Twilio
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Video.V1.RecordingContext #{context}>"
+            "#<Twilio.Video.V1.CompositionContext #{context}>"
           end
         end
 
-        class RecordingInstance < InstanceResource
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        class CompositionInstance < InstanceResource
           ##
-          # Initialize the RecordingInstance
+          # Initialize the CompositionInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
           # @param [String] sid The sid
-          # @return [RecordingInstance] RecordingInstance
+          # @return [CompositionInstance] CompositionInstance
           def initialize(version, payload, sid: nil)
             super(version)
 
@@ -233,16 +264,18 @@ module Twilio
                 'account_sid' => payload['account_sid'],
                 'status' => payload['status'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                'date_completed' => payload['date_completed'],
+                'date_deleted' => payload['date_deleted'],
                 'sid' => payload['sid'],
-                'source_sid' => payload['source_sid'],
-                'size' => payload['size'] == nil ? payload['size'] : payload['size'].to_i,
+                'audio_sources' => payload['audio_sources'],
+                'video_sources' => payload['video_sources'],
+                'video_layout' => payload['video_layout'],
+                'resolution' => payload['resolution'],
+                'format' => payload['format'],
+                'bitrate' => payload['bitrate'].to_i,
+                'size' => payload['size'].to_i,
+                'duration' => payload['duration'].to_i,
                 'url' => payload['url'],
-                'type' => payload['type'],
-                'duration' => payload['duration'] == nil ? payload['duration'] : payload['duration'].to_i,
-                'container_format' => payload['container_format'],
-                'codec' => payload['codec'],
-                'grouping_sids' => payload['grouping_sids'],
-                'track_name' => payload['track_name'],
                 'links' => payload['links'],
             }
 
@@ -254,10 +287,10 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [RecordingContext] RecordingContext for this RecordingInstance
+          # @return [CompositionContext] CompositionContext for this CompositionInstance
           def context
             unless @instance_context
-              @instance_context = RecordingContext.new(@version, @params['sid'], )
+              @instance_context = CompositionContext.new(@version, @params['sid'], )
             end
             @instance_context
           end
@@ -269,7 +302,7 @@ module Twilio
           end
 
           ##
-          # @return [recording.Status] The status
+          # @return [composition.Status] The status
           def status
             @properties['status']
           end
@@ -281,15 +314,57 @@ module Twilio
           end
 
           ##
+          # @return [String] The date_completed
+          def date_completed
+            @properties['date_completed']
+          end
+
+          ##
+          # @return [String] The date_deleted
+          def date_deleted
+            @properties['date_deleted']
+          end
+
+          ##
           # @return [String] The sid
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The source_sid
-          def source_sid
-            @properties['source_sid']
+          # @return [String] The audio_sources
+          def audio_sources
+            @properties['audio_sources']
+          end
+
+          ##
+          # @return [String] The video_sources
+          def video_sources
+            @properties['video_sources']
+          end
+
+          ##
+          # @return [composition.VideoLayout] The video_layout
+          def video_layout
+            @properties['video_layout']
+          end
+
+          ##
+          # @return [String] The resolution
+          def resolution
+            @properties['resolution']
+          end
+
+          ##
+          # @return [composition.Format] The format
+          def format
+            @properties['format']
+          end
+
+          ##
+          # @return [String] The bitrate
+          def bitrate
+            @properties['bitrate']
           end
 
           ##
@@ -299,45 +374,15 @@ module Twilio
           end
 
           ##
-          # @return [String] The url
-          def url
-            @properties['url']
-          end
-
-          ##
-          # @return [recording.Type] The type
-          def type
-            @properties['type']
-          end
-
-          ##
           # @return [String] The duration
           def duration
             @properties['duration']
           end
 
           ##
-          # @return [recording.Format] The container_format
-          def container_format
-            @properties['container_format']
-          end
-
-          ##
-          # @return [recording.Codec] The codec
-          def codec
-            @properties['codec']
-          end
-
-          ##
-          # @return [Hash] The grouping_sids
-          def grouping_sids
-            @properties['grouping_sids']
-          end
-
-          ##
-          # @return [String] The track_name
-          def track_name
-            @properties['track_name']
+          # @return [String] The url
+          def url
+            @properties['url']
           end
 
           ##
@@ -347,14 +392,14 @@ module Twilio
           end
 
           ##
-          # Fetch a RecordingInstance
-          # @return [RecordingInstance] Fetched RecordingInstance
+          # Fetch a CompositionInstance
+          # @return [CompositionInstance] Fetched CompositionInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Deletes the RecordingInstance
+          # Deletes the CompositionInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
             context.delete
@@ -364,14 +409,14 @@ module Twilio
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Video.V1.RecordingInstance #{values}>"
+            "<Twilio.Video.V1.CompositionInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Video.V1.RecordingInstance #{values}>"
+            "<Twilio.Video.V1.CompositionInstance #{values}>"
           end
         end
       end

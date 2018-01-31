@@ -40,6 +40,7 @@ module Twilio
         @messaging = nil
         @wireless = nil
         @sync = nil
+        @studio = nil
       end
 
       ##
@@ -181,6 +182,12 @@ module Twilio
       # Access the Sync Twilio Domain
       def sync
         @sync ||= Sync.new self
+      end
+
+      ##
+      # Access the Studio Twilio Domain
+      def studio
+        @studio ||= Studio.new self
       end
 
       ##
