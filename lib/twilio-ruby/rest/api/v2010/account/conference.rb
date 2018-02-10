@@ -237,9 +237,15 @@ module Twilio
             ##
             # Update the ConferenceInstance
             # @param [conference.UpdateStatus] status The status
+            # @param [String] announce_url The announce_url
+            # @param [String] announce_method The announce_method
             # @return [ConferenceInstance] Updated ConferenceInstance
-            def update(status: :unset)
-              data = Twilio::Values.of({'Status' => status, })
+            def update(status: :unset, announce_url: :unset, announce_method: :unset)
+              data = Twilio::Values.of({
+                  'Status' => status,
+                  'AnnounceUrl' => announce_url,
+                  'AnnounceMethod' => announce_method,
+              })
 
               payload = @version.update(
                   'POST',
@@ -392,9 +398,11 @@ module Twilio
             ##
             # Update the ConferenceInstance
             # @param [conference.UpdateStatus] status The status
+            # @param [String] announce_url The announce_url
+            # @param [String] announce_method The announce_method
             # @return [ConferenceInstance] Updated ConferenceInstance
-            def update(status: :unset)
-              context.update(status: status, )
+            def update(status: :unset, announce_url: :unset, announce_method: :unset)
+              context.update(status: status, announce_url: announce_url, announce_method: announce_method, )
             end
 
             ##
