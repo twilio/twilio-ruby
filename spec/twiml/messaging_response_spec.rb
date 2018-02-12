@@ -151,6 +151,22 @@ describe Twilio::TwiML::MessagingResponse do
       doc = parse(response)
       expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
+
+    it 'should allow and preserve new lines in messages' do
+      expected_doc = parse <<-XML
+        <Response>
+          <Message>Hello
+World
+          </Message>
+        </Response>
+      XML
+
+      response = Twilio::TwiML::MessagingResponse.new
+      response.message(body: "Hello\nWorld")
+
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
+    end
   end
 
   context 'Testing Redirect' do
