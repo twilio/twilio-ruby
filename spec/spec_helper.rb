@@ -10,6 +10,8 @@ require_relative './holodeck/hologram.rb'
 
 require 'twilio-ruby'
 require 'rack'
+require 'rspec/matchers'
+require 'equivalent-xml'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
