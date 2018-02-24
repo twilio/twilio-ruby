@@ -11,7 +11,7 @@ describe 'Command' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.wireless.commands("DCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.wireless.commands('DCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -42,7 +42,7 @@ describe 'Command' do
       ]
     ))
 
-    actual = @client.preview.wireless.commands("DCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.wireless.commands('DCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -128,10 +128,10 @@ describe 'Command' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.wireless.commands.create(command: "command")
+      @client.preview.wireless.commands.create(command: 'command')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Command' => "command", }
+    values = {'Command' => 'command', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -160,7 +160,7 @@ describe 'Command' do
       ]
     ))
 
-    actual = @client.preview.wireless.commands.create(command: "command")
+    actual = @client.preview.wireless.commands.create(command: 'command')
 
     expect(actual).to_not eq(nil)
   end

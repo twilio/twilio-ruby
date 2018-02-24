@@ -11,11 +11,11 @@ describe 'Application' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .applications.create(friendly_name: "friendly_name")
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .applications.create(friendly_name: 'friendly_name')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'FriendlyName' => "friendly_name", }
+    values = {'FriendlyName' => 'friendly_name', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -53,8 +53,8 @@ describe 'Application' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .applications.create(friendly_name: "friendly_name")
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .applications.create(friendly_name: 'friendly_name')
 
     expect(actual).to_not eq(nil)
   end
@@ -63,8 +63,8 @@ describe 'Application' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .applications("APaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .applications('APaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -81,8 +81,8 @@ describe 'Application' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .applications("APaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .applications('APaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -91,8 +91,8 @@ describe 'Application' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .applications("APaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .applications('APaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -132,8 +132,8 @@ describe 'Application' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .applications("APaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .applications('APaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -142,7 +142,7 @@ describe 'Application' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .applications.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -198,7 +198,7 @@ describe 'Application' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .applications.list()
 
     expect(actual).to_not eq(nil)
@@ -225,7 +225,7 @@ describe 'Application' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .applications.list()
 
     expect(actual).to_not eq(nil)
@@ -235,8 +235,8 @@ describe 'Application' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .applications("APaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .applications('APaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -276,8 +276,8 @@ describe 'Application' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .applications("APaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .applications('APaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

@@ -140,8 +140,10 @@ module Twilio
           # @param [String] desired_max_duration The desired_max_duration
           # @param [String] status_callback The status_callback
           # @param [String] status_callback_method The status_callback_method
+          # @param [Boolean] trim The trim
+          # @param [Boolean] reuse The reuse
           # @return [CompositionInstance] Newly created CompositionInstance
-          def create(audio_sources: :unset, video_sources: :unset, video_layout: :unset, resolution: :unset, format: :unset, desired_bitrate: :unset, desired_max_duration: :unset, status_callback: :unset, status_callback_method: :unset)
+          def create(audio_sources: :unset, video_sources: :unset, video_layout: :unset, resolution: :unset, format: :unset, desired_bitrate: :unset, desired_max_duration: :unset, status_callback: :unset, status_callback_method: :unset, trim: :unset, reuse: :unset)
             data = Twilio::Values.of({
                 'AudioSources' => Twilio.serialize_list(audio_sources) { |e| e },
                 'VideoSources' => Twilio.serialize_list(video_sources) { |e| e },
@@ -152,6 +154,8 @@ module Twilio
                 'DesiredMaxDuration' => desired_max_duration,
                 'StatusCallback' => status_callback,
                 'StatusCallbackMethod' => status_callback_method,
+                'Trim' => trim,
+                'Reuse' => reuse,
             })
 
             payload = @version.create(

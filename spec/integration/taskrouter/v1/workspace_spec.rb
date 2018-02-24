@@ -11,7 +11,7 @@ describe 'Workspace' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -57,7 +57,7 @@ describe 'Workspace' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -66,7 +66,7 @@ describe 'Workspace' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -112,7 +112,7 @@ describe 'Workspace' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -213,10 +213,10 @@ describe 'Workspace' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces.create(friendly_name: "friendly_name")
+      @client.taskrouter.v1.workspaces.create(friendly_name: 'friendly_name')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'FriendlyName' => "friendly_name", }
+    values = {'FriendlyName' => 'friendly_name', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -260,7 +260,7 @@ describe 'Workspace' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces.create(friendly_name: "friendly_name")
+    actual = @client.taskrouter.v1.workspaces.create(friendly_name: 'friendly_name')
 
     expect(actual).to_not eq(nil)
   end
@@ -269,7 +269,7 @@ describe 'Workspace' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -286,7 +286,7 @@ describe 'Workspace' do
       nil,
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

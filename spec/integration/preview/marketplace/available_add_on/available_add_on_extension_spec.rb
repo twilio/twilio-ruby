@@ -11,8 +11,8 @@ describe 'AvailableAddOnExtension' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.marketplace.available_add_ons("XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .extensions("XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.marketplace.available_add_ons('XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .extensions('XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -38,8 +38,8 @@ describe 'AvailableAddOnExtension' do
       ]
     ))
 
-    actual = @client.preview.marketplace.available_add_ons("XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                        .extensions("XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.marketplace.available_add_ons('XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                        .extensions('XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -48,7 +48,7 @@ describe 'AvailableAddOnExtension' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.marketplace.available_add_ons("XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.marketplace.available_add_ons('XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                  .extensions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -88,7 +88,7 @@ describe 'AvailableAddOnExtension' do
       ]
     ))
 
-    actual = @client.preview.marketplace.available_add_ons("XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.marketplace.available_add_ons('XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                         .extensions.list()
 
     expect(actual).to_not eq(nil)
@@ -113,7 +113,7 @@ describe 'AvailableAddOnExtension' do
       ]
     ))
 
-    actual = @client.preview.marketplace.available_add_ons("XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.marketplace.available_add_ons('XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                         .extensions.list()
 
     expect(actual).to_not eq(nil)

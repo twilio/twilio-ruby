@@ -11,8 +11,8 @@ describe 'SubscribedTrack' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .participants("PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                       .subscribed_tracks.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -43,8 +43,8 @@ describe 'SubscribedTrack' do
       ]
     ))
 
-    actual = @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .participants("PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                              .subscribed_tracks.list()
 
     expect(actual).to_not eq(nil)
@@ -81,8 +81,8 @@ describe 'SubscribedTrack' do
       ]
     ))
 
-    actual = @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .participants("PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                              .subscribed_tracks.list()
 
     expect(actual).to_not eq(nil)
@@ -92,8 +92,8 @@ describe 'SubscribedTrack' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .participants("PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                       .subscribed_tracks.update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -123,8 +123,8 @@ describe 'SubscribedTrack' do
       ]
     ))
 
-    actual = @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .participants("PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                              .subscribed_tracks.update()
 
     expect(actual).to_not eq(nil)

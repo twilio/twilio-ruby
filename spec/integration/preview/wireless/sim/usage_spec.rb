@@ -11,7 +11,7 @@ describe 'Usage' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.wireless.sims("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.wireless.sims('DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .usage().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -41,7 +41,7 @@ describe 'Usage' do
       ]
     ))
 
-    actual = @client.preview.wireless.sims("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.wireless.sims('DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                      .usage().fetch()
 
     expect(actual).to_not eq(nil)

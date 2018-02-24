@@ -11,7 +11,7 @@ describe 'Segment' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .segments.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -42,7 +42,7 @@ describe 'Segment' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .segments.list()
 
     expect(actual).to_not eq(nil)
@@ -76,7 +76,7 @@ describe 'Segment' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .segments.list()
 
     expect(actual).to_not eq(nil)

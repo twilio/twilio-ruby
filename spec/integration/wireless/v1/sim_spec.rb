@@ -11,7 +11,7 @@ describe 'Sim' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.wireless.v1.sims("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.wireless.v1.sims('DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -58,7 +58,7 @@ describe 'Sim' do
       ]
     ))
 
-    actual = @client.wireless.v1.sims("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.wireless.v1.sims('DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -160,7 +160,7 @@ describe 'Sim' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.wireless.v1.sims("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.wireless.v1.sims('DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -207,7 +207,7 @@ describe 'Sim' do
       ]
     ))
 
-    actual = @client.wireless.v1.sims("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.wireless.v1.sims('DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

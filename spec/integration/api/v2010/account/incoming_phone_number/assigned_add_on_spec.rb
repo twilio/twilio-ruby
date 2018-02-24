@@ -11,9 +11,9 @@ describe 'AssignedAddOn' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .assigned_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .incoming_phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .assigned_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -48,9 +48,9 @@ describe 'AssignedAddOn' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .assigned_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .incoming_phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .assigned_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -59,8 +59,8 @@ describe 'AssignedAddOn' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .incoming_phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .assigned_add_ons.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -108,8 +108,8 @@ describe 'AssignedAddOn' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .incoming_phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .assigned_add_ons.list()
 
     expect(actual).to_not eq(nil)
@@ -133,8 +133,8 @@ describe 'AssignedAddOn' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .incoming_phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .assigned_add_ons.list()
 
     expect(actual).to_not eq(nil)
@@ -144,12 +144,12 @@ describe 'AssignedAddOn' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .assigned_add_ons.create(installed_add_on_sid: "XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .incoming_phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .assigned_add_ons.create(installed_add_on_sid: 'XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'InstalledAddOnSid' => "XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", }
+    values = {'InstalledAddOnSid' => 'XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -182,9 +182,9 @@ describe 'AssignedAddOn' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .assigned_add_ons.create(installed_add_on_sid: "XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .incoming_phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .assigned_add_ons.create(installed_add_on_sid: 'XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
     expect(actual).to_not eq(nil)
   end
@@ -193,9 +193,9 @@ describe 'AssignedAddOn' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .assigned_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .incoming_phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .assigned_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -212,9 +212,9 @@ describe 'AssignedAddOn' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .assigned_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .incoming_phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .assigned_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

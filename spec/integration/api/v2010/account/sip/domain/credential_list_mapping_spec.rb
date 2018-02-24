@@ -11,13 +11,13 @@ describe 'CredentialListMapping' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .sip \
-                       .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .credential_list_mappings.create(credential_list_sid: "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .credential_list_mappings.create(credential_list_sid: 'CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'CredentialListSid' => "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", }
+    values = {'CredentialListSid' => 'CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -44,10 +44,10 @@ describe 'CredentialListMapping' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .credential_list_mappings.create(credential_list_sid: "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .credential_list_mappings.create(credential_list_sid: 'CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
     expect(actual).to_not eq(nil)
   end
@@ -56,9 +56,9 @@ describe 'CredentialListMapping' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .sip \
-                       .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .credential_list_mappings.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -98,9 +98,9 @@ describe 'CredentialListMapping' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .credential_list_mappings.list()
 
     expect(actual).to_not eq(nil)
@@ -122,9 +122,9 @@ describe 'CredentialListMapping' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .credential_list_mappings.list()
 
     expect(actual).to_not eq(nil)
@@ -134,10 +134,10 @@ describe 'CredentialListMapping' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .sip \
-                       .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .credential_list_mappings("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .credential_list_mappings('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -166,10 +166,10 @@ describe 'CredentialListMapping' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .credential_list_mappings("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .credential_list_mappings('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -178,10 +178,10 @@ describe 'CredentialListMapping' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .sip \
-                       .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .credential_list_mappings("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .credential_list_mappings('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -198,10 +198,10 @@ describe 'CredentialListMapping' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .credential_list_mappings("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .credential_list_mappings('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

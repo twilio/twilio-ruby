@@ -11,7 +11,7 @@ describe 'Service' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -44,7 +44,7 @@ describe 'Service' do
       ]
     ))
 
-    actual = @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -134,7 +134,7 @@ describe 'Service' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -151,7 +151,7 @@ describe 'Service' do
       nil,
     ))
 
-    actual = @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -160,7 +160,7 @@ describe 'Service' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -193,7 +193,7 @@ describe 'Service' do
       ]
     ))
 
-    actual = @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

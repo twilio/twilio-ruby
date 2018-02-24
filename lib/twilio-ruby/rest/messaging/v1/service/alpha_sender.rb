@@ -191,7 +191,12 @@ module Twilio
                   params,
               )
 
-              AlphaSenderInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+              AlphaSenderInstance.new(
+                  @version,
+                  payload,
+                  service_sid: @solution[:service_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##

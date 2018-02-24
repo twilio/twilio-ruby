@@ -11,8 +11,8 @@ describe 'IpAccessControlList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                         .ip_access_control_lists("ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                         .ip_access_control_lists('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -39,8 +39,8 @@ describe 'IpAccessControlList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .ip_access_control_lists("ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .ip_access_control_lists('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -49,8 +49,8 @@ describe 'IpAccessControlList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                         .ip_access_control_lists("ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                         .ip_access_control_lists('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -67,8 +67,8 @@ describe 'IpAccessControlList' do
       nil,
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .ip_access_control_lists("ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .ip_access_control_lists('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -77,11 +77,11 @@ describe 'IpAccessControlList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                         .ip_access_control_lists.create(ip_access_control_list_sid: "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                         .ip_access_control_lists.create(ip_access_control_list_sid: 'ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'IpAccessControlListSid' => "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", }
+    values = {'IpAccessControlListSid' => 'ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -106,8 +106,8 @@ describe 'IpAccessControlList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .ip_access_control_lists.create(ip_access_control_list_sid: "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .ip_access_control_lists.create(ip_access_control_list_sid: 'ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
     expect(actual).to_not eq(nil)
   end
@@ -116,7 +116,7 @@ describe 'IpAccessControlList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                          .ip_access_control_lists.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -147,7 +147,7 @@ describe 'IpAccessControlList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                 .ip_access_control_lists.list()
 
     expect(actual).to_not eq(nil)
@@ -182,7 +182,7 @@ describe 'IpAccessControlList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                 .ip_access_control_lists.list()
 
     expect(actual).to_not eq(nil)

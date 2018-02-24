@@ -11,11 +11,11 @@ describe 'AlphaSender' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                          .alpha_senders.create(alpha_sender: "alpha_sender")
+      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                          .alpha_senders.create(alpha_sender: 'alpha_sender')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'AlphaSender' => "alpha_sender", }
+    values = {'AlphaSender' => 'alpha_sender', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -41,8 +41,8 @@ describe 'AlphaSender' do
       ]
     ))
 
-    actual = @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .alpha_senders.create(alpha_sender: "alpha_sender")
+    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .alpha_senders.create(alpha_sender: 'alpha_sender')
 
     expect(actual).to_not eq(nil)
   end
@@ -51,7 +51,7 @@ describe 'AlphaSender' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                           .alpha_senders.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -93,7 +93,7 @@ describe 'AlphaSender' do
       ]
     ))
 
-    actual = @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                  .alpha_senders.list()
 
     expect(actual).to_not eq(nil)
@@ -103,8 +103,8 @@ describe 'AlphaSender' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                          .alpha_senders("AIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                          .alpha_senders('AIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -132,8 +132,8 @@ describe 'AlphaSender' do
       ]
     ))
 
-    actual = @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .alpha_senders("AIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .alpha_senders('AIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -142,8 +142,8 @@ describe 'AlphaSender' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                          .alpha_senders("AIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                          .alpha_senders('AIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -160,8 +160,8 @@ describe 'AlphaSender' do
       nil,
     ))
 
-    actual = @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .alpha_senders("AIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .alpha_senders('AIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

@@ -11,8 +11,8 @@ describe 'Device' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                      .devices("THaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                      .devices('THaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -44,8 +44,8 @@ describe 'Device' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                             .devices("THaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                             .devices('THaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -54,8 +54,8 @@ describe 'Device' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                      .devices("THaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                      .devices('THaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -72,8 +72,8 @@ describe 'Device' do
       nil,
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                             .devices("THaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                             .devices('THaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -82,7 +82,7 @@ describe 'Device' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                       .devices.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -115,7 +115,7 @@ describe 'Device' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                              .devices.create()
 
     expect(actual).to_not eq(nil)
@@ -125,7 +125,7 @@ describe 'Device' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                       .devices.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -156,7 +156,7 @@ describe 'Device' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                              .devices.list()
 
     expect(actual).to_not eq(nil)
@@ -196,7 +196,7 @@ describe 'Device' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                              .devices.list()
 
     expect(actual).to_not eq(nil)
@@ -206,8 +206,8 @@ describe 'Device' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                      .devices("THaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                      .devices('THaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -239,8 +239,8 @@ describe 'Device' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                             .devices("THaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                             .devices('THaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

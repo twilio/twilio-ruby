@@ -11,8 +11,8 @@ describe 'Feedback' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .calls('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .feedback().create(quality_score: 1)
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -43,8 +43,8 @@ describe 'Feedback' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .calls('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .feedback().create(quality_score: 1)
 
     expect(actual).to_not eq(nil)
@@ -54,8 +54,8 @@ describe 'Feedback' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .calls('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .feedback().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -85,8 +85,8 @@ describe 'Feedback' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .calls('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .feedback().fetch()
 
     expect(actual).to_not eq(nil)
@@ -96,8 +96,8 @@ describe 'Feedback' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .calls('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .feedback().update(quality_score: 1)
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -128,8 +128,8 @@ describe 'Feedback' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .calls("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .calls('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .feedback().update(quality_score: 1)
 
     expect(actual).to_not eq(nil)

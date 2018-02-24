@@ -11,7 +11,7 @@ describe 'Fax' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -51,7 +51,7 @@ describe 'Fax' do
       ]
     ))
 
-    actual = @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -146,10 +146,10 @@ describe 'Fax' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.fax.v1.faxes.create(to: "to", media_url: "https://example.com")
+      @client.fax.v1.faxes.create(to: 'to', media_url: 'https://example.com')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'To' => "to", 'MediaUrl' => "https://example.com", }
+    values = {'To' => 'to', 'MediaUrl' => 'https://example.com', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -187,7 +187,7 @@ describe 'Fax' do
       ]
     ))
 
-    actual = @client.fax.v1.faxes.create(to: "to", media_url: "https://example.com")
+    actual = @client.fax.v1.faxes.create(to: 'to', media_url: 'https://example.com')
 
     expect(actual).to_not eq(nil)
   end
@@ -196,7 +196,7 @@ describe 'Fax' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -236,7 +236,7 @@ describe 'Fax' do
       ]
     ))
 
-    actual = @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -245,7 +245,7 @@ describe 'Fax' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -262,7 +262,7 @@ describe 'Fax' do
       nil,
     ))
 
-    actual = @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

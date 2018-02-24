@@ -11,7 +11,7 @@ describe 'Notification' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .notifications.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -54,7 +54,7 @@ describe 'Notification' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .notifications.create()
 
     expect(actual).to_not eq(nil)
@@ -89,7 +89,7 @@ describe 'Notification' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .notifications.create()
 
     expect(actual).to_not eq(nil)

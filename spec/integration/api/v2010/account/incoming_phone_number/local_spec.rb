@@ -11,7 +11,7 @@ describe 'Local' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .incoming_phone_numbers \
                        .local.list()
     }.to raise_exception(Twilio::REST::TwilioError)
@@ -80,7 +80,7 @@ describe 'Local' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .incoming_phone_numbers \
                               .local.list()
 
@@ -108,7 +108,7 @@ describe 'Local' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .incoming_phone_numbers \
                               .local.list()
 
@@ -119,12 +119,12 @@ describe 'Local' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .incoming_phone_numbers \
-                       .local.create(phone_number: "+15017122661")
+                       .local.create(phone_number: '+15017122661')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'PhoneNumber' => "+15017122661", }
+    values = {'PhoneNumber' => '+15017122661', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -174,9 +174,9 @@ describe 'Local' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .incoming_phone_numbers \
-                              .local.create(phone_number: "+15017122661")
+                              .local.create(phone_number: '+15017122661')
 
     expect(actual).to_not eq(nil)
   end

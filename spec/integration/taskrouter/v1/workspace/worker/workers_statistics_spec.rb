@@ -11,7 +11,7 @@ describe 'WorkersStatistics' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                            .workers \
                            .statistics().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
@@ -105,7 +105,7 @@ describe 'WorkersStatistics' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                   .workers \
                                   .statistics().fetch()
 

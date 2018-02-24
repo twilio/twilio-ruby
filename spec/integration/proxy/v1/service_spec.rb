@@ -11,7 +11,7 @@ describe 'Service' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -48,7 +48,7 @@ describe 'Service' do
       ]
     ))
 
-    actual = @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -96,10 +96,10 @@ describe 'Service' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services.create(unique_name: "unique_name")
+      @client.proxy.v1.services.create(unique_name: 'unique_name')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'UniqueName' => "unique_name", }
+    values = {'UniqueName' => 'unique_name', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -134,7 +134,7 @@ describe 'Service' do
       ]
     ))
 
-    actual = @client.proxy.v1.services.create(unique_name: "unique_name")
+    actual = @client.proxy.v1.services.create(unique_name: 'unique_name')
 
     expect(actual).to_not eq(nil)
   end
@@ -143,7 +143,7 @@ describe 'Service' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -160,7 +160,7 @@ describe 'Service' do
       nil,
     ))
 
-    actual = @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -169,7 +169,7 @@ describe 'Service' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -206,7 +206,7 @@ describe 'Service' do
       ]
     ))
 
-    actual = @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

@@ -11,8 +11,8 @@ describe 'Reservation' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .tasks("WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .tasks('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                            .reservations.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -61,8 +61,8 @@ describe 'Reservation' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .tasks("WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .tasks('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                   .reservations.list()
 
     expect(actual).to_not eq(nil)
@@ -87,8 +87,8 @@ describe 'Reservation' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .tasks("WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .tasks('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                   .reservations.list()
 
     expect(actual).to_not eq(nil)
@@ -98,9 +98,9 @@ describe 'Reservation' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .tasks("WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .reservations("WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .tasks('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .reservations('WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -135,9 +135,9 @@ describe 'Reservation' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .tasks("WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .reservations("WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .tasks('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .reservations('WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -146,9 +146,9 @@ describe 'Reservation' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .tasks("WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .reservations("WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .tasks('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .reservations('WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -183,9 +183,9 @@ describe 'Reservation' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .tasks("WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .reservations("WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .tasks('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .reservations('WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

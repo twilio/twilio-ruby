@@ -11,11 +11,11 @@ describe 'VerificationCheck' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.acc_security.services("VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .verification_checks.create(code: "code")
+      @client.preview.acc_security.services('VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .verification_checks.create(code: 'code')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Code' => "code", }
+    values = {'Code' => 'code', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -42,8 +42,8 @@ describe 'VerificationCheck' do
       ]
     ))
 
-    actual = @client.preview.acc_security.services("VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                         .verification_checks.create(code: "code")
+    actual = @client.preview.acc_security.services('VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                         .verification_checks.create(code: 'code')
 
     expect(actual).to_not eq(nil)
   end

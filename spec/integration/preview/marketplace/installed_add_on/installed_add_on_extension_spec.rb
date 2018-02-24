@@ -11,8 +11,8 @@ describe 'InstalledAddOnExtension' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.marketplace.installed_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .extensions("XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.marketplace.installed_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .extensions('XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -39,8 +39,8 @@ describe 'InstalledAddOnExtension' do
       ]
     ))
 
-    actual = @client.preview.marketplace.installed_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                        .extensions("XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.marketplace.installed_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                        .extensions('XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -49,8 +49,8 @@ describe 'InstalledAddOnExtension' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.marketplace.installed_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .extensions("XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(enabled: true)
+      @client.preview.marketplace.installed_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .extensions('XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update(enabled: true)
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Enabled' => true, }
@@ -78,8 +78,8 @@ describe 'InstalledAddOnExtension' do
       ]
     ))
 
-    actual = @client.preview.marketplace.installed_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                        .extensions("XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(enabled: true)
+    actual = @client.preview.marketplace.installed_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                        .extensions('XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update(enabled: true)
 
     expect(actual).to_not eq(nil)
   end
@@ -88,7 +88,7 @@ describe 'InstalledAddOnExtension' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.marketplace.installed_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.marketplace.installed_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                  .extensions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -129,7 +129,7 @@ describe 'InstalledAddOnExtension' do
       ]
     ))
 
-    actual = @client.preview.marketplace.installed_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.marketplace.installed_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                         .extensions.list()
 
     expect(actual).to_not eq(nil)
@@ -154,7 +154,7 @@ describe 'InstalledAddOnExtension' do
       ]
     ))
 
-    actual = @client.preview.marketplace.installed_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.marketplace.installed_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                         .extensions.list()
 
     expect(actual).to_not eq(nil)

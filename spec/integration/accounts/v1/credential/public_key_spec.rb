@@ -87,10 +87,10 @@ describe 'PublicKey' do
 
     expect {
       @client.accounts.v1.credentials \
-                         .public_key.create(public_key: "publickey")
+                         .public_key.create(public_key: 'publickey')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'PublicKey' => "publickey", }
+    values = {'PublicKey' => 'publickey', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -115,7 +115,7 @@ describe 'PublicKey' do
     ))
 
     actual = @client.accounts.v1.credentials \
-                                .public_key.create(public_key: "publickey")
+                                .public_key.create(public_key: 'publickey')
 
     expect(actual).to_not eq(nil)
   end
@@ -125,7 +125,7 @@ describe 'PublicKey' do
 
     expect {
       @client.accounts.v1.credentials \
-                         .public_key("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+                         .public_key('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -152,7 +152,7 @@ describe 'PublicKey' do
     ))
 
     actual = @client.accounts.v1.credentials \
-                                .public_key("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+                                .public_key('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -162,7 +162,7 @@ describe 'PublicKey' do
 
     expect {
       @client.accounts.v1.credentials \
-                         .public_key("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+                         .public_key('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -189,7 +189,7 @@ describe 'PublicKey' do
     ))
 
     actual = @client.accounts.v1.credentials \
-                                .public_key("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+                                .public_key('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -199,7 +199,7 @@ describe 'PublicKey' do
 
     expect {
       @client.accounts.v1.credentials \
-                         .public_key("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+                         .public_key('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -217,7 +217,7 @@ describe 'PublicKey' do
     ))
 
     actual = @client.accounts.v1.credentials \
-                                .public_key("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+                                .public_key('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

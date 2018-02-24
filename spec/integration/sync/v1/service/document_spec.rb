@@ -11,8 +11,8 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -46,8 +46,8 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -56,8 +56,8 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -74,8 +74,8 @@ describe 'Document' do
       nil,
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -84,7 +84,7 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                      .documents.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -119,7 +119,7 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .documents.create()
 
     expect(actual).to_not eq(nil)
@@ -129,7 +129,7 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                      .documents.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -160,7 +160,7 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .documents.list()
 
     expect(actual).to_not eq(nil)
@@ -202,7 +202,7 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .documents.list()
 
     expect(actual).to_not eq(nil)
@@ -212,8 +212,8 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -247,8 +247,8 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

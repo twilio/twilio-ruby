@@ -11,8 +11,8 @@ describe 'ModelBuild' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .model_builds("UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .model_builds('UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -40,8 +40,8 @@ describe 'ModelBuild' do
       ]
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .model_builds("UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .model_builds('UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -50,7 +50,7 @@ describe 'ModelBuild' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                 .model_builds.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -81,7 +81,7 @@ describe 'ModelBuild' do
       ]
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                        .model_builds.list()
 
     expect(actual).to_not eq(nil)
@@ -117,7 +117,7 @@ describe 'ModelBuild' do
       ]
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                        .model_builds.list()
 
     expect(actual).to_not eq(nil)
@@ -127,7 +127,7 @@ describe 'ModelBuild' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                 .model_builds.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -156,7 +156,7 @@ describe 'ModelBuild' do
       ]
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                        .model_builds.create()
 
     expect(actual).to_not eq(nil)
@@ -166,8 +166,8 @@ describe 'ModelBuild' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .model_builds("UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .model_builds('UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -195,8 +195,8 @@ describe 'ModelBuild' do
       ]
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .model_builds("UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .model_builds('UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -205,8 +205,8 @@ describe 'ModelBuild' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .model_builds("UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .model_builds('UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -223,8 +223,8 @@ describe 'ModelBuild' do
       nil,
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .model_builds("UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .model_builds('UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

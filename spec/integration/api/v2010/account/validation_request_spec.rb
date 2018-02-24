@@ -11,11 +11,11 @@ describe 'ValidationRequest' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .validation_requests.create(phone_number: "+15017122661")
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .validation_requests.create(phone_number: '+15017122661')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'PhoneNumber' => "+15017122661", }
+    values = {'PhoneNumber' => '+15017122661', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -38,8 +38,8 @@ describe 'ValidationRequest' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .validation_requests.create(phone_number: "+15017122661")
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .validation_requests.create(phone_number: '+15017122661')
 
     expect(actual).to_not eq(nil)
   end

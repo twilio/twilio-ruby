@@ -11,8 +11,8 @@ describe 'Step' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .engagements("FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.studio.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .steps.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -43,8 +43,8 @@ describe 'Step' do
       ]
     ))
 
-    actual = @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                   .engagements("FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.studio.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                   .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                    .steps.list()
 
     expect(actual).to_not eq(nil)
@@ -54,9 +54,9 @@ describe 'Step' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .engagements("FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .steps("FTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.studio.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .steps('FTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -87,9 +87,9 @@ describe 'Step' do
       ]
     ))
 
-    actual = @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                   .engagements("FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                   .steps("FTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.studio.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                   .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                   .steps('FTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end

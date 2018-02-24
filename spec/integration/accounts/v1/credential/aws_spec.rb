@@ -87,10 +87,10 @@ describe 'Aws' do
 
     expect {
       @client.accounts.v1.credentials \
-                         .aws.create(credentials: "AKIAIOSFODNN7EXAMPLE:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY")
+                         .aws.create(credentials: 'AKIAIOSFODNN7EXAMPLE:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Credentials' => "AKIAIOSFODNN7EXAMPLE:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", }
+    values = {'Credentials' => 'AKIAIOSFODNN7EXAMPLE:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -115,7 +115,7 @@ describe 'Aws' do
     ))
 
     actual = @client.accounts.v1.credentials \
-                                .aws.create(credentials: "AKIAIOSFODNN7EXAMPLE:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY")
+                                .aws.create(credentials: 'AKIAIOSFODNN7EXAMPLE:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY')
 
     expect(actual).to_not eq(nil)
   end
@@ -125,7 +125,7 @@ describe 'Aws' do
 
     expect {
       @client.accounts.v1.credentials \
-                         .aws("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+                         .aws('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -152,7 +152,7 @@ describe 'Aws' do
     ))
 
     actual = @client.accounts.v1.credentials \
-                                .aws("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+                                .aws('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -162,7 +162,7 @@ describe 'Aws' do
 
     expect {
       @client.accounts.v1.credentials \
-                         .aws("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+                         .aws('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -189,7 +189,7 @@ describe 'Aws' do
     ))
 
     actual = @client.accounts.v1.credentials \
-                                .aws("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+                                .aws('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -199,7 +199,7 @@ describe 'Aws' do
 
     expect {
       @client.accounts.v1.credentials \
-                         .aws("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+                         .aws('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -217,7 +217,7 @@ describe 'Aws' do
     ))
 
     actual = @client.accounts.v1.credentials \
-                                .aws("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+                                .aws('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

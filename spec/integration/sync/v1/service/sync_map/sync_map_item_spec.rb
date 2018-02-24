@@ -11,9 +11,9 @@ describe 'SyncMapItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_map_items("key").fetch()
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_map_items('key').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -44,9 +44,9 @@ describe 'SyncMapItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_map_items("key").fetch()
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_map_items('key').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -55,9 +55,9 @@ describe 'SyncMapItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_map_items("key").delete()
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_map_items('key').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -74,9 +74,9 @@ describe 'SyncMapItem' do
       nil,
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_map_items("key").delete()
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_map_items('key').delete()
 
     expect(actual).to eq(true)
   end
@@ -85,12 +85,12 @@ describe 'SyncMapItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_map_items.create(key: "key", data: "{}")
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_map_items.create(key: 'key', data: {})
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Key' => "key", 'Data' => Twilio.serialize_object("{}"), }
+    values = {'Key' => 'key', 'Data' => Twilio.serialize_object({}), }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -119,9 +119,9 @@ describe 'SyncMapItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_map_items.create(key: "key", data: "{}")
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_map_items.create(key: 'key', data: {})
 
     expect(actual).to_not eq(nil)
   end
@@ -130,8 +130,8 @@ describe 'SyncMapItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                      .sync_map_items.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -162,8 +162,8 @@ describe 'SyncMapItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .sync_map_items.list()
 
     expect(actual).to_not eq(nil)
@@ -202,8 +202,8 @@ describe 'SyncMapItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .sync_map_items.list()
 
     expect(actual).to_not eq(nil)
@@ -213,9 +213,9 @@ describe 'SyncMapItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_map_items("key").update()
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_map_items('key').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -246,9 +246,9 @@ describe 'SyncMapItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_map_items("key").update()
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_map_items('key').update()
 
     expect(actual).to_not eq(nil)
   end

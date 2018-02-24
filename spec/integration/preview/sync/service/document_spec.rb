@@ -11,8 +11,8 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                          .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                          .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -45,8 +45,8 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -55,8 +55,8 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                          .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                          .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -73,8 +73,8 @@ describe 'Document' do
       nil,
     ))
 
-    actual = @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -83,7 +83,7 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                           .documents.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -117,7 +117,7 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                  .documents.create()
 
     expect(actual).to_not eq(nil)
@@ -127,7 +127,7 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                           .documents.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -158,7 +158,7 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                  .documents.list()
 
     expect(actual).to_not eq(nil)
@@ -199,7 +199,7 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                  .documents.list()
 
     expect(actual).to_not eq(nil)
@@ -209,11 +209,11 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                          .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(data: "{}")
+      @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                          .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update(data: {})
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Data' => Twilio.serialize_object("{}"), }
+    values = {'Data' => Twilio.serialize_object({}), }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -244,8 +244,8 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.preview.sync.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(data: "{}")
+    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update(data: {})
 
     expect(actual).to_not eq(nil)
   end

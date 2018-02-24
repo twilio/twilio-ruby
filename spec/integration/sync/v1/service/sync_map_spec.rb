@@ -11,8 +11,8 @@ describe 'SyncMap' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -46,8 +46,8 @@ describe 'SyncMap' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -56,8 +56,8 @@ describe 'SyncMap' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -74,8 +74,8 @@ describe 'SyncMap' do
       nil,
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -84,7 +84,7 @@ describe 'SyncMap' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                      .sync_maps.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -119,7 +119,7 @@ describe 'SyncMap' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .sync_maps.create()
 
     expect(actual).to_not eq(nil)
@@ -129,8 +129,8 @@ describe 'SyncMap' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -164,8 +164,8 @@ describe 'SyncMap' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_maps("MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -174,7 +174,7 @@ describe 'SyncMap' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                      .sync_maps.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -205,7 +205,7 @@ describe 'SyncMap' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .sync_maps.list()
 
     expect(actual).to_not eq(nil)
@@ -247,7 +247,7 @@ describe 'SyncMap' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .sync_maps.list()
 
     expect(actual).to_not eq(nil)

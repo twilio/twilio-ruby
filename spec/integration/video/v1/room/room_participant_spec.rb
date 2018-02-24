@@ -11,8 +11,8 @@ describe 'Participant' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .participants("PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -47,8 +47,8 @@ describe 'Participant' do
       ]
     ))
 
-    actual = @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .participants("PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -57,7 +57,7 @@ describe 'Participant' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                       .participants.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -88,7 +88,7 @@ describe 'Participant' do
       ]
     ))
 
-    actual = @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                              .participants.list()
 
     expect(actual).to_not eq(nil)
@@ -131,7 +131,7 @@ describe 'Participant' do
       ]
     ))
 
-    actual = @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                              .participants.list()
 
     expect(actual).to_not eq(nil)
@@ -141,8 +141,8 @@ describe 'Participant' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .participants("PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -177,8 +177,8 @@ describe 'Participant' do
       ]
     ))
 
-    actual = @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .participants("PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

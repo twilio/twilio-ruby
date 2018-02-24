@@ -12,7 +12,7 @@ describe 'Number' do
 
     expect {
       @client.pricing.v1.voice \
-                        .numbers("+15017122661").fetch()
+                        .numbers('+15017122661').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -47,7 +47,7 @@ describe 'Number' do
     ))
 
     actual = @client.pricing.v1.voice \
-                               .numbers("+15017122661").fetch()
+                               .numbers('+15017122661').fetch()
 
     expect(actual).to_not eq(nil)
   end

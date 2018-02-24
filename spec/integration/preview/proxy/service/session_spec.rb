@@ -11,8 +11,8 @@ describe 'Session' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -47,8 +47,8 @@ describe 'Session' do
       ]
     ))
 
-    actual = @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -57,7 +57,7 @@ describe 'Session' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                            .sessions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -88,7 +88,7 @@ describe 'Session' do
       ]
     ))
 
-    actual = @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                   .sessions.list()
 
     expect(actual).to_not eq(nil)
@@ -98,7 +98,7 @@ describe 'Session' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                            .sessions.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -134,7 +134,7 @@ describe 'Session' do
       ]
     ))
 
-    actual = @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                   .sessions.create()
 
     expect(actual).to_not eq(nil)
@@ -144,8 +144,8 @@ describe 'Session' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -162,8 +162,8 @@ describe 'Session' do
       nil,
     ))
 
-    actual = @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -172,8 +172,8 @@ describe 'Session' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -208,8 +208,8 @@ describe 'Session' do
       ]
     ))
 
-    actual = @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

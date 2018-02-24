@@ -11,9 +11,9 @@ describe 'Sample' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .intents("UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .samples("UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .samples('UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -42,9 +42,9 @@ describe 'Sample' do
       ]
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .intents("UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .samples("UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .samples('UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -53,8 +53,8 @@ describe 'Sample' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .intents("UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                 .samples.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -85,8 +85,8 @@ describe 'Sample' do
       ]
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .intents("UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                        .samples.list()
 
     expect(actual).to_not eq(nil)
@@ -123,8 +123,8 @@ describe 'Sample' do
       ]
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .intents("UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                        .samples.list()
 
     expect(actual).to_not eq(nil)
@@ -134,12 +134,12 @@ describe 'Sample' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .intents("UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .samples.create(language: "language", tagged_text: "tagged_text")
+      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .samples.create(language: 'language', tagged_text: 'tagged_text')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Language' => "language", 'TaggedText' => "tagged_text", }
+    values = {'Language' => 'language', 'TaggedText' => 'tagged_text', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -166,9 +166,9 @@ describe 'Sample' do
       ]
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .intents("UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .samples.create(language: "language", tagged_text: "tagged_text")
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .samples.create(language: 'language', tagged_text: 'tagged_text')
 
     expect(actual).to_not eq(nil)
   end
@@ -177,9 +177,9 @@ describe 'Sample' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .intents("UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .samples("UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .samples('UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -208,9 +208,9 @@ describe 'Sample' do
       ]
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .intents("UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .samples("UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .samples('UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -219,9 +219,9 @@ describe 'Sample' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .intents("UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .samples("UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .samples('UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -238,9 +238,9 @@ describe 'Sample' do
       nil,
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .intents("UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .samples("UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .samples('UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

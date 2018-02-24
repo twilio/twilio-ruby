@@ -95,7 +95,7 @@ describe 'RatePlan' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.wireless.rate_plans("WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.wireless.rate_plans('WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -133,7 +133,7 @@ describe 'RatePlan' do
       ]
     ))
 
-    actual = @client.preview.wireless.rate_plans("WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.wireless.rate_plans('WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -189,7 +189,7 @@ describe 'RatePlan' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.wireless.rate_plans("WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.preview.wireless.rate_plans('WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -227,7 +227,7 @@ describe 'RatePlan' do
       ]
     ))
 
-    actual = @client.preview.wireless.rate_plans("WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.preview.wireless.rate_plans('WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -236,7 +236,7 @@ describe 'RatePlan' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.wireless.rate_plans("WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.preview.wireless.rate_plans('WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -253,7 +253,7 @@ describe 'RatePlan' do
       nil,
     ))
 
-    actual = @client.preview.wireless.rate_plans("WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.preview.wireless.rate_plans('WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

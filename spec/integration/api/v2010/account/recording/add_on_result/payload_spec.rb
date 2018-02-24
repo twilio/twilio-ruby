@@ -11,10 +11,10 @@ describe 'Payload' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .payloads("XHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .add_on_results('XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .payloads('XHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -47,10 +47,10 @@ describe 'Payload' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .payloads("XHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .add_on_results('XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .payloads('XHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -59,9 +59,9 @@ describe 'Payload' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .add_on_results('XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .payloads.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -107,9 +107,9 @@ describe 'Payload' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .add_on_results('XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .payloads.list()
 
     expect(actual).to_not eq(nil)
@@ -133,9 +133,9 @@ describe 'Payload' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .add_on_results('XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .payloads.list()
 
     expect(actual).to_not eq(nil)
@@ -145,10 +145,10 @@ describe 'Payload' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .payloads("XHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .add_on_results('XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .payloads('XHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -165,10 +165,10 @@ describe 'Payload' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .payloads("XHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .add_on_results('XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .payloads('XHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

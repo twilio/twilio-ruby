@@ -11,11 +11,11 @@ describe 'ShortCode' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                          .short_codes.create(short_code_sid: "SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                          .short_codes.create(short_code_sid: 'SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'ShortCodeSid' => "SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", }
+    values = {'ShortCodeSid' => 'SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -42,8 +42,8 @@ describe 'ShortCode' do
       ]
     ))
 
-    actual = @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .short_codes.create(short_code_sid: "SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .short_codes.create(short_code_sid: 'SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
     expect(actual).to_not eq(nil)
   end
@@ -52,8 +52,8 @@ describe 'ShortCode' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                          .short_codes("SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                          .short_codes('SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -70,8 +70,8 @@ describe 'ShortCode' do
       nil,
     ))
 
-    actual = @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .short_codes("SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .short_codes('SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -80,7 +80,7 @@ describe 'ShortCode' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                           .short_codes.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -123,7 +123,7 @@ describe 'ShortCode' do
       ]
     ))
 
-    actual = @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                  .short_codes.list()
 
     expect(actual).to_not eq(nil)
@@ -133,8 +133,8 @@ describe 'ShortCode' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                          .short_codes("SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                          .short_codes('SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -163,8 +163,8 @@ describe 'ShortCode' do
       ]
     ))
 
-    actual = @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .short_codes("SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .short_codes('SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end

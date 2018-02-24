@@ -11,7 +11,7 @@ describe 'Day' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.bulk_exports.exports("resource_type") \
+      @client.preview.bulk_exports.exports('resource_type') \
                                   .days.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -48,7 +48,7 @@ describe 'Day' do
       ]
     ))
 
-    actual = @client.preview.bulk_exports.exports("resource_type") \
+    actual = @client.preview.bulk_exports.exports('resource_type') \
                                          .days.list()
 
     expect(actual).to_not eq(nil)

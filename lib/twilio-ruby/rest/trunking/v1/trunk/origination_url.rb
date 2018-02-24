@@ -195,7 +195,12 @@ module Twilio
                   params,
               )
 
-              OriginationUrlInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid], sid: @solution[:sid], )
+              OriginationUrlInstance.new(
+                  @version,
+                  payload,
+                  trunk_sid: @solution[:trunk_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##
@@ -228,7 +233,12 @@ module Twilio
                   data: data,
               )
 
-              OriginationUrlInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid], sid: @solution[:sid], )
+              OriginationUrlInstance.new(
+                  @version,
+                  payload,
+                  trunk_sid: @solution[:trunk_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##

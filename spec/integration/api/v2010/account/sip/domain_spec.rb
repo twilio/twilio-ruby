@@ -11,7 +11,7 @@ describe 'Domain' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .sip \
                        .domains.list()
     }.to raise_exception(Twilio::REST::TwilioError)
@@ -63,7 +63,7 @@ describe 'Domain' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
                               .domains.list()
 
@@ -86,7 +86,7 @@ describe 'Domain' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
                               .domains.list()
 
@@ -97,12 +97,12 @@ describe 'Domain' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .sip \
-                       .domains.create(domain_name: "domain_name")
+                       .domains.create(domain_name: 'domain_name')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'DomainName' => "domain_name", }
+    values = {'DomainName' => 'domain_name', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -140,9 +140,9 @@ describe 'Domain' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .domains.create(domain_name: "domain_name")
+                              .domains.create(domain_name: 'domain_name')
 
     expect(actual).to_not eq(nil)
   end
@@ -151,9 +151,9 @@ describe 'Domain' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .sip \
-                       .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -193,9 +193,9 @@ describe 'Domain' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -204,9 +204,9 @@ describe 'Domain' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .sip \
-                       .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -246,9 +246,9 @@ describe 'Domain' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -257,9 +257,9 @@ describe 'Domain' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .sip \
-                       .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -276,9 +276,9 @@ describe 'Domain' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .domains("SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

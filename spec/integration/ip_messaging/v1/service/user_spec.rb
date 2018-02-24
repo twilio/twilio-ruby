@@ -11,8 +11,8 @@ describe 'User' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -48,8 +48,8 @@ describe 'User' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -58,8 +58,8 @@ describe 'User' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -76,8 +76,8 @@ describe 'User' do
       nil,
     ))
 
-    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -86,11 +86,11 @@ describe 'User' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .users.create(identity: "identity")
+      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .users.create(identity: 'identity')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Identity' => "identity", }
+    values = {'Identity' => 'identity', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -124,8 +124,8 @@ describe 'User' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .users.create(identity: "identity")
+    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .users.create(identity: 'identity')
 
     expect(actual).to_not eq(nil)
   end
@@ -134,7 +134,7 @@ describe 'User' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                              .users.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -184,7 +184,7 @@ describe 'User' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                     .users.list()
 
     expect(actual).to_not eq(nil)
@@ -209,7 +209,7 @@ describe 'User' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                     .users.list()
 
     expect(actual).to_not eq(nil)
@@ -219,8 +219,8 @@ describe 'User' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -256,8 +256,8 @@ describe 'User' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

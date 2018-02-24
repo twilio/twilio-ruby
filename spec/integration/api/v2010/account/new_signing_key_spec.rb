@@ -11,7 +11,7 @@ describe 'NewSigningKey' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .new_signing_keys.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -37,7 +37,7 @@ describe 'NewSigningKey' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .new_signing_keys.create()
 
     expect(actual).to_not eq(nil)

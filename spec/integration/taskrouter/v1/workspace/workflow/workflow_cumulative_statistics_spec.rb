@@ -11,8 +11,8 @@ describe 'WorkflowCumulativeStatistics' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .workflows("WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .workflows('WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                            .cumulative_statistics().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -86,8 +86,8 @@ describe 'WorkflowCumulativeStatistics' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .workflows("WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .workflows('WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                   .cumulative_statistics().fetch()
 
     expect(actual).to_not eq(nil)

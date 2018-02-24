@@ -11,8 +11,8 @@ describe 'Workflow' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .workflows("WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .workflows('WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -49,8 +49,8 @@ describe 'Workflow' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .workflows("WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .workflows('WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -59,8 +59,8 @@ describe 'Workflow' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .workflows("WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .workflows('WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -97,8 +97,8 @@ describe 'Workflow' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .workflows("WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .workflows('WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -107,8 +107,8 @@ describe 'Workflow' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .workflows("WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .workflows('WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -125,8 +125,8 @@ describe 'Workflow' do
       nil,
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .workflows("WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .workflows('WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -135,7 +135,7 @@ describe 'Workflow' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                            .workflows.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -187,7 +187,7 @@ describe 'Workflow' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                   .workflows.list()
 
     expect(actual).to_not eq(nil)
@@ -213,7 +213,7 @@ describe 'Workflow' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                   .workflows.list()
 
     expect(actual).to_not eq(nil)
@@ -223,11 +223,11 @@ describe 'Workflow' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .workflows.create(friendly_name: "friendly_name", configuration: "configuration")
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .workflows.create(friendly_name: 'friendly_name', configuration: 'configuration')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'FriendlyName' => "friendly_name", 'Configuration' => "configuration", }
+    values = {'FriendlyName' => 'friendly_name', 'Configuration' => 'configuration', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -262,8 +262,8 @@ describe 'Workflow' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .workflows.create(friendly_name: "friendly_name", configuration: "configuration")
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .workflows.create(friendly_name: 'friendly_name', configuration: 'configuration')
 
     expect(actual).to_not eq(nil)
   end

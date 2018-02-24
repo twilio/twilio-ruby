@@ -11,7 +11,7 @@ describe 'Export' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.bulk_exports.exports("resource_type").fetch()
+      @client.preview.bulk_exports.exports('resource_type').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -36,7 +36,7 @@ describe 'Export' do
       ]
     ))
 
-    actual = @client.preview.bulk_exports.exports("resource_type").fetch()
+    actual = @client.preview.bulk_exports.exports('resource_type').fetch()
 
     expect(actual).to_not eq(nil)
   end

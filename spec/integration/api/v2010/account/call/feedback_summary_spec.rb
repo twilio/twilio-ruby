@@ -11,7 +11,7 @@ describe 'FeedbackSummary' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .calls \
                        .feedback_summaries.create(start_date: Date.new(2008, 1, 2), end_date: Date.new(2008, 1, 2))
     }.to raise_exception(Twilio::REST::TwilioError)
@@ -57,7 +57,7 @@ describe 'FeedbackSummary' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .calls \
                               .feedback_summaries.create(start_date: Date.new(2008, 1, 2), end_date: Date.new(2008, 1, 2))
 
@@ -68,9 +68,9 @@ describe 'FeedbackSummary' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .calls \
-                       .feedback_summaries("FSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+                       .feedback_summaries('FSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -110,9 +110,9 @@ describe 'FeedbackSummary' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .calls \
-                              .feedback_summaries("FSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+                              .feedback_summaries('FSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -121,9 +121,9 @@ describe 'FeedbackSummary' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .calls \
-                       .feedback_summaries("FSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+                       .feedback_summaries('FSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -140,9 +140,9 @@ describe 'FeedbackSummary' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .calls \
-                              .feedback_summaries("FSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+                              .feedback_summaries('FSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

@@ -11,8 +11,8 @@ describe 'SyncListItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                      .sync_list_items(1).fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -44,8 +44,8 @@ describe 'SyncListItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .sync_list_items(1).fetch()
 
     expect(actual).to_not eq(nil)
@@ -55,8 +55,8 @@ describe 'SyncListItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                      .sync_list_items(1).delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -74,8 +74,8 @@ describe 'SyncListItem' do
       nil,
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .sync_list_items(1).delete()
 
     expect(actual).to eq(true)
@@ -85,12 +85,12 @@ describe 'SyncListItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_list_items.create(data: "{}")
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_list_items.create(data: {})
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Data' => Twilio.serialize_object("{}"), }
+    values = {'Data' => Twilio.serialize_object({}), }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -119,9 +119,9 @@ describe 'SyncListItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_list_items.create(data: "{}")
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_list_items.create(data: {})
 
     expect(actual).to_not eq(nil)
   end
@@ -130,8 +130,8 @@ describe 'SyncListItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                      .sync_list_items.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -162,8 +162,8 @@ describe 'SyncListItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .sync_list_items.list()
 
     expect(actual).to_not eq(nil)
@@ -202,8 +202,8 @@ describe 'SyncListItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .sync_list_items.list()
 
     expect(actual).to_not eq(nil)
@@ -213,8 +213,8 @@ describe 'SyncListItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                      .sync_list_items(1).update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -246,8 +246,8 @@ describe 'SyncListItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .sync_lists("ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .sync_list_items(1).update()
 
     expect(actual).to_not eq(nil)

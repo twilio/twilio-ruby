@@ -11,7 +11,7 @@ describe 'Binding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                              .bindings.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -64,7 +64,7 @@ describe 'Binding' do
       ]
     ))
 
-    actual = @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                     .bindings.list()
 
     expect(actual).to_not eq(nil)
@@ -89,7 +89,7 @@ describe 'Binding' do
       ]
     ))
 
-    actual = @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                     .bindings.list()
 
     expect(actual).to_not eq(nil)
@@ -99,8 +99,8 @@ describe 'Binding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -139,8 +139,8 @@ describe 'Binding' do
       ]
     ))
 
-    actual = @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -149,8 +149,8 @@ describe 'Binding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -167,8 +167,8 @@ describe 'Binding' do
       nil,
     ))
 
-    actual = @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

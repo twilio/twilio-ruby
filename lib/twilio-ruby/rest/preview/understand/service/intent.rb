@@ -253,7 +253,11 @@ module Twilio
               end
 
               unless @samples
-                @samples = SampleList.new(@version, service_sid: @solution[:service_sid], intent_sid: @solution[:sid], )
+                @samples = SampleList.new(
+                    @version,
+                    service_sid: @solution[:service_sid],
+                    intent_sid: @solution[:sid],
+                )
               end
 
               @samples

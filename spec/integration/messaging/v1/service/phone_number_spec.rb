@@ -11,11 +11,11 @@ describe 'PhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                          .phone_numbers.create(phone_number_sid: "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                          .phone_numbers.create(phone_number_sid: 'PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'PhoneNumberSid' => "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", }
+    values = {'PhoneNumberSid' => 'PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -42,8 +42,8 @@ describe 'PhoneNumber' do
       ]
     ))
 
-    actual = @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .phone_numbers.create(phone_number_sid: "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .phone_numbers.create(phone_number_sid: 'PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
     expect(actual).to_not eq(nil)
   end
@@ -70,8 +70,8 @@ describe 'PhoneNumber' do
       ]
     ))
 
-    actual = @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .phone_numbers.create(phone_number_sid: "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .phone_numbers.create(phone_number_sid: 'PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
     expect(actual).to_not eq(nil)
   end
@@ -80,8 +80,8 @@ describe 'PhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                          .phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                          .phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -98,8 +98,8 @@ describe 'PhoneNumber' do
       nil,
     ))
 
-    actual = @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -108,7 +108,7 @@ describe 'PhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                           .phone_numbers.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -151,7 +151,7 @@ describe 'PhoneNumber' do
       ]
     ))
 
-    actual = @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                  .phone_numbers.list()
 
     expect(actual).to_not eq(nil)
@@ -161,8 +161,8 @@ describe 'PhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                          .phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                          .phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -191,8 +191,8 @@ describe 'PhoneNumber' do
       ]
     ))
 
-    actual = @client.messaging.v1.services("MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                 .phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                 .phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end

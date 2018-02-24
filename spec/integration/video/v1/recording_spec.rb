@@ -11,7 +11,7 @@ describe 'Recording' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.recordings("RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.video.v1.recordings('RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -51,7 +51,7 @@ describe 'Recording' do
       ]
     ))
 
-    actual = @client.video.v1.recordings("RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.video.v1.recordings('RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -147,7 +147,7 @@ describe 'Recording' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.recordings("RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.video.v1.recordings('RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -164,7 +164,7 @@ describe 'Recording' do
       nil,
     ))
 
-    actual = @client.video.v1.recordings("RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.video.v1.recordings('RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

@@ -85,10 +85,10 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.credentials.create(type: "gcm")
+      @client.notify.v1.credentials.create(type: 'gcm')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Type' => "gcm", }
+    values = {'Type' => 'gcm', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -114,7 +114,7 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.notify.v1.credentials.create(type: "gcm")
+    actual = @client.notify.v1.credentials.create(type: 'gcm')
 
     expect(actual).to_not eq(nil)
   end
@@ -123,7 +123,7 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.notify.v1.credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -151,7 +151,7 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.notify.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.notify.v1.credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -160,7 +160,7 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.notify.v1.credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -188,7 +188,7 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.notify.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.notify.v1.credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -197,7 +197,7 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.notify.v1.credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -214,7 +214,7 @@ describe 'Credential' do
       nil,
     ))
 
-    actual = @client.notify.v1.credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.notify.v1.credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

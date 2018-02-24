@@ -169,7 +169,12 @@ module Twilio
                   params,
               )
 
-              SigningKeyInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
+              SigningKeyInstance.new(
+                  @version,
+                  payload,
+                  account_sid: @solution[:account_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##
@@ -185,7 +190,12 @@ module Twilio
                   data: data,
               )
 
-              SigningKeyInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
+              SigningKeyInstance.new(
+                  @version,
+                  payload,
+                  account_sid: @solution[:account_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##

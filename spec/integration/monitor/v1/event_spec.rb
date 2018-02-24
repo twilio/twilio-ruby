@@ -11,7 +11,7 @@ describe 'Event' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.monitor.v1.events("AEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.monitor.v1.events('AEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -53,7 +53,7 @@ describe 'Event' do
       ]
     ))
 
-    actual = @client.monitor.v1.events("AEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.monitor.v1.events('AEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end

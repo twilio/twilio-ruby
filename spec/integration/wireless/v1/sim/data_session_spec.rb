@@ -11,7 +11,7 @@ describe 'DataSession' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.wireless.v1.sims("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.wireless.v1.sims('DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                          .data_sessions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -77,7 +77,7 @@ describe 'DataSession' do
       ]
     ))
 
-    actual = @client.wireless.v1.sims("DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.wireless.v1.sims('DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                 .data_sessions.list()
 
     expect(actual).to_not eq(nil)

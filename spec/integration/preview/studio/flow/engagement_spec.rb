@@ -11,7 +11,7 @@ describe 'Engagement' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.studio.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .engagements.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -42,7 +42,7 @@ describe 'Engagement' do
       ]
     ))
 
-    actual = @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.studio.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                    .engagements.list()
 
     expect(actual).to_not eq(nil)
@@ -52,8 +52,8 @@ describe 'Engagement' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .engagements("FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.studio.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -86,8 +86,8 @@ describe 'Engagement' do
       ]
     ))
 
-    actual = @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                   .engagements("FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.studio.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                   .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -96,11 +96,11 @@ describe 'Engagement' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .engagements.create(to: "+15558675310", from: "+15017122661")
+      @client.preview.studio.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .engagements.create(to: '+15558675310', from: '+15017122661')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'To' => "+15558675310", 'From' => "+15017122661", }
+    values = {'To' => '+15558675310', 'From' => '+15017122661', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -135,8 +135,8 @@ describe 'Engagement' do
       ]
     ))
 
-    actual = @client.preview.studio.flows("FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                   .engagements.create(to: "+15558675310", from: "+15017122661")
+    actual = @client.preview.studio.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                   .engagements.create(to: '+15558675310', from: '+15017122661')
 
     expect(actual).to_not eq(nil)
   end

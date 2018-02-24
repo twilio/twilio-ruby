@@ -11,10 +11,10 @@ describe 'AssignedAddOnExtension' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .assigned_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .extensions("XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .incoming_phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .assigned_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .extensions('XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -43,10 +43,10 @@ describe 'AssignedAddOnExtension' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .assigned_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .extensions("XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .incoming_phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .assigned_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .extensions('XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -55,9 +55,9 @@ describe 'AssignedAddOnExtension' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .assigned_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .incoming_phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .assigned_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .extensions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -99,9 +99,9 @@ describe 'AssignedAddOnExtension' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .assigned_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .incoming_phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .assigned_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .extensions.list()
 
     expect(actual).to_not eq(nil)
@@ -125,9 +125,9 @@ describe 'AssignedAddOnExtension' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .incoming_phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .assigned_add_ons("XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .incoming_phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .assigned_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .extensions.list()
 
     expect(actual).to_not eq(nil)

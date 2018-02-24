@@ -11,8 +11,8 @@ describe 'Key' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                      .keys("KYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                      .keys('KYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -41,8 +41,8 @@ describe 'Key' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                             .keys("KYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                             .keys('KYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -51,8 +51,8 @@ describe 'Key' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                      .keys("KYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                      .keys('KYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -69,8 +69,8 @@ describe 'Key' do
       nil,
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                             .keys("KYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                             .keys('KYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -79,7 +79,7 @@ describe 'Key' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                       .keys.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -109,7 +109,7 @@ describe 'Key' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                              .keys.create()
 
     expect(actual).to_not eq(nil)
@@ -119,7 +119,7 @@ describe 'Key' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                       .keys.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -150,7 +150,7 @@ describe 'Key' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                              .keys.list()
 
     expect(actual).to_not eq(nil)
@@ -187,7 +187,7 @@ describe 'Key' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                              .keys.list()
 
     expect(actual).to_not eq(nil)
@@ -197,8 +197,8 @@ describe 'Key' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                      .keys("KYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                      .keys('KYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -227,8 +227,8 @@ describe 'Key' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                             .keys("KYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                             .keys('KYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

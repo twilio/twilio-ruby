@@ -11,7 +11,7 @@ describe 'Alert' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.monitor.v1.alerts("NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.monitor.v1.alerts('NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -48,7 +48,7 @@ describe 'Alert' do
       ]
     ))
 
-    actual = @client.monitor.v1.alerts("NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.monitor.v1.alerts('NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -57,7 +57,7 @@ describe 'Alert' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.monitor.v1.alerts("NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.monitor.v1.alerts('NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -74,7 +74,7 @@ describe 'Alert' do
       nil,
     ))
 
-    actual = @client.monitor.v1.alerts("NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.monitor.v1.alerts('NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

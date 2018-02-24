@@ -11,12 +11,12 @@ describe 'SegmentMembership' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .segment_memberships.create(segment: "segment")
+      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .segment_memberships.create(segment: 'segment')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Segment' => "segment", }
+    values = {'Segment' => 'segment', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -39,9 +39,9 @@ describe 'SegmentMembership' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .segment_memberships.create(segment: "segment")
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .segment_memberships.create(segment: 'segment')
 
     expect(actual).to_not eq(nil)
   end
@@ -50,9 +50,9 @@ describe 'SegmentMembership' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .segment_memberships("segment").delete()
+      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .segment_memberships('segment').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -69,9 +69,9 @@ describe 'SegmentMembership' do
       nil,
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .segment_memberships("segment").delete()
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .segment_memberships('segment').delete()
 
     expect(actual).to eq(true)
   end
@@ -80,9 +80,9 @@ describe 'SegmentMembership' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .segment_memberships("segment").fetch()
+      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .segment_memberships('segment').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -107,9 +107,9 @@ describe 'SegmentMembership' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .segment_memberships("segment").fetch()
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .segment_memberships('segment').fetch()
 
     expect(actual).to_not eq(nil)
   end

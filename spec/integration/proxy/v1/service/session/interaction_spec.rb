@@ -11,9 +11,9 @@ describe 'Interaction' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .interactions("KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .interactions('KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -52,9 +52,9 @@ describe 'Interaction' do
       ]
     ))
 
-    actual = @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .interactions("KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .interactions('KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -63,8 +63,8 @@ describe 'Interaction' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                       .interactions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -95,8 +95,8 @@ describe 'Interaction' do
       ]
     ))
 
-    actual = @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                              .interactions.list()
 
     expect(actual).to_not eq(nil)
@@ -106,9 +106,9 @@ describe 'Interaction' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .interactions("KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .interactions('KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -125,9 +125,9 @@ describe 'Interaction' do
       nil,
     ))
 
-    actual = @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .interactions("KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .interactions('KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

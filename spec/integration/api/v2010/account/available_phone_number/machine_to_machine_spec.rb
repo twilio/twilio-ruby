@@ -11,8 +11,8 @@ describe 'MachineToMachine' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .available_phone_numbers("US") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .available_phone_numbers('US') \
                        .machine_to_machine.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -65,8 +65,8 @@ describe 'MachineToMachine' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .available_phone_numbers("US") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .available_phone_numbers('US') \
                               .machine_to_machine.list()
 
     expect(actual).to_not eq(nil)
@@ -92,8 +92,8 @@ describe 'MachineToMachine' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .available_phone_numbers("US") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .available_phone_numbers('US') \
                               .machine_to_machine.list()
 
     expect(actual).to_not eq(nil)

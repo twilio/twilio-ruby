@@ -271,7 +271,12 @@ module Twilio
                 raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
                 if sid != :unset
-                  return IpAccessControlListMappingContext.new(@version, @solution[:account_sid], @solution[:sid], sid, )
+                  return IpAccessControlListMappingContext.new(
+                      @version,
+                      @solution[:account_sid],
+                      @solution[:sid],
+                      sid,
+                  )
                 end
 
                 unless @ip_access_control_list_mappings

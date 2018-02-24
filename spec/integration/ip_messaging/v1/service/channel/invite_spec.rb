@@ -11,9 +11,9 @@ describe 'Invite' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .invites("INaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .invites('INaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -43,9 +43,9 @@ describe 'Invite' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .invites("INaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .invites('INaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -54,12 +54,12 @@ describe 'Invite' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .invites.create(identity: "identity")
+      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .invites.create(identity: 'identity')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Identity' => "identity", }
+    values = {'Identity' => 'identity', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -87,9 +87,9 @@ describe 'Invite' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .invites.create(identity: "identity")
+    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .invites.create(identity: 'identity')
 
     expect(actual).to_not eq(nil)
   end
@@ -98,8 +98,8 @@ describe 'Invite' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                              .invites.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -130,8 +130,8 @@ describe 'Invite' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                     .invites.list()
 
     expect(actual).to_not eq(nil)
@@ -169,8 +169,8 @@ describe 'Invite' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                     .invites.list()
 
     expect(actual).to_not eq(nil)
@@ -180,9 +180,9 @@ describe 'Invite' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .invites("INaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .invites('INaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -199,9 +199,9 @@ describe 'Invite' do
       nil,
     ))
 
-    actual = @client.ip_messaging.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .channels("CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .invites("INaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .invites('INaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

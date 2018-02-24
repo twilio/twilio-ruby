@@ -11,8 +11,8 @@ describe 'CredentialList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                         .credentials_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                         .credentials_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -39,8 +39,8 @@ describe 'CredentialList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .credentials_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .credentials_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -49,8 +49,8 @@ describe 'CredentialList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                         .credentials_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                         .credentials_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -67,8 +67,8 @@ describe 'CredentialList' do
       nil,
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .credentials_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .credentials_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -77,11 +77,11 @@ describe 'CredentialList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                         .credentials_lists.create(credential_list_sid: "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                         .credentials_lists.create(credential_list_sid: 'CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'CredentialListSid' => "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", }
+    values = {'CredentialListSid' => 'CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -106,8 +106,8 @@ describe 'CredentialList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .credentials_lists.create(credential_list_sid: "CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .credentials_lists.create(credential_list_sid: 'CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
     expect(actual).to_not eq(nil)
   end
@@ -116,7 +116,7 @@ describe 'CredentialList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                          .credentials_lists.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -157,7 +157,7 @@ describe 'CredentialList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                 .credentials_lists.list()
 
     expect(actual).to_not eq(nil)
@@ -182,7 +182,7 @@ describe 'CredentialList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                 .credentials_lists.list()
 
     expect(actual).to_not eq(nil)

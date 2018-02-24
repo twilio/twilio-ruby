@@ -11,9 +11,9 @@ describe 'Transcription' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .transcriptions("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .transcriptions('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -46,9 +46,9 @@ describe 'Transcription' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .transcriptions("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .transcriptions('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -57,9 +57,9 @@ describe 'Transcription' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .transcriptions("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .transcriptions('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -76,9 +76,9 @@ describe 'Transcription' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .transcriptions("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .transcriptions('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -87,8 +87,8 @@ describe 'Transcription' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .transcriptions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -137,8 +137,8 @@ describe 'Transcription' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .transcriptions.list()
 
     expect(actual).to_not eq(nil)
@@ -165,8 +165,8 @@ describe 'Transcription' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .transcriptions.list()
 
     expect(actual).to_not eq(nil)

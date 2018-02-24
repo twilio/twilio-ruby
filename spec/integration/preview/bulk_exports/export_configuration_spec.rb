@@ -11,7 +11,7 @@ describe 'ExportConfiguration' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.bulk_exports.export_configuration("resource_type").fetch()
+      @client.preview.bulk_exports.export_configuration('resource_type').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -36,7 +36,7 @@ describe 'ExportConfiguration' do
       ]
     ))
 
-    actual = @client.preview.bulk_exports.export_configuration("resource_type").fetch()
+    actual = @client.preview.bulk_exports.export_configuration('resource_type').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -45,7 +45,7 @@ describe 'ExportConfiguration' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.bulk_exports.export_configuration("resource_type").update()
+      @client.preview.bulk_exports.export_configuration('resource_type').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -70,7 +70,7 @@ describe 'ExportConfiguration' do
       ]
     ))
 
-    actual = @client.preview.bulk_exports.export_configuration("resource_type").update()
+    actual = @client.preview.bulk_exports.export_configuration('resource_type').update()
 
     expect(actual).to_not eq(nil)
   end

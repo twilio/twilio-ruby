@@ -66,7 +66,11 @@ module Twilio
             def stream(friendly_name: :unset, short_code: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(friendly_name: friendly_name, short_code: short_code, page_size: limits[:page_size], )
+              page = self.page(
+                  friendly_name: friendly_name,
+                  short_code: short_code,
+                  page_size: limits[:page_size],
+              )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end

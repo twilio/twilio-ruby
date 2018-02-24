@@ -169,7 +169,12 @@ module Twilio
                   params,
               )
 
-              ConnectAppInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
+              ConnectAppInstance.new(
+                  @version,
+                  payload,
+                  account_sid: @solution[:account_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##
@@ -208,7 +213,12 @@ module Twilio
                   data: data,
               )
 
-              ConnectAppInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
+              ConnectAppInstance.new(
+                  @version,
+                  payload,
+                  account_sid: @solution[:account_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##

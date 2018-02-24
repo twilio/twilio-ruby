@@ -11,9 +11,9 @@ describe 'DocumentPermission' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .document_permissions("identity").fetch()
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .document_permissions('identity').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -41,9 +41,9 @@ describe 'DocumentPermission' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .document_permissions("identity").fetch()
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .document_permissions('identity').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -52,9 +52,9 @@ describe 'DocumentPermission' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .document_permissions("identity").delete()
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .document_permissions('identity').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -71,9 +71,9 @@ describe 'DocumentPermission' do
       nil,
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .document_permissions("identity").delete()
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .document_permissions('identity').delete()
 
     expect(actual).to eq(true)
   end
@@ -82,8 +82,8 @@ describe 'DocumentPermission' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                      .document_permissions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -114,8 +114,8 @@ describe 'DocumentPermission' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .document_permissions.list()
 
     expect(actual).to_not eq(nil)
@@ -151,8 +151,8 @@ describe 'DocumentPermission' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .document_permissions.list()
 
     expect(actual).to_not eq(nil)
@@ -162,9 +162,9 @@ describe 'DocumentPermission' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .document_permissions("identity").update(read: true, write: true, manage: true)
+      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .document_permissions('identity').update(read: true, write: true, manage: true)
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Read' => true, 'Write' => true, 'Manage' => true, }
@@ -193,9 +193,9 @@ describe 'DocumentPermission' do
       ]
     ))
 
-    actual = @client.sync.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .documents("ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .document_permissions("identity").update(read: true, write: true, manage: true)
+    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .document_permissions('identity').update(read: true, write: true, manage: true)
 
     expect(actual).to_not eq(nil)
   end

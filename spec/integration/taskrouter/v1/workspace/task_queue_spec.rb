@@ -11,8 +11,8 @@ describe 'TaskQueue' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .task_queues("WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .task_queues('WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -55,8 +55,8 @@ describe 'TaskQueue' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .task_queues("WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .task_queues('WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -65,8 +65,8 @@ describe 'TaskQueue' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .task_queues("WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .task_queues('WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -109,8 +109,8 @@ describe 'TaskQueue' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .task_queues("WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .task_queues('WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -119,7 +119,7 @@ describe 'TaskQueue' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                            .task_queues.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -176,7 +176,7 @@ describe 'TaskQueue' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                   .task_queues.list()
 
     expect(actual).to_not eq(nil)
@@ -201,7 +201,7 @@ describe 'TaskQueue' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                   .task_queues.list()
 
     expect(actual).to_not eq(nil)
@@ -211,14 +211,14 @@ describe 'TaskQueue' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .task_queues.create(friendly_name: "friendly_name", reservation_activity_sid: "WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", assignment_activity_sid: "WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .task_queues.create(friendly_name: 'friendly_name', reservation_activity_sid: 'WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', assignment_activity_sid: 'WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
-        'FriendlyName' => "friendly_name",
-        'ReservationActivitySid' => "WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        'AssignmentActivitySid' => "WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        'FriendlyName' => 'friendly_name',
+        'ReservationActivitySid' => 'WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        'AssignmentActivitySid' => 'WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -260,8 +260,8 @@ describe 'TaskQueue' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .task_queues.create(friendly_name: "friendly_name", reservation_activity_sid: "WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", assignment_activity_sid: "WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .task_queues.create(friendly_name: 'friendly_name', reservation_activity_sid: 'WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', assignment_activity_sid: 'WAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
     expect(actual).to_not eq(nil)
   end
@@ -270,8 +270,8 @@ describe 'TaskQueue' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .task_queues("WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .task_queues('WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -288,8 +288,8 @@ describe 'TaskQueue' do
       nil,
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .task_queues("WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .task_queues('WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

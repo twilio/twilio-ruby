@@ -54,7 +54,12 @@ module Twilio
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
           def list(friendly_name: :unset, status: :unset, limit: nil, page_size: nil)
-            self.stream(friendly_name: friendly_name, status: status, limit: limit, page_size: page_size).entries
+            self.stream(
+                friendly_name: friendly_name,
+                status: status,
+                limit: limit,
+                page_size: page_size
+            ).entries
           end
 
           ##

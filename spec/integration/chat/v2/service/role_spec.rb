@@ -11,8 +11,8 @@ describe 'Role' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .roles("RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .roles('RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -46,8 +46,8 @@ describe 'Role' do
       ]
     ))
 
-    actual = @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .roles("RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .roles('RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -56,8 +56,8 @@ describe 'Role' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .roles("RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .roles('RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -74,8 +74,8 @@ describe 'Role' do
       nil,
     ))
 
-    actual = @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .roles("RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .roles('RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -84,13 +84,13 @@ describe 'Role' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .roles.create(friendly_name: "friendly_name", type: "channel", permission: ['permission'])
+      @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .roles.create(friendly_name: 'friendly_name', type: 'channel', permission: ['permission'])
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
-        'FriendlyName' => "friendly_name",
-        'Type' => "channel",
+        'FriendlyName' => 'friendly_name',
+        'Type' => 'channel',
         'Permission' => Twilio.serialize_list(['permission']) { |e| e },
     }
     expect(
@@ -124,8 +124,8 @@ describe 'Role' do
       ]
     ))
 
-    actual = @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .roles.create(friendly_name: "friendly_name", type: "channel", permission: ['permission'])
+    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .roles.create(friendly_name: 'friendly_name', type: 'channel', permission: ['permission'])
 
     expect(actual).to_not eq(nil)
   end
@@ -134,7 +134,7 @@ describe 'Role' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                      .roles.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -182,7 +182,7 @@ describe 'Role' do
       ]
     ))
 
-    actual = @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .roles.list()
 
     expect(actual).to_not eq(nil)
@@ -207,7 +207,7 @@ describe 'Role' do
       ]
     ))
 
-    actual = @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .roles.list()
 
     expect(actual).to_not eq(nil)
@@ -217,8 +217,8 @@ describe 'Role' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .roles("RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(permission: ['permission'])
+      @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .roles('RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update(permission: ['permission'])
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Permission' => Twilio.serialize_list(['permission']) { |e| e }, }
@@ -253,8 +253,8 @@ describe 'Role' do
       ]
     ))
 
-    actual = @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .roles("RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(permission: ['permission'])
+    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .roles('RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update(permission: ['permission'])
 
     expect(actual).to_not eq(nil)
   end

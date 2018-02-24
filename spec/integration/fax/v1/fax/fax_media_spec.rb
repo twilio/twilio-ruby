@@ -11,8 +11,8 @@ describe 'FaxMedia' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                    .media("MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                    .media('MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -39,8 +39,8 @@ describe 'FaxMedia' do
       ]
     ))
 
-    actual = @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .media("MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .media('MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -49,7 +49,7 @@ describe 'FaxMedia' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                     .media.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -90,7 +90,7 @@ describe 'FaxMedia' do
       ]
     ))
 
-    actual = @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                            .media.list()
 
     expect(actual).to_not eq(nil)
@@ -100,8 +100,8 @@ describe 'FaxMedia' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                    .media("MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                    .media('MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -118,8 +118,8 @@ describe 'FaxMedia' do
       nil,
     ))
 
-    actual = @client.fax.v1.faxes("FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .media("MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .media('MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

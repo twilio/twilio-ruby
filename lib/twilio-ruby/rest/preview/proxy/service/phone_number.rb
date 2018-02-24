@@ -198,7 +198,12 @@ module Twilio
                   params,
               )
 
-              PhoneNumberInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+              PhoneNumberInstance.new(
+                  @version,
+                  payload,
+                  service_sid: @solution[:service_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##

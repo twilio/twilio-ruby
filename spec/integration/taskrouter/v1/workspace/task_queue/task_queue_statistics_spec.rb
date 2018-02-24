@@ -11,8 +11,8 @@ describe 'TaskQueueStatistics' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .task_queues("WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .task_queues('WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                            .statistics().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -97,8 +97,8 @@ describe 'TaskQueueStatistics' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .task_queues("WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .task_queues('WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                   .statistics().fetch()
 
     expect(actual).to_not eq(nil)

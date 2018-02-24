@@ -11,17 +11,17 @@ describe 'Address' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .addresses.create(customer_name: "customer_name", street: "street", city: "city", region: "region", postal_code: "postal_code", iso_country: "US")
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .addresses.create(customer_name: 'customer_name', street: 'street', city: 'city', region: 'region', postal_code: 'postal_code', iso_country: 'US')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
-        'CustomerName' => "customer_name",
-        'Street' => "street",
-        'City' => "city",
-        'Region' => "region",
-        'PostalCode' => "postal_code",
-        'IsoCountry' => "US",
+        'CustomerName' => 'customer_name',
+        'Street' => 'street',
+        'City' => 'city',
+        'Region' => 'region',
+        'PostalCode' => 'postal_code',
+        'IsoCountry' => 'US',
     }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -54,8 +54,8 @@ describe 'Address' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .addresses.create(customer_name: "customer_name", street: "street", city: "city", region: "region", postal_code: "postal_code", iso_country: "US")
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .addresses.create(customer_name: 'customer_name', street: 'street', city: 'city', region: 'region', postal_code: 'postal_code', iso_country: 'US')
 
     expect(actual).to_not eq(nil)
   end
@@ -64,8 +64,8 @@ describe 'Address' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .addresses("ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .addresses('ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -82,8 +82,8 @@ describe 'Address' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .addresses("ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .addresses('ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -92,8 +92,8 @@ describe 'Address' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .addresses("ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .addresses('ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -127,8 +127,8 @@ describe 'Address' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .addresses("ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .addresses('ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -137,8 +137,8 @@ describe 'Address' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .addresses("ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .addresses('ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -172,8 +172,8 @@ describe 'Address' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .addresses("ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .addresses('ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -182,7 +182,7 @@ describe 'Address' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .addresses.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -232,7 +232,7 @@ describe 'Address' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .addresses.list()
 
     expect(actual).to_not eq(nil)
@@ -259,7 +259,7 @@ describe 'Address' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .addresses.list()
 
     expect(actual).to_not eq(nil)

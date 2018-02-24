@@ -11,7 +11,7 @@ describe 'Composition' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.compositions("CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.video.v1.compositions('CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -53,7 +53,7 @@ describe 'Composition' do
       ]
     ))
 
-    actual = @client.video.v1.compositions("CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.video.v1.compositions('CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -149,7 +149,7 @@ describe 'Composition' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.compositions("CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.video.v1.compositions('CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -166,7 +166,7 @@ describe 'Composition' do
       nil,
     ))
 
-    actual = @client.video.v1.compositions("CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.video.v1.compositions('CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

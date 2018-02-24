@@ -11,9 +11,9 @@ describe 'Media' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .media("MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .messages('MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .media('MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -30,9 +30,9 @@ describe 'Media' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .media("MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .messages('MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .media('MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -41,9 +41,9 @@ describe 'Media' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .media("MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .messages('MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .media('MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -70,9 +70,9 @@ describe 'Media' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .media("MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .messages('MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .media('MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -81,8 +81,8 @@ describe 'Media' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .messages('MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .media.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -125,8 +125,8 @@ describe 'Media' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .messages('MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .media.list()
 
     expect(actual).to_not eq(nil)
@@ -153,8 +153,8 @@ describe 'Media' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .messages('MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .media.list()
 
     expect(actual).to_not eq(nil)

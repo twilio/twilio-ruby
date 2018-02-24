@@ -11,9 +11,9 @@ describe 'Member' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .queues("QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .members("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .queues('QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .members('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -38,9 +38,9 @@ describe 'Member' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .queues("QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .members("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .queues('QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .members('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -49,12 +49,12 @@ describe 'Member' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .queues("QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .members("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(url: "https://example.com", method: "GET")
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .queues('QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .members('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update(url: 'https://example.com', method: 'GET')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Url' => "https://example.com", 'Method' => "GET", }
+    values = {'Url' => 'https://example.com', 'Method' => 'GET', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -77,9 +77,9 @@ describe 'Member' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .queues("QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .members("CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update(url: "https://example.com", method: "GET")
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .queues('QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .members('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update(url: 'https://example.com', method: 'GET')
 
     expect(actual).to_not eq(nil)
   end
@@ -88,8 +88,8 @@ describe 'Member' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .queues("QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .queues('QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .members.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -130,8 +130,8 @@ describe 'Member' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .queues("QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .queues('QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .members.list()
 
     expect(actual).to_not eq(nil)
@@ -158,8 +158,8 @@ describe 'Member' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .queues("QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .queues('QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .members.list()
 
     expect(actual).to_not eq(nil)

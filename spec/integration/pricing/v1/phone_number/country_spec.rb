@@ -84,7 +84,7 @@ describe 'Country' do
 
     expect {
       @client.pricing.v1.phone_numbers \
-                        .countries("US").fetch()
+                        .countries('US').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -121,7 +121,7 @@ describe 'Country' do
     ))
 
     actual = @client.pricing.v1.phone_numbers \
-                               .countries("US").fetch()
+                               .countries('US').fetch()
 
     expect(actual).to_not eq(nil)
   end

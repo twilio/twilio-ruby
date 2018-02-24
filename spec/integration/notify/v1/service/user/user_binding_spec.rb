@@ -11,9 +11,9 @@ describe 'UserBinding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -51,9 +51,9 @@ describe 'UserBinding' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -62,9 +62,9 @@ describe 'UserBinding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -81,9 +81,9 @@ describe 'UserBinding' do
       nil,
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -92,12 +92,12 @@ describe 'UserBinding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .bindings.create(binding_type: "apn", address: "address")
+      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .bindings.create(binding_type: 'apn', address: 'address')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'BindingType' => "apn", 'Address' => "address", }
+    values = {'BindingType' => 'apn', 'Address' => 'address', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -133,9 +133,9 @@ describe 'UserBinding' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .bindings.create(binding_type: "apn", address: "address")
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .bindings.create(binding_type: 'apn', address: 'address')
 
     expect(actual).to_not eq(nil)
   end
@@ -167,9 +167,9 @@ describe 'UserBinding' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .bindings.create(binding_type: "apn", address: "address")
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .bindings.create(binding_type: 'apn', address: 'address')
 
     expect(actual).to_not eq(nil)
   end
@@ -178,8 +178,8 @@ describe 'UserBinding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .bindings.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -210,8 +210,8 @@ describe 'UserBinding' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .bindings.list()
 
     expect(actual).to_not eq(nil)
@@ -257,8 +257,8 @@ describe 'UserBinding' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .users("NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .bindings.list()
 
     expect(actual).to_not eq(nil)

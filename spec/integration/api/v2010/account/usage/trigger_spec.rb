@@ -11,9 +11,9 @@ describe 'Trigger' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .usage \
-                       .triggers("UTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+                       .triggers('UTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -49,9 +49,9 @@ describe 'Trigger' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .usage \
-                              .triggers("UTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+                              .triggers('UTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -60,9 +60,9 @@ describe 'Trigger' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .usage \
-                       .triggers("UTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+                       .triggers('UTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -98,9 +98,9 @@ describe 'Trigger' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .usage \
-                              .triggers("UTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+                              .triggers('UTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -109,9 +109,9 @@ describe 'Trigger' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .usage \
-                       .triggers("UTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+                       .triggers('UTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -128,9 +128,9 @@ describe 'Trigger' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .usage \
-                              .triggers("UTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+                              .triggers('UTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -139,15 +139,15 @@ describe 'Trigger' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .usage \
-                       .triggers.create(callback_url: "https://example.com", trigger_value: "trigger_value", usage_category: "answering-machine-detection")
+                       .triggers.create(callback_url: 'https://example.com', trigger_value: 'trigger_value', usage_category: 'answering-machine-detection')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
-        'CallbackUrl' => "https://example.com",
-        'TriggerValue' => "trigger_value",
-        'UsageCategory' => "answering-machine-detection",
+        'CallbackUrl' => 'https://example.com',
+        'TriggerValue' => 'trigger_value',
+        'UsageCategory' => 'answering-machine-detection',
     }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -182,9 +182,9 @@ describe 'Trigger' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .usage \
-                              .triggers.create(callback_url: "https://example.com", trigger_value: "trigger_value", usage_category: "answering-machine-detection")
+                              .triggers.create(callback_url: 'https://example.com', trigger_value: 'trigger_value', usage_category: 'answering-machine-detection')
 
     expect(actual).to_not eq(nil)
   end
@@ -193,7 +193,7 @@ describe 'Trigger' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .usage \
                        .triggers.list()
     }.to raise_exception(Twilio::REST::TwilioError)
@@ -246,7 +246,7 @@ describe 'Trigger' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .usage \
                               .triggers.list()
 
@@ -274,7 +274,7 @@ describe 'Trigger' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .usage \
                               .triggers.list()
 

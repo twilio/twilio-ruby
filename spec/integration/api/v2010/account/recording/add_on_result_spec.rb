@@ -11,9 +11,9 @@ describe 'AddOnResult' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .add_on_results('XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -45,9 +45,9 @@ describe 'AddOnResult' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .add_on_results('XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -56,8 +56,8 @@ describe 'AddOnResult' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .add_on_results.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -102,8 +102,8 @@ describe 'AddOnResult' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .add_on_results.list()
 
     expect(actual).to_not eq(nil)
@@ -127,8 +127,8 @@ describe 'AddOnResult' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .add_on_results.list()
 
     expect(actual).to_not eq(nil)
@@ -138,9 +138,9 @@ describe 'AddOnResult' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .add_on_results('XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -157,9 +157,9 @@ describe 'AddOnResult' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .recordings("REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .add_on_results("XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .add_on_results('XRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

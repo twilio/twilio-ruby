@@ -11,11 +11,11 @@ describe 'PhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .phone_numbers.create(sid: "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+      @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .phone_numbers.create(sid: 'PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Sid' => "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", }
+    values = {'Sid' => 'PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -42,8 +42,8 @@ describe 'PhoneNumber' do
       ]
     ))
 
-    actual = @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .phone_numbers.create(sid: "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    actual = @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .phone_numbers.create(sid: 'PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
     expect(actual).to_not eq(nil)
   end
@@ -52,8 +52,8 @@ describe 'PhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -70,8 +70,8 @@ describe 'PhoneNumber' do
       nil,
     ))
 
-    actual = @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -80,7 +80,7 @@ describe 'PhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                            .phone_numbers.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -123,7 +123,7 @@ describe 'PhoneNumber' do
       ]
     ))
 
-    actual = @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                   .phone_numbers.list()
 
     expect(actual).to_not eq(nil)
@@ -133,8 +133,8 @@ describe 'PhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -163,8 +163,8 @@ describe 'PhoneNumber' do
       ]
     ))
 
-    actual = @client.preview.proxy.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .phone_numbers("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end

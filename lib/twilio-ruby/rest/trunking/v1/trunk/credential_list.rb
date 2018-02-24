@@ -185,7 +185,12 @@ module Twilio
                   params,
               )
 
-              CredentialListInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid], sid: @solution[:sid], )
+              CredentialListInstance.new(
+                  @version,
+                  payload,
+                  trunk_sid: @solution[:trunk_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##

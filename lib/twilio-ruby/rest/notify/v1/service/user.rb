@@ -252,7 +252,12 @@ module Twilio
               raise ArgumentError, 'segment cannot be nil' if segment.nil?
 
               if segment != :unset
-                return SegmentMembershipContext.new(@version, @solution[:service_sid], @solution[:identity], segment, )
+                return SegmentMembershipContext.new(
+                    @version,
+                    @solution[:service_sid],
+                    @solution[:identity],
+                    segment,
+                )
               end
 
               unless @segment_memberships

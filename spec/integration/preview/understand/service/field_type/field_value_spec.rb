@@ -11,9 +11,9 @@ describe 'FieldValue' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .field_types("UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .field_values("UCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .field_types('UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .field_values('UCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -42,9 +42,9 @@ describe 'FieldValue' do
       ]
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .field_types("UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .field_values("UCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .field_types('UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .field_values('UCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -53,8 +53,8 @@ describe 'FieldValue' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .field_types("UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .field_types('UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                 .field_values.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -85,8 +85,8 @@ describe 'FieldValue' do
       ]
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .field_types("UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .field_types('UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                        .field_values.list()
 
     expect(actual).to_not eq(nil)
@@ -123,8 +123,8 @@ describe 'FieldValue' do
       ]
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .field_types("UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .field_types('UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                        .field_values.list()
 
     expect(actual).to_not eq(nil)
@@ -134,12 +134,12 @@ describe 'FieldValue' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .field_types("UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .field_values.create(language: "language", value: "value")
+      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .field_types('UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .field_values.create(language: 'language', value: 'value')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Language' => "language", 'Value' => "value", }
+    values = {'Language' => 'language', 'Value' => 'value', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -166,9 +166,9 @@ describe 'FieldValue' do
       ]
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .field_types("UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .field_values.create(language: "language", value: "value")
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .field_types('UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .field_values.create(language: 'language', value: 'value')
 
     expect(actual).to_not eq(nil)
   end
@@ -177,9 +177,9 @@ describe 'FieldValue' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .field_types("UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .field_values("UCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .field_types('UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .field_values('UCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -196,9 +196,9 @@ describe 'FieldValue' do
       nil,
     ))
 
-    actual = @client.preview.understand.services("UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .field_types("UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                       .field_values("UCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .field_types('UBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                       .field_values('UCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

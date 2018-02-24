@@ -231,7 +231,12 @@ module Twilio
                   params,
               )
 
-              ConferenceInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
+              ConferenceInstance.new(
+                  @version,
+                  payload,
+                  account_sid: @solution[:account_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##
@@ -253,7 +258,12 @@ module Twilio
                   data: data,
               )
 
-              ConferenceInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
+              ConferenceInstance.new(
+                  @version,
+                  payload,
+                  account_sid: @solution[:account_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##

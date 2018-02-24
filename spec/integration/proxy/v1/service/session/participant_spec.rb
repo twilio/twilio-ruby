@@ -11,9 +11,9 @@ describe 'Participant' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .participants("KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .participants('KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -48,9 +48,9 @@ describe 'Participant' do
       ]
     ))
 
-    actual = @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .participants("KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .participants('KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -59,8 +59,8 @@ describe 'Participant' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                       .participants.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -91,8 +91,8 @@ describe 'Participant' do
       ]
     ))
 
-    actual = @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                              .participants.list()
 
     expect(actual).to_not eq(nil)
@@ -102,12 +102,12 @@ describe 'Participant' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .participants.create(identifier: "identifier")
+      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .participants.create(identifier: 'identifier')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Identifier' => "identifier", }
+    values = {'Identifier' => 'identifier', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -140,9 +140,9 @@ describe 'Participant' do
       ]
     ))
 
-    actual = @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .participants.create(identifier: "identifier")
+    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .participants.create(identifier: 'identifier')
 
     expect(actual).to_not eq(nil)
   end
@@ -151,9 +151,9 @@ describe 'Participant' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .participants("KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .participants('KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -170,9 +170,9 @@ describe 'Participant' do
       nil,
     ))
 
-    actual = @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .participants("KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .participants('KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -181,9 +181,9 @@ describe 'Participant' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .participants("KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .participants('KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -218,9 +218,9 @@ describe 'Participant' do
       ]
     ))
 
-    actual = @client.proxy.v1.services("KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .sessions("KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .participants("KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .participants('KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

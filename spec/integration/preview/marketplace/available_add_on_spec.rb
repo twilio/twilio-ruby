@@ -11,7 +11,7 @@ describe 'AvailableAddOn' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.marketplace.available_add_ons("XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.marketplace.available_add_ons('XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -50,7 +50,7 @@ describe 'AvailableAddOn' do
       ]
     ))
 
-    actual = @client.preview.marketplace.available_add_ons("XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.marketplace.available_add_ons('XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end

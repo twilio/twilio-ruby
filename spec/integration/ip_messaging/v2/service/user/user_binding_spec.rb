@@ -11,8 +11,8 @@ describe 'UserBinding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                              .user_bindings.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -63,8 +63,8 @@ describe 'UserBinding' do
       ]
     ))
 
-    actual = @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                     .user_bindings.list()
 
     expect(actual).to_not eq(nil)
@@ -89,8 +89,8 @@ describe 'UserBinding' do
       ]
     ))
 
-    actual = @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                     .user_bindings.list()
 
     expect(actual).to_not eq(nil)
@@ -100,9 +100,9 @@ describe 'UserBinding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .user_bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .user_bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -139,9 +139,9 @@ describe 'UserBinding' do
       ]
     ))
 
-    actual = @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .user_bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .user_bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -150,9 +150,9 @@ describe 'UserBinding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .user_bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .user_bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -169,9 +169,9 @@ describe 'UserBinding' do
       nil,
     ))
 
-    actual = @client.ip_messaging.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                    .user_bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                    .user_bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

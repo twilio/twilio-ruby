@@ -198,7 +198,12 @@ module Twilio
                   params,
               )
 
-              NotificationInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
+              NotificationInstance.new(
+                  @version,
+                  payload,
+                  account_sid: @solution[:account_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##

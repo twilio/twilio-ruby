@@ -11,10 +11,10 @@ describe 'Service' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.acc_security.services.create(name: "name")
+      @client.preview.acc_security.services.create(name: 'name')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Name' => "name", }
+    values = {'Name' => 'name', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -43,7 +43,7 @@ describe 'Service' do
       ]
     ))
 
-    actual = @client.preview.acc_security.services.create(name: "name")
+    actual = @client.preview.acc_security.services.create(name: 'name')
 
     expect(actual).to_not eq(nil)
   end
@@ -52,7 +52,7 @@ describe 'Service' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.acc_security.services("VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.acc_security.services('VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -83,7 +83,7 @@ describe 'Service' do
       ]
     ))
 
-    actual = @client.preview.acc_security.services("VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.acc_security.services('VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -145,7 +145,7 @@ describe 'Service' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.acc_security.services("VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.preview.acc_security.services('VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -176,7 +176,7 @@ describe 'Service' do
       ]
     ))
 
-    actual = @client.preview.acc_security.services("VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.preview.acc_security.services('VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

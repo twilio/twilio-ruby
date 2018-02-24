@@ -11,8 +11,8 @@ describe 'WorkerChannel' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .workers("WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                            .worker_channels.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -59,8 +59,8 @@ describe 'WorkerChannel' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .workers("WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                   .worker_channels.list()
 
     expect(actual).to_not eq(nil)
@@ -85,8 +85,8 @@ describe 'WorkerChannel' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .workers("WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                   .worker_channels.list()
 
     expect(actual).to_not eq(nil)
@@ -96,9 +96,9 @@ describe 'WorkerChannel' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .workers("WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .worker_channels("WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .worker_channels('WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -131,9 +131,9 @@ describe 'WorkerChannel' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .workers("WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .worker_channels("WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .worker_channels('WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -142,9 +142,9 @@ describe 'WorkerChannel' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .workers("WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                           .worker_channels("WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                           .worker_channels('WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -177,9 +177,9 @@ describe 'WorkerChannel' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces("WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .workers("WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                  .worker_channels("WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                  .worker_channels('WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

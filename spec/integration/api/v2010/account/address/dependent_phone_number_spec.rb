@@ -11,8 +11,8 @@ describe 'DependentPhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .addresses("ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .addresses('ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .dependent_phone_numbers.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -73,8 +73,8 @@ describe 'DependentPhoneNumber' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .addresses("ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .addresses('ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .dependent_phone_numbers.list()
 
     expect(actual).to_not eq(nil)
@@ -96,8 +96,8 @@ describe 'DependentPhoneNumber' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .addresses("ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .addresses('ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .dependent_phone_numbers.list()
 
     expect(actual).to_not eq(nil)

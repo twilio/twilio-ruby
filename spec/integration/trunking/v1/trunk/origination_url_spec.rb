@@ -11,8 +11,8 @@ describe 'OriginationUrl' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                         .origination_urls("OUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                         .origination_urls('OUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -43,8 +43,8 @@ describe 'OriginationUrl' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .origination_urls("OUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .origination_urls('OUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -53,8 +53,8 @@ describe 'OriginationUrl' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                         .origination_urls("OUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                         .origination_urls('OUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -71,8 +71,8 @@ describe 'OriginationUrl' do
       nil,
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .origination_urls("OUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .origination_urls('OUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -81,16 +81,16 @@ describe 'OriginationUrl' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                         .origination_urls.create(weight: 1, priority: 1, enabled: true, friendly_name: "friendly_name", sip_url: "https://example.com")
+      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                         .origination_urls.create(weight: 1, priority: 1, enabled: true, friendly_name: 'friendly_name', sip_url: 'https://example.com')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'Weight' => 1,
         'Priority' => 1,
         'Enabled' => true,
-        'FriendlyName' => "friendly_name",
-        'SipUrl' => "https://example.com",
+        'FriendlyName' => 'friendly_name',
+        'SipUrl' => 'https://example.com',
     }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -120,8 +120,8 @@ describe 'OriginationUrl' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .origination_urls.create(weight: 1, priority: 1, enabled: true, friendly_name: "friendly_name", sip_url: "https://example.com")
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .origination_urls.create(weight: 1, priority: 1, enabled: true, friendly_name: 'friendly_name', sip_url: 'https://example.com')
 
     expect(actual).to_not eq(nil)
   end
@@ -130,7 +130,7 @@ describe 'OriginationUrl' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                          .origination_urls.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -175,7 +175,7 @@ describe 'OriginationUrl' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                 .origination_urls.list()
 
     expect(actual).to_not eq(nil)
@@ -200,7 +200,7 @@ describe 'OriginationUrl' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                 .origination_urls.list()
 
     expect(actual).to_not eq(nil)
@@ -210,8 +210,8 @@ describe 'OriginationUrl' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                         .origination_urls("OUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                         .origination_urls('OUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -242,8 +242,8 @@ describe 'OriginationUrl' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks("TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                .origination_urls("OUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                .origination_urls('OUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

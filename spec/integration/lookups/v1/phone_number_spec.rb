@@ -11,7 +11,7 @@ describe 'PhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.lookups.v1.phone_numbers("+15017122661").fetch()
+      @client.lookups.v1.phone_numbers('+15017122661').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -39,6 +39,16 @@ describe 'PhoneNumber' do
               "name": "verizon",
               "type": "mobile"
           },
+          "fraud": {
+              "error_code": null,
+              "advanced_line_type": "voip",
+              "is_prepaid": false,
+              "mobile_country_code": "310",
+              "mobile_network_code": "456",
+              "carrier_name": "verizon",
+              "caller_name": "Delicious Cheese Cake",
+              "caller_type": "CONSUMER"
+          },
           "country_code": "US",
           "national_format": "(510) 867-5309",
           "phone_number": "+15108675309",
@@ -53,7 +63,7 @@ describe 'PhoneNumber' do
       ]
     ))
 
-    actual = @client.lookups.v1.phone_numbers("+15017122661").fetch()
+    actual = @client.lookups.v1.phone_numbers('+15017122661').fetch()
 
     expect(actual).to_not eq(nil)
   end

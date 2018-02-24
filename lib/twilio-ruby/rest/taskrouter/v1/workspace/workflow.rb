@@ -205,7 +205,12 @@ module Twilio
                   params,
               )
 
-              WorkflowInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid], )
+              WorkflowInstance.new(
+                  @version,
+                  payload,
+                  workspace_sid: @solution[:workspace_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##
@@ -232,7 +237,12 @@ module Twilio
                   data: data,
               )
 
-              WorkflowInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid], )
+              WorkflowInstance.new(
+                  @version,
+                  payload,
+                  workspace_sid: @solution[:workspace_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##

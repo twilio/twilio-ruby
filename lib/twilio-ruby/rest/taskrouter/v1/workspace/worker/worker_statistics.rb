@@ -195,7 +195,12 @@ module Twilio
               # @param [String] task_channel The task_channel
               # @return [WorkerStatisticsInstance] Fetched WorkerStatisticsInstance
               def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_channel: :unset)
-                context.fetch(minutes: minutes, start_date: start_date, end_date: end_date, task_channel: task_channel, )
+                context.fetch(
+                    minutes: minutes,
+                    start_date: start_date,
+                    end_date: end_date,
+                    task_channel: task_channel,
+                )
               end
 
               ##

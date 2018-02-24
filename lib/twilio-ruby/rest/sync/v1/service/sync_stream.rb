@@ -197,7 +197,12 @@ module Twilio
                   params,
               )
 
-              SyncStreamInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+              SyncStreamInstance.new(
+                  @version,
+                  payload,
+                  service_sid: @solution[:service_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##
@@ -221,7 +226,12 @@ module Twilio
                   data: data,
               )
 
-              SyncStreamInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+              SyncStreamInstance.new(
+                  @version,
+                  payload,
+                  service_sid: @solution[:service_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##

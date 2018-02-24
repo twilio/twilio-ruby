@@ -11,8 +11,8 @@ describe 'Binding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -50,8 +50,8 @@ describe 'Binding' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -60,8 +60,8 @@ describe 'Binding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -78,8 +78,8 @@ describe 'Binding' do
       nil,
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .bindings("BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -88,11 +88,11 @@ describe 'Binding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .bindings.create(identity: "identity", binding_type: "apn", address: "address")
+      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .bindings.create(identity: 'identity', binding_type: 'apn', address: 'address')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Identity' => "identity", 'BindingType' => "apn", 'Address' => "address", }
+    values = {'Identity' => 'identity', 'BindingType' => 'apn', 'Address' => 'address', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -128,8 +128,8 @@ describe 'Binding' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .bindings.create(identity: "identity", binding_type: "apn", address: "address")
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .bindings.create(identity: 'identity', binding_type: 'apn', address: 'address')
 
     expect(actual).to_not eq(nil)
   end
@@ -138,7 +138,7 @@ describe 'Binding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .bindings.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -169,7 +169,7 @@ describe 'Binding' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .bindings.list()
 
     expect(actual).to_not eq(nil)
@@ -215,7 +215,7 @@ describe 'Binding' do
       ]
     ))
 
-    actual = @client.notify.v1.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .bindings.list()
 
     expect(actual).to_not eq(nil)

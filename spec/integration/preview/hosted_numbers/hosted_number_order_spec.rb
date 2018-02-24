@@ -11,7 +11,7 @@ describe 'HostedNumberOrder' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.hosted_numbers.hosted_number_orders("HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.hosted_numbers.hosted_number_orders('HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -63,7 +63,7 @@ describe 'HostedNumberOrder' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.hosted_number_orders("HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.hosted_numbers.hosted_number_orders('HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -72,7 +72,7 @@ describe 'HostedNumberOrder' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.hosted_numbers.hosted_number_orders("HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.preview.hosted_numbers.hosted_number_orders('HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -89,7 +89,7 @@ describe 'HostedNumberOrder' do
       nil,
     ))
 
-    actual = @client.preview.hosted_numbers.hosted_number_orders("HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.preview.hosted_numbers.hosted_number_orders('HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -98,7 +98,7 @@ describe 'HostedNumberOrder' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.hosted_numbers.hosted_number_orders("HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.preview.hosted_numbers.hosted_number_orders('HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -150,7 +150,7 @@ describe 'HostedNumberOrder' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.hosted_number_orders("HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.preview.hosted_numbers.hosted_number_orders('HRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -257,10 +257,10 @@ describe 'HostedNumberOrder' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+15017122661", sms_capability: true)
+      @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: '+15017122661', sms_capability: true)
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'PhoneNumber' => "+15017122661", 'SmsCapability' => true, }
+    values = {'PhoneNumber' => '+15017122661', 'SmsCapability' => true, }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -304,7 +304,7 @@ describe 'HostedNumberOrder' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+15017122661", sms_capability: true)
+    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: '+15017122661', sms_capability: true)
 
     expect(actual).to_not eq(nil)
   end
@@ -344,7 +344,7 @@ describe 'HostedNumberOrder' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+15017122661", sms_capability: true)
+    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: '+15017122661', sms_capability: true)
 
     expect(actual).to_not eq(nil)
   end
@@ -384,7 +384,7 @@ describe 'HostedNumberOrder' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: "+15017122661", sms_capability: true)
+    actual = @client.preview.hosted_numbers.hosted_number_orders.create(phone_number: '+15017122661', sms_capability: true)
 
     expect(actual).to_not eq(nil)
   end

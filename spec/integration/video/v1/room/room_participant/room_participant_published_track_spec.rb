@@ -11,9 +11,9 @@ describe 'PublishedTrack' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .participants("PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .published_tracks("MTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .published_tracks('MTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -42,9 +42,9 @@ describe 'PublishedTrack' do
       ]
     ))
 
-    actual = @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .participants("PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .published_tracks("MTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .published_tracks('MTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -53,8 +53,8 @@ describe 'PublishedTrack' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                      .participants("PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                      .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                       .published_tracks.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -85,8 +85,8 @@ describe 'PublishedTrack' do
       ]
     ))
 
-    actual = @client.video.v1.rooms("RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                             .participants("PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                             .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                              .published_tracks.list()
 
     expect(actual).to_not eq(nil)

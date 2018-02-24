@@ -11,9 +11,9 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .sip \
-                       .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                       .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .credentials.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -56,9 +56,9 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                              .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .credentials.list()
 
     expect(actual).to_not eq(nil)
@@ -85,9 +85,9 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+                              .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .credentials.list()
 
     expect(actual).to_not eq(nil)
@@ -97,13 +97,13 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .sip \
-                       .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .credentials.create(username: "username", password: "password")
+                       .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .credentials.create(username: 'username', password: 'password')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Username' => "username", 'Password' => "password", }
+    values = {'Username' => 'username', 'Password' => 'password', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -128,10 +128,10 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .credentials.create(username: "username", password: "password")
+                              .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .credentials.create(username: 'username', password: 'password')
 
     expect(actual).to_not eq(nil)
   end
@@ -140,10 +140,10 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .sip \
-                       .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+                       .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -170,10 +170,10 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+                              .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -182,10 +182,10 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .sip \
-                       .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+                       .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -212,10 +212,10 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+                              .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -224,10 +224,10 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .sip \
-                       .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+                       .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -244,10 +244,10 @@ describe 'Credential' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .sip \
-                              .credential_lists("CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .credentials("CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+                              .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end

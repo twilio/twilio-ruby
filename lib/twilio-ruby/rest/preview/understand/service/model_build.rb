@@ -192,7 +192,12 @@ module Twilio
                   params,
               )
 
-              ModelBuildInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+              ModelBuildInstance.new(
+                  @version,
+                  payload,
+                  service_sid: @solution[:service_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##
@@ -208,7 +213,12 @@ module Twilio
                   data: data,
               )
 
-              ModelBuildInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+              ModelBuildInstance.new(
+                  @version,
+                  payload,
+                  service_sid: @solution[:service_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##

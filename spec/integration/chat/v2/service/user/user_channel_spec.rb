@@ -11,8 +11,8 @@ describe 'UserChannel' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                     .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                     .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                      .user_channels.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -57,8 +57,8 @@ describe 'UserChannel' do
       ]
     ))
 
-    actual = @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .user_channels.list()
 
     expect(actual).to_not eq(nil)
@@ -83,8 +83,8 @@ describe 'UserChannel' do
       ]
     ))
 
-    actual = @client.chat.v2.services("ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                            .users("USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                            .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .user_channels.list()
 
     expect(actual).to_not eq(nil)

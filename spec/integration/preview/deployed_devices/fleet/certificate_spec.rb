@@ -11,8 +11,8 @@ describe 'Certificate' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                      .certificates("CYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                      .certificates('CYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -41,8 +41,8 @@ describe 'Certificate' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                             .certificates("CYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").fetch()
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                             .certificates('CYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -51,8 +51,8 @@ describe 'Certificate' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                      .certificates("CYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                      .certificates('CYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -69,8 +69,8 @@ describe 'Certificate' do
       nil,
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                             .certificates("CYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").delete()
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                             .certificates('CYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
 
     expect(actual).to eq(true)
   end
@@ -79,11 +79,11 @@ describe 'Certificate' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                      .certificates.create(certificate_data: "certificate_data")
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                      .certificates.create(certificate_data: 'certificate_data')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'CertificateData' => "certificate_data", }
+    values = {'CertificateData' => 'certificate_data', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -110,8 +110,8 @@ describe 'Certificate' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                             .certificates.create(certificate_data: "certificate_data")
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                             .certificates.create(certificate_data: 'certificate_data')
 
     expect(actual).to_not eq(nil)
   end
@@ -120,7 +120,7 @@ describe 'Certificate' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                       .certificates.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -151,7 +151,7 @@ describe 'Certificate' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                              .certificates.list()
 
     expect(actual).to_not eq(nil)
@@ -188,7 +188,7 @@ describe 'Certificate' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                              .certificates.list()
 
     expect(actual).to_not eq(nil)
@@ -198,8 +198,8 @@ describe 'Certificate' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                      .certificates("CYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+      @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                      .certificates('CYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -228,8 +228,8 @@ describe 'Certificate' do
       ]
     ))
 
-    actual = @client.preview.deployed_devices.fleets("FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                                             .certificates("CYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").update()
+    actual = @client.preview.deployed_devices.fleets('FLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                                             .certificates('CYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
 
     expect(actual).to_not eq(nil)
   end

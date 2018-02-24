@@ -11,8 +11,8 @@ describe 'Feedback' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                       .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .messages('MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                        .feedback.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -39,8 +39,8 @@ describe 'Feedback' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts("ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
-                              .messages("MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") \
+    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .messages('MMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                               .feedback.create()
 
     expect(actual).to_not eq(nil)
