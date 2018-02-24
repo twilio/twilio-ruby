@@ -3,6 +3,9 @@ twilio-ruby changelog
 
 [2018-02-23] Version 5.6.4
 ---------------------------
+**Library**
+- PR #385 - Fix ClientCapability appParams
+
 **Api**
 - Add `trim` param to Outbound Calls API
 
