@@ -41,6 +41,13 @@ describe Twilio::JWT::ClientCapability do
       expect(@clientCapability.__send__(:_generate_payload)[:scope]).to eq(escope)
     end
 
+    it 'OutgoingClientScope with multiple params' do
+      @outgoingScope = Twilio::JWT::ClientCapability::OutgoingClientScope.new('test-application-sid', nil, {'params_key'=>'param_value', 'other_key'=>'other_value'})
+      @clientCapability.add_scope(@outgoingScope)
+      escope = 'scope:client:outgoing?appSid=test-application-sid&appParams=params_key%3Dparam_value%26other_key%3Dother_value'
+      expect(@clientCapability.__send__(:_generate_payload)[:scope]).to eq(escope)
+    end
+
     it 'IncomingClientScope' do
       @incomingScope = Twilio::JWT::ClientCapability::IncomingClientScope.new('test-client-name')
       @clientCapability.add_scope(@incomingScope)
