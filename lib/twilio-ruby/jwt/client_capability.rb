@@ -68,7 +68,7 @@ module Twilio
             client_name = "clientName=#{CGI.escape(@client_name)}"
           end
           unless @params.empty?
-            params = 'appParams=' + @params.map { |k, v| CGI.escape("#{k}=#{v}") }.join('%26')
+            params = 'appParams=' + @params.map { |k, v| CGI.escape("#{k}=#{v}") }.join(CGI.escape('&'))
           end
 
           suffix = [application_sid, client_name, params].compact.join('&')
