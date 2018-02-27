@@ -3,93 +3,169 @@ require 'spec_helper'
 describe Twilio::TwiML::MessagingResponse do
   context 'Testing Response' do
     it 'should allow empty response' do
-      r = Twilio::TwiML::MessagingResponse.new
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response/>')
+      expected_doc = parse <<-XML
+        <Response/>
+      XML
+      response = Twilio::TwiML::MessagingResponse.new.to_s
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow using to_xml instead of to_s' do
-      r = Twilio::TwiML::MessagingResponse.new
-      expect(r.to_xml).to eq('<?xml version="1.0" encoding="UTF-8"?><Response/>')
+      expected_doc = parse <<-XML
+        <Response/>
+      XML
+      response = Twilio::TwiML::MessagingResponse.new.to_xml
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow populated response' do
-      r = Twilio::TwiML::MessagingResponse.new
-      r.message(body: 'Hello')
-      r.redirect('example.com')
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello</Message><Redirect>example.com</Redirect></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Message>Hello</Message>
+          <Redirect>example.com</Redirect>
+        </Response>
+      XML
+      response = Twilio::TwiML::MessagingResponse.new
+      response.message(body: 'Hello')
+      response.redirect('example.com')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow chaining' do
-      r = Twilio::TwiML::MessagingResponse.new.message(body: 'Hello').redirect('example.com')
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello</Message><Redirect>example.com</Redirect></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Message>Hello</Message>
+          <Redirect>example.com</Redirect>
+        </Response>
+      XML
+      response = Twilio::TwiML::MessagingResponse.new.message(body: 'Hello').redirect('example.com')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow nesting' do
-      r = Twilio::TwiML::MessagingResponse.new
-      r.message(body: 'Hello') do |m|
-        m.media('foobar')
+      expected_doc = parse <<-XML
+        <Response>
+          <Message>
+            Hello
+            <Media>foobar</Media>
+          </Message>
+        </Response>
+      XML
+      response = Twilio::TwiML::MessagingResponse.new
+      response.message(body: 'Hello') do |message|
+        message.media('foobar')
       end
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello<Media>foobar</Media></Message></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow nesting and chaining' do
-      r = Twilio::TwiML::MessagingResponse.new
-      r.message(body: 'Hello') do |m|
-        m.media('foobar')
+      expected_doc = parse <<-XML
+        <Response>
+          <Message>
+            Hello
+            <Media>foobar</Media>
+          </Message>
+          <Redirect>example.com</Redirec>
+        </Response>
+      XML
+      response = Twilio::TwiML::MessagingResponse.new
+      response.message(body: 'Hello') do |message|
+        message.media('foobar')
       end
 
-      r.redirect('example.com')
+      response.redirect('example.com')
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello<Media>foobar</Media></Message><Redirect>example.com</Redirect></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow nesting from the initializer' do
-      response = Twilio::TwiML::MessagingResponse.new do |r|
-        r.message(body: 'Hello')
-        r.redirect('example.com')
+      expected_doc = parse <<-XML
+        <Response>
+          <Message>Hello</Message>
+          <Redirect>example.com</Redirec>
+        </Response>
+      XML
+      response = Twilio::TwiML::MessagingResponse.new do |res|
+        res.message(body: 'Hello')
+        res.redirect('example.com')
       end
-      expect(response.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello</Message><Redirect>example.com</Redirect></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 
   context 'Testing Message' do
     it 'should allow a body' do
-      r = Twilio::TwiML::MessagingResponse.new
-      r.message(body: 'Hello')
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Hello</Message></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Message>Hello</Message>
+        </Response>
+      XML
+      response = Twilio::TwiML::MessagingResponse.new
+      response.message(body: 'Hello')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow appending Body' do
-      b = Twilio::TwiML::Body.new('Hello World')
+      expected_doc = parse <<-XML
+        <Response>
+          <Message><Body>Hello World</Body></Message>
+        </Response>
+      XML
+      body = Twilio::TwiML::Body.new('Hello World')
+      message = Twilio::TwiML::Message.new
 
-      r = Twilio::TwiML::MessagingResponse.new
-      r.append(b)
+      response = Twilio::TwiML::MessagingResponse.new
+      message.append(body)
+      response.append(message)
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Body>Hello World</Body></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow appending Body and Media' do
-      b = Twilio::TwiML::Body.new('Hello World')
-      m = Twilio::TwiML::Media.new('hey.jpg')
+      expected_doc = parse <<-XML
+        <Response>
+          <Message>
+            <Body>Hello World</Body>
+            <Media>hey.jpg</Media>
+          </Message>
+        </Response>
+      XML
+      body = Twilio::TwiML::Body.new('Hello World')
+      media = Twilio::TwiML::Media.new('hey.jpg')
+      message = Twilio::TwiML::Message.new
 
-      r = Twilio::TwiML::MessagingResponse.new
-      r.append(b)
-      r.append(m)
+      response = Twilio::TwiML::MessagingResponse.new
+      message.append(body)
+      message.append(media)
+      response.append(message)
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Body>Hello World</Body><Media>hey.jpg</Media></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 
   context 'Testing Redirect' do
     it 'should allow MessagingResponse.redirect' do
-      r = Twilio::TwiML::MessagingResponse.new
-      r.redirect('example.com')
+      expected_doc = parse <<-XML
+        <Response>
+          <Message><Redirect>example.com</Redirect></Message>
+        </Response>
+      XML
+      response = Twilio::TwiML::MessagingResponse.new
+      response.redirect('example.com')
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Redirect>example.com</Redirect></Response>')
+      doc = parse(response)
+      redirect = doc.xpath('/Response/Redirect').first
+      expect(redirect.content).to eq('example.com')
     end
   end
 end

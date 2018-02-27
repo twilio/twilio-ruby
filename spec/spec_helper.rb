@@ -10,6 +10,8 @@ require_relative './holodeck/hologram.rb'
 
 require 'twilio-ruby'
 require 'rack'
+require 'rspec/matchers'
+require 'equivalent-xml'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
@@ -29,4 +31,10 @@ end
 
 def auth_token
   ENV['AUTH_TOKEN']
+end
+
+def parse(twiml_response)
+  Nokogiri::XML::Document.parse(twiml_response.to_s) do |options|
+    options.noblanks
+  end
 end
