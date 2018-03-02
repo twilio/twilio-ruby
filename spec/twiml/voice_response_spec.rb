@@ -3,252 +3,428 @@ require 'spec_helper'
 describe Twilio::TwiML::VoiceResponse do
   context 'Testing Response' do
     it 'should allow empty response' do
-      r = Twilio::TwiML::VoiceResponse.new
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response/>')
+      expected_doc = parse <<-XML
+        <Response/>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new.to_s
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow using to_xml instead of to_s' do
-      r = Twilio::TwiML::VoiceResponse.new
-      expect(r.to_xml).to eq('<?xml version="1.0" encoding="UTF-8"?><Response/>')
+      expected_doc = parse <<-XML
+        <Response/>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new.to_xml
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
+    end
+
+    it 'should have an xml declaration by default' do
+      twiml = Twilio::TwiML::VoiceResponse.new.to_xml
+      expect(twiml).to match(/\A<\?xml version="1.0" encoding="UTF-8"\?>/)
+    end
+
+    it 'should allow no xml_declaration' do
+      twiml = Twilio::TwiML::VoiceResponse.new.to_xml(false)
+      expect(twiml).not_to match(/\A<\?xml version="1.0" encoding="UTF-8"\?>/)
     end
 
     it 'should allow populated response' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.hangup
-      r.leave
-      r.sms('twilio sms', to: '+11234567890', from: '+10987654321')
+      expected_doc = parse <<-XML
+        <Response>
+          <Hangup/>
+          <Leave/>
+          <Sms to="+11234567890" from="+10987654321">twilio sms</Sms>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.hangup
+      response.leave
+      response.sms('twilio sms', to: '+11234567890', from: '+10987654321')
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Hangup/><Leave/><Sms from="+10987654321" to="+11234567890">twilio sms</Sms></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow chaining' do
-      r = Twilio::TwiML::VoiceResponse.new.hangup.leave.sms(
+      expected_doc = parse <<-XML
+        <Response>
+          <Hangup/>
+          <Leave/>
+          <Sms to="+11234567890" from="+10987654321">twilio sms</Sms>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new.hangup.leave.sms(
         'twilio sms',
         to: '+11234567890',
         from: '+10987654321'
       )
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Hangup/><Leave/><Sms from="+10987654321" to="+11234567890">twilio sms</Sms></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow nesting' do
+      expected_doc = parse <<-XML
+        <Response>
+          <Hangup/>
+          <Leave/>
+          <Sms to="+11234567890" from="+10987654321">twilio sms</Sms>
+        </Response>
+      XML
       response = Twilio::TwiML::VoiceResponse.new do |r|
         r.hangup
         r.leave
         r.sms('twilio sms', to: '+11234567890', from: '+10987654321')
       end
-      expect(response.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Hangup/><Leave/><Sms from="+10987654321" to="+11234567890">twilio sms</Sms></Response>')
+
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 
   context 'Testing Say' do
     it 'should allow empty say' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.say ''
+      expected_doc = parse <<-XML
+        <Response>
+          <Say></Say>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.say ''
 
-      # For Ruby 2.0, 2.1, 2.2 both opening and closing tags are generated
-      # Ruby 2.4 generates an empty tag
-      expect(r.to_s)
-        .to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Say></Say></Response>')
-        .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Say/></Response>'))
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow populated say' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.say 'Hello World'
+      expected_doc = parse <<-XML
+        <Response>
+          <Say>Hello World</Say>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.say 'Hello World'
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Say>Hello World</Say></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow unicode say' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.say 'nécessaire et d\'autres'
+      expected_doc = parse <<-XML
+        <Response>
+          <Say>nécessaire et d'autres</Say>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.say 'nécessaire et d\'autres'
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Say>nécessaire et d\'autres</Say></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow looping' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.say 'Hello Monkey', loop: 3
+      expected_doc = parse <<-XML
+        <Response>
+          <Say loop="3">Hello Monkey</Say>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.say 'Hello Monkey', loop: 3
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Say loop="3">Hello Monkey</Say></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow languages' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.say 'Hello Monkey', language: 'en-gb'
+      expected_doc = parse <<-XML
+        <Response>
+          <Say language="en-gb">Hello Monkey</Say>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.say 'Hello Monkey', language: 'en-gb'
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Say language="en-gb">Hello Monkey</Say></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow all attributes' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.say 'Hello Monkey', loop: 3, voice: 'man', language: 'fr'
+      expected_doc = parse <<-XML
+        <Response>
+          <Say loop="3" voice="man" language="fr">Hello Monkey</Say>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.say 'Hello Monkey', loop: 3, voice: 'man', language: 'fr'
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Say language="fr" loop="3" voice="man">Hello Monkey</Say></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 
   context 'Testing Play' do
     it 'should allow empty play' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.play
+      expected_doc = parse <<-XML
+        <Response>
+          <Play></Play>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.play
 
-      # For Ruby 2.0, 2.1, 2.2 both opening and closing tags are generated
-      # Ruby 2.4 generates an empty tag
-      expect(r.to_s)
-        .to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play></Play></Response>')
-        .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play/></Response>'))
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should play hello' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.play(url: 'http://hellomonkey.mp3')
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play>http://hellomonkey.mp3</Play></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Play>http://hellomonkey.mp3</Play>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.play(url: 'http://hellomonkey.mp3')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should play hello on loop' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.play(url: 'http://hellomonkey.mp3', loop: 3)
+      expected_doc = parse <<-XML
+        <Response>
+          <Play loop="3">http://hellomonkey.mp3</Play>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.play(url: 'http://hellomonkey.mp3', loop: 3)
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play loop="3">http://hellomonkey.mp3</Play></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should play digits' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.play(digits: 'w123')
+      expected_doc = parse <<-XML
+        <Response>
+          <Play digits="w123"></Play>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.play(digits: 'w123')
 
-      # For Ruby 2.0, 2.1, 2.2 both opening and closing tags are generated
-      # Ruby 2.4 generates an empty tag
-      expect(r.to_s)
-        .to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play digits="w123"></Play></Response>')
-        .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Play digits="w123"/></Response>'))
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 
   context 'Testing Record' do
     it 'should allow empty record' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.record
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Record/></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Record/>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.record
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow action and method' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.record(action: 'example.com', method: 'GET')
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Record action="example.com" method="GET"/></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Record action="example.com" method="GET" />
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.record(action: 'example.com', method: 'GET')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow max_length, finish_on_key, and timeout' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.record(timeout: 4, finish_on_key: '#', max_length: 30)
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Record finishOnKey="#" maxLength="30" timeout="4"/></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Record timeout="4" finishOnKey="#" maxLength="30" />
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.record(timeout: 4, finish_on_key: '#', max_length: 30)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow transcribe' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.record(transcribe_callback: 'example.com')
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Record transcribeCallback="example.com"/></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Record transcribeCallback="example.com" />
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.record(transcribe_callback: 'example.com')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 
   context 'Testing Redirect' do
     it 'should allow empty redirect' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.redirect ''
-
-      # For Ruby 2.0, 2.1, 2.2 both opening and closing tags are generated
-      # Ruby 2.4 generates an empty tag
-      expect(r.to_s)
-        .to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Redirect></Redirect></Response>')
-        .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Redirect/></Response>'))
+      expected_doc = parse <<-XML
+        <Response>
+          <Redirect/>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.redirect ''
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow method' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.redirect('example.com', method: 'POST')
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Redirect method="POST">example.com</Redirect></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Redirect method="POST">example.com</Redirect>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.redirect('example.com', method: 'POST')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow method and params' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.redirect('example.com?id=34&action=hey', method: 'POST')
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Redirect method="POST">example.com?id=34&amp;action=hey</Redirect></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Redirect method="POST">example.com?id=34&amp;action=hey</Redirect>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.redirect('example.com?id=34&action=hey', method: 'POST')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 
   context 'Testing Hangup' do
     it 'should allow hangup' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.hangup
+      expected_doc = parse <<-XML
+        <Response>
+          <Hangup/>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.hangup
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
+    end
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Hangup/></Response>')
+    it 'should not allow content in the hangup' do
+      response = Twilio::TwiML::VoiceResponse.new
+      expect { response.hangup "Goodbye" }.to raise_error(ArgumentError)
     end
   end
 
   context 'Testing Leave' do
     it 'should allow leave' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.leave
+      expected_doc = parse <<-XML
+        <Response>
+          <Leave/>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.leave
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
+    end
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Leave/></Response>')
+    it 'should not allow content in the leave' do
+      response = Twilio::TwiML::VoiceResponse.new
+      expect { response.leave "Goodbye" }.to raise_error(ArgumentError)
     end
   end
 
   context 'Testing Reject' do
     it 'should reject with a default reason' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.reject
+      expected_doc = parse <<-XML
+        <Response>
+          <Reject/>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.reject
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
+    end
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Reject/></Response>')
+    it 'should not allow content in the reject' do
+      response = Twilio::TwiML::VoiceResponse.new
+      expect { response.reject "Goodbye" }.to raise_error(ArgumentError)
     end
   end
 
   context 'Testing SMS' do
     it 'should allow empty SMS' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.sms ''
-
-      # For Ruby 2.0, 2.1, 2.2 both opening and closing tags are generated
-      # Ruby 2.4 generates an empty tag
-      expect(r.to_s)
-        .to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Sms></Sms></Response>')
-        .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Sms/></Response>'))
+      expected_doc = parse <<-XML
+        <Response>
+          <Sms/>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.sms ''
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow SMS body' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.sms 'Hello, World'
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Sms>Hello, World</Sms></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Sms>Hello, World</Sms>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.sms 'Hello, World'
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow to, from, action, and status_callback' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.sms('Hello, World', to: 1_231_231_234, from: 3_453_453_456, status_callback: 'example.com?id=34&action=hey')
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Sms from="3453453456" statusCallback="example.com?id=34&amp;action=hey" to="1231231234">Hello, World</Sms></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Sms to="1231231234" from="3453453456" statusCallback="example.com?id=34&amp;action=hey">Hello, World</Sms>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.sms('Hello, World', to: 1_231_231_234, from: 3_453_453_456, status_callback: 'example.com?id=34&action=hey')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow action and method' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.sms('Hello', method: 'POST', action: 'example.com?id=34&action=hey')
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Sms action="example.com?id=34&amp;action=hey" method="POST">Hello</Sms></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Sms method="POST" action="example.com?id=34&amp;action=hey">Hello</Sms>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.sms('Hello', method: 'POST', action: 'example.com?id=34&action=hey')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 
   context 'Testing Conference' do
     it 'should allow basic conferencing' do
-      d = Twilio::TwiML::Dial.new
-      d.conference(
+      expected_doc = parse <<-XML
+        <Response>
+          <Dial>
+            <Conference beep="false" waitUrl="" startConferenceOnEnter="true" endConferenceOnExit="true">
+              TestConferenceAttributes
+            </Conference>
+          </Dial>
+        </Response>
+      XML
+      dial = Twilio::TwiML::Dial.new
+      dial.conference(
         'TestConferenceAttributes',
         beep: false,
         wait_url: '',
@@ -256,15 +432,24 @@ describe Twilio::TwiML::VoiceResponse do
         end_conference_on_exit: true
       )
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(d)
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Conference beep="false" endConferenceOnExit="true" startConferenceOnEnter="true" waitUrl="">TestConferenceAttributes</Conference></Dial></Response>')
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(dial)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow muted conferencing' do
-      d = Twilio::TwiML::Dial.new
-      d.conference(
+      expected_doc = parse <<-XML
+        <Response>
+          <Dial>
+            <Conference beep="false" waitUrl="" startConferenceOnEnter="true" endConferenceOnExit="true" muted="true">
+              TestConferenceMutedAttribute
+            </Conference>
+          </Dial>
+        </Response>
+      XML
+      dial = Twilio::TwiML::Dial.new
+      dial.conference(
         'TestConferenceMutedAttribute',
         beep: false,
         muted: true,
@@ -273,207 +458,319 @@ describe Twilio::TwiML::VoiceResponse do
         end_conference_on_exit: true
       )
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(d)
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Conference beep="false" endConferenceOnExit="true" muted="true" startConferenceOnEnter="true" waitUrl="">TestConferenceMutedAttribute</Conference></Dial></Response>')
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(dial)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 
   context 'Testing Queue' do
     it 'should allow queues in VoiceResponse' do
-      d = Twilio::TwiML::Dial.new
-      d.queue('TestQueueAttribute', url: '', method: 'GET')
+      expected_doc = parse <<-XML
+        <Response>
+          <Dial>
+            <Queue url="" method="GET">TestQueueAttribute</Queue>
+          </Dial>
+        </Response>
+      XML
+      dial = Twilio::TwiML::Dial.new
+      dial.queue('TestQueueAttribute', url: '', method: 'GET')
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(d)
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Queue method="GET" url="">TestQueueAttribute</Queue></Dial></Response>')
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(dial)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 
   context 'Testing Echo' do
     it 'should allow VoiceResponse Echo' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.echo
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Echo/></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Echo/>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.echo
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 
   context 'Testing Enqueue' do
     it 'should allow VoiceResponse.enqueue' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.enqueue(
+      expected_doc = parse <<-XML
+        <Response>
+          <Enqueue action="act" method="GET" waitUrl="wait" waitUrlMethod="POST">TestEnqueueAttribute</Enqueue>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.enqueue(
         name: 'TestEnqueueAttribute',
         action: 'act',
         method: 'GET',
         wait_url: 'wait',
         wait_url_method: 'POST'
       )
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Enqueue action="act" method="GET" waitUrl="wait" waitUrlMethod="POST">TestEnqueueAttribute</Enqueue></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow Enqueue.task and appending Enqueue' do
-      e = Twilio::TwiML::Enqueue.new(name: nil, workflow_sid: '123123123')
-      e.task('{"account_sid": "AC123123123"}')
+      task_json = '{"account_sid": "AC123123123"}'
+      expected_doc = parse <<-XML
+        <Response>
+          <Enqueue workflowSid="123123123">
+            <Task>#{task_json}</Task>
+          </Enqueue>
+        </Response>
+      XML
+      enqueue_elem = Twilio::TwiML::Enqueue.new(name: nil, workflow_sid: '123123123')
+      enqueue_elem.task(task_json)
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(e)
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Enqueue workflowSid="123123123"><Task>{"account_sid": "AC123123123"}</Task></Enqueue></Response>')
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(enqueue_elem)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow Enqueue.task with a dictionary and appending Enqueue' do
-      e = Twilio::TwiML::Enqueue.new(name: nil, workflow_sid: '123123123')
-      e.task({ account_sid: 'AC123123123' })
+      expected_doc = parse <<-XML
+        <Response>
+          <Enqueue workflowSid="123123123">
+            <Task>{"account_sid":"AC123123123"}</Task>
+          </Enqueue>
+        </Response>
+      XML
+      enqueue_elem = Twilio::TwiML::Enqueue.new(name: nil, workflow_sid: '123123123')
+      enqueue_elem.task(account_sid: 'AC123123123')
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(e)
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(enqueue_elem)
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Enqueue workflowSid="123123123"><Task>{"account_sid":"AC123123123"}</Task></Enqueue></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 
   context 'Testing Dial' do
     it 'should allow VoiceResponse.dial' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.dial(number: '1231231234')
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial>1231231234</Dial></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Dial>1231231234</Dial>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.dial(number: '1231231234')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow Dial.sim' do
-      d = Twilio::TwiML::Dial.new
-      d.sim '123123123'
+      expected_doc = parse <<-XML
+        <Response>
+          <Dial>
+            <Sim>123123123</Sim>
+          </Dial>
+        </Response>
+      XML
+      dial = Twilio::TwiML::Dial.new
+      dial.sim '123123123'
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(d)
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(dial)
 
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Sim>123123123</Sim></Dial></Response>')
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow Dial.sip' do
-      d = Twilio::TwiML::Dial.new
-      d.sip 'foo@example.com'
+      expected_doc = parse <<-XML
+        <Response>
+          <Dial>
+            <Sip>foo@example.com</Sip>
+          </Dial>
+        </Response>
+      XML
+      dial = Twilio::TwiML::Dial.new
+      dial.sip 'foo@example.com'
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(d)
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Sip>foo@example.com</Sip></Dial></Response>')
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(dial)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow Dial.sip with username, password' do
-      d = Twilio::TwiML::Dial.new
-      d.sip('foo@example.com', username: 'foo', password: 'bar')
+      expected_doc = parse <<-XML
+        <Response>
+          <Dial>
+            <Sip username="foo" password="bar">foo@example.com</Sip>
+          </Dial>
+        </Response>
+      XML
+      dial = Twilio::TwiML::Dial.new
+      dial.sip('foo@example.com', username: 'foo', password: 'bar')
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(d)
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Sip password="bar" username="foo">foo@example.com</Sip></Dial></Response>')
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(dial)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow Dial.number' do
-      d = Twilio::TwiML::Dial.new
-      d.number '1231231234'
+      expected_doc = parse <<-XML
+        <Response>
+          <Dial>
+            <Number>1231231234</Number>
+          </Dial>
+        </Response>
+      XML
+      dial = Twilio::TwiML::Dial.new
+      dial.number '1231231234'
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(d)
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Number>1231231234</Number></Dial></Response>')
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(dial)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow Dial.number with params' do
-      d = Twilio::TwiML::Dial.new
-      d.number('1231231234', status_callback: 'http://example.com', status_callback_event: 'initiated completed')
+      expected_doc = parse <<-XML
+        <Response>
+          <Dial>
+            <Number statusCallback="http://example.com" statusCallbackEvent="initiated completed">1231231234</Number>
+          </Dial>
+        </Response>
+      XML
+      dial = Twilio::TwiML::Dial.new
+      dial.number('1231231234', status_callback: 'http://example.com', status_callback_event: 'initiated completed')
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(d)
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Number statusCallback="http://example.com" statusCallbackEvent="initiated completed">1231231234</Number></Dial></Response>')
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(dial)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow Dial.conference' do
-      d = Twilio::TwiML::Dial.new
-      d.conference 'My Room'
+      expected_doc = parse <<-XML
+        <Response>
+          <Dial>
+            <Conference>My Room</Conference>
+          </Dial>
+        </Response>
+      XML
+      dial = Twilio::TwiML::Dial.new
+      dial.conference 'My Room'
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(d)
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Conference>My Room</Conference></Dial></Response>')
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(dial)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow Dial.queue' do
-      d = Twilio::TwiML::Dial.new
-      d.queue 'The Cute Queue'
+      expected_doc = parse <<-XML
+        <Response>
+          <Dial>
+            <Queue>The Cute Queue</Queue>
+          </Dial>
+        </Response>
+      XML
+      dial = Twilio::TwiML::Dial.new
+      dial.queue 'The Cute Queue'
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(d)
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Queue>The Cute Queue</Queue></Dial></Response>')
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(dial)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow empty Dial.client' do
-      d = Twilio::TwiML::Dial.new
-      d.client ''
+      expected_doc = parse <<-XML
+        <Response>
+          <Dial>
+            <Client></Client>
+          </Dial>
+        </Response>
+      XML
+      dial = Twilio::TwiML::Dial.new
+      dial.client ''
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(d)
-
-      # For Ruby 2.0, 2.1, 2.2 both opening and closing tags are generated
-      # Ruby 2.4 generates an empty tag
-      expect(r.to_s)
-        .to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Client></Client></Dial></Response>')
-        .or(eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Client/></Dial></Response>'))
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(dial)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow populated Dial.client' do
-      d = Twilio::TwiML::Dial.new
-      d.client 'alice'
+      expected_doc = parse <<-XML
+        <Response>
+          <Dial>
+            <Client>alice</Client>
+          </Dial>
+        </Response>
+      XML
+      dial = Twilio::TwiML::Dial.new
+      dial.client 'alice'
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(d)
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Dial><Client>alice</Client></Dial></Response>')
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(dial)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 
   context 'Testing Gather' do
     it 'should allow empty Gather' do
-      r = Twilio::TwiML::VoiceResponse.new
-      r.gather
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Gather/></Response>')
+      expected_doc = parse <<-XML
+        <Response>
+          <Gather></Gather>
+        </Response>
+      XML
+      response = Twilio::TwiML::VoiceResponse.new
+      response.gather
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
-    it 'should allow Gather.say' do
-      g = Twilio::TwiML::Gather.new
-      g.say 'Hello'
+    it 'should allow nested Say in Gather' do
+      expected_doc = parse <<-XML
+        <Response>
+          <Gather>
+            <Say>Hello</Say>
+          </Gather>
+        </Response>
+      XML
+      gather_elem = Twilio::TwiML::Gather.new
+      gather_elem.say 'Hello'
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(g)
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?><Response><Gather><Say>Hello</Say></Gather></Response>')
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(gather_elem)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow nested play and pause' do
-      g = Twilio::TwiML::Gather.new
-      g.say 'Hey'
-      g.play(url: 'hey.mp3')
-      g.pause
+      expected_doc = parse <<-XML
+        <Response>
+          <Gather>
+            <Say>Hey</Say>
+            <Play>hey.mp3</Play>
+            <Pause/>
+          </Gather>
+        </Response>
+      XML
+      gather = Twilio::TwiML::Gather.new
+      gather.say 'Hey'
+      gather.play(url: 'hey.mp3')
+      gather.pause
 
-      r = Twilio::TwiML::VoiceResponse.new
-      r.append(g)
-
-      expect(r.to_s).to eq('<?xml version="1.0" encoding="UTF-8"?>' \
-                             '<Response>' \
-                               '<Gather>' \
-                                 '<Say>Hey</Say>' \
-                                 '<Play>hey.mp3</Play>' \
-                                 '<Pause/>' \
-                               '</Gather>' \
-                             '</Response>')
+      response = Twilio::TwiML::VoiceResponse.new
+      response.append(gather)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 end
