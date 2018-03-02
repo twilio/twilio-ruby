@@ -320,7 +320,7 @@ describe Twilio::TwiML::VoiceResponse do
 
     it 'should not allow content in the hangup' do
       response = Twilio::TwiML::VoiceResponse.new
-      expect { response.hangup "Goodbye" }.to raise_error(ArgumentError)
+      expect { response.hangup 'Goodbye' }.to raise_error(ArgumentError)
     end
   end
 
@@ -339,7 +339,7 @@ describe Twilio::TwiML::VoiceResponse do
 
     it 'should not allow content in the leave' do
       response = Twilio::TwiML::VoiceResponse.new
-      expect { response.leave "Goodbye" }.to raise_error(ArgumentError)
+      expect { response.leave 'Goodbye' }.to raise_error(ArgumentError)
     end
   end
 
@@ -358,7 +358,7 @@ describe Twilio::TwiML::VoiceResponse do
 
     it 'should not allow content in the reject' do
       response = Twilio::TwiML::VoiceResponse.new
-      expect { response.reject "Goodbye" }.to raise_error(ArgumentError)
+      expect { response.reject 'Goodbye' }.to raise_error(ArgumentError)
     end
   end
 

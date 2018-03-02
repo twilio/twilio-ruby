@@ -34,7 +34,5 @@ def auth_token
 end
 
 def parse(twiml_response)
-  Nokogiri::XML::Document.parse(twiml_response.to_s) do |options|
-    options.noblanks
-  end
+  Nokogiri::XML::Document.parse(twiml_response.to_s, &:noblanks)
 end

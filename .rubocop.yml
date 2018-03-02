@@ -21,6 +21,9 @@ Metrics/BlockLength:
 Metrics/AbcSize:
   Enabled: false
 
+Layout/IndentHeredoc:
+  Enabled: false
+
 Metrics/ClassLength:
   Max: 175
 

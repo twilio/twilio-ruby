@@ -173,15 +173,14 @@ World
     it 'should allow MessagingResponse.redirect' do
       expected_doc = parse <<-XML
         <Response>
-          <Message><Redirect>example.com</Redirect></Message>
+          <Redirect>example.com</Redirect>
         </Response>
       XML
       response = Twilio::TwiML::MessagingResponse.new
       response.redirect('example.com')
 
       doc = parse(response)
-      redirect = doc.xpath('/Response/Redirect').first
-      expect(redirect.content).to eq('example.com')
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
   end
 end
