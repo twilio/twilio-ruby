@@ -3,6 +3,9 @@ twilio-ruby changelog
 
 [2018-03-02] Version 5.7.0
 ---------------------------
+**TwiML**
+- Allow newlines in TwiML content. Better XML configuration in general.
+
 **Studio**
 - Add new /Context endpoint for step and engagement resources. Removes the context property from existing step and engagement resources. *(breaking change)*
 
