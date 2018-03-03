@@ -182,6 +182,7 @@ module Twilio
 
               # Dependents
               @steps = nil
+              @engagement_context = nil
             end
 
             ##
@@ -218,6 +219,14 @@ module Twilio
             end
 
             ##
+            # Access the engagement_context
+            # @return [EngagementContextList]
+            # @return [EngagementContextContext]
+            def engagement_context
+              EngagementContextContext.new(@version, @solution[:flow_sid], @solution[:sid], )
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -246,7 +255,6 @@ module Twilio
                   'contact_sid' => payload['contact_sid'],
                   'contact_channel_address' => payload['contact_channel_address'],
                   'status' => payload['status'],
-                  'context' => payload['context'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
@@ -306,12 +314,6 @@ module Twilio
             end
 
             ##
-            # @return [Hash] The context
-            def context
-              @properties['context']
-            end
-
-            ##
             # @return [Time] The date_created
             def date_created
               @properties['date_created']
@@ -347,6 +349,13 @@ module Twilio
             # @return [steps] steps
             def steps
               context.steps
+            end
+
+            ##
+            # Access the engagement_context
+            # @return [engagement_context] engagement_context
+            def engagement_context
+              context.engagement_context
             end
 
             ##

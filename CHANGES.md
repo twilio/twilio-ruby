@@ -1,6 +1,12 @@
 twilio-ruby changelog
 =====================
 
+[2018-03-02] Version 5.7.0
+---------------------------
+**Studio**
+- Add new /Context endpoint for step and engagement resources. Removes the context property from existing step and engagement resources. *(breaking change)*
+
+
 [2018-02-23] Version 5.6.4
 ---------------------------
 **Library**
