@@ -78,6 +78,12 @@ module Twilio
             #   Twilio should wait while machine_detection is performned before timing out.
             # @param [String] recording_status_callback_event The
             #   recording_status_callback_event
+            # @param [String] trim Set this parameter to control trimming of silence on the
+            #   recording.  Possible values are `trim-silence` or `do-not-trim`. Defaults to
+            #   `trim-silence`.
+            # @param [String] caller_id The phone number, SIP address or Client identifier
+            #   that made this Call. Phone numbers are in E.164 format (e.g. +16175551212). SIP
+            #   addresses are formatted as `name@company.com`.
             # @param [String] url The fully qualified URL that should be consulted when the
             #   call connects. Just like when you set a URL on a phone number for handling
             #   inbound calls.
@@ -85,7 +91,7 @@ module Twilio
             #   should use to handle this phone call. If this parameter is present, Twilio will
             #   ignore all of the voice URLs passed and use the URLs set on the application.
             # @return [CallInstance] Newly created CallInstance
-            def create(to: nil, from: nil, method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, send_digits: :unset, if_machine: :unset, timeout: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, machine_detection: :unset, machine_detection_timeout: :unset, recording_status_callback_event: :unset, url: :unset, application_sid: :unset)
+            def create(to: nil, from: nil, method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, send_digits: :unset, if_machine: :unset, timeout: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, machine_detection: :unset, machine_detection_timeout: :unset, recording_status_callback_event: :unset, trim: :unset, caller_id: :unset, url: :unset, application_sid: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -109,6 +115,8 @@ module Twilio
                   'MachineDetection' => machine_detection,
                   'MachineDetectionTimeout' => machine_detection_timeout,
                   'RecordingStatusCallbackEvent' => Twilio.serialize_list(recording_status_callback_event) { |e| e },
+                  'Trim' => trim,
+                  'CallerId' => caller_id,
               })
 
               payload = @version.create(

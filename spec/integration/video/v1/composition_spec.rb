@@ -45,6 +45,7 @@ describe 'Composition' do
           "bitrate": 64,
           "size": 4,
           "duration": 6,
+          "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "url": "https://video.twilio.com/v1/Compositions/CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "media": "https://video.twilio.com/v1/Compositions/CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media"
@@ -121,6 +122,7 @@ describe 'Composition' do
                   "bitrate": 16,
                   "size": 55,
                   "duration": 10,
+                  "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "url": "https://video.twilio.com/v1/Compositions/CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "links": {
                       "media": "https://video.twilio.com/v1/Compositions/CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media"
@@ -208,6 +210,7 @@ describe 'Composition' do
           "bitrate": 0,
           "size": 0,
           "duration": 1,
+          "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "url": "https://video.twilio.com/v1/Compositions/CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "media": "https://video.twilio.com/v1/Compositions/CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media"

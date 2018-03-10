@@ -30,6 +30,7 @@ module Twilio
           # @param [composition.Status] status The status
           # @param [Time] date_created_after The date_created_after
           # @param [Time] date_created_before The date_created_before
+          # @param [String] room_sid The room_sid
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -37,11 +38,12 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(status: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
+          def list(status: :unset, date_created_after: :unset, date_created_before: :unset, room_sid: :unset, limit: nil, page_size: nil)
             self.stream(
                 status: status,
                 date_created_after: date_created_after,
                 date_created_before: date_created_before,
+                room_sid: room_sid,
                 limit: limit,
                 page_size: page_size
             ).entries
@@ -54,6 +56,7 @@ module Twilio
           # @param [composition.Status] status The status
           # @param [Time] date_created_after The date_created_after
           # @param [Time] date_created_before The date_created_before
+          # @param [String] room_sid The room_sid
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -61,13 +64,14 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(status: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
+          def stream(status: :unset, date_created_after: :unset, date_created_before: :unset, room_sid: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
                 status: status,
                 date_created_after: date_created_after,
                 date_created_before: date_created_before,
+                room_sid: room_sid,
                 page_size: limits[:page_size],
             )
 
@@ -94,15 +98,17 @@ module Twilio
           # @param [composition.Status] status The status
           # @param [Time] date_created_after The date_created_after
           # @param [Time] date_created_before The date_created_before
+          # @param [String] room_sid The room_sid
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of CompositionInstance
-          def page(status: :unset, date_created_after: :unset, date_created_before: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+          def page(status: :unset, date_created_after: :unset, date_created_before: :unset, room_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'Status' => status,
                 'DateCreatedAfter' => Twilio.serialize_iso8601_datetime(date_created_after),
                 'DateCreatedBefore' => Twilio.serialize_iso8601_datetime(date_created_before),
+                'RoomSid' => room_sid,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
@@ -280,6 +286,7 @@ module Twilio
                 'size' => payload['size'].to_i,
                 'duration' => payload['duration'].to_i,
                 'url' => payload['url'],
+                'room_sid' => payload['room_sid'],
                 'links' => payload['links'],
             }
 
@@ -387,6 +394,12 @@ module Twilio
           # @return [String] The url
           def url
             @properties['url']
+          end
+
+          ##
+          # @return [String] The room_sid
+          def room_sid
+            @properties['room_sid']
           end
 
           ##
