@@ -8,7 +8,7 @@ twilio-ruby changelog
 - Release `trim` recording Outbound Calls API functionality in helper libraries
 
 **Video**
-- [composer] Add `room_sid` to Composition resource.
+- Add `room_sid` to Composition resource.
 
 **Twiml**
 - Adds support for passing in multiple input type enums when setting `input` on `Gather`
