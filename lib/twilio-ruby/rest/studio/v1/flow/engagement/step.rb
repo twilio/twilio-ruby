@@ -168,6 +168,9 @@ module Twilio
                 # Path Solution
                 @solution = {flow_sid: flow_sid, engagement_sid: engagement_sid, sid: sid, }
                 @uri = "/Flows/#{@solution[:flow_sid]}/Engagements/#{@solution[:engagement_sid]}/Steps/#{@solution[:sid]}"
+
+                # Dependents
+                @step_context = nil
               end
 
               ##
@@ -189,6 +192,14 @@ module Twilio
                     engagement_sid: @solution[:engagement_sid],
                     sid: @solution[:sid],
                 )
+              end
+
+              ##
+              # Access the step_context
+              # @return [StepContextList]
+              # @return [StepContextContext]
+              def step_context
+                StepContextContext.new(@version, @solution[:flow_sid], @solution[:engagement_sid], @solution[:sid], )
               end
 
               ##
@@ -226,6 +237,7 @@ module Twilio
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                     'url' => payload['url'],
+                    'links' => payload['links'],
                 }
 
                 # Context
@@ -320,10 +332,23 @@ module Twilio
               end
 
               ##
+              # @return [String] The links
+              def links
+                @properties['links']
+              end
+
+              ##
               # Fetch a StepInstance
               # @return [StepInstance] Fetched StepInstance
               def fetch
                 context.fetch
+              end
+
+              ##
+              # Access the step_context
+              # @return [step_context] step_context
+              def step_context
+                context.step_context
               end
 
               ##

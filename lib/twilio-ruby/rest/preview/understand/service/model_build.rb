@@ -259,6 +259,8 @@ module Twilio
                   'status' => payload['status'],
                   'unique_name' => payload['unique_name'],
                   'url' => payload['url'],
+                  'build_duration' => payload['build_duration'] == nil ? payload['build_duration'] : payload['build_duration'].to_i,
+                  'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
               }
 
               # Context
@@ -323,6 +325,18 @@ module Twilio
             # @return [String] The url
             def url
               @properties['url']
+            end
+
+            ##
+            # @return [String] The build_duration
+            def build_duration
+              @properties['build_duration']
+            end
+
+            ##
+            # @return [String] The error_code
+            def error_code
+              @properties['error_code']
             end
 
             ##

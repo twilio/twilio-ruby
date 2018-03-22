@@ -13,10 +13,10 @@ describe 'StreamMessage' do
     expect {
       @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                      .sync_streams('TOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .stream_messages.create(data: {})
+                     .stream_messages.create(data: JSON.parse('{}'))
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Data' => Twilio.serialize_object({}), }
+    values = {'Data' => Twilio.serialize_object(JSON.parse('{}')), }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -38,7 +38,7 @@ describe 'StreamMessage' do
 
     actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .sync_streams('TOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .stream_messages.create(data: {})
+                            .stream_messages.create(data: JSON.parse('{}'))
 
     expect(actual).to_not eq(nil)
   end

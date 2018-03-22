@@ -86,10 +86,10 @@ describe 'SyncListItem' do
     expect {
       @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                           .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                          .sync_list_items.create(data: {})
+                          .sync_list_items.create(data: JSON.parse('{}'))
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Data' => Twilio.serialize_object({}), }
+    values = {'Data' => Twilio.serialize_object(JSON.parse('{}')), }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -119,7 +119,7 @@ describe 'SyncListItem' do
 
     actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                  .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                 .sync_list_items.create(data: {})
+                                 .sync_list_items.create(data: JSON.parse('{}'))
 
     expect(actual).to_not eq(nil)
   end
@@ -212,10 +212,10 @@ describe 'SyncListItem' do
     expect {
       @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                           .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                          .sync_list_items(1).update(data: {})
+                          .sync_list_items(1).update(data: JSON.parse('{}'))
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Data' => Twilio.serialize_object({}), }
+    values = {'Data' => Twilio.serialize_object(JSON.parse('{}')), }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -245,7 +245,7 @@ describe 'SyncListItem' do
 
     actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                                  .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                 .sync_list_items(1).update(data: {})
+                                 .sync_list_items(1).update(data: JSON.parse('{}'))
 
     expect(actual).to_not eq(nil)
   end

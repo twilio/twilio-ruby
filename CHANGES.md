@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+[2018-03-22] Version 5.7.2
+---------------------------
+**Preview**
+- Add `BuildDuration` and `ErrorCode` to Understand ModelBuild
+
+**Studio**
+- Add new /Context endpoint for step and engagement resources.
+
+
 [2018-03-09] Version 5.7.1
 ---------------------------
 **Api**

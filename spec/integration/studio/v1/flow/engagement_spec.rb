@@ -80,7 +80,8 @@ describe 'Engagement' do
           "date_updated": null,
           "url": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
-              "steps": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Steps"
+              "steps": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Steps",
+              "engagement_context": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Context"
           }
       }
       ]
@@ -118,18 +119,15 @@ describe 'Engagement' do
           "sid": "FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "flow_sid": "FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "context": {
-              "flow": {
-                  "first_name": "Foo"
-              }
-          },
+          "context": {},
           "contact_sid": "FCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "contact_channel_address": "+18001234567",
           "status": "active",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "links": {
-              "steps": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Steps"
+              "steps": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Steps",
+              "engagement_context": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Context"
           }
       }
       ]

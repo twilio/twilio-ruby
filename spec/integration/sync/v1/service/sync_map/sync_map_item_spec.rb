@@ -87,10 +87,10 @@ describe 'SyncMapItem' do
     expect {
       @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                      .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_map_items.create(key: 'key', data: {})
+                     .sync_map_items.create(key: 'key', data: JSON.parse('{}'))
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Key' => 'key', 'Data' => Twilio.serialize_object({}), }
+    values = {'Key' => 'key', 'Data' => Twilio.serialize_object(JSON.parse('{}')), }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -121,7 +121,7 @@ describe 'SyncMapItem' do
 
     actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
                             .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_map_items.create(key: 'key', data: {})
+                            .sync_map_items.create(key: 'key', data: JSON.parse('{}'))
 
     expect(actual).to_not eq(nil)
   end
