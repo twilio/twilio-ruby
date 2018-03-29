@@ -144,7 +144,8 @@ module Twilio
 
       class VoiceGrant
         include AccessTokenGrant
-        attr_accessor :outgoing_application_sid,
+        attr_accessor :incoming_allow,
+                      :outgoing_application_sid,
                       :outgoing_application_params,
                       :push_credential_sid,
                       :endpoint_id
@@ -155,6 +156,12 @@ module Twilio
 
         def _generate_payload
           payload = {}
+
+          if incoming_allow == true
+            incoming = {}
+            incoming[:allow] = true
+            payload[:incoming] = incoming
+          end
 
           if outgoing_application_sid
             outgoing = {}
