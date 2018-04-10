@@ -156,12 +156,7 @@ module Twilio
 
         def _generate_payload
           payload = {}
-
-          if incoming_allow == true
-            incoming = {}
-            incoming[:allow] = true
-            payload[:incoming] = incoming
-          end
+          payload[:incoming] = { allow: true } if incoming_allow == true
 
           if outgoing_application_sid
             outgoing = {}
