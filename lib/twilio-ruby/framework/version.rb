@@ -52,16 +52,7 @@ module Twilio
       end
 
       def exception(response, header)
-        message = header
-        code = response.status_code
-
-        if response.body.key?('message')
-          message += ": #{response.body['message']}"
-        end
-
-        code = response.body['code'] if response.body.key?('code')
-
-        Twilio::REST::RestError.new(message, code, response.status_code)
+        Twilio::REST::RestError.new(header, response)
       end
 
       def fetch(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
