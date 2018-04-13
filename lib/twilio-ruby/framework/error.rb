@@ -37,7 +37,7 @@ module Twilio
         message += "\n#{error_message}" if error_message
         message += "\n#{detail}" if detail
         message += "\n#{more_info}" if more_info
-        message += "\n\n"
+        message + "\n\n"
       end
     end
 

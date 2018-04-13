@@ -19,3 +19,7 @@ before_install:
   # Bundler on Travis may be too out of date
   # Update bundler to a recent version.
   - gem install bundler
+
+after_success:
+  # Make sure it passes linter
+  - make lint
