@@ -13,20 +13,20 @@ module Twilio
         def initialize(domain)
           super
           @version = 'understand'
-          @services = nil
+          @assistants = nil
         end
 
         ##
         # @param [String] sid The sid
-        # @return [Twilio::REST::Preview::Understand::ServiceContext] if sid was passed.
-        # @return [Twilio::REST::Preview::Understand::ServiceList]
-        def services(sid=:unset)
+        # @return [Twilio::REST::Preview::Understand::AssistantContext] if sid was passed.
+        # @return [Twilio::REST::Preview::Understand::AssistantList]
+        def assistants(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'
           elsif sid == :unset
-            @services ||= ServiceList.new self
+            @assistants ||= AssistantList.new self
           else
-            ServiceContext.new(self, sid)
+            AssistantContext.new(self, sid)
           end
         end
 

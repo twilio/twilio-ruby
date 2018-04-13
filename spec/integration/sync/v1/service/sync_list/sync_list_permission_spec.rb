@@ -11,8 +11,8 @@ describe 'SyncListPermission' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_lists('ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .sync_list_permissions('identity').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -20,7 +20,7 @@ describe 'SyncListPermission' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Lists/ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Permissions/identity',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Lists/ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Permissions/identity',
     ))).to eq(true)
   end
 
@@ -41,8 +41,8 @@ describe 'SyncListPermission' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_lists('ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_list_permissions('identity').fetch()
 
     expect(actual).to_not eq(nil)
@@ -52,8 +52,8 @@ describe 'SyncListPermission' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_lists('ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .sync_list_permissions('identity').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -61,7 +61,7 @@ describe 'SyncListPermission' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Lists/ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Permissions/identity',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Lists/ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Permissions/identity',
     ))).to eq(true)
   end
 
@@ -71,8 +71,8 @@ describe 'SyncListPermission' do
       nil,
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_lists('ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_list_permissions('identity').delete()
 
     expect(actual).to eq(true)
@@ -82,8 +82,8 @@ describe 'SyncListPermission' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_lists('ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .sync_list_permissions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -91,7 +91,7 @@ describe 'SyncListPermission' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Lists/ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Permissions',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Lists/ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Permissions',
     ))).to eq(true)
   end
 
@@ -114,8 +114,8 @@ describe 'SyncListPermission' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_lists('ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_list_permissions.list()
 
     expect(actual).to_not eq(nil)
@@ -151,8 +151,8 @@ describe 'SyncListPermission' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_lists('ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_list_permissions.list()
 
     expect(actual).to_not eq(nil)
@@ -162,8 +162,8 @@ describe 'SyncListPermission' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_lists('ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .sync_list_permissions('identity').update(read: true, write: true, manage: true)
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -171,7 +171,7 @@ describe 'SyncListPermission' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Lists/ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Permissions/identity',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Lists/ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Permissions/identity',
         data: values,
     ))).to eq(true)
   end
@@ -193,8 +193,8 @@ describe 'SyncListPermission' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_lists('ESaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_lists('ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_list_permissions('identity').update(read: true, write: true, manage: true)
 
     expect(actual).to_not eq(nil)

@@ -235,7 +235,7 @@ module Twilio
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'sid' => payload['sid'],
                 'source_sid' => payload['source_sid'],
-                'size' => payload['size'] == nil ? payload['size'] : payload['size'].to_i,
+                'size' => payload['size'],
                 'url' => payload['url'],
                 'type' => payload['type'],
                 'duration' => payload['duration'] == nil ? payload['duration'] : payload['duration'].to_i,

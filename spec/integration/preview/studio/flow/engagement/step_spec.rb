@@ -11,8 +11,8 @@ describe 'Step' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.studio.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.studio.flows('FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .engagements('FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .steps.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -20,7 +20,7 @@ describe 'Step' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/Studio/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Steps',
+        url: 'https://preview.twilio.com/Studio/Flows/FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Engagements/FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Steps',
     ))).to eq(true)
   end
 
@@ -43,8 +43,8 @@ describe 'Step' do
       ]
     ))
 
-    actual = @client.preview.studio.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                   .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.studio.flows('FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                   .engagements('FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                    .steps.list()
 
     expect(actual).to_not eq(nil)
@@ -54,16 +54,16 @@ describe 'Step' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.studio.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .steps('FTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.preview.studio.flows('FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .engagements('FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .steps('FTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/Studio/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Steps/FTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/Studio/Flows/FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Engagements/FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Steps/FTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -87,9 +87,9 @@ describe 'Step' do
       ]
     ))
 
-    actual = @client.preview.studio.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                   .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                   .steps('FTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.preview.studio.flows('FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                   .engagements('FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                   .steps('FTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end

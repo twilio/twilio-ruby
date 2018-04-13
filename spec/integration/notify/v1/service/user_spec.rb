@@ -11,7 +11,7 @@ describe 'User' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .users.create(identity: 'identity')
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -19,7 +19,7 @@ describe 'User' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users',
+        url: 'https://notify.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users',
         data: values,
     ))).to eq(true)
   end
@@ -47,7 +47,7 @@ describe 'User' do
       ]
     ))
 
-    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .users.create(identity: 'identity')
 
     expect(actual).to_not eq(nil)
@@ -57,15 +57,15 @@ describe 'User' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .users('NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://notify.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -75,8 +75,8 @@ describe 'User' do
       nil,
     ))
 
-    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .users('NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -85,15 +85,15 @@ describe 'User' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .users('NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://notify.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -120,8 +120,8 @@ describe 'User' do
       ]
     ))
 
-    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .users('NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -130,7 +130,7 @@ describe 'User' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .users.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -138,7 +138,7 @@ describe 'User' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users',
+        url: 'https://notify.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users',
     ))).to eq(true)
   end
 
@@ -161,7 +161,7 @@ describe 'User' do
       ]
     ))
 
-    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .users.list()
 
     expect(actual).to_not eq(nil)
@@ -203,7 +203,7 @@ describe 'User' do
       ]
     ))
 
-    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .users.list()
 
     expect(actual).to_not eq(nil)

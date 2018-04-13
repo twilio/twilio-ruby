@@ -11,7 +11,7 @@ describe 'Domain' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
                        .domains.list()
     }.to raise_exception(Twilio::REST::TwilioError)
@@ -20,7 +20,7 @@ describe 'Domain' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/Domains.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/Domains.json',
     ))).to eq(true)
   end
 
@@ -63,7 +63,7 @@ describe 'Domain' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
                               .domains.list()
 
@@ -86,7 +86,7 @@ describe 'Domain' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
                               .domains.list()
 
@@ -97,7 +97,7 @@ describe 'Domain' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
                        .domains.create(domain_name: 'domain_name')
     }.to raise_exception(Twilio::REST::TwilioError)
@@ -106,7 +106,7 @@ describe 'Domain' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/Domains.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/Domains.json',
         data: values,
     ))).to eq(true)
   end
@@ -140,7 +140,7 @@ describe 'Domain' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
                               .domains.create(domain_name: 'domain_name')
 
@@ -151,16 +151,16 @@ describe 'Domain' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+                       .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/Domains/SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/Domains/SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
     ))).to eq(true)
   end
 
@@ -193,9 +193,9 @@ describe 'Domain' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+                              .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -204,16 +204,16 @@ describe 'Domain' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+                       .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/Domains/SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/Domains/SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
     ))).to eq(true)
   end
 
@@ -246,9 +246,9 @@ describe 'Domain' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+                              .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -257,16 +257,16 @@ describe 'Domain' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+                       .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/Domains/SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/Domains/SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
     ))).to eq(true)
   end
 
@@ -276,9 +276,9 @@ describe 'Domain' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+                              .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

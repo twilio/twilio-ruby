@@ -11,15 +11,15 @@ describe 'ShortCode' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .short_codes.create(sid: 'SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .short_codes.create(sid: 'SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Sid' => 'SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', }
+    values = {'Sid' => 'SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes',
+        url: 'https://proxy.twilio.com/v1/Services/KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/ShortCodes',
         data: values,
     ))).to eq(true)
   end
@@ -45,8 +45,8 @@ describe 'ShortCode' do
       ]
     ))
 
-    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .short_codes.create(sid: 'SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+    actual = @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .short_codes.create(sid: 'SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
     expect(actual).to_not eq(nil)
   end
@@ -55,15 +55,15 @@ describe 'ShortCode' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .short_codes('SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .short_codes('SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://proxy.twilio.com/v1/Services/KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/ShortCodes/SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -73,8 +73,8 @@ describe 'ShortCode' do
       nil,
     ))
 
-    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .short_codes('SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .short_codes('SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -83,7 +83,7 @@ describe 'ShortCode' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                       .short_codes.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -91,7 +91,7 @@ describe 'ShortCode' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes',
+        url: 'https://proxy.twilio.com/v1/Services/KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/ShortCodes',
     ))).to eq(true)
   end
 
@@ -129,7 +129,7 @@ describe 'ShortCode' do
       ]
     ))
 
-    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .short_codes.list()
 
     expect(actual).to_not eq(nil)
@@ -139,15 +139,15 @@ describe 'ShortCode' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .short_codes('SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .short_codes('SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://proxy.twilio.com/v1/Services/KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/ShortCodes/SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -172,8 +172,8 @@ describe 'ShortCode' do
       ]
     ))
 
-    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .short_codes('SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .short_codes('SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end

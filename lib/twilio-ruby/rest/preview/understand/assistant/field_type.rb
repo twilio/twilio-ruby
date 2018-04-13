@@ -8,21 +8,21 @@ module Twilio
   module REST
     class Preview < Domain
       class Understand < Version
-        class ServiceContext < InstanceContext
+        class AssistantContext < InstanceContext
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
           class FieldTypeList < ListResource
             ##
             # Initialize the FieldTypeList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] assistant_sid The assistant_sid
             # @return [FieldTypeList] FieldTypeList
-            def initialize(version, service_sid: nil)
+            def initialize(version, assistant_sid: nil)
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid}
-              @uri = "/Services/#{@solution[:service_sid]}/FieldTypes"
+              @solution = {assistant_sid: assistant_sid}
+              @uri = "/Assistants/#{@solution[:assistant_sid]}/FieldTypes"
             end
 
             ##
@@ -122,7 +122,7 @@ module Twilio
                   data: data
               )
 
-              FieldTypeInstance.new(@version, payload, service_sid: @solution[:service_sid], )
+              FieldTypeInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
 
             ##
@@ -153,7 +153,7 @@ module Twilio
             # @param [Hash] payload Payload response from the API
             # @return [FieldTypeInstance] FieldTypeInstance
             def get_instance(payload)
-              FieldTypeInstance.new(@version, payload, service_sid: @solution[:service_sid], )
+              FieldTypeInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
 
             ##
@@ -169,15 +169,15 @@ module Twilio
             ##
             # Initialize the FieldTypeContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] assistant_sid The assistant_sid
             # @param [String] sid The sid
             # @return [FieldTypeContext] FieldTypeContext
-            def initialize(version, service_sid, sid)
+            def initialize(version, assistant_sid, sid)
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid, sid: sid, }
-              @uri = "/Services/#{@solution[:service_sid]}/FieldTypes/#{@solution[:sid]}"
+              @solution = {assistant_sid: assistant_sid, sid: sid, }
+              @uri = "/Assistants/#{@solution[:assistant_sid]}/FieldTypes/#{@solution[:sid]}"
 
               # Dependents
               @field_values = nil
@@ -195,7 +195,12 @@ module Twilio
                   params,
               )
 
-              FieldTypeInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+              FieldTypeInstance.new(
+                  @version,
+                  payload,
+                  assistant_sid: @solution[:assistant_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##
@@ -212,7 +217,12 @@ module Twilio
                   data: data,
               )
 
-              FieldTypeInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+              FieldTypeInstance.new(
+                  @version,
+                  payload,
+                  assistant_sid: @solution[:assistant_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##
@@ -230,13 +240,13 @@ module Twilio
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return FieldValueContext.new(@version, @solution[:service_sid], @solution[:sid], sid, )
+                return FieldValueContext.new(@version, @solution[:assistant_sid], @solution[:sid], sid, )
               end
 
               unless @field_values
                 @field_values = FieldValueList.new(
                     @version,
-                    service_sid: @solution[:service_sid],
+                    assistant_sid: @solution[:assistant_sid],
                     field_type_sid: @solution[:sid],
                 )
               end
@@ -259,10 +269,10 @@ module Twilio
             # Initialize the FieldTypeInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
+            # @param [String] assistant_sid The assistant_sid
             # @param [String] sid The sid
             # @return [FieldTypeInstance] FieldTypeInstance
-            def initialize(version, payload, service_sid: nil, sid: nil)
+            def initialize(version, payload, assistant_sid: nil, sid: nil)
               super(version)
 
               # Marshaled Properties
@@ -272,7 +282,7 @@ module Twilio
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'friendly_name' => payload['friendly_name'],
                   'links' => payload['links'],
-                  'service_sid' => payload['service_sid'],
+                  'assistant_sid' => payload['assistant_sid'],
                   'sid' => payload['sid'],
                   'unique_name' => payload['unique_name'],
                   'url' => payload['url'],
@@ -280,7 +290,7 @@ module Twilio
 
               # Context
               @instance_context = nil
-              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'], }
+              @params = {'assistant_sid' => assistant_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
@@ -289,7 +299,7 @@ module Twilio
             # @return [FieldTypeContext] FieldTypeContext for this FieldTypeInstance
             def context
               unless @instance_context
-                @instance_context = FieldTypeContext.new(@version, @params['service_sid'], @params['sid'], )
+                @instance_context = FieldTypeContext.new(@version, @params['assistant_sid'], @params['sid'], )
               end
               @instance_context
             end
@@ -325,9 +335,9 @@ module Twilio
             end
 
             ##
-            # @return [String] The service_sid
-            def service_sid
-              @properties['service_sid']
+            # @return [String] The assistant_sid
+            def assistant_sid
+              @properties['assistant_sid']
             end
 
             ##

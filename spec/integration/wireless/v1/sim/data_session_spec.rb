@@ -11,7 +11,7 @@ describe 'DataSession' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.wireless.v1.sims('DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.wireless.v1.sims('DEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                          .data_sessions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -19,7 +19,7 @@ describe 'DataSession' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://wireless.twilio.com/v1/Sims/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/DataSessions',
+        url: 'https://wireless.twilio.com/v1/Sims/DEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/DataSessions',
     ))).to eq(true)
   end
 
@@ -77,7 +77,7 @@ describe 'DataSession' do
       ]
     ))
 
-    actual = @client.wireless.v1.sims('DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.wireless.v1.sims('DEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .data_sessions.list()
 
     expect(actual).to_not eq(nil)

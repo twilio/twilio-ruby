@@ -112,10 +112,14 @@ module Twilio
             # Request is executed immediately.
             # @param [String] to The to
             # @param [String] from The from
-            # @param [String] parameters The parameters
+            # @param [Hash] parameters The parameters
             # @return [EngagementInstance] Newly created EngagementInstance
             def create(to: nil, from: nil, parameters: :unset)
-              data = Twilio::Values.of({'To' => to, 'From' => from, 'Parameters' => parameters, })
+              data = Twilio::Values.of({
+                  'To' => to,
+                  'From' => from,
+                  'Parameters' => Twilio.serialize_object(parameters),
+              })
 
               payload = @version.create(
                   'POST',

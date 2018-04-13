@@ -11,14 +11,14 @@ describe 'Service' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -47,7 +47,7 @@ describe 'Service' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -56,14 +56,14 @@ describe 'Service' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -73,7 +73,7 @@ describe 'Service' do
       nil,
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -209,14 +209,14 @@ describe 'Service' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -245,7 +245,7 @@ describe 'Service' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end

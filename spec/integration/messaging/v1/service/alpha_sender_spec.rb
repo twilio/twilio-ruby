@@ -11,7 +11,7 @@ describe 'AlphaSender' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                           .alpha_senders.create(alpha_sender: 'alpha_sender')
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -19,7 +19,7 @@ describe 'AlphaSender' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://messaging.twilio.com/v1/Services/MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/AlphaSenders',
+        url: 'https://messaging.twilio.com/v1/Services/MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/AlphaSenders',
         data: values,
     ))).to eq(true)
   end
@@ -41,7 +41,7 @@ describe 'AlphaSender' do
       ]
     ))
 
-    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                  .alpha_senders.create(alpha_sender: 'alpha_sender')
 
     expect(actual).to_not eq(nil)
@@ -51,7 +51,7 @@ describe 'AlphaSender' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                           .alpha_senders.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -59,7 +59,7 @@ describe 'AlphaSender' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://messaging.twilio.com/v1/Services/MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/AlphaSenders',
+        url: 'https://messaging.twilio.com/v1/Services/MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/AlphaSenders',
     ))).to eq(true)
   end
 
@@ -93,7 +93,7 @@ describe 'AlphaSender' do
       ]
     ))
 
-    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                  .alpha_senders.list()
 
     expect(actual).to_not eq(nil)
@@ -103,15 +103,15 @@ describe 'AlphaSender' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                          .alpha_senders('AIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                          .alpha_senders('AIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://messaging.twilio.com/v1/Services/MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/AlphaSenders/AIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://messaging.twilio.com/v1/Services/MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/AlphaSenders/AIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -132,8 +132,8 @@ describe 'AlphaSender' do
       ]
     ))
 
-    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                 .alpha_senders('AIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                 .alpha_senders('AIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -142,15 +142,15 @@ describe 'AlphaSender' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                          .alpha_senders('AIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                          .alpha_senders('AIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://messaging.twilio.com/v1/Services/MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/AlphaSenders/AIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://messaging.twilio.com/v1/Services/MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/AlphaSenders/AIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -160,8 +160,8 @@ describe 'AlphaSender' do
       nil,
     ))
 
-    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                 .alpha_senders('AIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                 .alpha_senders('AIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

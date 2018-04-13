@@ -11,15 +11,15 @@ describe 'IpAccessControlList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                         .ip_access_control_lists('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                         .ip_access_control_lists('ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlLists/ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/IpAccessControlLists/ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -39,8 +39,8 @@ describe 'IpAccessControlList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .ip_access_control_lists('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .ip_access_control_lists('ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -49,15 +49,15 @@ describe 'IpAccessControlList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                         .ip_access_control_lists('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                         .ip_access_control_lists('ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlLists/ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/IpAccessControlLists/ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -67,8 +67,8 @@ describe 'IpAccessControlList' do
       nil,
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .ip_access_control_lists('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .ip_access_control_lists('ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -77,15 +77,15 @@ describe 'IpAccessControlList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                         .ip_access_control_lists.create(ip_access_control_list_sid: 'ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                         .ip_access_control_lists.create(ip_access_control_list_sid: 'ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'IpAccessControlListSid' => 'ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', }
+    values = {'IpAccessControlListSid' => 'ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlLists',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/IpAccessControlLists',
         data: values,
     ))).to eq(true)
   end
@@ -106,8 +106,8 @@ describe 'IpAccessControlList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .ip_access_control_lists.create(ip_access_control_list_sid: 'ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .ip_access_control_lists.create(ip_access_control_list_sid: 'ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
     expect(actual).to_not eq(nil)
   end
@@ -116,7 +116,7 @@ describe 'IpAccessControlList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                          .ip_access_control_lists.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -124,7 +124,7 @@ describe 'IpAccessControlList' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlLists',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/IpAccessControlLists',
     ))).to eq(true)
   end
 
@@ -147,7 +147,7 @@ describe 'IpAccessControlList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .ip_access_control_lists.list()
 
     expect(actual).to_not eq(nil)
@@ -182,7 +182,7 @@ describe 'IpAccessControlList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .ip_access_control_lists.list()
 
     expect(actual).to_not eq(nil)

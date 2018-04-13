@@ -11,17 +11,17 @@ describe 'IpAccessControlListMapping' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .ip_access_control_list_mappings('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+                       .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .ip_access_control_list_mappings('ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/Domains/SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlListMappings/ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/Domains/SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/IpAccessControlListMappings/ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
     ))).to eq(true)
   end
 
@@ -43,10 +43,10 @@ describe 'IpAccessControlListMapping' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .ip_access_control_list_mappings('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+                              .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .ip_access_control_list_mappings('ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -55,17 +55,17 @@ describe 'IpAccessControlListMapping' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .ip_access_control_list_mappings.create(ip_access_control_list_sid: 'ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+                       .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .ip_access_control_list_mappings.create(ip_access_control_list_sid: 'ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'IpAccessControlListSid' => 'ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', }
+    values = {'IpAccessControlListSid' => 'ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/Domains/SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlListMappings.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/Domains/SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/IpAccessControlListMappings.json',
         data: values,
     ))).to eq(true)
   end
@@ -88,10 +88,10 @@ describe 'IpAccessControlListMapping' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .ip_access_control_list_mappings.create(ip_access_control_list_sid: 'ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+                              .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .ip_access_control_list_mappings.create(ip_access_control_list_sid: 'ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
     expect(actual).to_not eq(nil)
   end
@@ -100,9 +100,9 @@ describe 'IpAccessControlListMapping' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .ip_access_control_list_mappings.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -110,7 +110,7 @@ describe 'IpAccessControlListMapping' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/Domains/SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlListMappings.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/Domains/SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/IpAccessControlListMappings.json',
     ))).to eq(true)
   end
 
@@ -147,9 +147,9 @@ describe 'IpAccessControlListMapping' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .ip_access_control_list_mappings.list()
 
     expect(actual).to_not eq(nil)
@@ -176,9 +176,9 @@ describe 'IpAccessControlListMapping' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .ip_access_control_list_mappings.list()
 
     expect(actual).to_not eq(nil)
@@ -188,17 +188,17 @@ describe 'IpAccessControlListMapping' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .ip_access_control_list_mappings('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+                       .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .ip_access_control_list_mappings('ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/Domains/SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlListMappings/ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/Domains/SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/IpAccessControlListMappings/ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
     ))).to eq(true)
   end
 
@@ -208,10 +208,10 @@ describe 'IpAccessControlListMapping' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .ip_access_control_list_mappings('ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+                              .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .ip_access_control_list_mappings('ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

@@ -11,15 +11,15 @@ describe 'ModelBuild' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .model_builds('UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .model_builds('UGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds/UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/ModelBuilds/UGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -30,9 +30,9 @@ describe 'ModelBuild' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_updated": "2015-07-30T20:00:00Z",
-          "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds/UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds/UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "status": "enqueued",
-          "service_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2015-07-30T20:00:00Z",
           "sid": "UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "unique_name": "unique_name",
@@ -42,8 +42,8 @@ describe 'ModelBuild' do
       ]
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                       .model_builds('UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .model_builds('UGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -52,7 +52,7 @@ describe 'ModelBuild' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .model_builds.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -60,7 +60,7 @@ describe 'ModelBuild' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/ModelBuilds',
     ))).to eq(true)
   end
 
@@ -72,8 +72,8 @@ describe 'ModelBuild' do
           "meta": {
               "page": 0,
               "key": "model_builds",
-              "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds?PageSize=50&Page=0",
-              "first_page_url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds?PageSize=50&Page=0",
+              "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds?PageSize=50&Page=0",
+              "first_page_url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds?PageSize=50&Page=0",
               "next_page_url": null,
               "previous_page_url": null,
               "page_size": 50
@@ -83,7 +83,7 @@ describe 'ModelBuild' do
       ]
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .model_builds.list()
 
     expect(actual).to_not eq(nil)
@@ -97,8 +97,8 @@ describe 'ModelBuild' do
           "meta": {
               "page": 0,
               "key": "model_builds",
-              "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds?PageSize=50&Page=0",
-              "first_page_url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds?PageSize=50&Page=0",
+              "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds?PageSize=50&Page=0",
+              "first_page_url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds?PageSize=50&Page=0",
               "next_page_url": null,
               "previous_page_url": null,
               "page_size": 50
@@ -107,9 +107,9 @@ describe 'ModelBuild' do
               {
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "date_updated": "2015-07-30T20:00:00Z",
-                  "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds/UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds/UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "status": "failed",
-                  "service_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "date_created": "2015-07-30T20:00:00Z",
                   "sid": "UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "unique_name": "unique_name",
@@ -121,7 +121,7 @@ describe 'ModelBuild' do
       ]
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .model_builds.list()
 
     expect(actual).to_not eq(nil)
@@ -131,7 +131,7 @@ describe 'ModelBuild' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .model_builds.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -139,7 +139,7 @@ describe 'ModelBuild' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/ModelBuilds',
     ))).to eq(true)
   end
 
@@ -150,9 +150,9 @@ describe 'ModelBuild' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_updated": "2015-07-30T20:00:00Z",
-          "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds/UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds/UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "status": "enqueued",
-          "service_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2015-07-30T20:00:00Z",
           "sid": "UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "unique_name": "unique_name",
@@ -162,7 +162,7 @@ describe 'ModelBuild' do
       ]
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .model_builds.create()
 
     expect(actual).to_not eq(nil)
@@ -172,15 +172,15 @@ describe 'ModelBuild' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .model_builds('UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+      @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .model_builds('UGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds/UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/ModelBuilds/UGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -191,9 +191,9 @@ describe 'ModelBuild' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_updated": "2015-07-30T20:00:00Z",
-          "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds/UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds/UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "status": "completed",
-          "service_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2015-07-30T20:00:00Z",
           "sid": "UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "unique_name": "unique_name",
@@ -203,8 +203,8 @@ describe 'ModelBuild' do
       ]
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                       .model_builds('UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .model_builds('UGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -213,15 +213,15 @@ describe 'ModelBuild' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .model_builds('UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .model_builds('UGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ModelBuilds/UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/ModelBuilds/UGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -231,8 +231,8 @@ describe 'ModelBuild' do
       nil,
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                       .model_builds('UGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .model_builds('UGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

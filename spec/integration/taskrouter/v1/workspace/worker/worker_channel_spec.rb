@@ -11,8 +11,8 @@ describe 'WorkerChannel' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .workers('WKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                            .worker_channels.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -20,7 +20,7 @@ describe 'WorkerChannel' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Workers/WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels',
+        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Workers/WKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels',
     ))).to eq(true)
   end
 
@@ -59,8 +59,8 @@ describe 'WorkerChannel' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .workers('WKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                   .worker_channels.list()
 
     expect(actual).to_not eq(nil)
@@ -85,8 +85,8 @@ describe 'WorkerChannel' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .workers('WKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                   .worker_channels.list()
 
     expect(actual).to_not eq(nil)
@@ -96,16 +96,16 @@ describe 'WorkerChannel' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .worker_channels('WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .workers('WKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .worker_channels('WCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Workers/WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Workers/WKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/WCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -131,9 +131,9 @@ describe 'WorkerChannel' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .worker_channels('WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .workers('WKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .worker_channels('WCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -142,16 +142,16 @@ describe 'WorkerChannel' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .worker_channels('WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+      @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .workers('WKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .worker_channels('WCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Workers/WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Workers/WKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/WCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -177,9 +177,9 @@ describe 'WorkerChannel' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .worker_channels('WCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .workers('WKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .worker_channels('WCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end

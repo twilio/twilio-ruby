@@ -11,14 +11,14 @@ describe 'Fax' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.fax.v1.faxes('FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://fax.twilio.com/v1/Faxes/FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -51,7 +51,7 @@ describe 'Fax' do
       ]
     ))
 
-    actual = @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.fax.v1.faxes('FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -196,14 +196,14 @@ describe 'Fax' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+      @client.fax.v1.faxes('FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://fax.twilio.com/v1/Faxes/FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -236,7 +236,7 @@ describe 'Fax' do
       ]
     ))
 
-    actual = @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.fax.v1.faxes('FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -245,14 +245,14 @@ describe 'Fax' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.fax.v1.faxes('FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://fax.twilio.com/v1/Faxes/FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -262,7 +262,7 @@ describe 'Fax' do
       nil,
     ))
 
-    actual = @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.fax.v1.faxes('FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

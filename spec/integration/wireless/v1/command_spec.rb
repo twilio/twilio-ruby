@@ -11,14 +11,14 @@ describe 'Command' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.wireless.v1.commands('DCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.wireless.v1.commands('DCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://wireless.twilio.com/v1/Commands/DCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://wireless.twilio.com/v1/Commands/DCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -41,7 +41,7 @@ describe 'Command' do
       ]
     ))
 
-    actual = @client.wireless.v1.commands('DCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.wireless.v1.commands('DCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end

@@ -97,14 +97,14 @@ describe 'RatePlan' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.wireless.v1.rate_plans('WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.wireless.v1.rate_plans('WPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://wireless.twilio.com/v1/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://wireless.twilio.com/v1/RatePlans/WPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -137,7 +137,7 @@ describe 'RatePlan' do
       ]
     ))
 
-    actual = @client.wireless.v1.rate_plans('WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.wireless.v1.rate_plans('WPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -195,14 +195,14 @@ describe 'RatePlan' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.wireless.v1.rate_plans('WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+      @client.wireless.v1.rate_plans('WPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://wireless.twilio.com/v1/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://wireless.twilio.com/v1/RatePlans/WPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -235,7 +235,7 @@ describe 'RatePlan' do
       ]
     ))
 
-    actual = @client.wireless.v1.rate_plans('WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.wireless.v1.rate_plans('WPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -244,14 +244,14 @@ describe 'RatePlan' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.wireless.v1.rate_plans('WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.wireless.v1.rate_plans('WPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://wireless.twilio.com/v1/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://wireless.twilio.com/v1/RatePlans/WPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -261,7 +261,7 @@ describe 'RatePlan' do
       nil,
     ))
 
-    actual = @client.wireless.v1.rate_plans('WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.wireless.v1.rate_plans('WPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

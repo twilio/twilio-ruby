@@ -11,7 +11,7 @@ describe 'Record' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .usage \
                        .records.list()
     }.to raise_exception(Twilio::REST::TwilioError)
@@ -20,7 +20,7 @@ describe 'Record' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Usage/Records.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Usage/Records.json',
     ))).to eq(true)
   end
 
@@ -71,7 +71,7 @@ describe 'Record' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .usage \
                               .records.list()
 
@@ -99,7 +99,7 @@ describe 'Record' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .usage \
                               .records.list()
 

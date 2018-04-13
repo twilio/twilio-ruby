@@ -11,14 +11,14 @@ describe 'AuthorizationDocument' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.hosted_numbers.authorization_documents('PXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.preview.hosted_numbers.authorization_documents('PXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/HostedNumbers/AuthorizationDocuments/PXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/HostedNumbers/AuthorizationDocuments/PXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -45,7 +45,7 @@ describe 'AuthorizationDocument' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.authorization_documents('PXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.preview.hosted_numbers.authorization_documents('PXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -54,14 +54,14 @@ describe 'AuthorizationDocument' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.hosted_numbers.authorization_documents('PXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+      @client.preview.hosted_numbers.authorization_documents('PXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/HostedNumbers/AuthorizationDocuments/PXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/HostedNumbers/AuthorizationDocuments/PXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -88,7 +88,7 @@ describe 'AuthorizationDocument' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.authorization_documents('PXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.preview.hosted_numbers.authorization_documents('PXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -177,12 +177,12 @@ describe 'AuthorizationDocument' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.hosted_numbers.authorization_documents.create(hosted_number_order_sids: ['hosted_number_order_sids'], address_sid: 'ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', email: 'email')
+      @client.preview.hosted_numbers.authorization_documents.create(hosted_number_order_sids: ['hosted_number_order_sids'], address_sid: 'ADXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', email: 'email')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'HostedNumberOrderSids' => Twilio.serialize_list(['hosted_number_order_sids']) { |e| e },
-        'AddressSid' => 'ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        'AddressSid' => 'ADXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         'Email' => 'email',
     }
     expect(
@@ -216,7 +216,7 @@ describe 'AuthorizationDocument' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.authorization_documents.create(hosted_number_order_sids: ['hosted_number_order_sids'], address_sid: 'ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', email: 'email')
+    actual = @client.preview.hosted_numbers.authorization_documents.create(hosted_number_order_sids: ['hosted_number_order_sids'], address_sid: 'ADXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', email: 'email')
 
     expect(actual).to_not eq(nil)
   end

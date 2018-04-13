@@ -11,7 +11,7 @@ describe 'Usage' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.wireless.sims('DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.wireless.sims('DEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .usage().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -19,7 +19,7 @@ describe 'Usage' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/wireless/Sims/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Usage',
+        url: 'https://preview.twilio.com/wireless/Sims/DEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Usage',
     ))).to eq(true)
   end
 
@@ -41,7 +41,7 @@ describe 'Usage' do
       ]
     ))
 
-    actual = @client.preview.wireless.sims('DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.wireless.sims('DEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                      .usage().fetch()
 
     expect(actual).to_not eq(nil)

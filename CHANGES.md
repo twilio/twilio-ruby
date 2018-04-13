@@ -1,6 +1,25 @@
 twilio-ruby changelog
 =====================
 
+[2018-04-13] Version 5.8.0
+---------------------------
+**Library**
+- PR #389: Add incoming.allow to AccessToken VoiceGrant. Thanks to @ryan-rowland!
+- PR #391: Improves error message for Twilio::REST::RestError. Thanks to @philnash!
+
+**Lookups**
+- Disable support for `fraud` lookups **(breaking change)**
+
+**Preview**
+- Support for Understand V2 APIs - renames various resources and adds new fields
+
+**Studio**
+- Change parameters type from string to object in engagement resource
+
+**Video**
+- [Recordings] Change `size` type to `long`. **(breaking change)**
+
+
 [2018-03-22] Version 5.7.2
 ---------------------------
 **Preview**

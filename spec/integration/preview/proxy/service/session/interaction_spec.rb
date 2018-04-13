@@ -11,16 +11,16 @@ describe 'Interaction' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .interactions('KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.preview.proxy.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .sessions('KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .interactions('KIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/Proxy/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Sessions/KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Interactions/KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/Proxy/Services/KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Sessions/KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Interactions/KIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -52,9 +52,9 @@ describe 'Interaction' do
       ]
     ))
 
-    actual = @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .interactions('KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.preview.proxy.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .sessions('KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .interactions('KIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -63,8 +63,8 @@ describe 'Interaction' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.proxy.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .sessions('KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                            .interactions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -72,7 +72,7 @@ describe 'Interaction' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/Proxy/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Sessions/KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Interactions',
+        url: 'https://preview.twilio.com/Proxy/Services/KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Sessions/KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Interactions',
     ))).to eq(true)
   end
 
@@ -95,8 +95,8 @@ describe 'Interaction' do
       ]
     ))
 
-    actual = @client.preview.proxy.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.proxy.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .sessions('KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                   .interactions.list()
 
     expect(actual).to_not eq(nil)

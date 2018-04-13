@@ -11,9 +11,9 @@ describe 'StepContext' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.studio.v1.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .steps('FTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.studio.v1.flows('FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .engagements('FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .steps('FTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .step_context().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -21,7 +21,7 @@ describe 'StepContext' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Steps/FTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Context',
+        url: 'https://studio.twilio.com/v1/Flows/FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Engagements/FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Steps/FTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Context',
     ))).to eq(true)
   end
 
@@ -42,9 +42,9 @@ describe 'StepContext' do
       ]
     ))
 
-    actual = @client.studio.v1.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .steps('FTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.studio.v1.flows('FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .engagements('FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .steps('FTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .step_context().fetch()
 
     expect(actual).to_not eq(nil)

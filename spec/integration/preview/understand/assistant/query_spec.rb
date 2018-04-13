@@ -11,15 +11,15 @@ describe 'Query' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .queries('UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .queries('UHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries/UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Queries/UHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -35,7 +35,7 @@ describe 'Query' do
           "date_updated": "2015-07-30T20:00:00Z",
           "status": "status",
           "sample_sid": "UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "service_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "results": {
               "intent": {
                   "name": "name",
@@ -50,15 +50,16 @@ describe 'Query' do
                   }
               ]
           },
-          "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries/UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries/UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "sid": "UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "sid": "UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source_channel": "voice"
       }
       ]
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                       .queries('UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .queries('UHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -67,7 +68,7 @@ describe 'Query' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .queries.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -75,7 +76,7 @@ describe 'Query' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Queries',
     ))).to eq(true)
   end
 
@@ -88,17 +89,17 @@ describe 'Query' do
           "meta": {
               "previous_page_url": null,
               "next_page_url": null,
-              "first_page_url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries?PageSize=50&Page=0",
+              "first_page_url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries?PageSize=50&Page=0",
               "page": 0,
               "key": "queries",
-              "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries?PageSize=50&Page=0",
+              "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries?PageSize=50&Page=0",
               "page_size": 50
           }
       }
       ]
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .queries.list()
 
     expect(actual).to_not eq(nil)
@@ -118,7 +119,7 @@ describe 'Query' do
                   "date_updated": "2015-07-30T20:00:00Z",
                   "status": "status",
                   "sample_sid": "UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                  "service_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "results": {
                       "intent": {
                           "name": "name",
@@ -133,25 +134,26 @@ describe 'Query' do
                           }
                       ]
                   },
-                  "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries/UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries/UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                  "sid": "UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  "sid": "UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "source_channel": null
               }
           ],
           "meta": {
               "previous_page_url": null,
               "next_page_url": null,
-              "first_page_url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries?PageSize=50&Page=0",
+              "first_page_url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries?PageSize=50&Page=0",
               "page": 0,
               "key": "queries",
-              "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries?PageSize=50&Page=0",
+              "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries?PageSize=50&Page=0",
               "page_size": 50
           }
       }
       ]
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .queries.list()
 
     expect(actual).to_not eq(nil)
@@ -161,7 +163,7 @@ describe 'Query' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .queries.create(language: 'language', query: 'query')
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -169,7 +171,7 @@ describe 'Query' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Queries',
         data: values,
     ))).to eq(true)
   end
@@ -186,7 +188,7 @@ describe 'Query' do
           "date_updated": "2015-07-30T20:00:00Z",
           "status": "status",
           "sample_sid": "UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "service_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "results": {
               "intent": {
                   "name": "name",
@@ -201,14 +203,15 @@ describe 'Query' do
                   }
               ]
           },
-          "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries/UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries/UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "sid": "UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "sid": "UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source_channel": "voice"
       }
       ]
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .queries.create(language: 'language', query: 'query')
 
     expect(actual).to_not eq(nil)
@@ -218,15 +221,15 @@ describe 'Query' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .queries('UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+      @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .queries('UHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries/UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Queries/UHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -242,7 +245,7 @@ describe 'Query' do
           "date_updated": "2015-07-30T20:00:00Z",
           "status": "status",
           "sample_sid": "UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "service_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "results": {
               "intent": {
                   "name": "name",
@@ -257,15 +260,16 @@ describe 'Query' do
                   }
               ]
           },
-          "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries/UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries/UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "sid": "UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "sid": "UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source_channel": "sms"
       }
       ]
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                       .queries('UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .queries('UHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -274,15 +278,15 @@ describe 'Query' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .queries('UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .queries('UHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries/UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Queries/UHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -292,8 +296,8 @@ describe 'Query' do
       nil,
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                       .queries('UHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .queries('UHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

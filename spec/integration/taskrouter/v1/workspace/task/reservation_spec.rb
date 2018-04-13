@@ -11,8 +11,8 @@ describe 'Reservation' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .tasks('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .tasks('WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                            .reservations.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -20,7 +20,7 @@ describe 'Reservation' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Reservations',
+        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Tasks/WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Reservations',
     ))).to eq(true)
   end
 
@@ -61,8 +61,8 @@ describe 'Reservation' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .tasks('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .tasks('WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                   .reservations.list()
 
     expect(actual).to_not eq(nil)
@@ -87,8 +87,8 @@ describe 'Reservation' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .tasks('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .tasks('WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                   .reservations.list()
 
     expect(actual).to_not eq(nil)
@@ -98,16 +98,16 @@ describe 'Reservation' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .tasks('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .reservations('WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .tasks('WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .reservations('WRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Reservations/WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Tasks/WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Reservations/WRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -135,9 +135,9 @@ describe 'Reservation' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .tasks('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .reservations('WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .tasks('WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .reservations('WRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -146,16 +146,16 @@ describe 'Reservation' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .tasks('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .reservations('WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+      @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .tasks('WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .reservations('WRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Reservations/WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Tasks/WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Reservations/WRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -183,9 +183,9 @@ describe 'Reservation' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .tasks('WTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .reservations('WRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .tasks('WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .reservations('WRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end

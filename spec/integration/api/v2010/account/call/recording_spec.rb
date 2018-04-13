@@ -11,16 +11,16 @@ describe 'Recording' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .calls('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .recordings('REXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings/REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Calls/CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Recordings/REXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
     ))).to eq(true)
   end
 
@@ -55,9 +55,9 @@ describe 'Recording' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .calls('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .recordings('REXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -66,16 +66,16 @@ describe 'Recording' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .calls('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .recordings('REXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings/REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Calls/CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Recordings/REXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
     ))).to eq(true)
   end
 
@@ -85,9 +85,9 @@ describe 'Recording' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .calls('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .recordings('REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .recordings('REXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -96,8 +96,8 @@ describe 'Recording' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .calls('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .recordings.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -105,7 +105,7 @@ describe 'Recording' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Calls/CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Recordings.json',
     ))).to eq(true)
   end
 
@@ -152,8 +152,8 @@ describe 'Recording' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .calls('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .recordings.list()
 
     expect(actual).to_not eq(nil)
@@ -177,8 +177,8 @@ describe 'Recording' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .calls('CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .recordings.list()
 
     expect(actual).to_not eq(nil)

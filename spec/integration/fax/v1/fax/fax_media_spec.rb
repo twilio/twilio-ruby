@@ -11,15 +11,15 @@ describe 'FaxMedia' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                    .media('MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.fax.v1.faxes('FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                    .media('MEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media/MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://fax.twilio.com/v1/Faxes/FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Media/MEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -39,8 +39,8 @@ describe 'FaxMedia' do
       ]
     ))
 
-    actual = @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .media('MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.fax.v1.faxes('FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .media('MEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -49,7 +49,7 @@ describe 'FaxMedia' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.fax.v1.faxes('FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                     .media.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -57,7 +57,7 @@ describe 'FaxMedia' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media',
+        url: 'https://fax.twilio.com/v1/Faxes/FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Media',
     ))).to eq(true)
   end
 
@@ -90,7 +90,7 @@ describe 'FaxMedia' do
       ]
     ))
 
-    actual = @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.fax.v1.faxes('FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                            .media.list()
 
     expect(actual).to_not eq(nil)
@@ -100,15 +100,15 @@ describe 'FaxMedia' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                    .media('MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.fax.v1.faxes('FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                    .media('MEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://fax.twilio.com/v1/Faxes/FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media/MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://fax.twilio.com/v1/Faxes/FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Media/MEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -118,8 +118,8 @@ describe 'FaxMedia' do
       nil,
     ))
 
-    actual = @client.fax.v1.faxes('FXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .media('MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.fax.v1.faxes('FXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .media('MEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

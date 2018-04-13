@@ -151,10 +151,10 @@ module Twilio
 
       ##
       # @param [String] sid The sid
-      # @return [Twilio::REST::Preview::Understand::ServiceInstance] if sid was passed.
-      # @return [Twilio::REST::Preview::Understand::ServiceList]
+      # @return [Twilio::REST::Preview::Sync::ServiceInstance] if sid was passed.
+      # @return [Twilio::REST::Preview::Sync::ServiceList]
       def services(sid=:unset)
-        self.understand.services(sid)
+        self.sync.services(sid)
       end
 
       ##
@@ -163,6 +163,14 @@ module Twilio
       # @return [Twilio::REST::Preview::Studio::FlowList]
       def flows(sid=:unset)
         self.studio.flows(sid)
+      end
+
+      ##
+      # @param [String] sid The sid
+      # @return [Twilio::REST::Preview::Understand::AssistantInstance] if sid was passed.
+      # @return [Twilio::REST::Preview::Understand::AssistantList]
+      def assistants(sid=:unset)
+        self.understand.assistants(sid)
       end
 
       ##

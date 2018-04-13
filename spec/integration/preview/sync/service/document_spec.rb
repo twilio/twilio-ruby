@@ -11,15 +11,15 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                          .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                          .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/Sync/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Documents/ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/Sync/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Documents/ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -45,8 +45,8 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                 .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                 .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -55,15 +55,15 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                          .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                          .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://preview.twilio.com/Sync/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Documents/ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/Sync/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Documents/ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -73,8 +73,8 @@ describe 'Document' do
       nil,
     ))
 
-    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                 .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                 .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -83,7 +83,7 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                           .documents.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -91,7 +91,7 @@ describe 'Document' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/Sync/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Documents',
+        url: 'https://preview.twilio.com/Sync/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Documents',
     ))).to eq(true)
   end
 
@@ -117,7 +117,7 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                  .documents.create()
 
     expect(actual).to_not eq(nil)
@@ -127,7 +127,7 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                           .documents.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -135,7 +135,7 @@ describe 'Document' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/Sync/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Documents',
+        url: 'https://preview.twilio.com/Sync/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Documents',
     ))).to eq(true)
   end
 
@@ -158,7 +158,7 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                  .documents.list()
 
     expect(actual).to_not eq(nil)
@@ -199,7 +199,7 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                  .documents.list()
 
     expect(actual).to_not eq(nil)
@@ -209,15 +209,15 @@ describe 'Document' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                          .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update(data: JSON.parse('{}'))
+      @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                          .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(data: {})
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Data' => Twilio.serialize_object(JSON.parse('{}')), }
+    values = {'Data' => Twilio.serialize_object({}), }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/Sync/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Documents/ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/Sync/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Documents/ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         data: values,
     ))).to eq(true)
   end
@@ -244,8 +244,8 @@ describe 'Document' do
       ]
     ))
 
-    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                 .documents('ETaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update(data: JSON.parse('{}'))
+    actual = @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                 .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(data: {})
 
     expect(actual).to_not eq(nil)
   end

@@ -11,8 +11,8 @@ describe 'WorkersCumulativeStatistics' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                           .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .workers('WKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                            .cumulative_statistics().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -20,7 +20,7 @@ describe 'WorkersCumulativeStatistics' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Workers/CumulativeStatistics',
+        url: 'https://taskrouter.twilio.com/v1/Workspaces/WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Workers/CumulativeStatistics',
     ))).to eq(true)
   end
 
@@ -78,8 +78,8 @@ describe 'WorkersCumulativeStatistics' do
       ]
     ))
 
-    actual = @client.taskrouter.v1.workspaces('WSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                  .workers('WKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .workers('WKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                   .cumulative_statistics().fetch()
 
     expect(actual).to_not eq(nil)

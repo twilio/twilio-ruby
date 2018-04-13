@@ -11,8 +11,8 @@ describe 'SyncMapPermission' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .sync_map_permissions('identity').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -20,7 +20,7 @@ describe 'SyncMapPermission' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Maps/MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Permissions/identity',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps/MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Permissions/identity',
     ))).to eq(true)
   end
 
@@ -41,8 +41,8 @@ describe 'SyncMapPermission' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_map_permissions('identity').fetch()
 
     expect(actual).to_not eq(nil)
@@ -52,8 +52,8 @@ describe 'SyncMapPermission' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .sync_map_permissions('identity').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -61,7 +61,7 @@ describe 'SyncMapPermission' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Maps/MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Permissions/identity',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps/MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Permissions/identity',
     ))).to eq(true)
   end
 
@@ -71,8 +71,8 @@ describe 'SyncMapPermission' do
       nil,
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_map_permissions('identity').delete()
 
     expect(actual).to eq(true)
@@ -82,8 +82,8 @@ describe 'SyncMapPermission' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .sync_map_permissions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -91,7 +91,7 @@ describe 'SyncMapPermission' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Maps/MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Permissions',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps/MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Permissions',
     ))).to eq(true)
   end
 
@@ -114,8 +114,8 @@ describe 'SyncMapPermission' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_map_permissions.list()
 
     expect(actual).to_not eq(nil)
@@ -151,8 +151,8 @@ describe 'SyncMapPermission' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_map_permissions.list()
 
     expect(actual).to_not eq(nil)
@@ -162,8 +162,8 @@ describe 'SyncMapPermission' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .sync_map_permissions('identity').update(read: true, write: true, manage: true)
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -171,7 +171,7 @@ describe 'SyncMapPermission' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Maps/MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Permissions/identity',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps/MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Permissions/identity',
         data: values,
     ))).to eq(true)
   end
@@ -193,8 +193,8 @@ describe 'SyncMapPermission' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_map_permissions('identity').update(read: true, write: true, manage: true)
 
     expect(actual).to_not eq(nil)

@@ -11,9 +11,9 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .credential_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .credentials.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -21,7 +21,7 @@ describe 'Credential' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/CredentialLists/CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Credentials.json',
     ))).to eq(true)
   end
 
@@ -56,9 +56,9 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .credential_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .credentials.list()
 
     expect(actual).to_not eq(nil)
@@ -85,9 +85,9 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .credential_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .credentials.list()
 
     expect(actual).to_not eq(nil)
@@ -97,9 +97,9 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .credential_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .credentials.create(username: 'username', password: 'password')
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -107,7 +107,7 @@ describe 'Credential' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/CredentialLists/CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Credentials.json',
         data: values,
     ))).to eq(true)
   end
@@ -128,9 +128,9 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .credential_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .credentials.create(username: 'username', password: 'password')
 
     expect(actual).to_not eq(nil)
@@ -140,17 +140,17 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+                       .credential_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .credentials('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/CredentialLists/CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Credentials/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
     ))).to eq(true)
   end
 
@@ -170,10 +170,10 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+                              .credential_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .credentials('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -182,17 +182,17 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+                       .credential_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .credentials('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/CredentialLists/CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Credentials/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
     ))).to eq(true)
   end
 
@@ -212,10 +212,10 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+                              .credential_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .credentials('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -224,17 +224,17 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+                       .credential_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .credentials('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/CredentialLists/CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Credentials/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
     ))).to eq(true)
   end
 
@@ -244,10 +244,10 @@ describe 'Credential' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .credential_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+                              .credential_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .credentials('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

@@ -11,16 +11,16 @@ describe 'Field' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .fields('UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .fields('UEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields/UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Intents/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Fields/UEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -29,11 +29,11 @@ describe 'Field' do
         200,
       %q[
       {
-          "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields/UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields/UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "unique_name": "unique_name",
           "date_updated": "2015-07-30T20:00:00Z",
-          "service_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "intent_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2015-07-30T20:00:00Z",
           "sid": "UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -42,9 +42,9 @@ describe 'Field' do
       ]
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                       .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                       .fields('UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .fields('UEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -53,8 +53,8 @@ describe 'Field' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .fields.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -62,7 +62,7 @@ describe 'Field' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Intents/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Fields',
     ))).to eq(true)
   end
 
@@ -74,8 +74,8 @@ describe 'Field' do
           "fields": [],
           "meta": {
               "page": 0,
-              "first_page_url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields?PageSize=50&Page=0",
-              "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields?PageSize=50&Page=0",
+              "first_page_url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields?PageSize=50&Page=0",
+              "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields?PageSize=50&Page=0",
               "key": "fields",
               "next_page_url": null,
               "previous_page_url": null,
@@ -85,8 +85,8 @@ describe 'Field' do
       ]
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                       .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .fields.list()
 
     expect(actual).to_not eq(nil)
@@ -99,11 +99,11 @@ describe 'Field' do
       {
           "fields": [
               {
-                  "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields/UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields/UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "unique_name": "unique_name",
                   "date_updated": "2015-07-30T20:00:00Z",
-                  "service_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "intent_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "date_created": "2015-07-30T20:00:00Z",
                   "sid": "UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -112,8 +112,8 @@ describe 'Field' do
           ],
           "meta": {
               "page": 0,
-              "first_page_url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields?PageSize=50&Page=0",
-              "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields?PageSize=50&Page=0",
+              "first_page_url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields?PageSize=50&Page=0",
+              "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields?PageSize=50&Page=0",
               "key": "fields",
               "next_page_url": null,
               "previous_page_url": null,
@@ -123,8 +123,8 @@ describe 'Field' do
       ]
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                       .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .fields.list()
 
     expect(actual).to_not eq(nil)
@@ -134,8 +134,8 @@ describe 'Field' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .fields.create(field_type: 'field_type', unique_name: 'unique_name')
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -143,7 +143,7 @@ describe 'Field' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Intents/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Fields',
         data: values,
     ))).to eq(true)
   end
@@ -153,11 +153,11 @@ describe 'Field' do
         201,
       %q[
       {
-          "url": "https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields/UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields/UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "unique_name": "unique_name",
           "date_updated": "2015-07-30T20:00:00Z",
-          "service_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "intent_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2015-07-30T20:00:00Z",
           "sid": "UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -166,8 +166,8 @@ describe 'Field' do
       ]
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                       .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .fields.create(field_type: 'field_type', unique_name: 'unique_name')
 
     expect(actual).to_not eq(nil)
@@ -177,16 +177,16 @@ describe 'Field' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .fields('UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .fields('UEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://preview.twilio.com/understand/Services/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Fields/UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Intents/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Fields/UEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -196,9 +196,9 @@ describe 'Field' do
       nil,
     ))
 
-    actual = @client.preview.understand.services('UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                       .intents('UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                       .fields('UEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .fields('UEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

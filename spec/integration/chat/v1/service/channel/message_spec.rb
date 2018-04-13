@@ -11,16 +11,16 @@ describe 'Message' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .messages('IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .messages('IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages/IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -46,9 +46,9 @@ describe 'Message' do
       ]
     ))
 
-    actual = @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .messages('IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .messages('IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -57,8 +57,8 @@ describe 'Message' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .messages.create(body: 'body')
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -66,7 +66,7 @@ describe 'Message' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages',
         data: values,
     ))).to eq(true)
   end
@@ -93,8 +93,8 @@ describe 'Message' do
       ]
     ))
 
-    actual = @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .messages.create(body: 'body')
 
     expect(actual).to_not eq(nil)
@@ -122,8 +122,8 @@ describe 'Message' do
       ]
     ))
 
-    actual = @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .messages.create(body: 'body')
 
     expect(actual).to_not eq(nil)
@@ -133,8 +133,8 @@ describe 'Message' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .messages.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -142,7 +142,7 @@ describe 'Message' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages',
     ))).to eq(true)
   end
 
@@ -181,8 +181,8 @@ describe 'Message' do
       ]
     ))
 
-    actual = @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .messages.list()
 
     expect(actual).to_not eq(nil)
@@ -207,8 +207,8 @@ describe 'Message' do
       ]
     ))
 
-    actual = @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .messages.list()
 
     expect(actual).to_not eq(nil)
@@ -218,16 +218,16 @@ describe 'Message' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .messages('IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .messages('IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages/IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -237,9 +237,9 @@ describe 'Message' do
       nil,
     ))
 
-    actual = @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .messages('IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .messages('IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -248,16 +248,16 @@ describe 'Message' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .messages('IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+      @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .messages('IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages/IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -283,9 +283,9 @@ describe 'Message' do
       ]
     ))
 
-    actual = @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .messages('IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .messages('IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end

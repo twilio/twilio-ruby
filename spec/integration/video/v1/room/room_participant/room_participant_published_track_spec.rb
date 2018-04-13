@@ -11,16 +11,16 @@ describe 'PublishedTrack' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .published_tracks('MTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .participants('PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .published_tracks('MTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PublishedTracks/MTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://video.twilio.com/v1/Rooms/RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Participants/PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/PublishedTracks/MTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -42,9 +42,9 @@ describe 'PublishedTrack' do
       ]
     ))
 
-    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .published_tracks('MTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .participants('PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .published_tracks('MTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -53,8 +53,8 @@ describe 'PublishedTrack' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .participants('PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                       .published_tracks.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -62,7 +62,7 @@ describe 'PublishedTrack' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PublishedTracks',
+        url: 'https://video.twilio.com/v1/Rooms/RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Participants/PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/PublishedTracks',
     ))).to eq(true)
   end
 
@@ -85,8 +85,8 @@ describe 'PublishedTrack' do
       ]
     ))
 
-    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .participants('PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .published_tracks.list()
 
     expect(actual).to_not eq(nil)

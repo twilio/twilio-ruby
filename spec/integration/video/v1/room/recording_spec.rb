@@ -11,15 +11,15 @@ describe 'RoomRecording' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .recordings('RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .recordings('RTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings/RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://video.twilio.com/v1/Rooms/RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Recordings/RTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -50,8 +50,8 @@ describe 'RoomRecording' do
       ]
     ))
 
-    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .recordings('RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .recordings('RTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -60,7 +60,7 @@ describe 'RoomRecording' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                       .recordings.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -68,7 +68,7 @@ describe 'RoomRecording' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings',
+        url: 'https://video.twilio.com/v1/Rooms/RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Recordings',
     ))).to eq(true)
   end
 
@@ -91,7 +91,7 @@ describe 'RoomRecording' do
       ]
     ))
 
-    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .recordings.list()
 
     expect(actual).to_not eq(nil)
@@ -138,7 +138,7 @@ describe 'RoomRecording' do
       ]
     ))
 
-    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .recordings.list()
 
     expect(actual).to_not eq(nil)

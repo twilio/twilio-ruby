@@ -11,15 +11,15 @@ describe 'Role' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .roles('RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .roles('RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Roles/RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles/RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -46,8 +46,8 @@ describe 'Role' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .roles('RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .roles('RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -56,15 +56,15 @@ describe 'Role' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .roles('RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .roles('RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Roles/RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles/RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -74,8 +74,8 @@ describe 'Role' do
       nil,
     ))
 
-    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .roles('RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .roles('RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -84,7 +84,7 @@ describe 'Role' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .roles.create(friendly_name: 'friendly_name', type: 'channel', permission: ['permission'])
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -96,7 +96,7 @@ describe 'Role' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Roles',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles',
         data: values,
     ))).to eq(true)
   end
@@ -124,7 +124,7 @@ describe 'Role' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                     .roles.create(friendly_name: 'friendly_name', type: 'channel', permission: ['permission'])
 
     expect(actual).to_not eq(nil)
@@ -134,7 +134,7 @@ describe 'Role' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .roles.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -142,7 +142,7 @@ describe 'Role' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Roles',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles',
     ))).to eq(true)
   end
 
@@ -182,7 +182,7 @@ describe 'Role' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                     .roles.list()
 
     expect(actual).to_not eq(nil)
@@ -207,7 +207,7 @@ describe 'Role' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                     .roles.list()
 
     expect(actual).to_not eq(nil)
@@ -217,15 +217,15 @@ describe 'Role' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .roles('RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update(permission: ['permission'])
+      @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .roles('RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(permission: ['permission'])
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Permission' => Twilio.serialize_list(['permission']) { |e| e }, }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Roles/RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles/RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         data: values,
     ))).to eq(true)
   end
@@ -253,8 +253,8 @@ describe 'Role' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .roles('RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update(permission: ['permission'])
+    actual = @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .roles('RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(permission: ['permission'])
 
     expect(actual).to_not eq(nil)
   end

@@ -11,14 +11,14 @@ describe 'Composition' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.compositions('CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.video.v1.compositions('CJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://video.twilio.com/v1/Compositions/CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://video.twilio.com/v1/Compositions/CJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -54,7 +54,7 @@ describe 'Composition' do
       ]
     ))
 
-    actual = @client.video.v1.compositions('CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.video.v1.compositions('CJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -151,14 +151,14 @@ describe 'Composition' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.compositions('CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.video.v1.compositions('CJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://video.twilio.com/v1/Compositions/CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://video.twilio.com/v1/Compositions/CJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -168,7 +168,7 @@ describe 'Composition' do
       nil,
     ))
 
-    actual = @client.video.v1.compositions('CJaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.video.v1.compositions('CJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

@@ -11,8 +11,8 @@ describe 'SyncMapItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .sync_map_items('key').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -20,7 +20,7 @@ describe 'SyncMapItem' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Maps/MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Items/key',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps/MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Items/key',
     ))).to eq(true)
   end
 
@@ -44,8 +44,8 @@ describe 'SyncMapItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_map_items('key').fetch()
 
     expect(actual).to_not eq(nil)
@@ -55,8 +55,8 @@ describe 'SyncMapItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .sync_map_items('key').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -64,7 +64,7 @@ describe 'SyncMapItem' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Maps/MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Items/key',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps/MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Items/key',
     ))).to eq(true)
   end
 
@@ -74,8 +74,8 @@ describe 'SyncMapItem' do
       nil,
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_map_items('key').delete()
 
     expect(actual).to eq(true)
@@ -85,16 +85,16 @@ describe 'SyncMapItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_map_items.create(key: 'key', data: JSON.parse('{}'))
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_map_items.create(key: 'key', data: {})
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Key' => 'key', 'Data' => Twilio.serialize_object(JSON.parse('{}')), }
+    values = {'Key' => 'key', 'Data' => Twilio.serialize_object({}), }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Maps/MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Items',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps/MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Items',
         data: values,
     ))).to eq(true)
   end
@@ -119,9 +119,9 @@ describe 'SyncMapItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_map_items.create(key: 'key', data: JSON.parse('{}'))
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_map_items.create(key: 'key', data: {})
 
     expect(actual).to_not eq(nil)
   end
@@ -130,8 +130,8 @@ describe 'SyncMapItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .sync_map_items.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -139,7 +139,7 @@ describe 'SyncMapItem' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Maps/MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Items',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps/MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Items',
     ))).to eq(true)
   end
 
@@ -162,8 +162,8 @@ describe 'SyncMapItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_map_items.list()
 
     expect(actual).to_not eq(nil)
@@ -202,8 +202,8 @@ describe 'SyncMapItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_map_items.list()
 
     expect(actual).to_not eq(nil)
@@ -213,8 +213,8 @@ describe 'SyncMapItem' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .sync_map_items('key').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -222,7 +222,7 @@ describe 'SyncMapItem' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Maps/MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Items/key',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps/MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Items/key',
     ))).to eq(true)
   end
 
@@ -246,8 +246,8 @@ describe 'SyncMapItem' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .sync_map_items('key').update()
 
     expect(actual).to_not eq(nil)

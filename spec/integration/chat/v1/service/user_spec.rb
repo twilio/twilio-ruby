@@ -11,15 +11,15 @@ describe 'User' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -48,8 +48,8 @@ describe 'User' do
       ]
     ))
 
-    actual = @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -58,15 +58,15 @@ describe 'User' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -76,8 +76,8 @@ describe 'User' do
       nil,
     ))
 
-    actual = @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -86,7 +86,7 @@ describe 'User' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .users.create(identity: 'identity')
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -94,7 +94,7 @@ describe 'User' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users',
         data: values,
     ))).to eq(true)
   end
@@ -124,7 +124,7 @@ describe 'User' do
       ]
     ))
 
-    actual = @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .users.create(identity: 'identity')
 
     expect(actual).to_not eq(nil)
@@ -134,7 +134,7 @@ describe 'User' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .users.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -142,7 +142,7 @@ describe 'User' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users',
     ))).to eq(true)
   end
 
@@ -184,7 +184,7 @@ describe 'User' do
       ]
     ))
 
-    actual = @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .users.list()
 
     expect(actual).to_not eq(nil)
@@ -209,7 +209,7 @@ describe 'User' do
       ]
     ))
 
-    actual = @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .users.list()
 
     expect(actual).to_not eq(nil)
@@ -219,15 +219,15 @@ describe 'User' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+      @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -256,8 +256,8 @@ describe 'User' do
       ]
     ))
 
-    actual = @client.chat.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.chat.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end

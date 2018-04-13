@@ -11,7 +11,7 @@ describe 'VerificationCheck' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.acc_security.services('VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.acc_security.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                   .verification_checks.create(code: 'code')
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -19,7 +19,7 @@ describe 'VerificationCheck' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/Verification/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/VerificationCheck',
+        url: 'https://preview.twilio.com/Verification/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/VerificationCheck',
         data: values,
     ))).to eq(true)
   end
@@ -42,7 +42,7 @@ describe 'VerificationCheck' do
       ]
     ))
 
-    actual = @client.preview.acc_security.services('VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.acc_security.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                          .verification_checks.create(code: 'code')
 
     expect(actual).to_not eq(nil)

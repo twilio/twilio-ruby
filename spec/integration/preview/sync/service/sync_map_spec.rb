@@ -11,15 +11,15 @@ describe 'SyncMap' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                          .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                          .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/Sync/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Maps/MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/Sync/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps/MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -45,8 +45,8 @@ describe 'SyncMap' do
       ]
     ))
 
-    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                 .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                 .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -55,15 +55,15 @@ describe 'SyncMap' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                          .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                          .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://preview.twilio.com/Sync/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Maps/MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/Sync/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps/MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -73,8 +73,8 @@ describe 'SyncMap' do
       nil,
     ))
 
-    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                 .sync_maps('MPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                 .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -83,7 +83,7 @@ describe 'SyncMap' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                           .sync_maps.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -91,7 +91,7 @@ describe 'SyncMap' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/Sync/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Maps',
+        url: 'https://preview.twilio.com/Sync/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps',
     ))).to eq(true)
   end
 
@@ -117,7 +117,7 @@ describe 'SyncMap' do
       ]
     ))
 
-    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                  .sync_maps.create()
 
     expect(actual).to_not eq(nil)
@@ -127,7 +127,7 @@ describe 'SyncMap' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                           .sync_maps.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -135,7 +135,7 @@ describe 'SyncMap' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/Sync/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Maps',
+        url: 'https://preview.twilio.com/Sync/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps',
     ))).to eq(true)
   end
 
@@ -158,7 +158,7 @@ describe 'SyncMap' do
       ]
     ))
 
-    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                  .sync_maps.list()
 
     expect(actual).to_not eq(nil)
@@ -199,7 +199,7 @@ describe 'SyncMap' do
       ]
     ))
 
-    actual = @client.preview.sync.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                  .sync_maps.list()
 
     expect(actual).to_not eq(nil)

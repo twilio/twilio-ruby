@@ -11,8 +11,8 @@ describe 'SegmentMembership' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .users('NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .segment_memberships.create(segment: 'segment')
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -20,7 +20,7 @@ describe 'SegmentMembership' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SegmentMemberships',
+        url: 'https://notify.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SegmentMemberships',
         data: values,
     ))).to eq(true)
   end
@@ -39,8 +39,8 @@ describe 'SegmentMembership' do
       ]
     ))
 
-    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .users('NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .segment_memberships.create(segment: 'segment')
 
     expect(actual).to_not eq(nil)
@@ -50,8 +50,8 @@ describe 'SegmentMembership' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .users('NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .segment_memberships('segment').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -59,7 +59,7 @@ describe 'SegmentMembership' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SegmentMemberships/segment',
+        url: 'https://notify.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SegmentMemberships/segment',
     ))).to eq(true)
   end
 
@@ -69,8 +69,8 @@ describe 'SegmentMembership' do
       nil,
     ))
 
-    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .users('NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .segment_memberships('segment').delete()
 
     expect(actual).to eq(true)
@@ -80,8 +80,8 @@ describe 'SegmentMembership' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .users('NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .segment_memberships('segment').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -89,7 +89,7 @@ describe 'SegmentMembership' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SegmentMemberships/segment',
+        url: 'https://notify.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SegmentMemberships/segment',
     ))).to eq(true)
   end
 
@@ -107,8 +107,8 @@ describe 'SegmentMembership' do
       ]
     ))
 
-    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .users('NUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .users('NUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .segment_memberships('segment').fetch()
 
     expect(actual).to_not eq(nil)

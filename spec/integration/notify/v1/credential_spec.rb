@@ -123,14 +123,14 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.notify.v1.credentials('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://notify.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://notify.twilio.com/v1/Credentials/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -151,7 +151,7 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.notify.v1.credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.notify.v1.credentials('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -160,14 +160,14 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+      @client.notify.v1.credentials('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://notify.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://notify.twilio.com/v1/Credentials/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -188,7 +188,7 @@ describe 'Credential' do
       ]
     ))
 
-    actual = @client.notify.v1.credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.notify.v1.credentials('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -197,14 +197,14 @@ describe 'Credential' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.notify.v1.credentials('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://notify.twilio.com/v1/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://notify.twilio.com/v1/Credentials/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -214,7 +214,7 @@ describe 'Credential' do
       nil,
     ))
 
-    actual = @client.notify.v1.credentials('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.notify.v1.credentials('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

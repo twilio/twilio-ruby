@@ -8,27 +8,30 @@ module Twilio
   module REST
     class Preview < Domain
       class Understand < Version
-        class ServiceContext < InstanceContext
+        class AssistantContext < InstanceContext
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class IntentList < ListResource
+          class QueryList < ListResource
             ##
-            # Initialize the IntentList
+            # Initialize the QueryList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @return [IntentList] IntentList
-            def initialize(version, service_sid: nil)
+            # @param [String] assistant_sid The assistant_sid
+            # @return [QueryList] QueryList
+            def initialize(version, assistant_sid: nil)
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid}
-              @uri = "/Services/#{@solution[:service_sid]}/Intents"
+              @solution = {assistant_sid: assistant_sid}
+              @uri = "/Assistants/#{@solution[:assistant_sid]}/Queries"
             end
 
             ##
-            # Lists IntentInstance records from the API as a list.
+            # Lists QueryInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
+            # @param [String] language The language
+            # @param [String] model_build The model_build
+            # @param [String] status The status
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -36,14 +39,23 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(limit: nil, page_size: nil)
-              self.stream(limit: limit, page_size: page_size).entries
+            def list(language: :unset, model_build: :unset, status: :unset, limit: nil, page_size: nil)
+              self.stream(
+                  language: language,
+                  model_build: model_build,
+                  status: status,
+                  limit: limit,
+                  page_size: page_size
+              ).entries
             end
 
             ##
-            # Streams IntentInstance records from the API as an Enumerable.
+            # Streams QueryInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
+            # @param [String] language The language
+            # @param [String] model_build The model_build
+            # @param [String] status The status
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -51,16 +63,21 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(limit: nil, page_size: nil)
+            def stream(language: :unset, model_build: :unset, status: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size], )
+              page = self.page(
+                  language: language,
+                  model_build: model_build,
+                  status: status,
+                  page_size: limits[:page_size],
+              )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
 
             ##
-            # When passed a block, yields IntentInstance records from the API.
+            # When passed a block, yields QueryInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             def each
@@ -74,14 +91,20 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of IntentInstance records from the API.
+            # Retrieve a single page of QueryInstance records from the API.
             # Request is executed immediately.
+            # @param [String] language The language
+            # @param [String] model_build The model_build
+            # @param [String] status The status
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            # @return [Page] Page of IntentInstance
-            def page(page_token: :unset, page_number: :unset, page_size: :unset)
+            # @return [Page] Page of QueryInstance
+            def page(language: :unset, model_build: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
+                  'Language' => language,
+                  'ModelBuild' => model_build,
+                  'Status' => status,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
@@ -91,30 +114,39 @@ module Twilio
                   @uri,
                   params
               )
-              IntentPage.new(@version, response, @solution)
+              QueryPage.new(@version, response, @solution)
             end
 
             ##
-            # Retrieve a single page of IntentInstance records from the API.
+            # Retrieve a single page of QueryInstance records from the API.
             # Request is executed immediately.
             # @param [String] target_url API-generated URL for the requested results page
-            # @return [Page] Page of IntentInstance
+            # @return [Page] Page of QueryInstance
             def get_page(target_url)
               response = @version.domain.request(
                   'GET',
                   target_url
               )
-              IntentPage.new(@version, response, @solution)
+              QueryPage.new(@version, response, @solution)
             end
 
             ##
-            # Retrieve a single page of IntentInstance records from the API.
+            # Retrieve a single page of QueryInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name The unique_name
-            # @param [String] friendly_name The friendly_name
-            # @return [IntentInstance] Newly created IntentInstance
-            def create(unique_name: nil, friendly_name: :unset)
-              data = Twilio::Values.of({'UniqueName' => unique_name, 'FriendlyName' => friendly_name, })
+            # @param [String] language The language
+            # @param [String] query The query
+            # @param [String] intents The intents
+            # @param [String] model_build The model_build
+            # @param [String] field The field
+            # @return [QueryInstance] Newly created QueryInstance
+            def create(language: nil, query: nil, intents: :unset, model_build: :unset, field: :unset)
+              data = Twilio::Values.of({
+                  'Language' => language,
+                  'Query' => query,
+                  'Intents' => intents,
+                  'ModelBuild' => model_build,
+                  'Field' => field,
+              })
 
               payload = @version.create(
                   'POST',
@@ -122,25 +154,25 @@ module Twilio
                   data: data
               )
 
-              IntentInstance.new(@version, payload, service_sid: @solution[:service_sid], )
+              QueryInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '#<Twilio.Preview.Understand.IntentList>'
+              '#<Twilio.Preview.Understand.QueryList>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class IntentPage < Page
+          class QueryPage < Page
             ##
-            # Initialize the IntentPage
+            # Initialize the QueryPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @return [IntentPage] IntentPage
+            # @return [QueryPage] QueryPage
             def initialize(version, response, solution)
               super(version, response)
 
@@ -149,44 +181,40 @@ module Twilio
             end
 
             ##
-            # Build an instance of IntentInstance
+            # Build an instance of QueryInstance
             # @param [Hash] payload Payload response from the API
-            # @return [IntentInstance] IntentInstance
+            # @return [QueryInstance] QueryInstance
             def get_instance(payload)
-              IntentInstance.new(@version, payload, service_sid: @solution[:service_sid], )
+              QueryInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '<Twilio.Preview.Understand.IntentPage>'
+              '<Twilio.Preview.Understand.QueryPage>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class IntentContext < InstanceContext
+          class QueryContext < InstanceContext
             ##
-            # Initialize the IntentContext
+            # Initialize the QueryContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] assistant_sid The assistant_sid
             # @param [String] sid The sid
-            # @return [IntentContext] IntentContext
-            def initialize(version, service_sid, sid)
+            # @return [QueryContext] QueryContext
+            def initialize(version, assistant_sid, sid)
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid, sid: sid, }
-              @uri = "/Services/#{@solution[:service_sid]}/Intents/#{@solution[:sid]}"
-
-              # Dependents
-              @fields = nil
-              @samples = nil
+              @solution = {assistant_sid: assistant_sid, sid: sid, }
+              @uri = "/Assistants/#{@solution[:assistant_sid]}/Queries/#{@solution[:sid]}"
             end
 
             ##
-            # Fetch a IntentInstance
-            # @return [IntentInstance] Fetched IntentInstance
+            # Fetch a QueryInstance
+            # @return [QueryInstance] Fetched QueryInstance
             def fetch
               params = Twilio::Values.of({})
 
@@ -196,16 +224,16 @@ module Twilio
                   params,
               )
 
-              IntentInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+              QueryInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Update the IntentInstance
-            # @param [String] friendly_name The friendly_name
-            # @param [String] unique_name The unique_name
-            # @return [IntentInstance] Updated IntentInstance
-            def update(friendly_name: :unset, unique_name: :unset)
-              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'UniqueName' => unique_name, })
+            # Update the QueryInstance
+            # @param [String] sample_sid The sample_sid
+            # @param [String] status The status
+            # @return [QueryInstance] Updated QueryInstance
+            def update(sample_sid: :unset, status: :unset)
+              data = Twilio::Values.of({'SampleSid' => sample_sid, 'Status' => status, })
 
               payload = @version.update(
                   'POST',
@@ -213,75 +241,35 @@ module Twilio
                   data: data,
               )
 
-              IntentInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+              QueryInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the IntentInstance
+            # Deletes the QueryInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               @version.delete('delete', @uri)
             end
 
             ##
-            # Access the fields
-            # @return [FieldList]
-            # @return [FieldContext] if sid was passed.
-            def fields(sid=:unset)
-              raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-              if sid != :unset
-                return FieldContext.new(@version, @solution[:service_sid], @solution[:sid], sid, )
-              end
-
-              unless @fields
-                @fields = FieldList.new(@version, service_sid: @solution[:service_sid], intent_sid: @solution[:sid], )
-              end
-
-              @fields
-            end
-
-            ##
-            # Access the samples
-            # @return [SampleList]
-            # @return [SampleContext] if sid was passed.
-            def samples(sid=:unset)
-              raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-              if sid != :unset
-                return SampleContext.new(@version, @solution[:service_sid], @solution[:sid], sid, )
-              end
-
-              unless @samples
-                @samples = SampleList.new(
-                    @version,
-                    service_sid: @solution[:service_sid],
-                    intent_sid: @solution[:sid],
-                )
-              end
-
-              @samples
-            end
-
-            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Preview.Understand.IntentContext #{context}>"
+              "#<Twilio.Preview.Understand.QueryContext #{context}>"
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class IntentInstance < InstanceResource
+          class QueryInstance < InstanceResource
             ##
-            # Initialize the IntentInstance
+            # Initialize the QueryInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
+            # @param [String] assistant_sid The assistant_sid
             # @param [String] sid The sid
-            # @return [IntentInstance] IntentInstance
-            def initialize(version, payload, service_sid: nil, sid: nil)
+            # @return [QueryInstance] QueryInstance
+            def initialize(version, payload, assistant_sid: nil, sid: nil)
               super(version)
 
               # Marshaled Properties
@@ -289,26 +277,30 @@ module Twilio
                   'account_sid' => payload['account_sid'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                  'friendly_name' => payload['friendly_name'],
-                  'links' => payload['links'],
-                  'service_sid' => payload['service_sid'],
+                  'results' => payload['results'],
+                  'language' => payload['language'],
+                  'model_build_sid' => payload['model_build_sid'],
+                  'query' => payload['query'],
+                  'sample_sid' => payload['sample_sid'],
+                  'assistant_sid' => payload['assistant_sid'],
                   'sid' => payload['sid'],
-                  'unique_name' => payload['unique_name'],
+                  'status' => payload['status'],
                   'url' => payload['url'],
+                  'source_channel' => payload['source_channel'],
               }
 
               # Context
               @instance_context = nil
-              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'], }
+              @params = {'assistant_sid' => assistant_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return [IntentContext] IntentContext for this IntentInstance
+            # @return [QueryContext] QueryContext for this QueryInstance
             def context
               unless @instance_context
-                @instance_context = IntentContext.new(@version, @params['service_sid'], @params['sid'], )
+                @instance_context = QueryContext.new(@version, @params['assistant_sid'], @params['sid'], )
               end
               @instance_context
             end
@@ -332,21 +324,39 @@ module Twilio
             end
 
             ##
-            # @return [String] The friendly_name
-            def friendly_name
-              @properties['friendly_name']
+            # @return [Hash] The results
+            def results
+              @properties['results']
             end
 
             ##
-            # @return [String] The links
-            def links
-              @properties['links']
+            # @return [String] The language
+            def language
+              @properties['language']
             end
 
             ##
-            # @return [String] The service_sid
-            def service_sid
-              @properties['service_sid']
+            # @return [String] The model_build_sid
+            def model_build_sid
+              @properties['model_build_sid']
+            end
+
+            ##
+            # @return [String] The query
+            def query
+              @properties['query']
+            end
+
+            ##
+            # @return [String] The sample_sid
+            def sample_sid
+              @properties['sample_sid']
+            end
+
+            ##
+            # @return [String] The assistant_sid
+            def assistant_sid
+              @properties['assistant_sid']
             end
 
             ##
@@ -356,9 +366,9 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique_name
-            def unique_name
-              @properties['unique_name']
+            # @return [String] The status
+            def status
+              @properties['status']
             end
 
             ##
@@ -368,54 +378,46 @@ module Twilio
             end
 
             ##
-            # Fetch a IntentInstance
-            # @return [IntentInstance] Fetched IntentInstance
+            # @return [String] The source_channel
+            def source_channel
+              @properties['source_channel']
+            end
+
+            ##
+            # Fetch a QueryInstance
+            # @return [QueryInstance] Fetched QueryInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Update the IntentInstance
-            # @param [String] friendly_name The friendly_name
-            # @param [String] unique_name The unique_name
-            # @return [IntentInstance] Updated IntentInstance
-            def update(friendly_name: :unset, unique_name: :unset)
-              context.update(friendly_name: friendly_name, unique_name: unique_name, )
+            # Update the QueryInstance
+            # @param [String] sample_sid The sample_sid
+            # @param [String] status The status
+            # @return [QueryInstance] Updated QueryInstance
+            def update(sample_sid: :unset, status: :unset)
+              context.update(sample_sid: sample_sid, status: status, )
             end
 
             ##
-            # Deletes the IntentInstance
+            # Deletes the QueryInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               context.delete
             end
 
             ##
-            # Access the fields
-            # @return [fields] fields
-            def fields
-              context.fields
-            end
-
-            ##
-            # Access the samples
-            # @return [samples] samples
-            def samples
-              context.samples
-            end
-
-            ##
             # Provide a user friendly representation
             def to_s
               values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Preview.Understand.IntentInstance #{values}>"
+              "<Twilio.Preview.Understand.QueryInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
               values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Preview.Understand.IntentInstance #{values}>"
+              "<Twilio.Preview.Understand.QueryInstance #{values}>"
             end
           end
         end

@@ -11,11 +11,11 @@ describe 'InstalledAddOn' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.marketplace.installed_add_ons.create(available_add_on_sid: 'XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', accept_terms_of_service: true)
+      @client.preview.marketplace.installed_add_ons.create(available_add_on_sid: 'XBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', accept_terms_of_service: true)
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
-        'AvailableAddOnSid' => 'XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        'AvailableAddOnSid' => 'XBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         'AcceptTermsOfService' => true,
     }
     expect(
@@ -50,7 +50,7 @@ describe 'InstalledAddOn' do
       ]
     ))
 
-    actual = @client.preview.marketplace.installed_add_ons.create(available_add_on_sid: 'XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', accept_terms_of_service: true)
+    actual = @client.preview.marketplace.installed_add_ons.create(available_add_on_sid: 'XBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', accept_terms_of_service: true)
 
     expect(actual).to_not eq(nil)
   end
@@ -59,14 +59,14 @@ describe 'InstalledAddOn' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.marketplace.installed_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.preview.marketplace.installed_add_ons('XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://preview.twilio.com/marketplace/InstalledAddOns/XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/marketplace/InstalledAddOns/XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -76,7 +76,7 @@ describe 'InstalledAddOn' do
       nil,
     ))
 
-    actual = @client.preview.marketplace.installed_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.preview.marketplace.installed_add_ons('XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -85,14 +85,14 @@ describe 'InstalledAddOn' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.marketplace.installed_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.preview.marketplace.installed_add_ons('XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/marketplace/InstalledAddOns/XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/marketplace/InstalledAddOns/XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -120,7 +120,7 @@ describe 'InstalledAddOn' do
       ]
     ))
 
-    actual = @client.preview.marketplace.installed_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.preview.marketplace.installed_add_ons('XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -129,14 +129,14 @@ describe 'InstalledAddOn' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.marketplace.installed_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+      @client.preview.marketplace.installed_add_ons('XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/marketplace/InstalledAddOns/XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/marketplace/InstalledAddOns/XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -164,7 +164,7 @@ describe 'InstalledAddOn' do
       ]
     ))
 
-    actual = @client.preview.marketplace.installed_add_ons('XEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.preview.marketplace.installed_add_ons('XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end

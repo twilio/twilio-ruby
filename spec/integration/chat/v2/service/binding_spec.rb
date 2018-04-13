@@ -11,7 +11,7 @@ describe 'Binding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .bindings.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -19,7 +19,7 @@ describe 'Binding' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings',
+        url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Bindings',
     ))).to eq(true)
   end
 
@@ -64,7 +64,7 @@ describe 'Binding' do
       ]
     ))
 
-    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .bindings.list()
 
     expect(actual).to_not eq(nil)
@@ -89,7 +89,7 @@ describe 'Binding' do
       ]
     ))
 
-    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .bindings.list()
 
     expect(actual).to_not eq(nil)
@@ -99,15 +99,15 @@ describe 'Binding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .bindings('BSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings/BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Bindings/BSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -139,8 +139,8 @@ describe 'Binding' do
       ]
     ))
 
-    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .bindings('BSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -149,15 +149,15 @@ describe 'Binding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .bindings('BSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings/BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Bindings/BSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -167,8 +167,8 @@ describe 'Binding' do
       nil,
     ))
 
-    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .bindings('BSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

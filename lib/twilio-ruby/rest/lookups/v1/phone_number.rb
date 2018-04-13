@@ -119,7 +119,6 @@ module Twilio
                 'phone_number' => payload['phone_number'],
                 'national_format' => payload['national_format'],
                 'carrier' => payload['carrier'],
-                'fraud' => payload['fraud'],
                 'add_ons' => payload['add_ons'],
                 'url' => payload['url'],
             }
@@ -168,12 +167,6 @@ module Twilio
           # @return [String] The carrier
           def carrier
             @properties['carrier']
-          end
-
-          ##
-          # @return [String] The fraud
-          def fraud
-            @properties['fraud']
           end
 
           ##

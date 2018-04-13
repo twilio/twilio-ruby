@@ -11,17 +11,17 @@ describe 'CredentialListMapping' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .credential_list_mappings.create(credential_list_sid: 'CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+                       .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .credential_list_mappings.create(credential_list_sid: 'CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'CredentialListSid' => 'CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', }
+    values = {'CredentialListSid' => 'CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/Domains/SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialListMappings.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/Domains/SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/CredentialListMappings.json',
         data: values,
     ))).to eq(true)
   end
@@ -44,10 +44,10 @@ describe 'CredentialListMapping' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .credential_list_mappings.create(credential_list_sid: 'CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+                              .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .credential_list_mappings.create(credential_list_sid: 'CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
     expect(actual).to_not eq(nil)
   end
@@ -56,9 +56,9 @@ describe 'CredentialListMapping' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                       .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .credential_list_mappings.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -66,7 +66,7 @@ describe 'CredentialListMapping' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/Domains/SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialListMappings.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/Domains/SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/CredentialListMappings.json',
     ))).to eq(true)
   end
 
@@ -98,9 +98,9 @@ describe 'CredentialListMapping' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .credential_list_mappings.list()
 
     expect(actual).to_not eq(nil)
@@ -122,9 +122,9 @@ describe 'CredentialListMapping' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+                              .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .credential_list_mappings.list()
 
     expect(actual).to_not eq(nil)
@@ -134,17 +134,17 @@ describe 'CredentialListMapping' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .credential_list_mappings('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+                       .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .credential_list_mappings('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/Domains/SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialListMappings/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/Domains/SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/CredentialListMappings/CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
     ))).to eq(true)
   end
 
@@ -166,10 +166,10 @@ describe 'CredentialListMapping' do
       ]
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .credential_list_mappings('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+                              .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .credential_list_mappings('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -178,17 +178,17 @@ describe 'CredentialListMapping' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .sip \
-                       .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .credential_list_mappings('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+                       .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .credential_list_mappings('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/Domains/SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialListMappings/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json',
+        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SIP/Domains/SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/CredentialListMappings/CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
     ))).to eq(true)
   end
 
@@ -198,10 +198,10 @@ describe 'CredentialListMapping' do
       nil,
     ))
 
-    actual = @client.api.v2010.accounts('ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .sip \
-                              .domains('SDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .credential_list_mappings('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+                              .domains('SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .credential_list_mappings('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

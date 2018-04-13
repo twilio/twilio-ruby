@@ -125,14 +125,14 @@ describe 'PublicKey' do
 
     expect {
       @client.accounts.v1.credentials \
-                         .public_key('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+                         .public_key('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://accounts.twilio.com/v1/Credentials/PublicKeys/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://accounts.twilio.com/v1/Credentials/PublicKeys/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -152,7 +152,7 @@ describe 'PublicKey' do
     ))
 
     actual = @client.accounts.v1.credentials \
-                                .public_key('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+                                .public_key('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -162,14 +162,14 @@ describe 'PublicKey' do
 
     expect {
       @client.accounts.v1.credentials \
-                         .public_key('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+                         .public_key('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://accounts.twilio.com/v1/Credentials/PublicKeys/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://accounts.twilio.com/v1/Credentials/PublicKeys/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -189,7 +189,7 @@ describe 'PublicKey' do
     ))
 
     actual = @client.accounts.v1.credentials \
-                                .public_key('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+                                .public_key('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -199,14 +199,14 @@ describe 'PublicKey' do
 
     expect {
       @client.accounts.v1.credentials \
-                         .public_key('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+                         .public_key('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://accounts.twilio.com/v1/Credentials/PublicKeys/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://accounts.twilio.com/v1/Credentials/PublicKeys/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -217,7 +217,7 @@ describe 'PublicKey' do
     ))
 
     actual = @client.accounts.v1.credentials \
-                                .public_key('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+                                .public_key('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

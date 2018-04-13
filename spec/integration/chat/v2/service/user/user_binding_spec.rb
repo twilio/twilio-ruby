@@ -11,8 +11,8 @@ describe 'UserBinding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .user_bindings.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -20,7 +20,7 @@ describe 'UserBinding' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings',
+        url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Bindings',
     ))).to eq(true)
   end
 
@@ -63,8 +63,8 @@ describe 'UserBinding' do
       ]
     ))
 
-    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .user_bindings.list()
 
     expect(actual).to_not eq(nil)
@@ -89,8 +89,8 @@ describe 'UserBinding' do
       ]
     ))
 
-    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .user_bindings.list()
 
     expect(actual).to_not eq(nil)
@@ -100,16 +100,16 @@ describe 'UserBinding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .user_bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .user_bindings('BSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings/BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Bindings/BSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -139,9 +139,9 @@ describe 'UserBinding' do
       ]
     ))
 
-    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .user_bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .user_bindings('BSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -150,16 +150,16 @@ describe 'UserBinding' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .user_bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .user_bindings('BSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings/BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Bindings/BSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -169,9 +169,9 @@ describe 'UserBinding' do
       nil,
     ))
 
-    actual = @client.chat.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .users('USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .user_bindings('BSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .user_bindings('BSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

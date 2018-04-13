@@ -125,14 +125,14 @@ describe 'Aws' do
 
     expect {
       @client.accounts.v1.credentials \
-                         .aws('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+                         .aws('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://accounts.twilio.com/v1/Credentials/AWS/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://accounts.twilio.com/v1/Credentials/AWS/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -152,7 +152,7 @@ describe 'Aws' do
     ))
 
     actual = @client.accounts.v1.credentials \
-                                .aws('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+                                .aws('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -162,14 +162,14 @@ describe 'Aws' do
 
     expect {
       @client.accounts.v1.credentials \
-                         .aws('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+                         .aws('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://accounts.twilio.com/v1/Credentials/AWS/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://accounts.twilio.com/v1/Credentials/AWS/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -189,7 +189,7 @@ describe 'Aws' do
     ))
 
     actual = @client.accounts.v1.credentials \
-                                .aws('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+                                .aws('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -199,14 +199,14 @@ describe 'Aws' do
 
     expect {
       @client.accounts.v1.credentials \
-                         .aws('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+                         .aws('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://accounts.twilio.com/v1/Credentials/AWS/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://accounts.twilio.com/v1/Credentials/AWS/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -217,7 +217,7 @@ describe 'Aws' do
     ))
 
     actual = @client.accounts.v1.credentials \
-                                .aws('CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+                                .aws('CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

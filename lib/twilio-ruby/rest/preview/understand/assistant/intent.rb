@@ -8,25 +8,25 @@ module Twilio
   module REST
     class Preview < Domain
       class Understand < Version
-        class ServiceContext < InstanceContext
+        class AssistantContext < InstanceContext
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class ModelBuildList < ListResource
+          class IntentList < ListResource
             ##
-            # Initialize the ModelBuildList
+            # Initialize the IntentList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @return [ModelBuildList] ModelBuildList
-            def initialize(version, service_sid: nil)
+            # @param [String] assistant_sid The assistant_sid
+            # @return [IntentList] IntentList
+            def initialize(version, assistant_sid: nil)
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid}
-              @uri = "/Services/#{@solution[:service_sid]}/ModelBuilds"
+              @solution = {assistant_sid: assistant_sid}
+              @uri = "/Assistants/#{@solution[:assistant_sid]}/Intents"
             end
 
             ##
-            # Lists ModelBuildInstance records from the API as a list.
+            # Lists IntentInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -41,7 +41,7 @@ module Twilio
             end
 
             ##
-            # Streams ModelBuildInstance records from the API as an Enumerable.
+            # Streams IntentInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -60,7 +60,7 @@ module Twilio
             end
 
             ##
-            # When passed a block, yields ModelBuildInstance records from the API.
+            # When passed a block, yields IntentInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             def each
@@ -74,12 +74,12 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of ModelBuildInstance records from the API.
+            # Retrieve a single page of IntentInstance records from the API.
             # Request is executed immediately.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            # @return [Page] Page of ModelBuildInstance
+            # @return [Page] Page of IntentInstance
             def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'PageToken' => page_token,
@@ -91,30 +91,30 @@ module Twilio
                   @uri,
                   params
               )
-              ModelBuildPage.new(@version, response, @solution)
+              IntentPage.new(@version, response, @solution)
             end
 
             ##
-            # Retrieve a single page of ModelBuildInstance records from the API.
+            # Retrieve a single page of IntentInstance records from the API.
             # Request is executed immediately.
             # @param [String] target_url API-generated URL for the requested results page
-            # @return [Page] Page of ModelBuildInstance
+            # @return [Page] Page of IntentInstance
             def get_page(target_url)
               response = @version.domain.request(
                   'GET',
                   target_url
               )
-              ModelBuildPage.new(@version, response, @solution)
+              IntentPage.new(@version, response, @solution)
             end
 
             ##
-            # Retrieve a single page of ModelBuildInstance records from the API.
+            # Retrieve a single page of IntentInstance records from the API.
             # Request is executed immediately.
-            # @param [String] status_callback The status_callback
             # @param [String] unique_name The unique_name
-            # @return [ModelBuildInstance] Newly created ModelBuildInstance
-            def create(status_callback: :unset, unique_name: :unset)
-              data = Twilio::Values.of({'StatusCallback' => status_callback, 'UniqueName' => unique_name, })
+            # @param [String] friendly_name The friendly_name
+            # @return [IntentInstance] Newly created IntentInstance
+            def create(unique_name: nil, friendly_name: :unset)
+              data = Twilio::Values.of({'UniqueName' => unique_name, 'FriendlyName' => friendly_name, })
 
               payload = @version.create(
                   'POST',
@@ -122,25 +122,25 @@ module Twilio
                   data: data
               )
 
-              ModelBuildInstance.new(@version, payload, service_sid: @solution[:service_sid], )
+              IntentInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '#<Twilio.Preview.Understand.ModelBuildList>'
+              '#<Twilio.Preview.Understand.IntentList>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class ModelBuildPage < Page
+          class IntentPage < Page
             ##
-            # Initialize the ModelBuildPage
+            # Initialize the IntentPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @return [ModelBuildPage] ModelBuildPage
+            # @return [IntentPage] IntentPage
             def initialize(version, response, solution)
               super(version, response)
 
@@ -149,40 +149,44 @@ module Twilio
             end
 
             ##
-            # Build an instance of ModelBuildInstance
+            # Build an instance of IntentInstance
             # @param [Hash] payload Payload response from the API
-            # @return [ModelBuildInstance] ModelBuildInstance
+            # @return [IntentInstance] IntentInstance
             def get_instance(payload)
-              ModelBuildInstance.new(@version, payload, service_sid: @solution[:service_sid], )
+              IntentInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '<Twilio.Preview.Understand.ModelBuildPage>'
+              '<Twilio.Preview.Understand.IntentPage>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class ModelBuildContext < InstanceContext
+          class IntentContext < InstanceContext
             ##
-            # Initialize the ModelBuildContext
+            # Initialize the IntentContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] assistant_sid The assistant_sid
             # @param [String] sid The sid
-            # @return [ModelBuildContext] ModelBuildContext
-            def initialize(version, service_sid, sid)
+            # @return [IntentContext] IntentContext
+            def initialize(version, assistant_sid, sid)
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid, sid: sid, }
-              @uri = "/Services/#{@solution[:service_sid]}/ModelBuilds/#{@solution[:sid]}"
+              @solution = {assistant_sid: assistant_sid, sid: sid, }
+              @uri = "/Assistants/#{@solution[:assistant_sid]}/Intents/#{@solution[:sid]}"
+
+              # Dependents
+              @fields = nil
+              @samples = nil
             end
 
             ##
-            # Fetch a ModelBuildInstance
-            # @return [ModelBuildInstance] Fetched ModelBuildInstance
+            # Fetch a IntentInstance
+            # @return [IntentInstance] Fetched IntentInstance
             def fetch
               params = Twilio::Values.of({})
 
@@ -192,20 +196,21 @@ module Twilio
                   params,
               )
 
-              ModelBuildInstance.new(
+              IntentInstance.new(
                   @version,
                   payload,
-                  service_sid: @solution[:service_sid],
+                  assistant_sid: @solution[:assistant_sid],
                   sid: @solution[:sid],
               )
             end
 
             ##
-            # Update the ModelBuildInstance
+            # Update the IntentInstance
+            # @param [String] friendly_name The friendly_name
             # @param [String] unique_name The unique_name
-            # @return [ModelBuildInstance] Updated ModelBuildInstance
-            def update(unique_name: :unset)
-              data = Twilio::Values.of({'UniqueName' => unique_name, })
+            # @return [IntentInstance] Updated IntentInstance
+            def update(friendly_name: :unset, unique_name: :unset)
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'UniqueName' => unique_name, })
 
               payload = @version.update(
                   'POST',
@@ -213,40 +218,84 @@ module Twilio
                   data: data,
               )
 
-              ModelBuildInstance.new(
+              IntentInstance.new(
                   @version,
                   payload,
-                  service_sid: @solution[:service_sid],
+                  assistant_sid: @solution[:assistant_sid],
                   sid: @solution[:sid],
               )
             end
 
             ##
-            # Deletes the ModelBuildInstance
+            # Deletes the IntentInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               @version.delete('delete', @uri)
             end
 
             ##
+            # Access the fields
+            # @return [FieldList]
+            # @return [FieldContext] if sid was passed.
+            def fields(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return FieldContext.new(@version, @solution[:assistant_sid], @solution[:sid], sid, )
+              end
+
+              unless @fields
+                @fields = FieldList.new(
+                    @version,
+                    assistant_sid: @solution[:assistant_sid],
+                    intent_sid: @solution[:sid],
+                )
+              end
+
+              @fields
+            end
+
+            ##
+            # Access the samples
+            # @return [SampleList]
+            # @return [SampleContext] if sid was passed.
+            def samples(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return SampleContext.new(@version, @solution[:assistant_sid], @solution[:sid], sid, )
+              end
+
+              unless @samples
+                @samples = SampleList.new(
+                    @version,
+                    assistant_sid: @solution[:assistant_sid],
+                    intent_sid: @solution[:sid],
+                )
+              end
+
+              @samples
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Preview.Understand.ModelBuildContext #{context}>"
+              "#<Twilio.Preview.Understand.IntentContext #{context}>"
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class ModelBuildInstance < InstanceResource
+          class IntentInstance < InstanceResource
             ##
-            # Initialize the ModelBuildInstance
+            # Initialize the IntentInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
+            # @param [String] assistant_sid The assistant_sid
             # @param [String] sid The sid
-            # @return [ModelBuildInstance] ModelBuildInstance
-            def initialize(version, payload, service_sid: nil, sid: nil)
+            # @return [IntentInstance] IntentInstance
+            def initialize(version, payload, assistant_sid: nil, sid: nil)
               super(version)
 
               # Marshaled Properties
@@ -254,27 +303,26 @@ module Twilio
                   'account_sid' => payload['account_sid'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                  'service_sid' => payload['service_sid'],
+                  'friendly_name' => payload['friendly_name'],
+                  'links' => payload['links'],
+                  'assistant_sid' => payload['assistant_sid'],
                   'sid' => payload['sid'],
-                  'status' => payload['status'],
                   'unique_name' => payload['unique_name'],
                   'url' => payload['url'],
-                  'build_duration' => payload['build_duration'] == nil ? payload['build_duration'] : payload['build_duration'].to_i,
-                  'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
               }
 
               # Context
               @instance_context = nil
-              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'], }
+              @params = {'assistant_sid' => assistant_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return [ModelBuildContext] ModelBuildContext for this ModelBuildInstance
+            # @return [IntentContext] IntentContext for this IntentInstance
             def context
               unless @instance_context
-                @instance_context = ModelBuildContext.new(@version, @params['service_sid'], @params['sid'], )
+                @instance_context = IntentContext.new(@version, @params['assistant_sid'], @params['sid'], )
               end
               @instance_context
             end
@@ -298,21 +346,27 @@ module Twilio
             end
 
             ##
-            # @return [String] The service_sid
-            def service_sid
-              @properties['service_sid']
+            # @return [String] The friendly_name
+            def friendly_name
+              @properties['friendly_name']
+            end
+
+            ##
+            # @return [String] The links
+            def links
+              @properties['links']
+            end
+
+            ##
+            # @return [String] The assistant_sid
+            def assistant_sid
+              @properties['assistant_sid']
             end
 
             ##
             # @return [String] The sid
             def sid
               @properties['sid']
-            end
-
-            ##
-            # @return [model_build.Status] The status
-            def status
-              @properties['status']
             end
 
             ##
@@ -328,51 +382,54 @@ module Twilio
             end
 
             ##
-            # @return [String] The build_duration
-            def build_duration
-              @properties['build_duration']
-            end
-
-            ##
-            # @return [String] The error_code
-            def error_code
-              @properties['error_code']
-            end
-
-            ##
-            # Fetch a ModelBuildInstance
-            # @return [ModelBuildInstance] Fetched ModelBuildInstance
+            # Fetch a IntentInstance
+            # @return [IntentInstance] Fetched IntentInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Update the ModelBuildInstance
+            # Update the IntentInstance
+            # @param [String] friendly_name The friendly_name
             # @param [String] unique_name The unique_name
-            # @return [ModelBuildInstance] Updated ModelBuildInstance
-            def update(unique_name: :unset)
-              context.update(unique_name: unique_name, )
+            # @return [IntentInstance] Updated IntentInstance
+            def update(friendly_name: :unset, unique_name: :unset)
+              context.update(friendly_name: friendly_name, unique_name: unique_name, )
             end
 
             ##
-            # Deletes the ModelBuildInstance
+            # Deletes the IntentInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               context.delete
             end
 
             ##
+            # Access the fields
+            # @return [fields] fields
+            def fields
+              context.fields
+            end
+
+            ##
+            # Access the samples
+            # @return [samples] samples
+            def samples
+              context.samples
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Preview.Understand.ModelBuildInstance #{values}>"
+              "<Twilio.Preview.Understand.IntentInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
               values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Preview.Understand.ModelBuildInstance #{values}>"
+              "<Twilio.Preview.Understand.IntentInstance #{values}>"
             end
           end
         end

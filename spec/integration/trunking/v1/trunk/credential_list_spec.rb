@@ -11,15 +11,15 @@ describe 'CredentialList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                         .credentials_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                         .credentials_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/CredentialLists/CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -39,8 +39,8 @@ describe 'CredentialList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .credentials_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .credentials_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -49,15 +49,15 @@ describe 'CredentialList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                         .credentials_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                         .credentials_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/CredentialLists/CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -67,8 +67,8 @@ describe 'CredentialList' do
       nil,
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .credentials_lists('CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .credentials_lists('CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -77,15 +77,15 @@ describe 'CredentialList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                         .credentials_lists.create(credential_list_sid: 'CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                         .credentials_lists.create(credential_list_sid: 'CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'CredentialListSid' => 'CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', }
+    values = {'CredentialListSid' => 'CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialLists',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/CredentialLists',
         data: values,
     ))).to eq(true)
   end
@@ -106,8 +106,8 @@ describe 'CredentialList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .credentials_lists.create(credential_list_sid: 'CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .credentials_lists.create(credential_list_sid: 'CLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
     expect(actual).to_not eq(nil)
   end
@@ -116,7 +116,7 @@ describe 'CredentialList' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                          .credentials_lists.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -124,7 +124,7 @@ describe 'CredentialList' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialLists',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/CredentialLists',
     ))).to eq(true)
   end
 
@@ -157,7 +157,7 @@ describe 'CredentialList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .credentials_lists.list()
 
     expect(actual).to_not eq(nil)
@@ -182,7 +182,7 @@ describe 'CredentialList' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .credentials_lists.list()
 
     expect(actual).to_not eq(nil)

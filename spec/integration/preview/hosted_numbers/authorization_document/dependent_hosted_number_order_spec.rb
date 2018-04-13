@@ -11,7 +11,7 @@ describe 'DependentHostedNumberOrder' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.hosted_numbers.authorization_documents('PXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.hosted_numbers.authorization_documents('PXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                     .dependent_hosted_number_orders.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -19,7 +19,7 @@ describe 'DependentHostedNumberOrder' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/HostedNumbers/AuthorizationDocuments/PXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/DependentHostedNumberOrders',
+        url: 'https://preview.twilio.com/HostedNumbers/AuthorizationDocuments/PXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/DependentHostedNumberOrders',
     ))).to eq(true)
   end
 
@@ -42,7 +42,7 @@ describe 'DependentHostedNumberOrder' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.authorization_documents('PXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.hosted_numbers.authorization_documents('PXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                            .dependent_hosted_number_orders.list()
 
     expect(actual).to_not eq(nil)
@@ -101,7 +101,7 @@ describe 'DependentHostedNumberOrder' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.authorization_documents('PXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.hosted_numbers.authorization_documents('PXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                            .dependent_hosted_number_orders.list()
 
     expect(actual).to_not eq(nil)

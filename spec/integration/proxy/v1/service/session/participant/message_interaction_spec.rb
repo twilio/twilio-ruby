@@ -11,9 +11,9 @@ describe 'MessageInteraction' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .participants('KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .sessions('KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .participants('KPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                       .message_interactions.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -21,7 +21,7 @@ describe 'MessageInteraction' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Sessions/KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/MessageInteractions',
+        url: 'https://proxy.twilio.com/v1/Services/KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Sessions/KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Participants/KPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/MessageInteractions',
     ))).to eq(true)
   end
 
@@ -54,9 +54,9 @@ describe 'MessageInteraction' do
       ]
     ))
 
-    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .participants('KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .sessions('KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .participants('KPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .message_interactions.create()
 
     expect(actual).to_not eq(nil)
@@ -66,17 +66,17 @@ describe 'MessageInteraction' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .participants('KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .message_interactions('KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .sessions('KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .participants('KPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .message_interactions('KIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Sessions/KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/MessageInteractions/KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://proxy.twilio.com/v1/Services/KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Sessions/KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Participants/KPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/MessageInteractions/KIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -109,10 +109,10 @@ describe 'MessageInteraction' do
       ]
     ))
 
-    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .participants('KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .message_interactions('KIaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .sessions('KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .participants('KPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .message_interactions('KIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -121,9 +121,9 @@ describe 'MessageInteraction' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .participants('KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .sessions('KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .participants('KPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                       .message_interactions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -131,7 +131,7 @@ describe 'MessageInteraction' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Sessions/KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/MessageInteractions',
+        url: 'https://proxy.twilio.com/v1/Services/KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Sessions/KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Participants/KPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/MessageInteractions',
     ))).to eq(true)
   end
 
@@ -154,9 +154,9 @@ describe 'MessageInteraction' do
       ]
     ))
 
-    actual = @client.proxy.v1.services('KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .sessions('KCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .participants('KPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .sessions('KCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .participants('KPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .message_interactions.list()
 
     expect(actual).to_not eq(nil)

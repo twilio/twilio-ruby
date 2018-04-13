@@ -11,7 +11,7 @@ describe 'Notification' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .notifications.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -19,7 +19,7 @@ describe 'Notification' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications',
+        url: 'https://notify.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Notifications',
     ))).to eq(true)
   end
 
@@ -54,7 +54,7 @@ describe 'Notification' do
       ]
     ))
 
-    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .notifications.create()
 
     expect(actual).to_not eq(nil)
@@ -89,7 +89,7 @@ describe 'Notification' do
       ]
     ))
 
-    actual = @client.notify.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.notify.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .notifications.create()
 
     expect(actual).to_not eq(nil)

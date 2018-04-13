@@ -11,15 +11,15 @@ describe 'PhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                         .phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                         .phone_numbers('PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/PhoneNumbers/PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -64,8 +64,8 @@ describe 'PhoneNumber' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .phone_numbers('PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -74,15 +74,15 @@ describe 'PhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                         .phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                         .phone_numbers('PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/PhoneNumbers/PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -92,8 +92,8 @@ describe 'PhoneNumber' do
       nil,
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .phone_numbers('PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .phone_numbers('PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -102,15 +102,15 @@ describe 'PhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                         .phone_numbers.create(phone_number_sid: 'PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                         .phone_numbers.create(phone_number_sid: 'PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'PhoneNumberSid' => 'PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', }
+    values = {'PhoneNumberSid' => 'PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/PhoneNumbers',
         data: values,
     ))).to eq(true)
   end
@@ -156,8 +156,8 @@ describe 'PhoneNumber' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                .phone_numbers.create(phone_number_sid: 'PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .phone_numbers.create(phone_number_sid: 'PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
     expect(actual).to_not eq(nil)
   end
@@ -166,7 +166,7 @@ describe 'PhoneNumber' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                          .phone_numbers.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -174,7 +174,7 @@ describe 'PhoneNumber' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers',
+        url: 'https://trunking.twilio.com/v1/Trunks/TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/PhoneNumbers',
     ))).to eq(true)
   end
 
@@ -232,7 +232,7 @@ describe 'PhoneNumber' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .phone_numbers.list()
 
     expect(actual).to_not eq(nil)
@@ -257,7 +257,7 @@ describe 'PhoneNumber' do
       ]
     ))
 
-    actual = @client.trunking.v1.trunks('TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.trunking.v1.trunks('TRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .phone_numbers.list()
 
     expect(actual).to_not eq(nil)

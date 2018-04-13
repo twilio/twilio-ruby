@@ -11,14 +11,14 @@ describe 'Recording' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.recordings('RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.video.v1.recordings('RTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://video.twilio.com/v1/Recordings/RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://video.twilio.com/v1/Recordings/RTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -30,6 +30,8 @@ describe 'Recording' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "status": "processing",
           "date_created": "2015-07-30T20:00:00Z",
+          "date_updated": "2015-07-30T21:00:00Z",
+          "date_deleted": "2015-07-30T22:00:00Z",
           "sid": "RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "source_sid": "MTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "size": 0,
@@ -51,7 +53,7 @@ describe 'Recording' do
       ]
     ))
 
-    actual = @client.video.v1.recordings('RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.video.v1.recordings('RTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -105,6 +107,8 @@ describe 'Recording' do
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "status": "completed",
                   "date_created": "2015-07-30T20:00:00Z",
+                  "date_updated": "2015-07-30T21:00:00Z",
+                  "date_deleted": "2015-07-30T22:00:00Z",
                   "sid": "RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "source_sid": "MTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "size": 23,
@@ -147,14 +151,14 @@ describe 'Recording' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.recordings('RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.video.v1.recordings('RTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://video.twilio.com/v1/Recordings/RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://video.twilio.com/v1/Recordings/RTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -164,7 +168,7 @@ describe 'Recording' do
       nil,
     ))
 
-    actual = @client.video.v1.recordings('RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.video.v1.recordings('RTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end

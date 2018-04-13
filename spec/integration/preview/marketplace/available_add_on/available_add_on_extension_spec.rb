@@ -11,15 +11,15 @@ describe 'AvailableAddOnExtension' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.marketplace.available_add_ons('XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                 .extensions('XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.preview.marketplace.available_add_ons('XBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                 .extensions('XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/marketplace/AvailableAddOns/XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Extensions/XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://preview.twilio.com/marketplace/AvailableAddOns/XBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Extensions/XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -38,8 +38,8 @@ describe 'AvailableAddOnExtension' do
       ]
     ))
 
-    actual = @client.preview.marketplace.available_add_ons('XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                        .extensions('XFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.preview.marketplace.available_add_ons('XBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                        .extensions('XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -48,7 +48,7 @@ describe 'AvailableAddOnExtension' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.marketplace.available_add_ons('XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.preview.marketplace.available_add_ons('XBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                  .extensions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -56,7 +56,7 @@ describe 'AvailableAddOnExtension' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/marketplace/AvailableAddOns/XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Extensions',
+        url: 'https://preview.twilio.com/marketplace/AvailableAddOns/XBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Extensions',
     ))).to eq(true)
   end
 
@@ -88,7 +88,7 @@ describe 'AvailableAddOnExtension' do
       ]
     ))
 
-    actual = @client.preview.marketplace.available_add_ons('XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.marketplace.available_add_ons('XBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                         .extensions.list()
 
     expect(actual).to_not eq(nil)
@@ -113,7 +113,7 @@ describe 'AvailableAddOnExtension' do
       ]
     ))
 
-    actual = @client.preview.marketplace.available_add_ons('XBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.preview.marketplace.available_add_ons('XBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                         .extensions.list()
 
     expect(actual).to_not eq(nil)

@@ -11,16 +11,16 @@ describe 'Member' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .members('MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .members('MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members/MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Members/MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -44,9 +44,9 @@ describe 'Member' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .members('MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .members('MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -55,8 +55,8 @@ describe 'Member' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .members.create(identity: 'identity')
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -64,7 +64,7 @@ describe 'Member' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Members',
         data: values,
     ))).to eq(true)
   end
@@ -89,8 +89,8 @@ describe 'Member' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                     .members.create(identity: 'identity')
 
     expect(actual).to_not eq(nil)
@@ -100,8 +100,8 @@ describe 'Member' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .members.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -109,7 +109,7 @@ describe 'Member' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Members',
     ))).to eq(true)
   end
 
@@ -146,8 +146,8 @@ describe 'Member' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                     .members.list()
 
     expect(actual).to_not eq(nil)
@@ -172,8 +172,8 @@ describe 'Member' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                     .members.list()
 
     expect(actual).to_not eq(nil)
@@ -183,16 +183,16 @@ describe 'Member' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .members('MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .members('MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members/MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Members/MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -202,9 +202,9 @@ describe 'Member' do
       nil,
     ))
 
-    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .members('MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .members('MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -213,16 +213,16 @@ describe 'Member' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .members('MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+      @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .members('MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members/MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Members/MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -246,9 +246,9 @@ describe 'Member' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .members('MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .members('MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -273,9 +273,9 @@ describe 'Member' do
       ]
     ))
 
-    actual = @client.ip_messaging.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .members('MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.ip_messaging.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .members('MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end

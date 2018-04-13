@@ -8,29 +8,30 @@ module Twilio
   module REST
     class Preview < Domain
       class Understand < Version
-        class ServiceContext < InstanceContext
+        class AssistantContext < InstanceContext
           class IntentContext < InstanceContext
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class FieldList < ListResource
+            class SampleList < ListResource
               ##
-              # Initialize the FieldList
+              # Initialize the SampleList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
+              # @param [String] assistant_sid The assistant_sid
               # @param [String] intent_sid The intent_sid
-              # @return [FieldList] FieldList
-              def initialize(version, service_sid: nil, intent_sid: nil)
+              # @return [SampleList] SampleList
+              def initialize(version, assistant_sid: nil, intent_sid: nil)
                 super(version)
 
                 # Path Solution
-                @solution = {service_sid: service_sid, intent_sid: intent_sid}
-                @uri = "/Services/#{@solution[:service_sid]}/Intents/#{@solution[:intent_sid]}/Fields"
+                @solution = {assistant_sid: assistant_sid, intent_sid: intent_sid}
+                @uri = "/Assistants/#{@solution[:assistant_sid]}/Intents/#{@solution[:intent_sid]}/Samples"
               end
 
               ##
-              # Lists FieldInstance records from the API as a list.
+              # Lists SampleInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
+              # @param [String] language The language
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -38,14 +39,15 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(limit: nil, page_size: nil)
-                self.stream(limit: limit, page_size: page_size).entries
+              def list(language: :unset, limit: nil, page_size: nil)
+                self.stream(language: language, limit: limit, page_size: page_size).entries
               end
 
               ##
-              # Streams FieldInstance records from the API as an Enumerable.
+              # Streams SampleInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
+              # @param [String] language The language
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -53,16 +55,16 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(limit: nil, page_size: nil)
+              def stream(language: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(page_size: limits[:page_size], )
+                page = self.page(language: language, page_size: limits[:page_size], )
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
 
               ##
-              # When passed a block, yields FieldInstance records from the API.
+              # When passed a block, yields SampleInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
               def each
@@ -76,14 +78,16 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of FieldInstance records from the API.
+              # Retrieve a single page of SampleInstance records from the API.
               # Request is executed immediately.
+              # @param [String] language The language
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
-              # @return [Page] Page of FieldInstance
-              def page(page_token: :unset, page_number: :unset, page_size: :unset)
+              # @return [Page] Page of SampleInstance
+              def page(language: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
+                    'Language' => language,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
@@ -93,30 +97,35 @@ module Twilio
                     @uri,
                     params
                 )
-                FieldPage.new(@version, response, @solution)
+                SamplePage.new(@version, response, @solution)
               end
 
               ##
-              # Retrieve a single page of FieldInstance records from the API.
+              # Retrieve a single page of SampleInstance records from the API.
               # Request is executed immediately.
               # @param [String] target_url API-generated URL for the requested results page
-              # @return [Page] Page of FieldInstance
+              # @return [Page] Page of SampleInstance
               def get_page(target_url)
                 response = @version.domain.request(
                     'GET',
                     target_url
                 )
-                FieldPage.new(@version, response, @solution)
+                SamplePage.new(@version, response, @solution)
               end
 
               ##
-              # Retrieve a single page of FieldInstance records from the API.
+              # Retrieve a single page of SampleInstance records from the API.
               # Request is executed immediately.
-              # @param [String] field_type The field_type
-              # @param [String] unique_name The unique_name
-              # @return [FieldInstance] Newly created FieldInstance
-              def create(field_type: nil, unique_name: nil)
-                data = Twilio::Values.of({'FieldType' => field_type, 'UniqueName' => unique_name, })
+              # @param [String] language The language
+              # @param [String] tagged_text The tagged_text
+              # @param [String] source_channel The source_channel
+              # @return [SampleInstance] Newly created SampleInstance
+              def create(language: nil, tagged_text: nil, source_channel: :unset)
+                data = Twilio::Values.of({
+                    'Language' => language,
+                    'TaggedText' => tagged_text,
+                    'SourceChannel' => source_channel,
+                })
 
                 payload = @version.create(
                     'POST',
@@ -124,10 +133,10 @@ module Twilio
                     data: data
                 )
 
-                FieldInstance.new(
+                SampleInstance.new(
                     @version,
                     payload,
-                    service_sid: @solution[:service_sid],
+                    assistant_sid: @solution[:assistant_sid],
                     intent_sid: @solution[:intent_sid],
                 )
               end
@@ -135,19 +144,19 @@ module Twilio
               ##
               # Provide a user friendly representation
               def to_s
-                '#<Twilio.Preview.Understand.FieldList>'
+                '#<Twilio.Preview.Understand.SampleList>'
               end
             end
 
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class FieldPage < Page
+            class SamplePage < Page
               ##
-              # Initialize the FieldPage
+              # Initialize the SamplePage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @return [FieldPage] FieldPage
+              # @return [SamplePage] SamplePage
               def initialize(version, response, solution)
                 super(version, response)
 
@@ -156,14 +165,14 @@ module Twilio
               end
 
               ##
-              # Build an instance of FieldInstance
+              # Build an instance of SampleInstance
               # @param [Hash] payload Payload response from the API
-              # @return [FieldInstance] FieldInstance
+              # @return [SampleInstance] SampleInstance
               def get_instance(payload)
-                FieldInstance.new(
+                SampleInstance.new(
                     @version,
                     payload,
-                    service_sid: @solution[:service_sid],
+                    assistant_sid: @solution[:assistant_sid],
                     intent_sid: @solution[:intent_sid],
                 )
               end
@@ -171,31 +180,31 @@ module Twilio
               ##
               # Provide a user friendly representation
               def to_s
-                '<Twilio.Preview.Understand.FieldPage>'
+                '<Twilio.Preview.Understand.SamplePage>'
               end
             end
 
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class FieldContext < InstanceContext
+            class SampleContext < InstanceContext
               ##
-              # Initialize the FieldContext
+              # Initialize the SampleContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
+              # @param [String] assistant_sid The assistant_sid
               # @param [String] intent_sid The intent_sid
               # @param [String] sid The sid
-              # @return [FieldContext] FieldContext
-              def initialize(version, service_sid, intent_sid, sid)
+              # @return [SampleContext] SampleContext
+              def initialize(version, assistant_sid, intent_sid, sid)
                 super(version)
 
                 # Path Solution
-                @solution = {service_sid: service_sid, intent_sid: intent_sid, sid: sid, }
-                @uri = "/Services/#{@solution[:service_sid]}/Intents/#{@solution[:intent_sid]}/Fields/#{@solution[:sid]}"
+                @solution = {assistant_sid: assistant_sid, intent_sid: intent_sid, sid: sid, }
+                @uri = "/Assistants/#{@solution[:assistant_sid]}/Intents/#{@solution[:intent_sid]}/Samples/#{@solution[:sid]}"
               end
 
               ##
-              # Fetch a FieldInstance
-              # @return [FieldInstance] Fetched FieldInstance
+              # Fetch a SampleInstance
+              # @return [SampleInstance] Fetched SampleInstance
               def fetch
                 params = Twilio::Values.of({})
 
@@ -205,17 +214,45 @@ module Twilio
                     params,
                 )
 
-                FieldInstance.new(
+                SampleInstance.new(
                     @version,
                     payload,
-                    service_sid: @solution[:service_sid],
+                    assistant_sid: @solution[:assistant_sid],
                     intent_sid: @solution[:intent_sid],
                     sid: @solution[:sid],
                 )
               end
 
               ##
-              # Deletes the FieldInstance
+              # Update the SampleInstance
+              # @param [String] language The language
+              # @param [String] tagged_text The tagged_text
+              # @param [String] source_channel The source_channel
+              # @return [SampleInstance] Updated SampleInstance
+              def update(language: :unset, tagged_text: :unset, source_channel: :unset)
+                data = Twilio::Values.of({
+                    'Language' => language,
+                    'TaggedText' => tagged_text,
+                    'SourceChannel' => source_channel,
+                })
+
+                payload = @version.update(
+                    'POST',
+                    @uri,
+                    data: data,
+                )
+
+                SampleInstance.new(
+                    @version,
+                    payload,
+                    assistant_sid: @solution[:assistant_sid],
+                    intent_sid: @solution[:intent_sid],
+                    sid: @solution[:sid],
+                )
+              end
+
+              ##
+              # Deletes the SampleInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
                 @version.delete('delete', @uri)
@@ -225,22 +262,22 @@ module Twilio
               # Provide a user friendly representation
               def to_s
                 context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-                "#<Twilio.Preview.Understand.FieldContext #{context}>"
+                "#<Twilio.Preview.Understand.SampleContext #{context}>"
               end
             end
 
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class FieldInstance < InstanceResource
+            class SampleInstance < InstanceResource
               ##
-              # Initialize the FieldInstance
+              # Initialize the SampleInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The service_sid
+              # @param [String] assistant_sid The assistant_sid
               # @param [String] intent_sid The intent_sid
               # @param [String] sid The sid
-              # @return [FieldInstance] FieldInstance
-              def initialize(version, payload, service_sid: nil, intent_sid: nil, sid: nil)
+              # @return [SampleInstance] SampleInstance
+              def initialize(version, payload, assistant_sid: nil, intent_sid: nil, sid: nil)
                 super(version)
 
                 # Marshaled Properties
@@ -248,18 +285,19 @@ module Twilio
                     'account_sid' => payload['account_sid'],
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                    'field_type' => payload['field_type'],
                     'intent_sid' => payload['intent_sid'],
-                    'service_sid' => payload['service_sid'],
+                    'language' => payload['language'],
+                    'assistant_sid' => payload['assistant_sid'],
                     'sid' => payload['sid'],
-                    'unique_name' => payload['unique_name'],
+                    'tagged_text' => payload['tagged_text'],
                     'url' => payload['url'],
+                    'source_channel' => payload['source_channel'],
                 }
 
                 # Context
                 @instance_context = nil
                 @params = {
-                    'service_sid' => service_sid,
+                    'assistant_sid' => assistant_sid,
                     'intent_sid' => intent_sid,
                     'sid' => sid || @properties['sid'],
                 }
@@ -268,12 +306,12 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @return [FieldContext] FieldContext for this FieldInstance
+              # @return [SampleContext] SampleContext for this SampleInstance
               def context
                 unless @instance_context
-                  @instance_context = FieldContext.new(
+                  @instance_context = SampleContext.new(
                       @version,
-                      @params['service_sid'],
+                      @params['assistant_sid'],
                       @params['intent_sid'],
                       @params['sid'],
                   )
@@ -300,21 +338,21 @@ module Twilio
               end
 
               ##
-              # @return [String] The field_type
-              def field_type
-                @properties['field_type']
-              end
-
-              ##
               # @return [String] The intent_sid
               def intent_sid
                 @properties['intent_sid']
               end
 
               ##
-              # @return [String] The service_sid
-              def service_sid
-                @properties['service_sid']
+              # @return [String] The language
+              def language
+                @properties['language']
+              end
+
+              ##
+              # @return [String] The assistant_sid
+              def assistant_sid
+                @properties['assistant_sid']
               end
 
               ##
@@ -324,9 +362,9 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique_name
-              def unique_name
-                @properties['unique_name']
+              # @return [String] The tagged_text
+              def tagged_text
+                @properties['tagged_text']
               end
 
               ##
@@ -336,14 +374,30 @@ module Twilio
               end
 
               ##
-              # Fetch a FieldInstance
-              # @return [FieldInstance] Fetched FieldInstance
+              # @return [String] The source_channel
+              def source_channel
+                @properties['source_channel']
+              end
+
+              ##
+              # Fetch a SampleInstance
+              # @return [SampleInstance] Fetched SampleInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the FieldInstance
+              # Update the SampleInstance
+              # @param [String] language The language
+              # @param [String] tagged_text The tagged_text
+              # @param [String] source_channel The source_channel
+              # @return [SampleInstance] Updated SampleInstance
+              def update(language: :unset, tagged_text: :unset, source_channel: :unset)
+                context.update(language: language, tagged_text: tagged_text, source_channel: source_channel, )
+              end
+
+              ##
+              # Deletes the SampleInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
                 context.delete
@@ -353,14 +407,14 @@ module Twilio
               # Provide a user friendly representation
               def to_s
                 values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Preview.Understand.FieldInstance #{values}>"
+                "<Twilio.Preview.Understand.SampleInstance #{values}>"
               end
 
               ##
               # Provide a detailed, user friendly representation
               def inspect
                 values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Preview.Understand.FieldInstance #{values}>"
+                "<Twilio.Preview.Understand.SampleInstance #{values}>"
               end
             end
           end

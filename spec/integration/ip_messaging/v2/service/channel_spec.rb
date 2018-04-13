@@ -11,15 +11,15 @@ describe 'Channel' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://ip-messaging.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://ip-messaging.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -51,8 +51,8 @@ describe 'Channel' do
       ]
     ))
 
-    actual = @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -61,15 +61,15 @@ describe 'Channel' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://ip-messaging.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://ip-messaging.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -79,8 +79,8 @@ describe 'Channel' do
       nil,
     ))
 
-    actual = @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -89,7 +89,7 @@ describe 'Channel' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .channels.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -97,7 +97,7 @@ describe 'Channel' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://ip-messaging.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels',
+        url: 'https://ip-messaging.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels',
     ))).to eq(true)
   end
 
@@ -129,7 +129,7 @@ describe 'Channel' do
       ]
     ))
 
-    actual = @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                     .channels.create()
 
     expect(actual).to_not eq(nil)
@@ -139,7 +139,7 @@ describe 'Channel' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .channels.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -147,7 +147,7 @@ describe 'Channel' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://ip-messaging.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels',
+        url: 'https://ip-messaging.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels',
     ))).to eq(true)
   end
 
@@ -192,7 +192,7 @@ describe 'Channel' do
       ]
     ))
 
-    actual = @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                     .channels.list()
 
     expect(actual).to_not eq(nil)
@@ -217,7 +217,7 @@ describe 'Channel' do
       ]
     ))
 
-    actual = @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                     .channels.list()
 
     expect(actual).to_not eq(nil)
@@ -227,15 +227,15 @@ describe 'Channel' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+      @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://ip-messaging.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://ip-messaging.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -267,8 +267,8 @@ describe 'Channel' do
       ]
     ))
 
-    actual = @client.ip_messaging.v2.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                    .channels('CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').update()
+    actual = @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end

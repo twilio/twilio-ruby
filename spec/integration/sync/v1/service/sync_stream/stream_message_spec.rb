@@ -11,16 +11,16 @@ describe 'StreamMessage' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .sync_streams('TOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                     .stream_messages.create(data: JSON.parse('{}'))
+      @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .sync_streams('TOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .stream_messages.create(data: {})
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Data' => Twilio.serialize_object(JSON.parse('{}')), }
+    values = {'Data' => Twilio.serialize_object({}), }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Streams/TOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages',
+        url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Streams/TOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages',
         data: values,
     ))).to eq(true)
   end
@@ -36,9 +36,9 @@ describe 'StreamMessage' do
       ]
     ))
 
-    actual = @client.sync.v1.services('ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .sync_streams('TOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                            .stream_messages.create(data: JSON.parse('{}'))
+    actual = @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .sync_streams('TOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .stream_messages.create(data: {})
 
     expect(actual).to_not eq(nil)
   end

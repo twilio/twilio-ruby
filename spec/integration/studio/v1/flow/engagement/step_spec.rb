@@ -11,8 +11,8 @@ describe 'Step' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.studio.v1.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.studio.v1.flows('FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .engagements('FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .steps.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -20,7 +20,7 @@ describe 'Step' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Steps',
+        url: 'https://studio.twilio.com/v1/Flows/FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Engagements/FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Steps',
     ))).to eq(true)
   end
 
@@ -43,8 +43,8 @@ describe 'Step' do
       ]
     ))
 
-    actual = @client.studio.v1.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.studio.v1.flows('FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .engagements('FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .steps.list()
 
     expect(actual).to_not eq(nil)
@@ -54,16 +54,16 @@ describe 'Step' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.studio.v1.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                       .steps('FTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.studio.v1.flows('FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .engagements('FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .steps('FTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Engagements/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Steps/FTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://studio.twilio.com/v1/Flows/FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Engagements/FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Steps/FTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -90,9 +90,9 @@ describe 'Step' do
       ]
     ))
 
-    actual = @client.studio.v1.flows('FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .engagements('FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                              .steps('FTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.studio.v1.flows('FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .engagements('FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .steps('FTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end

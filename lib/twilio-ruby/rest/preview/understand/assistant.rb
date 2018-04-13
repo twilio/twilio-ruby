@@ -10,21 +10,21 @@ module Twilio
       class Understand < Version
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class ServiceList < ListResource
+        class AssistantList < ListResource
           ##
-          # Initialize the ServiceList
+          # Initialize the AssistantList
           # @param [Version] version Version that contains the resource
-          # @return [ServiceList] ServiceList
+          # @return [AssistantList] AssistantList
           def initialize(version)
             super(version)
 
             # Path Solution
             @solution = {}
-            @uri = "/Services"
+            @uri = "/Assistants"
           end
 
           ##
-          # Lists ServiceInstance records from the API as a list.
+          # Lists AssistantInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -39,7 +39,7 @@ module Twilio
           end
 
           ##
-          # Streams ServiceInstance records from the API as an Enumerable.
+          # Streams AssistantInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -58,7 +58,7 @@ module Twilio
           end
 
           ##
-          # When passed a block, yields ServiceInstance records from the API.
+          # When passed a block, yields AssistantInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           def each
@@ -72,12 +72,12 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of ServiceInstance records from the API.
+          # Retrieve a single page of AssistantInstance records from the API.
           # Request is executed immediately.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          # @return [Page] Page of ServiceInstance
+          # @return [Page] Page of AssistantInstance
           def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
@@ -89,36 +89,42 @@ module Twilio
                 @uri,
                 params
             )
-            ServicePage.new(@version, response, @solution)
+            AssistantPage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of ServiceInstance records from the API.
+          # Retrieve a single page of AssistantInstance records from the API.
           # Request is executed immediately.
           # @param [String] target_url API-generated URL for the requested results page
-          # @return [Page] Page of ServiceInstance
+          # @return [Page] Page of AssistantInstance
           def get_page(target_url)
             response = @version.domain.request(
                 'GET',
                 target_url
             )
-            ServicePage.new(@version, response, @solution)
+            AssistantPage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of ServiceInstance records from the API.
+          # Retrieve a single page of AssistantInstance records from the API.
           # Request is executed immediately.
           # @param [String] friendly_name The friendly_name
           # @param [Boolean] log_queries The log_queries
           # @param [String] ttl The ttl
           # @param [String] unique_name The unique_name
-          # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: :unset, log_queries: :unset, ttl: :unset, unique_name: :unset)
+          # @param [String] response_url The response_url
+          # @param [String] callback_url The callback_url
+          # @param [String] callback_events The callback_events
+          # @return [AssistantInstance] Newly created AssistantInstance
+          def create(friendly_name: :unset, log_queries: :unset, ttl: :unset, unique_name: :unset, response_url: :unset, callback_url: :unset, callback_events: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'LogQueries' => log_queries,
                 'Ttl' => ttl,
                 'UniqueName' => unique_name,
+                'ResponseUrl' => response_url,
+                'CallbackUrl' => callback_url,
+                'CallbackEvents' => callback_events,
             })
 
             payload = @version.create(
@@ -127,25 +133,25 @@ module Twilio
                 data: data
             )
 
-            ServiceInstance.new(@version, payload, )
+            AssistantInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Preview.Understand.ServiceList>'
+            '#<Twilio.Preview.Understand.AssistantList>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class ServicePage < Page
+        class AssistantPage < Page
           ##
-          # Initialize the ServicePage
+          # Initialize the AssistantPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [ServicePage] ServicePage
+          # @return [AssistantPage] AssistantPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -154,34 +160,34 @@ module Twilio
           end
 
           ##
-          # Build an instance of ServiceInstance
+          # Build an instance of AssistantInstance
           # @param [Hash] payload Payload response from the API
-          # @return [ServiceInstance] ServiceInstance
+          # @return [AssistantInstance] AssistantInstance
           def get_instance(payload)
-            ServiceInstance.new(@version, payload, )
+            AssistantInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Preview.Understand.ServicePage>'
+            '<Twilio.Preview.Understand.AssistantPage>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class ServiceContext < InstanceContext
+        class AssistantContext < InstanceContext
           ##
-          # Initialize the ServiceContext
+          # Initialize the AssistantContext
           # @param [Version] version Version that contains the resource
           # @param [String] sid The sid
-          # @return [ServiceContext] ServiceContext
+          # @return [AssistantContext] AssistantContext
           def initialize(version, sid)
             super(version)
 
             # Path Solution
             @solution = {sid: sid, }
-            @uri = "/Services/#{@solution[:sid]}"
+            @uri = "/Assistants/#{@solution[:sid]}"
 
             # Dependents
             @field_types = nil
@@ -191,8 +197,8 @@ module Twilio
           end
 
           ##
-          # Fetch a ServiceInstance
-          # @return [ServiceInstance] Fetched ServiceInstance
+          # Fetch a AssistantInstance
+          # @return [AssistantInstance] Fetched AssistantInstance
           def fetch
             params = Twilio::Values.of({})
 
@@ -202,22 +208,28 @@ module Twilio
                 params,
             )
 
-            ServiceInstance.new(@version, payload, sid: @solution[:sid], )
+            AssistantInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Update the ServiceInstance
+          # Update the AssistantInstance
           # @param [String] friendly_name The friendly_name
           # @param [Boolean] log_queries The log_queries
           # @param [String] ttl The ttl
           # @param [String] unique_name The unique_name
-          # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, log_queries: :unset, ttl: :unset, unique_name: :unset)
+          # @param [String] response_url The response_url
+          # @param [String] callback_url The callback_url
+          # @param [String] callback_events The callback_events
+          # @return [AssistantInstance] Updated AssistantInstance
+          def update(friendly_name: :unset, log_queries: :unset, ttl: :unset, unique_name: :unset, response_url: :unset, callback_url: :unset, callback_events: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'LogQueries' => log_queries,
                 'Ttl' => ttl,
                 'UniqueName' => unique_name,
+                'ResponseUrl' => response_url,
+                'CallbackUrl' => callback_url,
+                'CallbackEvents' => callback_events,
             })
 
             payload = @version.update(
@@ -226,11 +238,11 @@ module Twilio
                 data: data,
             )
 
-            ServiceInstance.new(@version, payload, sid: @solution[:sid], )
+            AssistantInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the ServiceInstance
+          # Deletes the AssistantInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
             @version.delete('delete', @uri)
@@ -248,7 +260,7 @@ module Twilio
             end
 
             unless @field_types
-              @field_types = FieldTypeList.new(@version, service_sid: @solution[:sid], )
+              @field_types = FieldTypeList.new(@version, assistant_sid: @solution[:sid], )
             end
 
             @field_types
@@ -266,7 +278,7 @@ module Twilio
             end
 
             unless @intents
-              @intents = IntentList.new(@version, service_sid: @solution[:sid], )
+              @intents = IntentList.new(@version, assistant_sid: @solution[:sid], )
             end
 
             @intents
@@ -284,7 +296,7 @@ module Twilio
             end
 
             unless @model_builds
-              @model_builds = ModelBuildList.new(@version, service_sid: @solution[:sid], )
+              @model_builds = ModelBuildList.new(@version, assistant_sid: @solution[:sid], )
             end
 
             @model_builds
@@ -302,7 +314,7 @@ module Twilio
             end
 
             unless @queries
-              @queries = QueryList.new(@version, service_sid: @solution[:sid], )
+              @queries = QueryList.new(@version, assistant_sid: @solution[:sid], )
             end
 
             @queries
@@ -312,19 +324,19 @@ module Twilio
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Preview.Understand.ServiceContext #{context}>"
+            "#<Twilio.Preview.Understand.AssistantContext #{context}>"
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class ServiceInstance < InstanceResource
+        class AssistantInstance < InstanceResource
           ##
-          # Initialize the ServiceInstance
+          # Initialize the AssistantInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
           # @param [String] sid The sid
-          # @return [ServiceInstance] ServiceInstance
+          # @return [AssistantInstance] AssistantInstance
           def initialize(version, payload, sid: nil)
             super(version)
 
@@ -341,6 +353,9 @@ module Twilio
                 'ttl' => payload['ttl'].to_i,
                 'unique_name' => payload['unique_name'],
                 'url' => payload['url'],
+                'response_url' => payload['response_url'],
+                'callback_url' => payload['callback_url'],
+                'callback_events' => payload['callback_events'],
             }
 
             # Context
@@ -351,10 +366,10 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [ServiceContext] ServiceContext for this ServiceInstance
+          # @return [AssistantContext] AssistantContext for this AssistantInstance
           def context
             unless @instance_context
-              @instance_context = ServiceContext.new(@version, @params['sid'], )
+              @instance_context = AssistantContext.new(@version, @params['sid'], )
             end
             @instance_context
           end
@@ -426,30 +441,54 @@ module Twilio
           end
 
           ##
-          # Fetch a ServiceInstance
-          # @return [ServiceInstance] Fetched ServiceInstance
+          # @return [String] The response_url
+          def response_url
+            @properties['response_url']
+          end
+
+          ##
+          # @return [String] The callback_url
+          def callback_url
+            @properties['callback_url']
+          end
+
+          ##
+          # @return [String] The callback_events
+          def callback_events
+            @properties['callback_events']
+          end
+
+          ##
+          # Fetch a AssistantInstance
+          # @return [AssistantInstance] Fetched AssistantInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Update the ServiceInstance
+          # Update the AssistantInstance
           # @param [String] friendly_name The friendly_name
           # @param [Boolean] log_queries The log_queries
           # @param [String] ttl The ttl
           # @param [String] unique_name The unique_name
-          # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, log_queries: :unset, ttl: :unset, unique_name: :unset)
+          # @param [String] response_url The response_url
+          # @param [String] callback_url The callback_url
+          # @param [String] callback_events The callback_events
+          # @return [AssistantInstance] Updated AssistantInstance
+          def update(friendly_name: :unset, log_queries: :unset, ttl: :unset, unique_name: :unset, response_url: :unset, callback_url: :unset, callback_events: :unset)
             context.update(
                 friendly_name: friendly_name,
                 log_queries: log_queries,
                 ttl: ttl,
                 unique_name: unique_name,
+                response_url: response_url,
+                callback_url: callback_url,
+                callback_events: callback_events,
             )
           end
 
           ##
-          # Deletes the ServiceInstance
+          # Deletes the AssistantInstance
           # @return [Boolean] true if delete succeeds, true otherwise
           def delete
             context.delete
@@ -487,14 +526,14 @@ module Twilio
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Preview.Understand.ServiceInstance #{values}>"
+            "<Twilio.Preview.Understand.AssistantInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Preview.Understand.ServiceInstance #{values}>"
+            "<Twilio.Preview.Understand.AssistantInstance #{values}>"
           end
         end
       end

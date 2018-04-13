@@ -11,8 +11,8 @@ describe 'SubscribedTrack' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .participants('PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                       .subscribed_tracks.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -20,7 +20,7 @@ describe 'SubscribedTrack' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SubscribedTracks',
+        url: 'https://video.twilio.com/v1/Rooms/RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Participants/PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SubscribedTracks',
     ))).to eq(true)
   end
 
@@ -43,8 +43,8 @@ describe 'SubscribedTrack' do
       ]
     ))
 
-    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .participants('PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .subscribed_tracks.list()
 
     expect(actual).to_not eq(nil)
@@ -81,8 +81,8 @@ describe 'SubscribedTrack' do
       ]
     ))
 
-    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .participants('PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .subscribed_tracks.list()
 
     expect(actual).to_not eq(nil)
@@ -92,8 +92,8 @@ describe 'SubscribedTrack' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                      .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .participants('PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                       .subscribed_tracks.update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -101,7 +101,7 @@ describe 'SubscribedTrack' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SubscribedTracks',
+        url: 'https://video.twilio.com/v1/Rooms/RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Participants/PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SubscribedTracks',
     ))).to eq(true)
   end
 
@@ -123,8 +123,8 @@ describe 'SubscribedTrack' do
       ]
     ))
 
-    actual = @client.video.v1.rooms('RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                             .participants('PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .participants('PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .subscribed_tracks.update()
 
     expect(actual).to_not eq(nil)

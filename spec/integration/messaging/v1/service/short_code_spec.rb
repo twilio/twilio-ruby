@@ -11,15 +11,15 @@ describe 'ShortCode' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                          .short_codes.create(short_code_sid: 'SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                          .short_codes.create(short_code_sid: 'SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'ShortCodeSid' => 'SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', }
+    values = {'ShortCodeSid' => 'SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://messaging.twilio.com/v1/Services/MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes',
+        url: 'https://messaging.twilio.com/v1/Services/MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/ShortCodes',
         data: values,
     ))).to eq(true)
   end
@@ -42,8 +42,8 @@ describe 'ShortCode' do
       ]
     ))
 
-    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                 .short_codes.create(short_code_sid: 'SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+    actual = @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                 .short_codes.create(short_code_sid: 'SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
     expect(actual).to_not eq(nil)
   end
@@ -52,15 +52,15 @@ describe 'ShortCode' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                          .short_codes('SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+      @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                          .short_codes('SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://messaging.twilio.com/v1/Services/MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://messaging.twilio.com/v1/Services/MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/ShortCodes/SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -70,8 +70,8 @@ describe 'ShortCode' do
       nil,
     ))
 
-    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                 .short_codes('SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').delete()
+    actual = @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                 .short_codes('SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)
   end
@@ -80,7 +80,7 @@ describe 'ShortCode' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+      @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                           .short_codes.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -88,7 +88,7 @@ describe 'ShortCode' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://messaging.twilio.com/v1/Services/MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes',
+        url: 'https://messaging.twilio.com/v1/Services/MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/ShortCodes',
     ))).to eq(true)
   end
 
@@ -123,7 +123,7 @@ describe 'ShortCode' do
       ]
     ))
 
-    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
+    actual = @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                  .short_codes.list()
 
     expect(actual).to_not eq(nil)
@@ -133,15 +133,15 @@ describe 'ShortCode' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                          .short_codes('SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                          .short_codes('SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://messaging.twilio.com/v1/Services/MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://messaging.twilio.com/v1/Services/MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/ShortCodes/SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -163,8 +163,8 @@ describe 'ShortCode' do
       ]
     ))
 
-    actual = @client.messaging.v1.services('MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa') \
-                                 .short_codes('SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                 .short_codes('SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end

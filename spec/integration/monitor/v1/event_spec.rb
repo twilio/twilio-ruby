@@ -11,14 +11,14 @@ describe 'Event' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.monitor.v1.events('AEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+      @client.monitor.v1.events('AEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://monitor.twilio.com/v1/Events/AEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        url: 'https://monitor.twilio.com/v1/Events/AEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -53,7 +53,7 @@ describe 'Event' do
       ]
     ))
 
-    actual = @client.monitor.v1.events('AEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').fetch()
+    actual = @client.monitor.v1.events('AEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
   end

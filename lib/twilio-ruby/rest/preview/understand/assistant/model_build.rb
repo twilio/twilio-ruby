@@ -8,30 +8,27 @@ module Twilio
   module REST
     class Preview < Domain
       class Understand < Version
-        class ServiceContext < InstanceContext
+        class AssistantContext < InstanceContext
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class QueryList < ListResource
+          class ModelBuildList < ListResource
             ##
-            # Initialize the QueryList
+            # Initialize the ModelBuildList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @return [QueryList] QueryList
-            def initialize(version, service_sid: nil)
+            # @param [String] assistant_sid The assistant_sid
+            # @return [ModelBuildList] ModelBuildList
+            def initialize(version, assistant_sid: nil)
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid}
-              @uri = "/Services/#{@solution[:service_sid]}/Queries"
+              @solution = {assistant_sid: assistant_sid}
+              @uri = "/Assistants/#{@solution[:assistant_sid]}/ModelBuilds"
             end
 
             ##
-            # Lists QueryInstance records from the API as a list.
+            # Lists ModelBuildInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] language The language
-            # @param [String] model_build The model_build
-            # @param [String] status The status
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -39,23 +36,14 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(language: :unset, model_build: :unset, status: :unset, limit: nil, page_size: nil)
-              self.stream(
-                  language: language,
-                  model_build: model_build,
-                  status: status,
-                  limit: limit,
-                  page_size: page_size
-              ).entries
+            def list(limit: nil, page_size: nil)
+              self.stream(limit: limit, page_size: page_size).entries
             end
 
             ##
-            # Streams QueryInstance records from the API as an Enumerable.
+            # Streams ModelBuildInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] language The language
-            # @param [String] model_build The model_build
-            # @param [String] status The status
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -63,21 +51,16 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(language: :unset, model_build: :unset, status: :unset, limit: nil, page_size: nil)
+            def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(
-                  language: language,
-                  model_build: model_build,
-                  status: status,
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
 
             ##
-            # When passed a block, yields QueryInstance records from the API.
+            # When passed a block, yields ModelBuildInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             def each
@@ -91,20 +74,14 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of QueryInstance records from the API.
+            # Retrieve a single page of ModelBuildInstance records from the API.
             # Request is executed immediately.
-            # @param [String] language The language
-            # @param [String] model_build The model_build
-            # @param [String] status The status
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            # @return [Page] Page of QueryInstance
-            def page(language: :unset, model_build: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            # @return [Page] Page of ModelBuildInstance
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
-                  'Language' => language,
-                  'ModelBuild' => model_build,
-                  'Status' => status,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
@@ -114,41 +91,30 @@ module Twilio
                   @uri,
                   params
               )
-              QueryPage.new(@version, response, @solution)
+              ModelBuildPage.new(@version, response, @solution)
             end
 
             ##
-            # Retrieve a single page of QueryInstance records from the API.
+            # Retrieve a single page of ModelBuildInstance records from the API.
             # Request is executed immediately.
             # @param [String] target_url API-generated URL for the requested results page
-            # @return [Page] Page of QueryInstance
+            # @return [Page] Page of ModelBuildInstance
             def get_page(target_url)
               response = @version.domain.request(
                   'GET',
                   target_url
               )
-              QueryPage.new(@version, response, @solution)
+              ModelBuildPage.new(@version, response, @solution)
             end
 
             ##
-            # Retrieve a single page of QueryInstance records from the API.
+            # Retrieve a single page of ModelBuildInstance records from the API.
             # Request is executed immediately.
-            # @param [String] language The language
-            # @param [String] query The query
-            # @param [String] intent The intent
-            # @param [String] model_build The model_build
-            # @param [String] field The field
-            # @param [String] named_entity The named_entity
-            # @return [QueryInstance] Newly created QueryInstance
-            def create(language: nil, query: nil, intent: :unset, model_build: :unset, field: :unset, named_entity: :unset)
-              data = Twilio::Values.of({
-                  'Language' => language,
-                  'Query' => query,
-                  'Intent' => intent,
-                  'ModelBuild' => model_build,
-                  'Field' => field,
-                  'NamedEntity' => named_entity,
-              })
+            # @param [String] status_callback The status_callback
+            # @param [String] unique_name The unique_name
+            # @return [ModelBuildInstance] Newly created ModelBuildInstance
+            def create(status_callback: :unset, unique_name: :unset)
+              data = Twilio::Values.of({'StatusCallback' => status_callback, 'UniqueName' => unique_name, })
 
               payload = @version.create(
                   'POST',
@@ -156,25 +122,25 @@ module Twilio
                   data: data
               )
 
-              QueryInstance.new(@version, payload, service_sid: @solution[:service_sid], )
+              ModelBuildInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '#<Twilio.Preview.Understand.QueryList>'
+              '#<Twilio.Preview.Understand.ModelBuildList>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class QueryPage < Page
+          class ModelBuildPage < Page
             ##
-            # Initialize the QueryPage
+            # Initialize the ModelBuildPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @return [QueryPage] QueryPage
+            # @return [ModelBuildPage] ModelBuildPage
             def initialize(version, response, solution)
               super(version, response)
 
@@ -183,40 +149,40 @@ module Twilio
             end
 
             ##
-            # Build an instance of QueryInstance
+            # Build an instance of ModelBuildInstance
             # @param [Hash] payload Payload response from the API
-            # @return [QueryInstance] QueryInstance
+            # @return [ModelBuildInstance] ModelBuildInstance
             def get_instance(payload)
-              QueryInstance.new(@version, payload, service_sid: @solution[:service_sid], )
+              ModelBuildInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '<Twilio.Preview.Understand.QueryPage>'
+              '<Twilio.Preview.Understand.ModelBuildPage>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class QueryContext < InstanceContext
+          class ModelBuildContext < InstanceContext
             ##
-            # Initialize the QueryContext
+            # Initialize the ModelBuildContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] assistant_sid The assistant_sid
             # @param [String] sid The sid
-            # @return [QueryContext] QueryContext
-            def initialize(version, service_sid, sid)
+            # @return [ModelBuildContext] ModelBuildContext
+            def initialize(version, assistant_sid, sid)
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid, sid: sid, }
-              @uri = "/Services/#{@solution[:service_sid]}/Queries/#{@solution[:sid]}"
+              @solution = {assistant_sid: assistant_sid, sid: sid, }
+              @uri = "/Assistants/#{@solution[:assistant_sid]}/ModelBuilds/#{@solution[:sid]}"
             end
 
             ##
-            # Fetch a QueryInstance
-            # @return [QueryInstance] Fetched QueryInstance
+            # Fetch a ModelBuildInstance
+            # @return [ModelBuildInstance] Fetched ModelBuildInstance
             def fetch
               params = Twilio::Values.of({})
 
@@ -226,16 +192,20 @@ module Twilio
                   params,
               )
 
-              QueryInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+              ModelBuildInstance.new(
+                  @version,
+                  payload,
+                  assistant_sid: @solution[:assistant_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##
-            # Update the QueryInstance
-            # @param [String] sample_sid The sample_sid
-            # @param [String] status The status
-            # @return [QueryInstance] Updated QueryInstance
-            def update(sample_sid: :unset, status: :unset)
-              data = Twilio::Values.of({'SampleSid' => sample_sid, 'Status' => status, })
+            # Update the ModelBuildInstance
+            # @param [String] unique_name The unique_name
+            # @return [ModelBuildInstance] Updated ModelBuildInstance
+            def update(unique_name: :unset)
+              data = Twilio::Values.of({'UniqueName' => unique_name, })
 
               payload = @version.update(
                   'POST',
@@ -243,11 +213,16 @@ module Twilio
                   data: data,
               )
 
-              QueryInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+              ModelBuildInstance.new(
+                  @version,
+                  payload,
+                  assistant_sid: @solution[:assistant_sid],
+                  sid: @solution[:sid],
+              )
             end
 
             ##
-            # Deletes the QueryInstance
+            # Deletes the ModelBuildInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               @version.delete('delete', @uri)
@@ -257,21 +232,21 @@ module Twilio
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Preview.Understand.QueryContext #{context}>"
+              "#<Twilio.Preview.Understand.ModelBuildContext #{context}>"
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class QueryInstance < InstanceResource
+          class ModelBuildInstance < InstanceResource
             ##
-            # Initialize the QueryInstance
+            # Initialize the ModelBuildInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
+            # @param [String] assistant_sid The assistant_sid
             # @param [String] sid The sid
-            # @return [QueryInstance] QueryInstance
-            def initialize(version, payload, service_sid: nil, sid: nil)
+            # @return [ModelBuildInstance] ModelBuildInstance
+            def initialize(version, payload, assistant_sid: nil, sid: nil)
               super(version)
 
               # Marshaled Properties
@@ -279,29 +254,27 @@ module Twilio
                   'account_sid' => payload['account_sid'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                  'results' => payload['results'],
-                  'language' => payload['language'],
-                  'model_build_sid' => payload['model_build_sid'],
-                  'query' => payload['query'],
-                  'sample_sid' => payload['sample_sid'],
-                  'service_sid' => payload['service_sid'],
+                  'assistant_sid' => payload['assistant_sid'],
                   'sid' => payload['sid'],
                   'status' => payload['status'],
+                  'unique_name' => payload['unique_name'],
                   'url' => payload['url'],
+                  'build_duration' => payload['build_duration'] == nil ? payload['build_duration'] : payload['build_duration'].to_i,
+                  'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
               }
 
               # Context
               @instance_context = nil
-              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'], }
+              @params = {'assistant_sid' => assistant_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return [QueryContext] QueryContext for this QueryInstance
+            # @return [ModelBuildContext] ModelBuildContext for this ModelBuildInstance
             def context
               unless @instance_context
-                @instance_context = QueryContext.new(@version, @params['service_sid'], @params['sid'], )
+                @instance_context = ModelBuildContext.new(@version, @params['assistant_sid'], @params['sid'], )
               end
               @instance_context
             end
@@ -325,39 +298,9 @@ module Twilio
             end
 
             ##
-            # @return [Hash] The results
-            def results
-              @properties['results']
-            end
-
-            ##
-            # @return [String] The language
-            def language
-              @properties['language']
-            end
-
-            ##
-            # @return [String] The model_build_sid
-            def model_build_sid
-              @properties['model_build_sid']
-            end
-
-            ##
-            # @return [String] The query
-            def query
-              @properties['query']
-            end
-
-            ##
-            # @return [String] The sample_sid
-            def sample_sid
-              @properties['sample_sid']
-            end
-
-            ##
-            # @return [String] The service_sid
-            def service_sid
-              @properties['service_sid']
+            # @return [String] The assistant_sid
+            def assistant_sid
+              @properties['assistant_sid']
             end
 
             ##
@@ -367,9 +310,15 @@ module Twilio
             end
 
             ##
-            # @return [String] The status
+            # @return [model_build.Status] The status
             def status
               @properties['status']
+            end
+
+            ##
+            # @return [String] The unique_name
+            def unique_name
+              @properties['unique_name']
             end
 
             ##
@@ -379,23 +328,34 @@ module Twilio
             end
 
             ##
-            # Fetch a QueryInstance
-            # @return [QueryInstance] Fetched QueryInstance
+            # @return [String] The build_duration
+            def build_duration
+              @properties['build_duration']
+            end
+
+            ##
+            # @return [String] The error_code
+            def error_code
+              @properties['error_code']
+            end
+
+            ##
+            # Fetch a ModelBuildInstance
+            # @return [ModelBuildInstance] Fetched ModelBuildInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Update the QueryInstance
-            # @param [String] sample_sid The sample_sid
-            # @param [String] status The status
-            # @return [QueryInstance] Updated QueryInstance
-            def update(sample_sid: :unset, status: :unset)
-              context.update(sample_sid: sample_sid, status: status, )
+            # Update the ModelBuildInstance
+            # @param [String] unique_name The unique_name
+            # @return [ModelBuildInstance] Updated ModelBuildInstance
+            def update(unique_name: :unset)
+              context.update(unique_name: unique_name, )
             end
 
             ##
-            # Deletes the QueryInstance
+            # Deletes the ModelBuildInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               context.delete
@@ -405,14 +365,14 @@ module Twilio
             # Provide a user friendly representation
             def to_s
               values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Preview.Understand.QueryInstance #{values}>"
+              "<Twilio.Preview.Understand.ModelBuildInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
               values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Preview.Understand.QueryInstance #{values}>"
+              "<Twilio.Preview.Understand.ModelBuildInstance #{values}>"
             end
           end
         end
