@@ -75,6 +75,7 @@ describe Twilio::JWT::AccessToken do
 
       it 'Voice grant' do
         voice_grant = Twilio::JWT::AccessToken::VoiceGrant.new
+        voice_grant.incoming_allow = true
         voice_grant.outgoing_application_sid = 'AP123'
         voice_grant.outgoing_application_params = {:foo => 'bar'}
         voice_grant.push_credential_sid = 'PC123'
@@ -82,6 +83,7 @@ describe Twilio::JWT::AccessToken do
         @scat.add_grant(voice_grant)
         payload, _ = JWT.decode @scat.to_s, 'secret'
         expect(payload['grants'].count).to eq(1)
+        expect(payload['grants']['voice']['incoming']['allow']).to eq(true)
         expect(payload['grants']['voice']['outgoing']['application_sid']).to eq('AP123')
         expect(payload['grants']['voice']['outgoing']['params']['foo']).to eq('bar')
         expect(payload['grants']['voice']['push_credential_sid']).to eq('PC123')
