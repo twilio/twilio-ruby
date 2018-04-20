@@ -20,6 +20,6 @@ before_install:
   # Update bundler to a recent version.
   - gem install bundler
 
-after_success:
-  # Make sure it passes linter
+script:
+  - make test
   - make lint
