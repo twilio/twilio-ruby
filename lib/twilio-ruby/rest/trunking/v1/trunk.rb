@@ -24,12 +24,28 @@ module Twilio
           ##
           # Retrieve a single page of TrunkInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name The friendly_name
-          # @param [String] domain_name The domain_name
-          # @param [String] disaster_recovery_url The disaster_recovery_url
-          # @param [String] disaster_recovery_method The disaster_recovery_method
-          # @param [String] recording The recording
-          # @param [Boolean] secure The secure
+          # @param [String] friendly_name A human-readable name for the Trunk.
+          # @param [String] domain_name The unique address you reserve on Twilio to which
+          #   you route your SIP traffic. Domain names can contain letters, digits, and `-`
+          #   and must always end with `pstn.twilio.com`. See [Termination
+          #   Settings](https://www.twilio.com/docs/sip-trunking/getting-started#termination)
+          #   for more information.
+          # @param [String] disaster_recovery_url The HTTP URL that Twilio will request if
+          #   an error occurs while sending SIP traffic towards your configured Origination
+          #   URL. Twilio will retrieve TwiML from this URL and execute those instructions
+          #   like any other normal TwiML call. See [Disaster
+          #   Recovery](https://www.twilio.com/docs/sip-trunking/getting-started#disaster-recovery) for more information.
+          # @param [String] disaster_recovery_method The HTTP method Twilio will use when
+          #   requesting the `DisasterRecoveryUrl`. Either `GET` or `POST`.
+          # @param [String] recording The recording settings for this trunk. If turned on,
+          #   all calls going through this trunk will be recorded and the recording can either
+          #   start when the call is ringing or when the call is answered. See
+          #   [Recording](https://www.twilio.com/docs/sip-trunking/getting-started#recording)
+          #   for more information.
+          # @param [Boolean] secure The Secure Trunking  settings for this trunk. If turned
+          #   on, all calls going through this trunk will be secure using SRTP for media and
+          #   TLS for signalling. If turned off, then RTP will be used for media. See [Secure
+          #   Trunking](https://www.twilio.com/docs/sip-trunking/getting-started#securetrunking) for more information.
           # @return [TrunkInstance] Newly created TrunkInstance
           def create(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset)
             data = Twilio::Values.of({
@@ -212,12 +228,28 @@ module Twilio
 
           ##
           # Update the TrunkInstance
-          # @param [String] friendly_name The friendly_name
-          # @param [String] domain_name The domain_name
-          # @param [String] disaster_recovery_url The disaster_recovery_url
-          # @param [String] disaster_recovery_method The disaster_recovery_method
-          # @param [String] recording The recording
-          # @param [Boolean] secure The secure
+          # @param [String] friendly_name A human-readable name for the Trunk.
+          # @param [String] domain_name The unique address you reserve on Twilio to which
+          #   you route your SIP traffic. Domain names can contain letters, digits, and `-`
+          #   and must always end with `pstn.twilio.com`. See [Termination
+          #   Settings](https://www.twilio.com/docs/sip-trunking/getting-started#termination)
+          #   for more information.
+          # @param [String] disaster_recovery_url The HTTP URL that Twilio will request if
+          #   an error occurs while sending SIP traffic towards your configured Origination
+          #   URL. Twilio will retrieve TwiML from this URL and execute those instructions
+          #   like any other normal TwiML call. See [Disaster
+          #   Recovery](https://www.twilio.com/docs/sip-trunking/getting-started#disaster-recovery) for more information.
+          # @param [String] disaster_recovery_method The HTTP method Twilio will use when
+          #   requesting the `DisasterRecoveryUrl`. Either `GET` or `POST`.
+          # @param [String] recording The recording settings for this trunk. If turned on,
+          #   all calls going through this trunk will be recorded and the recording can either
+          #   start when the call is ringing or when the call is answered. See
+          #   [Recording](https://www.twilio.com/docs/sip-trunking/getting-started#recording)
+          #   for more information.
+          # @param [Boolean] secure The Secure Trunking  settings for this trunk. If turned
+          #   on, all calls going through this trunk will be secure using SRTP for media and
+          #   TLS for signalling. If turned off, then RTP will be used for media. See [Secure
+          #   Trunking](https://www.twilio.com/docs/sip-trunking/getting-started#securetrunking) for more information.
           # @return [TrunkInstance] Updated TrunkInstance
           def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset)
             data = Twilio::Values.of({
@@ -363,49 +395,49 @@ module Twilio
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] The unique ID of the Account that owns this Trunk.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The domain_name
+          # @return [String] The unique address you reserve on Twilio to which you route your SIP traffic.
           def domain_name
             @properties['domain_name']
           end
 
           ##
-          # @return [String] The disaster_recovery_method
+          # @return [String] The HTTP method Twilio will use when requesting the DisasterRecoveryUrl.
           def disaster_recovery_method
             @properties['disaster_recovery_method']
           end
 
           ##
-          # @return [String] The disaster_recovery_url
+          # @return [String] The HTTP URL that Twilio will request if an error occurs while sending SIP traffic towards your configured Origination URL.
           def disaster_recovery_url
             @properties['disaster_recovery_url']
           end
 
           ##
-          # @return [String] The friendly_name
+          # @return [String] A human-readable name for the Trunk.
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [Boolean] The secure
+          # @return [Boolean] The Secure Trunking  settings for this trunk.
           def secure
             @properties['secure']
           end
 
           ##
-          # @return [Hash] The recording
+          # @return [Hash] The recording settings for this trunk.
           def recording
             @properties['recording']
           end
 
           ##
-          # @return [String] The auth_type
+          # @return [String] The types of authentication you have mapped to your domain.
           def auth_type
             @properties['auth_type']
           end
@@ -417,25 +449,25 @@ module Twilio
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The date this Activity was created.
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The date this Activity was updated.
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A 34 character string that uniquely identifies the SIP Trunk in Twilio.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The URL for this resource, relative to https://trunking.
           def url
             @properties['url']
           end
@@ -462,12 +494,28 @@ module Twilio
 
           ##
           # Update the TrunkInstance
-          # @param [String] friendly_name The friendly_name
-          # @param [String] domain_name The domain_name
-          # @param [String] disaster_recovery_url The disaster_recovery_url
-          # @param [String] disaster_recovery_method The disaster_recovery_method
-          # @param [String] recording The recording
-          # @param [Boolean] secure The secure
+          # @param [String] friendly_name A human-readable name for the Trunk.
+          # @param [String] domain_name The unique address you reserve on Twilio to which
+          #   you route your SIP traffic. Domain names can contain letters, digits, and `-`
+          #   and must always end with `pstn.twilio.com`. See [Termination
+          #   Settings](https://www.twilio.com/docs/sip-trunking/getting-started#termination)
+          #   for more information.
+          # @param [String] disaster_recovery_url The HTTP URL that Twilio will request if
+          #   an error occurs while sending SIP traffic towards your configured Origination
+          #   URL. Twilio will retrieve TwiML from this URL and execute those instructions
+          #   like any other normal TwiML call. See [Disaster
+          #   Recovery](https://www.twilio.com/docs/sip-trunking/getting-started#disaster-recovery) for more information.
+          # @param [String] disaster_recovery_method The HTTP method Twilio will use when
+          #   requesting the `DisasterRecoveryUrl`. Either `GET` or `POST`.
+          # @param [String] recording The recording settings for this trunk. If turned on,
+          #   all calls going through this trunk will be recorded and the recording can either
+          #   start when the call is ringing or when the call is answered. See
+          #   [Recording](https://www.twilio.com/docs/sip-trunking/getting-started#recording)
+          #   for more information.
+          # @param [Boolean] secure The Secure Trunking  settings for this trunk. If turned
+          #   on, all calls going through this trunk will be secure using SRTP for media and
+          #   TLS for signalling. If turned off, then RTP will be used for media. See [Secure
+          #   Trunking](https://www.twilio.com/docs/sip-trunking/getting-started#securetrunking) for more information.
           # @return [TrunkInstance] Updated TrunkInstance
           def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset)
             context.update(

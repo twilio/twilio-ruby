@@ -111,7 +111,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid A 34 character string that uniquely identifies this API Key.
+      #    You will use this as the basic-auth `user` when authenticating to the API.
       # @return [Twilio::REST::Api::V2010::AccountContext::KeyInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::KeyList]
       def keys(sid=:unset)

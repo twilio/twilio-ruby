@@ -39,15 +39,16 @@ module Twilio
               # Lists RecordInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [record.Category] category Only include usage of a given category
+              # @param [record.Category] category Only include usage of this [usage
+              #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
               # @param [Date] start_date Only include usage that has occurred on or after this
-              #   date. Format is YYYY-MM-DD in GTM. As a convenience, you can also specify
-              #   offsets to today, for example, StartDate=-30days, which will make StartDate 30
-              #   days before today
-              # @param [Date] end_date Only include usage that has occurred on or after this
-              #   date. Format is YYYY-MM-DD in GTM. As a convenience, you can also specify
-              #   offsets to today, for example, EndDate=+30days, which will make EndDate 30 days
-              #   from today
+              #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
+              #   also specify offsets to today.  For example, `StartDate=-30days` will make
+              #   `StartDate` be 30 days before today.
+              # @param [Date] end_date Only include usage that has occurred on or before this
+              #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
+              #   also specify offsets to today.  For example, `EndDate=+30days` will make
+              #   `EndDate` be 30 days from today.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -69,15 +70,16 @@ module Twilio
               # Streams RecordInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [record.Category] category Only include usage of a given category
+              # @param [record.Category] category Only include usage of this [usage
+              #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
               # @param [Date] start_date Only include usage that has occurred on or after this
-              #   date. Format is YYYY-MM-DD in GTM. As a convenience, you can also specify
-              #   offsets to today, for example, StartDate=-30days, which will make StartDate 30
-              #   days before today
-              # @param [Date] end_date Only include usage that has occurred on or after this
-              #   date. Format is YYYY-MM-DD in GTM. As a convenience, you can also specify
-              #   offsets to today, for example, EndDate=+30days, which will make EndDate 30 days
-              #   from today
+              #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
+              #   also specify offsets to today.  For example, `StartDate=-30days` will make
+              #   `StartDate` be 30 days before today.
+              # @param [Date] end_date Only include usage that has occurred on or before this
+              #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
+              #   also specify offsets to today.  For example, `EndDate=+30days` will make
+              #   `EndDate` be 30 days from today.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -115,15 +117,16 @@ module Twilio
               ##
               # Retrieve a single page of RecordInstance records from the API.
               # Request is executed immediately.
-              # @param [record.Category] category Only include usage of a given category
+              # @param [record.Category] category Only include usage of this [usage
+              #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
               # @param [Date] start_date Only include usage that has occurred on or after this
-              #   date. Format is YYYY-MM-DD in GTM. As a convenience, you can also specify
-              #   offsets to today, for example, StartDate=-30days, which will make StartDate 30
-              #   days before today
-              # @param [Date] end_date Only include usage that has occurred on or after this
-              #   date. Format is YYYY-MM-DD in GTM. As a convenience, you can also specify
-              #   offsets to today, for example, EndDate=+30days, which will make EndDate 30 days
-              #   from today
+              #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
+              #   also specify offsets to today.  For example, `StartDate=-30days` will make
+              #   `StartDate` be 30 days before today.
+              # @param [Date] end_date Only include usage that has occurred on or before this
+              #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
+              #   also specify offsets to today.  For example, `EndDate=+30days` will make
+              #   `EndDate` be 30 days from today.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50

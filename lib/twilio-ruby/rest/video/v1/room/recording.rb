@@ -226,14 +226,15 @@ module Twilio
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'sid' => payload['sid'],
                   'source_sid' => payload['source_sid'],
-                  'size' => payload['size'] == nil ? payload['size'] : payload['size'].to_i,
+                  'size' => payload['size'],
+                  'url' => payload['url'],
                   'type' => payload['type'],
                   'duration' => payload['duration'] == nil ? payload['duration'] : payload['duration'].to_i,
                   'container_format' => payload['container_format'],
                   'codec' => payload['codec'],
                   'grouping_sids' => payload['grouping_sids'],
+                  'track_name' => payload['track_name'],
                   'room_sid' => payload['room_sid'],
-                  'url' => payload['url'],
                   'links' => payload['links'],
               }
 
@@ -290,6 +291,12 @@ module Twilio
             end
 
             ##
+            # @return [String] The url
+            def url
+              @properties['url']
+            end
+
+            ##
             # @return [room_recording.Type] The type
             def type
               @properties['type']
@@ -320,15 +327,15 @@ module Twilio
             end
 
             ##
-            # @return [String] The room_sid
-            def room_sid
-              @properties['room_sid']
+            # @return [String] The track_name
+            def track_name
+              @properties['track_name']
             end
 
             ##
-            # @return [String] The url
-            def url
-              @properties['url']
+            # @return [String] The room_sid
+            def room_sid
+              @properties['room_sid']
             end
 
             ##

@@ -30,9 +30,16 @@ module Twilio
                 # Lists DailyInstance records from the API as a list.
                 # Unlike stream(), this operation is eager and will load `limit` records into
                 # memory before returning.
-                # @param [daily.Category] category The category
-                # @param [Date] start_date The start_date
-                # @param [Date] end_date The end_date
+                # @param [daily.Category] category Only include usage of this [usage
+                #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
+                # @param [Date] start_date Only include usage that has occurred on or after this
+                #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
+                #   also specify offsets to today.  For example, `StartDate=-30days` will make
+                #   `StartDate` be 30 days before today.
+                # @param [Date] end_date Only include usage that has occurred on or before this
+                #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
+                #   also specify offsets to today.  For example, `EndDate=+30days` will make
+                #   `EndDate` be 30 days from today.
                 # @param [Integer] limit Upper limit for the number of records to return. stream()
                 #    guarantees to never return more than limit.  Default is no limit
                 # @param [Integer] page_size Number of records to fetch per request, when
@@ -54,9 +61,16 @@ module Twilio
                 # Streams DailyInstance records from the API as an Enumerable.
                 # This operation lazily loads records as efficiently as possible until the limit
                 # is reached.
-                # @param [daily.Category] category The category
-                # @param [Date] start_date The start_date
-                # @param [Date] end_date The end_date
+                # @param [daily.Category] category Only include usage of this [usage
+                #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
+                # @param [Date] start_date Only include usage that has occurred on or after this
+                #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
+                #   also specify offsets to today.  For example, `StartDate=-30days` will make
+                #   `StartDate` be 30 days before today.
+                # @param [Date] end_date Only include usage that has occurred on or before this
+                #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
+                #   also specify offsets to today.  For example, `EndDate=+30days` will make
+                #   `EndDate` be 30 days from today.
                 # @param [Integer] limit Upper limit for the number of records to return. stream()
                 #    guarantees to never return more than limit. Default is no limit.
                 # @param [Integer] page_size Number of records to fetch per request, when
@@ -94,9 +108,16 @@ module Twilio
                 ##
                 # Retrieve a single page of DailyInstance records from the API.
                 # Request is executed immediately.
-                # @param [daily.Category] category The category
-                # @param [Date] start_date The start_date
-                # @param [Date] end_date The end_date
+                # @param [daily.Category] category Only include usage of this [usage
+                #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
+                # @param [Date] start_date Only include usage that has occurred on or after this
+                #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
+                #   also specify offsets to today.  For example, `StartDate=-30days` will make
+                #   `StartDate` be 30 days before today.
+                # @param [Date] end_date Only include usage that has occurred on or before this
+                #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
+                #   also specify offsets to today.  For example, `EndDate=+30days` will make
+                #   `EndDate` be 30 days from today.
                 # @param [String] page_token PageToken provided by the API
                 # @param [Integer] page_number Page Number, this value is simply for client state
                 # @param [Integer] page_size Number of records to return, defaults to 50
@@ -198,7 +219,7 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The account_sid
+                # @return [String] The Account that accrued the usage.
                 def account_sid
                   @properties['account_sid']
                 end
@@ -210,73 +231,73 @@ module Twilio
                 end
 
                 ##
-                # @return [daily.Category] The category
+                # @return [daily.Category] The category of usage.
                 def category
                   @properties['category']
                 end
 
                 ##
-                # @return [String] The count
+                # @return [String] The number of usage events.
                 def count
                   @properties['count']
                 end
 
                 ##
-                # @return [String] The count_unit
+                # @return [String] The units in which Count is measured.
                 def count_unit
                   @properties['count_unit']
                 end
 
                 ##
-                # @return [String] The description
+                # @return [String] A human-readable description of the usage category.
                 def description
                   @properties['description']
                 end
 
                 ##
-                # @return [Date] The end_date
+                # @return [Date] The last date for which usage is included in this UsageRecord, formatted as YYYY-MM-DD.
                 def end_date
                   @properties['end_date']
                 end
 
                 ##
-                # @return [String] The price
+                # @return [String] The total price of the usage, in the currency associated with the account.
                 def price
                   @properties['price']
                 end
 
                 ##
-                # @return [String] The price_unit
+                # @return [String] The currency in which Price is measured, in ISO 4127 format.
                 def price_unit
                   @properties['price_unit']
                 end
 
                 ##
-                # @return [Date] The start_date
+                # @return [Date] The first date for which usage is included in this UsageRecord, formatted as YYYY-MM-DD.
                 def start_date
                   @properties['start_date']
                 end
 
                 ##
-                # @return [String] The subresource_uris
+                # @return [String] Subresource Uris for this UsageRecord.
                 def subresource_uris
                   @properties['subresource_uris']
                 end
 
                 ##
-                # @return [String] The uri
+                # @return [String] The URI that returns only this UsageRecord, relative to https://api.
                 def uri
                   @properties['uri']
                 end
 
                 ##
-                # @return [String] The usage
+                # @return [String] The amount of billed usage.
                 def usage
                   @properties['usage']
                 end
 
                 ##
-                # @return [String] The usage_unit
+                # @return [String] The units in which Usage is measured.
                 def usage_unit
                   @properties['usage_unit']
                 end

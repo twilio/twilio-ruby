@@ -26,7 +26,9 @@ module Twilio
             ##
             # Retrieve a single page of PhoneNumberInstance records from the API.
             # Request is executed immediately.
-            # @param [String] phone_number_sid The phone_number_sid
+            # @param [String] phone_number_sid The SID of the [Incoming Phone
+            #   Number](https://www.twilio.com/docs/api/rest/incoming-phone-numbers) that you
+            #   want to associate with this trunk.
             # @return [PhoneNumberInstance] Newly created PhoneNumberInstance
             def create(phone_number_sid: nil)
               data = Twilio::Values.of({'PhoneNumberSid' => phone_number_sid, })

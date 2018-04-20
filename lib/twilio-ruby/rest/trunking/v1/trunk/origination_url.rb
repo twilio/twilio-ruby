@@ -13,7 +13,8 @@ module Twilio
             ##
             # Initialize the OriginationUrlList
             # @param [Version] version Version that contains the resource
-            # @param [String] trunk_sid The trunk_sid
+            # @param [String] trunk_sid The unique ID of the Trunk that owns this Origination
+            #   URL.
             # @return [OriginationUrlList] OriginationUrlList
             def initialize(version, trunk_sid: nil)
               super(version)
@@ -26,11 +27,18 @@ module Twilio
             ##
             # Retrieve a single page of OriginationUrlInstance records from the API.
             # Request is executed immediately.
-            # @param [String] weight The weight
-            # @param [String] priority The priority
-            # @param [Boolean] enabled The enabled
-            # @param [String] friendly_name The friendly_name
-            # @param [String] sip_url The sip_url
+            # @param [String] weight Weight is used to determine the share of load when more
+            #   than one URI has the same priority. Its values range from 1 to 65535. The higher
+            #   the value, the more load a URI is given. Defaults to 10.
+            # @param [String] priority Priority ranks the importance of the URI. Values range
+            #   from 0 to 65535, where the lowest number represents the highest importance.
+            #   Defaults to 10.
+            # @param [Boolean] enabled A boolean value indicating whether the URL is enabled
+            #   or disabled. Defaults to true.
+            # @param [String] friendly_name A human readable descriptive text, up to 64
+            #   characters long.
+            # @param [String] sip_url The SIP address you want Twilio to route your
+            #   Origination calls to. This must be a `sip:` schema.
             # @return [OriginationUrlInstance] Newly created OriginationUrlInstance
             def create(weight: nil, priority: nil, enabled: nil, friendly_name: nil, sip_url: nil)
               data = Twilio::Values.of({
@@ -212,11 +220,18 @@ module Twilio
 
             ##
             # Update the OriginationUrlInstance
-            # @param [String] weight The weight
-            # @param [String] priority The priority
-            # @param [Boolean] enabled The enabled
-            # @param [String] friendly_name The friendly_name
-            # @param [String] sip_url The sip_url
+            # @param [String] weight Weight is used to determine the share of load when more
+            #   than one URI has the same priority. Its values range from 1 to 65535. The higher
+            #   the value, the more load a URI is given. Defaults to 10.
+            # @param [String] priority Priority ranks the importance of the URI. Values range
+            #   from 0 to 65535, where the lowest number represents the highest importance.
+            #   Defaults to 10.
+            # @param [Boolean] enabled A boolean value indicating whether the URL is enabled
+            #   or disabled. Defaults to true.
+            # @param [String] friendly_name A human readable descriptive text, up to 64
+            #   characters long.
+            # @param [String] sip_url The SIP address you want Twilio to route your
+            #   Origination calls to. This must be a `sip:` schema. `sips` is NOT supported
             # @return [OriginationUrlInstance] Updated OriginationUrlInstance
             def update(weight: :unset, priority: :unset, enabled: :unset, friendly_name: :unset, sip_url: :unset)
               data = Twilio::Values.of({
@@ -254,7 +269,8 @@ module Twilio
             # Initialize the OriginationUrlInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] trunk_sid The trunk_sid
+            # @param [String] trunk_sid The unique ID of the Trunk that owns this Origination
+            #   URL.
             # @param [String] sid The sid
             # @return [OriginationUrlInstance] OriginationUrlInstance
             def initialize(version, payload, trunk_sid: nil, sid: nil)
@@ -292,67 +308,67 @@ module Twilio
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The unique ID of the Account that owns this Origination URL.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] A 34 character string that uniquely identifies the Origination URL in this Twilio Trunk.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The trunk_sid
+            # @return [String] The unique ID of the Trunk that owns this Origination URL.
             def trunk_sid
               @properties['trunk_sid']
             end
 
             ##
-            # @return [String] The weight
+            # @return [String] Weight is used to determine the share of load when more than one URI has the same priority.
             def weight
               @properties['weight']
             end
 
             ##
-            # @return [Boolean] The enabled
+            # @return [Boolean] A boolean value indicating whether the URL is enabled or disabled.
             def enabled
               @properties['enabled']
             end
 
             ##
-            # @return [String] The sip_url
+            # @return [String] The SIP address you want Twilio to route your Origination calls to.
             def sip_url
               @properties['sip_url']
             end
 
             ##
-            # @return [String] The friendly_name
+            # @return [String] A human readable descriptive text, up to 64 characters long.
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] The priority
+            # @return [String] Priority ranks the importance of the URI.
             def priority
               @properties['priority']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date this Activity was created.
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date this Activity was updated.
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The URL for this resource, relative to https://trunking.
             def url
               @properties['url']
             end
@@ -373,11 +389,18 @@ module Twilio
 
             ##
             # Update the OriginationUrlInstance
-            # @param [String] weight The weight
-            # @param [String] priority The priority
-            # @param [Boolean] enabled The enabled
-            # @param [String] friendly_name The friendly_name
-            # @param [String] sip_url The sip_url
+            # @param [String] weight Weight is used to determine the share of load when more
+            #   than one URI has the same priority. Its values range from 1 to 65535. The higher
+            #   the value, the more load a URI is given. Defaults to 10.
+            # @param [String] priority Priority ranks the importance of the URI. Values range
+            #   from 0 to 65535, where the lowest number represents the highest importance.
+            #   Defaults to 10.
+            # @param [Boolean] enabled A boolean value indicating whether the URL is enabled
+            #   or disabled. Defaults to true.
+            # @param [String] friendly_name A human readable descriptive text, up to 64
+            #   characters long.
+            # @param [String] sip_url The SIP address you want Twilio to route your
+            #   Origination calls to. This must be a `sip:` schema. `sips` is NOT supported
             # @return [OriginationUrlInstance] Updated OriginationUrlInstance
             def update(weight: :unset, priority: :unset, enabled: :unset, friendly_name: :unset, sip_url: :unset)
               context.update(

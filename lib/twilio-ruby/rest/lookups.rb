@@ -27,7 +27,9 @@ module Twilio
       end
 
       ##
-      # @param [String] phone_number The phone_number
+      # @param [String] phone_number The phone number, in
+      #   [E.164](https://www.twilio.com/docs/api/rest/response#phone-numbers) format
+      #   (i.e. "+1").
       # @return [Twilio::REST::Lookups::V1::PhoneNumberInstance] if phone_number was passed.
       # @return [Twilio::REST::Lookups::V1::PhoneNumberList]
       def phone_numbers(phone_number=:unset)

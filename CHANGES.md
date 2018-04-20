@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+[2018-04-20] Version 5.8.1
+---------------------------
+**Library**
+- PR #397: Uses Twilio::REST::RestError when a page fails to load. Thanks to @philnash!
+
+**Twiml**
+- Gather input Enum: remove unnecessary "dtmf speech" value as you can now specify multiple enum values for this parameter and both "dtmf" and "speech" are already available.
+
+
 [2018-04-13] Version 5.8.0
 ---------------------------
 **Library**

@@ -36,13 +36,13 @@ describe 'Country' do
               }
           ],
           "meta": {
-              "first_page_url": "https://pricing.twilio.com/v1/PhoneNumbers/Countries?PageSize=1&Page=0",
-              "key": "countries",
-              "next_page_url": null,
               "page": 0,
-              "page_size": 1,
+              "page_size": 50,
+              "first_page_url": "https://pricing.twilio.com/v1/PhoneNumbers/Countries?PageSize=50&Page=0",
               "previous_page_url": null,
-              "url": "https://pricing.twilio.com/v1/PhoneNumbers/Countries?PageSize=1&Page=0"
+              "url": "https://pricing.twilio.com/v1/PhoneNumbers/Countries?PageSize=50&Page=0",
+              "next_page_url": null,
+              "key": "countries"
           }
       }
       ]
@@ -61,13 +61,13 @@ describe 'Country' do
       {
           "countries": [],
           "meta": {
-              "first_page_url": "https://pricing.twilio.com/v1/PhoneNumbers/Countries?PageSize=1&Page=0",
+              "first_page_url": "https://pricing.twilio.com/v1/PhoneNumbers/Countries?PageSize=50&Page=0",
               "key": "countries",
               "next_page_url": null,
               "page": 0,
-              "page_size": 1,
+              "page_size": 50,
               "previous_page_url": null,
-              "url": "https://pricing.twilio.com/v1/PhoneNumbers/Countries?PageSize=1&Page=0"
+              "url": "https://pricing.twilio.com/v1/PhoneNumbers/Countries?PageSize=50&Page=0"
           }
       }
       ]
@@ -100,21 +100,21 @@ describe 'Country' do
         200,
       %q[
       {
-          "country": "Estonia",
-          "iso_country": "EE",
+          "country": "United States",
+          "iso_country": "US",
           "phone_number_prices": [
               {
-                  "base_price": 3.0,
-                  "current_price": 3.0,
-                  "type": "mobile"
+                  "number_type": "local",
+                  "base_price": "1.00",
+                  "current_price": "1.00"
               },
               {
-                  "base_price": 1.0,
-                  "current_price": 1.0,
-                  "type": "national"
+                  "number_type": "toll free",
+                  "base_price": "2.00",
+                  "current_price": "2.00"
               }
           ],
-          "price_unit": "usd",
+          "price_unit": "USD",
           "url": "https://pricing.twilio.com/v1/PhoneNumbers/Countries/US"
       }
       ]

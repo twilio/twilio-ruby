@@ -30,13 +30,13 @@ describe 'Country' do
       {
           "countries": [],
           "meta": {
-              "first_page_url": "https://pricing.twilio.com/v1/Messaging/Countries?Page=0&PageSize=50",
+              "first_page_url": "https://pricing.twilio.com/v1/Messaging/Countries?PageSize=50&Page=0",
               "key": "countries",
               "next_page_url": null,
               "page": 0,
-              "page_size": 0,
+              "page_size": 50,
               "previous_page_url": null,
-              "url": "https://pricing.twilio.com/v1/Messaging/Countries"
+              "url": "https://pricing.twilio.com/v1/Messaging/Countries?PageSize=50&Page=0"
           }
       }
       ]
@@ -57,17 +57,17 @@ describe 'Country' do
               {
                   "country": "country",
                   "iso_country": "US",
-                  "url": "http://www.example.com"
+                  "url": "https://pricing.twilio.com/v1/Messaging/Countries/US"
               }
           ],
           "meta": {
-              "first_page_url": "https://pricing.twilio.com/v1/Messaging/Countries?Page=0&PageSize=50",
+              "first_page_url": "https://pricing.twilio.com/v1/Messaging/Countries?PageSize=50&Page=0",
               "key": "countries",
               "next_page_url": null,
               "page": 0,
-              "page_size": 1,
+              "page_size": 50,
               "previous_page_url": null,
-              "url": "https://pricing.twilio.com/v1/Messaging/Countries"
+              "url": "https://pricing.twilio.com/v1/Messaging/Countries?PageSize=50&Page=0"
           }
       }
       ]
@@ -103,8 +103,8 @@ describe 'Country' do
           "country": "country",
           "inbound_sms_prices": [
               {
-                  "base_price": 0.05,
-                  "current_price": 0.05,
+                  "base_price": "0.05",
+                  "current_price": "0.05",
                   "number_type": "mobile"
               }
           ],
@@ -116,15 +116,15 @@ describe 'Country' do
                   "mnc": "bar",
                   "prices": [
                       {
-                          "base_price": 0.05,
-                          "current_price": 0.05,
+                          "base_price": "0.05",
+                          "current_price": "0.05",
                           "number_type": "mobile"
                       }
                   ]
               }
           ],
           "price_unit": "USD",
-          "url": "http://www.example.com"
+          "url": "https://pricing.twilio.com/v1/Messaging/Countries/US"
       }
       ]
     ))

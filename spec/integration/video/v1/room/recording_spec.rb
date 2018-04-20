@@ -31,6 +31,8 @@ describe 'RoomRecording' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "status": "processing",
           "date_created": "2015-07-30T20:00:00Z",
+          "date_updated": "2015-07-30T21:00:00Z",
+          "date_deleted": "2015-07-30T22:00:00Z",
           "sid": "RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "source_sid": "MTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "size": 0,
@@ -38,9 +40,12 @@ describe 'RoomRecording' do
           "duration": 0,
           "container_format": "mka",
           "codec": "OPUS",
+          "track_name": "A name",
           "grouping_sids": {
               "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
           },
+          "media_external_location": "https://my-super-duper-bucket.s3.amazonaws.com/my/path/",
+          "encryption_key": "public_key",
           "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "url": "https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings/RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
@@ -107,6 +112,8 @@ describe 'RoomRecording' do
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "status": "completed",
                   "date_created": "2015-07-30T20:00:00Z",
+                  "date_updated": "2015-07-30T21:00:00Z",
+                  "date_deleted": "2015-07-30T22:00:00Z",
                   "sid": "RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "source_sid": "MTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "size": 23,
@@ -114,10 +121,13 @@ describe 'RoomRecording' do
                   "duration": 10,
                   "container_format": "mka",
                   "codec": "OPUS",
+                  "track_name": "A name",
                   "grouping_sids": {
                       "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                       "participant_sid": "PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
                   },
+                  "media_external_location": "https://my-super-duper-bucket.s3.amazonaws.com/my/path/",
+                  "encryption_key": "public_key",
                   "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "url": "https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings/RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "links": {

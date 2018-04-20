@@ -43,9 +43,10 @@ module Twilio
           # Lists AccountInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] friendly_name Filter accounts where the friendly name exactly
-          #   matches the desired FriendlyName
-          # @param [account.Status] status Only show accounts with the given Status
+          # @param [String] friendly_name Only return the Account resources with friendly
+          #   names that exactly match this name.
+          # @param [account.Status] status Only return Account resources with the given
+          #   status. Can be `closed`, `suspended` or `active`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -66,9 +67,10 @@ module Twilio
           # Streams AccountInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] friendly_name Filter accounts where the friendly name exactly
-          #   matches the desired FriendlyName
-          # @param [account.Status] status Only show accounts with the given Status
+          # @param [String] friendly_name Only return the Account resources with friendly
+          #   names that exactly match this name.
+          # @param [account.Status] status Only return Account resources with the given
+          #   status. Can be `closed`, `suspended` or `active`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -101,9 +103,10 @@ module Twilio
           ##
           # Retrieve a single page of AccountInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name Filter accounts where the friendly name exactly
-          #   matches the desired FriendlyName
-          # @param [account.Status] status Only show accounts with the given Status
+          # @param [String] friendly_name Only return the Account resources with friendly
+          #   names that exactly match this name.
+          # @param [account.Status] status Only return Account resources with the given
+          #   status. Can be `closed`, `suspended` or `active`.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50

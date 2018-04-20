@@ -174,7 +174,8 @@ module Twilio
 
             ##
             # Update the KeyInstance
-            # @param [String] friendly_name The friendly_name
+            # @param [String] friendly_name A descriptive string for this resource, chosen by
+            #   your application, up to 64 characters long.
             # @return [KeyInstance] Updated KeyInstance
             def update(friendly_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -240,25 +241,25 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] A 34 character string that uniquely identifies this API Key.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The friendly_name
+            # @return [String] A descriptive string for this resource, chosen by your application, up to 64 characters long.
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date-time this API Key was created, given as a RFC 2822 Timestamp.
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date-time this API Key was most recently updated, given as a  RFC 2822 Timestamp.
             def date_updated
               @properties['date_updated']
             end
@@ -272,7 +273,8 @@ module Twilio
 
             ##
             # Update the KeyInstance
-            # @param [String] friendly_name The friendly_name
+            # @param [String] friendly_name A descriptive string for this resource, chosen by
+            #   your application, up to 64 characters long.
             # @return [KeyInstance] Updated KeyInstance
             def update(friendly_name: :unset)
               context.update(friendly_name: friendly_name, )

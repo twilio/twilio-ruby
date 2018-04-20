@@ -15,7 +15,8 @@ module Twilio
                 ##
                 # Initialize the CredentialList
                 # @param [Version] version Version that contains the resource
-                # @param [String] account_sid The account_sid
+                # @param [String] account_sid The unique id of the Account that responsible for
+                #   this resource.
                 # @param [String] credential_list_sid The credential_list_sid
                 # @return [CredentialList] CredentialList
                 def initialize(version, account_sid: nil, credential_list_sid: nil)
@@ -111,8 +112,8 @@ module Twilio
                 ##
                 # Retrieve a single page of CredentialInstance records from the API.
                 # Request is executed immediately.
-                # @param [String] username The username
-                # @param [String] password The password
+                # @param [String] username The username for this credential.
+                # @param [String] password The password will not be returned in the response.
                 # @return [CredentialInstance] Newly created CredentialInstance
                 def create(username: nil, password: nil)
                   data = Twilio::Values.of({'Username' => username, 'Password' => password, })
@@ -251,7 +252,8 @@ module Twilio
                 # Initialize the CredentialInstance
                 # @param [Version] version Version that contains the resource
                 # @param [Hash] payload payload that contains response from Twilio
-                # @param [String] account_sid The account_sid
+                # @param [String] account_sid The unique id of the Account that responsible for
+                #   this resource.
                 # @param [String] credential_list_sid The credential_list_sid
                 # @param [String] sid The sid
                 # @return [CredentialInstance] CredentialInstance
@@ -295,13 +297,13 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The sid
+                # @return [String] A 34 character string that uniquely identifies this resource.
                 def sid
                   @properties['sid']
                 end
 
                 ##
-                # @return [String] The account_sid
+                # @return [String] The unique id of the Account that responsible for this resource.
                 def account_sid
                   @properties['account_sid']
                 end
@@ -313,25 +315,25 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The username
+                # @return [String] The username for this credential.
                 def username
                   @properties['username']
                 end
 
                 ##
-                # @return [Time] The date_created
+                # @return [Time] The date that this resource was created, given as GMT in RFC 2822 format.
                 def date_created
                   @properties['date_created']
                 end
 
                 ##
-                # @return [Time] The date_updated
+                # @return [Time] The date that this resource was last updated, given as GMT in RFC 2822 format.
                 def date_updated
                   @properties['date_updated']
                 end
 
                 ##
-                # @return [String] The uri
+                # @return [String] The URI for this resource, relative to https://api.
                 def uri
                   @properties['uri']
                 end

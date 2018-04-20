@@ -111,21 +111,23 @@ module Twilio
               # Retrieve a single page of DomainInstance records from the API.
               # Request is executed immediately.
               # @param [String] domain_name The unique address you reserve on Twilio to which
-              #   you route your SIP traffic
-              # @param [String] friendly_name A user-specified, human-readable name for the
-              #   trigger.
+              #   you route your SIP traffic. Domain names can contain letters, digits, and "-".
+              # @param [String] friendly_name A human readable descriptive text, up to 64
+              #   characters long.
               # @param [String] auth_type The types of authentication you have mapped to your
               #   domain
               # @param [String] voice_url The URL Twilio will request when this domain receives
-              #   a call
-              # @param [String] voice_method The HTTP method to use with the voice_url
-              # @param [String] voice_fallback_url The URL that Twilio will use if an error
-              #   occurs retrieving or executing the TwiML requested by VoiceUrl
+              #   a call.
+              # @param [String] voice_method The HTTP method Twilio will use when requesting the
+              #   above Url. Either `GET` or `POST`.
+              # @param [String] voice_fallback_url The URL that Twilio will request if an error
+              #   occurs retrieving or executing the TwiML requested by VoiceUrl.
               # @param [String] voice_fallback_method The HTTP method Twilio will use when
-              #   requesting the VoiceFallbackUrl
+              #   requesting the VoiceFallbackUrl. Either `GET` or `POST`.
               # @param [String] voice_status_callback_url The URL that Twilio will request to
-              #   pass status parameters
-              # @param [String] voice_status_callback_method The voice_status_callback_method
+              #   pass status parameters (such as call ended) to your application.
+              # @param [String] voice_status_callback_method The HTTP method Twilio will use to
+              #   make requests to the StatusCallback URL. Either `GET` or `POST`.
               # @param [Boolean] sip_registration The sip_registration
               # @return [DomainInstance] Newly created DomainInstance
               def create(domain_name: nil, friendly_name: :unset, auth_type: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, voice_status_callback_url: :unset, voice_status_callback_method: :unset, sip_registration: :unset)
@@ -442,7 +444,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The voice_status_callback_method
+              # @return [String] The HTTP method Twilio will use to make requests to the StatusCallback URL.
               def voice_status_callback_method
                 @properties['voice_status_callback_method']
               end
