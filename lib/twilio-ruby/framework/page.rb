@@ -29,7 +29,7 @@ module Twilio
 
       def process_response(response)
         if response.status_code != 200
-          raise Twilio::REST::TwilioError.new('Unable to fetch page', response)
+          raise Twilio::REST::RestError.new('Unable to fetch page', response)
         end
 
         response.body
