@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Twilio
   class Request
     attr_reader :host, :port, :method, :url, :params, :data, :headers, :auth, :timeout

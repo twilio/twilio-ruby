@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Twilio
   module Util
     def url_encode(hash)

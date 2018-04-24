@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Twilio
   class TwilioResponse
     attr_accessor :status_code, :body
