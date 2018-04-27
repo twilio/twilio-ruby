@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -45,8 +47,8 @@ module Twilio
           # memory before returning.
           # @param [String] friendly_name Only return the Account resources with friendly
           #   names that exactly match this name.
-          # @param [account.Status] status Only return Account resources with the given
-          #   status. Can be `closed`, `suspended` or `active`.
+          # @param [String] status Only return Account resources with the given status. Can
+          #   be `closed`, `suspended` or `active`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -69,8 +71,8 @@ module Twilio
           # is reached.
           # @param [String] friendly_name Only return the Account resources with friendly
           #   names that exactly match this name.
-          # @param [account.Status] status Only return Account resources with the given
-          #   status. Can be `closed`, `suspended` or `active`.
+          # @param [String] status Only return Account resources with the given status. Can
+          #   be `closed`, `suspended` or `active`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -105,8 +107,8 @@ module Twilio
           # Request is executed immediately.
           # @param [String] friendly_name Only return the Account resources with friendly
           #   names that exactly match this name.
-          # @param [account.Status] status Only return Account resources with the given
-          #   status. Can be `closed`, `suspended` or `active`.
+          # @param [String] status Only return Account resources with the given status. Can
+          #   be `closed`, `suspended` or `active`.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -235,8 +237,7 @@ module Twilio
           # Update the AccountInstance
           # @param [String] friendly_name Update the human-readable description of this
           #   Account
-          # @param [account.Status] status Alter the status of this account with a given
-          #   Status
+          # @param [String] status Alter the status of this account with a given Status
           # @return [AccountInstance] Updated AccountInstance
           def update(friendly_name: :unset, status: :unset)
             data = Twilio::Values.of({'FriendlyName' => friendly_name, 'Status' => status, })
@@ -717,7 +718,7 @@ module Twilio
           end
 
           ##
-          # @return [account.Status] The status of this account
+          # @return [String] The status of this account
           def status
             @properties['status']
           end
@@ -751,8 +752,7 @@ module Twilio
           # Update the AccountInstance
           # @param [String] friendly_name Update the human-readable description of this
           #   Account
-          # @param [account.Status] status Alter the status of this account with a given
-          #   Status
+          # @param [String] status Alter the status of this account with a given Status
           # @return [AccountInstance] Updated AccountInstance
           def update(friendly_name: :unset, status: :unset)
             context.update(friendly_name: friendly_name, status: status, )

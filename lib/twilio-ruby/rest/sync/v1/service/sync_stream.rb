@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -15,7 +17,8 @@ module Twilio
             ##
             # Initialize the SyncStreamList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the Service Instance.
+            # @param [String] service_sid The unique SID identifier of the Service Instance
+            #   that hosts this Message Stream.
             # @return [SyncStreamList] SyncStreamList
             def initialize(version, service_sid: nil)
               super(version)
@@ -30,8 +33,8 @@ module Twilio
             # Request is executed immediately.
             # @param [String] unique_name The unique and addressable name of this Stream.
             #   Optional, up to 256 characters long.
-            # @param [String] ttl Optional time-to-live of this Stream in seconds. In the
-            #   range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] ttl (optional) Time-to-live of this Stream in seconds, defaults
+            #   to no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [SyncStreamInstance] Newly created SyncStreamInstance
             def create(unique_name: :unset, ttl: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, 'Ttl' => ttl, })
@@ -171,7 +174,8 @@ module Twilio
             ##
             # Initialize the SyncStreamContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid Identifier of the Service Instance. Either a SID or
+            #   'default'.
             # @param [String] sid Identifier of the Stream. Either a SID or a unique name.
             # @return [SyncStreamContext] SyncStreamContext
             def initialize(version, service_sid, sid)
@@ -214,8 +218,8 @@ module Twilio
 
             ##
             # Update the SyncStreamInstance
-            # @param [String] ttl Time-to-live of this Stream in seconds. In the range [1, 31
-            #   536 000 (1 year)], or 0 for infinity.
+            # @param [String] ttl New time-to-live of this Stream in seconds. In the range [1,
+            #   31 536 000 (1 year)], or 0 for infinity.
             # @return [SyncStreamInstance] Updated SyncStreamInstance
             def update(ttl: :unset)
               data = Twilio::Values.of({'Ttl' => ttl, })
@@ -265,7 +269,8 @@ module Twilio
             # Initialize the SyncStreamInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The unique SID identifier of the Service Instance.
+            # @param [String] service_sid The unique SID identifier of the Service Instance
+            #   that hosts this Message Stream.
             # @param [String] sid Identifier of the Stream. Either a SID or a unique name.
             # @return [SyncStreamInstance] SyncStreamInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
@@ -377,8 +382,8 @@ module Twilio
 
             ##
             # Update the SyncStreamInstance
-            # @param [String] ttl Time-to-live of this Stream in seconds. In the range [1, 31
-            #   536 000 (1 year)], or 0 for infinity.
+            # @param [String] ttl New time-to-live of this Stream in seconds. In the range [1,
+            #   31 536 000 (1 year)], or 0 for infinity.
             # @return [SyncStreamInstance] Updated SyncStreamInstance
             def update(ttl: :unset)
               context.update(ttl: ttl, )

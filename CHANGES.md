@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+[2018-04-27] Version 5.9.0
+---------------------------
+**Library**
+- PR #403: Adds frozen_string_literal magic comment. Thanks to @philnash!
+
+**Video**
+- Redesign API by adding custom `VideoLayout` object. **(breaking change)**
+
+
 [2018-04-20] Version 5.8.1
 ---------------------------
 **Library**

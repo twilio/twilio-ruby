@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -13,8 +15,8 @@ module Twilio
             ##
             # Initialize the TokenList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the Account that created this
-            #   Token.
+            # @param [String] account_sid The unique id of the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this Token.
             # @return [TokenList] TokenList
             def initialize(version, account_sid: nil)
               super(version)
@@ -28,7 +30,7 @@ module Twilio
             # Retrieve a single page of TokenInstance records from the API.
             # Request is executed immediately.
             # @param [String] ttl The duration in seconds for which the generated credentials
-            #   are valid
+            #   are valid, the default value is 86400 (24 hours).
             # @return [TokenInstance] Newly created TokenInstance
             def create(ttl: :unset)
               data = Twilio::Values.of({'Ttl' => ttl, })
@@ -83,8 +85,8 @@ module Twilio
             # Initialize the TokenInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the Account that created this
-            #   Token.
+            # @param [String] account_sid The unique id of the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this Token.
             # @return [TokenInstance] TokenInstance
             def initialize(version, payload, account_sid: nil)
               super(version)

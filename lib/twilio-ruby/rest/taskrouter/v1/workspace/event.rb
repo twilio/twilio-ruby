@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -13,7 +15,7 @@ module Twilio
             ##
             # Initialize the EventList
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The sid
+            # @param [String] workspace_sid The unique ID of the Workspace
             # @return [EventList] EventList
             def initialize(version, workspace_sid: nil)
               super(version)
@@ -27,14 +29,21 @@ module Twilio
             # Lists EventInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [Time] end_date The end_date
-            # @param [String] event_type The event_type
-            # @param [String] minutes The minutes
-            # @param [String] reservation_sid The reservation_sid
-            # @param [Time] start_date The start_date
-            # @param [String] task_queue_sid The task_queue_sid
-            # @param [String] task_sid The task_sid
-            # @param [String] worker_sid The worker_sid
+            # @param [Time] end_date Filter events by an end date. This is helpful for
+            #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
+            # @param [String] event_type Filter events by those of a certain event type
+            # @param [String] minutes Filter events by up to ‘x’ minutes in the past. This is
+            #   helpful for events for the last 15 minutes, 240 minutes (4 hours), and 480
+            #   minutes (8 hours) to see trends. Defaults to 15 minutes.
+            # @param [String] reservation_sid Filter events by those pertaining to a
+            #   particular reservation
+            # @param [Time] start_date Filter events by a start date. This is helpful for
+            #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
+            # @param [String] task_queue_sid Filter events by those pertaining to a particular
+            #   queue
+            # @param [String] task_sid Filter events by those pertaining to a particular task
+            # @param [String] worker_sid Filter events by those pertaining to a particular
+            #   worker
             # @param [String] workflow_sid The workflow_sid
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
@@ -63,14 +72,21 @@ module Twilio
             # Streams EventInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Time] end_date The end_date
-            # @param [String] event_type The event_type
-            # @param [String] minutes The minutes
-            # @param [String] reservation_sid The reservation_sid
-            # @param [Time] start_date The start_date
-            # @param [String] task_queue_sid The task_queue_sid
-            # @param [String] task_sid The task_sid
-            # @param [String] worker_sid The worker_sid
+            # @param [Time] end_date Filter events by an end date. This is helpful for
+            #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
+            # @param [String] event_type Filter events by those of a certain event type
+            # @param [String] minutes Filter events by up to ‘x’ minutes in the past. This is
+            #   helpful for events for the last 15 minutes, 240 minutes (4 hours), and 480
+            #   minutes (8 hours) to see trends. Defaults to 15 minutes.
+            # @param [String] reservation_sid Filter events by those pertaining to a
+            #   particular reservation
+            # @param [Time] start_date Filter events by a start date. This is helpful for
+            #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
+            # @param [String] task_queue_sid Filter events by those pertaining to a particular
+            #   queue
+            # @param [String] task_sid Filter events by those pertaining to a particular task
+            # @param [String] worker_sid Filter events by those pertaining to a particular
+            #   worker
             # @param [String] workflow_sid The workflow_sid
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
@@ -115,14 +131,21 @@ module Twilio
             ##
             # Retrieve a single page of EventInstance records from the API.
             # Request is executed immediately.
-            # @param [Time] end_date The end_date
-            # @param [String] event_type The event_type
-            # @param [String] minutes The minutes
-            # @param [String] reservation_sid The reservation_sid
-            # @param [Time] start_date The start_date
-            # @param [String] task_queue_sid The task_queue_sid
-            # @param [String] task_sid The task_sid
-            # @param [String] worker_sid The worker_sid
+            # @param [Time] end_date Filter events by an end date. This is helpful for
+            #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
+            # @param [String] event_type Filter events by those of a certain event type
+            # @param [String] minutes Filter events by up to ‘x’ minutes in the past. This is
+            #   helpful for events for the last 15 minutes, 240 minutes (4 hours), and 480
+            #   minutes (8 hours) to see trends. Defaults to 15 minutes.
+            # @param [String] reservation_sid Filter events by those pertaining to a
+            #   particular reservation
+            # @param [Time] start_date Filter events by a start date. This is helpful for
+            #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
+            # @param [String] task_queue_sid Filter events by those pertaining to a particular
+            #   queue
+            # @param [String] task_sid Filter events by those pertaining to a particular task
+            # @param [String] worker_sid Filter events by those pertaining to a particular
+            #   worker
             # @param [String] workflow_sid The workflow_sid
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
@@ -243,7 +266,7 @@ module Twilio
             # Initialize the EventInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] workspace_sid The sid
+            # @param [String] workspace_sid The unique ID of the Workspace
             # @param [String] sid The sid
             # @return [EventInstance] EventInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
@@ -285,7 +308,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The account owning this event
             def account_sid
               @properties['account_sid']
             end
@@ -309,37 +332,37 @@ module Twilio
             end
 
             ##
-            # @return [String] The description
+            # @return [String] A description of the event
             def description
               @properties['description']
             end
 
             ##
-            # @return [String] The event_data
+            # @return [String] Data about this specific event.
             def event_data
               @properties['event_data']
             end
 
             ##
-            # @return [Time] The event_date
+            # @return [Time] The time this event was sent
             def event_date
               @properties['event_date']
             end
 
             ##
-            # @return [String] The event_type
+            # @return [String] An identifier for this event
             def event_type
               @properties['event_type']
             end
 
             ##
-            # @return [String] The resource_sid
+            # @return [String] The sid of the object this event is most relevant to
             def resource_sid
               @properties['resource_sid']
             end
 
             ##
-            # @return [String] The resource_type
+            # @return [String] The type of object this event is most relevant to
             def resource_type
               @properties['resource_type']
             end

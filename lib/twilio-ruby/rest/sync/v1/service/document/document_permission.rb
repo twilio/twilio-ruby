@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -160,7 +162,8 @@ module Twilio
               ##
               # Initialize the DocumentPermissionContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
+              # @param [String] service_sid Identifier of the Sync Service Instance. Either a
+              #   SID or 'default'.
               # @param [String] document_sid Identifier of the Sync Document. Either a SID or a
               #   unique name.
               # @param [String] identity Arbitrary string identifier representing a user

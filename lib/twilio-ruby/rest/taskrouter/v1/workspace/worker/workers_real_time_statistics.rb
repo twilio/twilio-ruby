@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -75,7 +77,8 @@ module Twilio
 
               ##
               # Fetch a WorkersRealTimeStatisticsInstance
-              # @param [String] task_channel The task_channel
+              # @param [String] task_channel Filter cumulative statistics by TaskChannel. Takes
+              #   in a Unique Name ("voice", "sms", "default", etc.) or a TaskChannelSid.
               # @return [WorkersRealTimeStatisticsInstance] Fetched WorkersRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
                 params = Twilio::Values.of({'TaskChannel' => task_channel, })
@@ -139,13 +142,13 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The activity_statistics
+              # @return [Hash] The current Worker status count breakdown by Activity
               def activity_statistics
                 @properties['activity_statistics']
               end
 
               ##
-              # @return [String] The total_workers
+              # @return [String] The total number of Workers
               def total_workers
                 @properties['total_workers']
               end
@@ -164,7 +167,8 @@ module Twilio
 
               ##
               # Fetch a WorkersRealTimeStatisticsInstance
-              # @param [String] task_channel The task_channel
+              # @param [String] task_channel Filter cumulative statistics by TaskChannel. Takes
+              #   in a Unique Name ("voice", "sms", "default", etc.) or a TaskChannelSid.
               # @return [WorkersRealTimeStatisticsInstance] Fetched WorkersRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
                 context.fetch(task_channel: task_channel, )

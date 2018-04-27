@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -74,11 +76,23 @@ module Twilio
 
             ##
             # Fetch a WorkspaceStatisticsInstance
-            # @param [String] minutes The minutes
-            # @param [Time] start_date The start_date
-            # @param [Time] end_date The end_date
-            # @param [String] task_channel The task_channel
-            # @param [String] split_by_wait_time The split_by_wait_time
+            # @param [String] minutes Filter cumulative statistics by up to ‘x’ minutes in the
+            #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
+            #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
+            # @param [Time] start_date Filter cumulative statistics by a start date. This is
+            #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
+            #   Timestamp
+            # @param [Time] end_date Filter cumulative statistics by an end date. This is
+            #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
+            #   Timestamp
+            # @param [String] task_channel Filter real-time and cumulative statistics by
+            #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
+            #   TaskChannelSid.
+            # @param [String] split_by_wait_time A comma separated values for viewing splits
+            #   of tasks canceled and accepted above the given threshold in seconds. Ex: "5,30"
+            #   would show splits of tasks that were canceled or accepted before or after 5
+            #   seconds and respectively, 30 seconds. This is great for showing short abandoned
+            #   tasks or tasks that failed to meet your SLA.
             # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
             def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_channel: :unset, split_by_wait_time: :unset)
               params = Twilio::Values.of({
@@ -173,11 +187,23 @@ module Twilio
 
             ##
             # Fetch a WorkspaceStatisticsInstance
-            # @param [String] minutes The minutes
-            # @param [Time] start_date The start_date
-            # @param [Time] end_date The end_date
-            # @param [String] task_channel The task_channel
-            # @param [String] split_by_wait_time The split_by_wait_time
+            # @param [String] minutes Filter cumulative statistics by up to ‘x’ minutes in the
+            #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
+            #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
+            # @param [Time] start_date Filter cumulative statistics by a start date. This is
+            #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
+            #   Timestamp
+            # @param [Time] end_date Filter cumulative statistics by an end date. This is
+            #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
+            #   Timestamp
+            # @param [String] task_channel Filter real-time and cumulative statistics by
+            #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
+            #   TaskChannelSid.
+            # @param [String] split_by_wait_time A comma separated values for viewing splits
+            #   of tasks canceled and accepted above the given threshold in seconds. Ex: "5,30"
+            #   would show splits of tasks that were canceled or accepted before or after 5
+            #   seconds and respectively, 30 seconds. This is great for showing short abandoned
+            #   tasks or tasks that failed to meet your SLA.
             # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
             def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_channel: :unset, split_by_wait_time: :unset)
               context.fetch(

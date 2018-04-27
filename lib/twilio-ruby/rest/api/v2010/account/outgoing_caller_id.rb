@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -13,7 +15,8 @@ module Twilio
             ##
             # Initialize the OutgoingCallerIdList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the Account responsible for this
+            # @param [String] account_sid The unique ID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
             #   Caller Id.
             # @return [OutgoingCallerIdList] OutgoingCallerIdList
             def initialize(version, account_sid: nil)
@@ -29,9 +32,9 @@ module Twilio
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [String] phone_number Only show the caller id resource that exactly
-            #   matches this phone number
+            #   matches this phone number.
             # @param [String] friendly_name Only show the caller id resource that exactly
-            #   matches this name
+            #   matches this name.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -53,9 +56,9 @@ module Twilio
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [String] phone_number Only show the caller id resource that exactly
-            #   matches this phone number
+            #   matches this phone number.
             # @param [String] friendly_name Only show the caller id resource that exactly
-            #   matches this name
+            #   matches this name.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -93,9 +96,9 @@ module Twilio
             # Retrieve a single page of OutgoingCallerIdInstance records from the API.
             # Request is executed immediately.
             # @param [String] phone_number Only show the caller id resource that exactly
-            #   matches this phone number
+            #   matches this phone number.
             # @param [String] friendly_name Only show the caller id resource that exactly
-            #   matches this name
+            #   matches this name.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -203,7 +206,9 @@ module Twilio
 
             ##
             # Update the OutgoingCallerIdInstance
-            # @param [String] friendly_name A human readable description of the caller ID
+            # @param [String] friendly_name A human readable description of a Caller ID, with
+            #   maximum length of 64 characters. Defaults to a nicely formatted version of the
+            #   phone number.
             # @return [OutgoingCallerIdInstance] Updated OutgoingCallerIdInstance
             def update(friendly_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -242,7 +247,8 @@ module Twilio
             # Initialize the OutgoingCallerIdInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the Account responsible for this
+            # @param [String] account_sid The unique ID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
             #   Caller Id.
             # @param [String] sid The outgoing-caller-id Sid that uniquely identifies this
             #   resource
@@ -328,7 +334,9 @@ module Twilio
 
             ##
             # Update the OutgoingCallerIdInstance
-            # @param [String] friendly_name A human readable description of the caller ID
+            # @param [String] friendly_name A human readable description of a Caller ID, with
+            #   maximum length of 64 characters. Defaults to a nicely formatted version of the
+            #   phone number.
             # @return [OutgoingCallerIdInstance] Updated OutgoingCallerIdInstance
             def update(friendly_name: :unset)
               context.update(friendly_name: friendly_name, )

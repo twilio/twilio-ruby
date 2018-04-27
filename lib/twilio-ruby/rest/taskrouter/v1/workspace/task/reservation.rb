@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -14,8 +16,9 @@ module Twilio
               ##
               # Initialize the ReservationList
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] task_sid The task_sid
+              # @param [String] workspace_sid The ID of the Workspace that this task is
+              #   contained within.
+              # @param [String] task_sid The ID of the reserved Task
               # @return [ReservationList] ReservationList
               def initialize(version, workspace_sid: nil, task_sid: nil)
                 super(version)
@@ -29,7 +32,8 @@ module Twilio
               # Lists ReservationInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [reservation.Status] reservation_status The reservation_status
+              # @param [reservation.Status] reservation_status Returns the list of reservations
+              #   for a task with a specified ReservationStatus
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -45,7 +49,8 @@ module Twilio
               # Streams ReservationInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [reservation.Status] reservation_status The reservation_status
+              # @param [reservation.Status] reservation_status Returns the list of reservations
+              #   for a task with a specified ReservationStatus
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -78,7 +83,8 @@ module Twilio
               ##
               # Retrieve a single page of ReservationInstance records from the API.
               # Request is executed immediately.
-              # @param [reservation.Status] reservation_status The reservation_status
+              # @param [reservation.Status] reservation_status Returns the list of reservations
+              #   for a task with a specified ReservationStatus
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -191,32 +197,31 @@ module Twilio
 
               ##
               # Update the ReservationInstance
-              # @param [reservation.Status] reservation_status The reservation_status
-              # @param [String] worker_activity_sid The worker_activity_sid
-              # @param [String] instruction The instruction
-              # @param [String] dequeue_post_work_activity_sid The
-              #   dequeue_post_work_activity_sid
-              # @param [String] dequeue_from The dequeue_from
-              # @param [String] dequeue_record The dequeue_record
-              # @param [String] dequeue_timeout The dequeue_timeout
-              # @param [String] dequeue_to The dequeue_to
-              # @param [String] dequeue_status_callback_url The dequeue_status_callback_url
-              # @param [String] call_from The call_from
-              # @param [String] call_record The call_record
-              # @param [String] call_timeout The call_timeout
-              # @param [String] call_to The call_to
-              # @param [String] call_url The call_url
-              # @param [String] call_status_callback_url The call_status_callback_url
-              # @param [Boolean] call_accept The call_accept
-              # @param [String] redirect_call_sid The redirect_call_sid
-              # @param [Boolean] redirect_accept The redirect_accept
-              # @param [String] redirect_url The redirect_url
-              # @param [String] to The to
-              # @param [String] from The from
+              # @param [reservation.Status] reservation_status Yes
+              # @param [String] worker_activity_sid No
+              # @param [String] instruction Yes
+              # @param [String] dequeue_post_work_activity_sid No
+              # @param [String] dequeue_from Yes
+              # @param [String] dequeue_record No
+              # @param [String] dequeue_timeout No
+              # @param [String] dequeue_to No
+              # @param [String] dequeue_status_callback_url No
+              # @param [String] call_from Yes
+              # @param [String] call_record No
+              # @param [String] call_timeout No
+              # @param [String] call_to No
+              # @param [String] call_url Yes
+              # @param [String] call_status_callback_url No
+              # @param [Boolean] call_accept No
+              # @param [String] redirect_call_sid Yes
+              # @param [Boolean] redirect_accept No
+              # @param [String] redirect_url Yes
+              # @param [String] to No
+              # @param [String] from No
               # @param [String] status_callback The status_callback
               # @param [String] status_callback_method The status_callback_method
               # @param [reservation.CallStatus] status_callback_event The status_callback_event
-              # @param [String] timeout The timeout
+              # @param [String] timeout No
               # @param [Boolean] record The record
               # @param [Boolean] muted The muted
               # @param [String] beep The beep
@@ -244,8 +249,8 @@ module Twilio
               # @param [String] region The region
               # @param [String] sip_auth_username The sip_auth_username
               # @param [String] sip_auth_password The sip_auth_password
-              # @param [String] dequeue_status_callback_event The dequeue_status_callback_event
-              # @param [String] post_work_activity_sid The post_work_activity_sid
+              # @param [String] dequeue_status_callback_event No
+              # @param [String] post_work_activity_sid No
               # @return [ReservationInstance] Updated ReservationInstance
               def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset, to: :unset, from: :unset, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, conference_record: :unset, conference_trim: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, region: :unset, sip_auth_username: :unset, sip_auth_password: :unset, dequeue_status_callback_event: :unset, post_work_activity_sid: :unset)
                 data = Twilio::Values.of({
@@ -328,8 +333,9 @@ module Twilio
               # Initialize the ReservationInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] task_sid The task_sid
+              # @param [String] workspace_sid The ID of the Workspace that this task is
+              #   contained within.
+              # @param [String] task_sid The ID of the reserved Task
               # @param [String] sid The sid
               # @return [ReservationInstance] ReservationInstance
               def initialize(version, payload, workspace_sid: nil, task_sid: nil, sid: nil)
@@ -376,7 +382,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The ID of the Account that owns this Task
               def account_sid
                 @properties['account_sid']
               end
@@ -394,37 +400,37 @@ module Twilio
               end
 
               ##
-              # @return [reservation.Status] The reservation_status
+              # @return [reservation.Status] The current status of the reservation.
               def reservation_status
                 @properties['reservation_status']
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] The unique ID of this Reservation.
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The task_sid
+              # @return [String] The ID of the reserved Task
               def task_sid
                 @properties['task_sid']
               end
 
               ##
-              # @return [String] The worker_name
+              # @return [String] Human readable description of the Worker that is reserved
               def worker_name
                 @properties['worker_name']
               end
 
               ##
-              # @return [String] The worker_sid
+              # @return [String] The ID of the reserved Worker
               def worker_sid
                 @properties['worker_sid']
               end
 
               ##
-              # @return [String] The workspace_sid
+              # @return [String] The ID of the Workspace that this task is contained within.
               def workspace_sid
                 @properties['workspace_sid']
               end
@@ -450,32 +456,31 @@ module Twilio
 
               ##
               # Update the ReservationInstance
-              # @param [reservation.Status] reservation_status The reservation_status
-              # @param [String] worker_activity_sid The worker_activity_sid
-              # @param [String] instruction The instruction
-              # @param [String] dequeue_post_work_activity_sid The
-              #   dequeue_post_work_activity_sid
-              # @param [String] dequeue_from The dequeue_from
-              # @param [String] dequeue_record The dequeue_record
-              # @param [String] dequeue_timeout The dequeue_timeout
-              # @param [String] dequeue_to The dequeue_to
-              # @param [String] dequeue_status_callback_url The dequeue_status_callback_url
-              # @param [String] call_from The call_from
-              # @param [String] call_record The call_record
-              # @param [String] call_timeout The call_timeout
-              # @param [String] call_to The call_to
-              # @param [String] call_url The call_url
-              # @param [String] call_status_callback_url The call_status_callback_url
-              # @param [Boolean] call_accept The call_accept
-              # @param [String] redirect_call_sid The redirect_call_sid
-              # @param [Boolean] redirect_accept The redirect_accept
-              # @param [String] redirect_url The redirect_url
-              # @param [String] to The to
-              # @param [String] from The from
+              # @param [reservation.Status] reservation_status Yes
+              # @param [String] worker_activity_sid No
+              # @param [String] instruction Yes
+              # @param [String] dequeue_post_work_activity_sid No
+              # @param [String] dequeue_from Yes
+              # @param [String] dequeue_record No
+              # @param [String] dequeue_timeout No
+              # @param [String] dequeue_to No
+              # @param [String] dequeue_status_callback_url No
+              # @param [String] call_from Yes
+              # @param [String] call_record No
+              # @param [String] call_timeout No
+              # @param [String] call_to No
+              # @param [String] call_url Yes
+              # @param [String] call_status_callback_url No
+              # @param [Boolean] call_accept No
+              # @param [String] redirect_call_sid Yes
+              # @param [Boolean] redirect_accept No
+              # @param [String] redirect_url Yes
+              # @param [String] to No
+              # @param [String] from No
               # @param [String] status_callback The status_callback
               # @param [String] status_callback_method The status_callback_method
               # @param [reservation.CallStatus] status_callback_event The status_callback_event
-              # @param [String] timeout The timeout
+              # @param [String] timeout No
               # @param [Boolean] record The record
               # @param [Boolean] muted The muted
               # @param [String] beep The beep
@@ -503,8 +508,8 @@ module Twilio
               # @param [String] region The region
               # @param [String] sip_auth_username The sip_auth_username
               # @param [String] sip_auth_password The sip_auth_password
-              # @param [String] dequeue_status_callback_event The dequeue_status_callback_event
-              # @param [String] post_work_activity_sid The post_work_activity_sid
+              # @param [String] dequeue_status_callback_event No
+              # @param [String] post_work_activity_sid No
               # @return [ReservationInstance] Updated ReservationInstance
               def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset, to: :unset, from: :unset, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, conference_record: :unset, conference_trim: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, region: :unset, sip_auth_username: :unset, sip_auth_password: :unset, dequeue_status_callback_event: :unset, post_work_activity_sid: :unset)
                 context.update(

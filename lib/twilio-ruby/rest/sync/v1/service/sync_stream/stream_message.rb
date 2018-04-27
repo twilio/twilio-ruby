@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -16,8 +18,10 @@ module Twilio
               ##
               # Initialize the StreamMessageList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique SID identifier of the Service Instance.
-              # @param [String] stream_sid The unique 34-character SID identifier of the Stream.
+              # @param [String] service_sid The unique SID identifier of the Service Instance
+              #   that hosts this Message Stream.
+              # @param [String] stream_sid The unique 34-character SID identifier of the Message
+              #   Stream.
               # @return [StreamMessageList] StreamMessageList
               def initialize(version, service_sid: nil, stream_sid: nil)
                 super(version)
@@ -100,8 +104,10 @@ module Twilio
               # Initialize the StreamMessageInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The unique SID identifier of the Service Instance.
-              # @param [String] stream_sid The unique 34-character SID identifier of the Stream.
+              # @param [String] service_sid The unique SID identifier of the Service Instance
+              #   that hosts this Message Stream.
+              # @param [String] stream_sid The unique 34-character SID identifier of the Message
+              #   Stream.
               # @return [StreamMessageInstance] StreamMessageInstance
               def initialize(version, payload, service_sid: nil, stream_sid: nil)
                 super(version)

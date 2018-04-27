@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -29,9 +31,7 @@ module Twilio
             # Lists SessionInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] unique_name Provides a unique and addressable name to be
-            #   assigned to this Session, assigned by the developer, to be optionally used in
-            #   addition to SID.
+            # @param [String] unique_name The unique_name
             # @param [session.Status] status The Status of this Session. One of `in-progress`,
             #   `closed`, `failed`, `unknown` or `completed`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -49,9 +49,7 @@ module Twilio
             # Streams SessionInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] unique_name Provides a unique and addressable name to be
-            #   assigned to this Session, assigned by the developer, to be optionally used in
-            #   addition to SID.
+            # @param [String] unique_name The unique_name
             # @param [session.Status] status The Status of this Session. One of `in-progress`,
             #   `closed`, `failed`, `unknown` or `completed`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -86,9 +84,7 @@ module Twilio
             ##
             # Retrieve a single page of SessionInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name Provides a unique and addressable name to be
-            #   assigned to this Session, assigned by the developer, to be optionally used in
-            #   addition to SID.
+            # @param [String] unique_name The unique_name
             # @param [session.Status] status The Status of this Session. One of `in-progress`,
             #   `closed`, `failed`, `unknown` or `completed`.
             # @param [String] page_token PageToken provided by the API
@@ -127,17 +123,20 @@ module Twilio
             ##
             # Retrieve a single page of SessionInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name Provides a unique and addressable name to be
-            #   assigned to this Session, assigned by the developer, to be optionally used in
-            #   addition to SID.
-            # @param [Time] date_expiry The date that this Session was expiry, given in ISO
-            #   8601 format.
-            # @param [String] ttl The Time to Live for a Session, in seconds.
-            # @param [session.Mode] mode The Mode of this Session. One of `message-only`,
-            #   `voice-only` or `voice-and-message`.
-            # @param [session.Status] status The Status of this Session. One of `in-progress`,
-            #   `closed`, `failed`, `unknown` or `completed`.
-            # @param [Hash] participants A list of phone numbers to add to this Session.
+            # @param [String] unique_name Your identifier for this Session such as a Job ID or
+            #   conversation ID.
+            # @param [Time] date_expiry An absolute time at which this Session should close.
+            #   If this is populated, it takes precedence over TTL values.
+            # @param [String] ttl The Time To Live for this Session. The amount of time,
+            #   specified in seconds, that this Session should live for before closing. Keys off
+            #   the last interaction or session creation time.
+            # @param [session.Mode] mode The type of communications mediums allowed on a
+            #   Session. Defaults to voice-and-message, other options are voice-only OR
+            #   message-only.
+            # @param [session.Status] status Set this value to 'closed' to close the session.
+            #   A Session can be re-opened by posting to a closed session with the value
+            #   'in-progress.'  This will be 'open' by default on create.
+            # @param [Hash] participants The participants
             # @return [SessionInstance] Newly created SessionInstance
             def create(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
               data = Twilio::Values.of({
@@ -241,17 +240,15 @@ module Twilio
 
             ##
             # Update the SessionInstance
-            # @param [String] unique_name Provides a unique and addressable name to be
-            #   assigned to this Session, assigned by the developer, to be optionally used in
-            #   addition to SID.
-            # @param [Time] date_expiry The date that this Session was expiry, given in ISO
-            #   8601 format.
-            # @param [String] ttl The Time to Live for a Session, in seconds.
-            # @param [session.Mode] mode The Mode of this Session. One of `message-only`,
-            #   `voice-only` or `voice-and-message`.
-            # @param [session.Status] status The Status of this Session. One of `in-progress`,
-            #   `closed`, `failed`, `unknown` or `completed`.
-            # @param [Hash] participants A list of phone numbers to add to this Session.
+            # @param [String] unique_name The unique_name
+            # @param [Time] date_expiry The date that this Session should be expired, given in
+            #   ISO 8601 format.
+            # @param [String] ttl The time delay, in seconds, after which a session will be
+            #   expired.  Keyed off of last interaction time.
+            # @param [session.Mode] mode The mode
+            # @param [session.Status] status The Status of this Session. Set `in-progress` to
+            #   re-open a session, `closed` to close a session.
+            # @param [Hash] participants The participants
             # @return [SessionInstance] Updated SessionInstance
             def update(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
               data = Twilio::Values.of({
@@ -485,17 +482,15 @@ module Twilio
 
             ##
             # Update the SessionInstance
-            # @param [String] unique_name Provides a unique and addressable name to be
-            #   assigned to this Session, assigned by the developer, to be optionally used in
-            #   addition to SID.
-            # @param [Time] date_expiry The date that this Session was expiry, given in ISO
-            #   8601 format.
-            # @param [String] ttl The Time to Live for a Session, in seconds.
-            # @param [session.Mode] mode The Mode of this Session. One of `message-only`,
-            #   `voice-only` or `voice-and-message`.
-            # @param [session.Status] status The Status of this Session. One of `in-progress`,
-            #   `closed`, `failed`, `unknown` or `completed`.
-            # @param [Hash] participants A list of phone numbers to add to this Session.
+            # @param [String] unique_name The unique_name
+            # @param [Time] date_expiry The date that this Session should be expired, given in
+            #   ISO 8601 format.
+            # @param [String] ttl The time delay, in seconds, after which a session will be
+            #   expired.  Keyed off of last interaction time.
+            # @param [session.Mode] mode The mode
+            # @param [session.Status] status The Status of this Session. Set `in-progress` to
+            #   re-open a session, `closed` to close a session.
+            # @param [Hash] participants The participants
             # @return [SessionInstance] Updated SessionInstance
             def update(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
               context.update(

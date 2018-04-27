@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -75,10 +77,17 @@ module Twilio
 
               ##
               # Fetch a WorkersCumulativeStatisticsInstance
-              # @param [Time] end_date The end_date
-              # @param [String] minutes The minutes
-              # @param [Time] start_date The start_date
-              # @param [String] task_channel The task_channel
+              # @param [Time] end_date Filter cumulative statistics by a end date. This is
+              #   helpful for defining a range of statistics to capture. Input is a string of the
+              #   format: yyyy-MM-dd’T’HH:mm:ss’Z’.
+              # @param [String] minutes Filter cumulative statistics by up to ‘x’ minutes in the
+              #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
+              #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
+              # @param [Time] start_date Filter cumulative statistics by a start date. This is
+              #   helpful for defining a range of statistics to capture. Input is a string of the
+              #   format: yyyy-MM-dd’T’HH:mm:ss’Z’.
+              # @param [String] task_channel Filter cumulative statistics by TaskChannel. Takes
+              #   in a Unique Name ("voice", "sms", "default", etc.) or a TaskChannelSid.
               # @return [WorkersCumulativeStatisticsInstance] Fetched WorkersCumulativeStatisticsInstance
               def fetch(end_date: :unset, minutes: :unset, start_date: :unset, task_channel: :unset)
                 params = Twilio::Values.of({
@@ -166,43 +175,43 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The activity_durations
+              # @return [Hash] The minimum, average, maximum and total time Workers spent in each Activity
               def activity_durations
                 @properties['activity_durations']
               end
 
               ##
-              # @return [String] The reservations_created
+              # @return [String] The total number of Reservations that were created
               def reservations_created
                 @properties['reservations_created']
               end
 
               ##
-              # @return [String] The reservations_accepted
+              # @return [String] The total number of Reservations that were accepted
               def reservations_accepted
                 @properties['reservations_accepted']
               end
 
               ##
-              # @return [String] The reservations_rejected
+              # @return [String] The total number of Reservations that were rejected
               def reservations_rejected
                 @properties['reservations_rejected']
               end
 
               ##
-              # @return [String] The reservations_timed_out
+              # @return [String] The total number of Reservations that were timed out
               def reservations_timed_out
                 @properties['reservations_timed_out']
               end
 
               ##
-              # @return [String] The reservations_canceled
+              # @return [String] The total number of Reservations that were canceled
               def reservations_canceled
                 @properties['reservations_canceled']
               end
 
               ##
-              # @return [String] The reservations_rescinded
+              # @return [String] The total number of Reservations that were rescinded
               def reservations_rescinded
                 @properties['reservations_rescinded']
               end
@@ -221,10 +230,17 @@ module Twilio
 
               ##
               # Fetch a WorkersCumulativeStatisticsInstance
-              # @param [Time] end_date The end_date
-              # @param [String] minutes The minutes
-              # @param [Time] start_date The start_date
-              # @param [String] task_channel The task_channel
+              # @param [Time] end_date Filter cumulative statistics by a end date. This is
+              #   helpful for defining a range of statistics to capture. Input is a string of the
+              #   format: yyyy-MM-dd’T’HH:mm:ss’Z’.
+              # @param [String] minutes Filter cumulative statistics by up to ‘x’ minutes in the
+              #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
+              #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
+              # @param [Time] start_date Filter cumulative statistics by a start date. This is
+              #   helpful for defining a range of statistics to capture. Input is a string of the
+              #   format: yyyy-MM-dd’T’HH:mm:ss’Z’.
+              # @param [String] task_channel Filter cumulative statistics by TaskChannel. Takes
+              #   in a Unique Name ("voice", "sms", "default", etc.) or a TaskChannelSid.
               # @return [WorkersCumulativeStatisticsInstance] Fetched WorkersCumulativeStatisticsInstance
               def fetch(end_date: :unset, minutes: :unset, start_date: :unset, task_channel: :unset)
                 context.fetch(

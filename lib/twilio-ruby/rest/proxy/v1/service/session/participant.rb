@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -118,10 +120,10 @@ module Twilio
               # Request is executed immediately.
               # @param [String] identifier The phone number of this Participant.
               # @param [String] friendly_name A human readable description of this resource, up
-              #   to 64 characters.
-              # @param [String] proxy_identifier The proxy phone number for this Participant.
-              # @param [String] proxy_identifier_sid The unique SID identifier of the Proxy
-              #   Identifier.
+              #   to 64 characters. Should not include PII.
+              # @param [String] proxy_identifier The proxy phone number to use for this
+              #   Participant. If not specified, Proxy will select a number from the pool.
+              # @param [String] proxy_identifier_sid The proxy_identifier_sid
               # @return [ParticipantInstance] Newly created ParticipantInstance
               def create(identifier: nil, friendly_name: :unset, proxy_identifier: :unset, proxy_identifier_sid: :unset)
                 data = Twilio::Values.of({
@@ -240,12 +242,10 @@ module Twilio
 
               ##
               # Update the ParticipantInstance
-              # @param [String] identifier The phone number of this Participant.
-              # @param [String] friendly_name A human readable description of this resource, up
-              #   to 64 characters.
-              # @param [String] proxy_identifier The proxy phone number for this Participant.
-              # @param [String] proxy_identifier_sid The unique SID identifier of the Proxy
-              #   Identifier.
+              # @param [String] identifier The identifier
+              # @param [String] friendly_name The friendly_name
+              # @param [String] proxy_identifier The proxy_identifier
+              # @param [String] proxy_identifier_sid The proxy_identifier_sid
               # @return [ParticipantInstance] Updated ParticipantInstance
               def update(identifier: :unset, friendly_name: :unset, proxy_identifier: :unset, proxy_identifier_sid: :unset)
                 data = Twilio::Values.of({
@@ -401,7 +401,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The proxy_identifier
+              # @return [String] Proxy Identifier.
               def proxy_identifier
                 @properties['proxy_identifier']
               end
@@ -458,12 +458,10 @@ module Twilio
 
               ##
               # Update the ParticipantInstance
-              # @param [String] identifier The phone number of this Participant.
-              # @param [String] friendly_name A human readable description of this resource, up
-              #   to 64 characters.
-              # @param [String] proxy_identifier The proxy phone number for this Participant.
-              # @param [String] proxy_identifier_sid The unique SID identifier of the Proxy
-              #   Identifier.
+              # @param [String] identifier The identifier
+              # @param [String] friendly_name The friendly_name
+              # @param [String] proxy_identifier The proxy_identifier
+              # @param [String] proxy_identifier_sid The proxy_identifier_sid
               # @return [ParticipantInstance] Updated ParticipantInstance
               def update(identifier: :unset, friendly_name: :unset, proxy_identifier: :unset, proxy_identifier_sid: :unset)
                 context.update(

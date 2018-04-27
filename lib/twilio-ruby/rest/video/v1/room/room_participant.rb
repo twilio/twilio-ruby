@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -13,7 +15,8 @@ module Twilio
             ##
             # Initialize the ParticipantList
             # @param [Version] version Version that contains the resource
-            # @param [String] room_sid The room_sid
+            # @param [String] room_sid A system-generated 34-character string that uniquely
+            #   identifies. this room
             # @return [ParticipantList] ParticipantList
             def initialize(version, room_sid: nil)
               super(version)
@@ -27,8 +30,11 @@ module Twilio
             # Lists ParticipantInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [participant.Status] status The status
-            # @param [String] identity The identity
+            # @param [participant.Status] status Only show Participants with the given Status.
+            #    For `in-progress` Rooms the default Status is `connected`, for `completed`
+            #   Rooms only `disconnected` Participants are returned.
+            # @param [String] identity Only show Participants that connected to the Room using
+            #   the provided Identity.
             # @param [Time] date_created_after The date_created_after
             # @param [Time] date_created_before The date_created_before
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -53,8 +59,11 @@ module Twilio
             # Streams ParticipantInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [participant.Status] status The status
-            # @param [String] identity The identity
+            # @param [participant.Status] status Only show Participants with the given Status.
+            #    For `in-progress` Rooms the default Status is `connected`, for `completed`
+            #   Rooms only `disconnected` Participants are returned.
+            # @param [String] identity Only show Participants that connected to the Room using
+            #   the provided Identity.
             # @param [Time] date_created_after The date_created_after
             # @param [Time] date_created_before The date_created_before
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -95,8 +104,11 @@ module Twilio
             ##
             # Retrieve a single page of ParticipantInstance records from the API.
             # Request is executed immediately.
-            # @param [participant.Status] status The status
-            # @param [String] identity The identity
+            # @param [participant.Status] status Only show Participants with the given Status.
+            #    For `in-progress` Rooms the default Status is `connected`, for `completed`
+            #   Rooms only `disconnected` Participants are returned.
+            # @param [String] identity Only show Participants that connected to the Room using
+            #   the provided Identity.
             # @param [Time] date_created_after The date_created_after
             # @param [Time] date_created_before The date_created_before
             # @param [String] page_token PageToken provided by the API
@@ -206,7 +218,7 @@ module Twilio
 
             ##
             # Update the ParticipantInstance
-            # @param [participant.Status] status The status
+            # @param [participant.Status] status Set to `disconnected` to remove participant.
             # @return [ParticipantInstance] Updated ParticipantInstance
             def update(status: :unset)
               data = Twilio::Values.of({'Status' => status, })
@@ -271,7 +283,8 @@ module Twilio
             # Initialize the ParticipantInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] room_sid The room_sid
+            # @param [String] room_sid A system-generated 34-character string that uniquely
+            #   identifies. this room
             # @param [String] sid The sid
             # @return [ParticipantInstance] ParticipantInstance
             def initialize(version, payload, room_sid: nil, sid: nil)
@@ -310,67 +323,67 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] A 34 character string that uniquely identifies this resource.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The room_sid
+            # @return [String] A system-generated 34-character string that uniquely identifies.
             def room_sid
               @properties['room_sid']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The unique ID of the Account associated with this Room.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [participant.Status] The status
+            # @return [participant.Status] A string representing the status of the Participant.
             def status
               @properties['status']
             end
 
             ##
-            # @return [String] The identity
+            # @return [String] The unique name identifier that is assigned to this Participant.
             def identity
               @properties['identity']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date that this resource was created, given as a UTC ISO 8601 Timestamp.
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date that this resource was last updated, given as a UTC ISO 8601 Timestamp.
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [Time] The start_time
+            # @return [Time] The time of Participant connected to the Room, given as a UTC ISO 8601 Timestamp.
             def start_time
               @properties['start_time']
             end
 
             ##
-            # @return [Time] The end_time
+            # @return [Time] The time of Participant disconnected from the Room, given as a UTC ISO 8601 Timestamp.
             def end_time
               @properties['end_time']
             end
 
             ##
-            # @return [String] The duration
+            # @return [String] Duration of time in seconds this Participant was connected.
             def duration
               @properties['duration']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL for this resource.
             def url
               @properties['url']
             end
@@ -390,7 +403,7 @@ module Twilio
 
             ##
             # Update the ParticipantInstance
-            # @param [participant.Status] status The status
+            # @param [participant.Status] status Set to `disconnected` to remove participant.
             # @return [ParticipantInstance] Updated ParticipantInstance
             def update(status: :unset)
               context.update(status: status, )

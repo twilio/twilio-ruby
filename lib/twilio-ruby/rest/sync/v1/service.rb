@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -26,10 +28,17 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name The friendly_name
-          # @param [String] webhook_url The webhook_url
-          # @param [Boolean] reachability_webhooks_enabled The reachability_webhooks_enabled
-          # @param [Boolean] acl_enabled The acl_enabled
+          # @param [String] friendly_name (optional) Human-readable name for this service
+          #   instance
+          # @param [String] webhook_url (optional) A URL that will receive event updates
+          #   when objects are manipulated.
+          # @param [Boolean] reachability_webhooks_enabled (optional) `true` or `false` -
+          #   controls whether this instance fires webhooks when client endpoints connect to
+          #   Sync Defaults to false.
+          # @param [Boolean] acl_enabled (optional) `true` or `false` - determines whether
+          #   token identities must be granted access to Sync objects via the [Permissions
+          #   API](https://www.twilio.com/docs/api/sync/rest/sync-rest-api-permissions) in
+          #   this Service.
           # @return [ServiceInstance] Newly created ServiceInstance
           def create(friendly_name: :unset, webhook_url: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset)
             data = Twilio::Values.of({
@@ -214,10 +223,17 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] webhook_url The webhook_url
-          # @param [String] friendly_name The friendly_name
-          # @param [Boolean] reachability_webhooks_enabled The reachability_webhooks_enabled
-          # @param [Boolean] acl_enabled The acl_enabled
+          # @param [String] webhook_url (optional) A URL that will receive event updates
+          #   when objects are manipulated.
+          # @param [String] friendly_name (optional) Human-readable name for this service
+          #   instance
+          # @param [Boolean] reachability_webhooks_enabled (optional) True or false -
+          #   controls whether this instance fires webhooks when client endpoints connect to
+          #   Sync Defaults to false.
+          # @param [Boolean] acl_enabled (optional) `true` or `false` - determines whether
+          #   token identities must be granted access to Sync objects via the [Permissions
+          #   API](https://www.twilio.com/docs/api/sync/rest/sync-rest-api-permissions) in
+          #   this Service.
           # @return [ServiceInstance] Updated ServiceInstance
           def update(webhook_url: :unset, friendly_name: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset)
             data = Twilio::Values.of({
@@ -378,7 +394,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The friendly_name
+          # @return [String] Human-readable name for this service instance
           def friendly_name
             @properties['friendly_name']
           end
@@ -402,19 +418,19 @@ module Twilio
           end
 
           ##
-          # @return [String] The webhook_url
+          # @return [String] A URL that will receive event updates when objects are manipulated.
           def webhook_url
             @properties['webhook_url']
           end
 
           ##
-          # @return [Boolean] The reachability_webhooks_enabled
+          # @return [Boolean] true or false - controls whether this instance fires webhooks when client endpoints connect to Sync
           def reachability_webhooks_enabled
             @properties['reachability_webhooks_enabled']
           end
 
           ##
-          # @return [Boolean] The acl_enabled
+          # @return [Boolean] true or false - determines whether token identities must be granted access to Sync objects via the Permissions API in this Service.
           def acl_enabled
             @properties['acl_enabled']
           end
@@ -441,10 +457,17 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] webhook_url The webhook_url
-          # @param [String] friendly_name The friendly_name
-          # @param [Boolean] reachability_webhooks_enabled The reachability_webhooks_enabled
-          # @param [Boolean] acl_enabled The acl_enabled
+          # @param [String] webhook_url (optional) A URL that will receive event updates
+          #   when objects are manipulated.
+          # @param [String] friendly_name (optional) Human-readable name for this service
+          #   instance
+          # @param [Boolean] reachability_webhooks_enabled (optional) True or false -
+          #   controls whether this instance fires webhooks when client endpoints connect to
+          #   Sync Defaults to false.
+          # @param [Boolean] acl_enabled (optional) `true` or `false` - determines whether
+          #   token identities must be granted access to Sync objects via the [Permissions
+          #   API](https://www.twilio.com/docs/api/sync/rest/sync-rest-api-permissions) in
+          #   this Service.
           # @return [ServiceInstance] Updated ServiceInstance
           def update(webhook_url: :unset, friendly_name: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset)
             context.update(

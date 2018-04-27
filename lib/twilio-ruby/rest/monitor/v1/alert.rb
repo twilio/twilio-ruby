@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -25,9 +27,18 @@ module Twilio
           # Lists AlertInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] log_level The log_level
-          # @param [Date] start_date The start_date
-          # @param [Date] end_date The end_date
+          # @param [String] log_level Only show alerts for this log-level.  One of 'error',
+          #   'warning', 'notice', or 'debug'.
+          # @param [Date] start_date Only show Alerts on or after this date.  Useful in
+          #   combination with `EndDate` to define a date-range of Alerts.  Input is a [UTC
+          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
+          #   is ignored by the filter. Queries for Alerts older than 30 days are not
+          #   supported.
+          # @param [Date] end_date Only show Alerts on or before this date.  Useful in
+          #   combination with `StartDate` to define a date-range of Alerts.  Input is a [UTC
+          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
+          #   is ignored by the filter. Queries for Alerts older than 30 days are not
+          #   supported.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -49,9 +60,18 @@ module Twilio
           # Streams AlertInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] log_level The log_level
-          # @param [Date] start_date The start_date
-          # @param [Date] end_date The end_date
+          # @param [String] log_level Only show alerts for this log-level.  One of 'error',
+          #   'warning', 'notice', or 'debug'.
+          # @param [Date] start_date Only show Alerts on or after this date.  Useful in
+          #   combination with `EndDate` to define a date-range of Alerts.  Input is a [UTC
+          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
+          #   is ignored by the filter. Queries for Alerts older than 30 days are not
+          #   supported.
+          # @param [Date] end_date Only show Alerts on or before this date.  Useful in
+          #   combination with `StartDate` to define a date-range of Alerts.  Input is a [UTC
+          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
+          #   is ignored by the filter. Queries for Alerts older than 30 days are not
+          #   supported.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -89,9 +109,18 @@ module Twilio
           ##
           # Retrieve a single page of AlertInstance records from the API.
           # Request is executed immediately.
-          # @param [String] log_level The log_level
-          # @param [Date] start_date The start_date
-          # @param [Date] end_date The end_date
+          # @param [String] log_level Only show alerts for this log-level.  One of 'error',
+          #   'warning', 'notice', or 'debug'.
+          # @param [Date] start_date Only show Alerts on or after this date.  Useful in
+          #   combination with `EndDate` to define a date-range of Alerts.  Input is a [UTC
+          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
+          #   is ignored by the filter. Queries for Alerts older than 30 days are not
+          #   supported.
+          # @param [Date] end_date Only show Alerts on or before this date.  Useful in
+          #   combination with `StartDate` to define a date-range of Alerts.  Input is a [UTC
+          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
+          #   is ignored by the filter. Queries for Alerts older than 30 days are not
+          #   supported.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -254,67 +283,67 @@ module Twilio
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] The unique id of the Account responsible for this alert.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The alert_text
+          # @return [String] The text of the alert.
           def alert_text
             @properties['alert_text']
           end
 
           ##
-          # @return [String] The api_version
+          # @return [String] The version of the Twilio API in use when this alert was generated.
           def api_version
             @properties['api_version']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The date that this resource was created, given in ISO 8601 format.
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_generated
+          # @return [Time] The date the alert was actually generated, given in ISO 8601 format.
           def date_generated
             @properties['date_generated']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The most recent date that this resource was updated, given in ISO 8601 format.
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The error_code
+          # @return [String] A unique error code for the error condition.
           def error_code
             @properties['error_code']
           end
 
           ##
-          # @return [String] The log_level
+          # @return [String] A string representing the log level.
           def log_level
             @properties['log_level']
           end
 
           ##
-          # @return [String] The more_info
+          # @return [String] A URL for more information about the error condition.
           def more_info
             @properties['more_info']
           end
 
           ##
-          # @return [String] The request_method
+          # @return [String] If the Alert was generated by a request Twilio made to your server, this will be the request method used when Twilio made the request to your server.
           def request_method
             @properties['request_method']
           end
 
           ##
-          # @return [String] The request_url
+          # @return [String] If the Alert was generated by a request Twilio made to your server, this will be the URL on your server that generated the alert.
           def request_url
             @properties['request_url']
           end
@@ -326,7 +355,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The resource_sid
+          # @return [String] The unique ID of the resource for which the Alert was generated.
           def resource_sid
             @properties['resource_sid']
           end
@@ -344,13 +373,13 @@ module Twilio
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A 34 character string that uniquely identifies this Alert.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The absolute URL for this resource.
           def url
             @properties['url']
           end

@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -13,8 +15,9 @@ module Twilio
             ##
             # Initialize the ConferenceList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the Account] responsible for
-            #   creating this conference.
+            # @param [String] account_sid The unique id of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for creating
+            #   this conference.
             # @return [ConferenceList] ConferenceList
             def initialize(version, account_sid: nil)
               super(version)
@@ -241,7 +244,8 @@ module Twilio
 
             ##
             # Update the ConferenceInstance
-            # @param [conference.UpdateStatus] status The status
+            # @param [conference.UpdateStatus] status Specifying `completed` will end the
+            #   conference and kick all participants
             # @param [String] announce_url The announce_url
             # @param [String] announce_method The announce_method
             # @return [ConferenceInstance] Updated ConferenceInstance
@@ -301,8 +305,9 @@ module Twilio
             # Initialize the ConferenceInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the Account] responsible for
-            #   creating this conference.
+            # @param [String] account_sid The unique id of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for creating
+            #   this conference.
             # @param [String] sid The conference Sid that uniquely identifies this resource
             # @return [ConferenceInstance] ConferenceInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
@@ -369,7 +374,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The region
+            # @return [String] A string representing the Twilio Region where the conference was mixed.
             def region
               @properties['region']
             end
@@ -407,7 +412,8 @@ module Twilio
 
             ##
             # Update the ConferenceInstance
-            # @param [conference.UpdateStatus] status The status
+            # @param [conference.UpdateStatus] status Specifying `completed` will end the
+            #   conference and kick all participants
             # @param [String] announce_url The announce_url
             # @param [String] announce_method The announce_method
             # @return [ConferenceInstance] Updated ConferenceInstance

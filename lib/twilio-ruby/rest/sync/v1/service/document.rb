@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -15,7 +17,8 @@ module Twilio
             ##
             # Initialize the DocumentList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The unique SID identifier of the Service Instance
+            #   that hosts this Document.
             # @return [DocumentList] DocumentList
             def initialize(version, service_sid: nil)
               super(version)
@@ -28,9 +31,11 @@ module Twilio
             ##
             # Retrieve a single page of DocumentInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name The unique_name
-            # @param [Hash] data The data
-            # @param [String] ttl The ttl
+            # @param [String] unique_name (optional) Human-readable name for this document
+            # @param [Hash] data (optional) JSON data to be stored in this document
+            # @param [String] ttl (optional) Time-to-live of this Document in seconds,
+            #   defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0 for
+            #   infinity.
             # @return [DocumentInstance] Newly created DocumentInstance
             def create(unique_name: :unset, data: :unset, ttl: :unset)
               data = Twilio::Values.of({
@@ -212,8 +217,10 @@ module Twilio
 
             ##
             # Update the DocumentInstance
-            # @param [Hash] data The data
-            # @param [String] ttl The ttl
+            # @param [Hash] data (optional) Contains an arbitrary JSON object to be stored in
+            #   this Document. Serialized to string to respect HTTP form input, up to 16KB.
+            # @param [String] ttl (optional) New time-to-live of this Document in seconds. In
+            #   the range [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [DocumentInstance] Updated DocumentInstance
             def update(data: :unset, ttl: :unset)
               data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), 'Ttl' => ttl, })
@@ -264,7 +271,8 @@ module Twilio
             # Initialize the DocumentInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The unique SID identifier of the Service Instance
+            #   that hosts this Document.
             # @param [String] sid The sid
             # @return [DocumentInstance] DocumentInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
@@ -303,73 +311,73 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] The unique 34-character SID identifier of the Document.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The unique_name
+            # @return [String] The unique and addressable name of this Document.
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The unique SID identifier of the Twilio Account.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The service_sid
+            # @return [String] The unique SID identifier of the Service Instance that hosts this Document.
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL for this Document.
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] A dictionary of URL links to nested resources of this Document.
             def links
               @properties['links']
             end
 
             ##
-            # @return [String] The revision
+            # @return [String] Contains the current revision of this Document, represented by a string identifier.
             def revision
               @properties['revision']
             end
 
             ##
-            # @return [Hash] The data
+            # @return [Hash] Contains arbitrary user-defined, schema-less data that this Document stores, represented by a JSON object, up to 16KB.
             def data
               @properties['data']
             end
 
             ##
-            # @return [Time] The date_expires
+            # @return [Time] Contains the date this Document expires and gets deleted automatically.
             def date_expires
               @properties['date_expires']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date this Document was created, given in UTC ISO 8601 format.
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] Specifies the date this Document was last updated, given in UTC ISO 8601 format.
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The created_by
+            # @return [String] The identity of the Document creator.
             def created_by
               @properties['created_by']
             end
@@ -390,8 +398,10 @@ module Twilio
 
             ##
             # Update the DocumentInstance
-            # @param [Hash] data The data
-            # @param [String] ttl The ttl
+            # @param [Hash] data (optional) Contains an arbitrary JSON object to be stored in
+            #   this Document. Serialized to string to respect HTTP form input, up to 16KB.
+            # @param [String] ttl (optional) New time-to-live of this Document in seconds. In
+            #   the range [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [DocumentInstance] Updated DocumentInstance
             def update(data: :unset, ttl: :unset)
               context.update(data: data, ttl: ttl, )

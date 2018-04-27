@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -13,7 +15,8 @@ module Twilio
             ##
             # Initialize the WorkerList
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The workspace_sid
+            # @param [String] workspace_sid The ID of the Workflow this worker is associated
+            #   with
             # @return [WorkerList] WorkerList
             def initialize(version, workspace_sid: nil)
               super(version)
@@ -30,13 +33,21 @@ module Twilio
             # Lists WorkerInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] activity_name The activity_name
-            # @param [String] activity_sid The activity_sid
-            # @param [String] available The available
-            # @param [String] friendly_name The friendly_name
-            # @param [String] target_workers_expression The target_workers_expression
-            # @param [String] task_queue_name The task_queue_name
-            # @param [String] task_queue_sid The task_queue_sid
+            # @param [String] activity_name Filter by workers that are in a particular
+            #   Activity by Friendly Name
+            # @param [String] activity_sid Filter by workers that are in a particular Activity
+            #   by SID
+            # @param [String] available Filter by workers that are available or unavailable.
+            #   (Note: This can be ‘true’, ‘1’’ or ‘yes’ to indicate a true value. All other
+            #   values will represent false)
+            # @param [String] friendly_name Filter by a worker’s friendly name
+            # @param [String] target_workers_expression Filter by workers that would match an
+            #   expression on a TaskQueue. This is helpful for debugging which workers would
+            #   match a potential queue.
+            # @param [String] task_queue_name Filter by workers that are eligible for a
+            #   TaskQueue by Friendly Name
+            # @param [String] task_queue_sid Filter by workers that are eligible for a
+            #   TaskQueue by SID
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -62,13 +73,21 @@ module Twilio
             # Streams WorkerInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] activity_name The activity_name
-            # @param [String] activity_sid The activity_sid
-            # @param [String] available The available
-            # @param [String] friendly_name The friendly_name
-            # @param [String] target_workers_expression The target_workers_expression
-            # @param [String] task_queue_name The task_queue_name
-            # @param [String] task_queue_sid The task_queue_sid
+            # @param [String] activity_name Filter by workers that are in a particular
+            #   Activity by Friendly Name
+            # @param [String] activity_sid Filter by workers that are in a particular Activity
+            #   by SID
+            # @param [String] available Filter by workers that are available or unavailable.
+            #   (Note: This can be ‘true’, ‘1’’ or ‘yes’ to indicate a true value. All other
+            #   values will represent false)
+            # @param [String] friendly_name Filter by a worker’s friendly name
+            # @param [String] target_workers_expression Filter by workers that would match an
+            #   expression on a TaskQueue. This is helpful for debugging which workers would
+            #   match a potential queue.
+            # @param [String] task_queue_name Filter by workers that are eligible for a
+            #   TaskQueue by Friendly Name
+            # @param [String] task_queue_sid Filter by workers that are eligible for a
+            #   TaskQueue by SID
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -110,13 +129,21 @@ module Twilio
             ##
             # Retrieve a single page of WorkerInstance records from the API.
             # Request is executed immediately.
-            # @param [String] activity_name The activity_name
-            # @param [String] activity_sid The activity_sid
-            # @param [String] available The available
-            # @param [String] friendly_name The friendly_name
-            # @param [String] target_workers_expression The target_workers_expression
-            # @param [String] task_queue_name The task_queue_name
-            # @param [String] task_queue_sid The task_queue_sid
+            # @param [String] activity_name Filter by workers that are in a particular
+            #   Activity by Friendly Name
+            # @param [String] activity_sid Filter by workers that are in a particular Activity
+            #   by SID
+            # @param [String] available Filter by workers that are available or unavailable.
+            #   (Note: This can be ‘true’, ‘1’’ or ‘yes’ to indicate a true value. All other
+            #   values will represent false)
+            # @param [String] friendly_name Filter by a worker’s friendly name
+            # @param [String] target_workers_expression Filter by workers that would match an
+            #   expression on a TaskQueue. This is helpful for debugging which workers would
+            #   match a potential queue.
+            # @param [String] task_queue_name Filter by workers that are eligible for a
+            #   TaskQueue by Friendly Name
+            # @param [String] task_queue_sid Filter by workers that are eligible for a
+            #   TaskQueue by SID
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -158,9 +185,15 @@ module Twilio
             ##
             # Retrieve a single page of WorkerInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name The friendly_name
-            # @param [String] activity_sid The activity_sid
-            # @param [String] attributes The attributes
+            # @param [String] friendly_name String representing user-friendly name for the
+            #   Worker.
+            # @param [String] activity_sid A valid Activity describing the worker's initial
+            #   state. See Activities for more information. If not provided, new Workers will be
+            #   use the DefaultActivitySid configured on the Workspace.
+            # @param [String] attributes JSON object describing this worker. For example: `{
+            #   'email: 'Bob@foo.com', 'phone': '8675309' }`. This data will be passed to the
+            #   Assignment Callback URL whenever TaskRouter assigns a Task to this worker.
+            #   Defaults to {}.
             # @return [WorkerInstance] Newly created WorkerInstance
             def create(friendly_name: nil, activity_sid: :unset, attributes: :unset)
               data = Twilio::Values.of({
@@ -381,7 +414,8 @@ module Twilio
             # Initialize the WorkerInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] workspace_sid The workspace_sid
+            # @param [String] workspace_sid The ID of the Workflow this worker is associated
+            #   with
             # @param [String] sid The sid
             # @return [WorkerInstance] WorkerInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
@@ -421,67 +455,67 @@ module Twilio
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The ID of the account that owns this worker
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The activity_name
+            # @return [String] Filter by workers that are in a particular Activity by Friendly Name
             def activity_name
               @properties['activity_name']
             end
 
             ##
-            # @return [String] The activity_sid
+            # @return [String] Filter by workers that are in a particular Activity by SID
             def activity_sid
               @properties['activity_sid']
             end
 
             ##
-            # @return [String] The attributes
+            # @return [String] JSON object describing this worker.
             def attributes
               @properties['attributes']
             end
 
             ##
-            # @return [Boolean] The available
+            # @return [Boolean] Filter by workers that are available or unavailable.
             def available
               @properties['available']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] DateTime this worker was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_status_changed
+            # @return [Time] DateTime of the last change to the Worker's activity.
             def date_status_changed
               @properties['date_status_changed']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] DateTime of the last update
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The friendly_name
+            # @return [String] Filter by a worker’s friendly name
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] The unique ID of the worker
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The workspace_sid
+            # @return [String] The ID of the Workflow this worker is associated with
             def workspace_sid
               @properties['workspace_sid']
             end

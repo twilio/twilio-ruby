@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -27,7 +29,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid The unique ID of the Workspace
       # @return [Twilio::REST::Taskrouter::V1::WorkspaceInstance] if sid was passed.
       # @return [Twilio::REST::Taskrouter::V1::WorkspaceList]
       def workspaces(sid=:unset)

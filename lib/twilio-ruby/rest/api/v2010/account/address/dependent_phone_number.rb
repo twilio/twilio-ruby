@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -15,7 +17,8 @@ module Twilio
               # Initialize the DependentPhoneNumberList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The account_sid
-              # @param [String] address_sid The sid
+              # @param [String] address_sid A 34 character string that uniquely identifies this
+              #   address.
               # @return [DependentPhoneNumberList] DependentPhoneNumberList
               def initialize(version, account_sid: nil, address_sid: nil)
                 super(version)
@@ -154,7 +157,8 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The account_sid
-              # @param [String] address_sid The sid
+              # @param [String] address_sid A 34 character string that uniquely identifies this
+              #   address.
               # @return [DependentPhoneNumberInstance] DependentPhoneNumberInstance
               def initialize(version, payload, account_sid: nil, address_sid: nil)
                 super(version)

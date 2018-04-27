@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -43,7 +45,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid A system-generated 34-character string that uniquely
+      #   identifies this resource.
       # @return [Twilio::REST::Video::V1::RoomInstance] if sid was passed.
       # @return [Twilio::REST::Video::V1::RoomList]
       def rooms(sid=:unset)

@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -14,8 +16,10 @@ module Twilio
               ##
               # Initialize the WorkerChannelList
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] worker_sid The worker_sid
+              # @param [String] workspace_sid The unique ID of the Workspace that this
+              #   WorkerChannel belongs to.
+              # @param [String] worker_sid The unique ID of the Worker that this WorkerChannel
+              #   belongs to.
               # @return [WorkerChannelList] WorkerChannelList
               def initialize(version, workspace_sid: nil, worker_sid: nil)
                 super(version)
@@ -187,8 +191,13 @@ module Twilio
 
               ##
               # Update the WorkerChannelInstance
-              # @param [String] capacity The capacity
-              # @param [Boolean] available The available
+              # @param [String] capacity The total number of Tasks worker should handle for this
+              #   TaskChannel type. TaskRouter will only create reservations for Tasks of this
+              #   TaskChannel type up to the capacity configured. If the capacity is 0, no new
+              #   reservations will be created
+              # @param [Boolean] available Toggle the availability of the WorkerChannel. Set
+              #   this to 'False' to make worker unavailable to receive any new Tasks of this
+              #   TaskChannel type.
               # @return [WorkerChannelInstance] Updated WorkerChannelInstance
               def update(capacity: :unset, available: :unset)
                 data = Twilio::Values.of({'Capacity' => capacity, 'Available' => available, })
@@ -221,8 +230,10 @@ module Twilio
               # Initialize the WorkerChannelInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] worker_sid The worker_sid
+              # @param [String] workspace_sid The unique ID of the Workspace that this
+              #   WorkerChannel belongs to.
+              # @param [String] worker_sid The unique ID of the Worker that this WorkerChannel
+              #   belongs to.
               # @param [String] sid The sid
               # @return [WorkerChannelInstance] WorkerChannelInstance
               def initialize(version, payload, workspace_sid: nil, worker_sid: nil, sid: nil)
@@ -271,73 +282,73 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The unique ID of the Account that owns this WorkerChannel.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The assigned_tasks
+              # @return [String] The total number of tasks assigned to Worker for this TaskChannel type.
               def assigned_tasks
                 @properties['assigned_tasks']
               end
 
               ##
-              # @return [Boolean] The available
+              # @return [Boolean] Boolean value indicating whether the worker should receive Tasks of this TaskChannel type.
               def available
                 @properties['available']
               end
 
               ##
-              # @return [String] The available_capacity_percentage
+              # @return [String] The current available capacity between 0 to 100 for this TaskChannel.
               def available_capacity_percentage
                 @properties['available_capacity_percentage']
               end
 
               ##
-              # @return [String] The configured_capacity
+              # @return [String] The current configured capacity for the WorkerChannel.
               def configured_capacity
                 @properties['configured_capacity']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The date this Activity was created.
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The date this Activity was updated.
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] The unique ID for this WorkerChannel.
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The task_channel_sid
+              # @return [String] The unique ID of the TaskChannel.
               def task_channel_sid
                 @properties['task_channel_sid']
               end
 
               ##
-              # @return [String] The task_channel_unique_name
+              # @return [String] The unique name of TaskChannel, such as 'voice', 'sms', etc.
               def task_channel_unique_name
                 @properties['task_channel_unique_name']
               end
 
               ##
-              # @return [String] The worker_sid
+              # @return [String] The unique ID of the Worker that this WorkerChannel belongs to.
               def worker_sid
                 @properties['worker_sid']
               end
 
               ##
-              # @return [String] The workspace_sid
+              # @return [String] The unique ID of the Workspace that this WorkerChannel belongs to.
               def workspace_sid
                 @properties['workspace_sid']
               end
@@ -357,8 +368,13 @@ module Twilio
 
               ##
               # Update the WorkerChannelInstance
-              # @param [String] capacity The capacity
-              # @param [Boolean] available The available
+              # @param [String] capacity The total number of Tasks worker should handle for this
+              #   TaskChannel type. TaskRouter will only create reservations for Tasks of this
+              #   TaskChannel type up to the capacity configured. If the capacity is 0, no new
+              #   reservations will be created
+              # @param [Boolean] available Toggle the availability of the WorkerChannel. Set
+              #   this to 'False' to make worker unavailable to receive any new Tasks of this
+              #   TaskChannel type.
               # @return [WorkerChannelInstance] Updated WorkerChannelInstance
               def update(capacity: :unset, available: :unset)
                 context.update(capacity: capacity, available: available, )

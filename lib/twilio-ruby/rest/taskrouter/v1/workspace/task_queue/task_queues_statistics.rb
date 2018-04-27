@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -14,7 +16,7 @@ module Twilio
               ##
               # Initialize the TaskQueuesStatisticsList
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The workspace_sid
+              # @param [String] workspace_sid The ID of the Workspace that owns this TaskQueue
               # @return [TaskQueuesStatisticsList] TaskQueuesStatisticsList
               def initialize(version, workspace_sid: nil)
                 super(version)
@@ -28,12 +30,25 @@ module Twilio
               # Lists TaskQueuesStatisticsInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [Time] end_date The end_date
-              # @param [String] friendly_name The friendly_name
-              # @param [String] minutes The minutes
-              # @param [Time] start_date The start_date
-              # @param [String] task_channel The task_channel
-              # @param [String] split_by_wait_time The split_by_wait_time
+              # @param [Time] end_date Filter cumulative statistics by an end date. This is
+              #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
+              #   Timestamp.
+              # @param [String] friendly_name Filter the TaskQueue stats based on a TaskQueue’s
+              #   name (only for list resource)
+              # @param [String] minutes Filter cumulative statistics by up to ‘x’ minutes in the
+              #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
+              #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
+              # @param [Time] start_date Filter cumulative statistics by a start date. This is
+              #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
+              #   Timestamp.
+              # @param [String] task_channel Filter real-time and cumulative statistics by
+              #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
+              #   TaskChannelSid.
+              # @param [String] split_by_wait_time A comma separated values for viewing splits
+              #   of tasks canceled and accepted above the given threshold in seconds. Ex: "5,30"
+              #   would show splits of tasks that were canceled or accepted before or after 5
+              #   seconds and respectively, 30 seconds. This is great for showing short abandoned
+              #   tasks or tasks that failed to meet your SLA.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -58,12 +73,25 @@ module Twilio
               # Streams TaskQueuesStatisticsInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Time] end_date The end_date
-              # @param [String] friendly_name The friendly_name
-              # @param [String] minutes The minutes
-              # @param [Time] start_date The start_date
-              # @param [String] task_channel The task_channel
-              # @param [String] split_by_wait_time The split_by_wait_time
+              # @param [Time] end_date Filter cumulative statistics by an end date. This is
+              #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
+              #   Timestamp.
+              # @param [String] friendly_name Filter the TaskQueue stats based on a TaskQueue’s
+              #   name (only for list resource)
+              # @param [String] minutes Filter cumulative statistics by up to ‘x’ minutes in the
+              #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
+              #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
+              # @param [Time] start_date Filter cumulative statistics by a start date. This is
+              #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
+              #   Timestamp.
+              # @param [String] task_channel Filter real-time and cumulative statistics by
+              #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
+              #   TaskChannelSid.
+              # @param [String] split_by_wait_time A comma separated values for viewing splits
+              #   of tasks canceled and accepted above the given threshold in seconds. Ex: "5,30"
+              #   would show splits of tasks that were canceled or accepted before or after 5
+              #   seconds and respectively, 30 seconds. This is great for showing short abandoned
+              #   tasks or tasks that failed to meet your SLA.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -104,12 +132,25 @@ module Twilio
               ##
               # Retrieve a single page of TaskQueuesStatisticsInstance records from the API.
               # Request is executed immediately.
-              # @param [Time] end_date The end_date
-              # @param [String] friendly_name The friendly_name
-              # @param [String] minutes The minutes
-              # @param [Time] start_date The start_date
-              # @param [String] task_channel The task_channel
-              # @param [String] split_by_wait_time The split_by_wait_time
+              # @param [Time] end_date Filter cumulative statistics by an end date. This is
+              #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
+              #   Timestamp.
+              # @param [String] friendly_name Filter the TaskQueue stats based on a TaskQueue’s
+              #   name (only for list resource)
+              # @param [String] minutes Filter cumulative statistics by up to ‘x’ minutes in the
+              #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
+              #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
+              # @param [Time] start_date Filter cumulative statistics by a start date. This is
+              #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
+              #   Timestamp.
+              # @param [String] task_channel Filter real-time and cumulative statistics by
+              #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
+              #   TaskChannelSid.
+              # @param [String] split_by_wait_time A comma separated values for viewing splits
+              #   of tasks canceled and accepted above the given threshold in seconds. Ex: "5,30"
+              #   would show splits of tasks that were canceled or accepted before or after 5
+              #   seconds and respectively, 30 seconds. This is great for showing short abandoned
+              #   tasks or tasks that failed to meet your SLA.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -188,7 +229,7 @@ module Twilio
               # Initialize the TaskQueuesStatisticsInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] workspace_sid The workspace_sid
+              # @param [String] workspace_sid The ID of the Workspace that owns this TaskQueue
               # @return [TaskQueuesStatisticsInstance] TaskQueuesStatisticsInstance
               def initialize(version, payload, workspace_sid: nil)
                 super(version)

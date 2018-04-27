@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -31,16 +33,10 @@ module Twilio
               # Lists InteractionInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [interaction.ResourceStatus] inbound_participant_status The Inbound
-              #   Participant Status of this Interaction. One of `accepted`, `answered`, `busy`,
-              #   `canceled`, `completed`, `deleted`, `delivered`, `delivery-unknown`, `failed`,
-              #   `in-progress`, `initiated`, `no-answer`, `queued`, `received`, `receiving`,
-              #   `ringing`, `scheduled`, `sending`, `sent`, `undelivered` or `unknown`.
-              # @param [interaction.ResourceStatus] outbound_participant_status The Outbound
-              #   Participant Status of this Interaction. One of `accepted`, `answered`, `busy`,
-              #   `canceled`, `completed`, `deleted`, `delivered`, `delivery-unknown`, `failed`,
-              #   `in-progress`, `initiated`, `no-answer`, `queued`, `received`, `receiving`,
-              #   `ringing`, `scheduled`, `sending`, `sent`, `undelivered` or `unknown`.
+              # @param [interaction.ResourceStatus] inbound_participant_status The
+              #   inbound_participant_status
+              # @param [interaction.ResourceStatus] outbound_participant_status The
+              #   outbound_participant_status
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -61,16 +57,10 @@ module Twilio
               # Streams InteractionInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [interaction.ResourceStatus] inbound_participant_status The Inbound
-              #   Participant Status of this Interaction. One of `accepted`, `answered`, `busy`,
-              #   `canceled`, `completed`, `deleted`, `delivered`, `delivery-unknown`, `failed`,
-              #   `in-progress`, `initiated`, `no-answer`, `queued`, `received`, `receiving`,
-              #   `ringing`, `scheduled`, `sending`, `sent`, `undelivered` or `unknown`.
-              # @param [interaction.ResourceStatus] outbound_participant_status The Outbound
-              #   Participant Status of this Interaction. One of `accepted`, `answered`, `busy`,
-              #   `canceled`, `completed`, `deleted`, `delivered`, `delivery-unknown`, `failed`,
-              #   `in-progress`, `initiated`, `no-answer`, `queued`, `received`, `receiving`,
-              #   `ringing`, `scheduled`, `sending`, `sent`, `undelivered` or `unknown`.
+              # @param [interaction.ResourceStatus] inbound_participant_status The
+              #   inbound_participant_status
+              # @param [interaction.ResourceStatus] outbound_participant_status The
+              #   outbound_participant_status
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -107,16 +97,10 @@ module Twilio
               ##
               # Retrieve a single page of InteractionInstance records from the API.
               # Request is executed immediately.
-              # @param [interaction.ResourceStatus] inbound_participant_status The Inbound
-              #   Participant Status of this Interaction. One of `accepted`, `answered`, `busy`,
-              #   `canceled`, `completed`, `deleted`, `delivered`, `delivery-unknown`, `failed`,
-              #   `in-progress`, `initiated`, `no-answer`, `queued`, `received`, `receiving`,
-              #   `ringing`, `scheduled`, `sending`, `sent`, `undelivered` or `unknown`.
-              # @param [interaction.ResourceStatus] outbound_participant_status The Outbound
-              #   Participant Status of this Interaction. One of `accepted`, `answered`, `busy`,
-              #   `canceled`, `completed`, `deleted`, `delivered`, `delivery-unknown`, `failed`,
-              #   `in-progress`, `initiated`, `no-answer`, `queued`, `received`, `receiving`,
-              #   `ringing`, `scheduled`, `sending`, `sent`, `undelivered` or `unknown`.
+              # @param [interaction.ResourceStatus] inbound_participant_status The
+              #   inbound_participant_status
+              # @param [interaction.ResourceStatus] outbound_participant_status The
+              #   outbound_participant_status
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -372,7 +356,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The URL of the Twilio resource.
+              # @return [String] The URL of the Twilio inbound resource.
               def inbound_resource_url
                 @properties['inbound_resource_url']
               end
@@ -402,7 +386,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The URL of the Twilio resource.
+              # @return [String] The URL of the Twilio outbound resource.
               def outbound_resource_url
                 @properties['outbound_resource_url']
               end

@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -32,7 +34,7 @@ module Twilio
                 ##
                 # Retrieve a single page of MessageInteractionInstance records from the API.
                 # Request is executed immediately.
-                # @param [String] body The body
+                # @param [String] body The message to send to the participant
                 # @param [String] media_url The media_url
                 # @return [MessageInteractionInstance] Newly created MessageInteractionInstance
                 def create(body: :unset, media_url: :unset)
@@ -185,11 +187,10 @@ module Twilio
                 ##
                 # Initialize the MessageInteractionContext
                 # @param [Version] version Version that contains the resource
-                # @param [String] service_sid The unique SID identifier of the Service.
-                # @param [String] session_sid The unique SID identifier of the Session.
-                # @param [String] participant_sid The unique SID identifier of the Participant.
-                # @param [String] sid A 34 character string that uniquely identifies this Message
-                #   Interaction.
+                # @param [String] service_sid The service_sid
+                # @param [String] session_sid The session_sid
+                # @param [String] participant_sid The participant_sid
+                # @param [String] sid The sid
                 # @return [MessageInteractionContext] MessageInteractionContext
                 def initialize(version, service_sid, session_sid, participant_sid, sid)
                   super(version)
@@ -244,8 +245,7 @@ module Twilio
                 # @param [String] service_sid The unique SID identifier of the Service.
                 # @param [String] session_sid The unique SID identifier of the Session.
                 # @param [String] participant_sid The unique SID identifier of the Participant.
-                # @param [String] sid A 34 character string that uniquely identifies this Message
-                #   Interaction.
+                # @param [String] sid The sid
                 # @return [MessageInteractionInstance] MessageInteractionInstance
                 def initialize(version, payload, service_sid: nil, session_sid: nil, participant_sid: nil, sid: nil)
                   super(version)
@@ -326,7 +326,7 @@ module Twilio
                 end
 
                 ##
-                # @return [String] Further details about an interaction.
+                # @return [String] Message body
                 def data
                   @properties['data']
                 end
@@ -350,7 +350,7 @@ module Twilio
                 end
 
                 ##
-                # @return [String] Inbound Resource Sid.
+                # @return [String] Inbound message resource Sid.
                 def inbound_resource_sid
                   @properties['inbound_resource_sid']
                 end
@@ -362,13 +362,13 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The type of the Inbound Resource, Call or Message.
+                # @return [String] Message
                 def inbound_resource_type
                   @properties['inbound_resource_type']
                 end
 
                 ##
-                # @return [String] The URL of the Twilio resource.
+                # @return [String] The URL of the Twilio message resource.
                 def inbound_resource_url
                   @properties['inbound_resource_url']
                 end
@@ -380,7 +380,7 @@ module Twilio
                 end
 
                 ##
-                # @return [String] Outbound Resource Sid.
+                # @return [String] Outbound message resource Sid.
                 def outbound_resource_sid
                   @properties['outbound_resource_sid']
                 end
@@ -392,13 +392,13 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The type of the Outbound Resource, Call or Message.
+                # @return [String] Message
                 def outbound_resource_type
                   @properties['outbound_resource_type']
                 end
 
                 ##
-                # @return [String] The URL of the Twilio resource.
+                # @return [String] The URL of the Twilio message resource.
                 def outbound_resource_url
                   @properties['outbound_resource_url']
                 end

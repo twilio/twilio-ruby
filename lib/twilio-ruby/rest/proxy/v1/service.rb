@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -110,12 +112,15 @@ module Twilio
           # Request is executed immediately.
           # @param [String] unique_name The human-readable string that uniquely identifies
           #   this Service, up to 64 characters.
-          # @param [String] default_ttl The default Time to Live for a Session, in seconds.
-          # @param [String] callback_url The URL Twilio will send callbacks to.
-          # @param [service.GeoMatchLevel] geo_match_level Whether to find proxy numbers in
-          #   the same areacode.
-          # @param [service.NumberSelectionBehavior] number_selection_behavior What behavior
-          #   to use when choosing a proxy number.
+          # @param [String] default_ttl The default time delay, in seconds, after which a
+          #   session will be expired.  Will be used for sessions where ttl is not specified.
+          # @param [String] callback_url The URL to which Twilio will make callbacks on
+          #   interaction status changes.
+          # @param [service.GeoMatchLevel] geo_match_level Options: country, area-code,
+          #   extended-area-code. Default: country.  Levels lower than country are only
+          #   available in North America.
+          # @param [service.NumberSelectionBehavior] number_selection_behavior Default:
+          #   prefer-sticky Options: prefer-sticky, avoid-sticky
           # @param [String] intercept_callback_url A URL for Twilio call before each
           #   Interaction. An error status code will prevent the interaction from continuing.
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
@@ -226,14 +231,17 @@ module Twilio
           # Update the ServiceInstance
           # @param [String] unique_name A human readable description of this resource, up to
           #   64 characters.
-          # @param [String] default_ttl The default Time to Live for a Session, in seconds.
-          # @param [String] callback_url The URL Twilio will send callbacks to.
-          # @param [service.GeoMatchLevel] geo_match_level Whether to find proxy numbers in
-          #   the same areacode.
-          # @param [service.NumberSelectionBehavior] number_selection_behavior What behavior
-          #   to use when choosing a proxy number.
-          # @param [String] intercept_callback_url A URL for Twilio call before each
-          #   Interaction. An error status code will prevent the interaction from continuing.
+          # @param [String] default_ttl The default time delay, in seconds, after which a
+          #   session will be expired.  Will be used for sessions where ttl is not specified.
+          # @param [String] callback_url The URL to which Twilio will make callbacks on
+          #   interaction status changes.
+          # @param [service.GeoMatchLevel] geo_match_level Default: country Options:
+          #   country, area-code, extended-area-code
+          # @param [service.NumberSelectionBehavior] number_selection_behavior Default:
+          #   prefer-sticky Options: prefer-sticky, avoid-sticky
+          # @param [String] intercept_callback_url Fires on each interaction. If responded
+          #   to with a 403 to this webhook, we will abort/block the interaction. For any
+          #   other status or timeout, the interaction continues.
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
           #   Interaction has no Session.
           # @return [ServiceInstance] Updated ServiceInstance
@@ -401,7 +409,7 @@ module Twilio
           end
 
           ##
-          # @return [service.GeoMatchLevel] Whether to find proxy numbers in the same areacode.
+          # @return [service.GeoMatchLevel] Whether to limit proxy numbers in the same areacode.
           def geo_match_level
             @properties['geo_match_level']
           end
@@ -460,14 +468,17 @@ module Twilio
           # Update the ServiceInstance
           # @param [String] unique_name A human readable description of this resource, up to
           #   64 characters.
-          # @param [String] default_ttl The default Time to Live for a Session, in seconds.
-          # @param [String] callback_url The URL Twilio will send callbacks to.
-          # @param [service.GeoMatchLevel] geo_match_level Whether to find proxy numbers in
-          #   the same areacode.
-          # @param [service.NumberSelectionBehavior] number_selection_behavior What behavior
-          #   to use when choosing a proxy number.
-          # @param [String] intercept_callback_url A URL for Twilio call before each
-          #   Interaction. An error status code will prevent the interaction from continuing.
+          # @param [String] default_ttl The default time delay, in seconds, after which a
+          #   session will be expired.  Will be used for sessions where ttl is not specified.
+          # @param [String] callback_url The URL to which Twilio will make callbacks on
+          #   interaction status changes.
+          # @param [service.GeoMatchLevel] geo_match_level Default: country Options:
+          #   country, area-code, extended-area-code
+          # @param [service.NumberSelectionBehavior] number_selection_behavior Default:
+          #   prefer-sticky Options: prefer-sticky, avoid-sticky
+          # @param [String] intercept_callback_url Fires on each interaction. If responded
+          #   to with a 403 to this webhook, we will abort/block the interaction. For any
+          #   other status or timeout, the interaction continues.
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
           #   Interaction has no Session.
           # @return [ServiceInstance] Updated ServiceInstance

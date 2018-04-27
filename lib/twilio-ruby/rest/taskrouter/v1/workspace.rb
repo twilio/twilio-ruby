@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -25,7 +27,9 @@ module Twilio
           # Lists WorkspaceInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] friendly_name The friendly_name
+          # @param [String] friendly_name Filter by a workspace’s friendly name. This is a
+          #   human readable description of this Workspace (for example "Customer Support" or
+          #   "2014 Election Campaign")
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -41,7 +45,9 @@ module Twilio
           # Streams WorkspaceInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] friendly_name The friendly_name
+          # @param [String] friendly_name Filter by a workspace’s friendly name. This is a
+          #   human readable description of this Workspace (for example "Customer Support" or
+          #   "2014 Election Campaign")
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -74,7 +80,9 @@ module Twilio
           ##
           # Retrieve a single page of WorkspaceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name The friendly_name
+          # @param [String] friendly_name Filter by a workspace’s friendly name. This is a
+          #   human readable description of this Workspace (for example "Customer Support" or
+          #   "2014 Election Campaign")
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -110,12 +118,33 @@ module Twilio
           ##
           # Retrieve a single page of WorkspaceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name The friendly_name
-          # @param [String] event_callback_url The event_callback_url
-          # @param [String] events_filter The events_filter
-          # @param [Boolean] multi_task_enabled The multi_task_enabled
-          # @param [String] template The template
-          # @param [workspace.QueueOrder] prioritize_queue_order The prioritize_queue_order
+          # @param [String] friendly_name Human readable description of this workspace (for
+          #   example "Customer Support" or "2014 Election Campaign")
+          # @param [String] event_callback_url If provided, the Workspace will publish
+          #   events to this URL. You can use this to gather data for reporting. See Workspace
+          #   Events for more information.
+          # @param [String] events_filter Use this parameter to receive webhooks on
+          #   EventCallbackUrl for specific events on a workspace. For example if
+          #   'EventsFilter=task.created,task.canceled,worker.activity.update', then
+          #   TaskRouter will webhook to EventCallbackUrl only when a task is created,
+          #   canceled or a worker activity is updated.
+          # @param [Boolean] multi_task_enabled Multi tasking allows workers to handle
+          #   multiple tasks simultaneously. When enabled (MultiTaskEnabled=true), each worker
+          #   will be eligible to receive parallel reservations up to the per-channel maximums
+          #   defined in the Workers section. Default is disabled (MultiTaskEnabled=false),
+          #   where each worker will only receive a new reservation when the previous task is
+          #   completed. Learn more by visiting [Multitasking][/docs/taskrouter/multitasking].
+          # @param [String] template One of the available template names. Will pre-configure
+          #   this Workspace with the Workflow and Activities specified in the template.
+          #   "NONE" will create a Workspace with a set of default activities and nothing
+          #   else. "FIFO" will configure TaskRouter with a set of default activities and a
+          #   single task queue for first-in, first-out distribution, useful if you want to
+          #   see a simple TaskRouter configuration when getting started. Defaults to "NONE".
+          # @param [workspace.QueueOrder] prioritize_queue_order Use this parameter to
+          #   configure whether to prioritize LIFO or FIFO when workers are receiving Tasks
+          #   from combination of LIFO and FIFO TaskQueues. Default is FIFO. [Click
+          #   here][/docs/taskrouter/queue-ordering-last-first-out-lifo] to learn more about
+          #   LIFO and the use of the parameter.
           # @return [WorkspaceInstance] Newly created WorkspaceInstance
           def create(friendly_name: nil, event_callback_url: :unset, events_filter: :unset, multi_task_enabled: :unset, template: :unset, prioritize_queue_order: :unset)
             data = Twilio::Values.of({
@@ -215,13 +244,28 @@ module Twilio
 
           ##
           # Update the WorkspaceInstance
-          # @param [String] default_activity_sid The default_activity_sid
-          # @param [String] event_callback_url The event_callback_url
-          # @param [String] events_filter The events_filter
-          # @param [String] friendly_name The friendly_name
-          # @param [Boolean] multi_task_enabled The multi_task_enabled
-          # @param [String] timeout_activity_sid The timeout_activity_sid
-          # @param [workspace.QueueOrder] prioritize_queue_order The prioritize_queue_order
+          # @param [String] default_activity_sid The ID of the Activity that will be used
+          #   when new Workers are created in this Workspace.
+          # @param [String] event_callback_url The Workspace will publish events to this
+          #   URL. You can use this to gather data for reporting. See
+          #   [Events][/docs/taskrouter/api/events] for more information.
+          # @param [String] events_filter Use this parameter to receive webhooks on
+          #   EventCallbackUrl for specific events on a workspace. For example if
+          #   'EventsFilter=task.created,task.canceled,worker.activity.update', then
+          #   TaskRouter will webhook to EventCallbackUrl only when a task is created,
+          #   canceled or a worker activity is updated.
+          # @param [String] friendly_name Human readable description of this workspace (for
+          #   example "Sales Call Center" or "Customer Support Team")
+          # @param [Boolean] multi_task_enabled Enable or Disable Multitasking by passing
+          #   either *true* or *False* with the POST request. Learn more by visiting
+          #   [Multitasking][/docs/taskrouter/multitasking].
+          # @param [String] timeout_activity_sid The ID of the Activity that will be
+          #   assigned to a Worker when a Task reservation times out without a response.
+          # @param [workspace.QueueOrder] prioritize_queue_order Use this parameter to
+          #   configure whether to prioritize LIFO or FIFO when workers are receiving Tasks
+          #   from combination of LIFO and FIFO TaskQueues. Default is FIFO. [Click
+          #   here][/docs/taskrouter/queue-ordering-last-first-out-lifo] to learn more about
+          #   LIFO and the use of the parameter.
           # @return [WorkspaceInstance] Updated WorkspaceInstance
           def update(default_activity_sid: :unset, event_callback_url: :unset, events_filter: :unset, friendly_name: :unset, multi_task_enabled: :unset, timeout_activity_sid: :unset, prioritize_queue_order: :unset)
             data = Twilio::Values.of({
@@ -454,79 +498,79 @@ module Twilio
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] The ID of the account that owns this Workflow
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The time the Workspace was created, given as GMT in ISO 8601 format.
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The time the Workspace was last updated, given as GMT in ISO 8601 format.
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The default_activity_name
+          # @return [String] The human readable name of the default activity.
           def default_activity_name
             @properties['default_activity_name']
           end
 
           ##
-          # @return [String] The default_activity_sid
+          # @return [String] The ID of the Activity that will be used when new Workers are created in this Workspace.
           def default_activity_sid
             @properties['default_activity_sid']
           end
 
           ##
-          # @return [String] The event_callback_url
+          # @return [String] If provided, the Workspace will publish events to this URL.
           def event_callback_url
             @properties['event_callback_url']
           end
 
           ##
-          # @return [String] The events_filter
+          # @return [String] Use this parameter to receive webhooks on EventCallbackUrl for specific events on a workspace.
           def events_filter
             @properties['events_filter']
           end
 
           ##
-          # @return [String] The friendly_name
+          # @return [String] Filter by a workspace’s friendly name.
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [Boolean] The multi_task_enabled
+          # @return [Boolean] Multi tasking allows workers to handle multiple tasks simultaneously.
           def multi_task_enabled
             @properties['multi_task_enabled']
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] The unique ID of the Workspace
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The timeout_activity_name
+          # @return [String] The human readable name of the timeout activity.
           def timeout_activity_name
             @properties['timeout_activity_name']
           end
 
           ##
-          # @return [String] The timeout_activity_sid
+          # @return [String] The ID of the Activity that will be assigned to a Worker when a Task reservation times out without a response.
           def timeout_activity_sid
             @properties['timeout_activity_sid']
           end
 
           ##
-          # @return [workspace.QueueOrder] The prioritize_queue_order
+          # @return [workspace.QueueOrder] Use this parameter to configure whether to prioritize LIFO or FIFO when workers are receiving Tasks from combination of LIFO and FIFO TaskQueues.
           def prioritize_queue_order
             @properties['prioritize_queue_order']
           end
@@ -552,13 +596,28 @@ module Twilio
 
           ##
           # Update the WorkspaceInstance
-          # @param [String] default_activity_sid The default_activity_sid
-          # @param [String] event_callback_url The event_callback_url
-          # @param [String] events_filter The events_filter
-          # @param [String] friendly_name The friendly_name
-          # @param [Boolean] multi_task_enabled The multi_task_enabled
-          # @param [String] timeout_activity_sid The timeout_activity_sid
-          # @param [workspace.QueueOrder] prioritize_queue_order The prioritize_queue_order
+          # @param [String] default_activity_sid The ID of the Activity that will be used
+          #   when new Workers are created in this Workspace.
+          # @param [String] event_callback_url The Workspace will publish events to this
+          #   URL. You can use this to gather data for reporting. See
+          #   [Events][/docs/taskrouter/api/events] for more information.
+          # @param [String] events_filter Use this parameter to receive webhooks on
+          #   EventCallbackUrl for specific events on a workspace. For example if
+          #   'EventsFilter=task.created,task.canceled,worker.activity.update', then
+          #   TaskRouter will webhook to EventCallbackUrl only when a task is created,
+          #   canceled or a worker activity is updated.
+          # @param [String] friendly_name Human readable description of this workspace (for
+          #   example "Sales Call Center" or "Customer Support Team")
+          # @param [Boolean] multi_task_enabled Enable or Disable Multitasking by passing
+          #   either *true* or *False* with the POST request. Learn more by visiting
+          #   [Multitasking][/docs/taskrouter/multitasking].
+          # @param [String] timeout_activity_sid The ID of the Activity that will be
+          #   assigned to a Worker when a Task reservation times out without a response.
+          # @param [workspace.QueueOrder] prioritize_queue_order Use this parameter to
+          #   configure whether to prioritize LIFO or FIFO when workers are receiving Tasks
+          #   from combination of LIFO and FIFO TaskQueues. Default is FIFO. [Click
+          #   here][/docs/taskrouter/queue-ordering-last-first-out-lifo] to learn more about
+          #   LIFO and the use of the parameter.
           # @return [WorkspaceInstance] Updated WorkspaceInstance
           def update(default_activity_sid: :unset, event_callback_url: :unset, events_filter: :unset, friendly_name: :unset, multi_task_enabled: :unset, timeout_activity_sid: :unset, prioritize_queue_order: :unset)
             context.update(

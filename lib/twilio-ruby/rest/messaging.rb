@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -27,7 +29,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid Unique 34 character ID of the Service.
       # @return [Twilio::REST::Messaging::V1::ServiceInstance] if sid was passed.
       # @return [Twilio::REST::Messaging::V1::ServiceList]
       def services(sid=:unset)

@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -14,8 +16,9 @@ module Twilio
               ##
               # Initialize the FeedbackSummaryList
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The unique id of the Account responsible for
-              #   creating this Call
+              # @param [String] account_sid The unique id of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for creating
+              #   this call.
               # @return [FeedbackSummaryList] FeedbackSummaryList
               def initialize(version, account_sid: nil)
                 super(version)
@@ -28,11 +31,17 @@ module Twilio
               ##
               # Retrieve a single page of FeedbackSummaryInstance records from the API.
               # Request is executed immediately.
-              # @param [Date] start_date The start_date
-              # @param [Date] end_date The end_date
-              # @param [Boolean] include_subaccounts The include_subaccounts
-              # @param [String] status_callback The status_callback
-              # @param [String] status_callback_method The status_callback_method
+              # @param [Date] start_date Only include usage that has occurred on or after this
+              #   date. Format is YYYY-MM-DD. All dates are in UTC.
+              # @param [Date] end_date Only include usage that has occurred on or before this
+              #   date. Format is YYYY-MM-DD. All dates are in UTC.
+              # @param [Boolean] include_subaccounts true to include feedback entries for the
+              #   master account and all subaccounts. false to include feedback entries for the
+              #   specified account. IncludeSubaccounts is false by default.
+              # @param [String] status_callback The URL that Twilio will request when the
+              #   Feedback Summary is completed.
+              # @param [String] status_callback_method The HTTP method Twilio will use to make
+              #   requests to the StatusCallback URL. Either GET or POST.
               # @return [FeedbackSummaryInstance] Newly created FeedbackSummaryInstance
               def create(start_date: nil, end_date: nil, include_subaccounts: :unset, status_callback: :unset, status_callback_method: :unset)
                 data = Twilio::Values.of({
@@ -143,8 +152,9 @@ module Twilio
               # Initialize the FeedbackSummaryInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] account_sid The unique id of the Account responsible for
-              #   creating this Call
+              # @param [String] account_sid The unique id of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for creating
+              #   this call.
               # @param [String] sid The sid
               # @return [FeedbackSummaryInstance] FeedbackSummaryInstance
               def initialize(version, payload, account_sid: nil, sid: nil)

@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -280,7 +282,7 @@ module Twilio
             end
 
             ##
-            # @return [Time] The date this Phone Number was created
+            # @return [Time] The date this Phone Number was added to the service
             def date_created
               @properties['date_created']
             end

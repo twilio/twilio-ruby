@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -14,7 +16,8 @@ module Twilio
               ##
               # Initialize the MediaList
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The unique id of the Account responsible for this
+              # @param [String] account_sid The unique id of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
               #   media.
               # @param [String] message_sid A 34 character string that uniquely identifies this
               #   resource.
@@ -230,7 +233,8 @@ module Twilio
               # Initialize the MediaInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] account_sid The unique id of the Account responsible for this
+              # @param [String] account_sid The unique id of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
               #   media.
               # @param [String] message_sid A 34 character string that uniquely identifies this
               #   resource.

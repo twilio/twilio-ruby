@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -15,7 +17,7 @@ module Twilio
             ##
             # Initialize the PhoneNumberList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The 34 character unique sid of the Service.
             # @return [PhoneNumberList] PhoneNumberList
             def initialize(version, service_sid: nil)
               super(version)
@@ -28,7 +30,8 @@ module Twilio
             ##
             # Retrieve a single page of PhoneNumberInstance records from the API.
             # Request is executed immediately.
-            # @param [String] phone_number_sid The phone_number_sid
+            # @param [String] phone_number_sid Phone Number SID for the Phone Number being
+            #   added to the Service.
             # @return [PhoneNumberInstance] Newly created PhoneNumberInstance
             def create(phone_number_sid: nil)
               data = Twilio::Values.of({'PhoneNumberSid' => phone_number_sid, })
@@ -221,7 +224,7 @@ module Twilio
             # Initialize the PhoneNumberInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The 34 character unique sid of the Service.
             # @param [String] sid The sid
             # @return [PhoneNumberInstance] PhoneNumberInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
@@ -257,55 +260,55 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] The 34 character unique sid of the Phone Number.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The 34 character unique sid of the Account.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The service_sid
+            # @return [String] The 34 character unique sid of the Service.
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date that this resource was created.
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date that this resource was last updated.
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The phone_number
+            # @return [String] The E.
             def phone_number
               @properties['phone_number']
             end
 
             ##
-            # @return [String] The country_code
+            # @return [String] The 2 character ISO Country Code of the number.
             def country_code
               @properties['country_code']
             end
 
             ##
-            # @return [String] The capabilities
+            # @return [String] Any array of values that indicate whether the number can receive calls or messages.
             def capabilities
               @properties['capabilities']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL for this resource.
             def url
               @properties['url']
             end

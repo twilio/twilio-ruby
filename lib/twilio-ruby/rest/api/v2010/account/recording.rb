@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -13,7 +15,8 @@ module Twilio
             ##
             # Initialize the RecordingList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the Account responsible for this
+            # @param [String] account_sid The unique ID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
             #   recording.
             # @return [RecordingList] RecordingList
             def initialize(version, account_sid: nil)
@@ -278,7 +281,8 @@ module Twilio
             # Initialize the RecordingInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the Account responsible for this
+            # @param [String] account_sid The unique ID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
             #   recording.
             # @param [String] sid The recording Sid that uniquely identifies this resource
             # @return [RecordingInstance] RecordingInstance
@@ -413,7 +417,7 @@ module Twilio
             end
 
             ##
-            # @return [Hash] The encryption_details
+            # @return [Hash] Details for how to decrypt the recording.
             def encryption_details
               @properties['encryption_details']
             end

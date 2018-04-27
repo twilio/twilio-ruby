@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -16,8 +18,10 @@ module Twilio
               ##
               # Initialize the SyncMapItemList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
-              # @param [String] map_sid The map_sid
+              # @param [String] service_sid The unique SID identifier of the Service Instance
+              #   that hosts this Map object.
+              # @param [String] map_sid The unique 34-character SID identifier of the Map
+              #   containing this Item.
               # @return [SyncMapItemList] SyncMapItemList
               def initialize(version, service_sid: nil, map_sid: nil)
                 super(version)
@@ -32,7 +36,8 @@ module Twilio
               # Request is executed immediately.
               # @param [String] key The key
               # @param [Hash] data The data
-              # @param [String] ttl The ttl
+              # @param [String] ttl (optional) Time-to-live of this Map in seconds, defaults to
+              #   no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
               # @return [SyncMapItemInstance] Newly created SyncMapItemInstance
               def create(key: nil, data: nil, ttl: :unset)
                 data = Twilio::Values.of({'Key' => key, 'Data' => Twilio.serialize_object(data), 'Ttl' => ttl, })
@@ -236,8 +241,10 @@ module Twilio
 
               ##
               # Update the SyncMapItemInstance
-              # @param [Hash] data The data
-              # @param [String] ttl The ttl
+              # @param [Hash] data (optional) Contains an arbitrary JSON object to be stored in
+              #   this Map Item. Serialized to string to respect HTTP form input, up to 16KB.
+              # @param [String] ttl New time-to-live of this Map in seconds. In the range [1, 31
+              #   536 000 (1 year)], or 0 for infinity.
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
               def update(data: :unset, ttl: :unset)
                 data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), 'Ttl' => ttl, })
@@ -272,8 +279,10 @@ module Twilio
               # Initialize the SyncMapItemInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The service_sid
-              # @param [String] map_sid The map_sid
+              # @param [String] service_sid The unique SID identifier of the Service Instance
+              #   that hosts this Map object.
+              # @param [String] map_sid The unique 34-character SID identifier of the Map
+              #   containing this Item.
               # @param [String] key The key
               # @return [SyncMapItemInstance] SyncMapItemInstance
               def initialize(version, payload, service_sid: nil, map_sid: nil, key: nil)
@@ -316,67 +325,67 @@ module Twilio
               end
 
               ##
-              # @return [String] The key
+              # @return [String] The unique user-defined key of this Map Item.
               def key
                 @properties['key']
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The unique SID identifier of the Twilio Account.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The service_sid
+              # @return [String] The unique SID identifier of the Service Instance that hosts this Map object.
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] The map_sid
+              # @return [String] The unique 34-character SID identifier of the Map containing this Item.
               def map_sid
                 @properties['map_sid']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] The absolute URL for this Map.
               def url
                 @properties['url']
               end
 
               ##
-              # @return [String] The revision
+              # @return [String] Contains the current revision of this Map, represented by a string identifier.
               def revision
                 @properties['revision']
               end
 
               ##
-              # @return [Hash] The data
+              # @return [Hash] Contains arbitrary user-defined, schema-less data that this Map Item stores, represented by a JSON object, up to 16KB.
               def data
                 @properties['data']
               end
 
               ##
-              # @return [Time] The date_expires
+              # @return [Time] Contains the date this Map expires and gets deleted automatically.
               def date_expires
                 @properties['date_expires']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The date this Map was created, given in UTC ISO 8601 format.
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] Specifies the date this Map was last updated, given in UTC ISO 8601 format.
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The created_by
+              # @return [String] The identity of the Map creator.
               def created_by
                 @properties['created_by']
               end
@@ -397,8 +406,10 @@ module Twilio
 
               ##
               # Update the SyncMapItemInstance
-              # @param [Hash] data The data
-              # @param [String] ttl The ttl
+              # @param [Hash] data (optional) Contains an arbitrary JSON object to be stored in
+              #   this Map Item. Serialized to string to respect HTTP form input, up to 16KB.
+              # @param [String] ttl New time-to-live of this Map in seconds. In the range [1, 31
+              #   536 000 (1 year)], or 0 for infinity.
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
               def update(data: :unset, ttl: :unset)
                 context.update(data: data, ttl: ttl, )

@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -29,7 +31,8 @@ module Twilio
               # Lists ReservationInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [reservation.Status] reservation_status The reservation_status
+              # @param [reservation.Status] reservation_status Filter by a worker’s reservation
+              #   status (pending, accepted, rejected, timeout, canceled, rescinded)
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -45,7 +48,8 @@ module Twilio
               # Streams ReservationInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [reservation.Status] reservation_status The reservation_status
+              # @param [reservation.Status] reservation_status Filter by a worker’s reservation
+              #   status (pending, accepted, rejected, timeout, canceled, rescinded)
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -78,7 +82,8 @@ module Twilio
               ##
               # Retrieve a single page of ReservationInstance records from the API.
               # Request is executed immediately.
-              # @param [reservation.Status] reservation_status The reservation_status
+              # @param [reservation.Status] reservation_status Filter by a worker’s reservation
+              #   status (pending, accepted, rejected, timeout, canceled, rescinded)
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -191,23 +196,22 @@ module Twilio
 
               ##
               # Update the ReservationInstance
-              # @param [reservation.Status] reservation_status The reservation_status
-              # @param [String] worker_activity_sid The worker_activity_sid
-              # @param [String] instruction The instruction
-              # @param [String] dequeue_post_work_activity_sid The
-              #   dequeue_post_work_activity_sid
-              # @param [String] dequeue_from The dequeue_from
+              # @param [reservation.Status] reservation_status Yes
+              # @param [String] worker_activity_sid No
+              # @param [String] instruction Yes
+              # @param [String] dequeue_post_work_activity_sid No
+              # @param [String] dequeue_from Yes
               # @param [String] dequeue_record The dequeue_record
               # @param [String] dequeue_timeout The dequeue_timeout
               # @param [String] dequeue_to The dequeue_to
               # @param [String] dequeue_status_callback_url The dequeue_status_callback_url
-              # @param [String] call_from The call_from
+              # @param [String] call_from Yes
               # @param [String] call_record The call_record
               # @param [String] call_timeout The call_timeout
               # @param [String] call_to The call_to
-              # @param [String] call_url The call_url
-              # @param [String] call_status_callback_url The call_status_callback_url
-              # @param [Boolean] call_accept The call_accept
+              # @param [String] call_url Yes
+              # @param [String] call_status_callback_url No
+              # @param [Boolean] call_accept No
               # @param [String] redirect_call_sid The redirect_call_sid
               # @param [Boolean] redirect_accept The redirect_accept
               # @param [String] redirect_url The redirect_url
@@ -394,7 +398,7 @@ module Twilio
               end
 
               ##
-              # @return [reservation.Status] The reservation_status
+              # @return [reservation.Status] Filter by a worker’s reservation status
               def reservation_status
                 @properties['reservation_status']
               end
@@ -450,23 +454,22 @@ module Twilio
 
               ##
               # Update the ReservationInstance
-              # @param [reservation.Status] reservation_status The reservation_status
-              # @param [String] worker_activity_sid The worker_activity_sid
-              # @param [String] instruction The instruction
-              # @param [String] dequeue_post_work_activity_sid The
-              #   dequeue_post_work_activity_sid
-              # @param [String] dequeue_from The dequeue_from
+              # @param [reservation.Status] reservation_status Yes
+              # @param [String] worker_activity_sid No
+              # @param [String] instruction Yes
+              # @param [String] dequeue_post_work_activity_sid No
+              # @param [String] dequeue_from Yes
               # @param [String] dequeue_record The dequeue_record
               # @param [String] dequeue_timeout The dequeue_timeout
               # @param [String] dequeue_to The dequeue_to
               # @param [String] dequeue_status_callback_url The dequeue_status_callback_url
-              # @param [String] call_from The call_from
+              # @param [String] call_from Yes
               # @param [String] call_record The call_record
               # @param [String] call_timeout The call_timeout
               # @param [String] call_to The call_to
-              # @param [String] call_url The call_url
-              # @param [String] call_status_callback_url The call_status_callback_url
-              # @param [Boolean] call_accept The call_accept
+              # @param [String] call_url Yes
+              # @param [String] call_status_callback_url No
+              # @param [Boolean] call_accept No
               # @param [String] redirect_call_sid The redirect_call_sid
               # @param [Boolean] redirect_accept The redirect_accept
               # @param [String] redirect_url The redirect_url

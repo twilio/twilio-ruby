@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -27,7 +29,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid A 34 character string that uniquely identifies this Alert.
       # @return [Twilio::REST::Monitor::V1::AlertInstance] if sid was passed.
       # @return [Twilio::REST::Monitor::V1::AlertList]
       def alerts(sid=:unset)

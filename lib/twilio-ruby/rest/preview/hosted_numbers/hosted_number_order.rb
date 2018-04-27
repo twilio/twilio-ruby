@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -164,27 +166,32 @@ module Twilio
           ##
           # Retrieve a single page of HostedNumberOrderInstance records from the API.
           # Request is executed immediately.
-          # @param [String] phone_number An E164 formatted phone number hosted by this
-          #   HostedNumberOrder.
+          # @param [String] phone_number The number to host in
+          #   [+E.164](https://en.wikipedia.org/wiki/E.164) format
           # @param [Boolean] sms_capability Used to specify that the SMS capability will be
           #   hosted on Twilio's platform.
-          # @param [String] account_sid Optional. The unique SID identifier of the Account
-          #   or Sub-Account to create this HostedNumberOrder on.
-          # @param [String] friendly_name Optional. A human readable description of this
-          #   resource, up to 64 characters.
+          # @param [String] account_sid This defaults to the AccountSid of the authorization
+          #   the user is using. This can be provided to specify a subaccount to add the
+          #   HostedNumberOrder to.
+          # @param [String] friendly_name A 64 character string that is a human readable
+          #   text that describes this resource.
           # @param [String] unique_name Optional. Provides a unique and addressable name to
           #   be assigned to this HostedNumberOrder, assigned by the developer, to be
           #   optionally used in addition to SID.
           # @param [String] cc_emails Optional. A list of emails that the LOA document for
           #   this HostedNumberOrder will be carbon copied to.
-          # @param [String] sms_url Optional. The SMS URL attached to the
+          # @param [String] sms_url The URL that Twilio should request when somebody sends
+          #   an SMS to the phone number. This will be copied onto the IncomingPhoneNumber
+          #   resource.
+          # @param [String] sms_method The HTTP method that should be used to request the
+          #   SmsUrl. Must be either `GET` or `POST`.  This will be copied onto the
           #   IncomingPhoneNumber resource.
-          # @param [String] sms_method Optional. The SMS Method attached to the
-          #   IncomingPhoneNumber resource.
-          # @param [String] sms_fallback_url Optional. The SMS Fallback URL attached to the
-          #   IncomingPhoneNumber resource.
-          # @param [String] sms_fallback_method Optional. The SMS Fallback Method attached
-          #   to the IncomingPhoneNumber resource.
+          # @param [String] sms_fallback_url A URL that Twilio will request if an error
+          #   occurs requesting or executing the TwiML defined by SmsUrl. This will be copied
+          #   onto the IncomingPhoneNumber resource.
+          # @param [String] sms_fallback_method The HTTP method that should be used to
+          #   request the SmsFallbackUrl. Must be either `GET` or `POST`. This will be copied
+          #   onto the IncomingPhoneNumber resource.
           # @param [String] status_callback_url Optional. The Status Callback URL attached
           #   to the IncomingPhoneNumber resource.
           # @param [String] status_callback_method Optional. The Status Callback Method
@@ -314,8 +321,8 @@ module Twilio
 
           ##
           # Update the HostedNumberOrderInstance
-          # @param [String] friendly_name A human readable description of this resource, up
-          #   to 64 characters.
+          # @param [String] friendly_name A 64 character string that is a human readable
+          #   text that describes this resource.
           # @param [String] unique_name Provides a unique and addressable name to be
           #   assigned to this HostedNumberOrder, assigned by the developer, to be optionally
           #   used in addition to SID.
@@ -323,8 +330,9 @@ module Twilio
           #   hosted.
           # @param [String] cc_emails Optional. A list of emails that LOA document for this
           #   HostedNumberOrder will be carbon copied to.
-          # @param [hosted_number_order.Status] status The Status of this HostedNumberOrder.
-          #   User can only update this to `pending-loa` or `pending-verification`.
+          # @param [hosted_number_order.Status] status User can only post to
+          #   `pending-verification` status to transition the HostedNumberOrder to initiate a
+          #   verification call or verification of ownership with a copy of a phone bill.
           # @param [String] verification_code A verification code that is given to the user
           #   via a phone call to the phone number that is being hosted.
           # @param [hosted_number_order.VerificationType] verification_type Optional. The
@@ -333,8 +341,9 @@ module Twilio
           # @param [String] verification_document_sid Optional. The unique sid identifier of
           #   the Identity Document that represents the document for verifying ownership of
           #   the number to be hosted. Required when VerificationType is phone-bill.
-          # @param [String] extension The extension
-          # @param [String] call_delay The call_delay
+          # @param [String] extension Digits to dial after connecting the verification call.
+          # @param [String] call_delay The number of seconds, between 0 and 60, to delay
+          #   before initiating the verification call. Defaults to 0.
           # @return [HostedNumberOrderInstance] Updated HostedNumberOrderInstance
           def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset, verification_code: :unset, verification_type: :unset, verification_document_sid: :unset, extension: :unset, call_delay: :unset)
             data = Twilio::Values.of({
@@ -577,8 +586,8 @@ module Twilio
 
           ##
           # Update the HostedNumberOrderInstance
-          # @param [String] friendly_name A human readable description of this resource, up
-          #   to 64 characters.
+          # @param [String] friendly_name A 64 character string that is a human readable
+          #   text that describes this resource.
           # @param [String] unique_name Provides a unique and addressable name to be
           #   assigned to this HostedNumberOrder, assigned by the developer, to be optionally
           #   used in addition to SID.
@@ -586,8 +595,9 @@ module Twilio
           #   hosted.
           # @param [String] cc_emails Optional. A list of emails that LOA document for this
           #   HostedNumberOrder will be carbon copied to.
-          # @param [hosted_number_order.Status] status The Status of this HostedNumberOrder.
-          #   User can only update this to `pending-loa` or `pending-verification`.
+          # @param [hosted_number_order.Status] status User can only post to
+          #   `pending-verification` status to transition the HostedNumberOrder to initiate a
+          #   verification call or verification of ownership with a copy of a phone bill.
           # @param [String] verification_code A verification code that is given to the user
           #   via a phone call to the phone number that is being hosted.
           # @param [hosted_number_order.VerificationType] verification_type Optional. The
@@ -596,8 +606,9 @@ module Twilio
           # @param [String] verification_document_sid Optional. The unique sid identifier of
           #   the Identity Document that represents the document for verifying ownership of
           #   the number to be hosted. Required when VerificationType is phone-bill.
-          # @param [String] extension The extension
-          # @param [String] call_delay The call_delay
+          # @param [String] extension Digits to dial after connecting the verification call.
+          # @param [String] call_delay The number of seconds, between 0 and 60, to delay
+          #   before initiating the verification call. Defaults to 0.
           # @return [HostedNumberOrderInstance] Updated HostedNumberOrderInstance
           def update(friendly_name: :unset, unique_name: :unset, email: :unset, cc_emails: :unset, status: :unset, verification_code: :unset, verification_type: :unset, verification_document_sid: :unset, extension: :unset, call_delay: :unset)
             context.update(

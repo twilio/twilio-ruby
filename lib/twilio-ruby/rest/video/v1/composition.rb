@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -137,31 +139,27 @@ module Twilio
           ##
           # Retrieve a single page of CompositionInstance records from the API.
           # Request is executed immediately.
+          # @param [String] room_sid The room_sid
+          # @param [Hash] video_layout The video_layout
           # @param [String] audio_sources The audio_sources
-          # @param [String] video_sources The video_sources
-          # @param [composition.VideoLayout] video_layout The video_layout
+          # @param [String] audio_sources_excluded The audio_sources_excluded
           # @param [String] resolution The resolution
           # @param [composition.Format] format The format
-          # @param [String] desired_bitrate The desired_bitrate
-          # @param [String] desired_max_duration The desired_max_duration
           # @param [String] status_callback The status_callback
           # @param [String] status_callback_method The status_callback_method
           # @param [Boolean] trim The trim
-          # @param [Boolean] reuse The reuse
           # @return [CompositionInstance] Newly created CompositionInstance
-          def create(audio_sources: :unset, video_sources: :unset, video_layout: :unset, resolution: :unset, format: :unset, desired_bitrate: :unset, desired_max_duration: :unset, status_callback: :unset, status_callback_method: :unset, trim: :unset, reuse: :unset)
+          def create(room_sid: :unset, video_layout: :unset, audio_sources: :unset, audio_sources_excluded: :unset, resolution: :unset, format: :unset, status_callback: :unset, status_callback_method: :unset, trim: :unset)
             data = Twilio::Values.of({
+                'RoomSid' => room_sid,
+                'VideoLayout' => Twilio.serialize_object(video_layout),
                 'AudioSources' => Twilio.serialize_list(audio_sources) { |e| e },
-                'VideoSources' => Twilio.serialize_list(video_sources) { |e| e },
-                'VideoLayout' => video_layout,
+                'AudioSourcesExcluded' => Twilio.serialize_list(audio_sources_excluded) { |e| e },
                 'Resolution' => resolution,
                 'Format' => format,
-                'DesiredBitrate' => desired_bitrate,
-                'DesiredMaxDuration' => desired_max_duration,
                 'StatusCallback' => status_callback,
                 'StatusCallbackMethod' => status_callback_method,
                 'Trim' => trim,
-                'Reuse' => reuse,
             })
 
             payload = @version.create(
@@ -277,16 +275,17 @@ module Twilio
                 'date_completed' => payload['date_completed'],
                 'date_deleted' => payload['date_deleted'],
                 'sid' => payload['sid'],
+                'room_sid' => payload['room_sid'],
                 'audio_sources' => payload['audio_sources'],
-                'video_sources' => payload['video_sources'],
+                'audio_sources_excluded' => payload['audio_sources_excluded'],
                 'video_layout' => payload['video_layout'],
                 'resolution' => payload['resolution'],
+                'trim' => payload['trim'],
                 'format' => payload['format'],
                 'bitrate' => payload['bitrate'].to_i,
-                'size' => payload['size'].to_i,
+                'size' => payload['size'],
                 'duration' => payload['duration'].to_i,
                 'url' => payload['url'],
-                'room_sid' => payload['room_sid'],
                 'links' => payload['links'],
             }
 
@@ -343,19 +342,25 @@ module Twilio
           end
 
           ##
+          # @return [String] The room_sid
+          def room_sid
+            @properties['room_sid']
+          end
+
+          ##
           # @return [String] The audio_sources
           def audio_sources
             @properties['audio_sources']
           end
 
           ##
-          # @return [String] The video_sources
-          def video_sources
-            @properties['video_sources']
+          # @return [String] The audio_sources_excluded
+          def audio_sources_excluded
+            @properties['audio_sources_excluded']
           end
 
           ##
-          # @return [composition.VideoLayout] The video_layout
+          # @return [Hash] The video_layout
           def video_layout
             @properties['video_layout']
           end
@@ -364,6 +369,12 @@ module Twilio
           # @return [String] The resolution
           def resolution
             @properties['resolution']
+          end
+
+          ##
+          # @return [Boolean] The trim
+          def trim
+            @properties['trim']
           end
 
           ##
@@ -394,12 +405,6 @@ module Twilio
           # @return [String] The url
           def url
             @properties['url']
-          end
-
-          ##
-          # @return [String] The room_sid
-          def room_sid
-            @properties['room_sid']
           end
 
           ##

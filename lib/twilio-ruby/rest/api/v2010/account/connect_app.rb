@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -13,7 +15,8 @@ module Twilio
             ##
             # Initialize the ConnectAppList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the Account that created this
+            # @param [String] account_sid The unique id of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
             #   ConnectApp.
             # @return [ConnectAppList] ConnectAppList
             def initialize(version, account_sid: nil)
@@ -184,16 +187,18 @@ module Twilio
             #   Connect App.
             # @param [String] company_name The company name set for this Connect App.
             # @param [String] deauthorize_callback_method The HTTP method to be used when
-            #   making a request to the `DeauthorizeCallbackUrl`.
+            #   making a request to the `DeauthorizeCallbackUrl`. Either `GET` or `POST`.
             # @param [String] deauthorize_callback_url The URL to which Twilio will send a
             #   request when a user de-authorizes this Connect App.
             # @param [String] description A more detailed human readable description of the
             #   Connect App.
-            # @param [String] friendly_name A human readable name for the Connect App.
+            # @param [String] friendly_name A human readable description of the Connect App,
+            #   with maximum length 64 characters.
             # @param [String] homepage_url The public URL where users can obtain more
             #   information about this Connect App.
-            # @param [connect_app.Permission] permissions The set of permissions that your
-            #   ConnectApp requests.
+            # @param [connect_app.Permission] permissions A comma-separated list of permssions
+            #   you will request from users of this ConnectApp.  Valid permssions are `get-all`
+            #   or `post-all`.
             # @return [ConnectAppInstance] Updated ConnectAppInstance
             def update(authorize_redirect_url: :unset, company_name: :unset, deauthorize_callback_method: :unset, deauthorize_callback_url: :unset, description: :unset, friendly_name: :unset, homepage_url: :unset, permissions: :unset)
               data = Twilio::Values.of({
@@ -234,7 +239,8 @@ module Twilio
             # Initialize the ConnectAppInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the Account that created this
+            # @param [String] account_sid The unique id of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
             #   ConnectApp.
             # @param [String] sid The connect-app Sid that uniquely identifies this resource
             # @return [ConnectAppInstance] ConnectAppInstance
@@ -291,7 +297,7 @@ module Twilio
             end
 
             ##
-            # @return [String] HTTP method Twilio WIll use making requests to the url
+            # @return [String] HTTP method Twilio will use making requests to the url
             def deauthorize_callback_method
               @properties['deauthorize_callback_method']
             end
@@ -352,16 +358,18 @@ module Twilio
             #   Connect App.
             # @param [String] company_name The company name set for this Connect App.
             # @param [String] deauthorize_callback_method The HTTP method to be used when
-            #   making a request to the `DeauthorizeCallbackUrl`.
+            #   making a request to the `DeauthorizeCallbackUrl`. Either `GET` or `POST`.
             # @param [String] deauthorize_callback_url The URL to which Twilio will send a
             #   request when a user de-authorizes this Connect App.
             # @param [String] description A more detailed human readable description of the
             #   Connect App.
-            # @param [String] friendly_name A human readable name for the Connect App.
+            # @param [String] friendly_name A human readable description of the Connect App,
+            #   with maximum length 64 characters.
             # @param [String] homepage_url The public URL where users can obtain more
             #   information about this Connect App.
-            # @param [connect_app.Permission] permissions The set of permissions that your
-            #   ConnectApp requests.
+            # @param [connect_app.Permission] permissions A comma-separated list of permssions
+            #   you will request from users of this ConnectApp.  Valid permssions are `get-all`
+            #   or `post-all`.
             # @return [ConnectAppInstance] Updated ConnectAppInstance
             def update(authorize_redirect_url: :unset, company_name: :unset, deauthorize_callback_method: :unset, deauthorize_callback_url: :unset, description: :unset, friendly_name: :unset, homepage_url: :unset, permissions: :unset)
               context.update(

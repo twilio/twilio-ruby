@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -16,8 +18,10 @@ module Twilio
               ##
               # Initialize the SyncListItemList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
-              # @param [String] list_sid The list_sid
+              # @param [String] service_sid The unique SID identifier of the Service Instance
+              #   that hosts this List object.
+              # @param [String] list_sid The unique 34-character SID identifier of the List
+              #   containing this Item.
               # @return [SyncListItemList] SyncListItemList
               def initialize(version, service_sid: nil, list_sid: nil)
                 super(version)
@@ -31,7 +35,10 @@ module Twilio
               # Retrieve a single page of SyncListItemInstance records from the API.
               # Request is executed immediately.
               # @param [Hash] data The data
-              # @param [String] ttl The ttl
+              # @param [String] ttl (optional) Time-to-live of this item in seconds, defaults to
+              #   no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity. Upon
+              #   expiry, the list item will be cleaned up at least in a matter of hours, and
+              #   often within seconds, making this a good tool for garbage management.
               # @return [SyncListItemInstance] Newly created SyncListItemInstance
               def create(data: nil, ttl: :unset)
                 data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), 'Ttl' => ttl, })
@@ -54,8 +61,11 @@ module Twilio
               # Lists SyncListItemInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [sync_list_item.QueryResultOrder] order The order
-              # @param [String] from The from
+              # @param [sync_list_item.QueryResultOrder] order (optional) A string; `asc` or
+              #   `desc`
+              # @param [String] from (optional) An integer representing Item index offset
+              #   (inclusive). If not present, query is performed from the start or end, depending
+              #   on the Order query parameter.
               # @param [sync_list_item.QueryFromBoundType] bounds The bounds
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
@@ -72,8 +82,11 @@ module Twilio
               # Streams SyncListItemInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [sync_list_item.QueryResultOrder] order The order
-              # @param [String] from The from
+              # @param [sync_list_item.QueryResultOrder] order (optional) A string; `asc` or
+              #   `desc`
+              # @param [String] from (optional) An integer representing Item index offset
+              #   (inclusive). If not present, query is performed from the start or end, depending
+              #   on the Order query parameter.
               # @param [sync_list_item.QueryFromBoundType] bounds The bounds
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
@@ -107,8 +120,11 @@ module Twilio
               ##
               # Retrieve a single page of SyncListItemInstance records from the API.
               # Request is executed immediately.
-              # @param [sync_list_item.QueryResultOrder] order The order
-              # @param [String] from The from
+              # @param [sync_list_item.QueryResultOrder] order (optional) A string; `asc` or
+              #   `desc`
+              # @param [String] from (optional) An integer representing Item index offset
+              #   (inclusive). If not present, query is performed from the start or end, depending
+              #   on the Order query parameter.
               # @param [sync_list_item.QueryFromBoundType] bounds The bounds
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
@@ -271,8 +287,10 @@ module Twilio
               # Initialize the SyncListItemInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The service_sid
-              # @param [String] list_sid The list_sid
+              # @param [String] service_sid The unique SID identifier of the Service Instance
+              #   that hosts this List object.
+              # @param [String] list_sid The unique 34-character SID identifier of the List
+              #   containing this Item.
               # @param [String] index The index
               # @return [SyncListItemInstance] SyncListItemInstance
               def initialize(version, payload, service_sid: nil, list_sid: nil, index: nil)
@@ -319,67 +337,67 @@ module Twilio
               end
 
               ##
-              # @return [String] The index
+              # @return [String] Contains the numeric index of this List Item.
               def index
                 @properties['index']
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The unique SID identifier of the Twilio Account.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The service_sid
+              # @return [String] The unique SID identifier of the Service Instance that hosts this List object.
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] The list_sid
+              # @return [String] The unique 34-character SID identifier of the List containing this Item.
               def list_sid
                 @properties['list_sid']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] The absolute URL for this item.
               def url
                 @properties['url']
               end
 
               ##
-              # @return [String] The revision
+              # @return [String] Contains the current revision of this item, represented by a string identifier.
               def revision
                 @properties['revision']
               end
 
               ##
-              # @return [Hash] The data
+              # @return [Hash] Contains arbitrary user-defined, schema-less data that this List Item stores, represented by a JSON object, up to 16KB.
               def data
                 @properties['data']
               end
 
               ##
-              # @return [Time] The date_expires
+              # @return [Time] Contains the date this item expires and gets deleted automatically.
               def date_expires
                 @properties['date_expires']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The date this item was created, given in UTC ISO 8601 format.
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] Specifies the date this item was last updated, given in UTC ISO 8601 format.
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The created_by
+              # @return [String] The identity of this item's creator.
               def created_by
                 @properties['created_by']
               end

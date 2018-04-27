@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -273,7 +275,7 @@ module Twilio
             end
 
             ##
-            # @return [Time] The date this Short Code was created
+            # @return [Time] The date this Short Code was added to the service
             def date_created
               @properties['date_created']
             end
@@ -297,7 +299,7 @@ module Twilio
             end
 
             ##
-            # @return [String] Nested resource URLs.
+            # @return [String] A list of capabilities.
             def capabilities
               @properties['capabilities']
             end

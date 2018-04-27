@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -30,10 +32,10 @@ module Twilio
             # Lists DependentHostedNumberOrderInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [dependent_hosted_number_order.Status] status The Status of this
-            #   HostedNumberOrder. One of `received`, `pending-verification`, `verified`,
-            #   `pending-loa`, `carrier-processing`, `testing`, `completed`, `failed`, or
-            #   `action-required`.
+            # @param [dependent_hosted_number_order.Status] status Status of an instance
+            #   resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4.
+            #   canceled, 5. failed. See the section entitled [Status
+            #   Values](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents#status-values) for more information on each of these statuses.
             # @param [String] phone_number An E164 formatted phone number hosted by this
             #   HostedNumberOrder.
             # @param [String] incoming_phone_number_sid A 34 character string that uniquely
@@ -66,10 +68,10 @@ module Twilio
             # Streams DependentHostedNumberOrderInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [dependent_hosted_number_order.Status] status The Status of this
-            #   HostedNumberOrder. One of `received`, `pending-verification`, `verified`,
-            #   `pending-loa`, `carrier-processing`, `testing`, `completed`, `failed`, or
-            #   `action-required`.
+            # @param [dependent_hosted_number_order.Status] status Status of an instance
+            #   resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4.
+            #   canceled, 5. failed. See the section entitled [Status
+            #   Values](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents#status-values) for more information on each of these statuses.
             # @param [String] phone_number An E164 formatted phone number hosted by this
             #   HostedNumberOrder.
             # @param [String] incoming_phone_number_sid A 34 character string that uniquely
@@ -118,10 +120,10 @@ module Twilio
             ##
             # Retrieve a single page of DependentHostedNumberOrderInstance records from the API.
             # Request is executed immediately.
-            # @param [dependent_hosted_number_order.Status] status The Status of this
-            #   HostedNumberOrder. One of `received`, `pending-verification`, `verified`,
-            #   `pending-loa`, `carrier-processing`, `testing`, `completed`, `failed`, or
-            #   `action-required`.
+            # @param [dependent_hosted_number_order.Status] status Status of an instance
+            #   resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4.
+            #   canceled, 5. failed. See the section entitled [Status
+            #   Values](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents#status-values) for more information on each of these statuses.
             # @param [String] phone_number An E164 formatted phone number hosted by this
             #   HostedNumberOrder.
             # @param [String] incoming_phone_number_sid A 34 character string that uniquely

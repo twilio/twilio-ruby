@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -129,9 +131,11 @@ module Twilio
 
               ##
               # Update the FeedbackInstance
-              # @param [String] quality_score An integer from 1 to 5 quality score
-              # @param [feedback.Issues] issue One or more of the issues experienced during the
-              #   call
+              # @param [String] quality_score An integer `1` to `5` quality score where `1`
+              #   represents very poor call quality and `5` represents a perfect call.
+              # @param [feedback.Issues] issue One or more issues experienced during the call.
+              #   The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`,
+              #   `post-dial-delay`, `digits-not-captured`, `audio-latency`, or `one-way-audio`.
               # @return [FeedbackInstance] Updated FeedbackInstance
               def update(quality_score: nil, issue: :unset)
                 data = Twilio::Values.of({
@@ -254,9 +258,11 @@ module Twilio
 
               ##
               # Update the FeedbackInstance
-              # @param [String] quality_score An integer from 1 to 5 quality score
-              # @param [feedback.Issues] issue One or more of the issues experienced during the
-              #   call
+              # @param [String] quality_score An integer `1` to `5` quality score where `1`
+              #   represents very poor call quality and `5` represents a perfect call.
+              # @param [feedback.Issues] issue One or more issues experienced during the call.
+              #   The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`,
+              #   `post-dial-delay`, `digits-not-captured`, `audio-latency`, or `one-way-audio`.
               # @return [FeedbackInstance] Updated FeedbackInstance
               def update(quality_score: nil, issue: :unset)
                 context.update(quality_score: quality_score, issue: issue, )

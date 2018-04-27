@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -13,7 +15,8 @@ module Twilio
             ##
             # Initialize the ApplicationList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the Account that created this
+            # @param [String] account_sid The unique id of the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
             #   application.
             # @return [ApplicationList] ApplicationList
             def initialize(version, account_sid: nil)
@@ -29,37 +32,43 @@ module Twilio
             # Request is executed immediately.
             # @param [String] friendly_name A human readable description of the new
             #   application, maximum of 64 characters.
-            # @param [String] api_version Requests to this application will start a new TwiML
-            #   session with this API version.
-            # @param [String] voice_url The URL Twilio will request when a phone number
-            #   assigned to this application receives a call.
-            # @param [String] voice_method The HTTP method Twilio will use when requesting the
-            #   above `Url`. Either `GET` or `POST`.
+            # @param [String] api_version Requests to this application's URLs will start a new
+            #   TwiML session with this API version. Either `2010-04-01` or `2008-08-01`.
+            #   Defaults to your account's default API version.
+            # @param [String] voice_url The URL that Twilio should request when somebody dials
+            #   a phone number assigned to this application.
+            # @param [String] voice_method The HTTP method that should be used to request the
+            #   `VoiceUrl`. Must be either `GET` or `POST`. Defaults to `POST`.
             # @param [String] voice_fallback_url The URL that Twilio will request if an error
             #   occurs retrieving or executing the TwiML requested by `Url`.
-            # @param [String] voice_fallback_method The HTTP method Twilio will use when
-            #   requesting the `VoiceFallbackUrl`. Either `GET` or `POST`.
+            # @param [String] voice_fallback_method The HTTP method that should be used to
+            #   request the `VoiceFallbackUrl`. Either `GET` or `POST`. Defaults to `POST`.
             # @param [String] status_callback The URL that Twilio will request to pass status
             #   parameters (such as call ended) to your application.
             # @param [String] status_callback_method The HTTP method Twilio will use to make
-            #   requests to the `StatusCallback` URL. Either `GET` or `POST`.
-            # @param [Boolean] voice_caller_id_lookup Look up the caller's caller-ID name from
-            #   the CNAM database (additional charges apply). Either `true` or `false`.
+            #   requests to the `StatusCallback` URL. Either `GET` or `POST`. Defaults to
+            #   `POST`.
+            # @param [Boolean] voice_caller_id_lookup Do a lookup of a caller's name from the
+            #   CNAM database and post it to your app. Either `true` or `false`. Defaults to
+            #   `false`.
             # @param [String] sms_url The URL Twilio will request when a phone number assigned
             #   to this application receives an incoming SMS message.
-            # @param [String] sms_method The HTTP method Twilio will use when making requests
-            #   to the `SmsUrl`. Either `GET` or `POST`.
-            # @param [String] sms_fallback_url The URL that Twilio will request if an error
-            #   occurs retrieving or executing the TwiML from `SmsUrl`.
-            # @param [String] sms_fallback_method The HTTP method Twilio will use when
-            #   requesting the above URL. Either `GET` or `POST`.
-            # @param [String] sms_status_callback The URL that Twilio will `POST` to when a
-            #   message is sent via the `/SMS/Messages` endpoint if you specify the `Sid` of
-            #   this application on an outgoing SMS request.
+            # @param [String] sms_method The HTTP method that should be used to request the
+            #   `SmsUrl`. Must be either `GET` or `POST`. Defaults to `POST`.
+            # @param [String] sms_fallback_url A URL that Twilio will request if an error
+            #   occurs requesting or executing the TwiML defined by `SmsUrl`.
+            # @param [String] sms_fallback_method The HTTP method that should be used to
+            #   request the `SmsFallbackUrl`. Must be either `GET` or `POST`. Defaults to
+            #   `POST`.
+            # @param [String] sms_status_callback Twilio will make a `POST` request to this
+            #   URL to pass status parameters (such as sent or failed) to your application if
+            #   you specify this application's `Sid` as the `ApplicationSid` on an [outgoing SMS
+            #   request](https://www.twilio.com/docs/sms/send-messages).
             # @param [String] message_status_callback Twilio will make a `POST` request to
             #   this URL to pass status parameters (such as sent or failed) to your application
             #   if you use the `/Messages` endpoint to send the message and specify this
-            #   application's `Sid` as the `ApplicationSid` on an outgoing SMS request.
+            #   application's `Sid` as the `ApplicationSid` on an [outgoing SMS
+            #   request](https://www.twilio.com/docs/sms/send-messages).
             # @return [ApplicationInstance] Newly created ApplicationInstance
             def create(friendly_name: nil, api_version: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, status_callback: :unset, status_callback_method: :unset, voice_caller_id_lookup: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, sms_status_callback: :unset, message_status_callback: :unset)
               data = Twilio::Values.of({
@@ -259,16 +268,16 @@ module Twilio
 
             ##
             # Update the ApplicationInstance
-            # @param [String] friendly_name A human readable descriptive text for this
-            #   resource, up to 64 characters long.
-            # @param [String] api_version Requests to this application will start a new TwiML
-            #   session with this API version.
-            # @param [String] voice_url The URL Twilio will request when a phone number
-            #   assigned to this application receives a call.
+            # @param [String] friendly_name A human readable description of the application,
+            #   with maximum length 64 characters.
+            # @param [String] api_version Requests to this application's URLs will start a new
+            #   TwiML session with this API version. Either `2010-04-01` or `2008-08-01`.
+            # @param [String] voice_url The URL that Twilio should request when somebody dials
+            #   a phone number assigned to this application.
             # @param [String] voice_method The HTTP method Twilio will use when requesting the
             #   above `Url`. Either `GET` or `POST`.
-            # @param [String] voice_fallback_url The URL that Twilio will request if an error
-            #   occurs retrieving or executing the TwiML requested by `Url`.
+            # @param [String] voice_fallback_url A URL that Twilio will request if an error
+            #   occurs requesting or executing the TwiML defined by `VoiceUrl`.
             # @param [String] voice_fallback_method The HTTP method Twilio will use when
             #   requesting the `VoiceFallbackUrl`. Either `GET` or `POST`.
             # @param [String] status_callback The URL that Twilio will request to pass status
@@ -281,17 +290,19 @@ module Twilio
             #   to this application receives an incoming SMS message.
             # @param [String] sms_method The HTTP method Twilio will use when making requests
             #   to the `SmsUrl`. Either `GET` or `POST`.
-            # @param [String] sms_fallback_url The URL that Twilio will request if an error
-            #   occurs retrieving or executing the TwiML from `SmsUrl`.
-            # @param [String] sms_fallback_method The HTTP method Twilio will use when
-            #   requesting the above URL. Either `GET` or `POST`.
+            # @param [String] sms_fallback_url A URL that Twilio will request if an error
+            #   occurs requesting or executing the TwiML defined by `SmsUrl`.
+            # @param [String] sms_fallback_method The HTTP method that should be used to
+            #   request the `SmsFallbackUrl`. Either `GET` or `POST`.
             # @param [String] sms_status_callback The URL that Twilio will `POST` to when a
             #   message is sent via the `/SMS/Messages` endpoint if you specify the `Sid` of
-            #   this application on an outgoing SMS request.
+            #   this application on an [outgoing SMS
+            #   request](https://www.twilio.com/docs/sms/send-messages).
             # @param [String] message_status_callback Twilio will make a `POST` request to
             #   this URL to pass status parameters (such as sent or failed) to your application
             #   if you use the `/Messages` endpoint to send the message and specify this
-            #   application's `Sid` as the `ApplicationSid` on an outgoing SMS request.
+            #   application's `Sid` as the `ApplicationSid` on an [outgoing SMS
+            #   request](https://www.twilio.com/docs/sms/send-messages).
             # @return [ApplicationInstance] Updated ApplicationInstance
             def update(friendly_name: :unset, api_version: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, status_callback: :unset, status_callback_method: :unset, voice_caller_id_lookup: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, sms_status_callback: :unset, message_status_callback: :unset)
               data = Twilio::Values.of({
@@ -339,7 +350,8 @@ module Twilio
             # Initialize the ApplicationInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the Account that created this
+            # @param [String] account_sid The unique id of the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
             #   application.
             # @param [String] sid The application Sid that that uniquely identifies this
             #   resource
@@ -523,16 +535,16 @@ module Twilio
 
             ##
             # Update the ApplicationInstance
-            # @param [String] friendly_name A human readable descriptive text for this
-            #   resource, up to 64 characters long.
-            # @param [String] api_version Requests to this application will start a new TwiML
-            #   session with this API version.
-            # @param [String] voice_url The URL Twilio will request when a phone number
-            #   assigned to this application receives a call.
+            # @param [String] friendly_name A human readable description of the application,
+            #   with maximum length 64 characters.
+            # @param [String] api_version Requests to this application's URLs will start a new
+            #   TwiML session with this API version. Either `2010-04-01` or `2008-08-01`.
+            # @param [String] voice_url The URL that Twilio should request when somebody dials
+            #   a phone number assigned to this application.
             # @param [String] voice_method The HTTP method Twilio will use when requesting the
             #   above `Url`. Either `GET` or `POST`.
-            # @param [String] voice_fallback_url The URL that Twilio will request if an error
-            #   occurs retrieving or executing the TwiML requested by `Url`.
+            # @param [String] voice_fallback_url A URL that Twilio will request if an error
+            #   occurs requesting or executing the TwiML defined by `VoiceUrl`.
             # @param [String] voice_fallback_method The HTTP method Twilio will use when
             #   requesting the `VoiceFallbackUrl`. Either `GET` or `POST`.
             # @param [String] status_callback The URL that Twilio will request to pass status
@@ -545,17 +557,19 @@ module Twilio
             #   to this application receives an incoming SMS message.
             # @param [String] sms_method The HTTP method Twilio will use when making requests
             #   to the `SmsUrl`. Either `GET` or `POST`.
-            # @param [String] sms_fallback_url The URL that Twilio will request if an error
-            #   occurs retrieving or executing the TwiML from `SmsUrl`.
-            # @param [String] sms_fallback_method The HTTP method Twilio will use when
-            #   requesting the above URL. Either `GET` or `POST`.
+            # @param [String] sms_fallback_url A URL that Twilio will request if an error
+            #   occurs requesting or executing the TwiML defined by `SmsUrl`.
+            # @param [String] sms_fallback_method The HTTP method that should be used to
+            #   request the `SmsFallbackUrl`. Either `GET` or `POST`.
             # @param [String] sms_status_callback The URL that Twilio will `POST` to when a
             #   message is sent via the `/SMS/Messages` endpoint if you specify the `Sid` of
-            #   this application on an outgoing SMS request.
+            #   this application on an [outgoing SMS
+            #   request](https://www.twilio.com/docs/sms/send-messages).
             # @param [String] message_status_callback Twilio will make a `POST` request to
             #   this URL to pass status parameters (such as sent or failed) to your application
             #   if you use the `/Messages` endpoint to send the message and specify this
-            #   application's `Sid` as the `ApplicationSid` on an outgoing SMS request.
+            #   application's `Sid` as the `ApplicationSid` on an [outgoing SMS
+            #   request](https://www.twilio.com/docs/sms/send-messages).
             # @return [ApplicationInstance] Updated ApplicationInstance
             def update(friendly_name: :unset, api_version: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, status_callback: :unset, status_callback_method: :unset, voice_caller_id_lookup: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, sms_status_callback: :unset, message_status_callback: :unset)
               context.update(

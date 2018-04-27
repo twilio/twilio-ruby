@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -141,8 +143,9 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this Add-on
-      #   installation.
+      # @param [String] sid 34 character string that uniquely identifies the Add-on.
+      #   This Sid can also be found in the Console on that specific Add-ons page as the
+      #   'Available Add-on Sid'.
       # @return [Twilio::REST::Preview::Marketplace::InstalledAddOnInstance] if sid was passed.
       # @return [Twilio::REST::Preview::Marketplace::InstalledAddOnList]
       def installed_add_ons(sid=:unset)

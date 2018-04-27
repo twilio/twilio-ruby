@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -15,7 +17,8 @@ module Twilio
             ##
             # Initialize the SyncListList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The unique SID identifier of the Service Instance
+            #   that hosts this List object.
             # @return [SyncListList] SyncListList
             def initialize(version, service_sid: nil)
               super(version)
@@ -28,8 +31,9 @@ module Twilio
             ##
             # Retrieve a single page of SyncListInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name The unique_name
-            # @param [String] ttl The ttl
+            # @param [String] unique_name (optional) Human-readable name for this list
+            # @param [String] ttl (optional) Time-to-live of this List in seconds, defaults to
+            #   no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [SyncListInstance] Newly created SyncListInstance
             def create(unique_name: :unset, ttl: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, 'Ttl' => ttl, })
@@ -281,7 +285,8 @@ module Twilio
             # Initialize the SyncListInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The unique SID identifier of the Service Instance
+            #   that hosts this List object.
             # @param [String] sid The sid
             # @return [SyncListInstance] SyncListInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
@@ -319,67 +324,67 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] The unique 34-character SID identifier of the List.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The unique_name
+            # @return [String] The unique and addressable name of this List.
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The unique SID identifier of the Twilio Account.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The service_sid
+            # @return [String] The unique SID identifier of the Service Instance that hosts this List object.
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL for this List.
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] A dictionary of URL links to nested resources of this List.
             def links
               @properties['links']
             end
 
             ##
-            # @return [String] The revision
+            # @return [String] Contains the current revision of this List, represented by a string identifier.
             def revision
               @properties['revision']
             end
 
             ##
-            # @return [Time] The date_expires
+            # @return [Time] Contains the date this List expires and gets deleted automatically.
             def date_expires
               @properties['date_expires']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date this List was created, given in UTC ISO 8601 format.
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] Specifies the date this List was last updated, given in UTC ISO 8601 format.
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The created_by
+            # @return [String] The identity of the List creator.
             def created_by
               @properties['created_by']
             end

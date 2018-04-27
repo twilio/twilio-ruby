@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -82,7 +84,9 @@ module Twilio
 
               ##
               # Fetch a TaskQueueRealTimeStatisticsInstance
-              # @param [String] task_channel The task_channel
+              # @param [String] task_channel Filter real-time and cumulative statistics by
+              #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
+              #   TaskChannelSid.
               # @return [TaskQueueRealTimeStatisticsInstance] Fetched TaskQueueRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
                 params = Twilio::Values.of({'TaskChannel' => task_channel, })
@@ -162,13 +166,13 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The activity_statistics
+              # @return [Hash] The current Worker status count breakdown by Activity
               def activity_statistics
                 @properties['activity_statistics']
               end
 
               ##
-              # @return [String] The longest_task_waiting_age
+              # @return [String] The age of the longest waiting Task
               def longest_task_waiting_age
                 @properties['longest_task_waiting_age']
               end
@@ -180,31 +184,31 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The tasks_by_priority
+              # @return [Hash] The Tasks broken down by priority
               def tasks_by_priority
                 @properties['tasks_by_priority']
               end
 
               ##
-              # @return [Hash] The tasks_by_status
+              # @return [Hash] The Tasks broken down by status
               def tasks_by_status
                 @properties['tasks_by_status']
               end
 
               ##
-              # @return [String] The total_available_workers
+              # @return [String] The total number of Workers available for Tasks in this TaskQueue
               def total_available_workers
                 @properties['total_available_workers']
               end
 
               ##
-              # @return [String] The total_eligible_workers
+              # @return [String] The total number of Workers eligible for Tasks in this TaskQueue, irrespective of Activity state.
               def total_eligible_workers
                 @properties['total_eligible_workers']
               end
 
               ##
-              # @return [String] The total_tasks
+              # @return [String] The total number of Tasks
               def total_tasks
                 @properties['total_tasks']
               end
@@ -223,7 +227,9 @@ module Twilio
 
               ##
               # Fetch a TaskQueueRealTimeStatisticsInstance
-              # @param [String] task_channel The task_channel
+              # @param [String] task_channel Filter real-time and cumulative statistics by
+              #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
+              #   TaskChannelSid.
               # @return [TaskQueueRealTimeStatisticsInstance] Fetched TaskQueueRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
                 context.fetch(task_channel: task_channel, )

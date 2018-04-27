@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -216,8 +218,9 @@ module Twilio
 
           ##
           # Update the InstalledAddOnInstance
-          # @param [Hash] configuration The JSON object representing the configuration of
-          #   the Add-on installation.
+          # @param [Hash] configuration Valid JSON object that conform to the configuration
+          #   schema exposed by the associated Available Add-on resource. This is only
+          #   required by Add-ons that need to be configured
           # @param [String] unique_name The human-readable string that uniquely identifies
           #   this Add-on installation for an Account.
           # @return [InstalledAddOnInstance] Updated InstalledAddOnInstance
@@ -360,7 +363,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The links
+          # @return [String] A dictionary of URLs for related resource.
           def links
             @properties['links']
           end
@@ -381,8 +384,9 @@ module Twilio
 
           ##
           # Update the InstalledAddOnInstance
-          # @param [Hash] configuration The JSON object representing the configuration of
-          #   the Add-on installation.
+          # @param [Hash] configuration Valid JSON object that conform to the configuration
+          #   schema exposed by the associated Available Add-on resource. This is only
+          #   required by Add-ons that need to be configured
           # @param [String] unique_name The human-readable string that uniquely identifies
           #   this Add-on installation for an Account.
           # @return [InstalledAddOnInstance] Updated InstalledAddOnInstance

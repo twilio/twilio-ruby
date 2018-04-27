@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -82,11 +84,23 @@ module Twilio
 
               ##
               # Fetch a WorkflowCumulativeStatisticsInstance
-              # @param [Time] end_date The end_date
-              # @param [String] minutes The minutes
-              # @param [Time] start_date The start_date
-              # @param [String] task_channel The task_channel
-              # @param [String] split_by_wait_time The split_by_wait_time
+              # @param [Time] end_date Filter cumulative statistics by an end date. This is
+              #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
+              #   Timestamp
+              # @param [String] minutes Filter cumulative statistics by up to ‘x’ minutes in the
+              #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
+              #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
+              # @param [Time] start_date Filter cumulative statistics by a start date. This is
+              #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
+              #   Timestamp
+              # @param [String] task_channel Filter real-time and cumulative statistics by
+              #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
+              #   TaskChannelSid.
+              # @param [String] split_by_wait_time A comma separated values for viewing splits
+              #   of tasks canceled and accepted above the given threshold in seconds. Ex: "5,30"
+              #   would show splits of tasks that were canceled or accepted before or after 5
+              #   seconds and respectively, 30 seconds. This is great for showing short abandoned
+              #   tasks or tasks that failed to meet your SLA.
               # @return [WorkflowCumulativeStatisticsInstance] Fetched WorkflowCumulativeStatisticsInstance
               def fetch(end_date: :unset, minutes: :unset, start_date: :unset, task_channel: :unset, split_by_wait_time: :unset)
                 params = Twilio::Values.of({
@@ -183,7 +197,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The avg_task_acceptance_time
+              # @return [String] The average time from Task creation to acceptance
               def avg_task_acceptance_time
                 @properties['avg_task_acceptance_time']
               end
@@ -201,91 +215,91 @@ module Twilio
               end
 
               ##
-              # @return [String] The reservations_created
+              # @return [String] The total number of Reservations that were created for Workers
               def reservations_created
                 @properties['reservations_created']
               end
 
               ##
-              # @return [String] The reservations_accepted
+              # @return [String] The total number of Reservations accepted by Workers
               def reservations_accepted
                 @properties['reservations_accepted']
               end
 
               ##
-              # @return [String] The reservations_rejected
+              # @return [String] The total number of Reservations that were rejected
               def reservations_rejected
                 @properties['reservations_rejected']
               end
 
               ##
-              # @return [String] The reservations_timed_out
+              # @return [String] The total number of Reservations that were timed out
               def reservations_timed_out
                 @properties['reservations_timed_out']
               end
 
               ##
-              # @return [String] The reservations_canceled
+              # @return [String] The total number of Reservations that were canceled
               def reservations_canceled
                 @properties['reservations_canceled']
               end
 
               ##
-              # @return [String] The reservations_rescinded
+              # @return [String] The total number of Reservations that were rescinded
               def reservations_rescinded
                 @properties['reservations_rescinded']
               end
 
               ##
-              # @return [Hash] The split_by_wait_time
+              # @return [Hash] The splits of the tasks canceled and accepted based on the provided SplitByWaitTime parameter.
               def split_by_wait_time
                 @properties['split_by_wait_time']
               end
 
               ##
-              # @return [Hash] The wait_duration_until_accepted
+              # @return [Hash] The wait duration stats for tasks that were accepted.
               def wait_duration_until_accepted
                 @properties['wait_duration_until_accepted']
               end
 
               ##
-              # @return [Hash] The wait_duration_until_canceled
+              # @return [Hash] The wait duration stats for tasks that were canceled.
               def wait_duration_until_canceled
                 @properties['wait_duration_until_canceled']
               end
 
               ##
-              # @return [String] The tasks_canceled
+              # @return [String] The total number of Tasks that were canceled
               def tasks_canceled
                 @properties['tasks_canceled']
               end
 
               ##
-              # @return [String] The tasks_completed
+              # @return [String] The total number of Tasks that were completed
               def tasks_completed
                 @properties['tasks_completed']
               end
 
               ##
-              # @return [String] The tasks_entered
+              # @return [String] The total number of Tasks that entered this Workflow
               def tasks_entered
                 @properties['tasks_entered']
               end
 
               ##
-              # @return [String] The tasks_deleted
+              # @return [String] The total number of Tasks that were deleted
               def tasks_deleted
                 @properties['tasks_deleted']
               end
 
               ##
-              # @return [String] The tasks_moved
+              # @return [String] The total number of Tasks that were moved from one queue to another
               def tasks_moved
                 @properties['tasks_moved']
               end
 
               ##
-              # @return [String] The tasks_timed_out_in_workflow
+              # @return [String] The total number of Tasks that were timed out of their Workflows
               def tasks_timed_out_in_workflow
                 @properties['tasks_timed_out_in_workflow']
               end
@@ -310,11 +324,23 @@ module Twilio
 
               ##
               # Fetch a WorkflowCumulativeStatisticsInstance
-              # @param [Time] end_date The end_date
-              # @param [String] minutes The minutes
-              # @param [Time] start_date The start_date
-              # @param [String] task_channel The task_channel
-              # @param [String] split_by_wait_time The split_by_wait_time
+              # @param [Time] end_date Filter cumulative statistics by an end date. This is
+              #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
+              #   Timestamp
+              # @param [String] minutes Filter cumulative statistics by up to ‘x’ minutes in the
+              #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
+              #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
+              # @param [Time] start_date Filter cumulative statistics by a start date. This is
+              #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
+              #   Timestamp
+              # @param [String] task_channel Filter real-time and cumulative statistics by
+              #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
+              #   TaskChannelSid.
+              # @param [String] split_by_wait_time A comma separated values for viewing splits
+              #   of tasks canceled and accepted above the given threshold in seconds. Ex: "5,30"
+              #   would show splits of tasks that were canceled or accepted before or after 5
+              #   seconds and respectively, 30 seconds. This is great for showing short abandoned
+              #   tasks or tasks that failed to meet your SLA.
               # @return [WorkflowCumulativeStatisticsInstance] Fetched WorkflowCumulativeStatisticsInstance
               def fetch(end_date: :unset, minutes: :unset, start_date: :unset, task_channel: :unset, split_by_wait_time: :unset)
                 context.fetch(

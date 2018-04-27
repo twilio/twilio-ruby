@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -82,7 +84,9 @@ module Twilio
 
               ##
               # Fetch a WorkflowRealTimeStatisticsInstance
-              # @param [String] task_channel The task_channel
+              # @param [String] task_channel Filter real-time and cumulative statistics by
+              #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
+              #   TaskChannelSid.
               # @return [WorkflowRealTimeStatisticsInstance] Fetched WorkflowRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
                 params = Twilio::Values.of({'TaskChannel' => task_channel, })
@@ -159,7 +163,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The longest_task_waiting_age
+              # @return [String] The age of the longest waiting Task
               def longest_task_waiting_age
                 @properties['longest_task_waiting_age']
               end
@@ -171,13 +175,13 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The tasks_by_status
+              # @return [Hash] The Tasks broken down by status
               def tasks_by_status
                 @properties['tasks_by_status']
               end
 
               ##
-              # @return [String] The total_tasks
+              # @return [String] The total number of Tasks
               def total_tasks
                 @properties['total_tasks']
               end
@@ -202,7 +206,9 @@ module Twilio
 
               ##
               # Fetch a WorkflowRealTimeStatisticsInstance
-              # @param [String] task_channel The task_channel
+              # @param [String] task_channel Filter real-time and cumulative statistics by
+              #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
+              #   TaskChannelSid.
               # @return [WorkflowRealTimeStatisticsInstance] Fetched WorkflowRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
                 context.fetch(task_channel: task_channel, )

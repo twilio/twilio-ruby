@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -26,20 +28,44 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name The friendly_name
-          # @param [String] inbound_request_url The inbound_request_url
-          # @param [String] inbound_method The inbound_method
-          # @param [String] fallback_url The fallback_url
-          # @param [String] fallback_method The fallback_method
-          # @param [String] status_callback The status_callback
-          # @param [Boolean] sticky_sender The sticky_sender
-          # @param [Boolean] mms_converter The mms_converter
-          # @param [Boolean] smart_encoding The smart_encoding
+          # @param [String] friendly_name A human readable descriptive text for this
+          #   resource, up to 64 characters.
+          # @param [String] inbound_request_url A [webhook
+          #   request](https://www.twilio.com/docs/api/twiml/sms/twilio_request) is made to
+          #   the Inbound Request URL when a message is received by any phone number or
+          #   shortcode associated to your Messaging Service. Set to `null` to disable inbound
+          #   messaging.
+          # @param [String] inbound_method The HTTP method used when making requests to the
+          #   Inbound Request URL. Either `GET` or `POST`. Default value is `POST`.
+          # @param [String] fallback_url A request is made to the Fallback URL if an error
+          #   occurs with retrieving or executing the TwiML from you Inbound Request URL.
+          # @param [String] fallback_method The HTTP method used when requesting the
+          #   Fallback URL. Either `GET` or `POST`. Default value is `POST`.
+          # @param [String] status_callback A webhook request is made to the Status Callback
+          #   to pass [status
+          #   updates](https://www.twilio.com/docs/api/rest/message#sms-status-values) about
+          #   your messages. These status updates let you know if your accepted message were
+          #   successfully sent and delivered or if a [delivery related
+          #   error](https://www.twilio.com/docs/api/rest/message#error-values) may have
+          #   occurred.
+          # @param [Boolean] sticky_sender Configuration to enable or disable Sticky Sender
+          #   on your Service Instance. Possible values are `true` and `false`. Default value
+          #   is `true`.
+          # @param [Boolean] mms_converter Configuration to enable or disable MMS Converter
+          #   on your Service Instance. Possible values are `true` and `false`. Default value
+          #   is `true`.
+          # @param [Boolean] smart_encoding Configuration to enable or disable [Smart
+          #   Encoding](https://www.twilio.com/docs/api/messaging/services-and-copilot#smart-encoding). Possible values are `true` and `false`. Default value is `true`.
           # @param [service.ScanMessageContent] scan_message_content The
           #   scan_message_content
-          # @param [Boolean] fallback_to_long_code The fallback_to_long_code
-          # @param [Boolean] area_code_geomatch The area_code_geomatch
-          # @param [String] validity_period The validity_period
+          # @param [Boolean] fallback_to_long_code Configuration to enable or disable
+          #   [Fallback to Long
+          #   Code](https://www.twilio.com/docs/api/messaging/services-and-copilot#fallback-to-long-code). Possible values are `true` and `false`. Default value is `false`.
+          # @param [Boolean] area_code_geomatch Configuration to enable or disable [Area
+          #   Code
+          #   Geomatch](https://www.twilio.com/docs/api/messaging/services-and-copilot#area-code-geomatch). Possible values are `true` and `false`. Default value is `false`.
+          # @param [String] validity_period Configuration to set the [validity
+          #   period](https://www.twilio.com/docs/api/messaging/services-and-copilot#validity-period) of all messages sent from your Service, in seconds. Acceptable integers range from `1` to `14,400`.  Default value is `14,400`.
           # @param [Boolean] synchronous_validation The synchronous_validation
           # @return [ServiceInstance] Newly created ServiceInstance
           def create(friendly_name: nil, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset)
@@ -392,79 +418,79 @@ module Twilio
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] Unique 34 character ID of the Service.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] Unique 34 character ID of the Account that created this Service.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The friendly_name
+          # @return [String] A human readable descriptive text for this resource, up to 64 characters.
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The date that this resource was created.
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The date that this resource was last updated.
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The inbound_request_url
+          # @return [String] The URL Twilio will make a webhook request to when a message is received by any phone number or short code in your Service.
           def inbound_request_url
             @properties['inbound_request_url']
           end
 
           ##
-          # @return [String] The inbound_method
+          # @return [String] The HTTP method Twilio will use when making requests to the Inbound Request URL.
           def inbound_method
             @properties['inbound_method']
           end
 
           ##
-          # @return [String] The fallback_url
+          # @return [String] The URL that Twilio will request if an error occurs when retrieving or executing the TwiML from your Inbound Request URL.
           def fallback_url
             @properties['fallback_url']
           end
 
           ##
-          # @return [String] The fallback_method
+          # @return [String] The HTTP method Twilio will use when making requests to the Fallback URL.
           def fallback_method
             @properties['fallback_method']
           end
 
           ##
-          # @return [String] The status_callback
+          # @return [String] The URL Twilio will make a webhook request to when passing you status updates about the delivery of your messages.
           def status_callback
             @properties['status_callback']
           end
 
           ##
-          # @return [Boolean] The sticky_sender
+          # @return [Boolean] Configuration to enable or disable Sticky Sender on your Service instance.
           def sticky_sender
             @properties['sticky_sender']
           end
 
           ##
-          # @return [Boolean] The mms_converter
+          # @return [Boolean] Configuration to enable or disable MMS Converter for messages sent through your Service instance.
           def mms_converter
             @properties['mms_converter']
           end
 
           ##
-          # @return [Boolean] The smart_encoding
+          # @return [Boolean] Configuration to enable or disable Smart Encoding for messages sent through your Service instance.
           def smart_encoding
             @properties['smart_encoding']
           end
@@ -476,13 +502,13 @@ module Twilio
           end
 
           ##
-          # @return [Boolean] The fallback_to_long_code
+          # @return [Boolean] Configuration to enable or disable Fallback to Long Code for messages sent through your Service instance.
           def fallback_to_long_code
             @properties['fallback_to_long_code']
           end
 
           ##
-          # @return [Boolean] The area_code_geomatch
+          # @return [Boolean] Configuration to enable or disable Area Code Geomatch on your Service Instance.
           def area_code_geomatch
             @properties['area_code_geomatch']
           end
@@ -494,7 +520,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The validity_period
+          # @return [String] The number of seconds all messages sent from your Service are valid for.
           def validity_period
             @properties['validity_period']
           end

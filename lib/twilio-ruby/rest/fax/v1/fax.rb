@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -151,12 +153,15 @@ module Twilio
           # Request is executed immediately.
           # @param [String] to The phone number or SIP address to send the fax to,
           #   E.164-formatted.
-          # @param [String] media_url The URL that Twilio will request to obtain the fax
-          #   media to send, which must be a PDF file.
-          # @param [fax.Quality] quality The quality setting to use for this fax. One of
-          #   `standard`, `fine` or `superfine`.
-          # @param [String] status_callback The URL that Twilio will request when the status
-          #   of the fax changes.
+          # @param [String] media_url The HTTP or HTTPS URL where the fax media PDF resides
+          #   (see our [security](https://www.twilio.com/docs/security) page for information
+          #   on how to ensure the request for your media comes from Twilio)
+          # @param [fax.Quality] quality A [quality
+          #   value](https://www.twilio.com/docs/api/fax/rest/faxes#fax-quality-values), which
+          #   defaults to `fine`
+          # @param [String] status_callback A [status
+          #   callback](https://www.twilio.com/docs/api/fax/rest/faxes#fax-status-callback)
+          #   URL that will receive a POST when the status of the fax changes
           # @param [String] from The phone number to use as the caller id, E.164-formatted.
           #   If using a phone number, it must be a Twilio number or a verified outgoing
           #   caller id for your account. If sending to a SIP address, this can be any

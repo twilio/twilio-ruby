@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -13,7 +15,8 @@ module Twilio
             ##
             # Initialize the NotificationList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the Account responsible for this
+            # @param [String] account_sid The unique id of the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
             #   notification.
             # @return [NotificationList] NotificationList
             def initialize(version, account_sid: nil)
@@ -28,7 +31,8 @@ module Twilio
             # Lists NotificationInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] log Only show notifications for this log level
+            # @param [String] log Only show notifications for this log, using the integer log
+            #   values shown above.
             # @param [Time] message_date_before Filter by date
             # @param [Time] message_date Filter by date
             # @param [Time] message_date_after Filter by date
@@ -54,7 +58,8 @@ module Twilio
             # Streams NotificationInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] log Only show notifications for this log level
+            # @param [String] log Only show notifications for this log, using the integer log
+            #   values shown above.
             # @param [Time] message_date_before Filter by date
             # @param [Time] message_date Filter by date
             # @param [Time] message_date_after Filter by date
@@ -96,7 +101,8 @@ module Twilio
             ##
             # Retrieve a single page of NotificationInstance records from the API.
             # Request is executed immediately.
-            # @param [String] log Only show notifications for this log level
+            # @param [String] log Only show notifications for this log, using the integer log
+            #   values shown above.
             # @param [Time] message_date_before Filter by date
             # @param [Time] message_date Filter by date
             # @param [Time] message_date_after Filter by date
@@ -226,7 +232,8 @@ module Twilio
             # Initialize the NotificationInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the Account responsible for this
+            # @param [String] account_sid The unique id of the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
             #   notification.
             # @param [String] sid The notification Sid that uniquely identifies this resource
             # @return [NotificationInstance] NotificationInstance

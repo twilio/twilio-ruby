@@ -3,6 +3,8 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
+# 
+# frozen_string_literal: true
 
 module Twilio
   module REST
@@ -13,7 +15,8 @@ module Twilio
             ##
             # Initialize the TranscriptionList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the Account responsible for this
+            # @param [String] account_sid The unique id of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
             #   transcription.
             # @return [TranscriptionList] TranscriptionList
             def initialize(version, account_sid: nil)
@@ -197,7 +200,8 @@ module Twilio
             # Initialize the TranscriptionInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the Account responsible for this
+            # @param [String] account_sid The unique id of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
             #   transcription.
             # @param [String] sid The transcription Sid that uniquely identifies this resource
             # @return [TranscriptionInstance] TranscriptionInstance
