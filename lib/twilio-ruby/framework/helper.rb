@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Twilio
   module REST
     def url_join(left, right)

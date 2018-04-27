@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rack
   # Middleware that authenticates webhooks from Twilio using the request
   # validator.

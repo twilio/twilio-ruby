@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Twilio
   class Values
     def self.of(hash)
