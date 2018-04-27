@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Twilio
-    VERSION = '5.8.1'
+    VERSION = '5.9.0'
 end
