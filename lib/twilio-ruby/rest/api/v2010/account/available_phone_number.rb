@@ -371,7 +371,7 @@ module Twilio
             end
 
             ##
-            # @return [Boolean] The beta
+            # @return [Boolean] True if new to Twilio platform.
             def beta
               @properties['beta']
             end

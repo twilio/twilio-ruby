@@ -17,7 +17,7 @@ module Twilio
             ##
             # Initialize the ModelBuildList
             # @param [Version] version Version that contains the resource
-            # @param [String] assistant_sid The assistant_sid
+            # @param [String] assistant_sid The unique ID of the parent Assistant.
             # @return [ModelBuildList] ModelBuildList
             def initialize(version, assistant_sid: nil)
               super(version)
@@ -113,7 +113,9 @@ module Twilio
             # Retrieve a single page of ModelBuildInstance records from the API.
             # Request is executed immediately.
             # @param [String] status_callback The status_callback
-            # @param [String] unique_name The unique_name
+            # @param [String] unique_name A user-provided string that uniquely identifies this
+            #   resource as an alternative to the sid. Unique up to 64 characters long. For
+            #   example: v0.1
             # @return [ModelBuildInstance] Newly created ModelBuildInstance
             def create(status_callback: :unset, unique_name: :unset)
               data = Twilio::Values.of({'StatusCallback' => status_callback, 'UniqueName' => unique_name, })
@@ -204,7 +206,9 @@ module Twilio
 
             ##
             # Update the ModelBuildInstance
-            # @param [String] unique_name The unique_name
+            # @param [String] unique_name A user-provided string that uniquely identifies this
+            #   resource as an alternative to the sid. Unique up to 64 characters long. For
+            #   example: v0.1
             # @return [ModelBuildInstance] Updated ModelBuildInstance
             def update(unique_name: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, })
@@ -245,7 +249,7 @@ module Twilio
             # Initialize the ModelBuildInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] assistant_sid The assistant_sid
+            # @param [String] assistant_sid The unique ID of the parent Assistant.
             # @param [String] sid The sid
             # @return [ModelBuildInstance] ModelBuildInstance
             def initialize(version, payload, assistant_sid: nil, sid: nil)
@@ -282,43 +286,43 @@ module Twilio
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The unique ID of the Account that created this Model Build.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date that this resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date that this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The assistant_sid
+            # @return [String] The unique ID of the parent Assistant.
             def assistant_sid
               @properties['assistant_sid']
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] A 34 character string that uniquely identifies this resource.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [model_build.Status] The status
+            # @return [model_build.Status] A string that described the model build status. The values can be: enqueued, building, completed, failed
             def status
               @properties['status']
             end
 
             ##
-            # @return [String] The unique_name
+            # @return [String] A user-provided string that uniquely identifies this resource as an alternative to the sid. Unique up to 64 characters long.
             def unique_name
               @properties['unique_name']
             end
@@ -330,7 +334,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The build_duration
+            # @return [String] The time in seconds it took to build the model.
             def build_duration
               @properties['build_duration']
             end
@@ -350,7 +354,9 @@ module Twilio
 
             ##
             # Update the ModelBuildInstance
-            # @param [String] unique_name The unique_name
+            # @param [String] unique_name A user-provided string that uniquely identifies this
+            #   resource as an alternative to the sid. Unique up to 64 characters long. For
+            #   example: v0.1
             # @return [ModelBuildInstance] Updated ModelBuildInstance
             def update(unique_name: :unset)
               context.update(unique_name: unique_name, )

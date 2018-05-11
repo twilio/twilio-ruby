@@ -17,7 +17,7 @@ module Twilio
             ##
             # Initialize the FieldTypeList
             # @param [Version] version Version that contains the resource
-            # @param [String] assistant_sid The assistant_sid
+            # @param [String] assistant_sid The unique ID of the Assistant.
             # @return [FieldTypeList] FieldTypeList
             def initialize(version, assistant_sid: nil)
               super(version)
@@ -112,8 +112,10 @@ module Twilio
             ##
             # Retrieve a single page of FieldTypeInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name The unique_name
-            # @param [String] friendly_name The friendly_name
+            # @param [String] unique_name A user-provided string that uniquely identifies this
+            #   resource as an alternative to the sid. Unique up to 64 characters long.
+            # @param [String] friendly_name A user-provided string that identifies this
+            #   resource. It is non-unique and can up to 255 characters long.
             # @return [FieldTypeInstance] Newly created FieldTypeInstance
             def create(unique_name: nil, friendly_name: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, 'FriendlyName' => friendly_name, })
@@ -207,8 +209,10 @@ module Twilio
 
             ##
             # Update the FieldTypeInstance
-            # @param [String] friendly_name The friendly_name
-            # @param [String] unique_name The unique_name
+            # @param [String] friendly_name A user-provided string that identifies this
+            #   resource. It is non-unique and can up to 255 characters long.
+            # @param [String] unique_name A user-provided string that uniquely identifies this
+            #   resource as an alternative to the sid. Unique up to 64 characters long.
             # @return [FieldTypeInstance] Updated FieldTypeInstance
             def update(friendly_name: :unset, unique_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, 'UniqueName' => unique_name, })
@@ -271,7 +275,7 @@ module Twilio
             # Initialize the FieldTypeInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] assistant_sid The assistant_sid
+            # @param [String] assistant_sid The unique ID of the Assistant.
             # @param [String] sid The sid
             # @return [FieldTypeInstance] FieldTypeInstance
             def initialize(version, payload, assistant_sid: nil, sid: nil)
@@ -307,25 +311,25 @@ module Twilio
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The unique ID of the Account that created this Field Type.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date that this resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date that this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The friendly_name
+            # @return [String] A user-provided string that identifies this resource. It is non-unique and can up to 255 characters long.
             def friendly_name
               @properties['friendly_name']
             end
@@ -337,19 +341,19 @@ module Twilio
             end
 
             ##
-            # @return [String] The assistant_sid
+            # @return [String] The unique ID of the Assistant.
             def assistant_sid
               @properties['assistant_sid']
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] A 34 character string that uniquely identifies this resource.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The unique_name
+            # @return [String] A user-provided string that uniquely identifies this resource as an alternative to the sid. Unique up to 64 characters long.
             def unique_name
               @properties['unique_name']
             end
@@ -369,8 +373,10 @@ module Twilio
 
             ##
             # Update the FieldTypeInstance
-            # @param [String] friendly_name The friendly_name
-            # @param [String] unique_name The unique_name
+            # @param [String] friendly_name A user-provided string that identifies this
+            #   resource. It is non-unique and can up to 255 characters long.
+            # @param [String] unique_name A user-provided string that uniquely identifies this
+            #   resource as an alternative to the sid. Unique up to 64 characters long.
             # @return [FieldTypeInstance] Updated FieldTypeInstance
             def update(friendly_name: :unset, unique_name: :unset)
               context.update(friendly_name: friendly_name, unique_name: unique_name, )

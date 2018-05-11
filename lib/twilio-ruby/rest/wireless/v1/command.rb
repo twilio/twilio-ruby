@@ -10,8 +10,6 @@ module Twilio
   module REST
     class Wireless < Domain
       class V1 < Version
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class CommandList < ListResource
           ##
           # Initialize the CommandList
@@ -29,9 +27,10 @@ module Twilio
           # Lists CommandInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] sim The sim
-          # @param [command.Status] status The status
-          # @param [command.Direction] direction The direction
+          # @param [String] sim Only return Commands to or from this SIM.
+          # @param [command.Status] status Only return Commands with this status value.
+          # @param [command.Direction] direction Only return Commands with this direction
+          #   value.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -53,9 +52,10 @@ module Twilio
           # Streams CommandInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] sim The sim
-          # @param [command.Status] status The status
-          # @param [command.Direction] direction The direction
+          # @param [String] sim Only return Commands to or from this SIM.
+          # @param [command.Status] status Only return Commands with this status value.
+          # @param [command.Direction] direction Only return Commands with this direction
+          #   value.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -88,9 +88,10 @@ module Twilio
           ##
           # Retrieve a single page of CommandInstance records from the API.
           # Request is executed immediately.
-          # @param [String] sim The sim
-          # @param [command.Status] status The status
-          # @param [command.Direction] direction The direction
+          # @param [String] sim Only return Commands to or from this SIM.
+          # @param [command.Status] status Only return Commands with this status value.
+          # @param [command.Direction] direction Only return Commands with this direction
+          #   value.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -128,12 +129,27 @@ module Twilio
           ##
           # Retrieve a single page of CommandInstance records from the API.
           # Request is executed immediately.
-          # @param [String] command The command
-          # @param [String] sim The sim
-          # @param [String] callback_method The callback_method
-          # @param [String] callback_url The callback_url
-          # @param [command.CommandMode] command_mode The command_mode
-          # @param [String] include_sid The include_sid
+          # @param [String] command The message body of the Command (in text mode) or a
+          #   Base64 encoded byte string in binary mode.
+          # @param [String] sim The Sid or UniqueName of the
+          #   [SIM](https://www.twilio.com/docs/api/wireless/rest-api/sim) to send the Command
+          #   to.
+          # @param [String] callback_method The HTTP method Twilio will use when making a
+          #   request to the callback URL (valid options are GET or POST). Defaults to POST.
+          # @param [String] callback_url Twilio will make a request to this URL when the
+          #   Command has finished sending (delivered or failed).
+          # @param [command.CommandMode] command_mode A string representing which mode to
+          #   send the SMS message using. May be `text` or `binary`. If omitted, the default
+          #   SMS mode is `text`.
+          # @param [String] include_sid When sending a Command to a SIM in text mode, Twilio
+          #   can automatically include the Sid of the Command in the message body, which
+          #   could be used to ensure that the device does not process the same Command more
+          #   than once. The options for inclusion are `none`, `start` and `end`. The default
+          #   behavior is `none`. When using `start` or `end`, the CommandSid will be
+          #   prepended or appended to the message body, with a space character separating the
+          #   CommandSid and the message body. The length of the CommandSid contributes toward
+          #   the 160 character limit, i.e. the SMS body must be 128 characters or less before
+          #   the Command Sid is included.
           # @return [CommandInstance] Newly created CommandInstance
           def create(command: nil, sim: :unset, callback_method: :unset, callback_url: :unset, command_mode: :unset, include_sid: :unset)
             data = Twilio::Values.of({
@@ -161,8 +177,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class CommandPage < Page
           ##
           # Initialize the CommandPage
@@ -192,8 +206,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class CommandContext < InstanceContext
           ##
           # Initialize the CommandContext
@@ -231,8 +243,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class CommandInstance < InstanceResource
           ##
           # Initialize the CommandInstance
@@ -274,61 +284,61 @@ module Twilio
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A 34 character string that uniquely identifies this resource.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] The unique id of the Account that this Command belongs to.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The sim_sid
+          # @return [String] The unique ID of the SIM that this Command was sent to or from.
           def sim_sid
             @properties['sim_sid']
           end
 
           ##
-          # @return [String] The command
+          # @return [String] The message being sent to or from the SIM.
           def command
             @properties['command']
           end
 
           ##
-          # @return [command.CommandMode] The command_mode
+          # @return [command.CommandMode] A string representing which mode the SMS was sent or received using.
           def command_mode
             @properties['command_mode']
           end
 
           ##
-          # @return [command.Status] The status
+          # @return [command.Status] A string representing the status of the Command.
           def status
             @properties['status']
           end
 
           ##
-          # @return [command.Direction] The direction
+          # @return [command.Direction] The direction of the Command.
           def direction
             @properties['direction']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The date that this resource was created, given as GMT in ISO 8601 format.
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The date that this resource was last updated, given as GMT in ISO 8601 format.
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The URL for this resource.
           def url
             @properties['url']
           end

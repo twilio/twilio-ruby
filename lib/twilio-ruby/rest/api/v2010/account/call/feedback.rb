@@ -86,8 +86,11 @@ module Twilio
               ##
               # Retrieve a single page of FeedbackInstance records from the API.
               # Request is executed immediately.
-              # @param [String] quality_score The quality_score
-              # @param [feedback.Issues] issue The issue
+              # @param [String] quality_score An integer `1` to `5` quality score where `1`
+              #   represents very poor call quality and `5` represents a perfect call.
+              # @param [feedback.Issues] issue One or more issues experienced during the call.
+              #   The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`,
+              #   `post-dial-delay`, `digits-not-captured`, `audio-latency`, or `one-way-audio`.
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(quality_score: nil, issue: :unset)
                 data = Twilio::Values.of({
@@ -242,8 +245,11 @@ module Twilio
               ##
               # Retrieve a single page of FeedbackInstance records from the API.
               # Request is executed immediately.
-              # @param [String] quality_score The quality_score
-              # @param [feedback.Issues] issue The issue
+              # @param [String] quality_score An integer `1` to `5` quality score where `1`
+              #   represents very poor call quality and `5` represents a perfect call.
+              # @param [feedback.Issues] issue One or more issues experienced during the call.
+              #   The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`,
+              #   `post-dial-delay`, `digits-not-captured`, `audio-latency`, or `one-way-audio`.
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(quality_score: nil, issue: :unset)
                 context.create(quality_score: quality_score, issue: issue, )

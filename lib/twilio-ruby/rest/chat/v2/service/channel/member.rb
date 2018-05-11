@@ -16,8 +16,11 @@ module Twilio
               ##
               # Initialize the MemberList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
-              # @param [String] channel_sid The channel_sid
+              # @param [String] service_sid The unique id of the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this member
+              #   belongs to.
+              # @param [String] channel_sid The unique id of the
+              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) for this member.
               # @return [MemberList] MemberList
               def initialize(version, service_sid: nil, channel_sid: nil)
                 super(version)
@@ -234,11 +237,17 @@ module Twilio
 
               ##
               # Update the MemberInstance
-              # @param [String] role_sid The role_sid
-              # @param [String] last_consumed_message_index The last_consumed_message_index
-              # @param [Time] last_consumption_timestamp The last_consumption_timestamp
-              # @param [Time] date_created The date_created
-              # @param [Time] date_updated The date_updated
+              # @param [String] role_sid The role to be assigned to this member. Defaults to the
+              #   roles specified on the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services).
+              # @param [String] last_consumed_message_index Optional field used to specify the
+              #   last consumed Message index for the Channel for this Member.
+              # @param [Time] last_consumption_timestamp Optional ISO8601 time indicating the
+              #   last datetime the Member consumed a Message in the Channel.
+              # @param [Time] date_created The optional ISO8601 time specifying the datetime the
+              #   Members should be set as being created.
+              # @param [Time] date_updated The optional ISO8601 time specifying the datetime the
+              #   Member should be set as having been last updated.
               # @return [MemberInstance] Updated MemberInstance
               def update(role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset)
                 data = Twilio::Values.of({
@@ -277,8 +286,11 @@ module Twilio
               # Initialize the MemberInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The service_sid
-              # @param [String] channel_sid The channel_sid
+              # @param [String] service_sid The unique id of the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this member
+              #   belongs to.
+              # @param [String] channel_sid The unique id of the
+              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) for this member.
               # @param [String] sid The sid
               # @return [MemberInstance] MemberInstance
               def initialize(version, payload, service_sid: nil, channel_sid: nil, sid: nil)
@@ -325,67 +337,67 @@ module Twilio
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] A 34 character string that uniquely identifies this resource.
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The unique id of the Account responsible for this member.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The channel_sid
+              # @return [String] The unique id of the Channel for this member.
               def channel_sid
                 @properties['channel_sid']
               end
 
               ##
-              # @return [String] The service_sid
+              # @return [String] The unique id of the Service this member belongs to.
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] The identity
+              # @return [String] A unique string identifier for this User in this Service.
               def identity
                 @properties['identity']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The date that this resource was created.
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The date that this resource was last updated.
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The role_sid
+              # @return [String] The Role assigned to this member.
               def role_sid
                 @properties['role_sid']
               end
 
               ##
-              # @return [String] The last_consumed_message_index
+              # @return [String] An Integer representing index of the last Message this Member has read within this Channel
               def last_consumed_message_index
                 @properties['last_consumed_message_index']
               end
 
               ##
-              # @return [Time] The last_consumption_timestamp
+              # @return [Time] An ISO8601 based timestamp string representing the datetime of the last Message read event for this Member within this Channel
               def last_consumption_timestamp
                 @properties['last_consumption_timestamp']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] An absolute URL for this member.
               def url
                 @properties['url']
               end
@@ -406,11 +418,17 @@ module Twilio
 
               ##
               # Update the MemberInstance
-              # @param [String] role_sid The role_sid
-              # @param [String] last_consumed_message_index The last_consumed_message_index
-              # @param [Time] last_consumption_timestamp The last_consumption_timestamp
-              # @param [Time] date_created The date_created
-              # @param [Time] date_updated The date_updated
+              # @param [String] role_sid The role to be assigned to this member. Defaults to the
+              #   roles specified on the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services).
+              # @param [String] last_consumed_message_index Optional field used to specify the
+              #   last consumed Message index for the Channel for this Member.
+              # @param [Time] last_consumption_timestamp Optional ISO8601 time indicating the
+              #   last datetime the Member consumed a Message in the Channel.
+              # @param [Time] date_created The optional ISO8601 time specifying the datetime the
+              #   Members should be set as being created.
+              # @param [Time] date_updated The optional ISO8601 time specifying the datetime the
+              #   Member should be set as having been last updated.
               # @return [MemberInstance] Updated MemberInstance
               def update(role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset)
                 context.update(

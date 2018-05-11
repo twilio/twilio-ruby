@@ -31,9 +31,9 @@ module Twilio
             ##
             # Retrieve a single page of SyncListInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name (optional) Human-readable name for this list
-            # @param [String] ttl (optional) Time-to-live of this List in seconds, defaults to
-            #   no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] unique_name Human-readable name for this list
+            # @param [String] ttl Time-to-live of this List in seconds, defaults to no
+            #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [SyncListInstance] Newly created SyncListInstance
             def create(unique_name: :unset, ttl: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, 'Ttl' => ttl, })
@@ -212,7 +212,8 @@ module Twilio
 
             ##
             # Update the SyncListInstance
-            # @param [String] ttl The ttl
+            # @param [String] ttl Time-to-live of this List in seconds, defaults to no
+            #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [SyncListInstance] Updated SyncListInstance
             def update(ttl: :unset)
               data = Twilio::Values.of({'Ttl' => ttl, })
@@ -405,7 +406,8 @@ module Twilio
 
             ##
             # Update the SyncListInstance
-            # @param [String] ttl The ttl
+            # @param [String] ttl Time-to-live of this List in seconds, defaults to no
+            #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [SyncListInstance] Updated SyncListInstance
             def update(ttl: :unset)
               context.update(ttl: ttl, )

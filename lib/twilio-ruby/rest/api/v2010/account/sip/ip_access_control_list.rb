@@ -114,7 +114,6 @@ module Twilio
               # Request is executed immediately.
               # @param [String] friendly_name A human readable descriptive text that describes
               #   the IpAccessControlList, up to 64 characters long.
-              #   https://www.twilio.com/docs/admin/pages/add/api_reference/apireferencepage/175/#
               # @return [IpAccessControlListInstance] Newly created IpAccessControlListInstance
               def create(friendly_name: nil)
                 data = Twilio::Values.of({'FriendlyName' => friendly_name, })

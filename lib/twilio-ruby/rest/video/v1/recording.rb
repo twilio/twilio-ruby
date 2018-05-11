@@ -27,11 +27,15 @@ module Twilio
           # Lists RecordingInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [recording.Status] status The status
-          # @param [String] source_sid The source_sid
-          # @param [String] grouping_sid The grouping_sid
-          # @param [Time] date_created_after The date_created_after
-          # @param [Time] date_created_before The date_created_before
+          # @param [recording.Status] status Only show Recordings with the given status.
+          # @param [String] source_sid Only show the Recordings with the given source Sid
+          #   (you can use this to filter Recordings by `TrackSid` for Video Room Recordings.
+          # @param [String] grouping_sid Only show Recordings that have this GroupingSid,
+          #   which may include a ParticipantSid and/or a RoomSid.
+          # @param [Time] date_created_after Only show Recordings that started on or after
+          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          # @param [Time] date_created_before Only show Recordings that started before this
+          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -55,11 +59,15 @@ module Twilio
           # Streams RecordingInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [recording.Status] status The status
-          # @param [String] source_sid The source_sid
-          # @param [String] grouping_sid The grouping_sid
-          # @param [Time] date_created_after The date_created_after
-          # @param [Time] date_created_before The date_created_before
+          # @param [recording.Status] status Only show Recordings with the given status.
+          # @param [String] source_sid Only show the Recordings with the given source Sid
+          #   (you can use this to filter Recordings by `TrackSid` for Video Room Recordings.
+          # @param [String] grouping_sid Only show Recordings that have this GroupingSid,
+          #   which may include a ParticipantSid and/or a RoomSid.
+          # @param [Time] date_created_after Only show Recordings that started on or after
+          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          # @param [Time] date_created_before Only show Recordings that started before this
+          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -99,11 +107,15 @@ module Twilio
           ##
           # Retrieve a single page of RecordingInstance records from the API.
           # Request is executed immediately.
-          # @param [recording.Status] status The status
-          # @param [String] source_sid The source_sid
-          # @param [String] grouping_sid The grouping_sid
-          # @param [Time] date_created_after The date_created_after
-          # @param [Time] date_created_before The date_created_before
+          # @param [recording.Status] status Only show Recordings with the given status.
+          # @param [String] source_sid Only show the Recordings with the given source Sid
+          #   (you can use this to filter Recordings by `TrackSid` for Video Room Recordings.
+          # @param [String] grouping_sid Only show Recordings that have this GroupingSid,
+          #   which may include a ParticipantSid and/or a RoomSid.
+          # @param [Time] date_created_after Only show Recordings that started on or after
+          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          # @param [Time] date_created_before Only show Recordings that started before this
+          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -180,7 +192,8 @@ module Twilio
           ##
           # Initialize the RecordingContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid The Recording Sid that uniquely identifies the Recording to
+          #   fetch.
           # @return [RecordingContext] RecordingContext
           def initialize(version, sid)
             super(version)
@@ -225,7 +238,8 @@ module Twilio
           # Initialize the RecordingInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid The Recording Sid that uniquely identifies the Recording to
+          #   fetch.
           # @return [RecordingInstance] RecordingInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -237,7 +251,7 @@ module Twilio
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'sid' => payload['sid'],
                 'source_sid' => payload['source_sid'],
-                'size' => payload['size'],
+                'size' => payload['size'].to_i,
                 'url' => payload['url'],
                 'type' => payload['type'],
                 'duration' => payload['duration'] == nil ? payload['duration'] : payload['duration'].to_i,
@@ -265,79 +279,79 @@ module Twilio
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] Twilio Account SID.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [recording.Status] The status
+          # @return [recording.Status] The status of the Recording.
           def status
             @properties['status']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] Date when the media recording began writing.
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A 34-character string that uniquely identifies this Recording.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The source_sid
+          # @return [String] A 34-character string that uniquely identifies the source of this Recording.
           def source_sid
             @properties['source_sid']
           end
 
           ##
-          # @return [String] The size
+          # @return [String] Size of the recorded track, in bytes.
           def size
             @properties['size']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The absolute URL for this resource.
           def url
             @properties['url']
           end
 
           ##
-          # @return [recording.Type] The type
+          # @return [recording.Type] Indicates the media type for this recording.
           def type
             @properties['type']
           end
 
           ##
-          # @return [String] The duration
+          # @return [String] Duration of the Recording in seconds.
           def duration
             @properties['duration']
           end
 
           ##
-          # @return [recording.Format] The container_format
+          # @return [recording.Format] The file format for this Recording.
           def container_format
             @properties['container_format']
           end
 
           ##
-          # @return [recording.Codec] The codec
+          # @return [recording.Codec] The codec used to encode the track.
           def codec
             @properties['codec']
           end
 
           ##
-          # @return [Hash] The grouping_sids
+          # @return [Hash] A list of Sids related to this Recording.
           def grouping_sids
             @properties['grouping_sids']
           end
 
           ##
-          # @return [String] The track_name
+          # @return [String] The name that was given to the source track of this recording.
           def track_name
             @properties['track_name']
           end

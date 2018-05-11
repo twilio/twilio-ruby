@@ -30,13 +30,31 @@ module Twilio
             ##
             # Retrieve a single page of BindingInstance records from the API.
             # Request is executed immediately.
-            # @param [String] identity The identity
-            # @param [binding.BindingType] binding_type The binding_type
-            # @param [String] address The address
-            # @param [String] tag The tag
-            # @param [String] notification_protocol_version The notification_protocol_version
-            # @param [String] credential_sid The credential_sid
-            # @param [String] endpoint The endpoint
+            # @param [String] identity The Identity to which this Binding belongs to. Identity
+            #   is defined by your application. Up to 20 Bindings can be created for the same
+            #   Identity in a given Service.
+            # @param [binding.BindingType] binding_type The type of the Binding. This
+            #   determines the transport technology to use. Allowed values: `apn`, `fcm`, `gcm`,
+            #   `sms`, and `facebook-messenger`.
+            # @param [String] address The address specific to the channel. For APNS it is the
+            #   device token. For FCM and GCM it is the registration token. For SMS it is a
+            #   phone number in E.164 format. For Facebook Messenger it is the Messenger ID of
+            #   the user or a phone number in E.164 format.
+            # @param [String] tag The list of tags associated with this Binding. Tags can be
+            #   used to select the Bindings to use when sending a notification. Maximum 20 tags
+            #   are allowed.
+            # @param [String] notification_protocol_version The version of the protocol (data
+            #   format) used to send the notification. This defaults to the value of
+            #   DefaultXXXNotificationProtocolVersion in the
+            #   [Service](https://www.twilio.com/docs/api/notify/rest/services). The current
+            #   version is `"3"` for `apn`, `fcm`, and `gcm` type Bindings. The parameter is not
+            #   applicable to `sms` and `facebook-messenger` type Bindings as the data format is
+            #   fixed.
+            # @param [String] credential_sid The unique identifier (SID) of the Credential
+            #   resource to be used to send notifications to this Binding. If present, this
+            #   overrides the Credential specified in the Service resource. Applicable only to
+            #   `apn`, `fcm`, and `gcm` type Bindings.
+            # @param [String] endpoint DEPRECATED*
             # @return [BindingInstance] Newly created BindingInstance
             def create(identity: nil, binding_type: nil, address: nil, tag: :unset, notification_protocol_version: :unset, credential_sid: :unset, endpoint: :unset)
               data = Twilio::Values.of({
@@ -62,10 +80,15 @@ module Twilio
             # Lists BindingInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [Date] start_date The start_date
-            # @param [Date] end_date The end_date
-            # @param [String] identity The identity
-            # @param [String] tag The tag
+            # @param [Date] start_date Only list Bindings created on or after the given date.
+            #   Should be formatted as YYYY-MM-DD. All dates considered in UTC.
+            # @param [Date] end_date Only list Bindings created on or before the given date.
+            #   Should be formatted as YYYY-MM-DD. All dates considered in UTC.
+            # @param [String] identity Only list Bindings that have any of the specified
+            #   Identities.
+            # @param [String] tag Only list Bindings that have all of the specified Tags. The
+            #   following implicit tags are available: all, apn, fcm, gcm, sms,
+            #   facebook-messenger. Maximum 5 tags are allowed.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -88,10 +111,15 @@ module Twilio
             # Streams BindingInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Date] start_date The start_date
-            # @param [Date] end_date The end_date
-            # @param [String] identity The identity
-            # @param [String] tag The tag
+            # @param [Date] start_date Only list Bindings created on or after the given date.
+            #   Should be formatted as YYYY-MM-DD. All dates considered in UTC.
+            # @param [Date] end_date Only list Bindings created on or before the given date.
+            #   Should be formatted as YYYY-MM-DD. All dates considered in UTC.
+            # @param [String] identity Only list Bindings that have any of the specified
+            #   Identities.
+            # @param [String] tag Only list Bindings that have all of the specified Tags. The
+            #   following implicit tags are available: all, apn, fcm, gcm, sms,
+            #   facebook-messenger. Maximum 5 tags are allowed.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -130,10 +158,15 @@ module Twilio
             ##
             # Retrieve a single page of BindingInstance records from the API.
             # Request is executed immediately.
-            # @param [Date] start_date The start_date
-            # @param [Date] end_date The end_date
-            # @param [String] identity The identity
-            # @param [String] tag The tag
+            # @param [Date] start_date Only list Bindings created on or after the given date.
+            #   Should be formatted as YYYY-MM-DD. All dates considered in UTC.
+            # @param [Date] end_date Only list Bindings created on or before the given date.
+            #   Should be formatted as YYYY-MM-DD. All dates considered in UTC.
+            # @param [String] identity Only list Bindings that have any of the specified
+            #   Identities.
+            # @param [String] tag Only list Bindings that have all of the specified Tags. The
+            #   following implicit tags are available: all, apn, fcm, gcm, sms,
+            #   facebook-messenger. Maximum 5 tags are allowed.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -320,7 +353,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The credential_sid
+            # @return [String] The unique identifier of the Credential resource to be used to send notifications to this Binding.
             def credential_sid
               @properties['credential_sid']
             end
@@ -338,37 +371,37 @@ module Twilio
             end
 
             ##
-            # @return [String] The notification_protocol_version
+            # @return [String] The version of the protocol used to send the notification.
             def notification_protocol_version
               @properties['notification_protocol_version']
             end
 
             ##
-            # @return [String] The endpoint
+            # @return [String] DEPRECATED*
             def endpoint
               @properties['endpoint']
             end
 
             ##
-            # @return [String] The identity
+            # @return [String] The Identity to which this Binding belongs to.
             def identity
               @properties['identity']
             end
 
             ##
-            # @return [String] The binding_type
+            # @return [String] The type of the Binding.
             def binding_type
               @properties['binding_type']
             end
 
             ##
-            # @return [String] The address
+            # @return [String] The address specific to the channel.
             def address
               @properties['address']
             end
 
             ##
-            # @return [String] The tags
+            # @return [String] The list of tags associated with this Binding.
             def tags
               @properties['tags']
             end

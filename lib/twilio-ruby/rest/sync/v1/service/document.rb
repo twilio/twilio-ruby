@@ -31,11 +31,10 @@ module Twilio
             ##
             # Retrieve a single page of DocumentInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name (optional) Human-readable name for this document
-            # @param [Hash] data (optional) JSON data to be stored in this document
-            # @param [String] ttl (optional) Time-to-live of this Document in seconds,
-            #   defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0 for
-            #   infinity.
+            # @param [String] unique_name Human-readable name for this document
+            # @param [Hash] data JSON data to be stored in this document
+            # @param [String] ttl Time-to-live of this Document in seconds, defaults to no
+            #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [DocumentInstance] Newly created DocumentInstance
             def create(unique_name: :unset, data: :unset, ttl: :unset)
               data = Twilio::Values.of({
@@ -217,10 +216,10 @@ module Twilio
 
             ##
             # Update the DocumentInstance
-            # @param [Hash] data (optional) Contains an arbitrary JSON object to be stored in
-            #   this Document. Serialized to string to respect HTTP form input, up to 16KB.
-            # @param [String] ttl (optional) New time-to-live of this Document in seconds. In
-            #   the range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [Hash] data Contains an arbitrary JSON object to be stored in this
+            #   Document. Serialized to string to respect HTTP form input, up to 16KB.
+            # @param [String] ttl New time-to-live of this Document in seconds. In the range
+            #   [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [DocumentInstance] Updated DocumentInstance
             def update(data: :unset, ttl: :unset)
               data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), 'Ttl' => ttl, })
@@ -398,10 +397,10 @@ module Twilio
 
             ##
             # Update the DocumentInstance
-            # @param [Hash] data (optional) Contains an arbitrary JSON object to be stored in
-            #   this Document. Serialized to string to respect HTTP form input, up to 16KB.
-            # @param [String] ttl (optional) New time-to-live of this Document in seconds. In
-            #   the range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [Hash] data Contains an arbitrary JSON object to be stored in this
+            #   Document. Serialized to string to respect HTTP form input, up to 16KB.
+            # @param [String] ttl New time-to-live of this Document in seconds. In the range
+            #   [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [DocumentInstance] Updated DocumentInstance
             def update(data: :unset, ttl: :unset)
               context.update(data: data, ttl: ttl, )

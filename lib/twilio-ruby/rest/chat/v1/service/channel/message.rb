@@ -16,7 +16,9 @@ module Twilio
               ##
               # Initialize the MessageList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
+              # @param [String] service_sid The unique id of the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/v1/services) this message
+              #   belongs to.
               # @param [String] channel_sid The channel_sid
               # @return [MessageList] MessageList
               def initialize(version, service_sid: nil, channel_sid: nil)
@@ -224,8 +226,11 @@ module Twilio
 
               ##
               # Update the MessageInstance
-              # @param [String] body The body
-              # @param [String] attributes The attributes
+              # @param [String] body The new message body string. You can also send structured
+              #   data by serializing it into a string.
+              # @param [String] attributes The new attributes metadata field you can use to
+              #   store any data you wish.  The string value must contain structurally valid JSON
+              #   if specified.
               # @return [MessageInstance] Updated MessageInstance
               def update(body: :unset, attributes: :unset)
                 data = Twilio::Values.of({'Body' => body, 'Attributes' => attributes, })
@@ -258,7 +263,9 @@ module Twilio
               # Initialize the MessageInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The service_sid
+              # @param [String] service_sid The unique id of the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/v1/services) this message
+              #   belongs to.
               # @param [String] channel_sid The channel_sid
               # @param [String] sid The sid
               # @return [MessageInstance] MessageInstance
@@ -308,31 +315,31 @@ module Twilio
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] A 34 character string that uniquely identifies this resource.
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The unique id of the Account responsible for this message.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The attributes
+              # @return [String] An optional string metadata field you can use to store any data you wish.
               def attributes
                 @properties['attributes']
               end
 
               ##
-              # @return [String] The service_sid
+              # @return [String] The unique id of the Service this message belongs to.
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] The to
+              # @return [String] The unique id of the Channel this message was sent to.
               def to
                 @properties['to']
               end
@@ -344,43 +351,43 @@ module Twilio
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The date that this resource was created.
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The date that this resource was last updated.
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [Boolean] The was_edited
+              # @return [Boolean] true if the message has been updated since it was created.
               def was_edited
                 @properties['was_edited']
               end
 
               ##
-              # @return [String] The from
+              # @return [String] The identity of the message's author.
               def from
                 @properties['from']
               end
 
               ##
-              # @return [String] The body
+              # @return [String] The contents of the message.
               def body
                 @properties['body']
               end
 
               ##
-              # @return [String] The index
+              # @return [String] The index of the message within the Channel
               def index
                 @properties['index']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] An absolute URL for this message.
               def url
                 @properties['url']
               end
@@ -401,8 +408,11 @@ module Twilio
 
               ##
               # Update the MessageInstance
-              # @param [String] body The body
-              # @param [String] attributes The attributes
+              # @param [String] body The new message body string. You can also send structured
+              #   data by serializing it into a string.
+              # @param [String] attributes The new attributes metadata field you can use to
+              #   store any data you wish.  The string value must contain structurally valid JSON
+              #   if specified.
               # @return [MessageInstance] Updated MessageInstance
               def update(body: :unset, attributes: :unset)
                 context.update(body: body, attributes: attributes, )

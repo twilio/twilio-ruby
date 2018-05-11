@@ -18,8 +18,9 @@ module Twilio
               ##
               # Initialize the SampleList
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The assistant_sid
-              # @param [String] intent_sid The intent_sid
+              # @param [String] assistant_sid The unique ID of the Assistant.
+              # @param [String] intent_sid The unique ID of the Intent associated with this
+              #   Sample.
               # @return [SampleList] SampleList
               def initialize(version, assistant_sid: nil, intent_sid: nil)
                 super(version)
@@ -33,7 +34,7 @@ module Twilio
               # Lists SampleInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] language The language
+              # @param [String] language An ISO language-country string of the sample.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -49,7 +50,7 @@ module Twilio
               # Streams SampleInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] language The language
+              # @param [String] language An ISO language-country string of the sample.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -82,7 +83,7 @@ module Twilio
               ##
               # Retrieve a single page of SampleInstance records from the API.
               # Request is executed immediately.
-              # @param [String] language The language
+              # @param [String] language An ISO language-country string of the sample.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -118,9 +119,12 @@ module Twilio
               ##
               # Retrieve a single page of SampleInstance records from the API.
               # Request is executed immediately.
-              # @param [String] language The language
-              # @param [String] tagged_text The tagged_text
-              # @param [String] source_channel The source_channel
+              # @param [String] language An ISO language-country string of the sample.
+              # @param [String] tagged_text The text example of how end-users may express this
+              #   intent. The sample may contain Field tag blocks.
+              # @param [String] source_channel The communication channel the sample was
+              #   captured. It can be: *voice*, *sms*, *chat*, *alexa*, *google-assistant*, or
+              #   *slack*. If not included the value will be null
               # @return [SampleInstance] Newly created SampleInstance
               def create(language: nil, tagged_text: nil, source_channel: :unset)
                 data = Twilio::Values.of({
@@ -227,9 +231,12 @@ module Twilio
 
               ##
               # Update the SampleInstance
-              # @param [String] language The language
-              # @param [String] tagged_text The tagged_text
-              # @param [String] source_channel The source_channel
+              # @param [String] language An ISO language-country string of the sample.
+              # @param [String] tagged_text The text example of how end-users may express this
+              #   intent. The sample may contain Field tag blocks.
+              # @param [String] source_channel The communication channel the sample was
+              #   captured. It can be: *voice*, *sms*, *chat*, *alexa*, *google-assistant*, or
+              #   *slack*. If not included the value will be null
               # @return [SampleInstance] Updated SampleInstance
               def update(language: :unset, tagged_text: :unset, source_channel: :unset)
                 data = Twilio::Values.of({
@@ -275,8 +282,9 @@ module Twilio
               # Initialize the SampleInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] assistant_sid The assistant_sid
-              # @param [String] intent_sid The intent_sid
+              # @param [String] assistant_sid The unique ID of the Assistant.
+              # @param [String] intent_sid The unique ID of the Intent associated with this
+              #   Sample.
               # @param [String] sid The sid
               # @return [SampleInstance] SampleInstance
               def initialize(version, payload, assistant_sid: nil, intent_sid: nil, sid: nil)
@@ -322,49 +330,49 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The unique ID of the Account that created this Sample.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The date that this resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The date that this resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The intent_sid
+              # @return [String] The unique ID of the Intent associated with this Sample.
               def intent_sid
                 @properties['intent_sid']
               end
 
               ##
-              # @return [String] The language
+              # @return [String] An ISO language-country string of the sample.
               def language
                 @properties['language']
               end
 
               ##
-              # @return [String] The assistant_sid
+              # @return [String] The unique ID of the Assistant.
               def assistant_sid
                 @properties['assistant_sid']
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] A 34 character string that uniquely identifies this resource.
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The tagged_text
+              # @return [String] The text example of how end-users may express this intent. The sample may contain Field tag blocks.
               def tagged_text
                 @properties['tagged_text']
               end
@@ -376,7 +384,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The source_channel
+              # @return [String] The communication channel the sample was captured. It can be: voice, sms, chat, alexa, google-assistant, or slack. If not included the value will be null
               def source_channel
                 @properties['source_channel']
               end
@@ -390,9 +398,12 @@ module Twilio
 
               ##
               # Update the SampleInstance
-              # @param [String] language The language
-              # @param [String] tagged_text The tagged_text
-              # @param [String] source_channel The source_channel
+              # @param [String] language An ISO language-country string of the sample.
+              # @param [String] tagged_text The text example of how end-users may express this
+              #   intent. The sample may contain Field tag blocks.
+              # @param [String] source_channel The communication channel the sample was
+              #   captured. It can be: *voice*, *sms*, *chat*, *alexa*, *google-assistant*, or
+              #   *slack*. If not included the value will be null
               # @return [SampleInstance] Updated SampleInstance
               def update(language: :unset, tagged_text: :unset, source_channel: :unset)
                 context.update(language: language, tagged_text: tagged_text, source_channel: source_channel, )

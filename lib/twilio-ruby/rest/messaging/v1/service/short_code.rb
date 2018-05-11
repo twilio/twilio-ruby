@@ -17,7 +17,7 @@ module Twilio
             ##
             # Initialize the ShortCodeList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The 34 character unique sid of the Service.
             # @return [ShortCodeList] ShortCodeList
             def initialize(version, service_sid: nil)
               super(version)
@@ -30,7 +30,8 @@ module Twilio
             ##
             # Retrieve a single page of ShortCodeInstance records from the API.
             # Request is executed immediately.
-            # @param [String] short_code_sid The short_code_sid
+            # @param [String] short_code_sid ShortCodeSid for the Shortcode being added to the
+            #   Service..
             # @return [ShortCodeInstance] Newly created ShortCodeInstance
             def create(short_code_sid: nil)
               data = Twilio::Values.of({'ShortCodeSid' => short_code_sid, })
@@ -218,7 +219,7 @@ module Twilio
             # Initialize the ShortCodeInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The 34 character unique sid of the Service.
             # @param [String] sid The sid
             # @return [ShortCodeInstance] ShortCodeInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
@@ -254,49 +255,49 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] The 34 character unique sid of the Short Code
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The 34 character unique sid of the Account.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The service_sid
+            # @return [String] The 34 character unique sid of the Service.
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] he date that this resource was created.
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date that this resource was last updated.
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The short_code
+            # @return [String] The E.164 format of the short code.
             def short_code
               @properties['short_code']
             end
 
             ##
-            # @return [String] The country_code
+            # @return [String] The 2 character ISO Country Code of the number.
             def country_code
               @properties['country_code']
             end
 
             ##
-            # @return [Hash] The capabilities
+            # @return [Hash] Any array of values that indicate whether the number can receive calls or messages.
             def capabilities
               @properties['capabilities']
             end

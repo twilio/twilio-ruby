@@ -216,31 +216,31 @@ module Twilio
             end
 
             ##
-            # @return [String] The country
+            # @return [String] Name of the country
             def country
               @properties['country']
             end
 
             ##
-            # @return [String] The iso_country
+            # @return [String] The ISO country code
             def iso_country
               @properties['iso_country']
             end
 
             ##
-            # @return [String] The outbound_sms_prices
+            # @return [String] List of OutboundSMSPrice records
             def outbound_sms_prices
               @properties['outbound_sms_prices']
             end
 
             ##
-            # @return [String] The inbound_sms_prices
+            # @return [String] List of InboundPrice records
             def inbound_sms_prices
               @properties['inbound_sms_prices']
             end
 
             ##
-            # @return [String] The price_unit
+            # @return [String] The currency in which prices are measured, in ISO 4127 format (e.g. usd, eur, jpy).
             def price_unit
               @properties['price_unit']
             end

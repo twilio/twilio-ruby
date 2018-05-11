@@ -28,15 +28,14 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name (optional) Human-readable name for this service
-          #   instance
-          # @param [String] webhook_url (optional) A URL that will receive event updates
-          #   when objects are manipulated.
-          # @param [Boolean] reachability_webhooks_enabled (optional) `true` or `false` -
-          #   controls whether this instance fires webhooks when client endpoints connect to
-          #   Sync Defaults to false.
-          # @param [Boolean] acl_enabled (optional) `true` or `false` - determines whether
-          #   token identities must be granted access to Sync objects via the [Permissions
+          # @param [String] friendly_name Human-readable name for this service instance
+          # @param [String] webhook_url A URL that will receive event updates when objects
+          #   are manipulated.
+          # @param [Boolean] reachability_webhooks_enabled `true` or `false` - controls
+          #   whether this instance fires webhooks when client endpoints connect to Sync
+          #   Defaults to false.
+          # @param [Boolean] acl_enabled `true` or `false` - determines whether token
+          #   identities must be granted access to Sync objects via the [Permissions
           #   API](https://www.twilio.com/docs/api/sync/rest/sync-rest-api-permissions) in
           #   this Service.
           # @return [ServiceInstance] Newly created ServiceInstance
@@ -223,15 +222,14 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] webhook_url (optional) A URL that will receive event updates
-          #   when objects are manipulated.
-          # @param [String] friendly_name (optional) Human-readable name for this service
-          #   instance
-          # @param [Boolean] reachability_webhooks_enabled (optional) True or false -
-          #   controls whether this instance fires webhooks when client endpoints connect to
-          #   Sync Defaults to false.
-          # @param [Boolean] acl_enabled (optional) `true` or `false` - determines whether
-          #   token identities must be granted access to Sync objects via the [Permissions
+          # @param [String] webhook_url A URL that will receive event updates when objects
+          #   are manipulated.
+          # @param [String] friendly_name Human-readable name for this service instance
+          # @param [Boolean] reachability_webhooks_enabled True or false - controls whether
+          #   this instance fires webhooks when client endpoints connect to Sync Defaults to
+          #   false.
+          # @param [Boolean] acl_enabled `true` or `false` - determines whether token
+          #   identities must be granted access to Sync objects via the [Permissions
           #   API](https://www.twilio.com/docs/api/sync/rest/sync-rest-api-permissions) in
           #   this Service.
           # @return [ServiceInstance] Updated ServiceInstance
@@ -457,15 +455,14 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] webhook_url (optional) A URL that will receive event updates
-          #   when objects are manipulated.
-          # @param [String] friendly_name (optional) Human-readable name for this service
-          #   instance
-          # @param [Boolean] reachability_webhooks_enabled (optional) True or false -
-          #   controls whether this instance fires webhooks when client endpoints connect to
-          #   Sync Defaults to false.
-          # @param [Boolean] acl_enabled (optional) `true` or `false` - determines whether
-          #   token identities must be granted access to Sync objects via the [Permissions
+          # @param [String] webhook_url A URL that will receive event updates when objects
+          #   are manipulated.
+          # @param [String] friendly_name Human-readable name for this service instance
+          # @param [Boolean] reachability_webhooks_enabled True or false - controls whether
+          #   this instance fires webhooks when client endpoints connect to Sync Defaults to
+          #   false.
+          # @param [Boolean] acl_enabled `true` or `false` - determines whether token
+          #   identities must be granted access to Sync objects via the [Permissions
           #   API](https://www.twilio.com/docs/api/sync/rest/sync-rest-api-permissions) in
           #   this Service.
           # @return [ServiceInstance] Updated ServiceInstance

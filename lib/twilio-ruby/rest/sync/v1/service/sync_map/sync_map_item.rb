@@ -34,10 +34,12 @@ module Twilio
               ##
               # Retrieve a single page of SyncMapItemInstance records from the API.
               # Request is executed immediately.
-              # @param [String] key The key
-              # @param [Hash] data The data
-              # @param [String] ttl (optional) Time-to-live of this Map in seconds, defaults to
-              #   no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
+              # @param [String] key The unique user-defined key of this Map Item. Up to 256
+              #   characters long.
+              # @param [Hash] data Contains arbitrary user-defined, schema-less data that this
+              #   Map Item stores, represented by a JSON object, up to 16KB.
+              # @param [String] ttl Time-to-live of this Map in seconds, defaults to no
+              #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
               # @return [SyncMapItemInstance] Newly created SyncMapItemInstance
               def create(key: nil, data: nil, ttl: :unset)
                 data = Twilio::Values.of({'Key' => key, 'Data' => Twilio.serialize_object(data), 'Ttl' => ttl, })
@@ -60,8 +62,13 @@ module Twilio
               # Lists SyncMapItemInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [sync_map_item.QueryResultOrder] order The order
-              # @param [String] from The from
+              # @param [sync_map_item.QueryResultOrder] order A string; asc or desc. Map Items
+              #   are [ordered
+              #   lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item
+              #   key.
+              # @param [String] from The Item key offset (including the specified key). If not
+              #   present, query is performed from the start or end, depending on the Order query
+              #   parameter.
               # @param [sync_map_item.QueryFromBoundType] bounds The bounds
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
@@ -78,8 +85,13 @@ module Twilio
               # Streams SyncMapItemInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [sync_map_item.QueryResultOrder] order The order
-              # @param [String] from The from
+              # @param [sync_map_item.QueryResultOrder] order A string; asc or desc. Map Items
+              #   are [ordered
+              #   lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item
+              #   key.
+              # @param [String] from The Item key offset (including the specified key). If not
+              #   present, query is performed from the start or end, depending on the Order query
+              #   parameter.
               # @param [sync_map_item.QueryFromBoundType] bounds The bounds
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
@@ -113,8 +125,13 @@ module Twilio
               ##
               # Retrieve a single page of SyncMapItemInstance records from the API.
               # Request is executed immediately.
-              # @param [sync_map_item.QueryResultOrder] order The order
-              # @param [String] from The from
+              # @param [sync_map_item.QueryResultOrder] order A string; asc or desc. Map Items
+              #   are [ordered
+              #   lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item
+              #   key.
+              # @param [String] from The Item key offset (including the specified key). If not
+              #   present, query is performed from the start or end, depending on the Order query
+              #   parameter.
               # @param [sync_map_item.QueryFromBoundType] bounds The bounds
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
@@ -241,8 +258,8 @@ module Twilio
 
               ##
               # Update the SyncMapItemInstance
-              # @param [Hash] data (optional) Contains an arbitrary JSON object to be stored in
-              #   this Map Item. Serialized to string to respect HTTP form input, up to 16KB.
+              # @param [Hash] data Contains an arbitrary JSON object to be stored in this Map
+              #   Item. Serialized to string to respect HTTP form input, up to 16KB.
               # @param [String] ttl New time-to-live of this Map in seconds. In the range [1, 31
               #   536 000 (1 year)], or 0 for infinity.
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
@@ -406,8 +423,8 @@ module Twilio
 
               ##
               # Update the SyncMapItemInstance
-              # @param [Hash] data (optional) Contains an arbitrary JSON object to be stored in
-              #   this Map Item. Serialized to string to respect HTTP form input, up to 16KB.
+              # @param [Hash] data Contains an arbitrary JSON object to be stored in this Map
+              #   Item. Serialized to string to respect HTTP form input, up to 16KB.
               # @param [String] ttl New time-to-live of this Map in seconds. In the range [1, 31
               #   536 000 (1 year)], or 0 for infinity.
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance

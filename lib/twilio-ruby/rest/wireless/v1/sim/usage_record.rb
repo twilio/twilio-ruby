@@ -11,13 +11,13 @@ module Twilio
     class Wireless < Domain
       class V1 < Version
         class SimContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class UsageRecordList < ListResource
             ##
             # Initialize the UsageRecordList
             # @param [Version] version Version that contains the resource
-            # @param [String] sim_sid The sim_sid
+            # @param [String] sim_sid The unique id of the
+            #   [SIM](https://www.twilio.com/docs/api/wireless/rest-api/sim) resource that this
+            #   Usage Record is for.
             # @return [UsageRecordList] UsageRecordList
             def initialize(version, sim_sid: nil)
               super(version)
@@ -31,9 +31,13 @@ module Twilio
             # Lists UsageRecordInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [Time] end_ The end
-            # @param [Time] start The start
-            # @param [usage_record.Granularity] granularity The granularity
+            # @param [Time] end_ Only include usage that has occurred on or before this date.
+            #   Format is [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm).
+            # @param [Time] start Only include usage that has occurred on or after this date.
+            #   Format is [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm).
+            # @param [usage_record.Granularity] granularity The time-based grouping that
+            #   results are aggregated by. Valid values are `daily`, `hourly`, `all`. `all` will
+            #   return one Usage Record for the entire period.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -55,9 +59,13 @@ module Twilio
             # Streams UsageRecordInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Time] end_ The end
-            # @param [Time] start The start
-            # @param [usage_record.Granularity] granularity The granularity
+            # @param [Time] end_ Only include usage that has occurred on or before this date.
+            #   Format is [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm).
+            # @param [Time] start Only include usage that has occurred on or after this date.
+            #   Format is [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm).
+            # @param [usage_record.Granularity] granularity The time-based grouping that
+            #   results are aggregated by. Valid values are `daily`, `hourly`, `all`. `all` will
+            #   return one Usage Record for the entire period.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -90,9 +98,13 @@ module Twilio
             ##
             # Retrieve a single page of UsageRecordInstance records from the API.
             # Request is executed immediately.
-            # @param [Time] end_ The end
-            # @param [Time] start The start
-            # @param [usage_record.Granularity] granularity The granularity
+            # @param [Time] end_ Only include usage that has occurred on or before this date.
+            #   Format is [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm).
+            # @param [Time] start Only include usage that has occurred on or after this date.
+            #   Format is [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm).
+            # @param [usage_record.Granularity] granularity The time-based grouping that
+            #   results are aggregated by. Valid values are `daily`, `hourly`, `all`. `all` will
+            #   return one Usage Record for the entire period.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -134,8 +146,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class UsageRecordPage < Page
             ##
             # Initialize the UsageRecordPage
@@ -165,14 +175,14 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class UsageRecordInstance < InstanceResource
             ##
             # Initialize the UsageRecordInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] sim_sid The sim_sid
+            # @param [String] sim_sid The unique id of the
+            #   [SIM](https://www.twilio.com/docs/api/wireless/rest-api/sim) resource that this
+            #   Usage Record is for.
             # @return [UsageRecordInstance] UsageRecordInstance
             def initialize(version, payload, sim_sid: nil)
               super(version)
@@ -188,31 +198,31 @@ module Twilio
             end
 
             ##
-            # @return [String] The sim_sid
+            # @return [String] The unique id of the SIM resource that this Usage Record is for.
             def sim_sid
               @properties['sim_sid']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The unique id of the Account that the SIM belongs to.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [Hash] The period
+            # @return [Hash] The time period for which usage is reported.
             def period
               @properties['period']
             end
 
             ##
-            # @return [Hash] The commands
+            # @return [Hash] An object representing the Commands usage for the SIM over the period.
             def commands
               @properties['commands']
             end
 
             ##
-            # @return [Hash] The data
+            # @return [Hash] An object representing the Data usage for the SIM over the period.
             def data
               @properties['data']
             end

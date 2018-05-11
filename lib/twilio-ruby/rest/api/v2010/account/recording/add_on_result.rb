@@ -344,7 +344,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The subresource_uris
+              # @return [String] A dictionary of URIs for related resources
               def subresource_uris
                 @properties['subresource_uris']
               end

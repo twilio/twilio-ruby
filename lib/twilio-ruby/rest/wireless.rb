@@ -29,7 +29,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid A 34 character string that uniquely identifies this
+      #   resource.
       # @return [Twilio::REST::Wireless::V1::CommandInstance] if sid was passed.
       # @return [Twilio::REST::Wireless::V1::CommandList]
       def commands(sid=:unset)
@@ -37,7 +38,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid A 34 character string that uniquely identifies this
+      #   resource.
       # @return [Twilio::REST::Wireless::V1::RatePlanInstance] if sid was passed.
       # @return [Twilio::REST::Wireless::V1::RatePlanList]
       def rate_plans(sid=:unset)
@@ -45,7 +47,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid A 34 character string that uniquely identifies this
+      #   resource.
       # @return [Twilio::REST::Wireless::V1::SimInstance] if sid was passed.
       # @return [Twilio::REST::Wireless::V1::SimList]
       def sims(sid=:unset)

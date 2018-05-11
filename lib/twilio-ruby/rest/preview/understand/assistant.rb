@@ -110,11 +110,17 @@ module Twilio
           ##
           # Retrieve a single page of AssistantInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name The friendly_name
-          # @param [Boolean] log_queries The log_queries
+          # @param [String] friendly_name A text description for the Assistant. It is
+          #   non-unique and can up to 255 characters long.
+          # @param [Boolean] log_queries A boolean that specifies whether queries should be
+          #   logged for 30 days further training. If false, no queries will be stored, if
+          #   true, queries will be stored for 30 days and deleted thereafter. Defaults to
+          #   true if no value is provided.
           # @param [String] ttl The ttl
-          # @param [String] unique_name The unique_name
-          # @param [String] response_url The response_url
+          # @param [String] unique_name A user-provided string that uniquely identifies this
+          #   resource as an alternative to the sid. Unique up to 64 characters long.
+          # @param [String] response_url The webhook URL called to fetch the response to an
+          #   incoming communication expressed in Assistant TwiML.
           # @param [String] callback_url The callback_url
           # @param [String] callback_events The callback_events
           # @return [AssistantInstance] Newly created AssistantInstance
@@ -215,11 +221,17 @@ module Twilio
 
           ##
           # Update the AssistantInstance
-          # @param [String] friendly_name The friendly_name
-          # @param [Boolean] log_queries The log_queries
+          # @param [String] friendly_name A text description for the Assistant. It is
+          #   non-unique and can up to 255 characters long.
+          # @param [Boolean] log_queries A boolean that specifies whether queries should be
+          #   logged for 30 days further training. If false, no queries will be stored, if
+          #   true, queries will be stored for 30 days and deleted thereafter. Defaults to
+          #   true if no value is provided.
           # @param [String] ttl The ttl
-          # @param [String] unique_name The unique_name
-          # @param [String] response_url The response_url
+          # @param [String] unique_name A user-provided string that uniquely identifies this
+          #   resource as an alternative to the sid. Unique up to 64 characters long.
+          # @param [String] response_url The webhook URL called to fetch the response to an
+          #   incoming communication expressed in Assistant TwiML.
           # @param [String] callback_url The callback_url
           # @param [String] callback_events The callback_events
           # @return [AssistantInstance] Updated AssistantInstance
@@ -377,31 +389,31 @@ module Twilio
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] The unique ID of the Account that created this Assistant.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The date that this resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The date that this resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The friendly_name
+          # @return [String] A text description for the Assistant. It is non-unique and can up to 255 characters long.
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [String] The latest_model_build_sid
+          # @return [String] The unique ID (Sid) of the latest model build. Null if no model has been built.
           def latest_model_build_sid
             @properties['latest_model_build_sid']
           end
@@ -413,13 +425,13 @@ module Twilio
           end
 
           ##
-          # @return [Boolean] The log_queries
+          # @return [Boolean] A boolean that specifies whether queries should be logged for 30 days further training. If false, no queries will be stored, if true, queries will be stored for 30 days and deleted thereafter.
           def log_queries
             @properties['log_queries']
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A 34 character string that uniquely identifies this resource.
           def sid
             @properties['sid']
           end
@@ -431,7 +443,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The unique_name
+          # @return [String] A user-provided string that uniquely identifies this resource as an alternative to the sid. You can use the unique name in the URL path. Unique up to 64 characters long.
           def unique_name
             @properties['unique_name']
           end
@@ -443,7 +455,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The response_url
+          # @return [String] The webhook URL called to fetch the response to an incoming communication expressed in Assistant TwiML.
           def response_url
             @properties['response_url']
           end
@@ -469,11 +481,17 @@ module Twilio
 
           ##
           # Update the AssistantInstance
-          # @param [String] friendly_name The friendly_name
-          # @param [Boolean] log_queries The log_queries
+          # @param [String] friendly_name A text description for the Assistant. It is
+          #   non-unique and can up to 255 characters long.
+          # @param [Boolean] log_queries A boolean that specifies whether queries should be
+          #   logged for 30 days further training. If false, no queries will be stored, if
+          #   true, queries will be stored for 30 days and deleted thereafter. Defaults to
+          #   true if no value is provided.
           # @param [String] ttl The ttl
-          # @param [String] unique_name The unique_name
-          # @param [String] response_url The response_url
+          # @param [String] unique_name A user-provided string that uniquely identifies this
+          #   resource as an alternative to the sid. Unique up to 64 characters long.
+          # @param [String] response_url The webhook URL called to fetch the response to an
+          #   incoming communication expressed in Assistant TwiML.
           # @param [String] callback_url The callback_url
           # @param [String] callback_events The callback_events
           # @return [AssistantInstance] Updated AssistantInstance

@@ -140,31 +140,31 @@ module Twilio
             end
 
             ##
-            # @return [String] The country
+            # @return [String] Name of the country
             def country
               @properties['country']
             end
 
             ##
-            # @return [String] The iso_country
+            # @return [String] The ISO country code
             def iso_country
               @properties['iso_country']
             end
 
             ##
-            # @return [String] The outbound_call_price
+            # @return [String] See OutboundCallPrice record
             def outbound_call_price
               @properties['outbound_call_price']
             end
 
             ##
-            # @return [String] The inbound_call_price
+            # @return [String] See InboundCallPrice record (returned as null if the Phone Number provided is not a Twilio number owned by this account)
             def inbound_call_price
               @properties['inbound_call_price']
             end
 
             ##
-            # @return [String] The price_unit
+            # @return [String] The currency in which prices are measured, in ISO 4127 format (e.g. usd, eur, jpy).
             def price_unit
               @properties['price_unit']
             end

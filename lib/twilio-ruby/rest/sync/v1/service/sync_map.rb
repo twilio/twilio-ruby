@@ -31,9 +31,9 @@ module Twilio
             ##
             # Retrieve a single page of SyncMapInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name (optional) Human-readable name for this map
-            # @param [String] ttl (optional) Time-to-live of this Map in seconds, defaults to
-            #   no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] unique_name Human-readable name for this map
+            # @param [String] ttl Time-to-live of this Map in seconds, defaults to no
+            #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [SyncMapInstance] Newly created SyncMapInstance
             def create(unique_name: :unset, ttl: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, 'Ttl' => ttl, })

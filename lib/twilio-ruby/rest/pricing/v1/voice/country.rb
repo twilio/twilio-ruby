@@ -216,13 +216,13 @@ module Twilio
             end
 
             ##
-            # @return [String] The country
+            # @return [String] Name of the country
             def country
               @properties['country']
             end
 
             ##
-            # @return [String] The iso_country
+            # @return [String] The ISO country code
             def iso_country
               @properties['iso_country']
             end
@@ -240,7 +240,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The price_unit
+            # @return [String] The currency in which prices are measured, in ISO 4127 format (e.g. usd, eur, jpy).
             def price_unit
               @properties['price_unit']
             end

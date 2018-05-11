@@ -16,8 +16,11 @@ module Twilio
               ##
               # Initialize the InviteList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
-              # @param [String] channel_sid The channel_sid
+              # @param [String] service_sid The unique id of the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/v1/service) this member
+              #   belongs to.
+              # @param [String] channel_sid The unique id of the
+              #   [Channel](https://www.twilio.com/docs/api/chat/rest/v1/channel) for this member.
               # @return [InviteList] InviteList
               def initialize(version, service_sid: nil, channel_sid: nil)
                 super(version)
@@ -30,8 +33,13 @@ module Twilio
               ##
               # Retrieve a single page of InviteInstance records from the API.
               # Request is executed immediately.
-              # @param [String] identity The identity
-              # @param [String] role_sid The role_sid
+              # @param [String] identity A unique string identifier for this
+              #   [User](https://www.twilio.com/docs/api/chat/rest/v1/user) in this
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/v1/service). See the [access
+              #   tokens](https://www.twilio.com/docs/api/chat/guides/create-tokens)[/docs/api/chat/guides/create-tokens] docs for more details.
+              # @param [String] role_sid The
+              #   [Role](https://www.twilio.com/docs/api/chat/rest/v1/role) assigned to this
+              #   member.
               # @return [InviteInstance] Newly created InviteInstance
               def create(identity: nil, role_sid: :unset)
                 data = Twilio::Values.of({'Identity' => identity, 'RoleSid' => role_sid, })
@@ -54,7 +62,10 @@ module Twilio
               # Lists InviteInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] identity The identity
+              # @param [String] identity A unique string identifier for this
+              #   [User](https://www.twilio.com/docs/api/chat/rest/v1/user) in this
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/v1/service). See the [access
+              #   tokens](https://www.twilio.com/docs/api/chat/guides/create-tokens)[/docs/api/chat/guides/create-tokens] docs for more details.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -70,7 +81,10 @@ module Twilio
               # Streams InviteInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] identity The identity
+              # @param [String] identity A unique string identifier for this
+              #   [User](https://www.twilio.com/docs/api/chat/rest/v1/user) in this
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/v1/service). See the [access
+              #   tokens](https://www.twilio.com/docs/api/chat/guides/create-tokens)[/docs/api/chat/guides/create-tokens] docs for more details.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -103,7 +117,10 @@ module Twilio
               ##
               # Retrieve a single page of InviteInstance records from the API.
               # Request is executed immediately.
-              # @param [String] identity The identity
+              # @param [String] identity A unique string identifier for this
+              #   [User](https://www.twilio.com/docs/api/chat/rest/v1/user) in this
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/v1/service). See the [access
+              #   tokens](https://www.twilio.com/docs/api/chat/guides/create-tokens)[/docs/api/chat/guides/create-tokens] docs for more details.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -234,8 +251,11 @@ module Twilio
               # Initialize the InviteInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The service_sid
-              # @param [String] channel_sid The channel_sid
+              # @param [String] service_sid The unique id of the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/v1/service) this member
+              #   belongs to.
+              # @param [String] channel_sid The unique id of the
+              #   [Channel](https://www.twilio.com/docs/api/chat/rest/v1/channel) for this member.
               # @param [String] sid The sid
               # @return [InviteInstance] InviteInstance
               def initialize(version, payload, service_sid: nil, channel_sid: nil, sid: nil)
@@ -281,49 +301,49 @@ module Twilio
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] A 34 character string that uniquely identifies this resource.
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The unique id of the Account[/console] responsible for this member.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The channel_sid
+              # @return [String] The unique id of the Channel for this member.
               def channel_sid
                 @properties['channel_sid']
               end
 
               ##
-              # @return [String] The service_sid
+              # @return [String] The unique id of the Service this member belongs to.
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] The identity
+              # @return [String] A unique string identifier for this User in this Service.
               def identity
                 @properties['identity']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The date that this resource was created.
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The date that this resource was last updated.
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The role_sid
+              # @return [String] The Role assigned to this member.
               def role_sid
                 @properties['role_sid']
               end
@@ -335,7 +355,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The url
+              # @return [String] An absolute URL for this member.
               def url
                 @properties['url']
               end

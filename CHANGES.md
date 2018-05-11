@@ -1,6 +1,18 @@
 twilio-ruby changelog
 =====================
 
+[2018-05-11] Version 5.10.0
+----------------------------
+**Chat**
+- Add Channel Webhooks resource
+
+**Monitor**
+- Update event filtering to support date/time **(breaking change)**
+
+**Wireless**
+- Updated `maturity` to `ga` for all wireless apis
+
+
 [2018-04-27] Version 5.9.0
 ---------------------------
 **Library**

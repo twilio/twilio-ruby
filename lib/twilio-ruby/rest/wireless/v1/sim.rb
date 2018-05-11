@@ -10,8 +10,6 @@ module Twilio
   module REST
     class Wireless < Domain
       class V1 < Version
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class SimList < ListResource
           ##
           # Initialize the SimList
@@ -29,9 +27,10 @@ module Twilio
           # Lists SimInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [sim.Status] status The status
-          # @param [String] iccid The iccid
-          # @param [String] rate_plan The rate_plan
+          # @param [sim.Status] status Only return Sims with this status.
+          # @param [String] iccid Return Sims with this Iccid. Currently this should be a
+          #   list with maximum size 1.
+          # @param [String] rate_plan Only return Sims with this Rate Plan.
           # @param [String] e_id The e_id
           # @param [String] sim_registration_code The sim_registration_code
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -57,9 +56,10 @@ module Twilio
           # Streams SimInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [sim.Status] status The status
-          # @param [String] iccid The iccid
-          # @param [String] rate_plan The rate_plan
+          # @param [sim.Status] status Only return Sims with this status.
+          # @param [String] iccid Return Sims with this Iccid. Currently this should be a
+          #   list with maximum size 1.
+          # @param [String] rate_plan Only return Sims with this Rate Plan.
           # @param [String] e_id The e_id
           # @param [String] sim_registration_code The sim_registration_code
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -101,9 +101,10 @@ module Twilio
           ##
           # Retrieve a single page of SimInstance records from the API.
           # Request is executed immediately.
-          # @param [sim.Status] status The status
-          # @param [String] iccid The iccid
-          # @param [String] rate_plan The rate_plan
+          # @param [sim.Status] status Only return Sims with this status.
+          # @param [String] iccid Return Sims with this Iccid. Currently this should be a
+          #   list with maximum size 1.
+          # @param [String] rate_plan Only return Sims with this Rate Plan.
           # @param [String] e_id The e_id
           # @param [String] sim_registration_code The sim_registration_code
           # @param [String] page_token PageToken provided by the API
@@ -149,8 +150,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class SimPage < Page
           ##
           # Initialize the SimPage
@@ -180,8 +179,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class SimContext < InstanceContext
           ##
           # Initialize the SimContext
@@ -217,22 +214,50 @@ module Twilio
 
           ##
           # Update the SimInstance
-          # @param [String] unique_name The unique_name
-          # @param [String] callback_method The callback_method
-          # @param [String] callback_url The callback_url
-          # @param [String] friendly_name The friendly_name
-          # @param [String] rate_plan The rate_plan
-          # @param [sim.Status] status The status
-          # @param [String] commands_callback_method The commands_callback_method
-          # @param [String] commands_callback_url The commands_callback_url
-          # @param [String] sms_fallback_method The sms_fallback_method
-          # @param [String] sms_fallback_url The sms_fallback_url
-          # @param [String] sms_method The sms_method
-          # @param [String] sms_url The sms_url
-          # @param [String] voice_fallback_method The voice_fallback_method
-          # @param [String] voice_fallback_url The voice_fallback_url
-          # @param [String] voice_method The voice_method
-          # @param [String] voice_url The voice_url
+          # @param [String] unique_name A user-provided string that uniquely identifies this
+          #   resource as an alternative to the `Sid`.
+          # @param [String] callback_method The HTTP method Twilio will use when making a
+          #   request to the callback URL (valid options are GET or POST). Defaults to POST.
+          # @param [String] callback_url Twilio will make a request to this URL when the Sim
+          #   has finished updating. In the case of a transition from the Sim's `new` status
+          #   to its `ready` status, or from any status to its `deactivated` status, you will
+          #   receive two callbacks. One when the Sim moves to its intermediary status
+          #   (`ready` or `deactivated`), and a second when it transitions to its final status
+          #   (`active` or `canceled`).
+          # @param [String] friendly_name A user-provided string that identifies this
+          #   resource. Non-unique.
+          # @param [String] rate_plan The Sid or UniqueName of the
+          #   [RatePlan](https://www.twilio.com/docs/api/wireless/rest-api/rate-plan) that
+          #   this Sim should use. *Note:* the RatePlan of a Sim can only be modified when the
+          #   Sim has a `suspended` or `deactivated` status.
+          # @param [sim.Status] status A string representing the status of the Sim. Valid
+          #   options depend on the current state of the Sim, but may include `ready`,
+          #   `active`, `suspended` or `deactivated`.
+          # @param [String] commands_callback_method A string representing the HTTP method
+          #   to use when making a request to `CommandsCallbackUrl`.  Can be one of `POST` or
+          #   `GET`. Defaults to `POST`.
+          # @param [String] commands_callback_url The URL that will receive a webhook when
+          #   this Sim originates a
+          #   [Command](https://www.twilio.com/docs/api/wireless/rest-api/command). Your
+          #   server should respond with an HTTP status code in the 200 range; any response
+          #   body will be ignored.
+          # @param [String] sms_fallback_method The HTTP method Twilio will use when
+          #   requesting the sms_fallback_url. Either `GET` or `POST`.
+          # @param [String] sms_fallback_url The URL that Twilio will request if an error
+          #   occurs retrieving or executing the TwiML requested by `sms_url`.
+          # @param [String] sms_method The HTTP method Twilio will use when requesting the
+          #   above Url. Either `GET` or `POST`.
+          # @param [String] sms_url The URL Twilio will request when the SIM-connected
+          #   device sends an SMS message that is not a
+          #   [Command](https://www.twilio.com/docs/api/wireless/rest-api/command).
+          # @param [String] voice_fallback_method The HTTP method Twilio will use when
+          #   requesting the voice_fallback_url. Either `GET` or `POST`.
+          # @param [String] voice_fallback_url The URL that Twilio will request if an error
+          #   occurs retrieving or executing the TwiML requested by `voice_url`.
+          # @param [String] voice_method The HTTP method Twilio will use when requesting the
+          #   above Url. Either `GET` or `POST`.
+          # @param [String] voice_url The URL Twilio will request when the SIM-connected
+          #   device makes a call.
           # @return [SimInstance] Updated SimInstance
           def update(unique_name: :unset, callback_method: :unset, callback_url: :unset, friendly_name: :unset, rate_plan: :unset, status: :unset, commands_callback_method: :unset, commands_callback_url: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset)
             data = Twilio::Values.of({
@@ -295,8 +320,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class SimInstance < InstanceResource
           ##
           # Initialize the SimInstance
@@ -351,37 +374,37 @@ module Twilio
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A 34 character string that uniquely identifies this resource.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The unique_name
+          # @return [String] A user-provided string that uniquely identifies this resource as an alternative to the sid.
           def unique_name
             @properties['unique_name']
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] The unique id of the Account that this Sim belongs to.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The rate_plan_sid
+          # @return [String] The unique ID of the Rate Plan configured for this Sim.
           def rate_plan_sid
             @properties['rate_plan_sid']
           end
 
           ##
-          # @return [String] The friendly_name
+          # @return [String] A user-provided string that identifies this resource.
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [String] The iccid
+          # @return [String] The ICCID associated with the SIM.
           def iccid
             @properties['iccid']
           end
@@ -393,91 +416,91 @@ module Twilio
           end
 
           ##
-          # @return [sim.Status] The status
+          # @return [sim.Status] A string representing the status of the Sim.
           def status
             @properties['status']
           end
 
           ##
-          # @return [String] The commands_callback_url
+          # @return [String] The URL that will receive a webhook when this Sim originates a machine-to-machine Command.
           def commands_callback_url
             @properties['commands_callback_url']
           end
 
           ##
-          # @return [String] The commands_callback_method
+          # @return [String] A string representing the HTTP method to use when making a request to commands_callback_url.
           def commands_callback_method
             @properties['commands_callback_method']
           end
 
           ##
-          # @return [String] The sms_fallback_method
+          # @return [String] The HTTP method Twilio will use when requesting the sms_fallback_url.
           def sms_fallback_method
             @properties['sms_fallback_method']
           end
 
           ##
-          # @return [String] The sms_fallback_url
+          # @return [String] The URL that Twilio will request if an error occurs retrieving or executing the TwiML requested by sms_url.
           def sms_fallback_url
             @properties['sms_fallback_url']
           end
 
           ##
-          # @return [String] The sms_method
+          # @return [String] The HTTP method Twilio will use when requesting the above Url.
           def sms_method
             @properties['sms_method']
           end
 
           ##
-          # @return [String] The sms_url
+          # @return [String] The URL Twilio will request when the SIM-connected device send an SMS that is not a Command.
           def sms_url
             @properties['sms_url']
           end
 
           ##
-          # @return [String] The voice_fallback_method
+          # @return [String] The HTTP method Twilio will use when requesting the voice_fallback_url.
           def voice_fallback_method
             @properties['voice_fallback_method']
           end
 
           ##
-          # @return [String] The voice_fallback_url
+          # @return [String] The URL that Twilio will request if an error occurs retrieving or executing the TwiML requested by voice_url.
           def voice_fallback_url
             @properties['voice_fallback_url']
           end
 
           ##
-          # @return [String] The voice_method
+          # @return [String] The HTTP method Twilio will use when requesting the above Url.
           def voice_method
             @properties['voice_method']
           end
 
           ##
-          # @return [String] The voice_url
+          # @return [String] The URL Twilio will request when the SIM-connected device makes a call.
           def voice_url
             @properties['voice_url']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The date that this resource was created, given as GMT in ISO 8601 format.
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The date that this resource was last updated, given as GMT in ISO 8601 format.
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The URL for this resource.
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] Each Sim instance resource supports a few subresources, listed here for convenience.
           def links
             @properties['links']
           end
@@ -497,22 +520,50 @@ module Twilio
 
           ##
           # Update the SimInstance
-          # @param [String] unique_name The unique_name
-          # @param [String] callback_method The callback_method
-          # @param [String] callback_url The callback_url
-          # @param [String] friendly_name The friendly_name
-          # @param [String] rate_plan The rate_plan
-          # @param [sim.Status] status The status
-          # @param [String] commands_callback_method The commands_callback_method
-          # @param [String] commands_callback_url The commands_callback_url
-          # @param [String] sms_fallback_method The sms_fallback_method
-          # @param [String] sms_fallback_url The sms_fallback_url
-          # @param [String] sms_method The sms_method
-          # @param [String] sms_url The sms_url
-          # @param [String] voice_fallback_method The voice_fallback_method
-          # @param [String] voice_fallback_url The voice_fallback_url
-          # @param [String] voice_method The voice_method
-          # @param [String] voice_url The voice_url
+          # @param [String] unique_name A user-provided string that uniquely identifies this
+          #   resource as an alternative to the `Sid`.
+          # @param [String] callback_method The HTTP method Twilio will use when making a
+          #   request to the callback URL (valid options are GET or POST). Defaults to POST.
+          # @param [String] callback_url Twilio will make a request to this URL when the Sim
+          #   has finished updating. In the case of a transition from the Sim's `new` status
+          #   to its `ready` status, or from any status to its `deactivated` status, you will
+          #   receive two callbacks. One when the Sim moves to its intermediary status
+          #   (`ready` or `deactivated`), and a second when it transitions to its final status
+          #   (`active` or `canceled`).
+          # @param [String] friendly_name A user-provided string that identifies this
+          #   resource. Non-unique.
+          # @param [String] rate_plan The Sid or UniqueName of the
+          #   [RatePlan](https://www.twilio.com/docs/api/wireless/rest-api/rate-plan) that
+          #   this Sim should use. *Note:* the RatePlan of a Sim can only be modified when the
+          #   Sim has a `suspended` or `deactivated` status.
+          # @param [sim.Status] status A string representing the status of the Sim. Valid
+          #   options depend on the current state of the Sim, but may include `ready`,
+          #   `active`, `suspended` or `deactivated`.
+          # @param [String] commands_callback_method A string representing the HTTP method
+          #   to use when making a request to `CommandsCallbackUrl`.  Can be one of `POST` or
+          #   `GET`. Defaults to `POST`.
+          # @param [String] commands_callback_url The URL that will receive a webhook when
+          #   this Sim originates a
+          #   [Command](https://www.twilio.com/docs/api/wireless/rest-api/command). Your
+          #   server should respond with an HTTP status code in the 200 range; any response
+          #   body will be ignored.
+          # @param [String] sms_fallback_method The HTTP method Twilio will use when
+          #   requesting the sms_fallback_url. Either `GET` or `POST`.
+          # @param [String] sms_fallback_url The URL that Twilio will request if an error
+          #   occurs retrieving or executing the TwiML requested by `sms_url`.
+          # @param [String] sms_method The HTTP method Twilio will use when requesting the
+          #   above Url. Either `GET` or `POST`.
+          # @param [String] sms_url The URL Twilio will request when the SIM-connected
+          #   device sends an SMS message that is not a
+          #   [Command](https://www.twilio.com/docs/api/wireless/rest-api/command).
+          # @param [String] voice_fallback_method The HTTP method Twilio will use when
+          #   requesting the voice_fallback_url. Either `GET` or `POST`.
+          # @param [String] voice_fallback_url The URL that Twilio will request if an error
+          #   occurs retrieving or executing the TwiML requested by `voice_url`.
+          # @param [String] voice_method The HTTP method Twilio will use when requesting the
+          #   above Url. Either `GET` or `POST`.
+          # @param [String] voice_url The URL Twilio will request when the SIM-connected
+          #   device makes a call.
           # @return [SimInstance] Updated SimInstance
           def update(unique_name: :unset, callback_method: :unset, callback_url: :unset, friendly_name: :unset, rate_plan: :unset, status: :unset, commands_callback_method: :unset, commands_callback_url: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset)
             context.update(

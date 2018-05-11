@@ -114,8 +114,12 @@ module Twilio
                 ##
                 # Retrieve a single page of CredentialInstance records from the API.
                 # Request is executed immediately.
-                # @param [String] username The username for this credential.
-                # @param [String] password The password will not be returned in the response.
+                # @param [String] username The username that will be passed when authenticating
+                #   SIP requests. The username should be sent in response to Twilio’s challenge of
+                #   the initial INVITE. It can be up to 32 characters long.
+                # @param [String] password The password that the username will use when when
+                #   authenticating SIP requests. The password must be a minimum of 12 characters,
+                #   contain at least 1 digit, and have mixed case. (eg “IWasAtSignal2018”)
                 # @return [CredentialInstance] Newly created CredentialInstance
                 def create(username: nil, password: nil)
                   data = Twilio::Values.of({'Username' => username, 'Password' => password, })
@@ -214,7 +218,9 @@ module Twilio
 
                 ##
                 # Update the CredentialInstance
-                # @param [String] password The password
+                # @param [String] password The password that the username will use when when
+                #   authenticating SIP requests. The password must be a minimum of 12 characters,
+                #   contain at least 1 digit, and have mixed case. (eg “IWasAtSignal2018”)
                 # @return [CredentialInstance] Updated CredentialInstance
                 def update(password: :unset)
                   data = Twilio::Values.of({'Password' => password, })
@@ -349,7 +355,9 @@ module Twilio
 
                 ##
                 # Update the CredentialInstance
-                # @param [String] password The password
+                # @param [String] password The password that the username will use when when
+                #   authenticating SIP requests. The password must be a minimum of 12 characters,
+                #   contain at least 1 digit, and have mixed case. (eg “IWasAtSignal2018”)
                 # @return [CredentialInstance] Updated CredentialInstance
                 def update(password: :unset)
                   context.update(password: password, )

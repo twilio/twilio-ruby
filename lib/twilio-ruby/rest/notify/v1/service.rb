@@ -28,18 +28,34 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name The friendly_name
-          # @param [String] apn_credential_sid The apn_credential_sid
-          # @param [String] gcm_credential_sid The gcm_credential_sid
-          # @param [String] messaging_service_sid The messaging_service_sid
-          # @param [String] facebook_messenger_page_id The facebook_messenger_page_id
-          # @param [String] default_apn_notification_protocol_version The
-          #   default_apn_notification_protocol_version
-          # @param [String] default_gcm_notification_protocol_version The
-          #   default_gcm_notification_protocol_version
-          # @param [String] fcm_credential_sid The fcm_credential_sid
-          # @param [String] default_fcm_notification_protocol_version The
-          #   default_fcm_notification_protocol_version
+          # @param [String] friendly_name Human-readable name for this service instance
+          # @param [String] apn_credential_sid The SID of the
+          #   [Credential](https://www.twilio.com/docs/notify/api/credentials) to be used for
+          #   APN Bindings.
+          # @param [String] gcm_credential_sid The SID of the
+          #   [Credential](https://www.twilio.com/docs/notify/api/credentials) to be used for
+          #   GCM Bindings.
+          # @param [String] messaging_service_sid The SID of the [Messaging
+          #   Service](https://www.twilio.com/docs/api/rest/sending-messages#messaging-services) to be used for SMS Bindings. In order to send SMS notifications this parameter has to be set.
+          # @param [String] facebook_messenger_page_id The Page ID to be used to send for
+          #   Facebook Messenger Bindings. It has to match the Page ID you configured when you
+          #   [enabled Facebook Messaging](https://www.twilio.com/console/sms/settings) on
+          #   your account.
+          # @param [String] default_apn_notification_protocol_version The version of the
+          #   protocol to be used for sending APNS notifications. Can be overriden on a
+          #   Binding by Binding basis when creating a
+          #   [Binding](https://www.twilio.com/docs/notify/api/bindings) resource.
+          # @param [String] default_gcm_notification_protocol_version The version of the
+          #   protocol to be used for sending GCM notifications. Can be overriden on a Binding
+          #   by Binding basis when creating a
+          #   [Binding](https://www.twilio.com/docs/notify/api/bindings) resource.
+          # @param [String] fcm_credential_sid The SID of the
+          #   [Credential](https://www.twilio.com/docs/notify/api/credentials) to be used for
+          #   FCM Bindings.
+          # @param [String] default_fcm_notification_protocol_version The version of the
+          #   protocol to be used for sending FCM notifications. Can be overriden on a Binding
+          #   by Binding basis when creating a
+          #   [Binding](https://www.twilio.com/docs/notify/api/bindings) resource.
           # @param [Boolean] log_enabled The log_enabled
           # @param [String] alexa_skill_id The alexa_skill_id
           # @param [String] default_alexa_notification_protocol_version The
@@ -74,7 +90,7 @@ module Twilio
           # Lists ServiceInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] friendly_name The friendly_name
+          # @param [String] friendly_name Filter services by FriendlyName
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -90,7 +106,7 @@ module Twilio
           # Streams ServiceInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] friendly_name The friendly_name
+          # @param [String] friendly_name Filter services by FriendlyName
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -123,7 +139,7 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name The friendly_name
+          # @param [String] friendly_name Filter services by FriendlyName
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -240,18 +256,29 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] friendly_name The friendly_name
-          # @param [String] apn_credential_sid The apn_credential_sid
-          # @param [String] gcm_credential_sid The gcm_credential_sid
-          # @param [String] messaging_service_sid The messaging_service_sid
-          # @param [String] facebook_messenger_page_id The facebook_messenger_page_id
-          # @param [String] default_apn_notification_protocol_version The
-          #   default_apn_notification_protocol_version
-          # @param [String] default_gcm_notification_protocol_version The
-          #   default_gcm_notification_protocol_version
-          # @param [String] fcm_credential_sid The fcm_credential_sid
-          # @param [String] default_fcm_notification_protocol_version The
-          #   default_fcm_notification_protocol_version
+          # @param [String] friendly_name Human-readable name for this service instance
+          # @param [String] apn_credential_sid The SID of the default Credential to be used
+          #   for APN Bindings
+          # @param [String] gcm_credential_sid The SID of the default Credential to be used
+          #   for GCM Bindings
+          # @param [String] messaging_service_sid The SID of the [Messaging
+          #   Service](https://www.twilio.com/docs/api/rest/sending-messages#messaging-services) to be used for SMS Bindings. In order to send SMS notifications this parameter has to be set.
+          # @param [String] facebook_messenger_page_id The Page ID to be used to send for
+          #   Facebook Messenger Bindings. It has to match the Page ID you configured when you
+          #   [enabled Facebook Messaging](https://www.twilio.com/console/sms/settings) on
+          #   your account. Facebook Messenger integration is in beta. You need to be in the
+          #   beta program to be able to enable Facebook Messaging for your account.
+          # @param [String] default_apn_notification_protocol_version The version of the
+          #   protocol to be used for sending APNS notifications. Can be overriden on a
+          #   Binding by Binding basis when creating a Binding resource.
+          # @param [String] default_gcm_notification_protocol_version The version of the
+          #   protocol to be used for sending GCM notifications. Can be overriden on a Binding
+          #   by Binding basis when creating a Binding resource.
+          # @param [String] fcm_credential_sid The SID of the default Credential to be used
+          #   for FCM Bindings
+          # @param [String] default_fcm_notification_protocol_version The version of the
+          #   protocol to be used for sending FCM notifications. Can be overriden on a Binding
+          #   by Binding basis when creating a Binding resource.
           # @param [Boolean] log_enabled The log_enabled
           # @param [String] alexa_skill_id The alexa_skill_id
           # @param [String] default_alexa_notification_protocol_version The
@@ -413,7 +440,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The friendly_name
+          # @return [String] Human-readable name for this service instance
           def friendly_name
             @properties['friendly_name']
           end
@@ -431,49 +458,49 @@ module Twilio
           end
 
           ##
-          # @return [String] The apn_credential_sid
+          # @return [String] The SID of the Credential to be used for APN Bindings.
           def apn_credential_sid
             @properties['apn_credential_sid']
           end
 
           ##
-          # @return [String] The gcm_credential_sid
+          # @return [String] The SID of the Credential to be used for GCM Bindings.
           def gcm_credential_sid
             @properties['gcm_credential_sid']
           end
 
           ##
-          # @return [String] The fcm_credential_sid
+          # @return [String] The SID of the Credential to be used for FCM Bindings.
           def fcm_credential_sid
             @properties['fcm_credential_sid']
           end
 
           ##
-          # @return [String] The messaging_service_sid
+          # @return [String] The SID of the Messaging Service to be used for SMS Bindings.
           def messaging_service_sid
             @properties['messaging_service_sid']
           end
 
           ##
-          # @return [String] The facebook_messenger_page_id
+          # @return [String] The Page ID to be used to send for Facebook Messenger Bindings.
           def facebook_messenger_page_id
             @properties['facebook_messenger_page_id']
           end
 
           ##
-          # @return [String] The default_apn_notification_protocol_version
+          # @return [String] The version of the protocol to be used for sending APNS notifications.
           def default_apn_notification_protocol_version
             @properties['default_apn_notification_protocol_version']
           end
 
           ##
-          # @return [String] The default_gcm_notification_protocol_version
+          # @return [String] The version of the protocol to be used for sending GCM notifications.
           def default_gcm_notification_protocol_version
             @properties['default_gcm_notification_protocol_version']
           end
 
           ##
-          # @return [String] The default_fcm_notification_protocol_version
+          # @return [String] The version of the protocol to be used for sending FCM notifications.
           def default_fcm_notification_protocol_version
             @properties['default_fcm_notification_protocol_version']
           end
@@ -524,18 +551,29 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] friendly_name The friendly_name
-          # @param [String] apn_credential_sid The apn_credential_sid
-          # @param [String] gcm_credential_sid The gcm_credential_sid
-          # @param [String] messaging_service_sid The messaging_service_sid
-          # @param [String] facebook_messenger_page_id The facebook_messenger_page_id
-          # @param [String] default_apn_notification_protocol_version The
-          #   default_apn_notification_protocol_version
-          # @param [String] default_gcm_notification_protocol_version The
-          #   default_gcm_notification_protocol_version
-          # @param [String] fcm_credential_sid The fcm_credential_sid
-          # @param [String] default_fcm_notification_protocol_version The
-          #   default_fcm_notification_protocol_version
+          # @param [String] friendly_name Human-readable name for this service instance
+          # @param [String] apn_credential_sid The SID of the default Credential to be used
+          #   for APN Bindings
+          # @param [String] gcm_credential_sid The SID of the default Credential to be used
+          #   for GCM Bindings
+          # @param [String] messaging_service_sid The SID of the [Messaging
+          #   Service](https://www.twilio.com/docs/api/rest/sending-messages#messaging-services) to be used for SMS Bindings. In order to send SMS notifications this parameter has to be set.
+          # @param [String] facebook_messenger_page_id The Page ID to be used to send for
+          #   Facebook Messenger Bindings. It has to match the Page ID you configured when you
+          #   [enabled Facebook Messaging](https://www.twilio.com/console/sms/settings) on
+          #   your account. Facebook Messenger integration is in beta. You need to be in the
+          #   beta program to be able to enable Facebook Messaging for your account.
+          # @param [String] default_apn_notification_protocol_version The version of the
+          #   protocol to be used for sending APNS notifications. Can be overriden on a
+          #   Binding by Binding basis when creating a Binding resource.
+          # @param [String] default_gcm_notification_protocol_version The version of the
+          #   protocol to be used for sending GCM notifications. Can be overriden on a Binding
+          #   by Binding basis when creating a Binding resource.
+          # @param [String] fcm_credential_sid The SID of the default Credential to be used
+          #   for FCM Bindings
+          # @param [String] default_fcm_notification_protocol_version The version of the
+          #   protocol to be used for sending FCM notifications. Can be overriden on a Binding
+          #   by Binding basis when creating a Binding resource.
           # @param [Boolean] log_enabled The log_enabled
           # @param [String] alexa_skill_id The alexa_skill_id
           # @param [String] default_alexa_notification_protocol_version The

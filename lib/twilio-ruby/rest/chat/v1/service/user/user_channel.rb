@@ -17,7 +17,8 @@ module Twilio
               # Initialize the UserChannelList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The service_sid
-              # @param [String] user_sid The sid
+              # @param [String] user_sid A 34 character string that uniquely identifies this
+              #   resource.
               # @return [UserChannelList] UserChannelList
               def initialize(version, service_sid: nil, user_sid: nil)
                 super(version)
@@ -156,7 +157,8 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The service_sid
-              # @param [String] user_sid The sid
+              # @param [String] user_sid A 34 character string that uniquely identifies this
+              #   resource.
               # @return [UserChannelInstance] UserChannelInstance
               def initialize(version, payload, service_sid: nil, user_sid: nil)
                 super(version)

@@ -15,7 +15,8 @@ module Twilio
             ##
             # Initialize the ChannelList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The unique id of the [Service][service] this channel
+            #   belongs to.
             # @return [ChannelList] ChannelList
             def initialize(version, service_sid: nil)
               super(version)
@@ -28,10 +29,13 @@ module Twilio
             ##
             # Retrieve a single page of ChannelInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name The friendly_name
-            # @param [String] unique_name The unique_name
-            # @param [String] attributes The attributes
-            # @param [channel.ChannelType] type The type
+            # @param [String] friendly_name A human-readable name for the Channel. Optional.
+            # @param [String] unique_name A unique, addressable name for the Channel. 
+            #   Optional.
+            # @param [String] attributes An optional metadata field you can use to store any
+            #   data you wish. No processing or validation is done on this field.
+            # @param [channel.ChannelType] type The visibility of the channel - `public` or
+            #   `private`. Defaults to `public`.
             # @return [ChannelInstance] Newly created ChannelInstance
             def create(friendly_name: :unset, unique_name: :unset, attributes: :unset, type: :unset)
               data = Twilio::Values.of({
@@ -216,9 +220,11 @@ module Twilio
 
             ##
             # Update the ChannelInstance
-            # @param [String] friendly_name The friendly_name
-            # @param [String] unique_name The unique_name
-            # @param [String] attributes The attributes
+            # @param [String] friendly_name A human-readable name for the Channel. Optional.
+            # @param [String] unique_name A unique, addressable name for the Channel. 
+            #   Optional.
+            # @param [String] attributes An optional metadata field you can use to store any
+            #   data you wish. No processing or validation is done on this field.
             # @return [ChannelInstance] Updated ChannelInstance
             def update(friendly_name: :unset, unique_name: :unset, attributes: :unset)
               data = Twilio::Values.of({
@@ -315,7 +321,8 @@ module Twilio
             # Initialize the ChannelInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The unique id of the [Service][service] this channel
+            #   belongs to.
             # @param [String] sid The sid
             # @return [ChannelInstance] ChannelInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
@@ -356,61 +363,61 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] A 34 character string that uniquely identifies this resource.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The unique id of the [Account][/console] responsible for this channel.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The service_sid
+            # @return [String] The unique id of the [Service][service] this channel belongs to.
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] The friendly_name
+            # @return [String] The human-readable name of this channel.
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] The unique_name
+            # @return [String] The unique, addressable name of this channel.
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [String] The attributes
+            # @return [String] An optional string metadata field you can use to store any data you wish.
             def attributes
               @properties['attributes']
             end
 
             ##
-            # @return [channel.ChannelType] The type
+            # @return [channel.ChannelType] The visibility of this channel - either public or private
             def type
               @properties['type']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date that this resource was created.
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date that this resource was last updated.
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The created_by
+            # @return [String] Identity of the channel's creator.
             def created_by
               @properties['created_by']
             end
@@ -428,13 +435,13 @@ module Twilio
             end
 
             ##
-            # @return [String] The url
+            # @return [String] An absolute URL for this channel.
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] Absolute URLs to access the [Members][members] and [Messages][messages] for this channel.
             def links
               @properties['links']
             end
@@ -455,9 +462,11 @@ module Twilio
 
             ##
             # Update the ChannelInstance
-            # @param [String] friendly_name The friendly_name
-            # @param [String] unique_name The unique_name
-            # @param [String] attributes The attributes
+            # @param [String] friendly_name A human-readable name for the Channel. Optional.
+            # @param [String] unique_name A unique, addressable name for the Channel. 
+            #   Optional.
+            # @param [String] attributes An optional metadata field you can use to store any
+            #   data you wish. No processing or validation is done on this field.
             # @return [ChannelInstance] Updated ChannelInstance
             def update(friendly_name: :unset, unique_name: :unset, attributes: :unset)
               context.update(friendly_name: friendly_name, unique_name: unique_name, attributes: attributes, )

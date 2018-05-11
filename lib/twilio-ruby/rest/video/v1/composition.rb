@@ -283,7 +283,7 @@ module Twilio
                 'trim' => payload['trim'],
                 'format' => payload['format'],
                 'bitrate' => payload['bitrate'].to_i,
-                'size' => payload['size'],
+                'size' => payload['size'].to_i,
                 'duration' => payload['duration'].to_i,
                 'url' => payload['url'],
                 'links' => payload['links'],

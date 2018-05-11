@@ -34,9 +34,10 @@ module Twilio
               ##
               # Retrieve a single page of SyncListItemInstance records from the API.
               # Request is executed immediately.
-              # @param [Hash] data The data
-              # @param [String] ttl (optional) Time-to-live of this item in seconds, defaults to
-              #   no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity. Upon
+              # @param [Hash] data Contains arbitrary user-defined, schema-less data that this
+              #   List Item stores, represented by a JSON object, up to 16KB.
+              # @param [String] ttl Time-to-live of this item in seconds, defaults to no
+              #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity. Upon
               #   expiry, the list item will be cleaned up at least in a matter of hours, and
               #   often within seconds, making this a good tool for garbage management.
               # @return [SyncListItemInstance] Newly created SyncListItemInstance
@@ -61,11 +62,10 @@ module Twilio
               # Lists SyncListItemInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [sync_list_item.QueryResultOrder] order (optional) A string; `asc` or
-              #   `desc`
-              # @param [String] from (optional) An integer representing Item index offset
-              #   (inclusive). If not present, query is performed from the start or end, depending
-              #   on the Order query parameter.
+              # @param [sync_list_item.QueryResultOrder] order A string; `asc` or `desc`
+              # @param [String] from An integer representing Item index offset (inclusive). If
+              #   not present, query is performed from the start or end, depending on the Order
+              #   query parameter.
               # @param [sync_list_item.QueryFromBoundType] bounds The bounds
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
@@ -82,11 +82,10 @@ module Twilio
               # Streams SyncListItemInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [sync_list_item.QueryResultOrder] order (optional) A string; `asc` or
-              #   `desc`
-              # @param [String] from (optional) An integer representing Item index offset
-              #   (inclusive). If not present, query is performed from the start or end, depending
-              #   on the Order query parameter.
+              # @param [sync_list_item.QueryResultOrder] order A string; `asc` or `desc`
+              # @param [String] from An integer representing Item index offset (inclusive). If
+              #   not present, query is performed from the start or end, depending on the Order
+              #   query parameter.
               # @param [sync_list_item.QueryFromBoundType] bounds The bounds
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
@@ -120,11 +119,10 @@ module Twilio
               ##
               # Retrieve a single page of SyncListItemInstance records from the API.
               # Request is executed immediately.
-              # @param [sync_list_item.QueryResultOrder] order (optional) A string; `asc` or
-              #   `desc`
-              # @param [String] from (optional) An integer representing Item index offset
-              #   (inclusive). If not present, query is performed from the start or end, depending
-              #   on the Order query parameter.
+              # @param [sync_list_item.QueryResultOrder] order A string; `asc` or `desc`
+              # @param [String] from An integer representing Item index offset (inclusive). If
+              #   not present, query is performed from the start or end, depending on the Order
+              #   query parameter.
               # @param [sync_list_item.QueryFromBoundType] bounds The bounds
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
@@ -251,8 +249,12 @@ module Twilio
 
               ##
               # Update the SyncListItemInstance
-              # @param [Hash] data The data
-              # @param [String] ttl The ttl
+              # @param [Hash] data Contains arbitrary user-defined, schema-less data that this
+              #   List Item stores, represented by a JSON object, up to 16KB.
+              # @param [String] ttl Time-to-live of this item in seconds, defaults to no
+              #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity. Upon
+              #   expiry, the list item will be cleaned up at least in a matter of hours, and
+              #   often within seconds, making this a good tool for garbage management.
               # @return [SyncListItemInstance] Updated SyncListItemInstance
               def update(data: :unset, ttl: :unset)
                 data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), 'Ttl' => ttl, })
@@ -418,8 +420,12 @@ module Twilio
 
               ##
               # Update the SyncListItemInstance
-              # @param [Hash] data The data
-              # @param [String] ttl The ttl
+              # @param [Hash] data Contains arbitrary user-defined, schema-less data that this
+              #   List Item stores, represented by a JSON object, up to 16KB.
+              # @param [String] ttl Time-to-live of this item in seconds, defaults to no
+              #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity. Upon
+              #   expiry, the list item will be cleaned up at least in a matter of hours, and
+              #   often within seconds, making this a good tool for garbage management.
               # @return [SyncListItemInstance] Updated SyncListItemInstance
               def update(data: :unset, ttl: :unset)
                 context.update(data: data, ttl: ttl, )

@@ -18,8 +18,9 @@ module Twilio
               ##
               # Initialize the FieldList
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The assistant_sid
-              # @param [String] intent_sid The intent_sid
+              # @param [String] assistant_sid The unique ID of the parent Assistant.
+              # @param [String] intent_sid The unique ID of the Intent associated with this
+              #   Field.
               # @return [FieldList] FieldList
               def initialize(version, assistant_sid: nil, intent_sid: nil)
                 super(version)
@@ -114,8 +115,9 @@ module Twilio
               ##
               # Retrieve a single page of FieldInstance records from the API.
               # Request is executed immediately.
-              # @param [String] field_type The field_type
-              # @param [String] unique_name The unique_name
+              # @param [String] field_type The unique name or sid of the FieldType
+              # @param [String] unique_name A user-provided string that uniquely identifies this
+              #   resource as an alternative to the sid. Unique up to 64 characters long.
               # @return [FieldInstance] Newly created FieldInstance
               def create(field_type: nil, unique_name: nil)
                 data = Twilio::Values.of({'FieldType' => field_type, 'UniqueName' => unique_name, })
@@ -238,8 +240,9 @@ module Twilio
               # Initialize the FieldInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] assistant_sid The assistant_sid
-              # @param [String] intent_sid The intent_sid
+              # @param [String] assistant_sid The unique ID of the parent Assistant.
+              # @param [String] intent_sid The unique ID of the Intent associated with this
+              #   Field.
               # @param [String] sid The sid
               # @return [FieldInstance] FieldInstance
               def initialize(version, payload, assistant_sid: nil, intent_sid: nil, sid: nil)
@@ -284,49 +287,49 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The unique ID of the Account that created this Field.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The date that this resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The date that this resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The field_type
+              # @return [String] The Field Type of this field. Can be the Field Type unique_name or the Field Type sid.
               def field_type
                 @properties['field_type']
               end
 
               ##
-              # @return [String] The intent_sid
+              # @return [String] The unique ID of the Intent associated with this Field.
               def intent_sid
                 @properties['intent_sid']
               end
 
               ##
-              # @return [String] The assistant_sid
+              # @return [String] The unique ID of the parent Assistant.
               def assistant_sid
                 @properties['assistant_sid']
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] A 34 character string that uniquely identifies this resource.
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The unique_name
+              # @return [String] A user-provided string that uniquely identifies this resource as an alternative to the sid. Unique up to 64 characters long.
               def unique_name
                 @properties['unique_name']
               end

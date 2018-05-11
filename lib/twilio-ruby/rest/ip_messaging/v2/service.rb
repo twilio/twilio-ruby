@@ -26,7 +26,7 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name The friendly_name
+          # @param [String] friendly_name Human-readable name for this service instance
           # @return [ServiceInstance] Newly created ServiceInstance
           def create(friendly_name: nil)
             data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -202,14 +202,20 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] friendly_name The friendly_name
+          # @param [String] friendly_name Human-readable name for this service instance
           # @param [String] default_service_role_sid The default_service_role_sid
-          # @param [String] default_channel_role_sid The default_channel_role_sid
-          # @param [String] default_channel_creator_role_sid The
-          #   default_channel_creator_role_sid
-          # @param [Boolean] read_status_enabled The read_status_enabled
-          # @param [Boolean] reachability_enabled The reachability_enabled
-          # @param [String] typing_indicator_timeout The typing_indicator_timeout
+          # @param [String] default_channel_role_sid Channel role assigned on channel join
+          #   (see [Roles](https://www.twilio.com/docs/chat/api/roles) data model for the
+          #   details)
+          # @param [String] default_channel_creator_role_sid Channel role assigned to
+          #   creator of channel when joining for first time
+          # @param [Boolean] read_status_enabled `true` if the member read status feature is
+          #   enabled, `false` if not.  Defaults to `true`.
+          # @param [Boolean] reachability_enabled `true` if the reachability feature should
+          #   be enabled.  Defaults to `false`
+          # @param [String] typing_indicator_timeout The duration in seconds indicating the
+          #   timeout after "started typing" event when client should assume that user is not
+          #   typing anymore even if no "ended typing" message received
           # @param [String] consumption_report_interval The consumption_report_interval
           # @param [Boolean] notifications_new_message_enabled The
           #   notifications.new_message.enabled
@@ -237,15 +243,29 @@ module Twilio
           #   notifications.invited_to_channel.template
           # @param [String] notifications_invited_to_channel_sound The
           #   notifications.invited_to_channel.sound
-          # @param [String] pre_webhook_url The pre_webhook_url
-          # @param [String] post_webhook_url The post_webhook_url
-          # @param [String] webhook_method The webhook_method
-          # @param [String] webhook_filters The webhook_filters
-          # @param [String] limits_channel_members The limits.channel_members
-          # @param [String] limits_user_channels The limits.user_channels
+          # @param [String] pre_webhook_url The webhook URL for PRE-Event webhooks. See
+          #   [Webhook Events](https://www.twilio.com/docs/chat/webhook-events) for more
+          #   details.
+          # @param [String] post_webhook_url The webhook URL for POST-Event webhooks. See
+          #   [Webhook Events](https://www.twilio.com/docs/chat/webhook-events) for more
+          #   details.
+          # @param [String] webhook_method The webhook request format to use.  Must be POST
+          #   or GET. See [Webhook Events](https://www.twilio.com/docs/chat/webhook-events)
+          #   for more details.
+          # @param [String] webhook_filters The list of WebHook events that are enabled for
+          #   this Service instance. See [Webhook
+          #   Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+          # @param [String] limits_channel_members The maximum number of Members that can be
+          #   added to Channels within this Service.  The maximum allowed value is 1,000
+          # @param [String] limits_user_channels The maximum number of Channels Users can be
+          #   a Member of within this Service.  The maximum value allowed is 1,000
           # @param [String] media_compatibility_message The media.compatibility_message
-          # @param [String] pre_webhook_retry_count The pre_webhook_retry_count
-          # @param [String] post_webhook_retry_count The post_webhook_retry_count
+          # @param [String] pre_webhook_retry_count Count of times webhook will be retried
+          #   in case of timeout (5 seconds) or 429/503/504 HTTP responses. Default retry
+          #   count is 0 times.
+          # @param [String] post_webhook_retry_count Count of times webhook will be retried
+          #   in case of timeout (5 seconds) or 429/503/504 HTTP responses. Default retry
+          #   count is 0 times.
           # @param [Boolean] notifications_log_enabled The notifications.log_enabled
           # @return [ServiceInstance] Updated ServiceInstance
           def update(friendly_name: :unset, default_service_role_sid: :unset, default_channel_role_sid: :unset, default_channel_creator_role_sid: :unset, read_status_enabled: :unset, reachability_enabled: :unset, typing_indicator_timeout: :unset, consumption_report_interval: :unset, notifications_new_message_enabled: :unset, notifications_new_message_template: :unset, notifications_new_message_sound: :unset, notifications_new_message_badge_count_enabled: :unset, notifications_added_to_channel_enabled: :unset, notifications_added_to_channel_template: :unset, notifications_added_to_channel_sound: :unset, notifications_removed_from_channel_enabled: :unset, notifications_removed_from_channel_template: :unset, notifications_removed_from_channel_sound: :unset, notifications_invited_to_channel_enabled: :unset, notifications_invited_to_channel_template: :unset, notifications_invited_to_channel_sound: :unset, pre_webhook_url: :unset, post_webhook_url: :unset, webhook_method: :unset, webhook_filters: :unset, limits_channel_members: :unset, limits_user_channels: :unset, media_compatibility_message: :unset, pre_webhook_retry_count: :unset, post_webhook_retry_count: :unset, notifications_log_enabled: :unset)
@@ -426,121 +446,121 @@ module Twilio
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A 34 character string that uniquely identifies this resource.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] The unique id of the Account responsible for this service.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The friendly_name
+          # @return [String] The human-readable name of this service.
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The date that this resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The date that this resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The default_service_role_sid
+          # @return [String] The service role assigned to users when they are added to the service.
           def default_service_role_sid
             @properties['default_service_role_sid']
           end
 
           ##
-          # @return [String] The default_channel_role_sid
+          # @return [String] The channel role assigned to users when they are added to a channel.
           def default_channel_role_sid
             @properties['default_channel_role_sid']
           end
 
           ##
-          # @return [String] The default_channel_creator_role_sid
+          # @return [String] The channel role assigned to a channel creator when joining a new channel.
           def default_channel_creator_role_sid
             @properties['default_channel_creator_role_sid']
           end
 
           ##
-          # @return [Boolean] The read_status_enabled
+          # @return [Boolean] Enable the Message Constumption Horizon feature.
           def read_status_enabled
             @properties['read_status_enabled']
           end
 
           ##
-          # @return [Boolean] The reachability_enabled
+          # @return [Boolean] Indicates whether the  the Reachability feature is enabled for this Service instance.
           def reachability_enabled
             @properties['reachability_enabled']
           end
 
           ##
-          # @return [String] The typing_indicator_timeout
+          # @return [String] The amount of time in seconds after a "started typing" event when clients should assume that user is no longer typing, even if no "ended typing" message was received.
           def typing_indicator_timeout
             @properties['typing_indicator_timeout']
           end
 
           ##
-          # @return [String] The consumption_report_interval
+          # @return [String] DEPRECATED.
           def consumption_report_interval
             @properties['consumption_report_interval']
           end
 
           ##
-          # @return [Hash] The limits
+          # @return [Hash] Configuration for service instance level limits.
           def limits
             @properties['limits']
           end
 
           ##
-          # @return [String] The pre_webhook_url
+          # @return [String] The webhook URL for PRE-Event webhooks.
           def pre_webhook_url
             @properties['pre_webhook_url']
           end
 
           ##
-          # @return [String] The post_webhook_url
+          # @return [String] The webhook URL for POST-Event webhooks.
           def post_webhook_url
             @properties['post_webhook_url']
           end
 
           ##
-          # @return [String] The webhook_method
+          # @return [String] The webhook request format to use for both PRE and POST webhooks.
           def webhook_method
             @properties['webhook_method']
           end
 
           ##
-          # @return [String] The webhook_filters
+          # @return [String] The list of WebHook events that are enabled for this Service instance.
           def webhook_filters
             @properties['webhook_filters']
           end
 
           ##
-          # @return [String] The pre_webhook_retry_count
+          # @return [String] Count of times webhook will be retried in case of timeout or 429/503/504 HTTP responses.
           def pre_webhook_retry_count
             @properties['pre_webhook_retry_count']
           end
 
           ##
-          # @return [String] The post_webhook_retry_count
+          # @return [String] Count of times webhook will be retried in case of timeout or 429/503/504 HTTP responses.
           def post_webhook_retry_count
             @properties['post_webhook_retry_count']
           end
 
           ##
-          # @return [Hash] The notifications
+          # @return [Hash] Notification configuration for the Service instance.
           def notifications
             @properties['notifications']
           end
@@ -552,13 +572,13 @@ module Twilio
           end
 
           ##
-          # @return [String] The url
+          # @return [String] An absolute URL for this service.
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] URLs to access the Channels, Roles, and Users for this service.
           def links
             @properties['links']
           end
@@ -579,14 +599,20 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] friendly_name The friendly_name
+          # @param [String] friendly_name Human-readable name for this service instance
           # @param [String] default_service_role_sid The default_service_role_sid
-          # @param [String] default_channel_role_sid The default_channel_role_sid
-          # @param [String] default_channel_creator_role_sid The
-          #   default_channel_creator_role_sid
-          # @param [Boolean] read_status_enabled The read_status_enabled
-          # @param [Boolean] reachability_enabled The reachability_enabled
-          # @param [String] typing_indicator_timeout The typing_indicator_timeout
+          # @param [String] default_channel_role_sid Channel role assigned on channel join
+          #   (see [Roles](https://www.twilio.com/docs/chat/api/roles) data model for the
+          #   details)
+          # @param [String] default_channel_creator_role_sid Channel role assigned to
+          #   creator of channel when joining for first time
+          # @param [Boolean] read_status_enabled `true` if the member read status feature is
+          #   enabled, `false` if not.  Defaults to `true`.
+          # @param [Boolean] reachability_enabled `true` if the reachability feature should
+          #   be enabled.  Defaults to `false`
+          # @param [String] typing_indicator_timeout The duration in seconds indicating the
+          #   timeout after "started typing" event when client should assume that user is not
+          #   typing anymore even if no "ended typing" message received
           # @param [String] consumption_report_interval The consumption_report_interval
           # @param [Boolean] notifications_new_message_enabled The
           #   notifications.new_message.enabled
@@ -614,15 +640,29 @@ module Twilio
           #   notifications.invited_to_channel.template
           # @param [String] notifications_invited_to_channel_sound The
           #   notifications.invited_to_channel.sound
-          # @param [String] pre_webhook_url The pre_webhook_url
-          # @param [String] post_webhook_url The post_webhook_url
-          # @param [String] webhook_method The webhook_method
-          # @param [String] webhook_filters The webhook_filters
-          # @param [String] limits_channel_members The limits.channel_members
-          # @param [String] limits_user_channels The limits.user_channels
+          # @param [String] pre_webhook_url The webhook URL for PRE-Event webhooks. See
+          #   [Webhook Events](https://www.twilio.com/docs/chat/webhook-events) for more
+          #   details.
+          # @param [String] post_webhook_url The webhook URL for POST-Event webhooks. See
+          #   [Webhook Events](https://www.twilio.com/docs/chat/webhook-events) for more
+          #   details.
+          # @param [String] webhook_method The webhook request format to use.  Must be POST
+          #   or GET. See [Webhook Events](https://www.twilio.com/docs/chat/webhook-events)
+          #   for more details.
+          # @param [String] webhook_filters The list of WebHook events that are enabled for
+          #   this Service instance. See [Webhook
+          #   Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+          # @param [String] limits_channel_members The maximum number of Members that can be
+          #   added to Channels within this Service.  The maximum allowed value is 1,000
+          # @param [String] limits_user_channels The maximum number of Channels Users can be
+          #   a Member of within this Service.  The maximum value allowed is 1,000
           # @param [String] media_compatibility_message The media.compatibility_message
-          # @param [String] pre_webhook_retry_count The pre_webhook_retry_count
-          # @param [String] post_webhook_retry_count The post_webhook_retry_count
+          # @param [String] pre_webhook_retry_count Count of times webhook will be retried
+          #   in case of timeout (5 seconds) or 429/503/504 HTTP responses. Default retry
+          #   count is 0 times.
+          # @param [String] post_webhook_retry_count Count of times webhook will be retried
+          #   in case of timeout (5 seconds) or 429/503/504 HTTP responses. Default retry
+          #   count is 0 times.
           # @param [Boolean] notifications_log_enabled The notifications.log_enabled
           # @return [ServiceInstance] Updated ServiceInstance
           def update(friendly_name: :unset, default_service_role_sid: :unset, default_channel_role_sid: :unset, default_channel_creator_role_sid: :unset, read_status_enabled: :unset, reachability_enabled: :unset, typing_indicator_timeout: :unset, consumption_report_interval: :unset, notifications_new_message_enabled: :unset, notifications_new_message_template: :unset, notifications_new_message_sound: :unset, notifications_new_message_badge_count_enabled: :unset, notifications_added_to_channel_enabled: :unset, notifications_added_to_channel_template: :unset, notifications_added_to_channel_sound: :unset, notifications_removed_from_channel_enabled: :unset, notifications_removed_from_channel_template: :unset, notifications_removed_from_channel_sound: :unset, notifications_invited_to_channel_enabled: :unset, notifications_invited_to_channel_template: :unset, notifications_invited_to_channel_sound: :unset, pre_webhook_url: :unset, post_webhook_url: :unset, webhook_method: :unset, webhook_filters: :unset, limits_channel_members: :unset, limits_user_channels: :unset, media_compatibility_message: :unset, pre_webhook_retry_count: :unset, post_webhook_retry_count: :unset, notifications_log_enabled: :unset)

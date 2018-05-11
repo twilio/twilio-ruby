@@ -75,7 +75,8 @@ module Twilio
 
             ##
             # Access the credential_lists
-            # @param [String] sid The credential Sid that uniquely identifies this resource
+            # @param [String] sid The credential list Sid that uniquely identifies this
+            #   resource
             # @return [CredentialListList]
             # @return [CredentialListContext] if sid was passed.
             def credential_lists(sid=:unset)

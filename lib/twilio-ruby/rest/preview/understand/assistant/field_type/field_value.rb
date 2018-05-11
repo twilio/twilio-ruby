@@ -18,8 +18,9 @@ module Twilio
               ##
               # Initialize the FieldValueList
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The assistant_sid
-              # @param [String] field_type_sid The field_type_sid
+              # @param [String] assistant_sid The unique ID of the Assistant.
+              # @param [String] field_type_sid The unique ID of the Field Type associated with
+              #   this Field Value.
               # @return [FieldValueList] FieldValueList
               def initialize(version, assistant_sid: nil, field_type_sid: nil)
                 super(version)
@@ -33,7 +34,8 @@ module Twilio
               # Lists FieldValueInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] language The language
+              # @param [String] language An ISO language-country string of the value. For
+              #   example: *en-US*
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -49,7 +51,8 @@ module Twilio
               # Streams FieldValueInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] language The language
+              # @param [String] language An ISO language-country string of the value. For
+              #   example: *en-US*
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -82,7 +85,8 @@ module Twilio
               ##
               # Retrieve a single page of FieldValueInstance records from the API.
               # Request is executed immediately.
-              # @param [String] language The language
+              # @param [String] language An ISO language-country string of the value. For
+              #   example: *en-US*
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -118,8 +122,9 @@ module Twilio
               ##
               # Retrieve a single page of FieldValueInstance records from the API.
               # Request is executed immediately.
-              # @param [String] language The language
-              # @param [String] value The value
+              # @param [String] language An ISO language-country string of the value.
+              # @param [String] value A user-provided string that uniquely identifies this
+              #   resource as an alternative to the sid. Unique up to 64 characters long.
               # @param [String] synonym_of The synonym_of
               # @return [FieldValueInstance] Newly created FieldValueInstance
               def create(language: nil, value: nil, synonym_of: :unset)
@@ -243,8 +248,9 @@ module Twilio
               # Initialize the FieldValueInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] assistant_sid The assistant_sid
-              # @param [String] field_type_sid The field_type_sid
+              # @param [String] assistant_sid The unique ID of the Assistant.
+              # @param [String] field_type_sid The unique ID of the Field Type associated with
+              #   this Field Value.
               # @param [String] sid The sid
               # @return [FieldValueInstance] FieldValueInstance
               def initialize(version, payload, assistant_sid: nil, field_type_sid: nil, sid: nil)
@@ -290,43 +296,43 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The unique ID of the Account that created this Field Value.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The date that this resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The date that this resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The field_type_sid
+              # @return [String] The unique ID of the Field Type associated with this Field Value.
               def field_type_sid
                 @properties['field_type_sid']
               end
 
               ##
-              # @return [String] The language
+              # @return [String] An ISO language-country string of the value.
               def language
                 @properties['language']
               end
 
               ##
-              # @return [String] The assistant_sid
+              # @return [String] The unique ID of the Assistant.
               def assistant_sid
                 @properties['assistant_sid']
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] A 34 character string that uniquely identifies this resource.
               def sid
                 @properties['sid']
               end

@@ -15,9 +15,24 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
-          @compositions = nil
           @recordings = nil
+          @compositions = nil
           @rooms = nil
+        end
+
+        ##
+        # @param [String] sid The Recording Sid that uniquely identifies the Recording to
+        #   fetch.
+        # @return [Twilio::REST::Video::V1::RecordingContext] if sid was passed.
+        # @return [Twilio::REST::Video::V1::RecordingList]
+        def recordings(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @recordings ||= RecordingList.new self
+          else
+            RecordingContext.new(self, sid)
+          end
         end
 
         ##
@@ -31,20 +46,6 @@ module Twilio
             @compositions ||= CompositionList.new self
           else
             CompositionContext.new(self, sid)
-          end
-        end
-
-        ##
-        # @param [String] sid The sid
-        # @return [Twilio::REST::Video::V1::RecordingContext] if sid was passed.
-        # @return [Twilio::REST::Video::V1::RecordingList]
-        def recordings(sid=:unset)
-          if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @recordings ||= RecordingList.new self
-          else
-            RecordingContext.new(self, sid)
           end
         end
 

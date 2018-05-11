@@ -32,7 +32,8 @@ module Twilio
             # @param [String] to The destination phone number for SMS/MMS or a [Channel user
             #   address](https://www.twilio.com/docs/api/channels#channel-addresses) for other
             #   3rd party channels. Destination phone numbers should be formatted with a '+' and
-            #   country code e.g., +16175551212.
+            #   country code e.g., +16175551212
+            #   ([E.164](https://www.twilio.com/docs/glossary/what-e164) format).
             # @param [String] status_callback A URL where Twilio will POST each time your
             #   message status changes to one of the following: `queued`, `failed`, `sent`,
             #   `delivered`, or `undelivered`. Twilio will POST the `MessageSid` along with the
@@ -69,17 +70,18 @@ module Twilio
             # @param [message.AddressRetention] address_retention The address_retention
             # @param [Boolean] smart_encoded The smart_encoded
             # @param [String] from A Twilio phone number (in
-            #   [E.164](http://en.wikipedia.org/wiki/E.164) format),  [alphanumeric sender
+            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format),  [alphanumeric
+            #   sender
             #   ID](https://www.twilio.com/docs/api/messaging/send-messages#alpha-sender-id) or
             #   a [Channel Endpoint
             #   address](https://www.twilio.com/docs/api/channels#channel-addresses) enabled for
             #   the type of message you wish to send. Phone numbers or [short
             #   codes](https://www.twilio.com/docs/sms/api/short-codes) purchased from Twilio
             #   work here. You cannot (for example) spoof messages from your own cell phone
-            #   number.
+            #   number. *Should not be passed if you are using MessagingServiceSid.*
             # @param [String] messaging_service_sid The 34 character unique id of the
             #   [Messaging
-            #   Service](https://www.twilio.com/docs/api/messaging/send-messages#messaging-services) you want to associate with this Message. Set this parameter to use the Messaging Service Settings and [Copilot Features](https://www.twilio.com/docs/api/messaging/send-messages-copilot) you have configured. When only this parameter is set, Twilio will use your enabled Copilot Features to select the From phone number for delivery.
+            #   Service](https://www.twilio.com/docs/api/messaging/send-messages#messaging-services) you want to associate with this Message. Set this parameter to use the Messaging Service Settings and [Copilot Features](https://www.twilio.com/docs/api/messaging/send-messages-copilot) you have configured. When only this parameter is set, Twilio will use your enabled Copilot Features to select the From phone number for delivery. *Should not be passed if you are using From.*
             # @param [String] body The text of the message you want to send, limited to 1600
             #   characters.
             # @param [String] media_url The URL of the media you wish to send out with the

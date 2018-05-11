@@ -29,8 +29,7 @@ module Twilio
             ##
             # Retrieve a single page of NewKeyInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name A descriptive string for this resource, chosen by
-            #   your application, up to 64 characters long.
+            # @param [String] friendly_name The friendly_name
             # @return [NewKeyInstance] Newly created NewKeyInstance
             def create(friendly_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -102,31 +101,31 @@ module Twilio
             end
 
             ##
-            # @return [String] A 34 character string that uniquely identifies this API Key.
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] A descriptive string for this resource, chosen by your application, up to 64 characters long.
+            # @return [String] The friendly_name
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [Time] The date-time this API Key was created, given as a RFC 2822 Timestamp.
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date-time this API Key was most recently updated, given as a  RFC 2822 Timestamp.
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The secret your application uses to sign Access Tokens and to authenticate to the REST API.
+            # @return [String] The secret
             def secret
               @properties['secret']
             end

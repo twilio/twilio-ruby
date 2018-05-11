@@ -36,7 +36,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid A 34 character string that uniquely identifies this
+      #   resource.
       # @return [Twilio::REST::Chat::V2::CredentialInstance] if sid was passed.
       # @return [Twilio::REST::Chat::V2::CredentialList]
       def credentials(sid=:unset)
@@ -44,7 +45,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid A 34 character string that uniquely identifies this
+      #   resource.
       # @return [Twilio::REST::Chat::V2::ServiceInstance] if sid was passed.
       # @return [Twilio::REST::Chat::V2::ServiceList]
       def services(sid=:unset)

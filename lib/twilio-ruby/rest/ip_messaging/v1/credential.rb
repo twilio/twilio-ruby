@@ -108,12 +108,18 @@ module Twilio
           ##
           # Retrieve a single page of CredentialInstance records from the API.
           # Request is executed immediately.
-          # @param [credential.PushService] type The type
-          # @param [String] friendly_name The friendly_name
-          # @param [String] certificate The certificate
-          # @param [String] private_key The private_key
-          # @param [Boolean] sandbox The sandbox
-          # @param [String] api_key The api_key
+          # @param [credential.PushService] type Credential type, one of "gcm" or "apn"
+          # @param [String] friendly_name Friendly name for stored credential
+          # @param [String] certificate [APN only] URL encoded representation of the
+          #   certificate, e.g. `-----BEGIN
+          #   CERTIFICATE-----MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEFBQAwgZYxCzAJBgNV.....A==-----END CERTIFICATE-----`
+          # @param [String] private_key [APN only] URL encoded representation of the private
+          #   key, e.g. `-----BEGIN RSA PRIVATE
+          #   KEY-----MIIEpQIBAAKCAQEAuyf/lNrH9ck8DmNyo3fGgvCI1l9s+cmBY3WIz+cUDqmxiieR\n.-----END RSA PRIVATE KEY-----`
+          # @param [Boolean] sandbox [APN only] use this credential for sending to
+          #   production or sandbox APNs (string `true` or `false`)
+          # @param [String] api_key [GCM only] This is the "API key" for project from Google
+          #   Developer console for your GCM Service application credential
           # @param [String] secret The secret
           # @return [CredentialInstance] Newly created CredentialInstance
           def create(type: nil, friendly_name: :unset, certificate: :unset, private_key: :unset, sandbox: :unset, api_key: :unset, secret: :unset)
@@ -203,11 +209,17 @@ module Twilio
 
           ##
           # Update the CredentialInstance
-          # @param [String] friendly_name The friendly_name
-          # @param [String] certificate The certificate
-          # @param [String] private_key The private_key
-          # @param [Boolean] sandbox The sandbox
-          # @param [String] api_key The api_key
+          # @param [String] friendly_name Friendly name for stored credential
+          # @param [String] certificate [APN only] URL encoded representation of the
+          #   certificate, e.g. `-----BEGIN
+          #   CERTIFICATE-----MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEFBQAwgZYxCzAJBgNV.....A==-----END CERTIFICATE-----`
+          # @param [String] private_key [APN only] URL encoded representation of the private
+          #   key, e.g. `-----BEGIN RSA PRIVATE
+          #   KEY-----MIIEpQIBAAKCAQEAuyf/lNrH9ck8DmNyo3fGgvCI1l9s+cmBY3WIz+cUDqmxiieR\n.-----END RSA PRIVATE KEY-----`
+          # @param [Boolean] sandbox [APN only] use this credential for sending to
+          #   production or sandbox APNs (string `true` or `false`)
+          # @param [String] api_key [GCM only] This is the "API key" for project from Google
+          #   Developer console for your GCM Service application credential
           # @param [String] secret The secret
           # @return [CredentialInstance] Updated CredentialInstance
           def update(friendly_name: :unset, certificate: :unset, private_key: :unset, sandbox: :unset, api_key: :unset, secret: :unset)
@@ -283,49 +295,49 @@ module Twilio
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A 34 character string that uniquely identifies this resource.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] The unique id of the Account[/console] responsible for this resource.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The friendly_name
+          # @return [String] The human-readable name of this resource.
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [credential.PushService] The type
+          # @return [credential.PushService] Indicates which push notifications service this credential is for - either gcm or apn
           def type
             @properties['type']
           end
 
           ##
-          # @return [String] The sandbox
+          # @return [String] [APN only] true when this resource should use the sandbox APN service.
           def sandbox
             @properties['sandbox']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The date that this resource was created.
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The date that this resource was last updated.
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] An absolute URL for this credential resource.
           def url
             @properties['url']
           end
@@ -339,11 +351,17 @@ module Twilio
 
           ##
           # Update the CredentialInstance
-          # @param [String] friendly_name The friendly_name
-          # @param [String] certificate The certificate
-          # @param [String] private_key The private_key
-          # @param [Boolean] sandbox The sandbox
-          # @param [String] api_key The api_key
+          # @param [String] friendly_name Friendly name for stored credential
+          # @param [String] certificate [APN only] URL encoded representation of the
+          #   certificate, e.g. `-----BEGIN
+          #   CERTIFICATE-----MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEFBQAwgZYxCzAJBgNV.....A==-----END CERTIFICATE-----`
+          # @param [String] private_key [APN only] URL encoded representation of the private
+          #   key, e.g. `-----BEGIN RSA PRIVATE
+          #   KEY-----MIIEpQIBAAKCAQEAuyf/lNrH9ck8DmNyo3fGgvCI1l9s+cmBY3WIz+cUDqmxiieR\n.-----END RSA PRIVATE KEY-----`
+          # @param [Boolean] sandbox [APN only] use this credential for sending to
+          #   production or sandbox APNs (string `true` or `false`)
+          # @param [String] api_key [GCM only] This is the "API key" for project from Google
+          #   Developer console for your GCM Service application credential
           # @param [String] secret The secret
           # @return [CredentialInstance] Updated CredentialInstance
           def update(friendly_name: :unset, certificate: :unset, private_key: :unset, sandbox: :unset, api_key: :unset, secret: :unset)

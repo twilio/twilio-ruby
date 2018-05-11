@@ -26,7 +26,7 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name The friendly_name
+          # @param [String] friendly_name Human-readable name for this service instance
           # @return [ServiceInstance] Newly created ServiceInstance
           def create(friendly_name: nil)
             data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -201,15 +201,22 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] friendly_name The friendly_name
+          # @param [String] friendly_name Human-readable name for this service instance
           # @param [String] default_service_role_sid The default_service_role_sid
-          # @param [String] default_channel_role_sid The default_channel_role_sid
-          # @param [String] default_channel_creator_role_sid The
-          #   default_channel_creator_role_sid
-          # @param [Boolean] read_status_enabled The read_status_enabled
-          # @param [Boolean] reachability_enabled The reachability_enabled
-          # @param [String] typing_indicator_timeout The typing_indicator_timeout
-          # @param [String] consumption_report_interval The consumption_report_interval
+          # @param [String] default_channel_role_sid Channel role assigned on channel join
+          #   (see [Roles](https://www.twilio.com/docs/api/chat/rest/v1/roles) data model for
+          #   the details)
+          # @param [String] default_channel_creator_role_sid Channel role assigned to
+          #   creator of channel when joining for first time
+          # @param [Boolean] read_status_enabled `true` if the member read status feature is
+          #   enabled, `false` if not.  Defaults to `true`.
+          # @param [Boolean] reachability_enabled `true` if the reachability feature should
+          #   be enabled.  Defaults to `false`
+          # @param [String] typing_indicator_timeout ISO 8601 duration indicating the
+          #   timeout after "started typing" event when client should assume that user is not
+          #   typing anymore even if no "ended typing" message received
+          # @param [String] consumption_report_interval ISO 8601 duration indicating the
+          #   interval between consumption reports sent from client endpoints.
           # @param [Boolean] notifications_new_message_enabled The
           #   notifications.new_message.enabled
           # @param [String] notifications_new_message_template The
@@ -226,10 +233,18 @@ module Twilio
           #   notifications.invited_to_channel.enabled
           # @param [String] notifications_invited_to_channel_template The
           #   notifications.invited_to_channel.template
-          # @param [String] pre_webhook_url The pre_webhook_url
-          # @param [String] post_webhook_url The post_webhook_url
-          # @param [String] webhook_method The webhook_method
-          # @param [String] webhook_filters The webhook_filters
+          # @param [String] pre_webhook_url The webhook URL for PRE-Event webhooks. See
+          #   [Webhook Events](https://www.twilio.com/docs/api/chat/webhooks) for more
+          #   details.
+          # @param [String] post_webhook_url The webhook URL for POST-Event webhooks. See
+          #   [Webhook Events](https://www.twilio.com/docs/api/chat/webhooks) for more
+          #   details.
+          # @param [String] webhook_method The webhook request format to use.  Must be POST
+          #   or GET. See [Webhook Events](https://www.twilio.com/docs/api/chat/webhooks) for
+          #   more details.
+          # @param [String] webhook_filters The list of WebHook events that are enabled for
+          #   this Service instance. See [Webhook
+          #   Events](https://www.twilio.com/docs/api/chat/webhooks) for more details.
           # @param [String] webhooks_on_message_send_url The webhooks.on_message_send.url
           # @param [String] webhooks_on_message_send_method The
           #   webhooks.on_message_send.method
@@ -517,73 +532,73 @@ module Twilio
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A 34 character string that uniquely identifies this resource.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] The unique id of the Account responsible for this service.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The friendly_name
+          # @return [String] The human-readable name of this service.
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The date that this resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The date that this resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The default_service_role_sid
+          # @return [String] The service role assigned to users when they are added to the service.
           def default_service_role_sid
             @properties['default_service_role_sid']
           end
 
           ##
-          # @return [String] The default_channel_role_sid
+          # @return [String] The channel role assigned to users when they are added to a channel.
           def default_channel_role_sid
             @properties['default_channel_role_sid']
           end
 
           ##
-          # @return [String] The default_channel_creator_role_sid
+          # @return [String] The channel role assigned to a channel creator when joining a new channel.
           def default_channel_creator_role_sid
             @properties['default_channel_creator_role_sid']
           end
 
           ##
-          # @return [Boolean] The read_status_enabled
+          # @return [Boolean] Enable the Message Constumption Horizon feature.
           def read_status_enabled
             @properties['read_status_enabled']
           end
 
           ##
-          # @return [Boolean] The reachability_enabled
+          # @return [Boolean] Indicates whether the  the Reachability feature is enabled for this Service instance.
           def reachability_enabled
             @properties['reachability_enabled']
           end
 
           ##
-          # @return [String] The typing_indicator_timeout
+          # @return [String] The amount of time after a "started typing" event when clients should assume that user is no longer typing, even if no "ended typing" message was received.
           def typing_indicator_timeout
             @properties['typing_indicator_timeout']
           end
 
           ##
-          # @return [String] The consumption_report_interval
+          # @return [String] The interval between consumption reports submission batches from client endpoints.
           def consumption_report_interval
             @properties['consumption_report_interval']
           end
@@ -601,43 +616,43 @@ module Twilio
           end
 
           ##
-          # @return [String] The pre_webhook_url
+          # @return [String] The webhook URL for PRE-Event webhooks.
           def pre_webhook_url
             @properties['pre_webhook_url']
           end
 
           ##
-          # @return [String] The post_webhook_url
+          # @return [String] The webhook URL for POST-Event webhooks.
           def post_webhook_url
             @properties['post_webhook_url']
           end
 
           ##
-          # @return [String] The webhook_method
+          # @return [String] The webhook request format to use.
           def webhook_method
             @properties['webhook_method']
           end
 
           ##
-          # @return [String] The webhook_filters
+          # @return [String] The list of WebHook events that are enabled for this Service instance.
           def webhook_filters
             @properties['webhook_filters']
           end
 
           ##
-          # @return [Hash] The notifications
+          # @return [Hash] Notification configuration for the Service instance.
           def notifications
             @properties['notifications']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] An absolute URL for this service.
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] URLs to access the Channels, Roles, and Users for this service.
           def links
             @properties['links']
           end
@@ -658,15 +673,22 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] friendly_name The friendly_name
+          # @param [String] friendly_name Human-readable name for this service instance
           # @param [String] default_service_role_sid The default_service_role_sid
-          # @param [String] default_channel_role_sid The default_channel_role_sid
-          # @param [String] default_channel_creator_role_sid The
-          #   default_channel_creator_role_sid
-          # @param [Boolean] read_status_enabled The read_status_enabled
-          # @param [Boolean] reachability_enabled The reachability_enabled
-          # @param [String] typing_indicator_timeout The typing_indicator_timeout
-          # @param [String] consumption_report_interval The consumption_report_interval
+          # @param [String] default_channel_role_sid Channel role assigned on channel join
+          #   (see [Roles](https://www.twilio.com/docs/api/chat/rest/v1/roles) data model for
+          #   the details)
+          # @param [String] default_channel_creator_role_sid Channel role assigned to
+          #   creator of channel when joining for first time
+          # @param [Boolean] read_status_enabled `true` if the member read status feature is
+          #   enabled, `false` if not.  Defaults to `true`.
+          # @param [Boolean] reachability_enabled `true` if the reachability feature should
+          #   be enabled.  Defaults to `false`
+          # @param [String] typing_indicator_timeout ISO 8601 duration indicating the
+          #   timeout after "started typing" event when client should assume that user is not
+          #   typing anymore even if no "ended typing" message received
+          # @param [String] consumption_report_interval ISO 8601 duration indicating the
+          #   interval between consumption reports sent from client endpoints.
           # @param [Boolean] notifications_new_message_enabled The
           #   notifications.new_message.enabled
           # @param [String] notifications_new_message_template The
@@ -683,10 +705,18 @@ module Twilio
           #   notifications.invited_to_channel.enabled
           # @param [String] notifications_invited_to_channel_template The
           #   notifications.invited_to_channel.template
-          # @param [String] pre_webhook_url The pre_webhook_url
-          # @param [String] post_webhook_url The post_webhook_url
-          # @param [String] webhook_method The webhook_method
-          # @param [String] webhook_filters The webhook_filters
+          # @param [String] pre_webhook_url The webhook URL for PRE-Event webhooks. See
+          #   [Webhook Events](https://www.twilio.com/docs/api/chat/webhooks) for more
+          #   details.
+          # @param [String] post_webhook_url The webhook URL for POST-Event webhooks. See
+          #   [Webhook Events](https://www.twilio.com/docs/api/chat/webhooks) for more
+          #   details.
+          # @param [String] webhook_method The webhook request format to use.  Must be POST
+          #   or GET. See [Webhook Events](https://www.twilio.com/docs/api/chat/webhooks) for
+          #   more details.
+          # @param [String] webhook_filters The list of WebHook events that are enabled for
+          #   this Service instance. See [Webhook
+          #   Events](https://www.twilio.com/docs/api/chat/webhooks) for more details.
           # @param [String] webhooks_on_message_send_url The webhooks.on_message_send.url
           # @param [String] webhooks_on_message_send_method The
           #   webhooks.on_message_send.method

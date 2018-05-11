@@ -112,7 +112,8 @@ module Twilio
               ##
               # Retrieve a single page of CredentialListInstance records from the API.
               # Request is executed immediately.
-              # @param [String] friendly_name The friendly_name
+              # @param [String] friendly_name A human readable descriptive text that describes
+              #   the IpAccessControlList, up to 64 characters long.
               # @return [CredentialListInstance] Newly created CredentialListInstance
               def create(friendly_name: nil)
                 data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -167,7 +168,8 @@ module Twilio
               # Initialize the CredentialListContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The account_sid
-              # @param [String] sid The credential Sid that uniquely identifies this resource
+              # @param [String] sid The credential list Sid that uniquely identifies this
+              #   resource
               # @return [CredentialListContext] CredentialListContext
               def initialize(version, account_sid, sid)
                 super(version)
@@ -202,7 +204,8 @@ module Twilio
 
               ##
               # Update the CredentialListInstance
-              # @param [String] friendly_name The friendly_name
+              # @param [String] friendly_name A human readable descriptive text for a
+              #   CredentialList, up to 64 characters long.
               # @return [CredentialListInstance] Updated CredentialListInstance
               def update(friendly_name: nil)
                 data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -265,7 +268,8 @@ module Twilio
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid A 34 character string that uniquely identifies this
               #   resource.
-              # @param [String] sid The credential Sid that uniquely identifies this resource
+              # @param [String] sid The credential list Sid that uniquely identifies this
+              #   resource
               # @return [CredentialListInstance] CredentialListInstance
               def initialize(version, payload, account_sid: nil, sid: nil)
                 super(version)
@@ -316,7 +320,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The friendly_name
+              # @return [String] Human readable descriptive text
               def friendly_name
                 @properties['friendly_name']
               end
@@ -348,7 +352,8 @@ module Twilio
 
               ##
               # Update the CredentialListInstance
-              # @param [String] friendly_name The friendly_name
+              # @param [String] friendly_name A human readable descriptive text for a
+              #   CredentialList, up to 64 characters long.
               # @return [CredentialListInstance] Updated CredentialListInstance
               def update(friendly_name: nil)
                 context.update(friendly_name: friendly_name, )

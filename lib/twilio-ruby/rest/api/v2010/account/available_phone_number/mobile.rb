@@ -62,25 +62,28 @@ module Twilio
               # @param [Boolean] beta Include phone numbers new to the Twilio platform. Possible
               #   values are either `true` or `false`. Default is `true`.
               # @param [String] near_number Given a phone number, find a geographically close
-              #   number within `Distance` miles. Distance defaults to 25 miles.
+              #   number within `Distance` miles. Distance defaults to 25 miles. *Limited to US
+              #   and Canadian phone numbers.*
               # @param [String] near_lat_long Given a latitude/longitude pair `lat,long` find
-              #   geographically close numbers within `Distance` miles.
+              #   geographically close numbers within `Distance` miles. *Limited to US and
+              #   Canadian phone numbers.*
               # @param [String] distance Specifies the search radius for a `Near-` query in
               #   miles. If not specified this defaults to 25 miles. Maximum searchable distance
-              #   is 500 miles.
+              #   is 500 miles. *Limited to US and Canadian phone numbers.*
               # @param [String] in_postal_code Limit results to a particular postal code. Given
-              #   a phone number, search within the same postal code as that number.
-              # @param [String] in_region Limit results to a particular region (i.e. 
+              #   a phone number, search within the same postal code as that number. *Limited to
+              #   US and Canadian phone numbers.*
+              # @param [String] in_region Limit results to a particular region (i.e.
               #   State/Province). Given a phone number, search within the same Region as that
-              #   number.
+              #   number. *Limited to US and Canadian phone numbers.*
               # @param [String] in_rate_center Limit results to a specific rate center, or given
               #   a phone number search within the same rate center as that number. Requires
-              #   InLata to be set as well.
+              #   InLata to be set as well. *Limited to US and Canadian phone numbers.*
               # @param [String] in_lata Limit results to a specific Local access and transport
               #   area ([LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area)).
               #   Given a phone number, search within the same
               #   [LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area) as that
-              #   number.
+              #   number. *Limited to US and Canadian phone numbers.*
               # @param [String] in_locality Limit results to a particular locality (i.e.  City).
               #   Given a phone number, search within the same Locality as that number.
               # @param [Boolean] fax_enabled This indicates whether the phone numbers can
@@ -151,25 +154,28 @@ module Twilio
               # @param [Boolean] beta Include phone numbers new to the Twilio platform. Possible
               #   values are either `true` or `false`. Default is `true`.
               # @param [String] near_number Given a phone number, find a geographically close
-              #   number within `Distance` miles. Distance defaults to 25 miles.
+              #   number within `Distance` miles. Distance defaults to 25 miles. *Limited to US
+              #   and Canadian phone numbers.*
               # @param [String] near_lat_long Given a latitude/longitude pair `lat,long` find
-              #   geographically close numbers within `Distance` miles.
+              #   geographically close numbers within `Distance` miles. *Limited to US and
+              #   Canadian phone numbers.*
               # @param [String] distance Specifies the search radius for a `Near-` query in
               #   miles. If not specified this defaults to 25 miles. Maximum searchable distance
-              #   is 500 miles.
+              #   is 500 miles. *Limited to US and Canadian phone numbers.*
               # @param [String] in_postal_code Limit results to a particular postal code. Given
-              #   a phone number, search within the same postal code as that number.
-              # @param [String] in_region Limit results to a particular region (i.e. 
+              #   a phone number, search within the same postal code as that number. *Limited to
+              #   US and Canadian phone numbers.*
+              # @param [String] in_region Limit results to a particular region (i.e.
               #   State/Province). Given a phone number, search within the same Region as that
-              #   number.
+              #   number. *Limited to US and Canadian phone numbers.*
               # @param [String] in_rate_center Limit results to a specific rate center, or given
               #   a phone number search within the same rate center as that number. Requires
-              #   InLata to be set as well.
+              #   InLata to be set as well. *Limited to US and Canadian phone numbers.*
               # @param [String] in_lata Limit results to a specific Local access and transport
               #   area ([LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area)).
               #   Given a phone number, search within the same
               #   [LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area) as that
-              #   number.
+              #   number. *Limited to US and Canadian phone numbers.*
               # @param [String] in_locality Limit results to a particular locality (i.e.  City).
               #   Given a phone number, search within the same Locality as that number.
               # @param [Boolean] fax_enabled This indicates whether the phone numbers can
@@ -256,25 +262,28 @@ module Twilio
               # @param [Boolean] beta Include phone numbers new to the Twilio platform. Possible
               #   values are either `true` or `false`. Default is `true`.
               # @param [String] near_number Given a phone number, find a geographically close
-              #   number within `Distance` miles. Distance defaults to 25 miles.
+              #   number within `Distance` miles. Distance defaults to 25 miles. *Limited to US
+              #   and Canadian phone numbers.*
               # @param [String] near_lat_long Given a latitude/longitude pair `lat,long` find
-              #   geographically close numbers within `Distance` miles.
+              #   geographically close numbers within `Distance` miles. *Limited to US and
+              #   Canadian phone numbers.*
               # @param [String] distance Specifies the search radius for a `Near-` query in
               #   miles. If not specified this defaults to 25 miles. Maximum searchable distance
-              #   is 500 miles.
+              #   is 500 miles. *Limited to US and Canadian phone numbers.*
               # @param [String] in_postal_code Limit results to a particular postal code. Given
-              #   a phone number, search within the same postal code as that number.
-              # @param [String] in_region Limit results to a particular region (i.e. 
+              #   a phone number, search within the same postal code as that number. *Limited to
+              #   US and Canadian phone numbers.*
+              # @param [String] in_region Limit results to a particular region (i.e.
               #   State/Province). Given a phone number, search within the same Region as that
-              #   number.
+              #   number. *Limited to US and Canadian phone numbers.*
               # @param [String] in_rate_center Limit results to a specific rate center, or given
               #   a phone number search within the same rate center as that number. Requires
-              #   InLata to be set as well.
+              #   InLata to be set as well. *Limited to US and Canadian phone numbers.*
               # @param [String] in_lata Limit results to a specific Local access and transport
               #   area ([LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area)).
               #   Given a phone number, search within the same
               #   [LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area) as that
-              #   number.
+              #   number. *Limited to US and Canadian phone numbers.*
               # @param [String] in_locality Limit results to a particular locality (i.e.  City).
               #   Given a phone number, search within the same Locality as that number.
               # @param [Boolean] fax_enabled This indicates whether the phone numbers can
@@ -406,7 +415,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The phone number, in E.
+              # @return [String] The phone number, in E.164 format.
               def phone_number
                 @properties['phone_number']
               end

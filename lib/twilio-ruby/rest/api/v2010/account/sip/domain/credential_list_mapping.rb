@@ -17,7 +17,8 @@ module Twilio
                 ##
                 # Initialize the CredentialListMappingList
                 # @param [Version] version Version that contains the resource
-                # @param [String] account_sid The account_sid
+                # @param [String] account_sid The unique id of the Account that responsible for
+                #   this resource.
                 # @param [String] domain_sid A 34 character string that uniquely identifies the
                 #   SIP domain in Twilio.
                 # @return [CredentialListMappingList] CredentialListMappingList
@@ -231,7 +232,8 @@ module Twilio
                 # Initialize the CredentialListMappingInstance
                 # @param [Version] version Version that contains the resource
                 # @param [Hash] payload payload that contains response from Twilio
-                # @param [String] account_sid The account_sid
+                # @param [String] account_sid The unique id of the Account that responsible for
+                #   this resource.
                 # @param [String] domain_sid A 34 character string that uniquely identifies the
                 #   SIP domain in Twilio.
                 # @param [String] sid The sid
@@ -276,37 +278,37 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The account_sid
+                # @return [String] The unique id of the Account that responsible for this resource.
                 def account_sid
                   @properties['account_sid']
                 end
 
                 ##
-                # @return [Time] The date_created
+                # @return [Time] The date that this resource was created, given as GMT in RFC 2822 format.
                 def date_created
                   @properties['date_created']
                 end
 
                 ##
-                # @return [Time] The date_updated
+                # @return [Time] The date that this resource was last updated, given as GMT in RFC 2822 format.
                 def date_updated
                   @properties['date_updated']
                 end
 
                 ##
-                # @return [String] The friendly_name
+                # @return [String] A human readable descriptive text for this resource, up to 64 characters long.
                 def friendly_name
                   @properties['friendly_name']
                 end
 
                 ##
-                # @return [String] The sid
+                # @return [String] A 34 character string that uniquely identifies this resource.
                 def sid
                   @properties['sid']
                 end
 
                 ##
-                # @return [String] The uri
+                # @return [String] The URI for this resource, relative to https://api.twilio.com
                 def uri
                   @properties['uri']
                 end

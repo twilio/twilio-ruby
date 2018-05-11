@@ -125,7 +125,7 @@ module Twilio
               end
 
               ##
-              # @return [feedback.Outcome] The outcome
+              # @return [feedback.Outcome] unconfirmed or confirmed. If ProvideFeedback=true in the initial HTTP POST, this value will default to unconfirmed. Make an HTTP POST to update this value to confirmed after the message arrives.
               def outcome
                 @properties['outcome']
               end

@@ -17,7 +17,8 @@ module Twilio
                 ##
                 # Initialize the IpAddressList
                 # @param [Version] version Version that contains the resource
-                # @param [String] account_sid The account_sid
+                # @param [String] account_sid The unique id of the Account that responsible for
+                #   this resource.
                 # @param [String] ip_access_control_list_sid The ip_access_control_list_sid
                 # @return [IpAddressList] IpAddressList
                 def initialize(version, account_sid: nil, ip_access_control_list_sid: nil)
@@ -258,7 +259,8 @@ module Twilio
                 # Initialize the IpAddressInstance
                 # @param [Version] version Version that contains the resource
                 # @param [Hash] payload payload that contains response from Twilio
-                # @param [String] account_sid The account_sid
+                # @param [String] account_sid The unique id of the Account that responsible for
+                #   this resource.
                 # @param [String] ip_access_control_list_sid The ip_access_control_list_sid
                 # @param [String] sid The sid
                 # @return [IpAddressInstance] IpAddressInstance
@@ -303,25 +305,25 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The sid
+                # @return [String] A 34 character string that uniquely identifies this resource.
                 def sid
                   @properties['sid']
                 end
 
                 ##
-                # @return [String] The account_sid
+                # @return [String] The unique id of the Account that responsible for this resource.
                 def account_sid
                   @properties['account_sid']
                 end
 
                 ##
-                # @return [String] The friendly_name
+                # @return [String] A human readable descriptive text for this resource, up to 64 characters long.
                 def friendly_name
                   @properties['friendly_name']
                 end
 
                 ##
-                # @return [String] The ip_address
+                # @return [String] An IP address in dotted decimal notation from which you want to accept traffic. Any SIP requests from this IP address will be allowed by Twilio. IPv4 only supported today.
                 def ip_address
                   @properties['ip_address']
                 end
@@ -333,19 +335,19 @@ module Twilio
                 end
 
                 ##
-                # @return [Time] The date_created
+                # @return [Time] The date that this resource was created, given as GMT in RFC 2822 format.
                 def date_created
                   @properties['date_created']
                 end
 
                 ##
-                # @return [Time] The date_updated
+                # @return [Time] The date that this resource was last updated, given as GMT in RFC 2822 format.
                 def date_updated
                   @properties['date_updated']
                 end
 
                 ##
-                # @return [String] The uri
+                # @return [String] The URI for this resource, relative to https://api.twilio.com
                 def uri
                   @properties['uri']
                 end

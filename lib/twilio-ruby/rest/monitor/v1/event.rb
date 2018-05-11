@@ -31,8 +31,8 @@ module Twilio
           # @param [String] event_type The event_type
           # @param [String] resource_sid The resource_sid
           # @param [String] source_ip_address The source_ip_address
-          # @param [Date] start_date The start_date
-          # @param [Date] end_date The end_date
+          # @param [Time] start_date The start_date
+          # @param [Time] end_date The end_date
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -61,8 +61,8 @@ module Twilio
           # @param [String] event_type The event_type
           # @param [String] resource_sid The resource_sid
           # @param [String] source_ip_address The source_ip_address
-          # @param [Date] start_date The start_date
-          # @param [Date] end_date The end_date
+          # @param [Time] start_date The start_date
+          # @param [Time] end_date The end_date
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -107,8 +107,8 @@ module Twilio
           # @param [String] event_type The event_type
           # @param [String] resource_sid The resource_sid
           # @param [String] source_ip_address The source_ip_address
-          # @param [Date] start_date The start_date
-          # @param [Date] end_date The end_date
+          # @param [Time] start_date The start_date
+          # @param [Time] end_date The end_date
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -119,8 +119,8 @@ module Twilio
                 'EventType' => event_type,
                 'ResourceSid' => resource_sid,
                 'SourceIpAddress' => source_ip_address,
-                'StartDate' => Twilio.serialize_iso8601_date(start_date),
-                'EndDate' => Twilio.serialize_iso8601_date(end_date),
+                'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
+                'EndDate' => Twilio.serialize_iso8601_datetime(end_date),
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
@@ -282,7 +282,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The description
+          # @return [String] A human-readable description of the event.  May be null.
           def description
             @properties['description']
           end
@@ -318,13 +318,13 @@ module Twilio
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A 34 character string that uniquely identifies this event.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The source
+          # @return [String] The originating system or interface that caused the event.  web for events caused by user action in the Twilio Console.  api for events caused through a request to the REST API.  twilio for events caused by an automated or internal Twilio system.
           def source
             @properties['source']
           end

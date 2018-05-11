@@ -11,13 +11,13 @@ module Twilio
     class Wireless < Domain
       class V1 < Version
         class SimContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class DataSessionList < ListResource
             ##
             # Initialize the DataSessionList
             # @param [Version] version Version that contains the resource
-            # @param [String] sim_sid The sim_sid
+            # @param [String] sim_sid The unique id of the
+            #   [SIM](https://www.twilio.com/docs/api/wireless/rest-api/sim) resource that this
+            #   Data Session is for.
             # @return [DataSessionList] DataSessionList
             def initialize(version, sim_sid: nil)
               super(version)
@@ -124,8 +124,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class DataSessionPage < Page
             ##
             # Initialize the DataSessionPage
@@ -155,14 +153,14 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class DataSessionInstance < InstanceResource
             ##
             # Initialize the DataSessionInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] sim_sid The sim_sid
+            # @param [String] sim_sid The unique id of the
+            #   [SIM](https://www.twilio.com/docs/api/wireless/rest-api/sim) resource that this
+            #   Data Session is for.
             # @return [DataSessionInstance] DataSessionInstance
             def initialize(version, payload, sim_sid: nil)
               super(version)
@@ -188,91 +186,91 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] The unique id of the Data Session resource that this Data Record is for.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The sim_sid
+            # @return [String] The unique id of the SIM resource that this Data Session is for.
             def sim_sid
               @properties['sim_sid']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The unique id of the Account that the SIM belongs to.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The radio_link
+            # @return [String] The generation of wireless technology that the device was attached to the cellular tower using.
             def radio_link
               @properties['radio_link']
             end
 
             ##
-            # @return [String] The operator_mcc
+            # @return [String] The 'mobile country code' is the unique id of the home country where the Data Session took place.
             def operator_mcc
               @properties['operator_mcc']
             end
 
             ##
-            # @return [String] The operator_mnc
+            # @return [String] The 'mobile network code' is the unique id specific to the mobile operator network where the Data Session took place.
             def operator_mnc
               @properties['operator_mnc']
             end
 
             ##
-            # @return [String] The operator_country
+            # @return [String] The three letter country code representing where the device's Data Session took place.
             def operator_country
               @properties['operator_country']
             end
 
             ##
-            # @return [String] The operator_name
+            # @return [String] The friendly name of the mobile operator network that the SIM-connected device is attached to.
             def operator_name
               @properties['operator_name']
             end
 
             ##
-            # @return [String] The cell_id
+            # @return [String] The unique id of the cellular tower that the device was attached to at the moment when the Data Session was last updated.
             def cell_id
               @properties['cell_id']
             end
 
             ##
-            # @return [Hash] The cell_location_estimate
+            # @return [Hash] An object representing the estimated location where the device's Data Session took place.
             def cell_location_estimate
               @properties['cell_location_estimate']
             end
 
             ##
-            # @return [String] The packets_uploaded
+            # @return [String] The number of packets uploaded by the device between the start time and when the Data Session was last updated.
             def packets_uploaded
               @properties['packets_uploaded']
             end
 
             ##
-            # @return [String] The packets_downloaded
+            # @return [String] The number of packets downloaded by the device between the start time and when the Data Session was last updated.
             def packets_downloaded
               @properties['packets_downloaded']
             end
 
             ##
-            # @return [Time] The last_updated
+            # @return [Time] The date that this resource was last updated, given as GMT in ISO 8601 format.
             def last_updated
               @properties['last_updated']
             end
 
             ##
-            # @return [Time] The start
+            # @return [Time] The date that this Data Session started, given as GMT in ISO 8601 format.
             def start
               @properties['start']
             end
 
             ##
-            # @return [Time] The end
+            # @return [Time] The date that this record ended, given as GMT in ISO 8601 format.
             def end_
               @properties['end_']
             end

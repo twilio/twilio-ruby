@@ -137,8 +137,8 @@ module Twilio
           #   Address resource that is associated with this AuthorizationDocument.
           # @param [String] email Email that this AuthorizationDocument will be sent to for
           #   signing.
-          # @param [String] cc_emails A list of emails that this AuthorizationDocument will
-          #   be carbon copied to.
+          # @param [String] cc_emails Email recipients who will be informed when an
+          #   Authorization Document has been sent and signed.
           # @return [AuthorizationDocumentInstance] Newly created AuthorizationDocumentInstance
           def create(hosted_number_order_sids: nil, address_sid: nil, email: nil, cc_emails: :unset)
             data = Twilio::Values.of({

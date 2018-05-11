@@ -32,8 +32,9 @@ module Twilio
                 # Lists LastMonthInstance records from the API as a list.
                 # Unlike stream(), this operation is eager and will load `limit` records into
                 # memory before returning.
-                # @param [last_month.Category] category Only include usage of this [usage
-                #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
+                # @param [last_month.Category] category The category of usage.  See [Usage
+                #   Categories](https://www.twilio.com/docs/api/rest/usage-records#usage-categories)
+                #   below.
                 # @param [Date] start_date Only include usage that has occurred on or after this
                 #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
                 #   also specify offsets to today.  For example, `StartDate=-30days` will make
@@ -63,8 +64,9 @@ module Twilio
                 # Streams LastMonthInstance records from the API as an Enumerable.
                 # This operation lazily loads records as efficiently as possible until the limit
                 # is reached.
-                # @param [last_month.Category] category Only include usage of this [usage
-                #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
+                # @param [last_month.Category] category The category of usage.  See [Usage
+                #   Categories](https://www.twilio.com/docs/api/rest/usage-records#usage-categories)
+                #   below.
                 # @param [Date] start_date Only include usage that has occurred on or after this
                 #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
                 #   also specify offsets to today.  For example, `StartDate=-30days` will make
@@ -110,8 +112,9 @@ module Twilio
                 ##
                 # Retrieve a single page of LastMonthInstance records from the API.
                 # Request is executed immediately.
-                # @param [last_month.Category] category Only include usage of this [usage
-                #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
+                # @param [last_month.Category] category The category of usage.  See [Usage
+                #   Categories](https://www.twilio.com/docs/api/rest/usage-records#usage-categories)
+                #   below.
                 # @param [Date] start_date Only include usage that has occurred on or after this
                 #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
                 #   also specify offsets to today.  For example, `StartDate=-30days` will make
