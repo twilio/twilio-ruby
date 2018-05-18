@@ -15,7 +15,8 @@ module Twilio
             ##
             # Initialize the IpAccessControlListList
             # @param [Version] version Version that contains the resource
-            # @param [String] trunk_sid The trunk_sid
+            # @param [String] trunk_sid A 34 character string that identifies the Trunk this
+            #   resrouce is associated with.
             # @return [IpAccessControlListList] IpAccessControlListList
             def initialize(version, trunk_sid: nil)
               super(version)
@@ -28,7 +29,9 @@ module Twilio
             ##
             # Retrieve a single page of IpAccessControlListInstance records from the API.
             # Request is executed immediately.
-            # @param [String] ip_access_control_list_sid The ip_access_control_list_sid
+            # @param [String] ip_access_control_list_sid The SID of the [IP Access Control
+            #   List](https://www.twilio.com/docs/api/rest/ip-access-control-list) that you want
+            #   to associate with this trunk.
             # @return [IpAccessControlListInstance] Newly created IpAccessControlListInstance
             def create(ip_access_control_list_sid: nil)
               data = Twilio::Values.of({'IpAccessControlListSid' => ip_access_control_list_sid, })
@@ -215,7 +218,8 @@ module Twilio
             # Initialize the IpAccessControlListInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] trunk_sid The trunk_sid
+            # @param [String] trunk_sid A 34 character string that identifies the Trunk this
+            #   resrouce is associated with.
             # @param [String] sid The sid
             # @return [IpAccessControlListInstance] IpAccessControlListInstance
             def initialize(version, payload, trunk_sid: nil, sid: nil)
@@ -249,37 +253,37 @@ module Twilio
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The unique sid that identifies this account
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] A string that uniquely identifies this resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The trunk_sid
+            # @return [String] The unique sid that identifies the associated Trunk
             def trunk_sid
               @properties['trunk_sid']
             end
 
             ##
-            # @return [String] The friendly_name
+            # @return [String] A human readable description of this resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date this resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
             end

@@ -42,6 +42,7 @@ module Twilio
                 #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
                 #   also specify offsets to today.  For example, `EndDate=+30days` will make
                 #   `EndDate` be 30 days from today.
+                # @param [Boolean] include_subaccounts The include_subaccounts
                 # @param [Integer] limit Upper limit for the number of records to return. stream()
                 #    guarantees to never return more than limit.  Default is no limit
                 # @param [Integer] page_size Number of records to fetch per request, when
@@ -49,11 +50,12 @@ module Twilio
                 #    but a limit is defined, stream() will attempt to read the limit with the most
                 #    efficient page size, i.e. min(limit, 1000)
                 # @return [Array] Array of up to limit results
-                def list(category: :unset, start_date: :unset, end_date: :unset, limit: nil, page_size: nil)
+                def list(category: :unset, start_date: :unset, end_date: :unset, include_subaccounts: :unset, limit: nil, page_size: nil)
                   self.stream(
                       category: category,
                       start_date: start_date,
                       end_date: end_date,
+                      include_subaccounts: include_subaccounts,
                       limit: limit,
                       page_size: page_size
                   ).entries
@@ -73,6 +75,7 @@ module Twilio
                 #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
                 #   also specify offsets to today.  For example, `EndDate=+30days` will make
                 #   `EndDate` be 30 days from today.
+                # @param [Boolean] include_subaccounts The include_subaccounts
                 # @param [Integer] limit Upper limit for the number of records to return. stream()
                 #    guarantees to never return more than limit. Default is no limit.
                 # @param [Integer] page_size Number of records to fetch per request, when
@@ -80,13 +83,14 @@ module Twilio
                 #    but a limit is defined, stream() will attempt to read the limit with the most
                 #    efficient page size, i.e. min(limit, 1000)
                 # @return [Enumerable] Enumerable that will yield up to limit results
-                def stream(category: :unset, start_date: :unset, end_date: :unset, limit: nil, page_size: nil)
+                def stream(category: :unset, start_date: :unset, end_date: :unset, include_subaccounts: :unset, limit: nil, page_size: nil)
                   limits = @version.read_limits(limit, page_size)
 
                   page = self.page(
                       category: category,
                       start_date: start_date,
                       end_date: end_date,
+                      include_subaccounts: include_subaccounts,
                       page_size: limits[:page_size],
                   )
 
@@ -120,15 +124,17 @@ module Twilio
                 #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
                 #   also specify offsets to today.  For example, `EndDate=+30days` will make
                 #   `EndDate` be 30 days from today.
+                # @param [Boolean] include_subaccounts The include_subaccounts
                 # @param [String] page_token PageToken provided by the API
                 # @param [Integer] page_number Page Number, this value is simply for client state
                 # @param [Integer] page_size Number of records to return, defaults to 50
                 # @return [Page] Page of ThisMonthInstance
-                def page(category: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                def page(category: :unset, start_date: :unset, end_date: :unset, include_subaccounts: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                   params = Twilio::Values.of({
                       'Category' => category,
                       'StartDate' => Twilio.serialize_iso8601_date(start_date),
                       'EndDate' => Twilio.serialize_iso8601_date(end_date),
+                      'IncludeSubaccounts' => include_subaccounts,
                       'PageToken' => page_token,
                       'Page' => page_number,
                       'PageSize' => page_size,

@@ -36,6 +36,7 @@ describe 'Trunk' do
           "disaster_recovery_url": "http://disaster-recovery.com",
           "friendly_name": "friendly_name",
           "secure": false,
+          "cnam_lookup_enabled": false,
           "recording": {
               "mode": "do-not-record",
               "trim": "do-not-trim"
@@ -44,12 +45,12 @@ describe 'Trunk' do
           "auth_type_set": [],
           "date_created": "2015-01-02T11:23:45Z",
           "date_updated": "2015-01-02T11:23:45Z",
-          "url": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
-              "origination_urls": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OriginationUrls",
-              "credential_lists": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialLists",
-              "ip_access_control_lists": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlLists",
-              "phone_numbers": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers"
+              "origination_urls": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OriginationUrls",
+              "credential_lists": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialLists",
+              "ip_access_control_lists": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlLists",
+              "phone_numbers": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers"
           }
       }
       ]
@@ -113,6 +114,7 @@ describe 'Trunk' do
           "disaster_recovery_url": "http://disaster-recovery.com",
           "friendly_name": "friendly_name",
           "secure": false,
+          "cnam_lookup_enabled": false,
           "recording": {
               "mode": "do-not-record",
               "trim": "do-not-trim"
@@ -121,12 +123,12 @@ describe 'Trunk' do
           "auth_type_set": [],
           "date_created": "2015-01-02T11:23:45Z",
           "date_updated": "2015-01-02T11:23:45Z",
-          "url": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
-              "origination_urls": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OriginationUrls",
-              "credential_lists": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialLists",
-              "ip_access_control_lists": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlLists",
-              "phone_numbers": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers"
+              "origination_urls": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OriginationUrls",
+              "credential_lists": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialLists",
+              "ip_access_control_lists": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlLists",
+              "phone_numbers": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers"
           }
       }
       ]
@@ -158,13 +160,13 @@ describe 'Trunk' do
       %q[
       {
           "meta": {
-              "first_page_url": "https://trunking.twilio.com/v1/Trunks?PageSize=1&Page=0",
+              "first_page_url": "https://trunking.twilio.com/v1/Trunks?PageSize=50&Page=0",
+              "url": "https://trunking.twilio.com/v1/Trunks?PageSize=50&Page=0",
+              "page_size": 50,
               "key": "trunks",
               "next_page_url": null,
               "page": 0,
-              "page_size": 1,
-              "previous_page_url": null,
-              "url": "https://trunking.twilio.com/v1/Trunks?PageSize=1&Page=0"
+              "previous_page_url": null
           },
           "trunks": [
               {
@@ -175,6 +177,7 @@ describe 'Trunk' do
                   "disaster_recovery_url": "http://disaster-recovery.com",
                   "friendly_name": "friendly_name",
                   "secure": false,
+                  "cnam_lookup_enabled": false,
                   "recording": {
                       "mode": "do-not-record",
                       "trim": "do-not-trim"
@@ -183,12 +186,12 @@ describe 'Trunk' do
                   "auth_type_set": [],
                   "date_created": "2015-01-02T11:23:45Z",
                   "date_updated": "2015-01-02T11:23:45Z",
-                  "url": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "url": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "links": {
-                      "origination_urls": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OriginationUrls",
-                      "credential_lists": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialLists",
-                      "ip_access_control_lists": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlLists",
-                      "phone_numbers": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers"
+                      "origination_urls": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OriginationUrls",
+                      "credential_lists": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialLists",
+                      "ip_access_control_lists": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlLists",
+                      "phone_numbers": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers"
                   }
               }
           ]
@@ -207,13 +210,13 @@ describe 'Trunk' do
       %q[
       {
           "meta": {
-              "first_page_url": "https://trunking.twilio.com/v1/Trunks?PageSize=1&Page=0",
+              "first_page_url": "https://trunking.twilio.com/v1/Trunks?PageSize=50&Page=0",
+              "url": "https://trunking.twilio.com/v1/Trunks?PageSize=50&Page=0",
+              "page_size": 50,
               "key": "trunks",
               "next_page_url": null,
               "page": 0,
-              "page_size": 1,
-              "previous_page_url": null,
-              "url": "https://trunking.twilio.com/v1/Trunks?PageSize=1&Page=0"
+              "previous_page_url": null
           },
           "trunks": []
       }
@@ -252,6 +255,7 @@ describe 'Trunk' do
           "disaster_recovery_url": "http://updated-recovery.com",
           "friendly_name": "updated_name",
           "secure": true,
+          "cnam_lookup_enabled": true,
           "recording": {
               "mode": "do-not-record",
               "trim": "do-not-trim"
@@ -260,12 +264,12 @@ describe 'Trunk' do
           "auth_type_set": [],
           "date_created": "2015-01-02T11:23:45Z",
           "date_updated": "2015-01-02T11:23:45Z",
-          "url": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
-              "origination_urls": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OriginationUrls",
-              "credential_lists": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialLists",
-              "ip_access_control_lists": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlLists",
-              "phone_numbers": "http://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers"
+              "origination_urls": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OriginationUrls",
+              "credential_lists": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/CredentialLists",
+              "ip_access_control_lists": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAccessControlLists",
+              "phone_numbers": "https://trunking.twilio.com/v1/Trunks/TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers"
           }
       }
       ]

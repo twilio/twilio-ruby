@@ -16,7 +16,9 @@ module Twilio
               ##
               # Initialize the UserChannelList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
+              # @param [String] service_sid The unique id of the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this channel
+              #   belongs to.
               # @param [String] user_sid A 34 character string that uniquely identifies this
               #   resource.
               # @return [UserChannelList] UserChannelList
@@ -156,7 +158,9 @@ module Twilio
               # Initialize the UserChannelInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The service_sid
+              # @param [String] service_sid The unique id of the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this channel
+              #   belongs to.
               # @param [String] user_sid A 34 character string that uniquely identifies this
               #   resource.
               # @return [UserChannelInstance] UserChannelInstance
@@ -177,43 +181,43 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The unique id of the Account responsible for this channel.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The service_sid
+              # @return [String] The unique id of the Service this channel belongs to.
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] The channel_sid
+              # @return [String] The unique id of a Channel.
               def channel_sid
                 @properties['channel_sid']
               end
 
               ##
-              # @return [String] The member_sid
+              # @return [String] The unique id of this User as a Member in this Channel.
               def member_sid
                 @properties['member_sid']
               end
 
               ##
-              # @return [user_channel.ChannelStatus] The status
+              # @return [user_channel.ChannelStatus] The status of the User on this Channel.
               def status
                 @properties['status']
               end
 
               ##
-              # @return [String] The last_consumed_message_index
+              # @return [String] The index of the last read Message in this Channel for this User.
               def last_consumed_message_index
                 @properties['last_consumed_message_index']
               end
 
               ##
-              # @return [String] The unread_messages_count
+              # @return [String] The count of unread Messages in this Channel for this User.
               def unread_messages_count
                 @properties['unread_messages_count']
               end

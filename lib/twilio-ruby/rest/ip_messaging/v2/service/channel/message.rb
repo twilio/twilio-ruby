@@ -17,8 +17,8 @@ module Twilio
               # Initialize the MessageList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The unique id of the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this message
-              #   belongs to.
+              #   [Service](https://www.twilio.com/docs/chat/api/services) this message belongs
+              #   to.
               # @param [String] channel_sid The channel_sid
               # @return [MessageList] MessageList
               def initialize(version, service_sid: nil, channel_sid: nil)
@@ -34,9 +34,11 @@ module Twilio
               # Request is executed immediately.
               # @param [String] from The
               #   [identity](https://www.twilio.com/docs/api/chat/guides/identity) of the
-              #   message's author. Defaults to `system` if not specified.
-              # @param [String] attributes A metadata field you can use to store any data you
-              #   wish.  The string value must contain structurally valid JSON if specified.
+              #   message's author. Defaults to `system`.
+              # @param [String] attributes An string metadata field you can use to store any
+              #   data you wish. The string value must contain structurally valid JSON if
+              #   specified. **Note** that this will always be null for resources returned via
+              #   LIST GET operations, but will be present for single GET operations.
               # @param [Time] date_created The ISO8601 time specifying the datetime the Message
               #   should be set as being created. Will be set to the current time by the Chat
               #   service if not specified.  Note that this should only be used in cases where a
@@ -262,9 +264,10 @@ module Twilio
               # @param [String] body The message body string. You can also send structured data
               #   by serializing it into a string. May be updated to empty string or `null`, will
               #   be set as empty string as a result in this cases.
-              # @param [String] attributes The attributes metadata field you can use to store
-              #   any data you wish.  The string value must contain structurally valid JSON if
-              #   specified.
+              # @param [String] attributes A string metadata field you can use to store any data
+              #   you wish. The string value must contain structurally valid JSON if specified.
+              #   **Note** that this will always be null for resources returned via LIST GET
+              #   operations, but will be present for single GET operations.
               # @param [Time] date_created The ISO8601 time specifying the datetime the Message
               #   should be set as being created.
               # @param [Time] date_updated The ISO8601 time specifying the datetime the Message
@@ -310,8 +313,8 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The unique id of the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this message
-              #   belongs to.
+              #   [Service](https://www.twilio.com/docs/chat/api/services) this message belongs
+              #   to.
               # @param [String] channel_sid The channel_sid
               # @param [String] sid The sid
               # @return [MessageInstance] MessageInstance
@@ -376,7 +379,7 @@ module Twilio
               end
 
               ##
-              # @return [String] An optional string metadata field you can use to store any data you wish.
+              # @return [String] A string metadata field you can use to store any data you wish.
               def attributes
                 @properties['attributes']
               end
@@ -412,7 +415,7 @@ module Twilio
               end
 
               ##
-              # @return [String] Optional field to specify the Identity of the User that last updated the Message
+              # @return [String] Field to specify the Identity of the User that last updated the Message
               def last_updated_by
                 @properties['last_updated_by']
               end
@@ -430,7 +433,7 @@ module Twilio
               end
 
               ##
-              # @return [String] Optional — the contents of the message.
+              # @return [String] The contents of the message.
               def body
                 @properties['body']
               end
@@ -448,7 +451,7 @@ module Twilio
               end
 
               ##
-              # @return [Hash] Optional — if a Media resource instance is attached to the Message, this will contain the Media object for the attached Media.
+              # @return [Hash] If a Media resource instance is attached to the Message, this will contain the Media object for the attached Media.
               def media
                 @properties['media']
               end
@@ -478,9 +481,10 @@ module Twilio
               # @param [String] body The message body string. You can also send structured data
               #   by serializing it into a string. May be updated to empty string or `null`, will
               #   be set as empty string as a result in this cases.
-              # @param [String] attributes The attributes metadata field you can use to store
-              #   any data you wish.  The string value must contain structurally valid JSON if
-              #   specified.
+              # @param [String] attributes A string metadata field you can use to store any data
+              #   you wish. The string value must contain structurally valid JSON if specified.
+              #   **Note** that this will always be null for resources returned via LIST GET
+              #   operations, but will be present for single GET operations.
               # @param [Time] date_created The ISO8601 time specifying the datetime the Message
               #   should be set as being created.
               # @param [Time] date_updated The ISO8601 time specifying the datetime the Message

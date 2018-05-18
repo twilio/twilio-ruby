@@ -38,7 +38,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid `CJxx…xx` A system-generated 34-character string that
+      #   uniquely identifies this Composition.
       # @return [Twilio::REST::Video::V1::CompositionInstance] if sid was passed.
       # @return [Twilio::REST::Video::V1::CompositionList]
       def compositions(sid=:unset)

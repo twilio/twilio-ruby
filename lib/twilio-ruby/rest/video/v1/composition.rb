@@ -29,9 +29,11 @@ module Twilio
           # Lists CompositionInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [composition.Status] status The status
-          # @param [Time] date_created_after The date_created_after
-          # @param [Time] date_created_before The date_created_before
+          # @param [composition.Status] status Only show Compositions with the given status.
+          # @param [Time] date_created_after Only show Compositions that started on or after
+          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          # @param [Time] date_created_before Only show Compositions that started before
+          #   this this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
           # @param [String] room_sid The room_sid
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
@@ -55,9 +57,11 @@ module Twilio
           # Streams CompositionInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [composition.Status] status The status
-          # @param [Time] date_created_after The date_created_after
-          # @param [Time] date_created_before The date_created_before
+          # @param [composition.Status] status Only show Compositions with the given status.
+          # @param [Time] date_created_after Only show Compositions that started on or after
+          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          # @param [Time] date_created_before Only show Compositions that started before
+          #   this this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
           # @param [String] room_sid The room_sid
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
@@ -97,9 +101,11 @@ module Twilio
           ##
           # Retrieve a single page of CompositionInstance records from the API.
           # Request is executed immediately.
-          # @param [composition.Status] status The status
-          # @param [Time] date_created_after The date_created_after
-          # @param [Time] date_created_before The date_created_before
+          # @param [composition.Status] status Only show Compositions with the given status.
+          # @param [Time] date_created_after Only show Compositions that started on or after
+          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          # @param [Time] date_created_before Only show Compositions that started before
+          #   this this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
           # @param [String] room_sid The room_sid
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
@@ -215,7 +221,8 @@ module Twilio
           ##
           # Initialize the CompositionContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid The Composition Sid that uniquely identifies the Composition
+          #   to fetch.
           # @return [CompositionContext] CompositionContext
           def initialize(version, sid)
             super(version)
@@ -262,7 +269,8 @@ module Twilio
           # Initialize the CompositionInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid The Composition Sid that uniquely identifies the Composition
+          #   to fetch.
           # @return [CompositionInstance] CompositionInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -306,79 +314,79 @@ module Twilio
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] Twilio Account SID.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [composition.Status] The status
+          # @return [composition.Status] The status of the Composition.
           def status
             @properties['status']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] Date when the Composition Resource was created.
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [String] The date_completed
+          # @return [String] Date when the media processing task finished.
           def date_completed
             @properties['date_completed']
           end
 
           ##
-          # @return [String] The date_deleted
+          # @return [String] Date when the Composition Resource generated media was deleted.
           def date_deleted
             @properties['date_deleted']
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A 34-character string that uniquely identifies this Composition.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The room_sid
+          # @return [String] A 34-character string that uniquely identifies the source of this Composition.
           def room_sid
             @properties['room_sid']
           end
 
           ##
-          # @return [String] The audio_sources
+          # @return [String] A list of audio sources related to this Composition.
           def audio_sources
             @properties['audio_sources']
           end
 
           ##
-          # @return [String] The audio_sources_excluded
+          # @return [String] A list of audio sources excluded related to this Composition.
           def audio_sources_excluded
             @properties['audio_sources_excluded']
           end
 
           ##
-          # @return [Hash] The video_layout
+          # @return [Hash] The JSON video layout description.
           def video_layout
             @properties['video_layout']
           end
 
           ##
-          # @return [String] The resolution
+          # @return [String] Pixel resolution of the composed video.
           def resolution
             @properties['resolution']
           end
 
           ##
-          # @return [Boolean] The trim
+          # @return [Boolean] Boolean flag for clipping intervals that have no media.
           def trim
             @properties['trim']
           end
 
           ##
-          # @return [composition.Format] The format
+          # @return [composition.Format] The file format for this Composition.
           def format
             @properties['format']
           end
@@ -390,25 +398,25 @@ module Twilio
           end
 
           ##
-          # @return [String] The size
+          # @return [String] Size of the Composed media file expressed in bytes.
           def size
             @properties['size']
           end
 
           ##
-          # @return [String] The duration
+          # @return [String] Duration of the Composed media in seconds.
           def duration
             @properties['duration']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The absolute URL for this resource.
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] JSON object with the URL where the media file can be fetched.
           def links
             @properties['links']
           end

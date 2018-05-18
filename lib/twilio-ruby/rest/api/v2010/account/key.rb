@@ -176,7 +176,8 @@ module Twilio
 
             ##
             # Update the KeyInstance
-            # @param [String] friendly_name The friendly_name
+            # @param [String] friendly_name A descriptive string for this resource, chosen by
+            #   your application, up to 64 characters long.
             # @return [KeyInstance] Updated KeyInstance
             def update(friendly_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -274,7 +275,8 @@ module Twilio
 
             ##
             # Update the KeyInstance
-            # @param [String] friendly_name The friendly_name
+            # @param [String] friendly_name A descriptive string for this resource, chosen by
+            #   your application, up to 64 characters long.
             # @return [KeyInstance] Updated KeyInstance
             def update(friendly_name: :unset)
               context.update(friendly_name: friendly_name, )

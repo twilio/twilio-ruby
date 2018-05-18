@@ -28,7 +28,10 @@ module Twilio
             ##
             # Retrieve a single page of CredentialListInstance records from the API.
             # Request is executed immediately.
-            # @param [String] credential_list_sid The credential_list_sid
+            # @param [String] credential_list_sid The SID of the [Credential
+            #   List](https://www.twilio.com/docs/api/rest/credential-list) that you want to
+            #   associate with this trunk. Once associated, Twilio will start authenticating
+            #   access to the trunk against this list.
             # @return [CredentialListInstance] Newly created CredentialListInstance
             def create(credential_list_sid: nil)
               data = Twilio::Values.of({'CredentialListSid' => credential_list_sid, })

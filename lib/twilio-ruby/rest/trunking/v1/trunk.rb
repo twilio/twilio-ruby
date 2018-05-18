@@ -39,17 +39,19 @@ module Twilio
           #   Recovery](https://www.twilio.com/docs/sip-trunking/getting-started#disaster-recovery) for more information.
           # @param [String] disaster_recovery_method The HTTP method Twilio will use when
           #   requesting the `DisasterRecoveryUrl`. Either `GET` or `POST`.
-          # @param [String] recording The recording settings for this trunk. If turned on,
-          #   all calls going through this trunk will be recorded and the recording can either
-          #   start when the call is ringing or when the call is answered. See
+          # @param [trunk.RecordingSetting] recording The recording settings for this trunk.
+          #   If turned on, all calls going through this trunk will be recorded and the
+          #   recording can either start when the call is ringing or when the call is
+          #   answered. See
           #   [Recording](https://www.twilio.com/docs/sip-trunking/getting-started#recording)
           #   for more information.
           # @param [Boolean] secure The Secure Trunking  settings for this trunk. If turned
           #   on, all calls going through this trunk will be secure using SRTP for media and
           #   TLS for signalling. If turned off, then RTP will be used for media. See [Secure
           #   Trunking](https://www.twilio.com/docs/sip-trunking/getting-started#securetrunking) for more information.
+          # @param [Boolean] cnam_lookup_enabled The cnam_lookup_enabled
           # @return [TrunkInstance] Newly created TrunkInstance
-          def create(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset)
+          def create(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DomainName' => domain_name,
@@ -57,6 +59,7 @@ module Twilio
                 'DisasterRecoveryMethod' => disaster_recovery_method,
                 'Recording' => recording,
                 'Secure' => secure,
+                'CnamLookupEnabled' => cnam_lookup_enabled,
             })
 
             payload = @version.create(
@@ -243,17 +246,19 @@ module Twilio
           #   Recovery](https://www.twilio.com/docs/sip-trunking/getting-started#disaster-recovery) for more information.
           # @param [String] disaster_recovery_method The HTTP method Twilio will use when
           #   requesting the `DisasterRecoveryUrl`. Either `GET` or `POST`.
-          # @param [String] recording The recording settings for this trunk. If turned on,
-          #   all calls going through this trunk will be recorded and the recording can either
-          #   start when the call is ringing or when the call is answered. See
+          # @param [trunk.RecordingSetting] recording The recording settings for this trunk.
+          #   If turned on, all calls going through this trunk will be recorded and the
+          #   recording can either start when the call is ringing or when the call is
+          #   answered. See
           #   [Recording](https://www.twilio.com/docs/sip-trunking/getting-started#recording)
           #   for more information.
           # @param [Boolean] secure The Secure Trunking  settings for this trunk. If turned
           #   on, all calls going through this trunk will be secure using SRTP for media and
           #   TLS for signalling. If turned off, then RTP will be used for media. See [Secure
           #   Trunking](https://www.twilio.com/docs/sip-trunking/getting-started#securetrunking) for more information.
+          # @param [Boolean] cnam_lookup_enabled The cnam_lookup_enabled
           # @return [TrunkInstance] Updated TrunkInstance
-          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset)
+          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DomainName' => domain_name,
@@ -261,6 +266,7 @@ module Twilio
                 'DisasterRecoveryMethod' => disaster_recovery_method,
                 'Recording' => recording,
                 'Secure' => secure,
+                'CnamLookupEnabled' => cnam_lookup_enabled,
             })
 
             payload = @version.update(
@@ -371,6 +377,7 @@ module Twilio
                 'friendly_name' => payload['friendly_name'],
                 'secure' => payload['secure'],
                 'recording' => payload['recording'],
+                'cnam_lookup_enabled' => payload['cnam_lookup_enabled'],
                 'auth_type' => payload['auth_type'],
                 'auth_type_set' => payload['auth_type_set'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
@@ -436,6 +443,12 @@ module Twilio
           # @return [Hash] The recording settings for this trunk.
           def recording
             @properties['recording']
+          end
+
+          ##
+          # @return [Boolean] The cnam_lookup_enabled
+          def cnam_lookup_enabled
+            @properties['cnam_lookup_enabled']
           end
 
           ##
@@ -509,17 +522,19 @@ module Twilio
           #   Recovery](https://www.twilio.com/docs/sip-trunking/getting-started#disaster-recovery) for more information.
           # @param [String] disaster_recovery_method The HTTP method Twilio will use when
           #   requesting the `DisasterRecoveryUrl`. Either `GET` or `POST`.
-          # @param [String] recording The recording settings for this trunk. If turned on,
-          #   all calls going through this trunk will be recorded and the recording can either
-          #   start when the call is ringing or when the call is answered. See
+          # @param [trunk.RecordingSetting] recording The recording settings for this trunk.
+          #   If turned on, all calls going through this trunk will be recorded and the
+          #   recording can either start when the call is ringing or when the call is
+          #   answered. See
           #   [Recording](https://www.twilio.com/docs/sip-trunking/getting-started#recording)
           #   for more information.
           # @param [Boolean] secure The Secure Trunking  settings for this trunk. If turned
           #   on, all calls going through this trunk will be secure using SRTP for media and
           #   TLS for signalling. If turned off, then RTP will be used for media. See [Secure
           #   Trunking](https://www.twilio.com/docs/sip-trunking/getting-started#securetrunking) for more information.
+          # @param [Boolean] cnam_lookup_enabled The cnam_lookup_enabled
           # @return [TrunkInstance] Updated TrunkInstance
-          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset)
+          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             context.update(
                 friendly_name: friendly_name,
                 domain_name: domain_name,
@@ -527,6 +542,7 @@ module Twilio
                 disaster_recovery_method: disaster_recovery_method,
                 recording: recording,
                 secure: secure,
+                cnam_lookup_enabled: cnam_lookup_enabled,
             )
           end
 

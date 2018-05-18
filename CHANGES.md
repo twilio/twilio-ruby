@@ -1,6 +1,17 @@
 twilio-ruby changelog
 =====================
 
+[2018-05-18] Version 5.10.1
+----------------------------
+**Api**
+- Add more programmable video categories to usage records
+- Add 'include_subaccounts' parameter to all variation of usage_record fetch
+
+**Trunking**
+- Added cnam_lookup_enabled parameter to Trunk resource.
+- Added case-insensitivity for recording parameter to Trunk resource.
+
+
 [2018-05-11] Version 5.10.0
 ----------------------------
 **Chat**

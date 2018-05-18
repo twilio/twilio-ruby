@@ -36,7 +36,8 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The sid
+        # @param [String] sid The Composition Sid that uniquely identifies the Composition
+        #   to fetch.
         # @return [Twilio::REST::Video::V1::CompositionContext] if sid was passed.
         # @return [Twilio::REST::Video::V1::CompositionList]
         def compositions(sid=:unset)

@@ -33,12 +33,28 @@ module Twilio
               ##
               # Retrieve a single page of MemberInstance records from the API.
               # Request is executed immediately.
-              # @param [String] identity The identity
-              # @param [String] role_sid The role_sid
-              # @param [String] last_consumed_message_index The last_consumed_message_index
-              # @param [Time] last_consumption_timestamp The last_consumption_timestamp
-              # @param [Time] date_created The date_created
-              # @param [Time] date_updated The date_updated
+              # @param [String] identity A unique string identifier for this
+              #   [User](https://www.twilio.com/docs/api/chat/rest/users) in this
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services). See the [access
+              #   tokens](https://www.twilio.com/docs/api/chat/guides/create-tokens) docs for more
+              #   details.
+              # @param [String] role_sid The role to be assigned to this member. Defaults to the
+              #   roles specified on the [Service](https://www.twilio.com/docs/chat/api/services).
+              # @param [String] last_consumed_message_index Field used to specify the last
+              #   consumed Message index for the Channel for this Member.  Should only be used
+              #   when recreating a Member from a backup/separate source.
+              # @param [Time] last_consumption_timestamp ISO8601 time indicating the last
+              #   datetime the Member consumed a Message in the Channel.  Should only be used when
+              #   recreating a Member from a backup/separate source
+              # @param [Time] date_created The ISO8601 time specifying the datetime the Members
+              #   should be set as being created.  Will be set to the current time by the Chat
+              #   service if not specified.  Note that this should only be used in cases where a
+              #   Member is being recreated from a backup/separate source
+              # @param [Time] date_updated The ISO8601 time specifying the datetime the Member
+              #   should be set as having been last updated.  Will be set to the `null` by the
+              #   Chat service if not specified.  Note that this should only be used in cases
+              #   where a Member is being recreated from a backup/separate source  and where a
+              #   Member was previously updated.
               # @return [MemberInstance] Newly created MemberInstance
               def create(identity: nil, role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset)
                 data = Twilio::Values.of({
@@ -68,7 +84,11 @@ module Twilio
               # Lists MemberInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] identity The identity
+              # @param [String] identity A unique string identifier for this
+              #   [User](https://www.twilio.com/docs/api/chat/rest/users) in this
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services). See the [access
+              #   tokens](https://www.twilio.com/docs/api/chat/guides/create-tokens) docs for more
+              #   details.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -84,7 +104,11 @@ module Twilio
               # Streams MemberInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] identity The identity
+              # @param [String] identity A unique string identifier for this
+              #   [User](https://www.twilio.com/docs/api/chat/rest/users) in this
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services). See the [access
+              #   tokens](https://www.twilio.com/docs/api/chat/guides/create-tokens) docs for more
+              #   details.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -117,7 +141,11 @@ module Twilio
               ##
               # Retrieve a single page of MemberInstance records from the API.
               # Request is executed immediately.
-              # @param [String] identity The identity
+              # @param [String] identity A unique string identifier for this
+              #   [User](https://www.twilio.com/docs/api/chat/rest/users) in this
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services). See the [access
+              #   tokens](https://www.twilio.com/docs/api/chat/guides/create-tokens) docs for more
+              #   details.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -238,16 +266,22 @@ module Twilio
               ##
               # Update the MemberInstance
               # @param [String] role_sid The role to be assigned to this member. Defaults to the
-              #   roles specified on the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/services).
-              # @param [String] last_consumed_message_index Optional field used to specify the
-              #   last consumed Message index for the Channel for this Member.
-              # @param [Time] last_consumption_timestamp Optional ISO8601 time indicating the
-              #   last datetime the Member consumed a Message in the Channel.
-              # @param [Time] date_created The optional ISO8601 time specifying the datetime the
-              #   Members should be set as being created.
-              # @param [Time] date_updated The optional ISO8601 time specifying the datetime the
-              #   Member should be set as having been last updated.
+              #   roles specified on the [Service](https://www.twilio.com/docs/chat/api/services).
+              # @param [String] last_consumed_message_index Field used to specify the last
+              #   consumed Message index for the Channel for this Member.  Should only be used
+              #   when recreating a Member from a backup/separate source.
+              # @param [Time] last_consumption_timestamp ISO8601 time indicating the last
+              #   datetime the Member consumed a Message in the Channel.  Should only be used when
+              #   recreating a Member from a backup/separate source
+              # @param [Time] date_created The ISO8601 time specifying the datetime the Members
+              #   should be set as being created.  Will be set to the current time by the Chat
+              #   service if not specified.  Note that this should only be used in cases where a
+              #   Member is being recreated from a backup/separate source
+              # @param [Time] date_updated The ISO8601 time specifying the datetime the Member
+              #   should be set as having been last updated.  Will be set to the `null` by the
+              #   Chat service if not specified.  Note that this should only be used in cases
+              #   where a Member is being recreated from a backup/separate source  and where a
+              #   Member was previously updated.
               # @return [MemberInstance] Updated MemberInstance
               def update(role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset)
                 data = Twilio::Values.of({
@@ -419,16 +453,22 @@ module Twilio
               ##
               # Update the MemberInstance
               # @param [String] role_sid The role to be assigned to this member. Defaults to the
-              #   roles specified on the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/services).
-              # @param [String] last_consumed_message_index Optional field used to specify the
-              #   last consumed Message index for the Channel for this Member.
-              # @param [Time] last_consumption_timestamp Optional ISO8601 time indicating the
-              #   last datetime the Member consumed a Message in the Channel.
-              # @param [Time] date_created The optional ISO8601 time specifying the datetime the
-              #   Members should be set as being created.
-              # @param [Time] date_updated The optional ISO8601 time specifying the datetime the
-              #   Member should be set as having been last updated.
+              #   roles specified on the [Service](https://www.twilio.com/docs/chat/api/services).
+              # @param [String] last_consumed_message_index Field used to specify the last
+              #   consumed Message index for the Channel for this Member.  Should only be used
+              #   when recreating a Member from a backup/separate source.
+              # @param [Time] last_consumption_timestamp ISO8601 time indicating the last
+              #   datetime the Member consumed a Message in the Channel.  Should only be used when
+              #   recreating a Member from a backup/separate source
+              # @param [Time] date_created The ISO8601 time specifying the datetime the Members
+              #   should be set as being created.  Will be set to the current time by the Chat
+              #   service if not specified.  Note that this should only be used in cases where a
+              #   Member is being recreated from a backup/separate source
+              # @param [Time] date_updated The ISO8601 time specifying the datetime the Member
+              #   should be set as having been last updated.  Will be set to the `null` by the
+              #   Chat service if not specified.  Note that this should only be used in cases
+              #   where a Member is being recreated from a backup/separate source  and where a
+              #   Member was previously updated.
               # @return [MemberInstance] Updated MemberInstance
               def update(role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset)
                 context.update(

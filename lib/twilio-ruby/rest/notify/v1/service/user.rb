@@ -30,8 +30,11 @@ module Twilio
             ##
             # Retrieve a single page of UserInstance records from the API.
             # Request is executed immediately.
-            # @param [String] identity The identity
-            # @param [String] segment The segment
+            # @param [String] identity The identifier of the User, defined by your
+            #   application.
+            # @param [String] segment The list of segments this User belongs to. Segments can
+            #   be used to select recipients of a notification. Maximum 20 Segments per User
+            #   allowed.
             # @return [UserInstance] Newly created UserInstance
             def create(identity: nil, segment: :unset)
               data = Twilio::Values.of({
@@ -52,8 +55,11 @@ module Twilio
             # Lists UserInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] identity The identity
-            # @param [String] segment The segment
+            # @param [String] identity The identifier of the User, defined by your
+            #   application.
+            # @param [String] segment The list of segments this User belongs to. Segments can
+            #   be used to select recipients of a notification. Maximum 20 Segments per User
+            #   allowed.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -69,8 +75,11 @@ module Twilio
             # Streams UserInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] identity The identity
-            # @param [String] segment The segment
+            # @param [String] identity The identifier of the User, defined by your
+            #   application.
+            # @param [String] segment The list of segments this User belongs to. Segments can
+            #   be used to select recipients of a notification. Maximum 20 Segments per User
+            #   allowed.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -103,8 +112,11 @@ module Twilio
             ##
             # Retrieve a single page of UserInstance records from the API.
             # Request is executed immediately.
-            # @param [String] identity The identity
-            # @param [String] segment The segment
+            # @param [String] identity The identifier of the User, defined by your
+            #   application.
+            # @param [String] segment The list of segments this User belongs to. Segments can
+            #   be used to select recipients of a notification. Maximum 20 Segments per User
+            #   allowed.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -342,7 +354,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The identity
+            # @return [String] The identifier of the User, defined by your application.
             def identity
               @properties['identity']
             end
