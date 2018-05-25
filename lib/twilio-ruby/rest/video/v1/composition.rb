@@ -145,15 +145,49 @@ module Twilio
           ##
           # Retrieve a single page of CompositionInstance records from the API.
           # Request is executed immediately.
-          # @param [String] room_sid The room_sid
-          # @param [Hash] video_layout The video_layout
-          # @param [String] audio_sources The audio_sources
-          # @param [String] audio_sources_excluded The audio_sources_excluded
-          # @param [String] resolution The resolution
-          # @param [composition.Format] format The format
-          # @param [String] status_callback The status_callback
-          # @param [String] status_callback_method The status_callback_method
-          # @param [Boolean] trim The trim
+          # @param [String] room_sid Group Room SID owning the media tracks to be used as
+          #   Composition sources.
+          # @param [Hash] video_layout A JSON object defining the video layout of the
+          #   Composition in terms of regions. See the section [Managing Video
+          #   Layouts](#managing-video-layouts) below for further information.
+          # @param [String] audio_sources An array of audio sources to merge. All the
+          #   specified sources must belong to the same Group Room. It can
+          #   include:<ul><li>Zero or more `RecordingTrackSid`</li><li>Zero or more
+          #   `MediaTrackSid`</li><li>Zero or more `ParticipantSid`</li><li>Zero or more Track
+          #   names. These can be specified using wildcards (e.g. `student*`)</li></ul>
+          # @param [String] audio_sources_excluded An array of audio sources to exclude from
+          #   the Composition. Any new Composition shall include all audio sources specified
+          #   in `AudioSources` except for the ones specified in `AudioSourcesExcluded`. This
+          #   parameter may include:<ul><li>Zero or more `RecordingTrackSid`</li><li>Zero or
+          #   more `MediaTrackSid`</li><li>Zero or more `ParticipantSid`</li><li>Zero or more
+          #   Track names. These can be specified using wildcards (e.g. `student*`)</li></ul>
+          # @param [String] resolution A string representing the numbers of pixels for rows
+          #   (width) and columns (height) of the generated composed video. This string must
+          #   have the format `{width}x{height}`. This parameter must comply with the
+          #   following constraints:<ul><li>`width >= 16 && width <= 1280`</li><li>`height >=
+          #   16 && height <= 1280`</li><li>`width * height <= 921,600`</li></ul>Typical
+          #   values are:<ul><li>HD = `1280x720`</li><li>PAL = `1024x576`</li><li>VGA =
+          #   `640x480`</li><li>CIF = `320x240`</li></ul>Note that the `Resolution` implicitly
+          #   imposes an aspect ratio to the resulting composition. When the original video
+          #   tracks get constrained by this aspect ratio they are scaled-down to fit. You can
+          #   find detailed information in the [Managing Video
+          #   Layouts](#managing-video-layouts) section. Defaults to `640x480`.
+          # @param [composition.Format] format Container format of the Composition media
+          #   file. Can be any of the following: `mp4`, `webm`. The use of `mp4` or `webm`
+          #   makes mandatory the specification of `AudioSources` and/or one `VideoLayout`
+          #   element containing a valid `video_sources` list, otherwise an error is fired.
+          #   Defaults to `webm`.
+          # @param [String] status_callback A URL that Twilio sends asynchronous webhook
+          #   requests to on every composition event. If not provided, status callback events
+          #   will not be dispatched.
+          # @param [String] status_callback_method HTTP method Twilio should use when
+          #   requesting the above URL. Defaults to `POST`.
+          # @param [Boolean] trim When activated, clips all the Composition intervals where
+          #   there is no active media. This results in shorter compositions in cases when the
+          #   Room was created but no Participant joined for some time, or if all the
+          #   Participants left the room and joined at a later stage, as those gaps will be
+          #   removed. You can find further information in the [Managing Video
+          #   Layouts](#managing-video-layouts) section. Defaults to `true`.
           # @return [CompositionInstance] Newly created CompositionInstance
           def create(room_sid: :unset, video_layout: :unset, audio_sources: :unset, audio_sources_excluded: :unset, resolution: :unset, format: :unset, status_callback: :unset, status_callback_method: :unset, trim: :unset)
             data = Twilio::Values.of({

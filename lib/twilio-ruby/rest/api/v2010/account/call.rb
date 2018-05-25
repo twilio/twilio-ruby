@@ -70,9 +70,7 @@ module Twilio
             #   to URL-encode this string, since the '`#`' character has special meaning in a
             #   URL. If both `SendDigits` and `MachineDetection` parameters are provided, then
             #   `MachineDetection` will be ignored.
-            # @param [String] if_machine Tell Twilio to try and determine if a machine (like
-            #   voicemail) or a human has answered the call. Possible value are `Continue` and
-            #   `Hangup`.
+            # @param [String] if_machine The if_machine
             # @param [String] timeout The integer number of seconds that Twilio should allow
             #   the phone to ring before assuming there is no answer. Default is `60` seconds,
             #   the maximum is `600` seconds. For some call flows Twilio will add a 5 second

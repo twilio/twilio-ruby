@@ -1,6 +1,12 @@
 twilio-ruby changelog
 =====================
 
+[2018-05-25] Version 5.10.2
+----------------------------
+**Studio**
+- Add endpoint to delete engagements
+
+
 [2018-05-18] Version 5.10.1
 ----------------------------
 **Api**

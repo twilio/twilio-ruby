@@ -207,6 +207,13 @@ module Twilio
             end
 
             ##
+            # Deletes the EngagementInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              @version.delete('delete', @uri)
+            end
+
+            ##
             # Access the steps
             # @return [StepList]
             # @return [StepContext] if sid was passed.
@@ -355,6 +362,13 @@ module Twilio
             # @return [EngagementInstance] Fetched EngagementInstance
             def fetch
               context.fetch
+            end
+
+            ##
+            # Deletes the EngagementInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              context.delete
             end
 
             ##
