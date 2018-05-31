@@ -377,6 +377,13 @@ module Twilio
       end
 
       ##
+      # @return [Bool] indicating whether requests to the new SSL certificate are valid
+      def validate_ssl_certificate
+        response = request('api.twilio.com', '8443', 'GET', 'https://api.twilio.com:8443/.json')
+        response.status_code >= 200 && response.status_code < 300
+      end
+
+      ##
       # Provide a user friendly representation
       def to_s
         "#<Twilio::REST::Client #{@account_sid}>"
