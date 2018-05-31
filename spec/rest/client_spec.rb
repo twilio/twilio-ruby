@@ -53,4 +53,9 @@ describe Twilio::REST::Client do
     @holodeck.mock Twilio::Response.new(200, '')
     expect(@client.validate_ssl_certificate).to be true
   end
+
+  it 'fails to validate broken SSL certificates' do
+    @holodeck.mock Twilio::Response.new(504, '')
+    expect(@client.validate_ssl_certificate).to be false
+  end
 end
