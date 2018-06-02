@@ -30,6 +30,12 @@ describe Twilio::TwiML::VoiceResponse do
       expect(twiml).not_to match(/\A<\?xml version="1.0" encoding="UTF-8"\?>/)
     end
 
+    it 'should allow comments' do
+      twiml = Twilio::TwiML::VoiceResponse.new
+      twiml.comment "This is awesome"
+      expect(twiml.to_xml).to match(/<!--This is awesome-->/)
+    end
+
     it 'should allow populated response' do
       expected_doc = parse <<-XML
         <Response>

@@ -12,6 +12,16 @@ module Twilio
   module TwiML
     class TwiMLError < StandardError; end
 
+    class Comment
+      def initialize(body)
+        @body = body
+      end
+
+      def xml(document)
+        Nokogiri::XML::Comment.new(document, @body)
+      end
+    end
+
     class TwiML
         attr_accessor :name
 
@@ -68,10 +78,16 @@ module Twilio
         end
 
         def append(verb)
-          raise TwiMLError, 'Only appending of TwiML is allowed' unless verb.is_a?(TwiML)
+          unless verb.is_a?(TwiML) || verb.is_a?(Comment)
+              raise TwiMLError, 'Only appending of TwiML is allowed'
+          end
 
           @verbs << verb
           self
+        end
+
+        def comment(body)
+          append(Comment.new(body))
         end
 
       alias to_xml to_s
