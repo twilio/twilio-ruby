@@ -22,7 +22,7 @@ describe Twilio::TwiML::MessagingResponse do
 
     it 'should allow comments' do
       twiml = Twilio::TwiML::MessagingResponse.new
-      twiml.comment "This is awesome"
+      twiml.comment 'This is awesome'
       expect(twiml.to_xml).to match(/<!--This is awesome-->/)
     end
 
