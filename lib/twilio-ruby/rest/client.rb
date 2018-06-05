@@ -377,10 +377,12 @@ module Twilio
       end
 
       ##
-      # @return [Bool] indicating whether requests to the new SSL certificate are valid
+      # @raise [Twilio::REST::RestError] if certificate is not valid
       def validate_ssl_certificate
         response = request('api.twilio.com', '8443', 'GET', 'https://api.twilio.com:8443/.json')
-        response.status_code >= 200 && response.status_code < 300
+        if response.status_code < 200 || response.status_code >= 300
+          raise RestError.new 'Unexpected response from certificate endpoint', response
+        end
       end
 
       ##
