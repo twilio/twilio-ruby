@@ -26,7 +26,7 @@ module Twilio
 
     class Text < LeafNode
       def xml(document)
-        Nokogiri::XML::Text.new(document, @content)
+        Nokogiri::XML::Text.new(@content, document)
       end
     end
 
