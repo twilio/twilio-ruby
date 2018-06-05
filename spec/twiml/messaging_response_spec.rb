@@ -28,7 +28,7 @@ describe Twilio::TwiML::MessagingResponse do
 
     it 'should allow text nodes' do
       twiml = Twilio::TwiML::MessagingResponse.new
-      twiml.text 'Look no tags'
+      twiml.add_text 'Look no tags'
       expect(twiml.to_xml).to include('<Response>Look no tags</Response>')
     end
 

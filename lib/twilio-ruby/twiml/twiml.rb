@@ -98,7 +98,7 @@ module Twilio
           append(Comment.new(body))
         end
 
-        def text(content)
+        def add_text(content)
           append(Text.new(content))
         end
 
