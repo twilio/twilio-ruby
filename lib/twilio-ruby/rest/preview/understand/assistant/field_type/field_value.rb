@@ -125,7 +125,8 @@ module Twilio
               # @param [String] language An ISO language-country string of the value.
               # @param [String] value A user-provided string that uniquely identifies this
               #   resource as an alternative to the sid. Unique up to 64 characters long.
-              # @param [String] synonym_of The synonym_of
+              # @param [String] synonym_of A value that indicates this field value is a synonym
+              #   of. Empty if the value is not a synonym.
               # @return [FieldValueInstance] Newly created FieldValueInstance
               def create(language: nil, value: nil, synonym_of: :unset)
                 data = Twilio::Values.of({'Language' => language, 'Value' => value, 'SynonymOf' => synonym_of, })
@@ -338,7 +339,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The value
+              # @return [String] The Field Value itself.
               def value
                 @properties['value']
               end
@@ -350,7 +351,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The synonym_of
+              # @return [String] A value that indicates this field value is a synonym of. Empty if the value is not a synonym.
               def synonym_of
                 @properties['synonym_of']
               end

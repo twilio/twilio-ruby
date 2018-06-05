@@ -1,6 +1,20 @@
 twilio-ruby changelog
 =====================
 
+[2018-06-04] Version 5.10.3
+----------------------------
+**Library**
+- PR #409: Switch to single quotes for rubocop. Thanks to @cjcodes!
+- PR #407: Allows developers to add comments to TwiML. Thanks to @philnash!
+- PR #405: Update description. Thanks to @efossier!
+
+**Chat**
+- Add Binding and UserBinding documentation
+
+**Lookups**
+- Add back support for `fraud` lookup type
+
+
 [2018-05-25] Version 5.10.2
 ----------------------------
 **Studio**
