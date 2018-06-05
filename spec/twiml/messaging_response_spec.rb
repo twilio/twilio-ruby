@@ -20,6 +20,12 @@ describe Twilio::TwiML::MessagingResponse do
       expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
+    it 'should allow comments' do
+      twiml = Twilio::TwiML::MessagingResponse.new
+      twiml.comment 'This is awesome'
+      expect(twiml.to_xml).to match(/<!--This is awesome-->/)
+    end
+
     it 'should allow populated response' do
       expected_doc = parse <<-XML
         <Response>

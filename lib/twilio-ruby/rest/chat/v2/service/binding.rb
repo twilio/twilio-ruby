@@ -15,7 +15,9 @@ module Twilio
             ##
             # Initialize the BindingList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The unique id of the
+            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this binding
+            #   belongs to.
             # @return [BindingList] BindingList
             def initialize(version, service_sid: nil)
               super(version)
@@ -29,7 +31,11 @@ module Twilio
             # Lists BindingInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [binding.BindingType] binding_type The binding_type
+            # @param [binding.BindingType] binding_type The push technology used for the
+            #   returned Bindings.  Supported values are apn, gcm and fcm.  See [push
+            #   notification
+            #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+            #   for more information.
             # @param [String] identity The identity
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
@@ -51,7 +57,11 @@ module Twilio
             # Streams BindingInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [binding.BindingType] binding_type The binding_type
+            # @param [binding.BindingType] binding_type The push technology used for the
+            #   returned Bindings.  Supported values are apn, gcm and fcm.  See [push
+            #   notification
+            #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+            #   for more information.
             # @param [String] identity The identity
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
@@ -85,7 +95,11 @@ module Twilio
             ##
             # Retrieve a single page of BindingInstance records from the API.
             # Request is executed immediately.
-            # @param [binding.BindingType] binding_type The binding_type
+            # @param [binding.BindingType] binding_type The push technology used for the
+            #   returned Bindings.  Supported values are apn, gcm and fcm.  See [push
+            #   notification
+            #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+            #   for more information.
             # @param [String] identity The identity
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
@@ -206,7 +220,9 @@ module Twilio
             # Initialize the BindingInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The unique id of the
+            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this binding
+            #   belongs to.
             # @param [String] sid The sid
             # @return [BindingInstance] BindingInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
@@ -245,73 +261,73 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] A 34 character string that uniquely identifies this resource.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The unique id of the Account responsible for this binding.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The service_sid
+            # @return [String] The unique id of the Service this binding belongs to.
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date that this resource was created.
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date that this resource was last updated.
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The endpoint
+            # @return [String] The unique endpoint identifier for this Binding.
             def endpoint
               @properties['endpoint']
             end
 
             ##
-            # @return [String] The identity
+            # @return [String] A unique string identifier for the Binding for this User in this Service.
             def identity
               @properties['identity']
             end
 
             ##
-            # @return [String] The credential_sid
+            # @return [String] The unique id of the Credential for this binding.
             def credential_sid
               @properties['credential_sid']
             end
 
             ##
-            # @return [binding.BindingType] The binding_type
+            # @return [binding.BindingType] The push technology to use for this binding.
             def binding_type
               @properties['binding_type']
             end
 
             ##
-            # @return [String] The message_types
+            # @return [String] List of message types for this binding.
             def message_types
               @properties['message_types']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] An absolute URL for this binding.
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] Absolute URLs to access the Users for this Binding.
             def links
               @properties['links']
             end

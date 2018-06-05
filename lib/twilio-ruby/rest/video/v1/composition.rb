@@ -34,7 +34,7 @@ module Twilio
           #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
           # @param [Time] date_created_before Only show Compositions that started before
           #   this this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
-          # @param [String] room_sid The room_sid
+          # @param [String] room_sid Only show Compositions with the given Room SID.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -62,7 +62,7 @@ module Twilio
           #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
           # @param [Time] date_created_before Only show Compositions that started before
           #   this this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
-          # @param [String] room_sid The room_sid
+          # @param [String] room_sid Only show Compositions with the given Room SID.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -106,7 +106,7 @@ module Twilio
           #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
           # @param [Time] date_created_before Only show Compositions that started before
           #   this this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
-          # @param [String] room_sid The room_sid
+          # @param [String] room_sid Only show Compositions with the given Room SID.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -151,27 +151,37 @@ module Twilio
           #   Composition in terms of regions. See the section [Managing Video
           #   Layouts](#managing-video-layouts) below for further information.
           # @param [String] audio_sources An array of audio sources to merge. All the
-          #   specified sources must belong to the same Group Room. It can
-          #   include:<ul><li>Zero or more `RecordingTrackSid`</li><li>Zero or more
-          #   `MediaTrackSid`</li><li>Zero or more `ParticipantSid`</li><li>Zero or more Track
-          #   names. These can be specified using wildcards (e.g. `student*`)</li></ul>
+          #   specified sources must belong to the same Group Room. It can include: 
+          #   * Zero or more `RecordingTrackSid`
+          #   * Zero or more `MediaTrackSid`
+          #   * Zero or more `ParticipantSid`
+          #   * Zero or more Track names. These can be specified using wildcards (e.g.
+          #   `student*`)
           # @param [String] audio_sources_excluded An array of audio sources to exclude from
           #   the Composition. Any new Composition shall include all audio sources specified
           #   in `AudioSources` except for the ones specified in `AudioSourcesExcluded`. This
-          #   parameter may include:<ul><li>Zero or more `RecordingTrackSid`</li><li>Zero or
-          #   more `MediaTrackSid`</li><li>Zero or more `ParticipantSid`</li><li>Zero or more
-          #   Track names. These can be specified using wildcards (e.g. `student*`)</li></ul>
+          #   parameter may include: 
+          #   * Zero or more `RecordingTrackSid`
+          #   * Zero or more `MediaTrackSid`
+          #   * Zero or more `ParticipantSid`
+          #   * Zero or more Track names. These can be specified using wildcards (e.g.
+          #   `student*`)
           # @param [String] resolution A string representing the numbers of pixels for rows
           #   (width) and columns (height) of the generated composed video. This string must
           #   have the format `{width}x{height}`. This parameter must comply with the
-          #   following constraints:<ul><li>`width >= 16 && width <= 1280`</li><li>`height >=
-          #   16 && height <= 1280`</li><li>`width * height <= 921,600`</li></ul>Typical
-          #   values are:<ul><li>HD = `1280x720`</li><li>PAL = `1024x576`</li><li>VGA =
-          #   `640x480`</li><li>CIF = `320x240`</li></ul>Note that the `Resolution` implicitly
-          #   imposes an aspect ratio to the resulting composition. When the original video
-          #   tracks get constrained by this aspect ratio they are scaled-down to fit. You can
-          #   find detailed information in the [Managing Video
-          #   Layouts](#managing-video-layouts) section. Defaults to `640x480`.
+          #   following constraints: 
+          #   * `width >= 16 && width <= 1280`
+          #   * `height >= 16 && height <= 1280`
+          #   * `width * height <= 921,600`
+          #   Typical values are: 
+          #   * HD = `1280x720`
+          #   * PAL = `1024x576`
+          #   * VGA = `640x480`
+          #   * CIF = `320x240`
+          #   Note that the `Resolution` implicitly imposes an aspect ratio to the resulting
+          #   composition. When the original video tracks get constrained by this aspect ratio
+          #   they are scaled-down to fit. You can find detailed information in the [Managing
+          #   Video Layouts](#managing-video-layouts) section. Defaults to `640x480`.
           # @param [composition.Format] format Container format of the Composition media
           #   file. Can be any of the following: `mp4`, `webm`. The use of `mp4` or `webm`
           #   makes mandatory the specification of `AudioSources` and/or one `VideoLayout`
