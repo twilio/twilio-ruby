@@ -85,6 +85,15 @@ module Twilio
       end
 
       ##
+      # Validate the new SSL certificate for the Twilio API
+      def validate_ssl_certificate
+        response = request('api.twilio.com', '8443', 'GET', 'https://api.twilio.com:8443/.json')
+        if response.status_code < 200 || response.status_code >= 300
+          raise RestError.new 'Unexpected response from certificate endpoint', response
+        end
+      end
+
+      ##
       # Access the Accounts Twilio Domain
       def accounts
         @accounts ||= Accounts.new self
@@ -374,15 +383,6 @@ module Twilio
       # @return [Twilio::REST::Api::V2010::AccountContext::ValidationRequestInstance]
       def validation_requests
         self.api.v2010.account.validation_requests
-      end
-
-      ##
-      # @raise [Twilio::REST::RestError] if certificate is not valid
-      def validate_ssl_certificate
-        response = request('api.twilio.com', '8443', 'GET', 'https://api.twilio.com:8443/.json')
-        if response.status_code < 200 || response.status_code >= 300
-          raise RestError.new 'Unexpected response from certificate endpoint', response
-        end
       end
 
       ##
