@@ -12,13 +12,21 @@ module Twilio
   module TwiML
     class TwiMLError < StandardError; end
 
-    class Comment
-      def initialize(body)
-        @body = body
+    class LeafNode
+      def initialize(content)
+        @content = content
       end
+    end
 
+    class Comment < LeafNode
       def xml(document)
-        Nokogiri::XML::Comment.new(document, @body)
+        Nokogiri::XML::Comment.new(document, @content)
+      end
+    end
+
+    class Text < LeafNode
+      def xml(document)
+        Nokogiri::XML::Text.new(@content, document)
       end
     end
 
@@ -78,7 +86,7 @@ module Twilio
         end
 
         def append(verb)
-          unless verb.is_a?(TwiML) || verb.is_a?(Comment)
+          unless verb.is_a?(TwiML) || verb.is_a?(LeafNode)
               raise TwiMLError, 'Only appending of TwiML is allowed'
           end
 
@@ -88,6 +96,10 @@ module Twilio
 
         def comment(body)
           append(Comment.new(body))
+        end
+
+        def add_text(content)
+          append(Text.new(content))
         end
 
       alias to_xml to_s

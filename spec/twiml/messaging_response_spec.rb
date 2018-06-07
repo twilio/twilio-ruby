@@ -26,6 +26,12 @@ describe Twilio::TwiML::MessagingResponse do
       expect(twiml.to_xml).to match(/<!--This is awesome-->/)
     end
 
+    it 'should allow text nodes' do
+      twiml = Twilio::TwiML::MessagingResponse.new
+      twiml.add_text 'Look no tags'
+      expect(twiml.to_xml).to include('<Response>Look no tags</Response>')
+    end
+
     it 'should allow populated response' do
       expected_doc = parse <<-XML
         <Response>
