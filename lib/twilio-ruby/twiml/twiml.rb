@@ -102,7 +102,22 @@ module Twilio
           append(Text.new(content))
         end
 
+        def add_child(name, value=nil, **keyword_args)
+          node = GenericNode.new(name, value, **keyword_args)
+
+          yield node if block_given?
+          append(node)
+        end
+
       alias to_xml to_s
+    end
+
+    class GenericNode < TwiML
+      def initialize(name, value, **keyword_args)
+        super(**keyword_args)
+        @name = name
+        @value = value
+      end
     end
   end
 end

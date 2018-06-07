@@ -27,9 +27,29 @@ describe Twilio::TwiML::MessagingResponse do
     end
 
     it 'should allow text nodes' do
+      expected_doc = parse <<-XML
+        <Response>Look no tags</Response>
+      XML
       twiml = Twilio::TwiML::MessagingResponse.new
       twiml.add_text 'Look no tags'
-      expect(twiml.to_xml).to include('<Response>Look no tags</Response>')
+      expect(parse(twiml)).to be_equivalent_to(expected_doc).respecting_element_order
+    end
+
+    it 'should allow generic child nodes' do
+      expected_doc = parse <<-XML
+        <Response>
+          <custom:message tag="global">
+            <font:bold>Hello</font:bold>
+          </amazon:alexa>
+        </Response>
+      XML
+
+      twiml = Twilio::TwiML::MessagingResponse.new
+      twiml.add_child('custom:message', tag: 'global') do |custom|
+        custom.add_child('font:bold', 'Hello')
+      end
+
+      expect(parse(twiml)).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
     it 'should allow populated response' do
