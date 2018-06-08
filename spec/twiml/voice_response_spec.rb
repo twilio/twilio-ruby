@@ -37,11 +37,30 @@ describe Twilio::TwiML::VoiceResponse do
     end
 
     it 'should allow text nodes' do
+      expected_doc = parse <<-XML
+        <Response>Look no tags</Response>
+      XML
       twiml = Twilio::TwiML::VoiceResponse.new
       twiml.add_text 'Look no tags'
-      expect(twiml.to_xml).to include('<Response>Look no tags</Response>')
+      expect(parse(twiml)).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
+    it 'should allow generic child nodes' do
+      expected_doc = parse <<-XML
+        <Response>
+          <alexa omnipresent="true">
+            <purchase>Kindle</purchase>
+          </alexa>
+        </Response>
+      XML
+
+      twiml = Twilio::TwiML::VoiceResponse.new
+      twiml.add_child('alexa', omnipresent: 'true') do |alexa|
+        alexa.add_child('purchase', 'Kindle')
+      end
+
+      expect(parse(twiml)).to be_equivalent_to(expected_doc).respecting_element_order
+    end
     it 'should allow populated response' do
       expected_doc = parse <<-XML
         <Response>
