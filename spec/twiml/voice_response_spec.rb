@@ -48,15 +48,15 @@ describe Twilio::TwiML::VoiceResponse do
     it 'should allow generic child nodes' do
       expected_doc = parse <<-XML
         <Response>
-          <amazon:alexa omnipresent="true">
-            <amazon:purchase>Kindle</amazon:purchase>
-          </amazon:alexa>
+          <alexa omnipresent="true">
+            <purchase>Kindle</purchase>
+          </alexa>
         </Response>
       XML
 
       twiml = Twilio::TwiML::VoiceResponse.new
-      twiml.add_child('amazon:alexa', omnipresent: 'true') do |alexa|
-        alexa.add_child('amazon:purchase', 'Kindle')
+      twiml.add_child('alexa', omnipresent: 'true') do |alexa|
+        alexa.add_child('purchase', 'Kindle')
       end
 
       expect(parse(twiml)).to be_equivalent_to(expected_doc).respecting_element_order

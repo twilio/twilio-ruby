@@ -38,15 +38,15 @@ describe Twilio::TwiML::MessagingResponse do
     it 'should allow generic child nodes' do
       expected_doc = parse <<-XML
         <Response>
-          <custom:message tag="global">
-            <font:bold>Hello</font:bold>
-          </amazon:alexa>
+          <message tag="global">
+            <bold>Hello</bold>
+          </alexa>
         </Response>
       XML
 
       twiml = Twilio::TwiML::MessagingResponse.new
-      twiml.add_child('custom:message', tag: 'global') do |custom|
-        custom.add_child('font:bold', 'Hello')
+      twiml.add_child('message', tag: 'global') do |custom|
+        custom.add_child('bold', 'Hello')
       end
 
       expect(parse(twiml)).to be_equivalent_to(expected_doc).respecting_element_order
