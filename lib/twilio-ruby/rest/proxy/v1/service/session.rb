@@ -123,19 +123,18 @@ module Twilio
             ##
             # Retrieve a single page of SessionInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name Your identifier for this Session such as a Job ID or
-            #   conversation ID.
-            # @param [Time] date_expiry An absolute time at which this Session should close.
-            #   If this is populated, it takes precedence over TTL values.
-            # @param [String] ttl The Time To Live for this Session. The amount of time,
-            #   specified in seconds, that this Session should live for before closing. Keys off
-            #   the last interaction or session creation time.
+            # @param [String] unique_name Your unique identifier for this Session such as a
+            #   Job ID or conversation ID. Should not contain PII.
+            # @param [Time] date_expiry An absolute time (ISO 8601) at which this Session
+            #   should close. If this is populated, it takes precedence over TTL values.
+            # @param [String] ttl The time, in seconds, after the latest of Session create
+            #   time or the Session's last Interaction time at which the session will expire.
             # @param [session.Mode] mode The type of communications mediums allowed on a
-            #   Session. Defaults to voice-and-message, other options are voice-only OR
-            #   message-only.
-            # @param [session.Status] status Set this value to 'closed' to close the session.
+            #   Session. Defaults to `voice-and-message`. Other options are `voice-only` or
+            #   `message-only`.
+            # @param [session.Status] status Set this value to `closed` to close the session.
             #   A Session can be re-opened by posting to a closed session with the value
-            #   'in-progress.'  This will be 'open' by default on create.
+            #   `in-progress`.  This will be `open` by default on create.
             # @param [Hash] participants The participants
             # @return [SessionInstance] Newly created SessionInstance
             def create(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
@@ -201,7 +200,8 @@ module Twilio
             ##
             # Initialize the SessionContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the Service.
+            # @param [String] service_sid The unique SID identifier of the parent
+            #   [Service](https://www.twilio.com/docs/proxy/api/service).
             # @param [String] sid A 34 character string that uniquely identifies this Session.
             # @return [SessionContext] SessionContext
             def initialize(version, service_sid, sid)
@@ -241,13 +241,13 @@ module Twilio
             ##
             # Update the SessionInstance
             # @param [String] unique_name The unique_name
-            # @param [Time] date_expiry The date that this Session should be expired, given in
-            #   ISO 8601 format.
-            # @param [String] ttl The time delay, in seconds, after which a session will be
-            #   expired.  Keyed off of last interaction time.
+            # @param [Time] date_expiry The date that this Session should expire, given in ISO
+            #   8601 format.
+            # @param [String] ttl The time, in seconds, after the latest of Session create
+            #   time or the Session's last Interaction time at which the session will expire.
             # @param [session.Mode] mode The mode
-            # @param [session.Status] status The Status of this Session. Set `in-progress` to
-            #   re-open a session, `closed` to close a session.
+            # @param [session.Status] status The Status of this Session. Set to `in-progress`
+            #   to re-open a session or `closed` to close a session.
             # @param [Hash] participants The participants
             # @return [SessionInstance] Updated SessionInstance
             def update(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
@@ -401,19 +401,19 @@ module Twilio
             end
 
             ##
-            # @return [Time] The date this Session was interaction
+            # @return [Time] The date this Session last had an interaction
             def date_last_interaction
               @properties['date_last_interaction']
             end
 
             ##
-            # @return [Time] The date this Session was expiry
+            # @return [Time] The date this Session should expire
             def date_expiry
               @properties['date_expiry']
             end
 
             ##
-            # @return [String] A unique, developer assigned name of this Session.
+            # @return [String] A unique, developer assigned identifier for this Session.
             def unique_name
               @properties['unique_name']
             end
@@ -449,7 +449,7 @@ module Twilio
             end
 
             ##
-            # @return [Time] The date this Session was updated
+            # @return [Time] The date this Session was last updated
             def date_updated
               @properties['date_updated']
             end
@@ -483,13 +483,13 @@ module Twilio
             ##
             # Update the SessionInstance
             # @param [String] unique_name The unique_name
-            # @param [Time] date_expiry The date that this Session should be expired, given in
-            #   ISO 8601 format.
-            # @param [String] ttl The time delay, in seconds, after which a session will be
-            #   expired.  Keyed off of last interaction time.
+            # @param [Time] date_expiry The date that this Session should expire, given in ISO
+            #   8601 format.
+            # @param [String] ttl The time, in seconds, after the latest of Session create
+            #   time or the Session's last Interaction time at which the session will expire.
             # @param [session.Mode] mode The mode
-            # @param [session.Status] status The Status of this Session. Set `in-progress` to
-            #   re-open a session, `closed` to close a session.
+            # @param [session.Status] status The Status of this Session. Set to `in-progress`
+            #   to re-open a session or `closed` to close a session.
             # @param [Hash] participants The participants
             # @return [SessionInstance] Updated SessionInstance
             def update(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)

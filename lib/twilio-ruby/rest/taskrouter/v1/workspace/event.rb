@@ -32,7 +32,7 @@ module Twilio
             # @param [Time] end_date Filter events by an end date. This is helpful for
             #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
             # @param [String] event_type Filter events by those of a certain event type
-            # @param [String] minutes Filter events by up to ‘x’ minutes in the past. This is
+            # @param [String] minutes Filter events by up to 'x' minutes in the past. This is
             #   helpful for events for the last 15 minutes, 240 minutes (4 hours), and 480
             #   minutes (8 hours) to see trends. Defaults to 15 minutes.
             # @param [String] reservation_sid Filter events by those pertaining to a
@@ -75,7 +75,7 @@ module Twilio
             # @param [Time] end_date Filter events by an end date. This is helpful for
             #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
             # @param [String] event_type Filter events by those of a certain event type
-            # @param [String] minutes Filter events by up to ‘x’ minutes in the past. This is
+            # @param [String] minutes Filter events by up to 'x' minutes in the past. This is
             #   helpful for events for the last 15 minutes, 240 minutes (4 hours), and 480
             #   minutes (8 hours) to see trends. Defaults to 15 minutes.
             # @param [String] reservation_sid Filter events by those pertaining to a
@@ -134,7 +134,7 @@ module Twilio
             # @param [Time] end_date Filter events by an end date. This is helpful for
             #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
             # @param [String] event_type Filter events by those of a certain event type
-            # @param [String] minutes Filter events by up to ‘x’ minutes in the past. This is
+            # @param [String] minutes Filter events by up to 'x' minutes in the past. This is
             #   helpful for events for the last 15 minutes, 240 minutes (4 hours), and 480
             #   minutes (8 hours) to see trends. Defaults to 15 minutes.
             # @param [String] reservation_sid Filter events by those pertaining to a

@@ -112,19 +112,22 @@ module Twilio
           # Request is executed immediately.
           # @param [String] unique_name The human-readable string that uniquely identifies
           #   this Service, up to 64 characters.
-          # @param [String] default_ttl The default time delay, in seconds, after which a
-          #   session will be expired.  Will be used for sessions where ttl is not specified.
+          # @param [String] default_ttl The default time delay in seconds after the latest
+          #   of Session create time or the Session's last Interaction time, after which a
+          #   session will expire.  Used for sessions where ttl is not specified.
           # @param [String] callback_url The URL to which Twilio will make callbacks on
           #   interaction status changes.
-          # @param [service.GeoMatchLevel] geo_match_level Options: country, area-code,
-          #   extended-area-code. Default: country.  Levels lower than country are only
-          #   available in North America.
-          # @param [service.NumberSelectionBehavior] number_selection_behavior Default:
-          #   prefer-sticky Options: prefer-sticky, avoid-sticky
+          # @param [service.GeoMatchLevel] geo_match_level Whether proxy number selected
+          #   must be in the same area code as the participant identifier. Options: `country`,
+          #   `area-code`, `extended-area-code`. Default: `country`. Levels lower than country
+          #   are only available in North America.
+          # @param [service.NumberSelectionBehavior] number_selection_behavior Options:
+          #   `prefer-sticky`, `avoid-sticky`. Default: `prefer-sticky`.
           # @param [String] intercept_callback_url A URL for Twilio call before each
-          #   Interaction. An error status code will prevent the interaction from continuing.
+          #   Interaction. Returning a 403 status code will prevent the interaction from
+          #   continuing.
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
-          #   Interaction has no Session.
+          #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session).
           # @return [ServiceInstance] Newly created ServiceInstance
           def create(unique_name: nil, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
             data = Twilio::Values.of({
@@ -231,19 +234,22 @@ module Twilio
           # Update the ServiceInstance
           # @param [String] unique_name A human readable description of this resource, up to
           #   64 characters.
-          # @param [String] default_ttl The default time delay, in seconds, after which a
-          #   session will be expired.  Will be used for sessions where ttl is not specified.
+          # @param [String] default_ttl The default time delay in seconds after the latest
+          #   of Session create time or the Session's last Interaction time, after which a
+          #   session will expire.  Used for sessions where ttl is not specified.
           # @param [String] callback_url The URL to which Twilio will make callbacks on
           #   interaction status changes.
-          # @param [service.GeoMatchLevel] geo_match_level Default: country Options:
-          #   country, area-code, extended-area-code
-          # @param [service.NumberSelectionBehavior] number_selection_behavior Default:
-          #   prefer-sticky Options: prefer-sticky, avoid-sticky
-          # @param [String] intercept_callback_url Fires on each interaction. If responded
-          #   to with a 403 to this webhook, we will abort/block the interaction. For any
-          #   other status or timeout, the interaction continues.
+          # @param [service.GeoMatchLevel] geo_match_level Whether proxy number selected
+          #   must be in the same area code as the participant identifier. Options: `country`,
+          #   `area-code`, `extended-area-code`. Default: `country`. Levels lower than country
+          #   are only available in North America.
+          # @param [service.NumberSelectionBehavior] number_selection_behavior Options:
+          #   `prefer-sticky`, `avoid-sticky`. Default: `prefer-sticky`.
+          # @param [String] intercept_callback_url A URL for Twilio call before each
+          #   Interaction. Returning a 403 status code will prevent the interaction from
+          #   continuing.
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
-          #   Interaction has no Session.
+          #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session).
           # @return [ServiceInstance] Updated ServiceInstance
           def update(unique_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
             data = Twilio::Values.of({
@@ -409,7 +415,7 @@ module Twilio
           end
 
           ##
-          # @return [service.GeoMatchLevel] Whether to limit proxy numbers in the same areacode.
+          # @return [service.GeoMatchLevel] Whether proxy number selected must be in the same area code as the participant identifier.
           def geo_match_level
             @properties['geo_match_level']
           end
@@ -433,7 +439,7 @@ module Twilio
           end
 
           ##
-          # @return [Time] The date this Service was updated
+          # @return [Time] The date this Service was last updated
           def date_updated
             @properties['date_updated']
           end
@@ -468,19 +474,22 @@ module Twilio
           # Update the ServiceInstance
           # @param [String] unique_name A human readable description of this resource, up to
           #   64 characters.
-          # @param [String] default_ttl The default time delay, in seconds, after which a
-          #   session will be expired.  Will be used for sessions where ttl is not specified.
+          # @param [String] default_ttl The default time delay in seconds after the latest
+          #   of Session create time or the Session's last Interaction time, after which a
+          #   session will expire.  Used for sessions where ttl is not specified.
           # @param [String] callback_url The URL to which Twilio will make callbacks on
           #   interaction status changes.
-          # @param [service.GeoMatchLevel] geo_match_level Default: country Options:
-          #   country, area-code, extended-area-code
-          # @param [service.NumberSelectionBehavior] number_selection_behavior Default:
-          #   prefer-sticky Options: prefer-sticky, avoid-sticky
-          # @param [String] intercept_callback_url Fires on each interaction. If responded
-          #   to with a 403 to this webhook, we will abort/block the interaction. For any
-          #   other status or timeout, the interaction continues.
+          # @param [service.GeoMatchLevel] geo_match_level Whether proxy number selected
+          #   must be in the same area code as the participant identifier. Options: `country`,
+          #   `area-code`, `extended-area-code`. Default: `country`. Levels lower than country
+          #   are only available in North America.
+          # @param [service.NumberSelectionBehavior] number_selection_behavior Options:
+          #   `prefer-sticky`, `avoid-sticky`. Default: `prefer-sticky`.
+          # @param [String] intercept_callback_url A URL for Twilio call before each
+          #   Interaction. Returning a 403 status code will prevent the interaction from
+          #   continuing.
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
-          #   Interaction has no Session.
+          #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session).
           # @return [ServiceInstance] Updated ServiceInstance
           def update(unique_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
             context.update(

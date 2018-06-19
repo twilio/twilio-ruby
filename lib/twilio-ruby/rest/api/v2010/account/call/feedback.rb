@@ -17,7 +17,7 @@ module Twilio
               # Initialize the FeedbackList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The account_sid
-              # @param [String] call_sid A 34 character string that uniquely identifies this
+              # @param [String] call_sid A 34-character string that uniquely identifies the Call
               #   resource.
               # @return [FeedbackList] FeedbackList
               def initialize(version, account_sid: nil, call_sid: nil)
@@ -174,7 +174,7 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The account_sid
-              # @param [String] call_sid A 34 character string that uniquely identifies this
+              # @param [String] call_sid A 34-character string that uniquely identifies the Call
               #   resource.
               # @return [FeedbackInstance] FeedbackInstance
               def initialize(version, payload, account_sid: nil, call_sid: nil)

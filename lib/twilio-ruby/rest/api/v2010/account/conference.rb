@@ -246,8 +246,10 @@ module Twilio
             # Update the ConferenceInstance
             # @param [conference.UpdateStatus] status Specifying `completed` will end the
             #   conference and kick all participants
-            # @param [String] announce_url The announce_url
-            # @param [String] announce_method The announce_method
+            # @param [String] announce_url The 'AnnounceUrl' attribute lets you specify a URL
+            #   for announcing something into a conference. The URL may return an MP3, a WAV or
+            #   a TwiML document with `<Play>` or `<Say>`.
+            # @param [String] announce_method Specify GET or POST, defaults to POST
             # @return [ConferenceInstance] Updated ConferenceInstance
             def update(status: :unset, announce_url: :unset, announce_method: :unset)
               data = Twilio::Values.of({
@@ -414,8 +416,10 @@ module Twilio
             # Update the ConferenceInstance
             # @param [conference.UpdateStatus] status Specifying `completed` will end the
             #   conference and kick all participants
-            # @param [String] announce_url The announce_url
-            # @param [String] announce_method The announce_method
+            # @param [String] announce_url The 'AnnounceUrl' attribute lets you specify a URL
+            #   for announcing something into a conference. The URL may return an MP3, a WAV or
+            #   a TwiML document with `<Play>` or `<Say>`.
+            # @param [String] announce_method Specify GET or POST, defaults to POST
             # @return [ConferenceInstance] Updated ConferenceInstance
             def update(status: :unset, announce_url: :unset, announce_method: :unset)
               context.update(status: status, announce_url: announce_url, announce_method: announce_method, )

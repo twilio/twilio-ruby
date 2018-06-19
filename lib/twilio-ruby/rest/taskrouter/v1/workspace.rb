@@ -27,7 +27,7 @@ module Twilio
           # Lists WorkspaceInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] friendly_name Filter by a workspace’s friendly name. This is a
+          # @param [String] friendly_name Filter by a workspace's friendly name. This is a
           #   human readable description of this Workspace (for example "Customer Support" or
           #   "2014 Election Campaign")
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -45,7 +45,7 @@ module Twilio
           # Streams WorkspaceInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] friendly_name Filter by a workspace’s friendly name. This is a
+          # @param [String] friendly_name Filter by a workspace's friendly name. This is a
           #   human readable description of this Workspace (for example "Customer Support" or
           #   "2014 Election Campaign")
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -80,7 +80,7 @@ module Twilio
           ##
           # Retrieve a single page of WorkspaceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name Filter by a workspace’s friendly name. This is a
+          # @param [String] friendly_name Filter by a workspace's friendly name. This is a
           #   human readable description of this Workspace (for example "Customer Support" or
           #   "2014 Election Campaign")
           # @param [String] page_token PageToken provided by the API
@@ -540,7 +540,7 @@ module Twilio
           end
 
           ##
-          # @return [String] Filter by a workspace’s friendly name.
+          # @return [String] Filter by a workspace's friendly name.
           def friendly_name
             @properties['friendly_name']
           end

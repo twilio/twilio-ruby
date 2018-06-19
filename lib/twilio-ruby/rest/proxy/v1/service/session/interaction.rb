@@ -18,8 +18,10 @@ module Twilio
               ##
               # Initialize the InteractionList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique SID identifier of the Service.
-              # @param [String] session_sid The unique SID identifier of the Session.
+              # @param [String] service_sid The unique SID identifier of the parent
+              #   [Service](https://www.twilio.com/docs/proxy/api/service).
+              # @param [String] session_sid The unique SID identifier of the parent
+              #   [Session](https://www.twilio.com/docs/proxy/api/session).
               # @return [InteractionList] InteractionList
               def initialize(version, service_sid: nil, session_sid: nil)
                 super(version)
@@ -183,8 +185,10 @@ module Twilio
               ##
               # Initialize the InteractionContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique SID identifier of the Service.
-              # @param [String] session_sid The unique SID identifier of the Session.
+              # @param [String] service_sid The unique SID identifier of the parent
+              #   [Service](https://www.twilio.com/docs/proxy/api/service).
+              # @param [String] session_sid The unique SID identifier of the parent
+              #   [Session](https://www.twilio.com/docs/proxy/api/session).
               # @param [String] sid A 34 character string that uniquely identifies this
               #   Interaction.
               # @return [InteractionContext] InteractionContext
@@ -239,8 +243,10 @@ module Twilio
               # Initialize the InteractionInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The unique SID identifier of the Service.
-              # @param [String] session_sid The unique SID identifier of the Session.
+              # @param [String] service_sid The unique SID identifier of the parent
+              #   [Service](https://www.twilio.com/docs/proxy/api/service).
+              # @param [String] session_sid The unique SID identifier of the parent
+              #   [Session](https://www.twilio.com/docs/proxy/api/session).
               # @param [String] sid A 34 character string that uniquely identifies this
               #   Interaction.
               # @return [InteractionInstance] InteractionInstance
@@ -398,7 +404,7 @@ module Twilio
               end
 
               ##
-              # @return [Time] The date this Interaction was updated
+              # @return [Time] The date this Interaction was last updated
               def date_updated
                 @properties['date_updated']
               end

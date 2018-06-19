@@ -1,6 +1,20 @@
 twilio-ruby changelog
 =====================
 
+[2018-06-19] Version 5.10.4
+----------------------------
+**Library**
+- PR #412: Allow adding TwiML children with generic tag names. Thanks to @ekarson!
+- PR #408: Add validate_ssl_certificate helper method to Client. Thanks to @ekarson!
+- PR #410: Allow adding text nodes to TwiML responses. Thanks to @ekarson!
+
+**Api**
+- Add Fraud Lookups category to usage records
+
+**Twiml**
+- Add methods to helper libraries to inject arbitrary text under a TwiML node
+
+
 [2018-06-04] Version 5.10.3
 ----------------------------
 **Library**

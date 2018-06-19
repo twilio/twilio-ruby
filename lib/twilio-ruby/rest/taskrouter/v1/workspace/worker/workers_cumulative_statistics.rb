@@ -79,13 +79,13 @@ module Twilio
               # Fetch a WorkersCumulativeStatisticsInstance
               # @param [Time] end_date Filter cumulative statistics by a end date. This is
               #   helpful for defining a range of statistics to capture. Input is a string of the
-              #   format: yyyy-MM-dd’T’HH:mm:ss’Z’.
-              # @param [String] minutes Filter cumulative statistics by up to ‘x’ minutes in the
+              #   format: yyyy-MM-dd'T'HH:mm:ss'Z'.
+              # @param [String] minutes Filter cumulative statistics by up to 'x' minutes in the
               #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
               #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
               # @param [Time] start_date Filter cumulative statistics by a start date. This is
               #   helpful for defining a range of statistics to capture. Input is a string of the
-              #   format: yyyy-MM-dd’T’HH:mm:ss’Z’.
+              #   format: yyyy-MM-dd'T'HH:mm:ss'Z'.
               # @param [String] task_channel Filter cumulative statistics by TaskChannel. Takes
               #   in a Unique Name ("voice", "sms", "default", etc.) or a TaskChannelSid.
               # @return [WorkersCumulativeStatisticsInstance] Fetched WorkersCumulativeStatisticsInstance
@@ -232,13 +232,13 @@ module Twilio
               # Fetch a WorkersCumulativeStatisticsInstance
               # @param [Time] end_date Filter cumulative statistics by a end date. This is
               #   helpful for defining a range of statistics to capture. Input is a string of the
-              #   format: yyyy-MM-dd’T’HH:mm:ss’Z’.
-              # @param [String] minutes Filter cumulative statistics by up to ‘x’ minutes in the
+              #   format: yyyy-MM-dd'T'HH:mm:ss'Z'.
+              # @param [String] minutes Filter cumulative statistics by up to 'x' minutes in the
               #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
               #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
               # @param [Time] start_date Filter cumulative statistics by a start date. This is
               #   helpful for defining a range of statistics to capture. Input is a string of the
-              #   format: yyyy-MM-dd’T’HH:mm:ss’Z’.
+              #   format: yyyy-MM-dd'T'HH:mm:ss'Z'.
               # @param [String] task_channel Filter cumulative statistics by TaskChannel. Takes
               #   in a Unique Name ("voice", "sms", "default", etc.) or a TaskChannelSid.
               # @return [WorkersCumulativeStatisticsInstance] Fetched WorkersCumulativeStatisticsInstance

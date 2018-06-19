@@ -66,7 +66,7 @@ module Twilio
             #   APNS.  This parameter is not supported by SMS and Facebook Messenger and is
             #   omitted from deliveries via those channels.
             # @param [Hash] data This parameter specifies the custom key-value pairs of the
-            #   notification’s payload. Translates to `data` dictionary in FCM and GCM payload.
+            #   notification's payload. Translates to `data` dictionary in FCM and GCM payload.
             #   FCM and GCM [reserves certain
             #   keys](https://firebase.google.com/docs/cloud-messaging/http-server-ref) that
             #   cannot be used for those channels. For APNS, attributes of `Data` will be
@@ -307,7 +307,7 @@ module Twilio
             end
 
             ##
-            # @return [Hash] This parameter specifies the custom key-value pairs of the notification’s payload.
+            # @return [Hash] This parameter specifies the custom key-value pairs of the notification's payload.
             def data
               @properties['data']
             end

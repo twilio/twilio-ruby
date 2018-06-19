@@ -84,7 +84,7 @@ module Twilio
 
               ##
               # Fetch a WorkflowStatisticsInstance
-              # @param [String] minutes Filter cumulative statistics by up to ‘x’ minutes in the
+              # @param [String] minutes Filter cumulative statistics by up to 'x' minutes in the
               #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
               #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
               # @param [Time] start_date Filter cumulative statistics by a start date. This is
@@ -212,7 +212,7 @@ module Twilio
 
               ##
               # Fetch a WorkflowStatisticsInstance
-              # @param [String] minutes Filter cumulative statistics by up to ‘x’ minutes in the
+              # @param [String] minutes Filter cumulative statistics by up to 'x' minutes in the
               #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
               #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
               # @param [Time] start_date Filter cumulative statistics by a start date. This is

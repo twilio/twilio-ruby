@@ -17,7 +17,8 @@ module Twilio
             ##
             # Initialize the PhoneNumberList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the Service.
+            # @param [String] service_sid The unique SID identifier of the parent
+            #   [Service](https://www.twilio.com/docs/proxy/api/service).
             # @return [PhoneNumberList] PhoneNumberList
             def initialize(version, service_sid: nil)
               super(version)
@@ -172,7 +173,8 @@ module Twilio
             ##
             # Initialize the PhoneNumberContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the Service.
+            # @param [String] service_sid The unique SID identifier of the parent
+            #   [Service](https://www.twilio.com/docs/proxy/api/service).
             # @param [String] sid A 34 character string that uniquely identifies this Phone
             #   Number.
             # @return [PhoneNumberContext] PhoneNumberContext
@@ -226,7 +228,8 @@ module Twilio
             # Initialize the PhoneNumberInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The unique SID identifier of the Service.
+            # @param [String] service_sid The unique SID identifier of the parent
+            #   [Service](https://www.twilio.com/docs/proxy/api/service).
             # @param [String] sid A 34 character string that uniquely identifies this Phone
             #   Number.
             # @return [PhoneNumberInstance] PhoneNumberInstance

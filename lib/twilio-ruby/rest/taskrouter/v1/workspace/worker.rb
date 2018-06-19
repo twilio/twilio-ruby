@@ -38,9 +38,9 @@ module Twilio
             # @param [String] activity_sid Filter by workers that are in a particular Activity
             #   by SID
             # @param [String] available Filter by workers that are available or unavailable.
-            #   (Note: This can be ‘true’, ‘1’’ or ‘yes’ to indicate a true value. All other
+            #   (Note: This can be 'true', '1' or 'yes' to indicate a true value. All other
             #   values will represent false)
-            # @param [String] friendly_name Filter by a worker’s friendly name
+            # @param [String] friendly_name Filter by a worker's friendly name
             # @param [String] target_workers_expression Filter by workers that would match an
             #   expression on a TaskQueue. This is helpful for debugging which workers would
             #   match a potential queue.
@@ -78,9 +78,9 @@ module Twilio
             # @param [String] activity_sid Filter by workers that are in a particular Activity
             #   by SID
             # @param [String] available Filter by workers that are available or unavailable.
-            #   (Note: This can be ‘true’, ‘1’’ or ‘yes’ to indicate a true value. All other
+            #   (Note: This can be 'true', '1' or 'yes' to indicate a true value. All other
             #   values will represent false)
-            # @param [String] friendly_name Filter by a worker’s friendly name
+            # @param [String] friendly_name Filter by a worker's friendly name
             # @param [String] target_workers_expression Filter by workers that would match an
             #   expression on a TaskQueue. This is helpful for debugging which workers would
             #   match a potential queue.
@@ -134,9 +134,9 @@ module Twilio
             # @param [String] activity_sid Filter by workers that are in a particular Activity
             #   by SID
             # @param [String] available Filter by workers that are available or unavailable.
-            #   (Note: This can be ‘true’, ‘1’’ or ‘yes’ to indicate a true value. All other
+            #   (Note: This can be 'true', '1' or 'yes' to indicate a true value. All other
             #   values will represent false)
-            # @param [String] friendly_name Filter by a worker’s friendly name
+            # @param [String] friendly_name Filter by a worker's friendly name
             # @param [String] target_workers_expression Filter by workers that would match an
             #   expression on a TaskQueue. This is helpful for debugging which workers would
             #   match a potential queue.
@@ -503,7 +503,7 @@ module Twilio
             end
 
             ##
-            # @return [String] Filter by a worker’s friendly name
+            # @return [String] Filter by a worker's friendly name
             def friendly_name
               @properties['friendly_name']
             end

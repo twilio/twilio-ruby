@@ -49,7 +49,12 @@ module Twilio
           #   on, all calls going through this trunk will be secure using SRTP for media and
           #   TLS for signalling. If turned off, then RTP will be used for media. See [Secure
           #   Trunking](https://www.twilio.com/docs/sip-trunking/getting-started#securetrunking) for more information.
-          # @param [Boolean] cnam_lookup_enabled The cnam_lookup_enabled
+          # @param [Boolean] cnam_lookup_enabled The Caller ID Name (CNAM) lookup setting
+          #   for this trunk. If turned on, all inbound calls to this SIP Trunk from the
+          #   United States and Canada will automatically perform a CNAM Lookup and display
+          #   Caller ID data on your phone. See
+          #   [CNAM](https://www.twilio.com/docs/sip-trunking#CNAM) Lookups for more
+          #   information.
           # @return [TrunkInstance] Newly created TrunkInstance
           def create(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             data = Twilio::Values.of({
@@ -256,7 +261,12 @@ module Twilio
           #   on, all calls going through this trunk will be secure using SRTP for media and
           #   TLS for signalling. If turned off, then RTP will be used for media. See [Secure
           #   Trunking](https://www.twilio.com/docs/sip-trunking/getting-started#securetrunking) for more information.
-          # @param [Boolean] cnam_lookup_enabled The cnam_lookup_enabled
+          # @param [Boolean] cnam_lookup_enabled The Caller ID Name (CNAM) lookup setting
+          #   for this trunk. If turned on, all inbound calls to this SIP Trunk from the
+          #   United States and Canada will automatically perform a CNAM Lookup and display
+          #   Caller ID data on your phone. See
+          #   [CNAM](https://www.twilio.com/docs/sip-trunking#CNAM) Lookups for more
+          #   information.
           # @return [TrunkInstance] Updated TrunkInstance
           def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             data = Twilio::Values.of({
@@ -446,7 +456,7 @@ module Twilio
           end
 
           ##
-          # @return [Boolean] The cnam_lookup_enabled
+          # @return [Boolean] The Caller ID Name (CNAM) lookup setting for this trunk.
           def cnam_lookup_enabled
             @properties['cnam_lookup_enabled']
           end
@@ -532,7 +542,12 @@ module Twilio
           #   on, all calls going through this trunk will be secure using SRTP for media and
           #   TLS for signalling. If turned off, then RTP will be used for media. See [Secure
           #   Trunking](https://www.twilio.com/docs/sip-trunking/getting-started#securetrunking) for more information.
-          # @param [Boolean] cnam_lookup_enabled The cnam_lookup_enabled
+          # @param [Boolean] cnam_lookup_enabled The Caller ID Name (CNAM) lookup setting
+          #   for this trunk. If turned on, all inbound calls to this SIP Trunk from the
+          #   United States and Canada will automatically perform a CNAM Lookup and display
+          #   Caller ID data on your phone. See
+          #   [CNAM](https://www.twilio.com/docs/sip-trunking#CNAM) Lookups for more
+          #   information.
           # @return [TrunkInstance] Updated TrunkInstance
           def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             context.update(

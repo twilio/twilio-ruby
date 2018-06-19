@@ -301,8 +301,10 @@ module Twilio
               #   music that plays when a participant is held. The URL may be an MP3, a WAV or a
               #   TwiML document that uses `<Play>`, `<Say>` or `<Redirect>`.
               # @param [String] hold_method Specify GET or POST, defaults to GET
-              # @param [String] announce_url The announce_url
-              # @param [String] announce_method The announce_method
+              # @param [String] announce_url The 'AnnounceUrl' attribute lets you specify a URL
+              #   for announcing something to the participant. The URL may return an MP3, a WAV or
+              #   a TwiML document with `<Play>` or `<Say>`.
+              # @param [String] announce_method Specify GET or POST, defaults to POST
               # @return [ParticipantInstance] Updated ParticipantInstance
               def update(muted: :unset, hold: :unset, hold_url: :unset, hold_method: :unset, announce_url: :unset, announce_method: :unset)
                 data = Twilio::Values.of({
@@ -483,8 +485,10 @@ module Twilio
               #   music that plays when a participant is held. The URL may be an MP3, a WAV or a
               #   TwiML document that uses `<Play>`, `<Say>` or `<Redirect>`.
               # @param [String] hold_method Specify GET or POST, defaults to GET
-              # @param [String] announce_url The announce_url
-              # @param [String] announce_method The announce_method
+              # @param [String] announce_url The 'AnnounceUrl' attribute lets you specify a URL
+              #   for announcing something to the participant. The URL may return an MP3, a WAV or
+              #   a TwiML document with `<Play>` or `<Say>`.
+              # @param [String] announce_method Specify GET or POST, defaults to POST
               # @return [ParticipantInstance] Updated ParticipantInstance
               def update(muted: :unset, hold: :unset, hold_url: :unset, hold_method: :unset, announce_url: :unset, announce_method: :unset)
                 context.update(

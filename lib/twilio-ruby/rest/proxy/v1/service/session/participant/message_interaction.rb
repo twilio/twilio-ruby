@@ -19,9 +19,12 @@ module Twilio
                 ##
                 # Initialize the MessageInteractionList
                 # @param [Version] version Version that contains the resource
-                # @param [String] service_sid The unique SID identifier of the Service.
-                # @param [String] session_sid The unique SID identifier of the Session.
-                # @param [String] participant_sid The unique SID identifier of the Participant.
+                # @param [String] service_sid The unique SID identifier of the parent
+                #   [Service](https://www.twilio.com/docs/proxy/api/service).
+                # @param [String] session_sid The unique SID identifier of the parent
+                #   [Session](https://www.twilio.com/docs/proxy/api/session).
+                # @param [String] participant_sid The unique SID identifier of the
+                #   [Participant](https://www.twilio.com/docs/proxy/api/participants).
                 # @return [MessageInteractionList] MessageInteractionList
                 def initialize(version, service_sid: nil, session_sid: nil, participant_sid: nil)
                   super(version)
@@ -242,9 +245,12 @@ module Twilio
                 # Initialize the MessageInteractionInstance
                 # @param [Version] version Version that contains the resource
                 # @param [Hash] payload payload that contains response from Twilio
-                # @param [String] service_sid The unique SID identifier of the Service.
-                # @param [String] session_sid The unique SID identifier of the Session.
-                # @param [String] participant_sid The unique SID identifier of the Participant.
+                # @param [String] service_sid The unique SID identifier of the parent
+                #   [Service](https://www.twilio.com/docs/proxy/api/service).
+                # @param [String] session_sid The unique SID identifier of the parent
+                #   [Session](https://www.twilio.com/docs/proxy/api/session).
+                # @param [String] participant_sid The unique SID identifier of the
+                #   [Participant](https://www.twilio.com/docs/proxy/api/participants).
                 # @param [String] sid The sid
                 # @return [MessageInteractionInstance] MessageInteractionInstance
                 def initialize(version, payload, service_sid: nil, session_sid: nil, participant_sid: nil, sid: nil)
@@ -344,31 +350,31 @@ module Twilio
                 end
 
                 ##
-                # @return [String] Inbound Participant Sid.
+                # @return [String] Always empty for Message Interactions.
                 def inbound_participant_sid
                   @properties['inbound_participant_sid']
                 end
 
                 ##
-                # @return [String] Inbound message resource Sid.
+                # @return [String] Always empty for Message Interactions.
                 def inbound_resource_sid
                   @properties['inbound_resource_sid']
                 end
 
                 ##
-                # @return [message_interaction.ResourceStatus] The Inbound Resource Status of this Message Interaction
+                # @return [message_interaction.ResourceStatus] Always empty for Message Interactions.
                 def inbound_resource_status
                   @properties['inbound_resource_status']
                 end
 
                 ##
-                # @return [String] Message
+                # @return [String] Always empty for Message Interactions.
                 def inbound_resource_type
                   @properties['inbound_resource_type']
                 end
 
                 ##
-                # @return [String] The URL of the Twilio message resource.
+                # @return [String] Always empty for Message Interactions.
                 def inbound_resource_url
                   @properties['inbound_resource_url']
                 end
@@ -410,7 +416,7 @@ module Twilio
                 end
 
                 ##
-                # @return [Time] The date this Message Interaction was updated
+                # @return [Time] The date this Message Interaction was last updated
                 def date_updated
                   @properties['date_updated']
                 end

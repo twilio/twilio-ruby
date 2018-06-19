@@ -31,7 +31,7 @@ module Twilio
               # Lists ReservationInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [reservation.Status] reservation_status Filter by a worker’s reservation
+              # @param [reservation.Status] reservation_status Filter by a worker's reservation
               #   status (pending, accepted, rejected, timeout, canceled, rescinded)
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
@@ -48,7 +48,7 @@ module Twilio
               # Streams ReservationInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [reservation.Status] reservation_status Filter by a worker’s reservation
+              # @param [reservation.Status] reservation_status Filter by a worker's reservation
               #   status (pending, accepted, rejected, timeout, canceled, rescinded)
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
@@ -82,7 +82,7 @@ module Twilio
               ##
               # Retrieve a single page of ReservationInstance records from the API.
               # Request is executed immediately.
-              # @param [reservation.Status] reservation_status Filter by a worker’s reservation
+              # @param [reservation.Status] reservation_status Filter by a worker's reservation
               #   status (pending, accepted, rejected, timeout, canceled, rescinded)
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
@@ -398,7 +398,7 @@ module Twilio
               end
 
               ##
-              # @return [reservation.Status] Filter by a worker’s reservation status
+              # @return [reservation.Status] Filter by a worker's reservation status
               def reservation_status
                 @properties['reservation_status']
               end

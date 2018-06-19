@@ -78,7 +78,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
+      # @param [String] sid A 34-character string that uniquely identifies the Call
       #   resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::CallInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::CallList]
