@@ -27,3 +27,16 @@ authors:
 
 gem:
 	bundle exec rake build | sed -e 's/.*pkg/pkg/g' | sed -e "s/\.$$//g" | xargs gem push
+
+API_DEFINITIONS_SHA=$(shell git log --oneline | grep Regenerated | head -n1 | cut -d ' ' -f 5)
+docker-build:
+	docker build -t twilio/twilio-ruby .
+	docker tag twilio/twilio-ruby twilio/twilio-ruby:${TRAVIS_TAG}
+	docker tag twilio/twilio-ruby twilio/twilio-ruby:apidefs=${API_DEFINITIONS_SHA}
+
+docker-push:
+	docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+	docker push twilio/twilio-ruby:${TRAVIS_TAG}
+	docker push twilio/twilio-ruby:${API_DEFINITIONS_TAG}
+
+.PHONY: all clean test docs docs-install test-install authors
