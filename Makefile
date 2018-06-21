@@ -32,11 +32,9 @@ API_DEFINITIONS_SHA=$(shell git log --oneline | grep Regenerated | head -n1 | cu
 docker-build:
 	docker build -t twilio/twilio-ruby .
 	docker tag twilio/twilio-ruby twilio/twilio-ruby:${TRAVIS_TAG}
-	docker tag twilio/twilio-ruby twilio/twilio-ruby:apidefs=${API_DEFINITIONS_SHA}
+	docker tag twilio/twilio-ruby twilio/twilio-ruby:apidefs-${API_DEFINITIONS_SHA}
 
 docker-push:
 	docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
 	docker push twilio/twilio-ruby:${TRAVIS_TAG}
-	docker push twilio/twilio-ruby:${API_DEFINITIONS_TAG}
-
-.PHONY: all clean test docs docs-install test-install authors
+	docker push twilio/twilio-ruby:apidefs-${API_DEFINITIONS_TAG}
