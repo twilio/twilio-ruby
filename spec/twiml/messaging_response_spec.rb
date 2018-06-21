@@ -52,6 +52,23 @@ describe Twilio::TwiML::MessagingResponse do
       expect(parse(twiml)).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
+    it 'should allow mixed text and generic nodes' do
+      expected_doc = parse <<-XML
+        <Response>
+          before
+          <Child>content</Child>
+          after
+        </Response>
+      XML
+
+      twiml = Twilio::TwiML::MessagingResponse.new
+      twiml.add_text('before')
+           .add_child('Child', 'content')
+           .add_text('after')
+
+      expect(parse(twiml)).to be_equivalent_to(expected_doc).respecting_element_order
+    end
+
     it 'should allow populated response' do
       expected_doc = parse <<-XML
         <Response>
