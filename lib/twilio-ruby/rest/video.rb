@@ -29,21 +29,21 @@ module Twilio
       end
 
       ##
-      # @param [String] sid `RTxx…xx` A system-generated 34-character string that
-      #   uniquely identifies this Recording.
-      # @return [Twilio::REST::Video::V1::RecordingInstance] if sid was passed.
-      # @return [Twilio::REST::Video::V1::RecordingList]
-      def recordings(sid=:unset)
-        self.v1.recordings(sid)
-      end
-
-      ##
       # @param [String] sid `CJxx…xx` A system-generated 34-character string that
       #   uniquely identifies this Composition.
       # @return [Twilio::REST::Video::V1::CompositionInstance] if sid was passed.
       # @return [Twilio::REST::Video::V1::CompositionList]
       def compositions(sid=:unset)
         self.v1.compositions(sid)
+      end
+
+      ##
+      # @param [String] sid `RTxx…xx` A system-generated 34-character string that
+      #   uniquely identifies this Recording.
+      # @return [Twilio::REST::Video::V1::RecordingInstance] if sid was passed.
+      # @return [Twilio::REST::Video::V1::RecordingList]
+      def recordings(sid=:unset)
+        self.v1.recordings(sid)
       end
 
       ##

@@ -1,6 +1,16 @@
 twilio-ruby changelog
 =====================
 
+[2018-06-21] Version 5.10.5
+----------------------------
+**Library**
+- PR #414: Added test for mixed content. Thanks to @ekarson!
+
+**Video**
+- Allow user to set `ContentDisposition` when obtaining media URLs for Room Recordings and Compositions
+- Add Composition Settings resource
+
+
 [2018-06-19] Version 5.10.4
 ----------------------------
 **Library**
