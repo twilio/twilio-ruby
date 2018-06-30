@@ -20,7 +20,9 @@ before_install:
   # Update bundler to a recent version.
   - gem install bundler
 deploy:
-  script:
-    - make docker-build
-    - make docker-push
-  on: tags
+  provider: script
+  script: make docker-build && make docker-push
+  skip_cleanup: true
+  on:
+    tags: true
+    rvm: "2.4.0"

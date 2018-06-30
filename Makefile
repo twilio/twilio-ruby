@@ -35,6 +35,6 @@ docker-build:
 	docker tag twilio/twilio-ruby twilio/twilio-ruby:apidefs-${API_DEFINITIONS_SHA}
 
 docker-push:
-	docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+	echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
 	docker push twilio/twilio-ruby:${TRAVIS_TAG}
-	docker push twilio/twilio-ruby:apidefs-${API_DEFINITIONS_TAG}
+	docker push twilio/twilio-ruby:apidefs-${API_DEFINITIONS_SHA}
