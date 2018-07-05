@@ -1,6 +1,16 @@
 twilio-ruby changelog
 =====================
 
+[2018-07-05] Version 5.10.6
+----------------------------
+**Library**
+- PR #413: Add Dockerfile and related changes to build the Docker image. Thanks to @jonatasbaldin!
+
+**Api**
+- Release `Call Recording Controls` feature support in helper libraries
+- Add Voice Insights sub-category keys to usage records
+
+
 [2018-06-21] Version 5.10.5
 ----------------------------
 **Library**

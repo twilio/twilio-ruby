@@ -16,7 +16,7 @@ module Twilio
             # Initialize the TranscriptionList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
             #   transcription.
             # @return [TranscriptionList] TranscriptionList
             def initialize(version, account_sid: nil)
@@ -150,7 +150,7 @@ module Twilio
             # Initialize the TranscriptionContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The account_sid
-            # @param [String] sid The transcription Sid that uniquely identifies this resource
+            # @param [String] sid The unique SID that identifies this Transcription
             # @return [TranscriptionContext] TranscriptionContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -201,9 +201,9 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
             #   transcription.
-            # @param [String] sid The transcription Sid that uniquely identifies this resource
+            # @param [String] sid The unique SID that identifies this Transcription
             # @return [TranscriptionInstance] TranscriptionInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)

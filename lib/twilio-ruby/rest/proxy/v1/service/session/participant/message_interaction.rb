@@ -38,7 +38,7 @@ module Twilio
                 # Retrieve a single page of MessageInteractionInstance records from the API.
                 # Request is executed immediately.
                 # @param [String] body The message to send to the participant
-                # @param [String] media_url The media_url
+                # @param [String] media_url Not currently supported during beta.
                 # @return [MessageInteractionInstance] Newly created MessageInteractionInstance
                 def create(body: :unset, media_url: :unset)
                   data = Twilio::Values.of({'Body' => body, 'MediaUrl' => Twilio.serialize_list(media_url) { |e| e }, })

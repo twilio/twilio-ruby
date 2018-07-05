@@ -17,7 +17,7 @@ module Twilio
               # Initialize the ParticipantList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The unique id of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
               #   conference
               # @param [String] conference_sid A 34 character string that identifies the
               #   conference this participant is in
@@ -33,35 +33,87 @@ module Twilio
               ##
               # Retrieve a single page of ParticipantInstance records from the API.
               # Request is executed immediately.
-              # @param [String] from number, client id
-              # @param [String] to number, client id, sip address
-              # @param [String] status_callback absolute url
-              # @param [String] status_callback_method GET, POST
-              # @param [String] status_callback_event initiated, ringing, answered, completed
-              # @param [String] timeout 5-600
-              # @param [Boolean] record true, false
-              # @param [Boolean] muted true, false
-              # @param [String] beep true, false, onEnter, onExit
-              # @param [Boolean] start_conference_on_enter true, false
-              # @param [Boolean] end_conference_on_exit true, false
-              # @param [String] wait_url absolute url
-              # @param [String] wait_method GET, POST
-              # @param [Boolean] early_media true, false
-              # @param [String] max_participants 2-10
-              # @param [String] conference_record true, false, record-from-start, do-not-record
-              # @param [String] conference_trim trim-silence or do-not-trim
-              # @param [String] conference_status_callback absolute url
-              # @param [String] conference_status_callback_method GET, POST
-              # @param [String] conference_status_callback_event start end join leave mute hold
-              #   speaker
-              # @param [String] recording_channels mono, dual
-              # @param [String] recording_status_callback absolute url
-              # @param [String] recording_status_callback_method GET, POST
-              # @param [String] sip_auth_username sip username
-              # @param [String] sip_auth_password sip password
-              # @param [String] region us1, ie1, de1, sg1, br1, au1, jp1
-              # @param [String] conference_recording_status_callback absolute url
-              # @param [String] conference_recording_status_callback_method GET, POST
+              # @param [String] from The `from` phone number that will dial the new conference
+              #   participant. Values may be a phone number or client id.
+              # @param [String] to The phone number, client id, or sip address you are inviting
+              #   to this conference.
+              # @param [String] status_callback The absolute URL where Twilio should send a
+              #   webhook with conference event information that you request with the
+              #   `StatusCallbackEvent` parameter.
+              # @param [String] status_callback_method The method Twilio should use when
+              #   requesting your `StatusCallback` URL. Options are `GET` and `POST`. Defaults to
+              #   `POST`.
+              # @param [String] status_callback_event Specifies which conference state changes
+              #   should generate a webhook to the `StatusCallback` URL. Options are `initiated`,
+              #   `ringing`, `answered`, and `completed`. To specify multiple values, separate
+              #   each with a space. Defaults to `completed`.
+              # @param [String] timeout The number of seconds (integer) that Twilio should allow
+              #   the phone to ring before assuming there is no answer. Defaults to 60 seconds.
+              #   Minimum allowed timeout is `5`, max is `600`. Twilio always adds a 5-second
+              #   timeout buffer to outgoing calls, so if you enter a timeout value of 10 seconds,
+              #   you will see an actual timeout closer to 15 seconds.
+              # @param [Boolean] record Records the agent and their conferences, including
+              #   downtime between conferences. Values may be `true` or `false`. Defaults to
+              #   `false`.
+              # @param [Boolean] muted Specify whether the agent can speak in the conference.
+              #   Values can be `true` or `false`. Defaults to `false`.
+              # @param [String] beep Play a notification beep to the conference when this
+              #   participant joins. Options are `true`, `false`, `onEnter`, or `onExit`. Defaults
+              #   to `true`.
+              # @param [Boolean] start_conference_on_enter If the conference has not already
+              #   begun, `true` will start the conference when this participant joins. Specifying
+              #   `false` will mute the participant and play background music until the conference
+              #   begins. Defaults to `true`.
+              # @param [Boolean] end_conference_on_exit If `true`, will end the conference when
+              #   this participant leaves. Defaults to `false`.
+              # @param [String] wait_url Specify an absolute URL that hosts music to play before
+              #   the  conference starts. Defualts to Twilio's standard [hold
+              #   music](https://www.twilio.com/labs/twimlets/holdmusic).
+              # @param [String] wait_method Specify which method, `GET` or `POST`, Twilio should
+              #   use to request the `WaitUrl` for this conference. Be sure to use `GET` if you
+              #   are directly requesting static audio files so that Twilio properly caches the
+              #   files. Defaults to `POST`.
+              # @param [Boolean] early_media Allow an agent to hear the state of the outbound
+              #   call, including ringing or disconnect messages. Can be `true` or `false`.
+              #   Defaults to `true`.
+              # @param [String] max_participants The maximum number of participants within this
+              #   agent conference. Values can be positive integers from `2`-`10`. Defaults to
+              #   `10`.
+              # @param [String] conference_record Records the conference that this participant
+              #   is joining. Options are `true`, `false`, `record-from-start`, and
+              #   `do-not-record`. Deafults to `false`
+              # @param [String] conference_trim Specify whether to trim leading and trailing
+              #   silence from your recorded conference audio files. Options are `trim-silence`
+              #   and `do-not-trim`. Defaults to `trim-silence`
+              # @param [String] conference_status_callback The absolute URL Twilio should
+              #   request with conference events specified in `ConferenceStatusCallbackEvent`.
+              #   This value is set by the first Participant to join the conference, and
+              #   subsequent callback URLs will be ignored.
+              # @param [String] conference_status_callback_method The HTTP method Twilio should
+              #   use when requesting the `ConferenceStatusCallback` URL. Either `GET` or `POST`.
+              #   Defaults to `POST`.
+              # @param [String] conference_status_callback_event Specifies which conference
+              #   state changes should generate a webhook to the URL specified in the
+              #   `ConferenceStatusCallback` attribute. Available values are `start`, `end`,
+              #   `join`, `leave`, `mute`, `hold`, and `speaker`. To specify multiple values,
+              #   separate them with a space. Defaults to `start` and `end`.
+              # @param [String] recording_channels Set the recording channels for the final
+              #   agent/conference recording. Either `mono` or `dual`. Defaults to `mono`.
+              # @param [String] recording_status_callback Specifies the `absolute URL` that
+              #   Twilio should request when the recording is available if the agent and
+              #   conference are recorded.
+              # @param [String] recording_status_callback_method The HTTP method Twilio should
+              #   use when requesting the `RecordingStatusCallback`. `GET` or `POST`. Defaults to
+              #   `POST`.
+              # @param [String] sip_auth_username SIP username used for authenticating.
+              # @param [String] sip_auth_password SIP password for authentication.
+              # @param [String] region Specifies the
+              #   [region](https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls) where Twilio should mix the recorded audio. Options are `us1`, `ie1`, `de1`, `sg1`, `br1`, `au1`, `jp1`.
+              # @param [String] conference_recording_status_callback The `absolute URL` Twilio
+              #   should request when the conference recording is available.
+              # @param [String] conference_recording_status_callback_method The HTTP method
+              #   Twilio should use when requesting your recording status callback URL, either
+              #   `GET` or `POST`. Defaults to `POST`.
               # @param [String] recording_status_callback_event The
               #   recording_status_callback_event
               # @param [String] conference_recording_status_callback_event The
@@ -119,10 +171,10 @@ module Twilio
               # Lists ParticipantInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [Boolean] muted Only show participants that are muted or unmuted. Either
-              #   `true` or `false`.
-              # @param [Boolean] hold Only show participants that are held or unheld. Either
-              #   `true` or `false`.
+              # @param [Boolean] muted Only return participants that are muted or unmuted.
+              #   Either `true` or `false`.
+              # @param [Boolean] hold Only return participants that are on hold or not on hold.
+              #   Either `true` or `false`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -138,10 +190,10 @@ module Twilio
               # Streams ParticipantInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Boolean] muted Only show participants that are muted or unmuted. Either
-              #   `true` or `false`.
-              # @param [Boolean] hold Only show participants that are held or unheld. Either
-              #   `true` or `false`.
+              # @param [Boolean] muted Only return participants that are muted or unmuted.
+              #   Either `true` or `false`.
+              # @param [Boolean] hold Only return participants that are on hold or not on hold.
+              #   Either `true` or `false`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -174,10 +226,10 @@ module Twilio
               ##
               # Retrieve a single page of ParticipantInstance records from the API.
               # Request is executed immediately.
-              # @param [Boolean] muted Only show participants that are muted or unmuted. Either
-              #   `true` or `false`.
-              # @param [Boolean] hold Only show participants that are held or unheld. Either
-              #   `true` or `false`.
+              # @param [Boolean] muted Only return participants that are muted or unmuted.
+              #   Either `true` or `false`.
+              # @param [Boolean] hold Only return participants that are on hold or not on hold.
+              #   Either `true` or `false`.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -258,8 +310,8 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The account_sid
               # @param [String] conference_sid The string that uniquely identifies the
-              #   conference this participant is in
-              # @param [String] call_sid The call_sid
+              #   conference this participant is in.
+              # @param [String] call_sid The Participant's unique Call SID.
               # @return [ParticipantContext] ParticipantContext
               def initialize(version, account_sid, conference_sid, call_sid)
                 super(version)
@@ -296,15 +348,17 @@ module Twilio
               #   `false` will un-mute. Anything other than `true` or `false` is interpreted as
               #   `false`.
               # @param [Boolean] hold Specifying `true` will hold the participant, while `false`
-              #   will un-hold.
+              #   will remove them from hold.
               # @param [String] hold_url The 'HoldUrl' attribute lets you specify a URL for
-              #   music that plays when a participant is held. The URL may be an MP3, a WAV or a
-              #   TwiML document that uses `<Play>`, `<Say>` or `<Redirect>`.
-              # @param [String] hold_method Specify GET or POST, defaults to GET
+              #   music that plays when a participant is on hold. The URL may be an MP3, a WAV or
+              #   a TwiML document that uses `<Play>`, `<Say>` or `<Redirect>`.
+              # @param [String] hold_method Specify the HTTP method Twilio should use to request
+              #   your `HoldUrl`, either `GET` or `POST`. Defaults to `GET`.
               # @param [String] announce_url The 'AnnounceUrl' attribute lets you specify a URL
               #   for announcing something to the participant. The URL may return an MP3, a WAV or
               #   a TwiML document with `<Play>` or `<Say>`.
-              # @param [String] announce_method Specify GET or POST, defaults to POST
+              # @param [String] announce_method Specify the HTTP method Twilio should use to
+              #   request your `AnnounceUrl`, either `GET` or `POST`. Defaults to `POST`.
               # @return [ParticipantInstance] Updated ParticipantInstance
               def update(muted: :unset, hold: :unset, hold_url: :unset, hold_method: :unset, announce_url: :unset, announce_method: :unset)
                 data = Twilio::Values.of({
@@ -352,11 +406,11 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The unique id of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
               #   conference
               # @param [String] conference_sid A 34 character string that identifies the
               #   conference this participant is in
-              # @param [String] call_sid The call_sid
+              # @param [String] call_sid The Participant's unique Call SID.
               # @return [ParticipantInstance] ParticipantInstance
               def initialize(version, payload, account_sid: nil, conference_sid: nil, call_sid: nil)
                 super(version)
@@ -480,15 +534,17 @@ module Twilio
               #   `false` will un-mute. Anything other than `true` or `false` is interpreted as
               #   `false`.
               # @param [Boolean] hold Specifying `true` will hold the participant, while `false`
-              #   will un-hold.
+              #   will remove them from hold.
               # @param [String] hold_url The 'HoldUrl' attribute lets you specify a URL for
-              #   music that plays when a participant is held. The URL may be an MP3, a WAV or a
-              #   TwiML document that uses `<Play>`, `<Say>` or `<Redirect>`.
-              # @param [String] hold_method Specify GET or POST, defaults to GET
+              #   music that plays when a participant is on hold. The URL may be an MP3, a WAV or
+              #   a TwiML document that uses `<Play>`, `<Say>` or `<Redirect>`.
+              # @param [String] hold_method Specify the HTTP method Twilio should use to request
+              #   your `HoldUrl`, either `GET` or `POST`. Defaults to `GET`.
               # @param [String] announce_url The 'AnnounceUrl' attribute lets you specify a URL
               #   for announcing something to the participant. The URL may return an MP3, a WAV or
               #   a TwiML document with `<Play>` or `<Say>`.
-              # @param [String] announce_method Specify GET or POST, defaults to POST
+              # @param [String] announce_method Specify the HTTP method Twilio should use to
+              #   request your `AnnounceUrl`, either `GET` or `POST`. Defaults to `POST`.
               # @return [ParticipantInstance] Updated ParticipantInstance
               def update(muted: :unset, hold: :unset, hold_url: :unset, hold_method: :unset, announce_url: :unset, announce_method: :unset)
                 context.update(

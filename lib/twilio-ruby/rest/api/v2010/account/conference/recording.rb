@@ -11,7 +11,7 @@ module Twilio
     class Api < Domain
       class V2010 < Version
         class AccountContext < InstanceContext
-          class CallContext < InstanceContext
+          class ConferenceContext < InstanceContext
             class RecordingList < ListResource
               ##
               # Initialize the RecordingList
@@ -19,55 +19,15 @@ module Twilio
               # @param [String] account_sid The unique ID of the
               #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
               #   recording.
-              # @param [String] call_sid A unique identifier for the call associated with the
-              #   recording. This will always refer to the parent leg of a two leg call.
+              # @param [String] conference_sid The unique id for the conference associated with
+              #   the recording.
               # @return [RecordingList] RecordingList
-              def initialize(version, account_sid: nil, call_sid: nil)
+              def initialize(version, account_sid: nil, conference_sid: nil)
                 super(version)
 
                 # Path Solution
-                @solution = {account_sid: account_sid, call_sid: call_sid}
-                @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/Recordings.json"
-              end
-
-              ##
-              # Retrieve a single page of RecordingInstance records from the API.
-              # Request is executed immediately.
-              # @param [String] recording_status_callback_event The
-              #   recording_status_callback_event
-              # @param [String] recording_status_callback The recording_status_callback
-              # @param [String] recording_status_callback_method The
-              #   recording_status_callback_method
-              # @param [String] trim Possible values `trim-silence` or `do-not-trim`.
-              #   `trim-silence` will trim the silence from the beginning and end of the
-              #   recording. `do-not-trim` will not trim the silence. Defaults to `do-not-trim`
-              # @param [String] recording_channels The recording_channels
-              # @param [Boolean] play_beep Possible values : true or false.  true will play a
-              #   double beep before the recording is paused or stopped or a single beep after the
-              #   recording is resumed. Defaults to false
-              # @return [RecordingInstance] Newly created RecordingInstance
-              def create(recording_status_callback_event: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, trim: :unset, recording_channels: :unset, play_beep: :unset)
-                data = Twilio::Values.of({
-                    'RecordingStatusCallbackEvent' => Twilio.serialize_list(recording_status_callback_event) { |e| e },
-                    'RecordingStatusCallback' => recording_status_callback,
-                    'RecordingStatusCallbackMethod' => recording_status_callback_method,
-                    'Trim' => trim,
-                    'RecordingChannels' => recording_channels,
-                    'PlayBeep' => play_beep,
-                })
-
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
-
-                RecordingInstance.new(
-                    @version,
-                    payload,
-                    account_sid: @solution[:account_sid],
-                    call_sid: @solution[:call_sid],
-                )
+                @solution = {account_sid: account_sid, conference_sid: conference_sid}
+                @uri = "/Accounts/#{@solution[:account_sid]}/Conferences/#{@solution[:conference_sid]}/Recordings.json"
               end
 
               ##
@@ -205,7 +165,7 @@ module Twilio
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
-                    call_sid: @solution[:call_sid],
+                    conference_sid: @solution[:conference_sid],
                 )
               end
 
@@ -221,15 +181,16 @@ module Twilio
               # Initialize the RecordingContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The account_sid
-              # @param [String] call_sid The call Sid that uniquely identifies this resource
+              # @param [String] conference_sid The conference Sid that uniquely identifies this
+              #   resource
               # @param [String] sid The recording Sid that uniquely identifies this resource
               # @return [RecordingContext] RecordingContext
-              def initialize(version, account_sid, call_sid, sid)
+              def initialize(version, account_sid, conference_sid, sid)
                 super(version)
 
                 # Path Solution
-                @solution = {account_sid: account_sid, call_sid: call_sid, sid: sid, }
-                @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/Recordings/#{@solution[:sid]}.json"
+                @solution = {account_sid: account_sid, conference_sid: conference_sid, sid: sid, }
+                @uri = "/Accounts/#{@solution[:account_sid]}/Conferences/#{@solution[:conference_sid]}/Recordings/#{@solution[:sid]}.json"
               end
 
               ##
@@ -250,7 +211,7 @@ module Twilio
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
-                    call_sid: @solution[:call_sid],
+                    conference_sid: @solution[:conference_sid],
                     sid: @solution[:sid],
                 )
               end
@@ -271,7 +232,7 @@ module Twilio
                     @version,
                     payload,
                     account_sid: @solution[:account_sid],
-                    call_sid: @solution[:call_sid],
+                    conference_sid: @solution[:conference_sid],
                     sid: @solution[:sid],
                 )
               end
@@ -299,11 +260,11 @@ module Twilio
               # @param [String] account_sid The unique ID of the
               #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
               #   recording.
-              # @param [String] call_sid A unique identifier for the call associated with the
-              #   recording. This will always refer to the parent leg of a two leg call.
+              # @param [String] conference_sid The unique id for the conference associated with
+              #   the recording.
               # @param [String] sid The recording Sid that uniquely identifies this resource
               # @return [RecordingInstance] RecordingInstance
-              def initialize(version, payload, account_sid: nil, call_sid: nil, sid: nil)
+              def initialize(version, payload, account_sid: nil, conference_sid: nil, sid: nil)
                 super(version)
 
                 # Marshaled Properties
@@ -318,18 +279,22 @@ module Twilio
                     'duration' => payload['duration'],
                     'sid' => payload['sid'],
                     'price' => payload['price'].to_f,
-                    'uri' => payload['uri'],
-                    'encryption_details' => payload['encryption_details'],
                     'price_unit' => payload['price_unit'],
                     'status' => payload['status'],
                     'channels' => payload['channels'].to_i,
                     'source' => payload['source'],
                     'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
+                    'encryption_details' => payload['encryption_details'],
+                    'uri' => payload['uri'],
                 }
 
                 # Context
                 @instance_context = nil
-                @params = {'account_sid' => account_sid, 'call_sid' => call_sid, 'sid' => sid || @properties['sid'], }
+                @params = {
+                    'account_sid' => account_sid,
+                    'conference_sid' => conference_sid,
+                    'sid' => sid || @properties['sid'],
+                }
               end
 
               ##
@@ -341,7 +306,7 @@ module Twilio
                   @instance_context = RecordingContext.new(
                       @version,
                       @params['account_sid'],
-                      @params['call_sid'],
+                      @params['conference_sid'],
                       @params['sid'],
                   )
                 end
@@ -367,7 +332,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique id for the conference associated with the recording, if a conference recording.
+              # @return [String] The unique id for the conference associated with the recording.
               def conference_sid
                 @properties['conference_sid']
               end
@@ -409,18 +374,6 @@ module Twilio
               end
 
               ##
-              # @return [String] The URI for this resource
-              def uri
-                @properties['uri']
-              end
-
-              ##
-              # @return [Hash] Details for how to decrypt the recording.
-              def encryption_details
-                @properties['encryption_details']
-              end
-
-              ##
               # @return [String] The currency used in the Price property.
               def price_unit
                 @properties['price_unit']
@@ -448,6 +401,18 @@ module Twilio
               # @return [String] More information about the recording failure, if Status is failed.
               def error_code
                 @properties['error_code']
+              end
+
+              ##
+              # @return [Hash] Details for how to decrypt the recording.
+              def encryption_details
+                @properties['encryption_details']
+              end
+
+              ##
+              # @return [String] The URI for this resource
+              def uri
+                @properties['uri']
               end
 
               ##

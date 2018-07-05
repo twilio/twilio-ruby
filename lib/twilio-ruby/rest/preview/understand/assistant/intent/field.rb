@@ -115,7 +115,10 @@ module Twilio
               ##
               # Retrieve a single page of FieldInstance records from the API.
               # Request is executed immediately.
-              # @param [String] field_type The unique name or sid of the FieldType
+              # @param [String] field_type The unique name or sid of the FieldType. It can be
+              #   any [Built-in Field
+              #   Type](https://www.twilio.com/docs/assistant/api/built-in-field-types) or the
+              #   unique_name or the Field Type sid of a custom Field Type.
               # @param [String] unique_name A user-provided string that uniquely identifies this
               #   resource as an alternative to the sid. Unique up to 64 characters long.
               # @return [FieldInstance] Newly created FieldInstance
@@ -305,7 +308,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The Field Type of this field. Can be the Field Type unique_name or the Field Type sid.
+              # @return [String] The Field Type of this field. It can be any Built-in Field Type or unique_name or the Field Type sid of a custom Field Type.
               def field_type
                 @properties['field_type']
               end

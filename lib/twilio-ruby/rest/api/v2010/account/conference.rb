@@ -220,6 +220,7 @@ module Twilio
 
               # Dependents
               @participants = nil
+              @recordings = nil
             end
 
             ##
@@ -292,6 +293,28 @@ module Twilio
               end
 
               @participants
+            end
+
+            ##
+            # Access the recordings
+            # @return [RecordingList]
+            # @return [RecordingContext] if sid was passed.
+            def recordings(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return RecordingContext.new(@version, @solution[:account_sid], @solution[:sid], sid, )
+              end
+
+              unless @recordings
+                @recordings = RecordingList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                    conference_sid: @solution[:sid],
+                )
+              end
+
+              @recordings
             end
 
             ##
@@ -430,6 +453,13 @@ module Twilio
             # @return [participants] participants
             def participants
               context.participants
+            end
+
+            ##
+            # Access the recordings
+            # @return [recordings] recordings
+            def recordings
+              context.recordings
             end
 
             ##

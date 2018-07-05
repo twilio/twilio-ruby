@@ -207,8 +207,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
-      #   resource.
+      # @param [String] sid A unique 34-character string that identifies this resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::TranscriptionInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::TranscriptionList]
       def transcriptions(sid=:unset)

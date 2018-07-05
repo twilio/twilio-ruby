@@ -165,9 +165,7 @@ describe 'Message' do
         200,
       %q[
       {
-          "end": 0,
           "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages.json?PageSize=1&Page=0",
-          "last_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages.json?PageSize=1&Page=119771",
           "messages": [
               {
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -195,12 +193,9 @@ describe 'Message' do
               }
           ],
           "next_page_uri": null,
-          "num_pages": 119772,
           "page": 0,
           "page_size": 1,
           "previous_page_uri": null,
-          "start": 0,
-          "total": 119772,
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages.json?PageSize=1&Page=0"
       }
       ]

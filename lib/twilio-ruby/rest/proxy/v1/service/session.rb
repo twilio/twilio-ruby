@@ -124,7 +124,7 @@ module Twilio
             # Retrieve a single page of SessionInstance records from the API.
             # Request is executed immediately.
             # @param [String] unique_name Your unique identifier for this Session such as a
-            #   Job ID or conversation ID. Should not contain PII.
+            #   Job ID or conversation ID. *Should not contain PII.*
             # @param [Time] date_expiry An absolute time (ISO 8601) at which this Session
             #   should close. If this is populated, it takes precedence over TTL values.
             # @param [String] ttl The time, in seconds, after the latest of Session create
@@ -240,7 +240,6 @@ module Twilio
 
             ##
             # Update the SessionInstance
-            # @param [String] unique_name The unique_name
             # @param [Time] date_expiry The date that this Session should expire, given in ISO
             #   8601 format.
             # @param [String] ttl The time, in seconds, after the latest of Session create
@@ -250,9 +249,8 @@ module Twilio
             #   to re-open a session or `closed` to close a session.
             # @param [Hash] participants The participants
             # @return [SessionInstance] Updated SessionInstance
-            def update(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
+            def update(date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
               data = Twilio::Values.of({
-                  'UniqueName' => unique_name,
                   'DateExpiry' => Twilio.serialize_iso8601_datetime(date_expiry),
                   'Ttl' => ttl,
                   'Mode' => mode,
@@ -482,7 +480,6 @@ module Twilio
 
             ##
             # Update the SessionInstance
-            # @param [String] unique_name The unique_name
             # @param [Time] date_expiry The date that this Session should expire, given in ISO
             #   8601 format.
             # @param [String] ttl The time, in seconds, after the latest of Session create
@@ -492,9 +489,8 @@ module Twilio
             #   to re-open a session or `closed` to close a session.
             # @param [Hash] participants The participants
             # @return [SessionInstance] Updated SessionInstance
-            def update(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
+            def update(date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
               context.update(
-                  unique_name: unique_name,
                   date_expiry: date_expiry,
                   ttl: ttl,
                   mode: mode,

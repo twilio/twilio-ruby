@@ -31,9 +31,11 @@ module Twilio
             ##
             # Retrieve a single page of PhoneNumberInstance records from the API.
             # Request is executed immediately.
-            # @param [String] sid A 34 character string that uniquely identifies this Phone
-            #   Number.
-            # @param [String] phone_number The phone_number
+            # @param [String] sid A Twilio
+            #   [IncomingPhoneNumber](https://www.twilio.com/docs/phone-numbers/api/incoming-phone-numbers) Sid that represents the Twilio Number you would like to assign to your Proxy Service (e.g. `PN1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d`).
+            # @param [String] phone_number A string that represents the Twilio Number you
+            #   would like to assign to your Proxy Service. Provide number in
+            #   [E.164](https://en.wikipedia.org/wiki/E.164) format (e.g. `+16175551212`).
             # @return [PhoneNumberInstance] Newly created PhoneNumberInstance
             def create(sid: :unset, phone_number: :unset)
               data = Twilio::Values.of({'Sid' => sid, 'PhoneNumber' => phone_number, })
@@ -175,8 +177,8 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The unique SID identifier of the parent
             #   [Service](https://www.twilio.com/docs/proxy/api/service).
-            # @param [String] sid A 34 character string that uniquely identifies this Phone
-            #   Number.
+            # @param [String] sid A 34 character string that uniquely identifies the Phone
+            #   Number to fetch (e.g. `PN1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d`).
             # @return [PhoneNumberContext] PhoneNumberContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -230,8 +232,8 @@ module Twilio
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The unique SID identifier of the parent
             #   [Service](https://www.twilio.com/docs/proxy/api/service).
-            # @param [String] sid A 34 character string that uniquely identifies this Phone
-            #   Number.
+            # @param [String] sid A 34 character string that uniquely identifies the Phone
+            #   Number to fetch (e.g. `PN1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d`).
             # @return [PhoneNumberInstance] PhoneNumberInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -303,7 +305,7 @@ module Twilio
             end
 
             ##
-            # @return [String] A human readable description of this resource.
+            # @return [String] A human-readable description of this resource.
             def friendly_name
               @properties['friendly_name']
             end

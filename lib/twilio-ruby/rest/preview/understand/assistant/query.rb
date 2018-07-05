@@ -35,7 +35,7 @@ module Twilio
             # @param [String] model_build The Model Build Sid or unique name of the Model
             #   Build to be queried.
             # @param [String] status A string that described the query status. The values can
-            #   be: to_review, reviewed, discarded
+            #   be: pending_review, reviewed, discarded
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -61,7 +61,7 @@ module Twilio
             # @param [String] model_build The Model Build Sid or unique name of the Model
             #   Build to be queried.
             # @param [String] status A string that described the query status. The values can
-            #   be: to_review, reviewed, discarded
+            #   be: pending_review, reviewed, discarded
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -103,7 +103,7 @@ module Twilio
             # @param [String] model_build The Model Build Sid or unique name of the Model
             #   Build to be queried.
             # @param [String] status A string that described the query status. The values can
-            #   be: to_review, reviewed, discarded
+            #   be: pending_review, reviewed, discarded
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -245,7 +245,7 @@ module Twilio
             # Update the QueryInstance
             # @param [String] sample_sid The sample_sid
             # @param [String] status A string that described the query status. The values can
-            #   be: to_review, reviewed, discarded
+            #   be: pending_review, reviewed, discarded
             # @return [QueryInstance] Updated QueryInstance
             def update(sample_sid: :unset, status: :unset)
               data = Twilio::Values.of({'SampleSid' => sample_sid, 'Status' => status, })
@@ -357,7 +357,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The query
+            # @return [String] The end-user's natural language input.
             def query
               @properties['query']
             end
@@ -381,7 +381,7 @@ module Twilio
             end
 
             ##
-            # @return [String] A string that described the query status. The values can be: to_review, reviewed, discarded
+            # @return [String] A string that described the query status. The values can be: pending_review, reviewed, discarded
             def status
               @properties['status']
             end
@@ -393,7 +393,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The source_channel
+            # @return [String] The communication channel where this end-user input came from
             def source_channel
               @properties['source_channel']
             end
@@ -409,7 +409,7 @@ module Twilio
             # Update the QueryInstance
             # @param [String] sample_sid The sample_sid
             # @param [String] status A string that described the query status. The values can
-            #   be: to_review, reviewed, discarded
+            #   be: pending_review, reviewed, discarded
             # @return [QueryInstance] Updated QueryInstance
             def update(sample_sid: :unset, status: :unset)
               context.update(sample_sid: sample_sid, status: status, )

@@ -121,7 +121,7 @@ module Twilio
               # Retrieve a single page of ParticipantInstance records from the API.
               # Request is executed immediately.
               # @param [String] identifier The phone number of this Participant.
-              # @param [String] friendly_name A human readable description of this resource, up
+              # @param [String] friendly_name A human-readable description of this resource, up
               #   to 64 characters. Should not include PII.
               # @param [String] proxy_identifier The proxy phone number to use for this
               #   Participant. If not specified, Proxy will select a number from the pool.
@@ -245,36 +245,6 @@ module Twilio
               end
 
               ##
-              # Update the ParticipantInstance
-              # @param [String] identifier The identifier
-              # @param [String] friendly_name The friendly_name
-              # @param [String] proxy_identifier The proxy_identifier
-              # @param [String] proxy_identifier_sid The proxy_identifier_sid
-              # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(identifier: :unset, friendly_name: :unset, proxy_identifier: :unset, proxy_identifier_sid: :unset)
-                data = Twilio::Values.of({
-                    'Identifier' => identifier,
-                    'FriendlyName' => friendly_name,
-                    'ProxyIdentifier' => proxy_identifier,
-                    'ProxyIdentifierSid' => proxy_identifier_sid,
-                })
-
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
-
-                ParticipantInstance.new(
-                    @version,
-                    payload,
-                    service_sid: @solution[:service_sid],
-                    session_sid: @solution[:session_sid],
-                    sid: @solution[:sid],
-                )
-              end
-
-              ##
               # Access the message_interactions
               # @return [MessageInteractionList]
               # @return [MessageInteractionContext] if sid was passed.
@@ -395,7 +365,7 @@ module Twilio
               end
 
               ##
-              # @return [String] A human readable description of this resource.
+              # @return [String] A human-readable description of this resource.
               def friendly_name
                 @properties['friendly_name']
               end
@@ -419,7 +389,7 @@ module Twilio
               end
 
               ##
-              # @return [Time] The date this Participant was deleted
+              # @return [Time] The date this Participant was removed
               def date_deleted
                 @properties['date_deleted']
               end
@@ -460,22 +430,6 @@ module Twilio
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
                 context.delete
-              end
-
-              ##
-              # Update the ParticipantInstance
-              # @param [String] identifier The identifier
-              # @param [String] friendly_name The friendly_name
-              # @param [String] proxy_identifier The proxy_identifier
-              # @param [String] proxy_identifier_sid The proxy_identifier_sid
-              # @return [ParticipantInstance] Updated ParticipantInstance
-              def update(identifier: :unset, friendly_name: :unset, proxy_identifier: :unset, proxy_identifier_sid: :unset)
-                context.update(
-                    identifier: identifier,
-                    friendly_name: friendly_name,
-                    proxy_identifier: proxy_identifier,
-                    proxy_identifier_sid: proxy_identifier_sid,
-                )
               end
 
               ##

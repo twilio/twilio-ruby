@@ -297,6 +297,7 @@ module Twilio
                   'conference_sid' => payload['conference_sid'],
                   'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                   'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
+                  'start_time' => Twilio.deserialize_rfc2822(payload['start_time']),
                   'duration' => payload['duration'],
                   'sid' => payload['sid'],
                   'price' => payload['price'],
@@ -360,6 +361,12 @@ module Twilio
             # @return [Time] The date this resource was last updated
             def date_updated
               @properties['date_updated']
+            end
+
+            ##
+            # @return [Time] The start time of the recording, given in RFC 2822 format.
+            def start_time
+              @properties['start_time']
             end
 
             ##

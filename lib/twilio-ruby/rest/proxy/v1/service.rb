@@ -111,10 +111,10 @@ module Twilio
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
           # @param [String] unique_name The human-readable string that uniquely identifies
-          #   this Service, up to 64 characters.
+          #   this Service, up to 64 characters. *Should not contain PII.*
           # @param [String] default_ttl The default time delay in seconds after the latest
           #   of Session create time or the Session's last Interaction time, after which a
-          #   session will expire.  Used for sessions where ttl is not specified.
+          #   session will expire.  Used for sessions where TTL is not specified.
           # @param [String] callback_url The URL to which Twilio will make callbacks on
           #   interaction status changes.
           # @param [service.GeoMatchLevel] geo_match_level Whether proxy number selected
@@ -232,11 +232,11 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] unique_name A human readable description of this resource, up to
-          #   64 characters.
+          # @param [String] unique_name A human-readable description of this resource, up to
+          #   64 characters. *Should not contain PII.*
           # @param [String] default_ttl The default time delay in seconds after the latest
           #   of Session create time or the Session's last Interaction time, after which a
-          #   session will expire.  Used for sessions where ttl is not specified.
+          #   session will expire.  Used for sessions where TTL is not specified.
           # @param [String] callback_url The URL to which Twilio will make callbacks on
           #   interaction status changes.
           # @param [service.GeoMatchLevel] geo_match_level Whether proxy number selected
@@ -385,7 +385,7 @@ module Twilio
           end
 
           ##
-          # @return [String] A human readable description of this resource.
+          # @return [String] A human-readable description of this resource.
           def unique_name
             @properties['unique_name']
           end
@@ -472,11 +472,11 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] unique_name A human readable description of this resource, up to
-          #   64 characters.
+          # @param [String] unique_name A human-readable description of this resource, up to
+          #   64 characters. *Should not contain PII.*
           # @param [String] default_ttl The default time delay in seconds after the latest
           #   of Session create time or the Session's last Interaction time, after which a
-          #   session will expire.  Used for sessions where ttl is not specified.
+          #   session will expire.  Used for sessions where TTL is not specified.
           # @param [String] callback_url The URL to which Twilio will make callbacks on
           #   interaction status changes.
           # @param [service.GeoMatchLevel] geo_match_level Whether proxy number selected
