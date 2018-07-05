@@ -50,6 +50,9 @@ make install
 ## Documentation
 [Here][documentation]
 
+## Docker Image
+The `Dockerfile` present in this repository and its respective `twilio/twilio-ruby` Docker image are currently used by Twilio for testing purposes only.
+
 ## Feedback
 During the Release Candidate period of this library, please leave all feedback and issues in the [Github Issues][issues] for `twilio-ruby`.
 

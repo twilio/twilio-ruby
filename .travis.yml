@@ -12,6 +12,9 @@ rvm:
   - 2.0.0
   - jruby-9.1.9.0
 
+services:
+  - docker
+
 matrix:
   fast_finish: true
 
@@ -19,3 +22,10 @@ before_install:
   # Bundler on Travis may be too out of date
   # Update bundler to a recent version.
   - gem install bundler
+deploy:
+  provider: script
+  script: make docker-build && make docker-push
+  skip_cleanup: true
+  on:
+    tags: true
+    rvm: "2.4.0"
