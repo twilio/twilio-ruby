@@ -10,8 +10,20 @@ module Twilio
 
       def validate(url, params, signature)
         params_hash = params_to_hash(params)
-        expected = build_signature_for(url, params_hash)
-        secure_compare(expected, signature)
+        if params_hash.is_a? Enumerable
+          expected = build_signature_for(url, params_hash)
+          secure_compare(expected, signature)
+        else
+          expected_signature = build_signature_for(url, {})
+          body_hash = URI.decode_www_form(URI(url).query).to_h['bodySHA256']
+          expected_hash = build_hash_for(params)
+          secure_compare(expected_signature, signature) && secure_compare(expected_hash, body_hash)
+        end
+      end
+
+      def build_hash_for(body)
+        hasher = OpenSSL::Digest.new('sha256')
+        Base64.encode64(hasher.digest(body)).strip
       end
 
       def build_signature_for(url, params)
