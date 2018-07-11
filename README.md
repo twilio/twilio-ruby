@@ -2,7 +2,7 @@
 
 [![Build Status](http://img.shields.io/travis/twilio/twilio-ruby.svg)][travis]
 [![Gem Version](http://img.shields.io/gem/v/twilio-ruby.svg)](https://rubygems.org/gems/twilio-ruby)
-[![Code Quality](http://img.shields.io/codeclimate/github/twilio/twilio-ruby.svg)][codeclimate]
+[![Maintainability](http://img.shields.io/codeclimate/maintainability/twilio/twilio-ruby.svg)][codeclimate]
 
 A module for using the Twilio REST API and generating valid [TwiML](http://www.twilio.com/docs/api/twiml/ "TwiML - Twilio Markup Language"). [Click here to read the full documentation.][documentation]
 
