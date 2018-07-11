@@ -203,6 +203,13 @@ module Twilio
             end
 
             ##
+            # Deletes the RoomRecordingInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              @version.delete('delete', @uri)
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -351,6 +358,13 @@ module Twilio
             # @return [RoomRecordingInstance] Fetched RoomRecordingInstance
             def fetch
               context.fetch
+            end
+
+            ##
+            # Deletes the RoomRecordingInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              context.delete
             end
 
             ##

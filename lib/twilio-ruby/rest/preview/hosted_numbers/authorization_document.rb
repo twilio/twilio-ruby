@@ -137,14 +137,20 @@ module Twilio
           #   Address resource that is associated with this AuthorizationDocument.
           # @param [String] email Email that this AuthorizationDocument will be sent to for
           #   signing.
+          # @param [String] contact_title The title of the person authorized to sign the
+          #   Authorization Document for this phone number.
+          # @param [String] contact_phone_number The contact phone number of the person
+          #   authorized to sign the Authorization Document.
           # @param [String] cc_emails Email recipients who will be informed when an
           #   Authorization Document has been sent and signed.
           # @return [AuthorizationDocumentInstance] Newly created AuthorizationDocumentInstance
-          def create(hosted_number_order_sids: nil, address_sid: nil, email: nil, cc_emails: :unset)
+          def create(hosted_number_order_sids: nil, address_sid: nil, email: nil, contact_title: nil, contact_phone_number: nil, cc_emails: :unset)
             data = Twilio::Values.of({
                 'HostedNumberOrderSids' => Twilio.serialize_list(hosted_number_order_sids) { |e| e },
                 'AddressSid' => address_sid,
                 'Email' => email,
+                'ContactTitle' => contact_title,
+                'ContactPhoneNumber' => contact_phone_number,
                 'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
             })
 
@@ -245,14 +251,20 @@ module Twilio
           #   can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5.
           #   failed. See the section entitled [Status
           #   Values](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents#status-values) for more information on each of these statuses.
+          # @param [String] contact_title The title of the person authorized to sign the
+          #   Authorization Document for this phone number.
+          # @param [String] contact_phone_number The contact phone number of the person
+          #   authorized to sign the Authorization Document.
           # @return [AuthorizationDocumentInstance] Updated AuthorizationDocumentInstance
-          def update(hosted_number_order_sids: :unset, address_sid: :unset, email: :unset, cc_emails: :unset, status: :unset)
+          def update(hosted_number_order_sids: :unset, address_sid: :unset, email: :unset, cc_emails: :unset, status: :unset, contact_title: :unset, contact_phone_number: :unset)
             data = Twilio::Values.of({
                 'HostedNumberOrderSids' => Twilio.serialize_list(hosted_number_order_sids) { |e| e },
                 'AddressSid' => address_sid,
                 'Email' => email,
                 'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
                 'Status' => status,
+                'ContactTitle' => contact_title,
+                'ContactPhoneNumber' => contact_phone_number,
             })
 
             payload = @version.update(
@@ -405,14 +417,20 @@ module Twilio
           #   can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5.
           #   failed. See the section entitled [Status
           #   Values](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents#status-values) for more information on each of these statuses.
+          # @param [String] contact_title The title of the person authorized to sign the
+          #   Authorization Document for this phone number.
+          # @param [String] contact_phone_number The contact phone number of the person
+          #   authorized to sign the Authorization Document.
           # @return [AuthorizationDocumentInstance] Updated AuthorizationDocumentInstance
-          def update(hosted_number_order_sids: :unset, address_sid: :unset, email: :unset, cc_emails: :unset, status: :unset)
+          def update(hosted_number_order_sids: :unset, address_sid: :unset, email: :unset, cc_emails: :unset, status: :unset, contact_title: :unset, contact_phone_number: :unset)
             context.update(
                 hosted_number_order_sids: hosted_number_order_sids,
                 address_sid: address_sid,
                 email: email,
                 cc_emails: cc_emails,
                 status: status,
+                contact_title: contact_title,
+                contact_phone_number: contact_phone_number,
             )
           end
 

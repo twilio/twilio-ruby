@@ -162,6 +162,7 @@ module Twilio
 
             # Dependents
             @engagements = nil
+            @executions = nil
           end
 
           ##
@@ -202,6 +203,24 @@ module Twilio
             end
 
             @engagements
+          end
+
+          ##
+          # Access the executions
+          # @return [ExecutionList]
+          # @return [ExecutionContext] if sid was passed.
+          def executions(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return ExecutionContext.new(@version, @solution[:sid], sid, )
+            end
+
+            unless @executions
+              @executions = ExecutionList.new(@version, flow_sid: @solution[:sid], )
+            end
+
+            @executions
           end
 
           ##
@@ -326,6 +345,13 @@ module Twilio
           # @return [engagements] engagements
           def engagements
             context.engagements
+          end
+
+          ##
+          # Access the executions
+          # @return [executions] executions
+          def executions
+            context.executions
           end
 
           ##

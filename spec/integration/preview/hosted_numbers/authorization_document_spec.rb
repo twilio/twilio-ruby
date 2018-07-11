@@ -179,13 +179,15 @@ describe 'AuthorizationDocument' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.hosted_numbers.authorization_documents.create(hosted_number_order_sids: ['hosted_number_order_sids'], address_sid: 'ADXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', email: 'email')
+      @client.preview.hosted_numbers.authorization_documents.create(hosted_number_order_sids: ['hosted_number_order_sids'], address_sid: 'ADXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', email: 'email', contact_title: 'contact_title', contact_phone_number: 'contact_phone_number')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'HostedNumberOrderSids' => Twilio.serialize_list(['hosted_number_order_sids']) { |e| e },
         'AddressSid' => 'ADXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         'Email' => 'email',
+        'ContactTitle' => 'contact_title',
+        'ContactPhoneNumber' => 'contact_phone_number',
     }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -218,7 +220,7 @@ describe 'AuthorizationDocument' do
       ]
     ))
 
-    actual = @client.preview.hosted_numbers.authorization_documents.create(hosted_number_order_sids: ['hosted_number_order_sids'], address_sid: 'ADXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', email: 'email')
+    actual = @client.preview.hosted_numbers.authorization_documents.create(hosted_number_order_sids: ['hosted_number_order_sids'], address_sid: 'ADXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', email: 'email', contact_title: 'contact_title', contact_phone_number: 'contact_phone_number')
 
     expect(actual).to_not eq(nil)
   end

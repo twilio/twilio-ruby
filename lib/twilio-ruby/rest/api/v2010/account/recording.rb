@@ -16,7 +16,7 @@ module Twilio
             # Initialize the RecordingList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The unique ID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
             #   recording.
             # @return [RecordingList] RecordingList
             def initialize(version, account_sid: nil)
@@ -34,8 +34,8 @@ module Twilio
             # @param [Time] date_created_before Filter by date created
             # @param [Time] date_created Filter by date created
             # @param [Time] date_created_after Filter by date created
-            # @param [String] call_sid Only show recordings made during the call given by the
-            #   indicated sid
+            # @param [String] call_sid Only show recordings made during the call indicated by
+            #   this call SID
             # @param [String] conference_sid The conference_sid
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
@@ -63,8 +63,8 @@ module Twilio
             # @param [Time] date_created_before Filter by date created
             # @param [Time] date_created Filter by date created
             # @param [Time] date_created_after Filter by date created
-            # @param [String] call_sid Only show recordings made during the call given by the
-            #   indicated sid
+            # @param [String] call_sid Only show recordings made during the call indicated by
+            #   this call SID
             # @param [String] conference_sid The conference_sid
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
@@ -108,8 +108,8 @@ module Twilio
             # @param [Time] date_created_before Filter by date created
             # @param [Time] date_created Filter by date created
             # @param [Time] date_created_after Filter by date created
-            # @param [String] call_sid Only show recordings made during the call given by the
-            #   indicated sid
+            # @param [String] call_sid Only show recordings made during the call indicated by
+            #   this call SID
             # @param [String] conference_sid The conference_sid
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
@@ -188,7 +188,7 @@ module Twilio
             # Initialize the RecordingContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The account_sid
-            # @param [String] sid The recording Sid that uniquely identifies this resource
+            # @param [String] sid The unique recording SID that identifies this resource
             # @return [RecordingContext] RecordingContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -282,9 +282,9 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The unique ID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
             #   recording.
-            # @param [String] sid The recording Sid that uniquely identifies this resource
+            # @param [String] sid The unique recording SID that identifies this resource
             # @return [RecordingInstance] RecordingInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
@@ -328,7 +328,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique sid that identifies this account
+            # @return [String] The unique SID that identifies this account
             def account_sid
               @properties['account_sid']
             end
@@ -340,13 +340,13 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique id for the call leg that corresponds to the recording.
+            # @return [String] The unique ID for the call leg that corresponds to the recording.
             def call_sid
               @properties['call_sid']
             end
 
             ##
-            # @return [String] The unique id for the conference associated with the recording, if a conference recording.
+            # @return [String] The unique ID for the conference associated with the recording.
             def conference_sid
               @properties['conference_sid']
             end
@@ -364,13 +364,13 @@ module Twilio
             end
 
             ##
-            # @return [Time] The start time of the recording, given in RFC 2822 format.
+            # @return [Time] The start time of the recording, in RFC 2822 format.
             def start_time
               @properties['start_time']
             end
 
             ##
-            # @return [String] The length of the recording, in seconds.
+            # @return [String] The length of the recording in seconds.
             def duration
               @properties['duration']
             end

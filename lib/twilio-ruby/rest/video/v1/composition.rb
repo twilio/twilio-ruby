@@ -156,7 +156,8 @@ module Twilio
           #   * Zero or more `MediaTrackSid`
           #   * Zero or more `ParticipantSid`
           #   * Zero or more Track names. These can be specified using wildcards (e.g.
-          #   `student*`)
+          #   `student*`). The use of `[*]` has semantics "all if any" meaning zero or more
+          #   (i.e. all) depending on whether the target room had video tracks.
           # @param [String] audio_sources_excluded An array of audio sources to exclude from
           #   the Composition. Any new Composition shall include all audio sources specified
           #   in `AudioSources` except for the ones specified in `AudioSourcesExcluded`. This

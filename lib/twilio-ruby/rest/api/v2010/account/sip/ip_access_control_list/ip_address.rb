@@ -116,9 +116,14 @@ module Twilio
                 # Request is executed immediately.
                 # @param [String] friendly_name The friendly_name
                 # @param [String] ip_address The ip_address
+                # @param [String] cidr_prefix_length The cidr_prefix_length
                 # @return [IpAddressInstance] Newly created IpAddressInstance
-                def create(friendly_name: nil, ip_address: nil)
-                  data = Twilio::Values.of({'FriendlyName' => friendly_name, 'IpAddress' => ip_address, })
+                def create(friendly_name: nil, ip_address: nil, cidr_prefix_length: :unset)
+                  data = Twilio::Values.of({
+                      'FriendlyName' => friendly_name,
+                      'IpAddress' => ip_address,
+                      'CidrPrefixLength' => cidr_prefix_length,
+                  })
 
                   payload = @version.create(
                       'POST',
@@ -220,9 +225,14 @@ module Twilio
                 # Update the IpAddressInstance
                 # @param [String] ip_address The ip_address
                 # @param [String] friendly_name The friendly_name
+                # @param [String] cidr_prefix_length The cidr_prefix_length
                 # @return [IpAddressInstance] Updated IpAddressInstance
-                def update(ip_address: :unset, friendly_name: :unset)
-                  data = Twilio::Values.of({'IpAddress' => ip_address, 'FriendlyName' => friendly_name, })
+                def update(ip_address: :unset, friendly_name: :unset, cidr_prefix_length: :unset)
+                  data = Twilio::Values.of({
+                      'IpAddress' => ip_address,
+                      'FriendlyName' => friendly_name,
+                      'CidrPrefixLength' => cidr_prefix_length,
+                  })
 
                   payload = @version.update(
                       'POST',
@@ -273,6 +283,7 @@ module Twilio
                       'account_sid' => payload['account_sid'],
                       'friendly_name' => payload['friendly_name'],
                       'ip_address' => payload['ip_address'],
+                      'cidr_prefix_length' => payload['cidr_prefix_length'].to_i,
                       'ip_access_control_list_sid' => payload['ip_access_control_list_sid'],
                       'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                       'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
@@ -329,6 +340,12 @@ module Twilio
                 end
 
                 ##
+                # @return [String] An integer representing the length of the CIDR prefix to use with this IP address when accepting traffic. By default the entire IP address is used.
+                def cidr_prefix_length
+                  @properties['cidr_prefix_length']
+                end
+
+                ##
                 # @return [String] The ip_access_control_list_sid
                 def ip_access_control_list_sid
                   @properties['ip_access_control_list_sid']
@@ -363,9 +380,14 @@ module Twilio
                 # Update the IpAddressInstance
                 # @param [String] ip_address The ip_address
                 # @param [String] friendly_name The friendly_name
+                # @param [String] cidr_prefix_length The cidr_prefix_length
                 # @return [IpAddressInstance] Updated IpAddressInstance
-                def update(ip_address: :unset, friendly_name: :unset)
-                  context.update(ip_address: ip_address, friendly_name: friendly_name, )
+                def update(ip_address: :unset, friendly_name: :unset, cidr_prefix_length: :unset)
+                  context.update(
+                      ip_address: ip_address,
+                      friendly_name: friendly_name,
+                      cidr_prefix_length: cidr_prefix_length,
+                  )
                 end
 
                 ##

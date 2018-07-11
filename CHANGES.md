@@ -1,6 +1,18 @@
 twilio-ruby changelog
 =====================
 
+[2018-07-11] Version 5.10.7
+----------------------------
+**Api**
+- Add `cidr_prefix_length` param to SIP IpAddresses API
+
+**Studio**
+- Add new /Execution endpoints to begin Engagement -> Execution migration
+
+**Video**
+- [Rooms] Allow deletion of individual recordings from a room
+
+
 [2018-07-05] Version 5.10.6
 ----------------------------
 **Library**
