@@ -4,7 +4,7 @@ module Twilio
   module Security
     class RequestValidator
       ##
-      # Initialize a Request Validator. quth_token will either be grabbed from the global Twilio object or you can
+      # Initialize a Request Validator. auth_token will either be grabbed from the global Twilio object or you can
       # pass it in here.
       #
       # @param [String] auth_token Your account auth token, used to sign requests
