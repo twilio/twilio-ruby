@@ -30,84 +30,57 @@ describe Twilio::Security::RequestValidator do
   end
 
   describe 'validations' do
-    let(:token) { '2bd9e9638872de601313dc77410d3b23' }
+    let(:token) { '12345' }
 
     let(:validator) { Twilio::Security::RequestValidator.new token }
 
-    let(:voice_url) { 'http://twiliotests.heroku.com/validate/voice' }
+    let(:url) { 'https://mycompany.com/myapp.php?foo=1&bar=2' }
 
-    let(:sms_url) { 'http://twiliotests.heroku.com/validate/sms' }
+    let(:default_signature) { 'RSOYDt4T1cUTdK1PDd93/VVr8B8=' }
 
-    let(:voice_params) do
+    let(:body) { '{"property": "value", "boolean": true}' }
+
+    let(:body_hash) { 'Ch/3Y02as7ldtcmi3+lBbkFQKyg6gMfPGWMmMvluZiA=' }
+
+    let(:body_hash_encoded) { body_hash.gsub('+', '%2B').gsub('=', '%3D') }
+
+    let(:params) do
       {
-        'ToState' => 'California',
-        'CalledState' => 'California',
-        'Direction' => 'inbound',
-        'FromState' => 'CA',
-        'AccountSid' => 'ACba8bc05eacf94afdae398e642c9cc32d',
-        'Caller' => '+14153595711',
-        'CallerZip' => '94108',
-        'CallerCountry' => 'US',
-        'From' => '+14153595711',
-        'FromCity' => 'SAN FRANCISCO',
-        'CallerCity' => 'SAN FRANCISCO',
-        'To' => '+14157669926',
-        'FromZip' => '94108',
-        'FromCountry' => 'US',
-        'ToCity' => '',
-        'CallStatus' => 'ringing',
-        'CalledCity' => '',
-        'CallerState' => 'CA',
-        'CalledZip' => '',
-        'ToZip' => '',
-        'ToCountry' => 'US',
-        'CallSid' => 'CA136d09cd59a3c0ec8dbff44da5c03f31',
-        'CalledCountry' => 'US',
-        'Called' => '+14157669926',
-        'ApiVersion' => '2010-04-01',
-        'ApplicationSid' => 'AP44efecad51364e80b133bb7c07eb8204'
+        'From' => '+14158675309',
+        'To' => '+18005551212',
+        'CallSid' => 'CA1234567890ABCDE',
+        'Caller' => '+14158675309',
+        'Digits' => '1234'
       }
     end
 
-    let(:sms_params) do
-      {
-        'ToState' => 'CA',
-        'FromState' => 'CA',
-        'AccountSid' => 'ACba8bc05eacf94afdae398e642c9cc32d',
-        'SmsMessageSid' => 'SM2003cbd5e6a3701999aa3e5f20ff2787',
-        'Body' => 'Orly',
-        'From' => '+14159354345',
-        'FromCity' => 'SAN FRANCISCO',
-        'SmsStatus' => 'received',
-        'FromZip' => '94107',
-        'FromCountry' => 'US',
-        'To' => '+14158141819',
-        'ToCity' => 'SAN FRANCISCO',
-        'ToZip' => '94105',
-        'ToCountry' => 'US',
-        'ApiVersion' => '2010-04-01',
-        'SmsSid' => 'SM2003cbd5e6a3701999aa3e5f20ff2787'
-      }
+    it 'should build a correct signature' do
+      expect(validator.build_signature_for(url, params)).to eq(default_signature)
+    end
+    it 'should validate an authentic Twilio request' do
+      expect(validator.validate(url, params, default_signature)).to eq(true)
     end
 
-    it 'should validate an authentic Twilio Voice request' do
-      signature = 'oVb2kXoVy8GEfwBDjR8bk/ZZ6eA='
-      expect(validator.validate(voice_url, voice_params, signature)).to eq(true)
+    it 'should not validate a request with wrong signature' do
+      expect(validator.validate(url, params, 'fake_signature')).to eq(false)
     end
 
-    it 'should validate an authentic Twilio SMS request' do
-      signature = 'mxeiv65lEe0b8L6LdVw2jgJi8yw='
-      expect(validator.validate(sms_url, sms_params, signature)).to eq(true)
+    it 'should hash body correctly' do
+      expect(validator.build_hash_for(body)).to eq(body_hash)
     end
 
-    it 'should not validate a Twilio Voice request with wrong signature' do
-      signature = 'foo'
-      expect(validator.validate(voice_url, voice_params, signature)).to eq(false)
+    it 'should validate requests with body correctly' do
+      url_with_hash = "#{url}&bodySHA256=#{body_hash_encoded}"
+      expect(validator.validate(url_with_hash, body, 'afcFvPLPYT8mg/JyIVkdnqQKa2s=')).to eq(true)
     end
 
-    it 'should not validate a Twilio SMS request with wrong signature' do
-      signature = 'bar'
-      expect(validator.validate(sms_url, sms_params, signature)).to eq(false)
+    it 'should validate with no other GET parameters' do
+      url_with_hash = "https://mycompany.com/myapp.php?bodySHA256=#{body_hash_encoded}"
+      expect(validator.validate(url_with_hash, body, 'DXnNFCj8DJ/hZmiSg4UzaDHw5Og=')).to eq(true)
+    end
+
+    it 'should fail validation with body but no signature' do
+      expect(validator.validate(url, body, default_signature)).to eq(false)
     end
   end
 end
