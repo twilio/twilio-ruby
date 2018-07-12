@@ -178,11 +178,10 @@ This will print the following (except for the whitespace):
 This library supports and is [tested against][travis] the following Ruby
 implementations:
 
+- Ruby 2.5.0
 - Ruby 2.4.0
 - Ruby 2.3.0
 - Ruby 2.2.0
-- Ruby 2.1.0
-- Ruby 2.0.0
 
 [capability]: https://github.com/twilio/twilio-ruby/wiki/JWT-Tokens
 [examples]: https://github.com/twilio/twilio-ruby/blob/master/examples
