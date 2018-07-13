@@ -123,7 +123,7 @@ describe Twilio::TwiML::VoiceResponse do
         </Response>
       XML
       response = Twilio::TwiML::VoiceResponse.new
-      response.say ''
+      response.say(message: '')
 
       doc = parse(response)
       expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
@@ -136,7 +136,7 @@ describe Twilio::TwiML::VoiceResponse do
         </Response>
       XML
       response = Twilio::TwiML::VoiceResponse.new
-      response.say 'Hello World'
+      response.say(message: 'Hello World')
 
       doc = parse(response)
       expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
@@ -149,7 +149,7 @@ describe Twilio::TwiML::VoiceResponse do
         </Response>
       XML
       response = Twilio::TwiML::VoiceResponse.new
-      response.say 'nécessaire et d\'autres'
+      response.say(message: 'nécessaire et d\'autres')
 
       doc = parse(response)
       expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
@@ -162,7 +162,7 @@ describe Twilio::TwiML::VoiceResponse do
         </Response>
       XML
       response = Twilio::TwiML::VoiceResponse.new
-      response.say 'Hello Monkey', loop: 3
+      response.say(message: 'Hello Monkey', loop: 3)
 
       doc = parse(response)
       expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
@@ -175,7 +175,7 @@ describe Twilio::TwiML::VoiceResponse do
         </Response>
       XML
       response = Twilio::TwiML::VoiceResponse.new
-      response.say 'Hello Monkey', language: 'en-gb'
+      response.say(message: 'Hello Monkey', language: 'en-gb')
 
       doc = parse(response)
       expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
@@ -188,7 +188,7 @@ describe Twilio::TwiML::VoiceResponse do
         </Response>
       XML
       response = Twilio::TwiML::VoiceResponse.new
-      response.say 'Hello Monkey', loop: 3, voice: 'man', language: 'fr'
+      response.say(message: 'Hello Monkey', loop: 3, voice: 'man', language: 'fr')
 
       doc = parse(response)
       expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
@@ -775,7 +775,7 @@ describe Twilio::TwiML::VoiceResponse do
         </Response>
       XML
       gather_elem = Twilio::TwiML::Gather.new
-      gather_elem.say 'Hello'
+      gather_elem.say(message: 'Hello')
 
       response = Twilio::TwiML::VoiceResponse.new
       response.append(gather_elem)
@@ -794,7 +794,7 @@ describe Twilio::TwiML::VoiceResponse do
         </Response>
       XML
       gather = Twilio::TwiML::Gather.new
-      gather.say 'Hey'
+      gather.say(message: 'Hey')
       gather.play(url: 'hey.mp3')
       gather.pause
 
