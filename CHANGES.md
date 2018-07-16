@@ -1,6 +1,17 @@
 twilio-ruby changelog
 =====================
 
+[2018-07-16] Version 5.11.0
+----------------------------
+**Library**
+- PR #421: Fix TwiML Say verb spec. Thanks to @HuipengRen!
+- PR #419: Add a request body validator. Thanks to @cjcodes!
+- PR #418: Remove support for ruby 2.0 and 2.1, adds 2.5. Thanks to @cjcodes!
+
+**Twiml**
+- Add support for SSML on Say verb, the message body is changed to be optional **(breaking change)**
+
+
 [2018-07-11] Version 5.10.7
 ----------------------------
 **Api**

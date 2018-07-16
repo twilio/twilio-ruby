@@ -27,12 +27,22 @@ module Twilio
           # Lists EventInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] actor_sid The actor_sid
-          # @param [String] event_type The event_type
-          # @param [String] resource_sid The resource_sid
-          # @param [String] source_ip_address The source_ip_address
-          # @param [Time] start_date The start_date
-          # @param [Time] end_date The end_date
+          # @param [String] actor_sid Only include Events initiated by this Actor. Useful
+          #   for auditing actions taken by specific users or API credentials.
+          # @param [String] event_type Only include Events of this EventType.
+          # @param [String] resource_sid Only include Events referring to this resource.
+          #   Useful for discovering the history of a specific resource.
+          # @param [String] source_ip_address Only include Events that originated from this
+          #   IP address. Useful for tracking suspicious activity originating from the API or
+          #   the Twilio Console.
+          # @param [Time] start_date Only show events on or after this date. Useful in
+          #   combination with `EndDate` to define a date-range of events. Input is a [UTC ISO
+          #   8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day is
+          #   ignored by the filter.
+          # @param [Time] end_date Only show events on or before this date. Useful in
+          #   combination with `StartDate` to define a date-range of events. Input is a [UTC
+          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
+          #   is ignored by the filter.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -57,12 +67,22 @@ module Twilio
           # Streams EventInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] actor_sid The actor_sid
-          # @param [String] event_type The event_type
-          # @param [String] resource_sid The resource_sid
-          # @param [String] source_ip_address The source_ip_address
-          # @param [Time] start_date The start_date
-          # @param [Time] end_date The end_date
+          # @param [String] actor_sid Only include Events initiated by this Actor. Useful
+          #   for auditing actions taken by specific users or API credentials.
+          # @param [String] event_type Only include Events of this EventType.
+          # @param [String] resource_sid Only include Events referring to this resource.
+          #   Useful for discovering the history of a specific resource.
+          # @param [String] source_ip_address Only include Events that originated from this
+          #   IP address. Useful for tracking suspicious activity originating from the API or
+          #   the Twilio Console.
+          # @param [Time] start_date Only show events on or after this date. Useful in
+          #   combination with `EndDate` to define a date-range of events. Input is a [UTC ISO
+          #   8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day is
+          #   ignored by the filter.
+          # @param [Time] end_date Only show events on or before this date. Useful in
+          #   combination with `StartDate` to define a date-range of events. Input is a [UTC
+          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
+          #   is ignored by the filter.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -103,12 +123,22 @@ module Twilio
           ##
           # Retrieve a single page of EventInstance records from the API.
           # Request is executed immediately.
-          # @param [String] actor_sid The actor_sid
-          # @param [String] event_type The event_type
-          # @param [String] resource_sid The resource_sid
-          # @param [String] source_ip_address The source_ip_address
-          # @param [Time] start_date The start_date
-          # @param [Time] end_date The end_date
+          # @param [String] actor_sid Only include Events initiated by this Actor. Useful
+          #   for auditing actions taken by specific users or API credentials.
+          # @param [String] event_type Only include Events of this EventType.
+          # @param [String] resource_sid Only include Events referring to this resource.
+          #   Useful for discovering the history of a specific resource.
+          # @param [String] source_ip_address Only include Events that originated from this
+          #   IP address. Useful for tracking suspicious activity originating from the API or
+          #   the Twilio Console.
+          # @param [Time] start_date Only show events on or after this date. Useful in
+          #   combination with `EndDate` to define a date-range of events. Input is a [UTC ISO
+          #   8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day is
+          #   ignored by the filter.
+          # @param [Time] end_date Only show events on or before this date. Useful in
+          #   combination with `StartDate` to define a date-range of events. Input is a [UTC
+          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
+          #   is ignored by the filter.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -186,7 +216,7 @@ module Twilio
           ##
           # Initialize the EventContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this event.
           # @return [EventContext] EventContext
           def initialize(version, sid)
             super(version)
@@ -224,7 +254,7 @@ module Twilio
           # Initialize the EventInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this event.
           # @return [EventInstance] EventInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -264,19 +294,19 @@ module Twilio
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] A 34 character string identifying the Account for which this Event was recorded.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The actor_sid
+          # @return [String] If available, a 34 character string identifying the actor that caused this event. May be null.
           def actor_sid
             @properties['actor_sid']
           end
 
           ##
-          # @return [String] The actor_type
+          # @return [String] The type of actor that caused this event
           def actor_type
             @properties['actor_type']
           end
@@ -288,31 +318,31 @@ module Twilio
           end
 
           ##
-          # @return [Hash] The event_data
+          # @return [Hash] A freeform json object encoding additional data about the event
           def event_data
             @properties['event_data']
           end
 
           ##
-          # @return [Time] The event_date
+          # @return [Time] The date-time the event was recorded
           def event_date
             @properties['event_date']
           end
 
           ##
-          # @return [String] The event_type
+          # @return [String] The event's type, as a string.
           def event_type
             @properties['event_type']
           end
 
           ##
-          # @return [String] The resource_sid
+          # @return [String] A 34 character string identifying the resource that was affected.
           def resource_sid
             @properties['resource_sid']
           end
 
           ##
-          # @return [String] The resource_type
+          # @return [String] The type of resource that was affected
           def resource_type
             @properties['resource_type']
           end
@@ -330,7 +360,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The source_ip_address
+          # @return [String] The IP address of the source
           def source_ip_address
             @properties['source_ip_address']
           end

@@ -41,7 +41,7 @@ describe 'IpAddress' do
                   "date_updated": "Mon, 20 Jul 2015 17:27:10 +0000",
                   "friendly_name": "friendly_name",
                   "ip_access_control_list_sid": "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                  "ip_address": "ip_address",
+                  "ip_address": "192.168.1.1",
                   "cidr_prefix_length": 32,
                   "sid": "IPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/IpAccessControlLists/ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAddresses/IPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
@@ -120,7 +120,7 @@ describe 'IpAddress' do
           "date_updated": "Mon, 20 Jul 2015 17:27:10 +0000",
           "friendly_name": "friendly_name",
           "ip_access_control_list_sid": "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "ip_address": "ip_address",
+          "ip_address": "192.168.1.1",
           "cidr_prefix_length": 32,
           "sid": "IPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/IpAccessControlLists/ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAddresses/IPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
@@ -164,7 +164,7 @@ describe 'IpAddress' do
           "date_updated": "Mon, 20 Jul 2015 17:27:10 +0000",
           "friendly_name": "friendly_name",
           "ip_access_control_list_sid": "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "ip_address": "ip_address",
+          "ip_address": "192.168.1.1",
           "cidr_prefix_length": 32,
           "sid": "IPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/IpAccessControlLists/ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAddresses/IPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
@@ -208,7 +208,7 @@ describe 'IpAddress' do
           "date_updated": "Mon, 20 Jul 2015 17:27:10 +0000",
           "friendly_name": "friendly_name",
           "ip_access_control_list_sid": "ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "ip_address": "ip_address",
+          "ip_address": "192.168.1.1",
           "cidr_prefix_length": 32,
           "sid": "IPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/IpAccessControlLists/ALaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/IpAddresses/IPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"

@@ -42,18 +42,14 @@ module Twilio
               #   `trim-silence` will trim the silence from the beginning and end of the
               #   recording. `do-not-trim` will not trim the silence. Defaults to `do-not-trim`
               # @param [String] recording_channels The recording_channels
-              # @param [Boolean] play_beep Possible values : true or false.  true will play a
-              #   double beep before the recording is paused or stopped or a single beep after the
-              #   recording is resumed. Defaults to false
               # @return [RecordingInstance] Newly created RecordingInstance
-              def create(recording_status_callback_event: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, trim: :unset, recording_channels: :unset, play_beep: :unset)
+              def create(recording_status_callback_event: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, trim: :unset, recording_channels: :unset)
                 data = Twilio::Values.of({
                     'RecordingStatusCallbackEvent' => Twilio.serialize_list(recording_status_callback_event) { |e| e },
                     'RecordingStatusCallback' => recording_status_callback,
                     'RecordingStatusCallbackMethod' => recording_status_callback_method,
                     'Trim' => trim,
                     'RecordingChannels' => recording_channels,
-                    'PlayBeep' => play_beep,
                 })
 
                 payload = @version.create(

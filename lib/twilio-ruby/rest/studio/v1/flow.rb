@@ -151,7 +151,7 @@ module Twilio
           ##
           # Initialize the FlowContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this Flow.
           # @return [FlowContext] FlowContext
           def initialize(version, sid)
             super(version)
@@ -238,7 +238,7 @@ module Twilio
           # Initialize the FlowInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this Flow.
           # @return [FlowInstance] FlowInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -273,55 +273,55 @@ module Twilio
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A string that uniquely identifies this Flow.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] Account Sid.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The friendly_name
+          # @return [String] A human readable description of this resource.
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [flow.Status] The status
+          # @return [flow.Status] The Status of this Flow
           def status
             @properties['status']
           end
 
           ##
-          # @return [String] The version
+          # @return [String] The latest version number of this Flow's definition.
           def version
             @properties['version']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The date this Flow was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The date this Flow was updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The URL of this resource.
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] Nested resource URLs.
           def links
             @properties['links']
           end

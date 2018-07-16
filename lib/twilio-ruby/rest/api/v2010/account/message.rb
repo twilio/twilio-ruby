@@ -30,33 +30,37 @@ module Twilio
             # Retrieve a single page of MessageInstance records from the API.
             # Request is executed immediately.
             # @param [String] to The destination phone number for SMS/MMS or a [Channel user
-            #   address](https://www.twilio.com/docs/api/channels#channel-addresses) for other
+            #   address](https://www.twilio.com/docs/sms/channels#channel-addresses) for other
             #   3rd party channels. Destination phone numbers should be formatted with a '+' and
             #   country code e.g., +16175551212
             #   ([E.164](https://www.twilio.com/docs/glossary/what-e164) format).
             # @param [String] status_callback A URL where Twilio will POST each time your
             #   message status changes to one of the following: `queued`, `failed`, `sent`,
-            #   `delivered`, or `undelivered`. Twilio will POST the `MessageSid` along with the
-            #   other [standard request
-            #   parameters](https://www.twilio.com/docs/api/twiml/sms/twilio_request#request-parameters) as well as `MessageStatus` and `ErrorCode`. If this parameter passed in addition to a `MessagingServiceSid`, Twilio will override the Status Callback URL of the [Messaging Service](https://www.twilio.com/docs/api/messaging/send-messages#messaging-services). URLs must contain a valid hostname (underscores are not allowed).
+            #   `delivered`, or `undelivered`. Twilio will POST the `MessageSid`,
+            #   `MessageStatus`, and `ErrorCode` along with the other [standard request
+            #   parameters](https://www.twilio.com/docs/sms/twiml#request-parameters). If you
+            #   include this parameter in addition to a `MessagingServiceSid`, Twilio will
+            #   override the Status Callback URL of the [Messaging
+            #   Service](https://www.twilio.com/docs/sms/services/api). URLs must contain a
+            #   valid hostname – underscores are not allowed.
             # @param [String] application_sid Twilio will POST `MessageSid` as well as
             #   `MessageStatus=sent` or `MessageStatus=failed` to the URL in the
             #   `MessageStatusCallback` property of this
-            #   [Application](https://www.twilio.com/docs/api/rest/applications). If the
-            #   `StatusCallback` parameter above is also passed, the Application's
+            #   [application](https://www.twilio.com/docs/usage/api/applications). If the
+            #   `StatusCallback` parameter is also passed, the application's
             #   `MessageStatusCallback` parameter will take precedence.
             # @param [String] max_price The total maximum price up to the fourth decimal
-            #   (0.0001) in US dollars acceptable for the message to be delivered. All messages
-            #   regardless of the price point will be queued for delivery. A POST request will
+            #   (0.0001) in US dollars acceptable for the message to be delivered. *All messages
+            #   will be queued for delivery regardless of the price point.* A POST request will
             #   later be made to your Status Callback URL with a status change of 'Sent' or
-            #   'Failed'. When the price of the message is above this value the message will
-            #   fail and not be sent. When MaxPrice is not set, all prices for the message is
-            #   accepted.
+            #   'Failed'. When the price of the message is greater than this value, the message
+            #   will fail and not be sent. When `MaxPrice` is not set, all prices for the
+            #   message are accepted.
             # @param [Boolean] provide_feedback Set this value to `true` if you are sending
             #   messages that have a trackable user action and you intend to confirm delivery of
             #   the message using the [Message Feedback
-            #   API](https://www.twilio.com/docs/api/messaging/message-feedback). This parameter
-            #   is set to `false` by default.
+            #   API](https://www.twilio.com/docs/sms/api/message-feedback). This parameter is
+            #   `false` by default.
             # @param [String] validity_period The number of seconds that the message can
             #   remain in a Twilio queue. After exceeding this time limit, the message will fail
             #   and a POST request will later be made to your Status Callback URL. Valid values
@@ -71,26 +75,26 @@ module Twilio
             # @param [Boolean] smart_encoded The smart_encoded
             # @param [String] from A Twilio phone number (in
             #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format),  [alphanumeric
-            #   sender
-            #   ID](https://www.twilio.com/docs/api/messaging/send-messages#alpha-sender-id) or
-            #   a [Channel Endpoint
-            #   address](https://www.twilio.com/docs/api/channels#channel-addresses) enabled for
+            #   sender ID](https://www.twilio.com/docs/sms/send-messages#alphanumeric-sender-id)
+            #   or a [Channel Endpoint
+            #   address](https://www.twilio.com/docs/sms/channels#channel-addresses) enabled for
             #   the type of message you wish to send. Phone numbers or [short
             #   codes](https://www.twilio.com/docs/sms/api/short-codes) purchased from Twilio
             #   work here. You cannot (for example) spoof messages from your own cell phone
-            #   number. *Should not be passed if you are using MessagingServiceSid.*
-            # @param [String] messaging_service_sid The 34 character unique id of the
+            #   number. *Should not be passed if you are using `MessagingServiceSid`.*
+            # @param [String] messaging_service_sid The 34-character unique ID of the
             #   [Messaging
-            #   Service](https://www.twilio.com/docs/api/messaging/send-messages#messaging-services) you want to associate with this Message. Set this parameter to use the Messaging Service Settings and [Copilot Features](https://www.twilio.com/docs/api/messaging/send-messages-copilot) you have configured. When only this parameter is set, Twilio will use your enabled Copilot Features to select the From phone number for delivery. *Should not be passed if you are using From.*
+            #   Service](https://www.twilio.com/docs/api/messaging/send-messages#messaging-services) you want to associate with this Message. Set this parameter to use the Messaging Service Settings and [Copilot Features](https://www.twilio.com/docs/sms/services) you have configured. When only this parameter is set, Twilio will use your enabled Copilot Features to select the `From` phone number for delivery. *Should not be passed if you are using `From`.*
             # @param [String] body The text of the message you want to send, limited to 1600
             #   characters.
-            # @param [String] media_url The URL of the media you wish to send out with the
+            # @param [String] media_url The URL of the media you wish to send with the
             #   message. `gif` , `png` and `jpeg` content is currently supported and will be
             #   formatted correctly on the recipient's device. [Other
-            #   types](https://www.twilio.com/docs/api/messaging/accepted-mime-types) are also
-            #   accepted by the API. The media size limit is 5MB. If you wish to send more than
-            #   one image in the message body, please provide multiple MediaUrls values in the
-            #   POST request. You may include up to 10 MediaUrls per message.
+            #   types](https://www.twilio.com/docs/sms/accepted-mime-types) are also accepted by
+            #   the API. The media size limit is 5MB. If you wish to send more than one image in
+            #   the message body, please provide multiple `MediaUrl` values in the POST request.
+            #   You may include up to 10 MediaUrls per message. *Sending images via SMS is
+            #   currently only possible in the US and Canada*
             # @return [MessageInstance] Newly created MessageInstance
             def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, max_rate: :unset, force_delivery: :unset, provider_sid: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
               data = Twilio::Values.of({

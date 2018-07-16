@@ -34,7 +34,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The sid
+        # @param [String] sid A 34 character string that uniquely identifies this event.
         # @return [Twilio::REST::Monitor::V1::EventContext] if sid was passed.
         # @return [Twilio::REST::Monitor::V1::EventList]
         def events(sid=:unset)
