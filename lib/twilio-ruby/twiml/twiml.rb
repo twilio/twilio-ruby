@@ -26,13 +26,19 @@ module Twilio
         attr_accessor :name
 
         def initialize(**keyword_args)
+          @overrides = {
+              'aliasAttribute': 'alias',
+              'xmlLang': 'xml:lang',
+              'interpretAs': 'interpret-as',
+          }
           @name = self.class.name.split('::').last
           @value = nil
           @verbs = []
           @attrs = {}
 
           keyword_args.each do |key, val|
-            @attrs[TwiML.to_lower_camel_case(key)] = val unless val.nil?
+            key = @overrides.fetch(key, TwiML.to_lower_camel_case(key))
+            @attrs[key] = val unless val.nil?
           end
         end
 
