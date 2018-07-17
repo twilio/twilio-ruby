@@ -27,9 +27,9 @@ module Twilio
 
         def initialize(**keyword_args)
           @overrides = {
-              'aliasAttribute': 'alias',
-              'xmlLang': 'xml:lang',
-              'interpretAs': 'interpret-as',
+              aliasAttribute: 'alias',
+              xmlLang: 'xml:lang',
+              interpretAs: 'interpret-as',
           }
           @name = self.class.name.split('::').last
           @value = nil
@@ -37,8 +37,8 @@ module Twilio
           @attrs = {}
 
           keyword_args.each do |key, val|
-            key = @overrides.fetch(key, TwiML.to_lower_camel_case(key))
-            @attrs[key] = val unless val.nil?
+            corrected_key = @overrides.fetch(key, TwiML.to_lower_camel_case(key))
+            @attrs[corrected_key] = val unless val.nil?
           end
         end
 
