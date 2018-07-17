@@ -65,7 +65,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The sid
+        # @param [String] sid The Room Sid or name that uniquely identifies this resource.
         # @return [Twilio::REST::Video::V1::RoomContext] if sid was passed.
         # @return [Twilio::REST::Video::V1::RoomList]
         def rooms(sid=:unset)

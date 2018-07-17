@@ -306,7 +306,7 @@ module Twilio
     class SsmlW < TwiML
       def initialize(words, **keyword_args)
         super(**keyword_args)
-        @name = 'W'
+        @name = 'w'
         @value = words
         yield(self) if block_given?
       end
@@ -317,7 +317,7 @@ module Twilio
     class SsmlSub < TwiML
       def initialize(words, **keyword_args)
         super(**keyword_args)
-        @name = 'Sub'
+        @name = 'sub'
         @value = words
         yield(self) if block_given?
       end
@@ -328,7 +328,7 @@ module Twilio
     class SsmlSayAs < TwiML
       def initialize(words, **keyword_args)
         super(**keyword_args)
-        @name = 'Say-As'
+        @name = 'say-as'
         @value = words
         yield(self) if block_given?
       end
@@ -339,7 +339,7 @@ module Twilio
     class SsmlS < TwiML
       def initialize(words, **keyword_args)
         super(**keyword_args)
-        @name = 'S'
+        @name = 's'
         @value = words
         yield(self) if block_given?
       end
@@ -350,7 +350,7 @@ module Twilio
     class SsmlProsody < TwiML
       def initialize(words, **keyword_args)
         super(**keyword_args)
-        @name = 'Prosody'
+        @name = 'prosody'
         @value = words
         yield(self) if block_given?
       end
@@ -361,7 +361,7 @@ module Twilio
     class SsmlPhoneme < TwiML
       def initialize(words, **keyword_args)
         super(**keyword_args)
-        @name = 'Phoneme'
+        @name = 'phoneme'
         @value = words
         yield(self) if block_given?
       end
@@ -372,7 +372,7 @@ module Twilio
     class SsmlP < TwiML
       def initialize(words, **keyword_args)
         super(**keyword_args)
-        @name = 'P'
+        @name = 'p'
         @value = words
         yield(self) if block_given?
       end
@@ -383,7 +383,7 @@ module Twilio
     class SsmlEmphasis < TwiML
       def initialize(words, **keyword_args)
         super(**keyword_args)
-        @name = 'Emphasis'
+        @name = 'emphasis'
         @value = words
         yield(self) if block_given?
       end
@@ -394,7 +394,7 @@ module Twilio
     class SsmlBreak < TwiML
       def initialize(**keyword_args)
         super(**keyword_args)
-        @name = 'Break'
+        @name = 'break'
 
         yield(self) if block_given?
       end

@@ -28,8 +28,8 @@ module Twilio
           # Request is executed immediately.
           # @param [Boolean] enable_turn Use Twilio Network Traversal for TURN service.
           #   Defaults to true. Only applicable to Rooms with type `peer-to-peer`.
-          # @param [room.RoomType] type Type of room, either `peer-to-peer` or `group`. Will
-          #   be `group` by default.
+          # @param [room.RoomType] type Type of room, either `peer-to-peer`, `group-small`
+          #   or `group`. Will be `group` by default.
           # @param [String] unique_name Name of the Room.  This is unique for `in-progress`
           #   rooms. If not provided, Room name will be set to the Room Sid.
           # @param [String] status_callback A URL that Twilio sends asynchronous webhook
@@ -227,7 +227,7 @@ module Twilio
           ##
           # Initialize the RoomContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid The Room Sid or name that uniquely identifies this resource.
           # @return [RoomContext] RoomContext
           def initialize(version, sid)
             super(version)
@@ -321,7 +321,7 @@ module Twilio
           # Initialize the RoomInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid The Room Sid or name that uniquely identifies this resource.
           # @return [RoomInstance] RoomInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -431,7 +431,7 @@ module Twilio
           end
 
           ##
-          # @return [room.RoomType] Type of Room, either peer-to-peer or group.
+          # @return [room.RoomType] Type of Room, either peer-to-peer, group-small or group.
           def type
             @properties['type']
           end

@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+[2018-07-17] Version 5.11.1
+----------------------------
+**Library**
+- PR #422: Add attribute overrides from generated code. Thanks to @cjcodes!
+
+**Video**
+- Add `group-small` room type
+
+
 [2018-07-16] Version 5.11.0
 ----------------------------
 **Library**
