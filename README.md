@@ -151,7 +151,7 @@ You can construct a TwiML response like this:
 require 'twilio-ruby'
 
 response = Twilio::TwiML::VoiceResponse.new do |r|
-  r.say('hello there', voice: 'alice')
+  r.say(message: 'hello there', voice: 'alice')
   r.dial(caller_id: '+14159992222') do |d|
     d.client 'jenny'
   end
