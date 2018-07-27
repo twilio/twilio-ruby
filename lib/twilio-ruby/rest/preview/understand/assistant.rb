@@ -116,7 +116,6 @@ module Twilio
           #   logged for 30 days further training. If false, no queries will be stored, if
           #   true, queries will be stored for 30 days and deleted thereafter. Defaults to
           #   true if no value is provided.
-          # @param [String] ttl The ttl
           # @param [String] unique_name A user-provided string that uniquely identifies this
           #   resource as an alternative to the sid. Unique up to 64 characters long.
           # @param [String] response_url The webhook URL called to fetch the response to an
@@ -124,11 +123,10 @@ module Twilio
           # @param [String] callback_url The callback_url
           # @param [String] callback_events The callback_events
           # @return [AssistantInstance] Newly created AssistantInstance
-          def create(friendly_name: :unset, log_queries: :unset, ttl: :unset, unique_name: :unset, response_url: :unset, callback_url: :unset, callback_events: :unset)
+          def create(friendly_name: :unset, log_queries: :unset, unique_name: :unset, response_url: :unset, callback_url: :unset, callback_events: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'LogQueries' => log_queries,
-                'Ttl' => ttl,
                 'UniqueName' => unique_name,
                 'ResponseUrl' => response_url,
                 'CallbackUrl' => callback_url,
@@ -227,7 +225,6 @@ module Twilio
           #   logged for 30 days further training. If false, no queries will be stored, if
           #   true, queries will be stored for 30 days and deleted thereafter. Defaults to
           #   true if no value is provided.
-          # @param [String] ttl The ttl
           # @param [String] unique_name A user-provided string that uniquely identifies this
           #   resource as an alternative to the sid. Unique up to 64 characters long.
           # @param [String] response_url The webhook URL called to fetch the response to an
@@ -235,11 +232,10 @@ module Twilio
           # @param [String] callback_url The callback_url
           # @param [String] callback_events The callback_events
           # @return [AssistantInstance] Updated AssistantInstance
-          def update(friendly_name: :unset, log_queries: :unset, ttl: :unset, unique_name: :unset, response_url: :unset, callback_url: :unset, callback_events: :unset)
+          def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, response_url: :unset, callback_url: :unset, callback_events: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'LogQueries' => log_queries,
-                'Ttl' => ttl,
                 'UniqueName' => unique_name,
                 'ResponseUrl' => response_url,
                 'CallbackUrl' => callback_url,
@@ -364,7 +360,6 @@ module Twilio
                 'links' => payload['links'],
                 'log_queries' => payload['log_queries'],
                 'sid' => payload['sid'],
-                'ttl' => payload['ttl'].to_i,
                 'unique_name' => payload['unique_name'],
                 'url' => payload['url'],
                 'response_url' => payload['response_url'],
@@ -437,12 +432,6 @@ module Twilio
           end
 
           ##
-          # @return [String] The ttl
-          def ttl
-            @properties['ttl']
-          end
-
-          ##
           # @return [String] A user-provided string that uniquely identifies this resource as an alternative to the sid. You can use the unique name in the URL path. Unique up to 64 characters long.
           def unique_name
             @properties['unique_name']
@@ -487,7 +476,6 @@ module Twilio
           #   logged for 30 days further training. If false, no queries will be stored, if
           #   true, queries will be stored for 30 days and deleted thereafter. Defaults to
           #   true if no value is provided.
-          # @param [String] ttl The ttl
           # @param [String] unique_name A user-provided string that uniquely identifies this
           #   resource as an alternative to the sid. Unique up to 64 characters long.
           # @param [String] response_url The webhook URL called to fetch the response to an
@@ -495,11 +483,10 @@ module Twilio
           # @param [String] callback_url The callback_url
           # @param [String] callback_events The callback_events
           # @return [AssistantInstance] Updated AssistantInstance
-          def update(friendly_name: :unset, log_queries: :unset, ttl: :unset, unique_name: :unset, response_url: :unset, callback_url: :unset, callback_events: :unset)
+          def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, response_url: :unset, callback_url: :unset, callback_events: :unset)
             context.update(
                 friendly_name: friendly_name,
                 log_queries: log_queries,
-                ttl: ttl,
                 unique_name: unique_name,
                 response_url: response_url,
                 callback_url: callback_url,

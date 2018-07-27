@@ -236,6 +236,15 @@ module Twilio
       end
 
       ##
+      # Create a new <Lang> element
+      # words:: Words to speak
+      # xml:lang:: Specify the language
+      # keyword_args:: additional attributes
+      def lang(words, xmlLang: nil, **keyword_args)
+        append(SsmlLang.new(words, xmlLang: xmlLang, **keyword_args))
+      end
+
+      ##
       # Create a new <P> element
       # words:: Words to speak
       # keyword_args:: additional attributes
@@ -373,6 +382,17 @@ module Twilio
       def initialize(words, **keyword_args)
         super(**keyword_args)
         @name = 'p'
+        @value = words
+        yield(self) if block_given?
+      end
+    end
+
+    ##
+    # Specifying Another Language for Specific Words in <Say>
+    class SsmlLang < TwiML
+      def initialize(words, **keyword_args)
+        super(**keyword_args)
+        @name = 'lang'
         @value = words
         yield(self) if block_given?
       end

@@ -42,7 +42,8 @@ describe 'ShortCode' do
               "sms_outbound": true,
               "voice_inbound": false
           },
-          "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "is_reserved": false
       }
       ]
     ))
@@ -124,7 +125,8 @@ describe 'ShortCode' do
                       "sms_outbound": true,
                       "voice_inbound": false
                   },
-                  "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "is_reserved": false
               }
           ]
       }
@@ -169,13 +171,58 @@ describe 'ShortCode' do
               "sms_outbound": true,
               "voice_inbound": false
           },
-          "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "is_reserved": false
       }
       ]
     ))
 
     actual = @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .short_codes('SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "can update" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .short_codes('SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {}
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://proxy.twilio.com/v1/Services/KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/ShortCodes/SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    ))).to eq(true)
+  end
+
+  it "receives update responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "sid": "SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "date_created": "2015-07-30T20:00:00Z",
+          "date_updated": "2015-07-30T20:00:00Z",
+          "short_code": "12345",
+          "iso_country": "US",
+          "capabilities": {
+              "sms_outbound": true,
+              "voice_inbound": false
+          },
+          "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ShortCodes/SCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "is_reserved": true
+      }
+      ]
+    ))
+
+    actual = @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .short_codes('SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end

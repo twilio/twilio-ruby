@@ -208,6 +208,7 @@ module Twilio
                 # Dependents
                 @ip_access_control_list_mappings = nil
                 @credential_list_mappings = nil
+                @auth = nil
               end
 
               ##
@@ -314,6 +315,22 @@ module Twilio
                 end
 
                 @credential_list_mappings
+              end
+
+              ##
+              # Access the auth
+              # @return [AuthTypesList]
+              # @return [AuthTypesContext]
+              def auth
+                unless @auth
+                  @auth = AuthTypesList.new(
+                      @version,
+                      account_sid: @solution[:account_sid],
+                      domain_sid: @solution[:sid],
+                  )
+                end
+
+                @auth
               end
 
               ##
@@ -528,6 +545,13 @@ module Twilio
               # @return [credential_list_mappings] credential_list_mappings
               def credential_list_mappings
                 context.credential_list_mappings
+              end
+
+              ##
+              # Access the auth
+              # @return [auth] auth
+              def auth
+                context.auth
               end
 
               ##

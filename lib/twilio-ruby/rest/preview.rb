@@ -135,6 +135,14 @@ module Twilio
       end
 
       ##
+      # @param [String] sid A 34 character string that uniquely identifies this Add-on.
+      # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnInstance] if sid was passed.
+      # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnList]
+      def available_add_ons(sid=:unset)
+        self.marketplace.available_add_ons(sid)
+      end
+
+      ##
       # @param [String] sid 34 character string that uniquely identifies the Add-on.
       #   This Sid can also be found in the Console on that specific Add-ons page as the
       #   'Available Add-on Sid'.
@@ -142,14 +150,6 @@ module Twilio
       # @return [Twilio::REST::Preview::Marketplace::InstalledAddOnList]
       def installed_add_ons(sid=:unset)
         self.marketplace.installed_add_ons(sid)
-      end
-
-      ##
-      # @param [String] sid A 34 character string that uniquely identifies this Add-on.
-      # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnInstance] if sid was passed.
-      # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnList]
-      def available_add_ons(sid=:unset)
-        self.marketplace.available_add_ons(sid)
       end
 
       ##

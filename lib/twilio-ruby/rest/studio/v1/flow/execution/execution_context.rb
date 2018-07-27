@@ -18,8 +18,8 @@ module Twilio
               ##
               # Initialize the ExecutionContextList
               # @param [Version] version Version that contains the resource
-              # @param [String] flow_sid The flow_sid
-              # @param [String] execution_sid The execution_sid
+              # @param [String] flow_sid The unique SID identifier of the Flow.
+              # @param [String] execution_sid The unique SID identifier of the Execution.
               # @return [ExecutionContextList] ExecutionContextList
               def initialize(version, flow_sid: nil, execution_sid: nil)
                 super(version)
@@ -77,8 +77,8 @@ module Twilio
               ##
               # Initialize the ExecutionContextContext
               # @param [Version] version Version that contains the resource
-              # @param [String] flow_sid The flow_sid
-              # @param [String] execution_sid The execution_sid
+              # @param [String] flow_sid The unique SID identifier of the Flow.
+              # @param [String] execution_sid The unique SID identifier of the Execution.
               # @return [ExecutionContextContext] ExecutionContextContext
               def initialize(version, flow_sid, execution_sid)
                 super(version)
@@ -123,8 +123,8 @@ module Twilio
               # Initialize the ExecutionContextInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] flow_sid The flow_sid
-              # @param [String] execution_sid The execution_sid
+              # @param [String] flow_sid The unique SID identifier of the Flow.
+              # @param [String] execution_sid The unique SID identifier of the Execution.
               # @return [ExecutionContextInstance] ExecutionContextInstance
               def initialize(version, payload, flow_sid: nil, execution_sid: nil)
                 super(version)
@@ -159,31 +159,31 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] Account Sid.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [Hash] The context
+              # @return [Hash] Flow state.
               def context
                 @properties['context']
               end
 
               ##
-              # @return [String] The flow_sid
+              # @return [String] Flow Sid.
               def flow_sid
                 @properties['flow_sid']
               end
 
               ##
-              # @return [String] The execution_sid
+              # @return [String] Execution Sid.
               def execution_sid
                 @properties['execution_sid']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] The URL of this resource.
               def url
                 @properties['url']
               end

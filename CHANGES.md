@@ -1,6 +1,24 @@
 twilio-ruby changelog
 =====================
 
+[2018-07-26] Version 5.11.2
+----------------------------
+**Library**
+- PR #424: Fix Say example in README.md. Thanks to @HuipengRen!
+
+**Api**
+- Add support for sip domains to map credential lists for registrations
+
+**Preview**
+- Remove `ttl` from Assistants
+
+**Proxy**
+- Enable setting a proxy number as reserved
+
+**Twiml**
+- Add support for SSML lang tag on Say verb
+
+
 [2018-07-17] Version 5.11.1
 ----------------------------
 **Library**

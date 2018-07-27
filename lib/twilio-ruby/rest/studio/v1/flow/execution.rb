@@ -17,7 +17,7 @@ module Twilio
             ##
             # Initialize the ExecutionList
             # @param [Version] version Version that contains the resource
-            # @param [String] flow_sid The flow_sid
+            # @param [String] flow_sid The unique SID identifier of the Flow.
             # @return [ExecutionList] ExecutionList
             def initialize(version, flow_sid: nil)
               super(version)
@@ -112,9 +112,17 @@ module Twilio
             ##
             # Retrieve a single page of ExecutionInstance records from the API.
             # Request is executed immediately.
-            # @param [String] to The to
-            # @param [String] from The from
-            # @param [Hash] parameters The parameters
+            # @param [String] to The Contact phone number to start a Studio Flow Execution,
+            #   available as variable {{contact.channel.address}}.
+            # @param [String] from The Twilio phone number to send messages or initiate calls
+            #   from during the Flow Execution, available as variable {{flow.channel.address}}
+            # @param [Hash] parameters JSON data that will be added to your flow's context and
+            #   can accessed as variables inside your flow. For example, if you pass in
+            #   Parameters={'name':'Zeke'} then inside a widget you can reference the variable
+            #   {{flow.data.name}} which will return the string 'Zeke'. Note: the JSON value
+            #   must explicitly be passed as a string, not as a hash object. Depending on your
+            #   particular HTTP library, you may need to add quotes or URL encode your JSON
+            #   string.
             # @return [ExecutionInstance] Newly created ExecutionInstance
             def create(to: nil, from: nil, parameters: :unset)
               data = Twilio::Values.of({
@@ -176,8 +184,8 @@ module Twilio
             ##
             # Initialize the ExecutionContext
             # @param [Version] version Version that contains the resource
-            # @param [String] flow_sid The flow_sid
-            # @param [String] sid The sid
+            # @param [String] flow_sid The unique SID identifier of the Flow.
+            # @param [String] sid The unique SID identifier of the Execution.
             # @return [ExecutionContext] ExecutionContext
             def initialize(version, flow_sid, sid)
               super(version)
@@ -258,8 +266,8 @@ module Twilio
             # Initialize the ExecutionInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] flow_sid The flow_sid
-            # @param [String] sid The sid
+            # @param [String] flow_sid The unique SID identifier of the Flow.
+            # @param [String] sid The unique SID identifier of the Execution.
             # @return [ExecutionInstance] ExecutionInstance
             def initialize(version, payload, flow_sid: nil, sid: nil)
               super(version)
@@ -296,67 +304,67 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] A string that uniquely identifies this Execution.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] Account Sid.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The flow_sid
+            # @return [String] Flow Sid.
             def flow_sid
               @properties['flow_sid']
             end
 
             ##
-            # @return [String] The contact_sid
+            # @return [String] Contact Sid.
             def contact_sid
               @properties['contact_sid']
             end
 
             ##
-            # @return [String] The contact_channel_address
+            # @return [String] The phone number, SIP address or Client identifier that triggered this Execution.
             def contact_channel_address
               @properties['contact_channel_address']
             end
 
             ##
-            # @return [Hash] The context
+            # @return [Hash] Flow state.
             def context
               @properties['context']
             end
 
             ##
-            # @return [execution.Status] The status
+            # @return [execution.Status] The Status of this Execution
             def status
               @properties['status']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date this Execution was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date this Execution was updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The URL of this resource.
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] Nested resource URLs.
             def links
               @properties['links']
             end

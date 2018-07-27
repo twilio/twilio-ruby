@@ -42,7 +42,8 @@ describe 'PhoneNumber' do
               "sms_outbound": true,
               "voice_inbound": false
           },
-          "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "is_reserved": false
       }
       ]
     ))
@@ -125,7 +126,8 @@ describe 'PhoneNumber' do
                       "sms_outbound": true,
                       "voice_inbound": false
                   },
-                  "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "is_reserved": false
               }
           ]
       }
@@ -171,13 +173,59 @@ describe 'PhoneNumber' do
               "sms_outbound": true,
               "voice_inbound": false
           },
-          "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "is_reserved": false
       }
       ]
     ))
 
     actual = @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .phone_numbers('PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "can update" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .phone_numbers('PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {}
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://proxy.twilio.com/v1/Services/KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/PhoneNumbers/PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    ))).to eq(true)
+  end
+
+  it "receives update responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "date_created": "2015-07-30T20:00:00Z",
+          "date_updated": "2015-07-30T20:00:00Z",
+          "phone_number": "12345",
+          "friendly_name": "Friendly Name",
+          "iso_country": "US",
+          "capabilities": {
+              "sms_outbound": true,
+              "voice_inbound": false
+          },
+          "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "is_reserved": true
+      }
+      ]
+    ))
+
+    actual = @client.proxy.v1.services('KSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .phone_numbers('PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end

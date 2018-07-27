@@ -206,6 +206,23 @@ module Twilio
             end
 
             ##
+            # Update the ShortCodeInstance
+            # @param [Boolean] is_reserved Whether or not the short code should be excluded
+            #   from being assigned to a participant using proxy pool logic
+            # @return [ShortCodeInstance] Updated ShortCodeInstance
+            def update(is_reserved: :unset)
+              data = Twilio::Values.of({'IsReserved' => is_reserved, })
+
+              payload = @version.update(
+                  'POST',
+                  @uri,
+                  data: data,
+              )
+
+              ShortCodeInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -238,6 +255,7 @@ module Twilio
                   'iso_country' => payload['iso_country'],
                   'capabilities' => payload['capabilities'],
                   'url' => payload['url'],
+                  'is_reserved' => payload['is_reserved'],
               }
 
               # Context
@@ -311,6 +329,12 @@ module Twilio
             end
 
             ##
+            # @return [Boolean] Reserve for manual assignment to participants only.
+            def is_reserved
+              @properties['is_reserved']
+            end
+
+            ##
             # Deletes the ShortCodeInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
@@ -322,6 +346,15 @@ module Twilio
             # @return [ShortCodeInstance] Fetched ShortCodeInstance
             def fetch
               context.fetch
+            end
+
+            ##
+            # Update the ShortCodeInstance
+            # @param [Boolean] is_reserved Whether or not the short code should be excluded
+            #   from being assigned to a participant using proxy pool logic
+            # @return [ShortCodeInstance] Updated ShortCodeInstance
+            def update(is_reserved: :unset)
+              context.update(is_reserved: is_reserved, )
             end
 
             ##

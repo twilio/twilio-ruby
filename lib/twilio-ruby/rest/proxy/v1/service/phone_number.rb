@@ -36,9 +36,11 @@ module Twilio
             # @param [String] phone_number A string that represents the Twilio Number you
             #   would like to assign to your Proxy Service. Provide number in
             #   [E.164](https://en.wikipedia.org/wiki/E.164) format (e.g. `+16175551212`).
+            # @param [Boolean] is_reserved Whether or not the number should be excluded from
+            #   being assigned to a participant using proxy pool logic
             # @return [PhoneNumberInstance] Newly created PhoneNumberInstance
-            def create(sid: :unset, phone_number: :unset)
-              data = Twilio::Values.of({'Sid' => sid, 'PhoneNumber' => phone_number, })
+            def create(sid: :unset, phone_number: :unset, is_reserved: :unset)
+              data = Twilio::Values.of({'Sid' => sid, 'PhoneNumber' => phone_number, 'IsReserved' => is_reserved, })
 
               payload = @version.create(
                   'POST',
@@ -216,6 +218,28 @@ module Twilio
             end
 
             ##
+            # Update the PhoneNumberInstance
+            # @param [Boolean] is_reserved Whether or not the number should be excluded from
+            #   being assigned to a participant using proxy pool logic
+            # @return [PhoneNumberInstance] Updated PhoneNumberInstance
+            def update(is_reserved: :unset)
+              data = Twilio::Values.of({'IsReserved' => is_reserved, })
+
+              payload = @version.update(
+                  'POST',
+                  @uri,
+                  data: data,
+              )
+
+              PhoneNumberInstance.new(
+                  @version,
+                  payload,
+                  service_sid: @solution[:service_sid],
+                  sid: @solution[:sid],
+              )
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -250,6 +274,7 @@ module Twilio
                   'iso_country' => payload['iso_country'],
                   'capabilities' => payload['capabilities'],
                   'url' => payload['url'],
+                  'is_reserved' => payload['is_reserved'],
               }
 
               # Context
@@ -329,6 +354,12 @@ module Twilio
             end
 
             ##
+            # @return [Boolean] Reserve for manual assignment to participants only.
+            def is_reserved
+              @properties['is_reserved']
+            end
+
+            ##
             # Deletes the PhoneNumberInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
@@ -340,6 +371,15 @@ module Twilio
             # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
             def fetch
               context.fetch
+            end
+
+            ##
+            # Update the PhoneNumberInstance
+            # @param [Boolean] is_reserved Whether or not the number should be excluded from
+            #   being assigned to a participant using proxy pool logic
+            # @return [PhoneNumberInstance] Updated PhoneNumberInstance
+            def update(is_reserved: :unset)
+              context.update(is_reserved: is_reserved, )
             end
 
             ##

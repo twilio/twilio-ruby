@@ -38,7 +38,8 @@ module Twilio
           # @param [String] status_callback_method HTTP method Twilio should use when
           #   requesting the above URL. Defaults to `POST`.
           # @param [String] max_participants Maximum number of Participants in the Room.
-          #   peer-to-peer rooms can have a maximum of 10 Participants.
+          #   Peer-to-peer rooms can have a maximum of 10 Participants. Small Group rooms can
+          #   have a max of 4 Participants. Group rooms can have a max of 50 Participants
           # @param [Boolean] record_participants_on_connect Start Participant recording when
           #   connected. ***This feature is not available in `peer-to-peer` rooms.***
           # @param [room.VideoCodec] video_codecs An array of video codecs supported when
