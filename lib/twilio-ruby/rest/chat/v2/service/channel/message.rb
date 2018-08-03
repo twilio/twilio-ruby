@@ -219,9 +219,13 @@ module Twilio
               ##
               # Initialize the MessageContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
-              # @param [String] channel_sid The channel_sid
-              # @param [String] sid The sid
+              # @param [String] service_sid Sid of the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this message
+              #   belongs to.
+              # @param [String] channel_sid Key of the
+              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) message belongs
+              #   to. Could be Sid or UniqueName
+              # @param [String] sid Key that uniquely defines the message to fetch.
               # @return [MessageContext] MessageContext
               def initialize(version, service_sid, channel_sid, sid)
                 super(version)
@@ -274,14 +278,18 @@ module Twilio
               #   should be set as having been last updated.
               # @param [String] last_updated_by Specify the Identity of the User that last
               #   updated the Message (if relevant)
+              # @param [String] from The
+              #   [identity](https://www.twilio.com/docs/api/chat/guides/identity) of the
+              #   message's author.
               # @return [MessageInstance] Updated MessageInstance
-              def update(body: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset)
+              def update(body: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset, from: :unset)
                 data = Twilio::Values.of({
                     'Body' => body,
                     'Attributes' => attributes,
                     'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                     'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                     'LastUpdatedBy' => last_updated_by,
+                    'From' => from,
                 })
 
                 payload = @version.update(
@@ -316,7 +324,7 @@ module Twilio
               #   [Service](https://www.twilio.com/docs/chat/api/services) this message belongs
               #   to.
               # @param [String] channel_sid The channel_sid
-              # @param [String] sid The sid
+              # @param [String] sid Key that uniquely defines the message to fetch.
               # @return [MessageInstance] MessageInstance
               def initialize(version, payload, service_sid: nil, channel_sid: nil, sid: nil)
                 super(version)
@@ -491,14 +499,18 @@ module Twilio
               #   should be set as having been last updated.
               # @param [String] last_updated_by Specify the Identity of the User that last
               #   updated the Message (if relevant)
+              # @param [String] from The
+              #   [identity](https://www.twilio.com/docs/api/chat/guides/identity) of the
+              #   message's author.
               # @return [MessageInstance] Updated MessageInstance
-              def update(body: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset)
+              def update(body: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset, from: :unset)
                 context.update(
                     body: body,
                     attributes: attributes,
                     date_created: date_created,
                     date_updated: date_updated,
                     last_updated_by: last_updated_by,
+                    from: from,
                 )
               end
 

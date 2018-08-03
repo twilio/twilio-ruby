@@ -73,7 +73,8 @@ module Twilio
             # Lists ChannelInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [channel.ChannelType] type The type
+            # @param [channel.ChannelType] type The visibility of the channel - `public` or
+            #   `private`. Defaults to `public`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -89,7 +90,8 @@ module Twilio
             # Streams ChannelInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [channel.ChannelType] type The type
+            # @param [channel.ChannelType] type The visibility of the channel - `public` or
+            #   `private`. Defaults to `public`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -122,7 +124,8 @@ module Twilio
             ##
             # Retrieve a single page of ChannelInstance records from the API.
             # Request is executed immediately.
-            # @param [channel.ChannelType] type The type
+            # @param [channel.ChannelType] type The visibility of the channel - `public` or
+            #   `private`. Defaults to `public`.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -195,8 +198,11 @@ module Twilio
             ##
             # Initialize the ChannelContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid Sid of the
+            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) channel belongs
+            #   to.
+            # @param [String] sid Key that uniquely defines the channel to fetch. Could be Sid
+            #   or UniqueName.
             # @return [ChannelContext] ChannelContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -371,7 +377,8 @@ module Twilio
             # @param [String] service_sid The unique id of the
             #   [Service](https://www.twilio.com/docs/chat/api/services) this channel belongs
             #   to.
-            # @param [String] sid The sid
+            # @param [String] sid Key that uniquely defines the channel to fetch. Could be Sid
+            #   or UniqueName.
             # @return [ChannelInstance] ChannelInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)

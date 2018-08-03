@@ -197,31 +197,49 @@ module Twilio
 
               ##
               # Update the ReservationInstance
-              # @param [reservation.Status] reservation_status Yes
-              # @param [String] worker_activity_sid No
-              # @param [String] instruction Yes
-              # @param [String] dequeue_post_work_activity_sid No
-              # @param [String] dequeue_from Yes
-              # @param [String] dequeue_record No
-              # @param [String] dequeue_timeout No
-              # @param [String] dequeue_to No
-              # @param [String] dequeue_status_callback_url No
-              # @param [String] call_from Yes
-              # @param [String] call_record No
-              # @param [String] call_timeout No
-              # @param [String] call_to No
-              # @param [String] call_url Yes
-              # @param [String] call_status_callback_url No
-              # @param [Boolean] call_accept No
-              # @param [String] redirect_call_sid Yes
-              # @param [Boolean] redirect_accept No
-              # @param [String] redirect_url Yes
-              # @param [String] to No
-              # @param [String] from No
+              # @param [reservation.Status] reservation_status New reservation status
+              # @param [String] worker_activity_sid New worker activity sid if rejecting a
+              #   reservation
+              # @param [String] instruction Assignment instruction for reservation
+              # @param [String] dequeue_post_work_activity_sid New worker activity sid after
+              #   executing a Dequeue instruction
+              # @param [String] dequeue_from Caller ID for the call to the worker when executing
+              #   a Dequeue instruction
+              # @param [String] dequeue_record Attribute to record both legs of a call when
+              #   executing a Dequeue instruction
+              # @param [String] dequeue_timeout Timeout for call when executing a Dequeue
+              #   instruction
+              # @param [String] dequeue_to Contact URI of the worker when executing a Dequeue
+              #   instruction
+              # @param [String] dequeue_status_callback_url Callback URL for completed call
+              #   event when executing a Dequeue instruction
+              # @param [String] call_from Caller ID for the outbound call when executing a Call
+              #   instruction
+              # @param [String] call_record Attribute to record both legs of a call when
+              #   executing a Call instruction
+              # @param [String] call_timeout Timeout for call when executing a Call instruction
+              # @param [String] call_to Contact URI of the worker when executing a Call
+              #   instruction
+              # @param [String] call_url TwiML URI executed on answering the worker's leg as a
+              #   result of the Call instruction
+              # @param [String] call_status_callback_url Callback URL for completed call event
+              #   when executing a Call instruction
+              # @param [Boolean] call_accept Flag to determine if reservation should be accepted
+              #   when executing a Call instruction
+              # @param [String] redirect_call_sid Call sid of the call parked in the queue when
+              #   executing a Redirect instruction
+              # @param [Boolean] redirect_accept Flag to determine if reservation should be
+              #   accepted when executing a Redirect instruction
+              # @param [String] redirect_url TwiML URI to redirect the call to when executing
+              #   the Redirect instruction
+              # @param [String] to Contact URI of the worker when executing a Conference
+              #   instruction
+              # @param [String] from Caller ID for the call to the worker when executing a
+              #   Conference instruction
               # @param [String] status_callback The status_callback
               # @param [String] status_callback_method The status_callback_method
               # @param [reservation.CallStatus] status_callback_event The status_callback_event
-              # @param [String] timeout No
+              # @param [String] timeout Timeout for call when executing a Conference instruction
               # @param [Boolean] record The record
               # @param [Boolean] muted The muted
               # @param [String] beep The beep
@@ -249,10 +267,16 @@ module Twilio
               # @param [String] region The region
               # @param [String] sip_auth_username The sip_auth_username
               # @param [String] sip_auth_password The sip_auth_password
-              # @param [String] dequeue_status_callback_event No
-              # @param [String] post_work_activity_sid No
+              # @param [String] dequeue_status_callback_event Call progress events sent via
+              #   webhooks as a result of a Dequeue instruction
+              # @param [String] post_work_activity_sid New worker activity sid after executing a
+              #   Conference instruction
+              # @param [reservation.SupervisorMode] supervisor_mode Supervisor mode when
+              #   executing the Supervise instruction
+              # @param [String] supervisor Supervisor sid/uri when executing the Supervise
+              #   instruction
               # @return [ReservationInstance] Updated ReservationInstance
-              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset, to: :unset, from: :unset, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, conference_record: :unset, conference_trim: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, region: :unset, sip_auth_username: :unset, sip_auth_password: :unset, dequeue_status_callback_event: :unset, post_work_activity_sid: :unset)
+              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset, to: :unset, from: :unset, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, conference_record: :unset, conference_trim: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, region: :unset, sip_auth_username: :unset, sip_auth_password: :unset, dequeue_status_callback_event: :unset, post_work_activity_sid: :unset, supervisor_mode: :unset, supervisor: :unset)
                 data = Twilio::Values.of({
                     'ReservationStatus' => reservation_status,
                     'WorkerActivitySid' => worker_activity_sid,
@@ -303,6 +327,8 @@ module Twilio
                     'SipAuthPassword' => sip_auth_password,
                     'DequeueStatusCallbackEvent' => Twilio.serialize_list(dequeue_status_callback_event) { |e| e },
                     'PostWorkActivitySid' => post_work_activity_sid,
+                    'SupervisorMode' => supervisor_mode,
+                    'Supervisor' => supervisor,
                 })
 
                 payload = @version.update(
@@ -456,31 +482,49 @@ module Twilio
 
               ##
               # Update the ReservationInstance
-              # @param [reservation.Status] reservation_status Yes
-              # @param [String] worker_activity_sid No
-              # @param [String] instruction Yes
-              # @param [String] dequeue_post_work_activity_sid No
-              # @param [String] dequeue_from Yes
-              # @param [String] dequeue_record No
-              # @param [String] dequeue_timeout No
-              # @param [String] dequeue_to No
-              # @param [String] dequeue_status_callback_url No
-              # @param [String] call_from Yes
-              # @param [String] call_record No
-              # @param [String] call_timeout No
-              # @param [String] call_to No
-              # @param [String] call_url Yes
-              # @param [String] call_status_callback_url No
-              # @param [Boolean] call_accept No
-              # @param [String] redirect_call_sid Yes
-              # @param [Boolean] redirect_accept No
-              # @param [String] redirect_url Yes
-              # @param [String] to No
-              # @param [String] from No
+              # @param [reservation.Status] reservation_status New reservation status
+              # @param [String] worker_activity_sid New worker activity sid if rejecting a
+              #   reservation
+              # @param [String] instruction Assignment instruction for reservation
+              # @param [String] dequeue_post_work_activity_sid New worker activity sid after
+              #   executing a Dequeue instruction
+              # @param [String] dequeue_from Caller ID for the call to the worker when executing
+              #   a Dequeue instruction
+              # @param [String] dequeue_record Attribute to record both legs of a call when
+              #   executing a Dequeue instruction
+              # @param [String] dequeue_timeout Timeout for call when executing a Dequeue
+              #   instruction
+              # @param [String] dequeue_to Contact URI of the worker when executing a Dequeue
+              #   instruction
+              # @param [String] dequeue_status_callback_url Callback URL for completed call
+              #   event when executing a Dequeue instruction
+              # @param [String] call_from Caller ID for the outbound call when executing a Call
+              #   instruction
+              # @param [String] call_record Attribute to record both legs of a call when
+              #   executing a Call instruction
+              # @param [String] call_timeout Timeout for call when executing a Call instruction
+              # @param [String] call_to Contact URI of the worker when executing a Call
+              #   instruction
+              # @param [String] call_url TwiML URI executed on answering the worker's leg as a
+              #   result of the Call instruction
+              # @param [String] call_status_callback_url Callback URL for completed call event
+              #   when executing a Call instruction
+              # @param [Boolean] call_accept Flag to determine if reservation should be accepted
+              #   when executing a Call instruction
+              # @param [String] redirect_call_sid Call sid of the call parked in the queue when
+              #   executing a Redirect instruction
+              # @param [Boolean] redirect_accept Flag to determine if reservation should be
+              #   accepted when executing a Redirect instruction
+              # @param [String] redirect_url TwiML URI to redirect the call to when executing
+              #   the Redirect instruction
+              # @param [String] to Contact URI of the worker when executing a Conference
+              #   instruction
+              # @param [String] from Caller ID for the call to the worker when executing a
+              #   Conference instruction
               # @param [String] status_callback The status_callback
               # @param [String] status_callback_method The status_callback_method
               # @param [reservation.CallStatus] status_callback_event The status_callback_event
-              # @param [String] timeout No
+              # @param [String] timeout Timeout for call when executing a Conference instruction
               # @param [Boolean] record The record
               # @param [Boolean] muted The muted
               # @param [String] beep The beep
@@ -508,10 +552,16 @@ module Twilio
               # @param [String] region The region
               # @param [String] sip_auth_username The sip_auth_username
               # @param [String] sip_auth_password The sip_auth_password
-              # @param [String] dequeue_status_callback_event No
-              # @param [String] post_work_activity_sid No
+              # @param [String] dequeue_status_callback_event Call progress events sent via
+              #   webhooks as a result of a Dequeue instruction
+              # @param [String] post_work_activity_sid New worker activity sid after executing a
+              #   Conference instruction
+              # @param [reservation.SupervisorMode] supervisor_mode Supervisor mode when
+              #   executing the Supervise instruction
+              # @param [String] supervisor Supervisor sid/uri when executing the Supervise
+              #   instruction
               # @return [ReservationInstance] Updated ReservationInstance
-              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset, to: :unset, from: :unset, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, conference_record: :unset, conference_trim: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, region: :unset, sip_auth_username: :unset, sip_auth_password: :unset, dequeue_status_callback_event: :unset, post_work_activity_sid: :unset)
+              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset, to: :unset, from: :unset, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, conference_record: :unset, conference_trim: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, region: :unset, sip_auth_username: :unset, sip_auth_password: :unset, dequeue_status_callback_event: :unset, post_work_activity_sid: :unset, supervisor_mode: :unset, supervisor: :unset)
                 context.update(
                     reservation_status: reservation_status,
                     worker_activity_sid: worker_activity_sid,
@@ -562,6 +612,8 @@ module Twilio
                     sip_auth_password: sip_auth_password,
                     dequeue_status_callback_event: dequeue_status_callback_event,
                     post_work_activity_sid: post_work_activity_sid,
+                    supervisor_mode: supervisor_mode,
+                    supervisor: supervisor,
                 )
               end
 

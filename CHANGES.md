@@ -1,6 +1,26 @@
 twilio-ruby changelog
 =====================
 
+[2018-08-03] Version 5.12.0
+----------------------------
+**Library**
+- PR #420: Tag and push Docker latest image when deploying with TravisCI. Thanks to @jonatasbaldin!
+
+**Chat**
+- Make message From field updatable
+- Add REST API webhooks
+
+**Notify**
+- Removing deprecated `segments`, `users`, `segment_memberships`, `user_bindings` classes from helper libraries. **(breaking change)**
+
+**Preview**
+- Add new Intent Statistics endpoint
+- Remove `ttl` from Assistants
+
+**Twiml**
+- Add `Connect` and `Room` for Programmable Video Rooms
+
+
 [2018-07-26] Version 5.11.2
 ----------------------------
 **Library**

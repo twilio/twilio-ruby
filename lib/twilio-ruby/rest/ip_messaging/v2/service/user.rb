@@ -180,8 +180,11 @@ module Twilio
             ##
             # Initialize the UserContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid Sid of the
+            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this user belongs
+            #   to.
+            # @param [String] sid Key that uniquely defines the user to fetch. Could be Sid or
+            #   Identity.
             # @return [UserContext] UserContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -297,7 +300,8 @@ module Twilio
             # @param [String] service_sid The unique id of the
             #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this user belongs
             #   to.
-            # @param [String] sid The sid
+            # @param [String] sid Key that uniquely defines the user to fetch. Could be Sid or
+            #   Identity.
             # @return [UserInstance] UserInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)

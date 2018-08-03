@@ -228,8 +228,6 @@ module Twilio
             # Dependents
             @bindings = nil
             @notifications = nil
-            @users = nil
-            @segments = nil
           end
 
           ##
@@ -337,36 +335,6 @@ module Twilio
             end
 
             @notifications
-          end
-
-          ##
-          # Access the users
-          # @return [UserList]
-          # @return [UserContext] if identity was passed.
-          def users(identity=:unset)
-            raise ArgumentError, 'identity cannot be nil' if identity.nil?
-
-            if identity != :unset
-              return UserContext.new(@version, @solution[:sid], identity, )
-            end
-
-            unless @users
-              @users = UserList.new(@version, service_sid: @solution[:sid], )
-            end
-
-            @users
-          end
-
-          ##
-          # Access the segments
-          # @return [SegmentList]
-          # @return [SegmentContext]
-          def segments
-            unless @segments
-              @segments = SegmentList.new(@version, service_sid: @solution[:sid], )
-            end
-
-            @segments
           end
 
           ##
@@ -608,20 +576,6 @@ module Twilio
           # @return [notifications] notifications
           def notifications
             context.notifications
-          end
-
-          ##
-          # Access the users
-          # @return [users] users
-          def users
-            context.users
-          end
-
-          ##
-          # Access the segments
-          # @return [segments] segments
-          def segments
-            context.segments
           end
 
           ##

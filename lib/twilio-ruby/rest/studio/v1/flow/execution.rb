@@ -334,7 +334,7 @@ module Twilio
             end
 
             ##
-            # @return [Hash] Flow state.
+            # @return [Hash] The context
             def context
               @properties['context']
             end

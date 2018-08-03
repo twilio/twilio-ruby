@@ -186,6 +186,7 @@ module Twilio
               # Dependents
               @fields = nil
               @samples = nil
+              @statistics = nil
             end
 
             ##
@@ -281,6 +282,14 @@ module Twilio
               end
 
               @samples
+            end
+
+            ##
+            # Access the statistics
+            # @return [IntentStatisticsList]
+            # @return [IntentStatisticsContext]
+            def statistics
+              IntentStatisticsContext.new(@version, @solution[:assistant_sid], @solution[:sid], )
             end
 
             ##
@@ -424,6 +433,13 @@ module Twilio
             # @return [samples] samples
             def samples
               context.samples
+            end
+
+            ##
+            # Access the statistics
+            # @return [statistics] statistics
+            def statistics
+              context.statistics
             end
 
             ##

@@ -223,9 +223,14 @@ module Twilio
               ##
               # Initialize the MemberContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
-              # @param [String] channel_sid The channel_sid
-              # @param [String] sid The sid
+              # @param [String] service_sid Sid of the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this member
+              #   belongs to.
+              # @param [String] channel_sid Key of the
+              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) this member
+              #   belongs to. Could be Sid or UniqueName
+              # @param [String] sid Key that uniquely defines the member to fetch. Could be
+              #   Member Sid or Identity
               # @return [MemberContext] MemberContext
               def initialize(version, service_sid, channel_sid, sid)
                 super(version)
@@ -325,7 +330,8 @@ module Twilio
               #   belongs to.
               # @param [String] channel_sid The unique id of the
               #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) for this member.
-              # @param [String] sid The sid
+              # @param [String] sid Key that uniquely defines the member to fetch. Could be
+              #   Member Sid or Identity
               # @return [MemberInstance] MemberInstance
               def initialize(version, payload, service_sid: nil, channel_sid: nil, sid: nil)
                 super(version)

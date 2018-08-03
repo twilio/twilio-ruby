@@ -19,6 +19,18 @@ module Twilio
       end
 
       ##
+      # Create a new <Connect> element
+      # action:: Action URL
+      # method:: Action URL method
+      # keyword_args:: additional attributes
+      def connect(action: nil, method: nil, **keyword_args)
+        connect = Connect.new(action: action, method: method, **keyword_args)
+
+        yield(connect) if block_given?
+        append(connect)
+      end
+
+      ##
       # Create a new <Dial> element
       # number:: Phone number to dial
       # action:: Action URL
@@ -743,6 +755,36 @@ module Twilio
       def initialize(name, **keyword_args)
         super(**keyword_args)
         @name = 'Client'
+        @value = name
+        yield(self) if block_given?
+      end
+    end
+
+    ##
+    # <Connect> TwiML Verb
+    class Connect < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Connect'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Room> element
+      # name:: Room name
+      # keyword_args:: additional attributes
+      def room(name, **keyword_args)
+        append(Room.new(name, **keyword_args))
+      end
+    end
+
+    ##
+    # <Room> TwiML Noun
+    class Room < TwiML
+      def initialize(name, **keyword_args)
+        super(**keyword_args)
+        @name = 'Room'
         @value = name
         yield(self) if block_given?
       end
