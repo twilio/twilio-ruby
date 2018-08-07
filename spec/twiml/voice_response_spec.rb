@@ -803,5 +803,22 @@ describe Twilio::TwiML::VoiceResponse do
       doc = parse(response)
       expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
+
+    it 'should render ssml attributes correctly' do
+      expected_doc = parse <<-XML
+        <Response>
+          <Say>
+            <say-as interpret-as="spell-out">Twilio</say-as>
+          </Say>
+        </Response>
+      XML
+
+      response = Twilio::TwiML::VoiceResponse.new
+      response.say do |s|
+        s.say_as('Twilio', interpretAs: 'spell-out')
+      end
+
+      expect(parse(response)).to be_equivalent_to(expected_doc).respecting_element_order
+    end
   end
 end
