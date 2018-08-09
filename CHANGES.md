@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+[2018-08-09] Version 5.12.1
+----------------------------
+**Library**
+- PR #426: Add a test showing how to emit "interpret-as". Thanks to @ekarson!
+
+**Studio**
+- Studio is now GA
+
+
 [2018-08-03] Version 5.12.0
 ----------------------------
 **Library**

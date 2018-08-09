@@ -12,8 +12,6 @@ module Twilio
       class V1 < Version
         class FlowContext < InstanceContext
           class EngagementContext < InstanceContext
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class EngagementContextList < ListResource
               ##
               # Initialize the EngagementContextList
@@ -35,8 +33,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class EngagementContextPage < Page
               ##
               # Initialize the EngagementContextPage
@@ -71,8 +67,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class EngagementContextContext < InstanceContext
               ##
               # Initialize the EngagementContextContext
@@ -116,8 +110,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class EngagementContextInstance < InstanceResource
               ##
               # Initialize the EngagementContextInstance

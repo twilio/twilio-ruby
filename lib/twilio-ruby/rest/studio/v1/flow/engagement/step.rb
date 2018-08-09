@@ -12,8 +12,6 @@ module Twilio
       class V1 < Version
         class FlowContext < InstanceContext
           class EngagementContext < InstanceContext
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class StepList < ListResource
               ##
               # Initialize the StepList
@@ -118,8 +116,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class StepPage < Page
               ##
               # Initialize the StepPage
@@ -154,8 +150,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class StepContext < InstanceContext
               ##
               # Initialize the StepContext
@@ -212,8 +206,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class StepInstance < InstanceResource
               ##
               # Initialize the StepInstance

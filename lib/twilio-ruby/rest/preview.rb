@@ -23,7 +23,6 @@ module Twilio
         @deployed_devices = nil
         @hosted_numbers = nil
         @marketplace = nil
-        @studio = nil
         @acc_security = nil
         @sync = nil
         @understand = nil
@@ -52,12 +51,6 @@ module Twilio
       # Version marketplace of preview
       def marketplace
         @marketplace ||= Marketplace.new self
-      end
-
-      ##
-      # Version studio of preview
-      def studio
-        @studio ||= Studio.new self
       end
 
       ##
@@ -143,14 +136,6 @@ module Twilio
       # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnList]
       def available_add_ons(sid=:unset)
         self.marketplace.available_add_ons(sid)
-      end
-
-      ##
-      # @param [String] sid A 34 character string that uniquely identifies this Flow.
-      # @return [Twilio::REST::Preview::Studio::FlowInstance] if sid was passed.
-      # @return [Twilio::REST::Preview::Studio::FlowList]
-      def flows(sid=:unset)
-        self.studio.flows(sid)
       end
 
       ##

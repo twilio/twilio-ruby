@@ -10,8 +10,6 @@ module Twilio
   module REST
     class Studio < Domain
       class V1 < Version
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FlowList < ListResource
           ##
           # Initialize the FlowList
@@ -114,8 +112,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FlowPage < Page
           ##
           # Initialize the FlowPage
@@ -145,8 +141,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FlowContext < InstanceContext
           ##
           # Initialize the FlowContext
@@ -231,8 +225,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FlowInstance < InstanceResource
           ##
           # Initialize the FlowInstance

@@ -154,8 +154,9 @@ module Twilio
           # @param [String] to The phone number or SIP address to send the fax to,
           #   E.164-formatted.
           # @param [String] media_url The HTTP or HTTPS URL where the fax media PDF resides
-          #   (see our [security](https://www.twilio.com/docs/security) page for information
-          #   on how to ensure the request for your media comes from Twilio)
+          #   that Twilio will make a GET request to. (See our
+          #   [security](https://www.twilio.com/docs/security) page for information on how to
+          #   ensure the request for your media comes from Twilio)
           # @param [fax.Quality] quality A [quality
           #   value](https://www.twilio.com/docs/api/fax/rest/faxes#fax-quality-values), which
           #   defaults to `fine`
