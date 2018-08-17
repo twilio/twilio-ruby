@@ -116,9 +116,14 @@ module Twilio
             #   resource as an alternative to the sid. Unique up to 64 characters long.
             # @param [String] friendly_name A user-provided string that identifies this
             #   resource. It is non-unique and can up to 255 characters long.
+            # @param [Hash] actions The actions
             # @return [IntentInstance] Newly created IntentInstance
-            def create(unique_name: nil, friendly_name: :unset)
-              data = Twilio::Values.of({'UniqueName' => unique_name, 'FriendlyName' => friendly_name, })
+            def create(unique_name: nil, friendly_name: :unset, actions: :unset)
+              data = Twilio::Values.of({
+                  'UniqueName' => unique_name,
+                  'FriendlyName' => friendly_name,
+                  'Actions' => Twilio.serialize_object(actions),
+              })
 
               payload = @version.create(
                   'POST',
@@ -186,6 +191,7 @@ module Twilio
               # Dependents
               @fields = nil
               @samples = nil
+              @intent_actions = nil
               @statistics = nil
             end
 
@@ -215,9 +221,14 @@ module Twilio
             #   resource. It is non-unique and can up to 255 characters long.
             # @param [String] unique_name A user-provided string that uniquely identifies this
             #   resource as an alternative to the sid. Unique up to 64 characters long.
+            # @param [Hash] actions The actions
             # @return [IntentInstance] Updated IntentInstance
-            def update(friendly_name: :unset, unique_name: :unset)
-              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'UniqueName' => unique_name, })
+            def update(friendly_name: :unset, unique_name: :unset, actions: :unset)
+              data = Twilio::Values.of({
+                  'FriendlyName' => friendly_name,
+                  'UniqueName' => unique_name,
+                  'Actions' => Twilio.serialize_object(actions),
+              })
 
               payload = @version.update(
                   'POST',
@@ -282,6 +293,14 @@ module Twilio
               end
 
               @samples
+            end
+
+            ##
+            # Access the intent_actions
+            # @return [IntentActionsList]
+            # @return [IntentActionsContext]
+            def intent_actions
+              IntentActionsContext.new(@version, @solution[:assistant_sid], @solution[:sid], )
             end
 
             ##
@@ -409,9 +428,10 @@ module Twilio
             #   resource. It is non-unique and can up to 255 characters long.
             # @param [String] unique_name A user-provided string that uniquely identifies this
             #   resource as an alternative to the sid. Unique up to 64 characters long.
+            # @param [Hash] actions The actions
             # @return [IntentInstance] Updated IntentInstance
-            def update(friendly_name: :unset, unique_name: :unset)
-              context.update(friendly_name: friendly_name, unique_name: unique_name, )
+            def update(friendly_name: :unset, unique_name: :unset, actions: :unset)
+              context.update(friendly_name: friendly_name, unique_name: unique_name, actions: actions, )
             end
 
             ##
@@ -433,6 +453,13 @@ module Twilio
             # @return [samples] samples
             def samples
               context.samples
+            end
+
+            ##
+            # Access the intent_actions
+            # @return [intent_actions] intent_actions
+            def intent_actions
+              context.intent_actions
             end
 
             ##

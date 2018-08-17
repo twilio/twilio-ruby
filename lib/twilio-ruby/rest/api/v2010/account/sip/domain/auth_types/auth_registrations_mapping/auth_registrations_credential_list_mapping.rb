@@ -20,7 +20,7 @@ module Twilio
                     # Initialize the AuthRegistrationsCredentialListMappingList
                     # @param [Version] version Version that contains the resource
                     # @param [String] account_sid The unique id of the
-                    #   [Account](https://www.twilio.com/docs/api/rest/account) that sent this message.
+                    #   [Account](https://www.twilio.com/docs/api/rest/account) that sent this call.
                     # @param [String] domain_sid A 34 character string that uniquely identifies the
                     #   SIP domain in Twilio.
                     # @return [AuthRegistrationsCredentialListMappingList] AuthRegistrationsCredentialListMappingList
@@ -237,7 +237,7 @@ module Twilio
                     # @param [Version] version Version that contains the resource
                     # @param [Hash] payload payload that contains response from Twilio
                     # @param [String] account_sid The unique id of the
-                    #   [Account](https://www.twilio.com/docs/api/rest/account) that sent this message.
+                    #   [Account](https://www.twilio.com/docs/api/rest/account) that sent this call.
                     # @param [String] domain_sid A 34 character string that uniquely identifies the
                     #   SIP domain in Twilio.
                     # @param [String] sid The credential list Sid that uniquely identifies this

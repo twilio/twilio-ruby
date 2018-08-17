@@ -33,7 +33,7 @@ module Twilio
             # memory before returning.
             # @param [String] unique_name The unique_name
             # @param [session.Status] status The Status of this Session. One of `in-progress`,
-            #   `closed`, `failed`, `unknown` or `completed`.
+            #   `closed`, `failed`, `unknown`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -51,7 +51,7 @@ module Twilio
             # is reached.
             # @param [String] unique_name The unique_name
             # @param [session.Status] status The Status of this Session. One of `in-progress`,
-            #   `closed`, `failed`, `unknown` or `completed`.
+            #   `closed`, `failed`, `unknown`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -86,7 +86,7 @@ module Twilio
             # Request is executed immediately.
             # @param [String] unique_name The unique_name
             # @param [session.Status] status The Status of this Session. One of `in-progress`,
-            #   `closed`, `failed`, `unknown` or `completed`.
+            #   `closed`, `failed`, `unknown`.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50

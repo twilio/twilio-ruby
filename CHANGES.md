@@ -1,6 +1,18 @@
 twilio-ruby changelog
 =====================
 
+[2018-08-17] Version 5.12.2
+----------------------------
+**Api**
+- Add Proxy Active Sessions category to usage records
+
+**Preview**
+- Add `Actions` endpoints and remove `ResponseUrl` from assistants on the Understand api
+
+**Pricing**
+- add voice_country resource (v2)
+
+
 [2018-08-09] Version 5.12.1
 ----------------------------
 **Library**

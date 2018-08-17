@@ -118,19 +118,20 @@ module Twilio
           #   true if no value is provided.
           # @param [String] unique_name A user-provided string that uniquely identifies this
           #   resource as an alternative to the sid. Unique up to 64 characters long.
-          # @param [String] response_url The webhook URL called to fetch the response to an
-          #   incoming communication expressed in Assistant TwiML.
           # @param [String] callback_url The callback_url
           # @param [String] callback_events The callback_events
+          # @param [Hash] fallback_actions The fallback_actions
+          # @param [Hash] initiation_actions The initiation_actions
           # @return [AssistantInstance] Newly created AssistantInstance
-          def create(friendly_name: :unset, log_queries: :unset, unique_name: :unset, response_url: :unset, callback_url: :unset, callback_events: :unset)
+          def create(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, fallback_actions: :unset, initiation_actions: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'LogQueries' => log_queries,
                 'UniqueName' => unique_name,
-                'ResponseUrl' => response_url,
                 'CallbackUrl' => callback_url,
                 'CallbackEvents' => callback_events,
+                'FallbackActions' => Twilio.serialize_object(fallback_actions),
+                'InitiationActions' => Twilio.serialize_object(initiation_actions),
             })
 
             payload = @version.create(
@@ -200,6 +201,8 @@ module Twilio
             @intents = nil
             @model_builds = nil
             @queries = nil
+            @assistant_fallback_actions = nil
+            @assistant_initiation_actions = nil
           end
 
           ##
@@ -227,19 +230,20 @@ module Twilio
           #   true if no value is provided.
           # @param [String] unique_name A user-provided string that uniquely identifies this
           #   resource as an alternative to the sid. Unique up to 64 characters long.
-          # @param [String] response_url The webhook URL called to fetch the response to an
-          #   incoming communication expressed in Assistant TwiML.
           # @param [String] callback_url The callback_url
           # @param [String] callback_events The callback_events
+          # @param [Hash] fallback_actions The fallback_actions
+          # @param [Hash] initiation_actions The initiation_actions
           # @return [AssistantInstance] Updated AssistantInstance
-          def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, response_url: :unset, callback_url: :unset, callback_events: :unset)
+          def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, fallback_actions: :unset, initiation_actions: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'LogQueries' => log_queries,
                 'UniqueName' => unique_name,
-                'ResponseUrl' => response_url,
                 'CallbackUrl' => callback_url,
                 'CallbackEvents' => callback_events,
+                'FallbackActions' => Twilio.serialize_object(fallback_actions),
+                'InitiationActions' => Twilio.serialize_object(initiation_actions),
             })
 
             payload = @version.update(
@@ -331,6 +335,22 @@ module Twilio
           end
 
           ##
+          # Access the assistant_fallback_actions
+          # @return [AssistantFallbackActionsList]
+          # @return [AssistantFallbackActionsContext]
+          def assistant_fallback_actions
+            AssistantFallbackActionsContext.new(@version, @solution[:sid], )
+          end
+
+          ##
+          # Access the assistant_initiation_actions
+          # @return [AssistantInitiationActionsList]
+          # @return [AssistantInitiationActionsContext]
+          def assistant_initiation_actions
+            AssistantInitiationActionsContext.new(@version, @solution[:sid], )
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -362,7 +382,6 @@ module Twilio
                 'sid' => payload['sid'],
                 'unique_name' => payload['unique_name'],
                 'url' => payload['url'],
-                'response_url' => payload['response_url'],
                 'callback_url' => payload['callback_url'],
                 'callback_events' => payload['callback_events'],
             }
@@ -444,12 +463,6 @@ module Twilio
           end
 
           ##
-          # @return [String] The webhook URL called to fetch the response to an incoming communication expressed in Assistant TwiML.
-          def response_url
-            @properties['response_url']
-          end
-
-          ##
           # @return [String] The callback_url
           def callback_url
             @properties['callback_url']
@@ -478,19 +491,20 @@ module Twilio
           #   true if no value is provided.
           # @param [String] unique_name A user-provided string that uniquely identifies this
           #   resource as an alternative to the sid. Unique up to 64 characters long.
-          # @param [String] response_url The webhook URL called to fetch the response to an
-          #   incoming communication expressed in Assistant TwiML.
           # @param [String] callback_url The callback_url
           # @param [String] callback_events The callback_events
+          # @param [Hash] fallback_actions The fallback_actions
+          # @param [Hash] initiation_actions The initiation_actions
           # @return [AssistantInstance] Updated AssistantInstance
-          def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, response_url: :unset, callback_url: :unset, callback_events: :unset)
+          def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, fallback_actions: :unset, initiation_actions: :unset)
             context.update(
                 friendly_name: friendly_name,
                 log_queries: log_queries,
                 unique_name: unique_name,
-                response_url: response_url,
                 callback_url: callback_url,
                 callback_events: callback_events,
+                fallback_actions: fallback_actions,
+                initiation_actions: initiation_actions,
             )
           end
 
@@ -527,6 +541,20 @@ module Twilio
           # @return [queries] queries
           def queries
             context.queries
+          end
+
+          ##
+          # Access the assistant_fallback_actions
+          # @return [assistant_fallback_actions] assistant_fallback_actions
+          def assistant_fallback_actions
+            context.assistant_fallback_actions
+          end
+
+          ##
+          # Access the assistant_initiation_actions
+          # @return [assistant_initiation_actions] assistant_initiation_actions
+          def assistant_initiation_actions
+            context.assistant_initiation_actions
           end
 
           ##

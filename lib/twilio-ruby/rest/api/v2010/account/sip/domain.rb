@@ -391,13 +391,13 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique id of the account that sent the message
+              # @return [String] The unique id of the account that sent the call
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The Twilio API version used to process the message
+              # @return [String] The Twilio API version used to process the call
               def api_version
                 @properties['api_version']
               end

@@ -20,12 +20,19 @@ module Twilio
 
         # Versions
         @v1 = nil
+        @v2 = nil
       end
 
       ##
       # Version v1 of pricing
       def v1
         @v1 ||= V1.new self
+      end
+
+      ##
+      # Version v2 of pricing
+      def v2
+        @v2 ||= V2.new self
       end
 
       ##
@@ -41,9 +48,9 @@ module Twilio
       end
 
       ##
-      # @return [Twilio::REST::Pricing::V1::VoiceInstance]
+      # @return [Twilio::REST::Pricing::V2::VoiceInstance]
       def voice
-        self.v1.voice()
+        self.v2.voice()
       end
 
       ##
