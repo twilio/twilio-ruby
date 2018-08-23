@@ -30,6 +30,7 @@ module Twilio
               aliasAttribute: 'alias',
               xmlLang: 'xml:lang',
               interpretAs: 'interpret-as',
+              for_: 'for',
           }
           @name = self.class.name.split('::').last
           @value = nil
