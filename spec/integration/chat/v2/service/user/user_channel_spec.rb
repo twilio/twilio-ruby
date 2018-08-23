@@ -45,10 +45,13 @@ describe 'UserChannel' do
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "channel_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "user_sid": "USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "member_sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "status": "joined",
                   "last_consumed_message_index": 5,
                   "unread_messages_count": 5,
+                  "notification_level": "default",
+                  "url": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "links": {
                       "channel": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                       "member": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members/MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -88,6 +91,101 @@ describe 'UserChannel' do
     actual = @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                             .user_channels.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "can fetch" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .user_channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {}
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'get',
+        url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    ))).to eq(true)
+  end
+
+  it "receives fetch responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "channel_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "user_sid": "USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "member_sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "status": "joined",
+          "last_consumed_message_index": 5,
+          "unread_messages_count": 5,
+          "notification_level": "default",
+          "url": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "channel": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "member": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members/MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .user_channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "can update" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                     .user_channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(notification_level: 'default')
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {'NotificationLevel' => 'default', }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        data: values,
+    ))).to eq(true)
+  end
+
+  it "receives update responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "channel_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "user_sid": "USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "member_sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "status": "joined",
+          "last_consumed_message_index": 5,
+          "unread_messages_count": 5,
+          "notification_level": "muted",
+          "url": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "channel": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "member": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members/MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                            .user_channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(notification_level: 'default')
 
     expect(actual).to_not eq(nil)
   end

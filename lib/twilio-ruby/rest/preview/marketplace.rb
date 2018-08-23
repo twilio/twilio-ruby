@@ -15,23 +15,8 @@ module Twilio
         def initialize(domain)
           super
           @version = 'marketplace'
-          @available_add_ons = nil
           @installed_add_ons = nil
-        end
-
-        ##
-        # @param [String] sid The Available Add-on Sid that uniquely identifies this
-        #   resource
-        # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnContext] if sid was passed.
-        # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnList]
-        def available_add_ons(sid=:unset)
-          if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @available_add_ons ||= AvailableAddOnList.new self
-          else
-            AvailableAddOnContext.new(self, sid)
-          end
+          @available_add_ons = nil
         end
 
         ##
@@ -46,6 +31,21 @@ module Twilio
             @installed_add_ons ||= InstalledAddOnList.new self
           else
             InstalledAddOnContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The Available Add-on Sid that uniquely identifies this
+        #   resource
+        # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnContext] if sid was passed.
+        # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnList]
+        def available_add_ons(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @available_add_ons ||= AvailableAddOnList.new self
+          else
+            AvailableAddOnContext.new(self, sid)
           end
         end
 

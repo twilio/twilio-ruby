@@ -19,8 +19,8 @@ module Twilio
               # @param [String] service_sid The unique id of the
               #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this channel
               #   belongs to.
-              # @param [String] user_sid A 34 character string that uniquely identifies this
-              #   resource.
+              # @param [String] user_sid The unique id of the
+              #   [User](https://www.twilio.com/docs/api/chat/rest/users) this Channel belongs to.
               # @return [UserChannelList] UserChannelList
               def initialize(version, service_sid: nil, user_sid: nil)
                 super(version)
@@ -153,6 +153,76 @@ module Twilio
               end
             end
 
+            class UserChannelContext < InstanceContext
+              ##
+              # Initialize the UserChannelContext
+              # @param [Version] version Version that contains the resource
+              # @param [String] service_sid The unique id of the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) those channels
+              #   belong to.
+              # @param [String] user_sid The unique id of a User.
+              # @param [String] channel_sid The unique id of a Channel.
+              # @return [UserChannelContext] UserChannelContext
+              def initialize(version, service_sid, user_sid, channel_sid)
+                super(version)
+
+                # Path Solution
+                @solution = {service_sid: service_sid, user_sid: user_sid, channel_sid: channel_sid, }
+                @uri = "/Services/#{@solution[:service_sid]}/Users/#{@solution[:user_sid]}/Channels/#{@solution[:channel_sid]}"
+              end
+
+              ##
+              # Fetch a UserChannelInstance
+              # @return [UserChannelInstance] Fetched UserChannelInstance
+              def fetch
+                params = Twilio::Values.of({})
+
+                payload = @version.fetch(
+                    'GET',
+                    @uri,
+                    params,
+                )
+
+                UserChannelInstance.new(
+                    @version,
+                    payload,
+                    service_sid: @solution[:service_sid],
+                    user_sid: @solution[:user_sid],
+                    channel_sid: @solution[:channel_sid],
+                )
+              end
+
+              ##
+              # Update the UserChannelInstance
+              # @param [user_channel.NotificationLevel] notification_level Push notification
+              #   level to be assigned to Channel of the User.
+              # @return [UserChannelInstance] Updated UserChannelInstance
+              def update(notification_level: nil)
+                data = Twilio::Values.of({'NotificationLevel' => notification_level, })
+
+                payload = @version.update(
+                    'POST',
+                    @uri,
+                    data: data,
+                )
+
+                UserChannelInstance.new(
+                    @version,
+                    payload,
+                    service_sid: @solution[:service_sid],
+                    user_sid: @solution[:user_sid],
+                    channel_sid: @solution[:channel_sid],
+                )
+              end
+
+              ##
+              # Provide a user friendly representation
+              def to_s
+                context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                "#<Twilio.IpMessaging.V2.UserChannelContext #{context}>"
+              end
+            end
+
             class UserChannelInstance < InstanceResource
               ##
               # Initialize the UserChannelInstance
@@ -161,10 +231,11 @@ module Twilio
               # @param [String] service_sid The unique id of the
               #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this channel
               #   belongs to.
-              # @param [String] user_sid A 34 character string that uniquely identifies this
-              #   resource.
+              # @param [String] user_sid The unique id of the
+              #   [User](https://www.twilio.com/docs/api/chat/rest/users) this Channel belongs to.
+              # @param [String] channel_sid The unique id of a Channel.
               # @return [UserChannelInstance] UserChannelInstance
-              def initialize(version, payload, service_sid: nil, user_sid: nil)
+              def initialize(version, payload, service_sid: nil, user_sid: nil, channel_sid: nil)
                 super(version)
 
                 # Marshaled Properties
@@ -172,12 +243,39 @@ module Twilio
                     'account_sid' => payload['account_sid'],
                     'service_sid' => payload['service_sid'],
                     'channel_sid' => payload['channel_sid'],
+                    'user_sid' => payload['user_sid'],
                     'member_sid' => payload['member_sid'],
                     'status' => payload['status'],
                     'last_consumed_message_index' => payload['last_consumed_message_index'] == nil ? payload['last_consumed_message_index'] : payload['last_consumed_message_index'].to_i,
                     'unread_messages_count' => payload['unread_messages_count'] == nil ? payload['unread_messages_count'] : payload['unread_messages_count'].to_i,
                     'links' => payload['links'],
+                    'url' => payload['url'],
+                    'notification_level' => payload['notification_level'],
                 }
+
+                # Context
+                @instance_context = nil
+                @params = {
+                    'service_sid' => service_sid,
+                    'user_sid' => user_sid,
+                    'channel_sid' => channel_sid || @properties['channel_sid'],
+                }
+              end
+
+              ##
+              # Generate an instance context for the instance, the context is capable of
+              # performing various actions.  All instance actions are proxied to the context
+              # @return [UserChannelContext] UserChannelContext for this UserChannelInstance
+              def context
+                unless @instance_context
+                  @instance_context = UserChannelContext.new(
+                      @version,
+                      @params['service_sid'],
+                      @params['user_sid'],
+                      @params['channel_sid'],
+                  )
+                end
+                @instance_context
               end
 
               ##
@@ -196,6 +294,12 @@ module Twilio
               # @return [String] The unique id of a Channel.
               def channel_sid
                 @properties['channel_sid']
+              end
+
+              ##
+              # @return [String] The unique id of the User this Channel belongs to.
+              def user_sid
+                @properties['user_sid']
               end
 
               ##
@@ -229,15 +333,45 @@ module Twilio
               end
 
               ##
+              # @return [String] An absolute URL for this User Channel.
+              def url
+                @properties['url']
+              end
+
+              ##
+              # @return [user_channel.NotificationLevel] The notification level of the User for this Channel.
+              def notification_level
+                @properties['notification_level']
+              end
+
+              ##
+              # Fetch a UserChannelInstance
+              # @return [UserChannelInstance] Fetched UserChannelInstance
+              def fetch
+                context.fetch
+              end
+
+              ##
+              # Update the UserChannelInstance
+              # @param [user_channel.NotificationLevel] notification_level Push notification
+              #   level to be assigned to Channel of the User.
+              # @return [UserChannelInstance] Updated UserChannelInstance
+              def update(notification_level: nil)
+                context.update(notification_level: notification_level, )
+              end
+
+              ##
               # Provide a user friendly representation
               def to_s
-                "<Twilio.IpMessaging.V2.UserChannelInstance>"
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.IpMessaging.V2.UserChannelInstance #{values}>"
               end
 
               ##
               # Provide a detailed, user friendly representation
               def inspect
-                "<Twilio.IpMessaging.V2.UserChannelInstance>"
+                values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.IpMessaging.V2.UserChannelInstance #{values}>"
               end
             end
           end

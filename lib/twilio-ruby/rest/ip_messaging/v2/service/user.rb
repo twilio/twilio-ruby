@@ -249,8 +249,14 @@ module Twilio
             ##
             # Access the user_channels
             # @return [UserChannelList]
-            # @return [UserChannelContext]
-            def user_channels
+            # @return [UserChannelContext] if channel_sid was passed.
+            def user_channels(channel_sid=:unset)
+              raise ArgumentError, 'channel_sid cannot be nil' if channel_sid.nil?
+
+              if channel_sid != :unset
+                return UserChannelContext.new(@version, @solution[:service_sid], @solution[:sid], channel_sid, )
+              end
+
               unless @user_channels
                 @user_channels = UserChannelList.new(
                     @version,
