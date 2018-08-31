@@ -43,6 +43,7 @@ describe 'RoomRecording' do
           "container_format": "mka",
           "codec": "OPUS",
           "track_name": "A name",
+          "offset": 10,
           "grouping_sids": {
               "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
           },
@@ -124,6 +125,7 @@ describe 'RoomRecording' do
                   "container_format": "mka",
                   "codec": "OPUS",
                   "track_name": "A name",
+                  "offset": 10,
                   "grouping_sids": {
                       "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                       "participant_sid": "PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"

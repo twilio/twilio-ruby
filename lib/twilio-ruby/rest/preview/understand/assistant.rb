@@ -203,6 +203,7 @@ module Twilio
             @queries = nil
             @assistant_fallback_actions = nil
             @assistant_initiation_actions = nil
+            @dialogues = nil
           end
 
           ##
@@ -348,6 +349,24 @@ module Twilio
           # @return [AssistantInitiationActionsContext]
           def assistant_initiation_actions
             AssistantInitiationActionsContext.new(@version, @solution[:sid], )
+          end
+
+          ##
+          # Access the dialogues
+          # @return [DialogueList]
+          # @return [DialogueContext] if sid was passed.
+          def dialogues(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return DialogueContext.new(@version, @solution[:sid], sid, )
+            end
+
+            unless @dialogues
+              @dialogues = DialogueList.new(@version, assistant_sid: @solution[:sid], )
+            end
+
+            @dialogues
           end
 
           ##
@@ -555,6 +574,13 @@ module Twilio
           # @return [assistant_initiation_actions] assistant_initiation_actions
           def assistant_initiation_actions
             context.assistant_initiation_actions
+          end
+
+          ##
+          # Access the dialogues
+          # @return [dialogues] dialogues
+          def dialogues
+            context.dialogues
           end
 
           ##

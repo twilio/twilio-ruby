@@ -259,6 +259,7 @@ module Twilio
                 'codec' => payload['codec'],
                 'grouping_sids' => payload['grouping_sids'],
                 'track_name' => payload['track_name'],
+                'offset' => payload['offset'].to_i,
                 'links' => payload['links'],
             }
 
@@ -354,6 +355,12 @@ module Twilio
           # @return [String] The name that was given to the source track of this recording.
           def track_name
             @properties['track_name']
+          end
+
+          ##
+          # @return [String] Offset in miliseconds for this track.
+          def offset
+            @properties['offset']
           end
 
           ##

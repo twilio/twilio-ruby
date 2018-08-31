@@ -114,12 +114,21 @@ module Twilio
               # @param [String] conference_recording_status_callback_method The HTTP method
               #   Twilio should use when requesting your recording status callback URL, either
               #   `GET` or `POST`. Defaults to `POST`.
-              # @param [String] recording_status_callback_event The
-              #   recording_status_callback_event
-              # @param [String] conference_recording_status_callback_event The
-              #   conference_recording_status_callback_event
+              # @param [String] recording_status_callback_event Specifies which recording state
+              #   changes should generate a webhook to the URL specified in the
+              #   `RecordingStatusCallback` attribute. Available values are `in-progress`,
+              #   `completed`, `failed`. To specify multiple values, separate them with a space.
+              #   Defaults to `in-progress`, `completed`, `failed`.
+              # @param [String] conference_recording_status_callback_event Specifies which
+              #   conference recording state changes should generate a webhook to the URL
+              #   specified in the `ConferenceRecordingStatusCallback` attribute. Available values
+              #   are `in-progress`, `completed`, `failed`. To specify multiple values, separate
+              #   them with a space. Defaults to `in-progress`, `completed`, `failed`.
+              # @param [String] call_sid_to_coach The string that uniquely identifies the
+              #   participant that is being `coached`, i.e. the only participant who can hear the
+              #   participant that is in `coach` mode.
               # @return [ParticipantInstance] Newly created ParticipantInstance
-              def create(from: nil, to: nil, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_record: :unset, conference_trim: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, region: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, recording_status_callback_event: :unset, conference_recording_status_callback_event: :unset)
+              def create(from: nil, to: nil, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_record: :unset, conference_trim: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, region: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, recording_status_callback_event: :unset, conference_recording_status_callback_event: :unset, call_sid_to_coach: :unset)
                 data = Twilio::Values.of({
                     'From' => from,
                     'To' => to,
@@ -151,6 +160,7 @@ module Twilio
                     'ConferenceRecordingStatusCallbackMethod' => conference_recording_status_callback_method,
                     'RecordingStatusCallbackEvent' => Twilio.serialize_list(recording_status_callback_event) { |e| e },
                     'ConferenceRecordingStatusCallbackEvent' => Twilio.serialize_list(conference_recording_status_callback_event) { |e| e },
+                    'CallSidToCoach' => call_sid_to_coach,
                 })
 
                 payload = @version.create(
@@ -308,7 +318,9 @@ module Twilio
               ##
               # Initialize the ParticipantContext
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
+              # @param [String] account_sid The unique id of the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
+              #   conference
               # @param [String] conference_sid The string that uniquely identifies the
               #   conference this participant is in.
               # @param [String] call_sid The Participant's unique Call SID.

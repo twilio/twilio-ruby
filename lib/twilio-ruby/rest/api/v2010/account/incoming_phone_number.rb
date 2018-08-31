@@ -205,8 +205,11 @@ module Twilio
             #   the new phone number. The VoiceURL will  no longer be used if a
             #   `VoiceApplicationSid` or a `TrunkSid` is set.
             # @param [incoming_phone_number.EmergencyStatus] emergency_status The
-            #   emergency_status
-            # @param [String] emergency_address_sid The emergency_address_sid
+            #   configuration status parameter determining whether this phone number is enabled
+            #   for emergency calling
+            # @param [String] emergency_address_sid The 34 character sid of the
+            #   EmergencyAddress configuration to leverage emergency calling for this phone
+            #   number
             # @param [String] trunk_sid The 34 character sid of the Trunk Twilio should use to
             #   handle phone calls to this number. If a `TrunkSid` is present, Twilio will
             #   ignore all of the voice urls  and voice applications above and use those set on
@@ -218,6 +221,9 @@ module Twilio
             # @param [String] address_sid The 34 character sid of the address Twilio should
             #   use to associate with the number. Addresses are required in some regions to meet
             #   local regulations
+            # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
+            #   configuration parameter for this phone number to receive incoming voice calls or
+            #   faxes. Must be either `fax` or `voice`. Defaults to `voice`
             # @param [String] phone_number The phone number you want to purchase. The number
             #   should be formatted starting with a '+' followed by the country code and the
             #   number in [E.164](http://en.wikipedia.org/wiki/E.164) format e.g.,
@@ -229,7 +235,7 @@ module Twilio
             #   this or a `PhoneNumber` parameter to have your POST succeed.** (US and Canada
             #   only)
             # @return [IncomingPhoneNumberInstance] Newly created IncomingPhoneNumberInstance
-            def create(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, identity_sid: :unset, address_sid: :unset, phone_number: :unset, area_code: :unset)
+            def create(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, identity_sid: :unset, address_sid: :unset, voice_receive_mode: :unset, phone_number: :unset, area_code: :unset)
               data = Twilio::Values.of({
                   'PhoneNumber' => phone_number,
                   'AreaCode' => area_code,
@@ -253,6 +259,7 @@ module Twilio
                   'TrunkSid' => trunk_sid,
                   'IdentitySid' => identity_sid,
                   'AddressSid' => address_sid,
+                  'VoiceReceiveMode' => voice_receive_mode,
               })
 
               payload = @version.create(
@@ -328,7 +335,9 @@ module Twilio
             ##
             # Initialize the IncomingPhoneNumberContext
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The account_sid
+            # @param [String] account_sid The unique id of the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
+            #   phone number.
             # @param [String] sid The incoming-phone-number Sid that uniquely identifies this
             #   resource
             # @return [IncomingPhoneNumberContext] IncomingPhoneNumberContext
@@ -386,15 +395,19 @@ module Twilio
             #   the phone number. The VoiceURL will  no longer be used if a
             #   `VoiceApplicationSid` or a `TrunkSid` is set.
             # @param [incoming_phone_number.EmergencyStatus] emergency_status The
-            #   emergency_status
-            # @param [String] emergency_address_sid The emergency_address_sid
+            #   configuration status parameter determining whether this phone number is enabled
+            #   for emergency calling
+            # @param [String] emergency_address_sid The 34 character sid of the
+            #   EmergencyAddress configuration to leverage emergency calling for this phone
+            #   number
             # @param [String] trunk_sid The 34 character sid of the Trunk Twilio should use to
             #   handle phone calls to this number. If a `TrunkSid` is present, Twilio will
             #   ignore all of the voice urls  and voice applications above and use those set on
             #   the Trunk. Setting a `TrunkSid` will automatically delete your
             #   `VoiceApplicationSid` and vice versa.
             # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
-            #   voice_receive_mode
+            #   configuration parameter for this phone number to receive incoming voice calls or
+            #   faxes. Must be either `fax` or `voice`. Defaults to `voice`
             # @param [String] identity_sid The 34 character sid of the identity Twilio should
             #   use to associate with the number. Identities are required in some regions to
             #   meet local regulations
@@ -786,15 +799,19 @@ module Twilio
             #   the phone number. The VoiceURL will  no longer be used if a
             #   `VoiceApplicationSid` or a `TrunkSid` is set.
             # @param [incoming_phone_number.EmergencyStatus] emergency_status The
-            #   emergency_status
-            # @param [String] emergency_address_sid The emergency_address_sid
+            #   configuration status parameter determining whether this phone number is enabled
+            #   for emergency calling
+            # @param [String] emergency_address_sid The 34 character sid of the
+            #   EmergencyAddress configuration to leverage emergency calling for this phone
+            #   number
             # @param [String] trunk_sid The 34 character sid of the Trunk Twilio should use to
             #   handle phone calls to this number. If a `TrunkSid` is present, Twilio will
             #   ignore all of the voice urls  and voice applications above and use those set on
             #   the Trunk. Setting a `TrunkSid` will automatically delete your
             #   `VoiceApplicationSid` and vice versa.
             # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
-            #   voice_receive_mode
+            #   configuration parameter for this phone number to receive incoming voice calls or
+            #   faxes. Must be either `fax` or `voice`. Defaults to `voice`
             # @param [String] identity_sid The 34 character sid of the identity Twilio should
             #   use to associate with the number. Identities are required in some regions to
             #   meet local regulations

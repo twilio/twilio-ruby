@@ -243,6 +243,7 @@ module Twilio
                   'codec' => payload['codec'],
                   'grouping_sids' => payload['grouping_sids'],
                   'track_name' => payload['track_name'],
+                  'offset' => payload['offset'].to_i,
                   'room_sid' => payload['room_sid'],
                   'links' => payload['links'],
               }
@@ -339,6 +340,12 @@ module Twilio
             # @return [String] The track_name
             def track_name
               @properties['track_name']
+            end
+
+            ##
+            # @return [String] The offset
+            def offset
+              @properties['offset']
             end
 
             ##

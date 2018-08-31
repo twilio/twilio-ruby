@@ -1,6 +1,19 @@
 twilio-ruby changelog
 =====================
 
+[2018-08-31] Version 5.12.4
+----------------------------
+**Library**
+- PR #427: VCORE-3651 Add support for *for* attribute in twiml element. Thanks to @nmahure!
+
+**Api**
+- Add `call_sid_to_coach` parameter to participant create request
+- Add `voice_receive_mode` param to IncomingPhoneNumbers create
+
+**Video**
+- [Recordings] Expose `offset` property in resource
+
+
 [2018-08-23] Version 5.12.3
 ----------------------------
 **Chat**

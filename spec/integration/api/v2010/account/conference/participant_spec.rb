@@ -169,6 +169,33 @@ describe 'Participant' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives create_with_sid_as_coach responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "call_sid": "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "conference_sid": "CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "date_created": "Fri, 18 Feb 2011 21:07:19 +0000",
+          "date_updated": "Fri, 18 Feb 2011 21:07:19 +0000",
+          "end_conference_on_exit": false,
+          "muted": false,
+          "hold": false,
+          "status": "queued",
+          "start_conference_on_enter": true,
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Conferences/CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+      }
+      ]
+    ))
+
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .conferences('CFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .participants.create(from: '+15017122661', to: '+15558675310')
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
