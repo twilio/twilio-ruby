@@ -120,8 +120,10 @@ module Twilio
           #   resource as an alternative to the sid. Unique up to 64 characters long.
           # @param [String] callback_url The callback_url
           # @param [String] callback_events The callback_events
-          # @param [Hash] fallback_actions The fallback_actions
-          # @param [Hash] initiation_actions The initiation_actions
+          # @param [Hash] fallback_actions The JSON actions to be executed when the user's
+          #   input is not recognized as matching any Intent.
+          # @param [Hash] initiation_actions The JSON actions to be executed on inbound
+          #   phone calls when the Assistant has to say something first.
           # @return [AssistantInstance] Newly created AssistantInstance
           def create(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, fallback_actions: :unset, initiation_actions: :unset)
             data = Twilio::Values.of({
@@ -233,8 +235,10 @@ module Twilio
           #   resource as an alternative to the sid. Unique up to 64 characters long.
           # @param [String] callback_url The callback_url
           # @param [String] callback_events The callback_events
-          # @param [Hash] fallback_actions The fallback_actions
-          # @param [Hash] initiation_actions The initiation_actions
+          # @param [Hash] fallback_actions The JSON actions to be executed when the user's
+          #   input is not recognized as matching any Intent.
+          # @param [Hash] initiation_actions The JSON actions to be executed on inbound
+          #   phone calls when the Assistant has to say something first.
           # @return [AssistantInstance] Updated AssistantInstance
           def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, fallback_actions: :unset, initiation_actions: :unset)
             data = Twilio::Values.of({
@@ -512,8 +516,10 @@ module Twilio
           #   resource as an alternative to the sid. Unique up to 64 characters long.
           # @param [String] callback_url The callback_url
           # @param [String] callback_events The callback_events
-          # @param [Hash] fallback_actions The fallback_actions
-          # @param [Hash] initiation_actions The initiation_actions
+          # @param [Hash] fallback_actions The JSON actions to be executed when the user's
+          #   input is not recognized as matching any Intent.
+          # @param [Hash] initiation_actions The JSON actions to be executed on inbound
+          #   phone calls when the Assistant has to say something first.
           # @return [AssistantInstance] Updated AssistantInstance
           def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, fallback_actions: :unset, initiation_actions: :unset)
             context.update(

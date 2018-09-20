@@ -18,8 +18,8 @@ module Twilio
               ##
               # Initialize the IntentActionsList
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The assistant_sid
-              # @param [String] intent_sid The intent_sid
+              # @param [String] assistant_sid The unique ID of the parent Assistant.
+              # @param [String] intent_sid The unique ID of the Intent.
               # @return [IntentActionsList] IntentActionsList
               def initialize(version, assistant_sid: nil, intent_sid: nil)
                 super(version)
@@ -77,8 +77,8 @@ module Twilio
               ##
               # Initialize the IntentActionsContext
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The assistant_sid
-              # @param [String] intent_sid The intent_sid
+              # @param [String] assistant_sid The unique ID of the parent Assistant.
+              # @param [String] intent_sid The unique ID of the Intent.
               # @return [IntentActionsContext] IntentActionsContext
               def initialize(version, assistant_sid, intent_sid)
                 super(version)
@@ -110,7 +110,8 @@ module Twilio
 
               ##
               # Update the IntentActionsInstance
-              # @param [Hash] actions The actions
+              # @param [Hash] actions The JSON actions that instruct the Assistant how to
+              #   perform this task.
               # @return [IntentActionsInstance] Updated IntentActionsInstance
               def update(actions: :unset)
                 data = Twilio::Values.of({'Actions' => Twilio.serialize_object(actions), })
@@ -144,8 +145,8 @@ module Twilio
               # Initialize the IntentActionsInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] assistant_sid The assistant_sid
-              # @param [String] intent_sid The intent_sid
+              # @param [String] assistant_sid The unique ID of the parent Assistant.
+              # @param [String] intent_sid The unique ID of the Intent.
               # @return [IntentActionsInstance] IntentActionsInstance
               def initialize(version, payload, assistant_sid: nil, intent_sid: nil)
                 super(version)
@@ -180,19 +181,19 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The unique ID of the Account that created this Field.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The assistant_sid
+              # @return [String] The unique ID of the parent Assistant.
               def assistant_sid
                 @properties['assistant_sid']
               end
 
               ##
-              # @return [String] The intent_sid
+              # @return [String] The unique ID of the Intent.
               def intent_sid
                 @properties['intent_sid']
               end
@@ -218,7 +219,8 @@ module Twilio
 
               ##
               # Update the IntentActionsInstance
-              # @param [Hash] actions The actions
+              # @param [Hash] actions The JSON actions that instruct the Assistant how to
+              #   perform this task.
               # @return [IntentActionsInstance] Updated IntentActionsInstance
               def update(actions: :unset)
                 context.update(actions: actions, )

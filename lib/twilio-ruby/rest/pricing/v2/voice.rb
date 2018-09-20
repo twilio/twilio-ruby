@@ -23,6 +23,7 @@ module Twilio
 
             # Components
             @countries = nil
+            @numbers = nil
           end
 
           ##
@@ -39,6 +40,22 @@ module Twilio
             end
 
               @countries ||= CountryList.new(@version, )
+          end
+
+          ##
+          # Access the numbers
+          # @param [String] destination_number This fetches the origin-based voice pricing
+          #   information for a phone number
+          # @return [NumberList]
+          # @return [NumberContext] if destination_number was passed.
+          def numbers(destination_number=:unset)
+            raise ArgumentError, 'destination_number cannot be nil' if destination_number.nil?
+
+            if destination_number != :unset
+              return NumberContext.new(@version, destination_number, )
+            end
+
+              @numbers ||= NumberList.new(@version, )
           end
 
           ##

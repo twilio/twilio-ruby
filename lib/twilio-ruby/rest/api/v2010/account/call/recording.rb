@@ -33,15 +33,22 @@ module Twilio
               ##
               # Retrieve a single page of RecordingInstance records from the API.
               # Request is executed immediately.
-              # @param [String] recording_status_callback_event The
-              #   recording_status_callback_event
-              # @param [String] recording_status_callback The recording_status_callback
-              # @param [String] recording_status_callback_method The
-              #   recording_status_callback_method
-              # @param [String] trim Possible values `trim-silence` or `do-not-trim`.
+              # @param [String] recording_status_callback_event The recording status changes
+              #   that should generate a request to the URL specified in RecordingStatusCallback.
+              #   Possible values: `in-progress`, `completed`, `failed`. To specify multiple
+              #   values separate them with a space. Defaults to `completed`.
+              # @param [String] recording_status_callback The URL which Twilio will make its GET
+              #   or POST request to for the recording events specified in parameter
+              #   RecordingStatusCallbackEvent.
+              # @param [String] recording_status_callback_method The HTTP method Twilio should
+              #   use when making a request to the RecordingStatusCallback URL. Possible values:
+              #   `GET`, `POST`. Defaults to `POST`.
+              # @param [String] trim Possible values: `trim-silence` or `do-not-trim`.
               #   `trim-silence` will trim the silence from the beginning and end of the
               #   recording. `do-not-trim` will not trim the silence. Defaults to `do-not-trim`
-              # @param [String] recording_channels The recording_channels
+              # @param [String] recording_channels Possible values: `mono` or `dual`. `mono`
+              #   records all parties of your call into one channel. `dual` records a 2 party call
+              #   into separate channels. Defaults to `mono`.
               # @return [RecordingInstance] Newly created RecordingInstance
               def create(recording_status_callback_event: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, trim: :unset, recording_channels: :unset)
                 data = Twilio::Values.of({
@@ -231,10 +238,14 @@ module Twilio
               ##
               # Update the RecordingInstance
               # @param [recording.Status] status The status to change the recording to. 
-              #   Possible values : stopped, paused, in-progress
+              #   Possible values: `stopped`, `paused`, `in-progress`
+              # @param [String] pause_behavior Possible values: `skip` or `silence`. `skip` will
+              #   result in no recording at all during the pause period. `silence` will replace
+              #   the actual audio of the call with silence during the pause period.  Defaults to
+              #   `silence`
               # @return [RecordingInstance] Updated RecordingInstance
-              def update(status: nil)
-                data = Twilio::Values.of({'Status' => status, })
+              def update(status: nil, pause_behavior: :unset)
+                data = Twilio::Values.of({'Status' => status, 'PauseBehavior' => pause_behavior, })
 
                 payload = @version.update(
                     'POST',
@@ -449,10 +460,14 @@ module Twilio
               ##
               # Update the RecordingInstance
               # @param [recording.Status] status The status to change the recording to. 
-              #   Possible values : stopped, paused, in-progress
+              #   Possible values: `stopped`, `paused`, `in-progress`
+              # @param [String] pause_behavior Possible values: `skip` or `silence`. `skip` will
+              #   result in no recording at all during the pause period. `silence` will replace
+              #   the actual audio of the call with silence during the pause period.  Defaults to
+              #   `silence`
               # @return [RecordingInstance] Updated RecordingInstance
-              def update(status: nil)
-                context.update(status: status, )
+              def update(status: nil, pause_behavior: :unset)
+                context.update(status: status, pause_behavior: pause_behavior, )
               end
 
               ##

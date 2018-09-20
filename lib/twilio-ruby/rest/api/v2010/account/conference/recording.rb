@@ -196,10 +196,14 @@ module Twilio
               ##
               # Update the RecordingInstance
               # @param [recording.Status] status The status to change the recording to. 
-              #   Possible values : stopped, paused, in-progress
+              #   Possible values: `stopped`, `paused`, `in-progress`
+              # @param [String] pause_behavior Possible values: `skip` or `silence`. `skip` will
+              #   result in no recording at all during the pause period. `silence` will replace
+              #   the actual audio of the call with silence during the pause period.  Defaults to
+              #   `silence`
               # @return [RecordingInstance] Updated RecordingInstance
-              def update(status: nil)
-                data = Twilio::Values.of({'Status' => status, })
+              def update(status: nil, pause_behavior: :unset)
+                data = Twilio::Values.of({'Status' => status, 'PauseBehavior' => pause_behavior, })
 
                 payload = @version.update(
                     'POST',
@@ -418,10 +422,14 @@ module Twilio
               ##
               # Update the RecordingInstance
               # @param [recording.Status] status The status to change the recording to. 
-              #   Possible values : stopped, paused, in-progress
+              #   Possible values: `stopped`, `paused`, `in-progress`
+              # @param [String] pause_behavior Possible values: `skip` or `silence`. `skip` will
+              #   result in no recording at all during the pause period. `silence` will replace
+              #   the actual audio of the call with silence during the pause period.  Defaults to
+              #   `silence`
               # @return [RecordingInstance] Updated RecordingInstance
-              def update(status: nil)
-                context.update(status: status, )
+              def update(status: nil, pause_behavior: :unset)
+                context.update(status: status, pause_behavior: pause_behavior, )
               end
 
               ##

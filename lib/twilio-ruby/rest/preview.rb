@@ -19,6 +19,7 @@ module Twilio
         @port = 443
 
         # Versions
+        @authy = nil
         @bulk_exports = nil
         @deployed_devices = nil
         @hosted_numbers = nil
@@ -27,6 +28,13 @@ module Twilio
         @sync = nil
         @understand = nil
         @wireless = nil
+        @permissions = nil
+      end
+
+      ##
+      # Version authy of preview
+      def authy
+        @authy ||= Authy.new self
       end
 
       ##
@@ -75,6 +83,20 @@ module Twilio
       # Version wireless of preview
       def wireless
         @wireless ||= Wireless.new self
+      end
+
+      ##
+      # Version permissions of preview
+      def permissions
+        @permissions ||= Permissions.new self
+      end
+
+      ##
+      # @param [String] sid The sid
+      # @return [Twilio::REST::Preview::Sync::ServiceInstance] if sid was passed.
+      # @return [Twilio::REST::Preview::Sync::ServiceList]
+      def services(sid=:unset)
+        self.sync.services(sid)
       end
 
       ##
@@ -139,14 +161,6 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
-      # @return [Twilio::REST::Preview::Sync::ServiceInstance] if sid was passed.
-      # @return [Twilio::REST::Preview::Sync::ServiceList]
-      def services(sid=:unset)
-        self.sync.services(sid)
-      end
-
-      ##
       # @param [String] sid A 34 character string that uniquely identifies this
       #   resource.
       # @return [Twilio::REST::Preview::Understand::AssistantInstance] if sid was passed.
@@ -177,6 +191,12 @@ module Twilio
       # @return [Twilio::REST::Preview::Wireless::SimList]
       def sims(sid=:unset)
         self.wireless.sims(sid)
+      end
+
+      ##
+      # @return [Twilio::REST::Preview::Permissions::VoicePermissionInstance]
+      def voice_permissions
+        self.permissions.voice_permissions()
       end
 
       ##
