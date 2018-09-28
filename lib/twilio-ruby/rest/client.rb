@@ -44,6 +44,7 @@ module Twilio
         @sync = nil
         @studio = nil
         @verify = nil
+        @voice = nil
       end
 
       ##
@@ -206,6 +207,12 @@ module Twilio
       # Access the Verify Twilio Domain
       def verify
         @verify ||= Verify.new self
+      end
+
+      ##
+      # Access the Voice Twilio Domain
+      def voice
+        @voice ||= Voice.new self
       end
 
       ##

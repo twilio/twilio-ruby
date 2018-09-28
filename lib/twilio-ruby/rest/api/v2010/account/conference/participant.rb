@@ -124,11 +124,8 @@ module Twilio
               #   specified in the `ConferenceRecordingStatusCallback` attribute. Available values
               #   are `in-progress`, `completed`, `failed`. To specify multiple values, separate
               #   them with a space. Defaults to `in-progress`, `completed`, `failed`.
-              # @param [String] call_sid_to_coach The string that uniquely identifies the
-              #   participant that is being `coached`, i.e. the only participant who can hear the
-              #   participant that is in `coach` mode.
               # @return [ParticipantInstance] Newly created ParticipantInstance
-              def create(from: nil, to: nil, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_record: :unset, conference_trim: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, region: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, recording_status_callback_event: :unset, conference_recording_status_callback_event: :unset, call_sid_to_coach: :unset)
+              def create(from: nil, to: nil, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_record: :unset, conference_trim: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, region: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, recording_status_callback_event: :unset, conference_recording_status_callback_event: :unset)
                 data = Twilio::Values.of({
                     'From' => from,
                     'To' => to,
@@ -160,7 +157,6 @@ module Twilio
                     'ConferenceRecordingStatusCallbackMethod' => conference_recording_status_callback_method,
                     'RecordingStatusCallbackEvent' => Twilio.serialize_list(recording_status_callback_event) { |e| e },
                     'ConferenceRecordingStatusCallbackEvent' => Twilio.serialize_list(conference_recording_status_callback_event) { |e| e },
-                    'CallSidToCoach' => call_sid_to_coach,
                 })
 
                 payload = @version.create(

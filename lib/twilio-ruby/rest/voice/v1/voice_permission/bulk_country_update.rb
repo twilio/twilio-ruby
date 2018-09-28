@@ -8,8 +8,8 @@
 
 module Twilio
   module REST
-    class Preview < Domain
-      class Permissions < Version
+    class Voice < Domain
+      class V1 < Version
         class VoicePermissionList < ListResource
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
@@ -23,15 +23,16 @@ module Twilio
 
               # Path Solution
               @solution = {}
-              @uri = "/VoicePermissions/BulkCountryUpdates"
+              @uri = "/DialingPermissions/BulkCountryUpdates"
             end
 
             ##
             # Retrieve a single page of BulkCountryUpdateInstance records from the API.
             # Request is executed immediately.
-            # @param [String] update_request Json list of update objects. eg : [ { "iso_code":
-            #   "GB", "low_risk_numbers": "Enabled", "high_risk_special_numbers":"Enabled",
-            #   "high_risk_irsf_numbers": "Enabled" } ]
+            # @param [String] update_request URL encoded JSON array of update objects. example
+            #   : [ { "iso_code": "GB", "low_risk_numbers_enabled": "true",
+            #   "high_risk_special_numbers_enabled":"true",
+            #   "high_risk_tollfraud_numbers_enabled": "false" } ]
             # @return [BulkCountryUpdateInstance] Newly created BulkCountryUpdateInstance
             def create(update_request: nil)
               data = Twilio::Values.of({'UpdateRequest' => update_request, })
@@ -48,7 +49,7 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              '#<Twilio.Preview.Permissions.BulkCountryUpdateList>'
+              '#<Twilio.Voice.V1.BulkCountryUpdateList>'
             end
           end
 
@@ -79,7 +80,7 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              '<Twilio.Preview.Permissions.BulkCountryUpdatePage>'
+              '<Twilio.Voice.V1.BulkCountryUpdatePage>'
             end
           end
 
@@ -102,7 +103,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The number of countries successfully updated
+            # @return [String] The number of countries updated
             def update_count
               @properties['update_count']
             end
@@ -116,13 +117,13 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              "<Twilio.Preview.Permissions.BulkCountryUpdateInstance>"
+              "<Twilio.Voice.V1.BulkCountryUpdateInstance>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
-              "<Twilio.Preview.Permissions.BulkCountryUpdateInstance>"
+              "<Twilio.Voice.V1.BulkCountryUpdateInstance>"
             end
           end
         end

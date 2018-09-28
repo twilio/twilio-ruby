@@ -8,8 +8,8 @@
 
 module Twilio
   module REST
-    class Preview < Domain
-      class Permissions < Version
+    class Voice < Domain
+      class V1 < Version
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class VoicePermissionList < ListResource
@@ -66,7 +66,7 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Preview.Permissions.VoicePermissionList>'
+            '#<Twilio.Voice.V1.VoicePermissionList>'
           end
         end
 
@@ -97,7 +97,7 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Preview.Permissions.VoicePermissionPage>'
+            '<Twilio.Voice.V1.VoicePermissionPage>'
           end
         end
 
@@ -116,13 +116,13 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            "<Twilio.Preview.Permissions.VoicePermissionInstance>"
+            "<Twilio.Voice.V1.VoicePermissionInstance>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
-            "<Twilio.Preview.Permissions.VoicePermissionInstance>"
+            "<Twilio.Voice.V1.VoicePermissionInstance>"
           end
         end
       end

@@ -13,15 +13,15 @@ describe 'Country' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.permissions.voice_permissions \
-                                 .countries('US').fetch()
+      @client.voice.v1.voice_permissions \
+                      .countries('US').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/permissions/VoicePermissions/Countries/US',
+        url: 'https://voice.twilio.com/v1/DialingPermissions/Countries/US',
     ))).to eq(true)
   end
 
@@ -39,16 +39,16 @@ describe 'Country' do
           "low_risk_numbers_enabled": false,
           "high_risk_special_numbers_enabled": false,
           "high_risk_tollfraud_numbers_enabled": false,
-          "url": "https://preview.twilio.com/permissions/VoicePermissions/Countries/US",
+          "url": "https://voice.twilio.com/v1/DialingPermissions/Countries/US",
           "links": {
-              "highrisk_special_prefixes": "https://preview.twilio.com/permissions/VoicePermissions/Countries/US/HighRiskSpecialPrefixes"
+              "highrisk_special_prefixes": "https://voice.twilio.com/v1/DialingPermissions/Countries/US/HighRiskSpecialPrefixes"
           }
       }
       ]
     ))
 
-    actual = @client.preview.permissions.voice_permissions \
-                                        .countries('US').fetch()
+    actual = @client.voice.v1.voice_permissions \
+                             .countries('US').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -57,15 +57,15 @@ describe 'Country' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.permissions.voice_permissions \
-                                 .countries.list()
+      @client.voice.v1.voice_permissions \
+                      .countries.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/permissions/VoicePermissions/Countries',
+        url: 'https://voice.twilio.com/v1/DialingPermissions/Countries',
     ))).to eq(true)
   end
 
@@ -85,27 +85,27 @@ describe 'Country' do
                   "low_risk_numbers_enabled": false,
                   "high_risk_special_numbers_enabled": false,
                   "high_risk_tollfraud_numbers_enabled": false,
-                  "url": "https://preview.twilio.com/permissions/VoicePermissions/Countries/US",
+                  "url": "https://voice.twilio.com/v1/DialingPermissions/Countries/US",
                   "links": {
-                      "highrisk_special_prefixes": "https://preview.twilio.com/permissions/VoicePermissions/Countries/US/HighRiskSpecialPrefixes"
+                      "highrisk_special_prefixes": "https://voice.twilio.com/v1/DialingPermissions/Countries/US/HighRiskSpecialPrefixes"
                   }
               }
           ],
           "meta": {
-              "first_page_url": "https://preview.twilio.com/permissions/VoicePermissions/Countries?PageSize=50&Page=0",
+              "first_page_url": "https://voice.twilio.com/v1/DialingPermissions/Countries?PageSize=50&Page=0",
               "key": "content",
               "next_page_url": null,
               "page": 0,
               "page_size": 50,
               "previous_page_url": null,
-              "url": "https://preview.twilio.com/permissions/VoicePermissions/Countries?PageSize=50&Page=0"
+              "url": "https://voice.twilio.com/v1/DialingPermissions/Countries?PageSize=50&Page=0"
           }
       }
       ]
     ))
 
-    actual = @client.preview.permissions.voice_permissions \
-                                        .countries.list()
+    actual = @client.voice.v1.voice_permissions \
+                             .countries.list()
 
     expect(actual).to_not eq(nil)
   end

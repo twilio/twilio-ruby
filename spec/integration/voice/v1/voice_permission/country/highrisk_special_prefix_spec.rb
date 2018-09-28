@@ -13,16 +13,16 @@ describe 'HighriskSpecialPrefix' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.permissions.voice_permissions \
-                                 .countries('US') \
-                                 .highrisk_special_prefixes.list()
+      @client.voice.v1.voice_permissions \
+                      .countries('US') \
+                      .highrisk_special_prefixes.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/permissions/VoicePermissions/Countries/US/HighRiskSpecialPrefixes',
+        url: 'https://voice.twilio.com/v1/DialingPermissions/Countries/US/HighRiskSpecialPrefixes',
     ))).to eq(true)
   end
 
@@ -40,21 +40,21 @@ describe 'HighriskSpecialPrefix' do
               }
           ],
           "meta": {
-              "first_page_url": "https://preview.twilio.com/permissions/VoicePermissions/Countries/LV/HighRiskSpecialPrefixes?PageSize=50&Page=0",
+              "first_page_url": "https://voice.twilio.com/v1/DialingPermissions/Countries/LV/HighRiskSpecialPrefixes?PageSize=50&Page=0",
               "key": "content",
               "next_page_url": null,
               "page": 0,
               "page_size": 50,
               "previous_page_url": null,
-              "url": "https://preview.twilio.com/permissions/VoicePermissions/Countries/LV/HighRiskSpecialPrefixes?PageSize=50&Page=0"
+              "url": "https://voice.twilio.com/v1/DialingPermissions/Countries/LV/HighRiskSpecialPrefixes?PageSize=50&Page=0"
           }
       }
       ]
     ))
 
-    actual = @client.preview.permissions.voice_permissions \
-                                        .countries('US') \
-                                        .highrisk_special_prefixes.list()
+    actual = @client.voice.v1.voice_permissions \
+                             .countries('US') \
+                             .highrisk_special_prefixes.list()
 
     expect(actual).to_not eq(nil)
   end

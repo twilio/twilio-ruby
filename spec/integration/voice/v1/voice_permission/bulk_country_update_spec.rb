@@ -13,15 +13,15 @@ describe 'BulkCountryUpdate' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.permissions.voice_permissions \
-                                 .bulk_country_updates.create(update_request: 'update_request')
+      @client.voice.v1.voice_permissions \
+                      .bulk_country_updates.create(update_request: 'update_request')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'UpdateRequest' => 'update_request', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/permissions/VoicePermissions/BulkCountryUpdates',
+        url: 'https://voice.twilio.com/v1/DialingPermissions/BulkCountryUpdates',
         data: values,
     ))).to eq(true)
   end
@@ -37,8 +37,8 @@ describe 'BulkCountryUpdate' do
       ]
     ))
 
-    actual = @client.preview.permissions.voice_permissions \
-                                        .bulk_country_updates.create(update_request: 'update_request')
+    actual = @client.voice.v1.voice_permissions \
+                             .bulk_country_updates.create(update_request: 'update_request')
 
     expect(actual).to_not eq(nil)
   end

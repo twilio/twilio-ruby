@@ -8,18 +8,18 @@
 
 module Twilio
   module REST
-    class Preview
-      class Permissions < Version
+    class Voice
+      class V1 < Version
         ##
-        # Initialize the Permissions version of Preview
+        # Initialize the V1 version of Voice
         def initialize(domain)
           super
-          @version = 'permissions'
+          @version = 'v1'
           @voice_permissions = nil
         end
 
         ##
-        # @return [Twilio::REST::Preview::Permissions::VoicePermissionContext]
+        # @return [Twilio::REST::Voice::V1::VoicePermissionContext]
         def voice_permissions
           @voice_permissions ||= VoicePermissionList.new self
         end
@@ -27,7 +27,7 @@ module Twilio
         ##
         # Provide a user friendly representation
         def to_s
-          '<Twilio::REST::Preview::Permissions>'
+          '<Twilio::REST::Voice::V1>'
         end
       end
     end

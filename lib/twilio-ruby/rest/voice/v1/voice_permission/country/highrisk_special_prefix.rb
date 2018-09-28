@@ -8,8 +8,8 @@
 
 module Twilio
   module REST
-    class Preview < Domain
-      class Permissions < Version
+    class Voice < Domain
+      class V1 < Version
         class VoicePermissionList < ListResource
           class CountryContext < InstanceContext
             ##
@@ -18,15 +18,15 @@ module Twilio
               ##
               # Initialize the HighriskSpecialPrefixList
               # @param [Version] version Version that contains the resource
-              # @param [String] parent_iso_code The [ISO country
+              # @param [String] iso_code The [ISO country
               #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
               # @return [HighriskSpecialPrefixList] HighriskSpecialPrefixList
-              def initialize(version, parent_iso_code: nil)
+              def initialize(version, iso_code: nil)
                 super(version)
 
                 # Path Solution
-                @solution = {parent_iso_code: parent_iso_code}
-                @uri = "/VoicePermissions/Countries/#{@solution[:parent_iso_code]}/HighRiskSpecialPrefixes"
+                @solution = {iso_code: iso_code}
+                @uri = "/DialingPermissions/Countries/#{@solution[:iso_code]}/HighRiskSpecialPrefixes"
               end
 
               ##
@@ -114,7 +114,7 @@ module Twilio
               ##
               # Provide a user friendly representation
               def to_s
-                '#<Twilio.Preview.Permissions.HighriskSpecialPrefixList>'
+                '#<Twilio.Voice.V1.HighriskSpecialPrefixList>'
               end
             end
 
@@ -139,13 +139,13 @@ module Twilio
               # @param [Hash] payload Payload response from the API
               # @return [HighriskSpecialPrefixInstance] HighriskSpecialPrefixInstance
               def get_instance(payload)
-                HighriskSpecialPrefixInstance.new(@version, payload, parent_iso_code: @solution[:parent_iso_code], )
+                HighriskSpecialPrefixInstance.new(@version, payload, iso_code: @solution[:iso_code], )
               end
 
               ##
               # Provide a user friendly representation
               def to_s
-                '<Twilio.Preview.Permissions.HighriskSpecialPrefixPage>'
+                '<Twilio.Voice.V1.HighriskSpecialPrefixPage>'
               end
             end
 
@@ -156,10 +156,10 @@ module Twilio
               # Initialize the HighriskSpecialPrefixInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] parent_iso_code The [ISO country
+              # @param [String] iso_code The [ISO country
               #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
               # @return [HighriskSpecialPrefixInstance] HighriskSpecialPrefixInstance
-              def initialize(version, payload, parent_iso_code: nil)
+              def initialize(version, payload, iso_code: nil)
                 super(version)
 
                 # Marshaled Properties
@@ -167,7 +167,7 @@ module Twilio
               end
 
               ##
-              # @return [String] prefix string of phone number
+              # @return [String] A prefix that includes the E.164 assigned country code
               def prefix
                 @properties['prefix']
               end
@@ -175,13 +175,13 @@ module Twilio
               ##
               # Provide a user friendly representation
               def to_s
-                "<Twilio.Preview.Permissions.HighriskSpecialPrefixInstance>"
+                "<Twilio.Voice.V1.HighriskSpecialPrefixInstance>"
               end
 
               ##
               # Provide a detailed, user friendly representation
               def inspect
-                "<Twilio.Preview.Permissions.HighriskSpecialPrefixInstance>"
+                "<Twilio.Voice.V1.HighriskSpecialPrefixInstance>"
               end
             end
           end

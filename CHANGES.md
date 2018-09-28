@@ -1,6 +1,24 @@
 twilio-ruby changelog
 =====================
 
+[2018-09-28] Version 5.14.0
+----------------------------
+**Api**
+- Set `call_sid_to_coach` parameter in participant to be `preview`
+
+**Preview**
+- Renamed response headers for Challenge and Factors Signatures
+- Supported `totp` in Authy preview endpoints
+- Allowed `latest` in Authy Challenges endpoints
+
+**Video**
+- [Composer] Add Composition Hook resources
+
+**Voice**
+- changed path param name from parent_iso_code to iso_code for highrisk_special_prefixes api **(breaking change)**
+- added geo permissions public api
+
+
 [2018-09-20] Version 5.13.0
 ----------------------------
 **Preview**
