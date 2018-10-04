@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+[2018-10-04] Version 5.14.1
+----------------------------
+**Twiml**
+- Add `debug` to `Gather`
+- Add `participantIdentity` to `Room`
+
+
 [2018-09-28] Version 5.14.0
 ----------------------------
 **Api**
