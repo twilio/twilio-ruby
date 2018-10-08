@@ -619,15 +619,18 @@ module Twilio
 
       ##
       # Create a new <Client> element
-      # name:: Client name
+      # identity:: Client identity
       # url:: Client URL
       # method:: Client URL Method
       # status_callback_event:: Events to trigger status callback
       # status_callback:: Status Callback URL
       # status_callback_method:: Status Callback URL Method
       # keyword_args:: additional attributes
-      def client(name, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
-        append(Client.new(name, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args))
+      def client(identity: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
+        client = Client.new(identity: identity, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args)
+
+        yield(client) if block_given?
+        append(client)
       end
 
       ##
@@ -753,10 +756,49 @@ module Twilio
     ##
     # <Client> TwiML Noun
     class Client < TwiML
-      def initialize(name, **keyword_args)
+      def initialize(identity: nil, **keyword_args)
         super(**keyword_args)
         @name = 'Client'
-        @value = name
+        @value = identity unless identity.nil?
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Identity> element
+      # client_identity:: Identity of the client to dial
+      # keyword_args:: additional attributes
+      def identity(client_identity, **keyword_args)
+        append(Identity.new(client_identity, **keyword_args))
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
+      end
+    end
+
+    ##
+    # <Parameter> TwiML Noun
+    class Parameter < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Parameter'
+
+        yield(self) if block_given?
+      end
+    end
+
+    ##
+    # <Identity> TwiML Noun
+    class Identity < TwiML
+      def initialize(client_identity, **keyword_args)
+        super(**keyword_args)
+        @name = 'Identity'
+        @value = client_identity
         yield(self) if block_given?
       end
     end

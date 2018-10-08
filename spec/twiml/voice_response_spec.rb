@@ -727,7 +727,7 @@ describe Twilio::TwiML::VoiceResponse do
         </Response>
       XML
       dial = Twilio::TwiML::Dial.new
-      dial.client ''
+      dial.client
 
       response = Twilio::TwiML::VoiceResponse.new
       response.append(dial)
@@ -744,9 +744,32 @@ describe Twilio::TwiML::VoiceResponse do
         </Response>
       XML
       dial = Twilio::TwiML::Dial.new
-      dial.client 'alice'
+      dial.client identity: 'alice'
 
       response = Twilio::TwiML::VoiceResponse.new
+      response.append(dial)
+      doc = parse(response)
+      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
+    end
+
+    it 'should allow client identity and parameters' do
+      expected_doc = parse <<-XML
+        <Response>
+          <Dial>
+            <Client>
+              <Identity>alice</Identity>
+              <Parameter name="hello" value="world"/>
+            </Client>
+          </Dial>
+        </Response>
+      XML
+      dial = Twilio::TwiML::Dial.new
+      client = Twilio::TwiML::Client.new
+      client.identity 'alice'
+      client.parameter name: 'hello', value: 'world'
+
+      response = Twilio::TwiML::VoiceResponse.new
+      dial.append(client)
       response.append(dial)
       doc = parse(response)
       expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
