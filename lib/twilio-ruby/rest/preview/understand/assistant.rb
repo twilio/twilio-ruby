@@ -118,14 +118,17 @@ module Twilio
           #   true if no value is provided.
           # @param [String] unique_name A user-provided string that uniquely identifies this
           #   resource as an alternative to the sid. Unique up to 64 characters long.
-          # @param [String] callback_url The callback_url
-          # @param [String] callback_events The callback_events
+          # @param [String] callback_url A user-provided URL to send event callbacks to.
+          # @param [String] callback_events Space-separated list of callback events that
+          #   will trigger callbacks.
           # @param [Hash] fallback_actions The JSON actions to be executed when the user's
-          #   input is not recognized as matching any Intent.
+          #   input is not recognized as matching any Task.
           # @param [Hash] initiation_actions The JSON actions to be executed on inbound
           #   phone calls when the Assistant has to say something first.
+          # @param [Hash] style_sheet The JSON object that holds the style sheet for the
+          #   assistant
           # @return [AssistantInstance] Newly created AssistantInstance
-          def create(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, fallback_actions: :unset, initiation_actions: :unset)
+          def create(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, fallback_actions: :unset, initiation_actions: :unset, style_sheet: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'LogQueries' => log_queries,
@@ -134,6 +137,7 @@ module Twilio
                 'CallbackEvents' => callback_events,
                 'FallbackActions' => Twilio.serialize_object(fallback_actions),
                 'InitiationActions' => Twilio.serialize_object(initiation_actions),
+                'StyleSheet' => Twilio.serialize_object(style_sheet),
             })
 
             payload = @version.create(
@@ -189,7 +193,8 @@ module Twilio
           ##
           # Initialize the AssistantContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this
+          #   resource.
           # @return [AssistantContext] AssistantContext
           def initialize(version, sid)
             super(version)
@@ -200,12 +205,13 @@ module Twilio
 
             # Dependents
             @field_types = nil
-            @intents = nil
+            @tasks = nil
             @model_builds = nil
             @queries = nil
             @assistant_fallback_actions = nil
             @assistant_initiation_actions = nil
             @dialogues = nil
+            @style_sheet = nil
           end
 
           ##
@@ -233,14 +239,17 @@ module Twilio
           #   true if no value is provided.
           # @param [String] unique_name A user-provided string that uniquely identifies this
           #   resource as an alternative to the sid. Unique up to 64 characters long.
-          # @param [String] callback_url The callback_url
-          # @param [String] callback_events The callback_events
+          # @param [String] callback_url A user-provided URL to send event callbacks to.
+          # @param [String] callback_events Space-separated list of callback events that
+          #   will trigger callbacks.
           # @param [Hash] fallback_actions The JSON actions to be executed when the user's
-          #   input is not recognized as matching any Intent.
+          #   input is not recognized as matching any Task.
           # @param [Hash] initiation_actions The JSON actions to be executed on inbound
           #   phone calls when the Assistant has to say something first.
+          # @param [Hash] style_sheet The JSON object that holds the style sheet for the
+          #   assistant
           # @return [AssistantInstance] Updated AssistantInstance
-          def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, fallback_actions: :unset, initiation_actions: :unset)
+          def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, fallback_actions: :unset, initiation_actions: :unset, style_sheet: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'LogQueries' => log_queries,
@@ -249,6 +258,7 @@ module Twilio
                 'CallbackEvents' => callback_events,
                 'FallbackActions' => Twilio.serialize_object(fallback_actions),
                 'InitiationActions' => Twilio.serialize_object(initiation_actions),
+                'StyleSheet' => Twilio.serialize_object(style_sheet),
             })
 
             payload = @version.update(
@@ -286,21 +296,21 @@ module Twilio
           end
 
           ##
-          # Access the intents
-          # @return [IntentList]
-          # @return [IntentContext] if sid was passed.
-          def intents(sid=:unset)
+          # Access the tasks
+          # @return [TaskList]
+          # @return [TaskContext] if sid was passed.
+          def tasks(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return IntentContext.new(@version, @solution[:sid], sid, )
+              return TaskContext.new(@version, @solution[:sid], sid, )
             end
 
-            unless @intents
-              @intents = IntentList.new(@version, assistant_sid: @solution[:sid], )
+            unless @tasks
+              @tasks = TaskList.new(@version, assistant_sid: @solution[:sid], )
             end
 
-            @intents
+            @tasks
           end
 
           ##
@@ -374,6 +384,14 @@ module Twilio
           end
 
           ##
+          # Access the style_sheet
+          # @return [StyleSheetList]
+          # @return [StyleSheetContext]
+          def style_sheet
+            StyleSheetContext.new(@version, @solution[:sid], )
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -388,7 +406,8 @@ module Twilio
           # Initialize the AssistantInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this
+          #   resource.
           # @return [AssistantInstance] AssistantInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -486,13 +505,13 @@ module Twilio
           end
 
           ##
-          # @return [String] The callback_url
+          # @return [String] A user-provided URL to send event callbacks to.
           def callback_url
             @properties['callback_url']
           end
 
           ##
-          # @return [String] The callback_events
+          # @return [String] Space-separated list of callback events that will trigger callbacks.
           def callback_events
             @properties['callback_events']
           end
@@ -514,14 +533,17 @@ module Twilio
           #   true if no value is provided.
           # @param [String] unique_name A user-provided string that uniquely identifies this
           #   resource as an alternative to the sid. Unique up to 64 characters long.
-          # @param [String] callback_url The callback_url
-          # @param [String] callback_events The callback_events
+          # @param [String] callback_url A user-provided URL to send event callbacks to.
+          # @param [String] callback_events Space-separated list of callback events that
+          #   will trigger callbacks.
           # @param [Hash] fallback_actions The JSON actions to be executed when the user's
-          #   input is not recognized as matching any Intent.
+          #   input is not recognized as matching any Task.
           # @param [Hash] initiation_actions The JSON actions to be executed on inbound
           #   phone calls when the Assistant has to say something first.
+          # @param [Hash] style_sheet The JSON object that holds the style sheet for the
+          #   assistant
           # @return [AssistantInstance] Updated AssistantInstance
-          def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, fallback_actions: :unset, initiation_actions: :unset)
+          def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, fallback_actions: :unset, initiation_actions: :unset, style_sheet: :unset)
             context.update(
                 friendly_name: friendly_name,
                 log_queries: log_queries,
@@ -530,6 +552,7 @@ module Twilio
                 callback_events: callback_events,
                 fallback_actions: fallback_actions,
                 initiation_actions: initiation_actions,
+                style_sheet: style_sheet,
             )
           end
 
@@ -548,10 +571,10 @@ module Twilio
           end
 
           ##
-          # Access the intents
-          # @return [intents] intents
-          def intents
-            context.intents
+          # Access the tasks
+          # @return [tasks] tasks
+          def tasks
+            context.tasks
           end
 
           ##
@@ -587,6 +610,13 @@ module Twilio
           # @return [dialogues] dialogues
           def dialogues
             context.dialogues
+          end
+
+          ##
+          # Access the style_sheet
+          # @return [style_sheet] style_sheet
+          def style_sheet
+            context.style_sheet
           end
 
           ##

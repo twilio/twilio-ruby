@@ -821,6 +821,25 @@ module Twilio
       def room(name, participantIdentity: nil, **keyword_args)
         append(Room.new(name, participantIdentity: participantIdentity, **keyword_args))
       end
+
+      ##
+      # Create a new <Autopilot> element
+      # name:: Autopilot assistant sid or unique name
+      # keyword_args:: additional attributes
+      def autopilot(name, **keyword_args)
+        append(Autopilot.new(name, **keyword_args))
+      end
+    end
+
+    ##
+    # <Autopilot> TwiML Noun
+    class Autopilot < TwiML
+      def initialize(name, **keyword_args)
+        super(**keyword_args)
+        @name = 'Autopilot'
+        @value = name
+        yield(self) if block_given?
+      end
     end
 
     ##

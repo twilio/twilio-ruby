@@ -14,7 +14,7 @@ describe 'Sample' do
 
     expect {
       @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .samples('UFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -22,7 +22,7 @@ describe 'Sample' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Intents/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Samples/UFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Tasks/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Samples/UFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -31,8 +31,8 @@ describe 'Sample' do
         200,
       %q[
       {
-          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples/UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "intent_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples/UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "task_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "sid": "UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -46,7 +46,7 @@ describe 'Sample' do
     ))
 
     actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                       .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .samples('UFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
@@ -57,7 +57,7 @@ describe 'Sample' do
 
     expect {
       @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .samples.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -65,7 +65,7 @@ describe 'Sample' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Intents/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Samples',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Tasks/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Samples',
     ))).to eq(true)
   end
 
@@ -76,11 +76,11 @@ describe 'Sample' do
       {
           "samples": [],
           "meta": {
-              "first_page_url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples?PageSize=50&Page=0",
+              "first_page_url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples?PageSize=50&Page=0",
               "previous_page_url": null,
               "key": "samples",
               "next_page_url": null,
-              "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples?PageSize=50&Page=0",
+              "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples?PageSize=50&Page=0",
               "page": 0,
               "page_size": 50
           }
@@ -89,7 +89,7 @@ describe 'Sample' do
     ))
 
     actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                       .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .samples.list()
 
     expect(actual).to_not eq(nil)
@@ -102,8 +102,8 @@ describe 'Sample' do
       {
           "samples": [
               {
-                  "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples/UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                  "intent_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples/UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "task_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "sid": "UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -115,11 +115,11 @@ describe 'Sample' do
               }
           ],
           "meta": {
-              "first_page_url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples?PageSize=50&Page=0",
+              "first_page_url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples?PageSize=50&Page=0",
               "previous_page_url": null,
               "key": "samples",
               "next_page_url": null,
-              "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples?PageSize=50&Page=0",
+              "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples?PageSize=50&Page=0",
               "page": 0,
               "page_size": 50
           }
@@ -128,7 +128,7 @@ describe 'Sample' do
     ))
 
     actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                       .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .samples.list()
 
     expect(actual).to_not eq(nil)
@@ -139,7 +139,7 @@ describe 'Sample' do
 
     expect {
       @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .samples.create(language: 'language', tagged_text: 'tagged_text')
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -147,7 +147,7 @@ describe 'Sample' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Intents/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Samples',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Tasks/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Samples',
         data: values,
     ))).to eq(true)
   end
@@ -157,8 +157,8 @@ describe 'Sample' do
         201,
       %q[
       {
-          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples/UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "intent_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples/UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "task_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "sid": "UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -172,7 +172,7 @@ describe 'Sample' do
     ))
 
     actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                       .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .samples.create(language: 'language', tagged_text: 'tagged_text')
 
     expect(actual).to_not eq(nil)
@@ -183,7 +183,7 @@ describe 'Sample' do
 
     expect {
       @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .samples('UFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -191,7 +191,7 @@ describe 'Sample' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Intents/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Samples/UFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Tasks/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Samples/UFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -200,8 +200,8 @@ describe 'Sample' do
         200,
       %q[
       {
-          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples/UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "intent_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Samples/UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "task_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "sid": "UFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -215,7 +215,7 @@ describe 'Sample' do
     ))
 
     actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                       .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .samples('UFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
@@ -226,7 +226,7 @@ describe 'Sample' do
 
     expect {
       @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .samples('UFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -234,7 +234,7 @@ describe 'Sample' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Intents/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Samples/UFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Tasks/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Samples/UFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -245,7 +245,7 @@ describe 'Sample' do
     ))
 
     actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                       .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .samples('UFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
 
     expect(actual).to eq(true)

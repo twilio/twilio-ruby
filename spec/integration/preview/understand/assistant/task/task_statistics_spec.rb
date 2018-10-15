@@ -8,13 +8,13 @@
 
 require 'spec_helper.rb'
 
-describe 'IntentStatistics' do
+describe 'TaskStatistics' do
   it "can fetch" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .statistics().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -22,7 +22,7 @@ describe 'IntentStatistics' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Intents/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Statistics',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Tasks/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Statistics',
     ))).to eq(true)
   end
 
@@ -31,10 +31,10 @@ describe 'IntentStatistics' do
         200,
       %q[
       {
-          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Statistics",
+          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Statistics",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "intent_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "task_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "samples_count": 0,
           "fields_count": 0
       }
@@ -42,7 +42,7 @@ describe 'IntentStatistics' do
     ))
 
     actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                       .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                        .statistics().fetch()
 
     expect(actual).to_not eq(nil)

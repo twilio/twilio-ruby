@@ -8,42 +8,42 @@
 
 module Twilio
   module REST
-    class Preview < Domain
-      class Understand < Version
+    class Autopilot < Domain
+      class V1 < Version
         class AssistantContext < InstanceContext
-          class IntentContext < InstanceContext
+          class TaskContext < InstanceContext
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class IntentActionsList < ListResource
+            class TaskStatisticsList < ListResource
               ##
-              # Initialize the IntentActionsList
+              # Initialize the TaskStatisticsList
               # @param [Version] version Version that contains the resource
               # @param [String] assistant_sid The unique ID of the parent Assistant.
-              # @param [String] intent_sid The unique ID of the Intent.
-              # @return [IntentActionsList] IntentActionsList
-              def initialize(version, assistant_sid: nil, intent_sid: nil)
+              # @param [String] task_sid The unique ID of the Task associated with this Field.
+              # @return [TaskStatisticsList] TaskStatisticsList
+              def initialize(version, assistant_sid: nil, task_sid: nil)
                 super(version)
 
                 # Path Solution
-                @solution = {assistant_sid: assistant_sid, intent_sid: intent_sid}
+                @solution = {assistant_sid: assistant_sid, task_sid: task_sid}
               end
 
               ##
               # Provide a user friendly representation
               def to_s
-                '#<Twilio.Preview.Understand.IntentActionsList>'
+                '#<Twilio.Autopilot.V1.TaskStatisticsList>'
               end
             end
 
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class IntentActionsPage < Page
+            class TaskStatisticsPage < Page
               ##
-              # Initialize the IntentActionsPage
+              # Initialize the TaskStatisticsPage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @return [IntentActionsPage] IntentActionsPage
+              # @return [TaskStatisticsPage] TaskStatisticsPage
               def initialize(version, response, solution)
                 super(version, response)
 
@@ -52,45 +52,45 @@ module Twilio
               end
 
               ##
-              # Build an instance of IntentActionsInstance
+              # Build an instance of TaskStatisticsInstance
               # @param [Hash] payload Payload response from the API
-              # @return [IntentActionsInstance] IntentActionsInstance
+              # @return [TaskStatisticsInstance] TaskStatisticsInstance
               def get_instance(payload)
-                IntentActionsInstance.new(
+                TaskStatisticsInstance.new(
                     @version,
                     payload,
                     assistant_sid: @solution[:assistant_sid],
-                    intent_sid: @solution[:intent_sid],
+                    task_sid: @solution[:task_sid],
                 )
               end
 
               ##
               # Provide a user friendly representation
               def to_s
-                '<Twilio.Preview.Understand.IntentActionsPage>'
+                '<Twilio.Autopilot.V1.TaskStatisticsPage>'
               end
             end
 
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class IntentActionsContext < InstanceContext
+            class TaskStatisticsContext < InstanceContext
               ##
-              # Initialize the IntentActionsContext
+              # Initialize the TaskStatisticsContext
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The unique ID of the parent Assistant.
-              # @param [String] intent_sid The unique ID of the Intent.
-              # @return [IntentActionsContext] IntentActionsContext
-              def initialize(version, assistant_sid, intent_sid)
+              # @param [String] assistant_sid The assistant_sid
+              # @param [String] task_sid The task_sid
+              # @return [TaskStatisticsContext] TaskStatisticsContext
+              def initialize(version, assistant_sid, task_sid)
                 super(version)
 
                 # Path Solution
-                @solution = {assistant_sid: assistant_sid, intent_sid: intent_sid, }
-                @uri = "/Assistants/#{@solution[:assistant_sid]}/Intents/#{@solution[:intent_sid]}/Actions"
+                @solution = {assistant_sid: assistant_sid, task_sid: task_sid, }
+                @uri = "/Assistants/#{@solution[:assistant_sid]}/Tasks/#{@solution[:task_sid]}/Statistics"
               end
 
               ##
-              # Fetch a IntentActionsInstance
-              # @return [IntentActionsInstance] Fetched IntentActionsInstance
+              # Fetch a TaskStatisticsInstance
+              # @return [TaskStatisticsInstance] Fetched TaskStatisticsInstance
               def fetch
                 params = Twilio::Values.of({})
 
@@ -100,33 +100,11 @@ module Twilio
                     params,
                 )
 
-                IntentActionsInstance.new(
+                TaskStatisticsInstance.new(
                     @version,
                     payload,
                     assistant_sid: @solution[:assistant_sid],
-                    intent_sid: @solution[:intent_sid],
-                )
-              end
-
-              ##
-              # Update the IntentActionsInstance
-              # @param [Hash] actions The JSON actions that instruct the Assistant how to
-              #   perform this task.
-              # @return [IntentActionsInstance] Updated IntentActionsInstance
-              def update(actions: :unset)
-                data = Twilio::Values.of({'Actions' => Twilio.serialize_object(actions), })
-
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
-
-                IntentActionsInstance.new(
-                    @version,
-                    payload,
-                    assistant_sid: @solution[:assistant_sid],
-                    intent_sid: @solution[:intent_sid],
+                    task_sid: @solution[:task_sid],
                 )
               end
 
@@ -134,47 +112,48 @@ module Twilio
               # Provide a user friendly representation
               def to_s
                 context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-                "#<Twilio.Preview.Understand.IntentActionsContext #{context}>"
+                "#<Twilio.Autopilot.V1.TaskStatisticsContext #{context}>"
               end
             end
 
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class IntentActionsInstance < InstanceResource
+            class TaskStatisticsInstance < InstanceResource
               ##
-              # Initialize the IntentActionsInstance
+              # Initialize the TaskStatisticsInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] assistant_sid The unique ID of the parent Assistant.
-              # @param [String] intent_sid The unique ID of the Intent.
-              # @return [IntentActionsInstance] IntentActionsInstance
-              def initialize(version, payload, assistant_sid: nil, intent_sid: nil)
+              # @param [String] task_sid The unique ID of the Task associated with this Field.
+              # @return [TaskStatisticsInstance] TaskStatisticsInstance
+              def initialize(version, payload, assistant_sid: nil, task_sid: nil)
                 super(version)
 
                 # Marshaled Properties
                 @properties = {
                     'account_sid' => payload['account_sid'],
                     'assistant_sid' => payload['assistant_sid'],
-                    'intent_sid' => payload['intent_sid'],
+                    'task_sid' => payload['task_sid'],
+                    'samples_count' => payload['samples_count'].to_i,
+                    'fields_count' => payload['fields_count'].to_i,
                     'url' => payload['url'],
-                    'data' => payload['data'],
                 }
 
                 # Context
                 @instance_context = nil
-                @params = {'assistant_sid' => assistant_sid, 'intent_sid' => intent_sid, }
+                @params = {'assistant_sid' => assistant_sid, 'task_sid' => task_sid, }
               end
 
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @return [IntentActionsContext] IntentActionsContext for this IntentActionsInstance
+              # @return [TaskStatisticsContext] TaskStatisticsContext for this TaskStatisticsInstance
               def context
                 unless @instance_context
-                  @instance_context = IntentActionsContext.new(
+                  @instance_context = TaskStatisticsContext.new(
                       @version,
                       @params['assistant_sid'],
-                      @params['intent_sid'],
+                      @params['task_sid'],
                   )
                 end
                 @instance_context
@@ -193,9 +172,21 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique ID of the Intent.
-              def intent_sid
-                @properties['intent_sid']
+              # @return [String] The unique ID of the Task associated with this Field.
+              def task_sid
+                @properties['task_sid']
+              end
+
+              ##
+              # @return [String] The total number of Samples associated with this Task.
+              def samples_count
+                @properties['samples_count']
+              end
+
+              ##
+              # @return [String] The total number of Fields associated with this Task.
+              def fields_count
+                @properties['fields_count']
               end
 
               ##
@@ -205,39 +196,24 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The data
-              def data
-                @properties['data']
-              end
-
-              ##
-              # Fetch a IntentActionsInstance
-              # @return [IntentActionsInstance] Fetched IntentActionsInstance
+              # Fetch a TaskStatisticsInstance
+              # @return [TaskStatisticsInstance] Fetched TaskStatisticsInstance
               def fetch
                 context.fetch
-              end
-
-              ##
-              # Update the IntentActionsInstance
-              # @param [Hash] actions The JSON actions that instruct the Assistant how to
-              #   perform this task.
-              # @return [IntentActionsInstance] Updated IntentActionsInstance
-              def update(actions: :unset)
-                context.update(actions: actions, )
               end
 
               ##
               # Provide a user friendly representation
               def to_s
                 values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Preview.Understand.IntentActionsInstance #{values}>"
+                "<Twilio.Autopilot.V1.TaskStatisticsInstance #{values}>"
               end
 
               ##
               # Provide a detailed, user friendly representation
               def inspect
                 values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Preview.Understand.IntentActionsInstance #{values}>"
+                "<Twilio.Autopilot.V1.TaskStatisticsInstance #{values}>"
               end
             end
           end

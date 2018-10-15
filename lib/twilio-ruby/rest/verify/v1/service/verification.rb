@@ -35,9 +35,16 @@ module Twilio
             #   sms or call
             # @param [String] custom_message A character string containing a custom message
             #   for this verification
+            # @param [String] send_digits Digits to send when a phone call is started, same
+            #   parameters as in Programmable Voice are supported
             # @return [VerificationInstance] Newly created VerificationInstance
-            def create(to: nil, channel: nil, custom_message: :unset)
-              data = Twilio::Values.of({'To' => to, 'Channel' => channel, 'CustomMessage' => custom_message, })
+            def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset)
+              data = Twilio::Values.of({
+                  'To' => to,
+                  'Channel' => channel,
+                  'CustomMessage' => custom_message,
+                  'SendDigits' => send_digits,
+              })
 
               payload = @version.create(
                   'POST',

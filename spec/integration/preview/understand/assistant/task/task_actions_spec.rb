@@ -8,21 +8,21 @@
 
 require 'spec_helper.rb'
 
-describe 'IntentActions' do
+describe 'TaskActions' do
   it "can fetch" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                .intent_actions().fetch()
+                                .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .task_actions().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Intents/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Actions',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Tasks/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Actions',
     ))).to eq(true)
   end
 
@@ -33,16 +33,16 @@ describe 'IntentActions' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "intent_sid": "UDdddddddddddddddddddddddddddddddd",
+          "task_sid": "UDdddddddddddddddddddddddddddddddd",
           "data": {},
-          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDdddddddddddddddddddddddddddddddd/Actions"
+          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/UDdddddddddddddddddddddddddddddddd/Actions"
       }
       ]
     ))
 
     actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                       .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                       .intent_actions().fetch()
+                                       .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .task_actions().fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -52,15 +52,15 @@ describe 'IntentActions' do
 
     expect {
       @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                .intent_actions().update()
+                                .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .task_actions().update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Intents/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Actions',
+        url: 'https://preview.twilio.com/understand/Assistants/UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Tasks/UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Actions',
     ))).to eq(true)
   end
 
@@ -71,16 +71,16 @@ describe 'IntentActions' do
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "assistant_sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "intent_sid": "UDdddddddddddddddddddddddddddddddd",
+          "task_sid": "UDdddddddddddddddddddddddddddddddd",
           "data": {},
-          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Intents/UDdddddddddddddddddddddddddddddddd/Actions"
+          "url": "https://preview.twilio.com/understand/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Tasks/UDdddddddddddddddddddddddddddddddd/Actions"
       }
       ]
     ))
 
     actual = @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                       .intents('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                       .intent_actions().update()
+                                       .tasks('UDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                       .task_actions().update()
 
     expect(actual).to_not eq(nil)
   end

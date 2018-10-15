@@ -41,6 +41,8 @@ describe 'Participant' do
           "hold": false,
           "status": "complete",
           "start_conference_on_enter": true,
+          "coaching": true,
+          "call_sid_to_coach": "CAbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Conferences/CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
       ]
@@ -70,7 +72,7 @@ describe 'Participant' do
     ))).to eq(true)
   end
 
-  it "receives update responses" do
+  it "receives mute_participant responses" do
     @holodeck.mock(Twilio::Response.new(
         200,
       %q[
@@ -85,6 +87,37 @@ describe 'Participant' do
           "hold": false,
           "status": "complete",
           "start_conference_on_enter": true,
+          "coaching": false,
+          "call_sid_to_coach": null,
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Conferences/CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+      }
+      ]
+    ))
+
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .conferences('CFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .participants('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives modify_participant responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "call_sid": "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "conference_sid": "CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "date_created": "Fri, 18 Feb 2011 21:07:19 +0000",
+          "date_updated": "Fri, 18 Feb 2011 21:07:19 +0000",
+          "end_conference_on_exit": false,
+          "muted": false,
+          "hold": false,
+          "status": "complete",
+          "start_conference_on_enter": true,
+          "coaching": true,
+          "call_sid_to_coach": "CAbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Conferences/CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
       ]
@@ -130,6 +163,8 @@ describe 'Participant' do
           "hold": false,
           "status": "complete",
           "start_conference_on_enter": true,
+          "coaching": false,
+          "call_sid_to_coach": null,
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Conferences/CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
       ]
@@ -157,6 +192,8 @@ describe 'Participant' do
           "hold": false,
           "status": "complete",
           "start_conference_on_enter": true,
+          "coaching": false,
+          "call_sid_to_coach": null,
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Conferences/CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
       ]
@@ -184,6 +221,8 @@ describe 'Participant' do
           "hold": false,
           "status": "queued",
           "start_conference_on_enter": true,
+          "coaching": false,
+          "call_sid_to_coach": null,
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Conferences/CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
       ]
@@ -265,6 +304,8 @@ describe 'Participant' do
                   "hold": false,
                   "status": "complete",
                   "start_conference_on_enter": true,
+                  "coaching": true,
+                  "call_sid_to_coach": "CAbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
                   "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Conferences/CFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
               }
           ],

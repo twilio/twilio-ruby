@@ -32,9 +32,15 @@ module Twilio
           #   service
           # @param [String] code_length The length of the verification code to be generated.
           #   Must be an integer value between 4-10
+          # @param [Boolean] lookup_enabled Boolean value that indicates if a lookup should
+          #   be performed with each verification started and associated info returned
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil, code_length: :unset)
-            data = Twilio::Values.of({'FriendlyName' => friendly_name, 'CodeLength' => code_length, })
+          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset)
+            data = Twilio::Values.of({
+                'FriendlyName' => friendly_name,
+                'CodeLength' => code_length,
+                'LookupEnabled' => lookup_enabled,
+            })
 
             payload = @version.create(
                 'POST',
@@ -201,14 +207,27 @@ module Twilio
           end
 
           ##
+          # Deletes the ServiceInstance
+          # @return [Boolean] true if delete succeeds, true otherwise
+          def delete
+            @version.delete('delete', @uri)
+          end
+
+          ##
           # Update the ServiceInstance
           # @param [String] friendly_name A 1-64 character string with friendly name of
           #   service
           # @param [String] code_length The length of the verification code to be generated.
           #   Must be an integer value between 4-10
+          # @param [Boolean] lookup_enabled Boolean value that indicates if a lookup should
+          #   be performed with each verification started and associated info returned
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset)
-            data = Twilio::Values.of({'FriendlyName' => friendly_name, 'CodeLength' => code_length, })
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset)
+            data = Twilio::Values.of({
+                'FriendlyName' => friendly_name,
+                'CodeLength' => code_length,
+                'LookupEnabled' => lookup_enabled,
+            })
 
             payload = @version.update(
                 'POST',
@@ -269,6 +288,7 @@ module Twilio
                 'account_sid' => payload['account_sid'],
                 'friendly_name' => payload['friendly_name'],
                 'code_length' => payload['code_length'].to_i,
+                'lookup_enabled' => payload['lookup_enabled'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
@@ -316,6 +336,12 @@ module Twilio
           end
 
           ##
+          # @return [Boolean] Indicates whether or not to perform a lookup with each verification started
+          def lookup_enabled
+            @properties['lookup_enabled']
+          end
+
+          ##
           # @return [Time] The date this Service was created
           def date_created
             @properties['date_created']
@@ -347,14 +373,27 @@ module Twilio
           end
 
           ##
+          # Deletes the ServiceInstance
+          # @return [Boolean] true if delete succeeds, true otherwise
+          def delete
+            context.delete
+          end
+
+          ##
           # Update the ServiceInstance
           # @param [String] friendly_name A 1-64 character string with friendly name of
           #   service
           # @param [String] code_length The length of the verification code to be generated.
           #   Must be an integer value between 4-10
+          # @param [Boolean] lookup_enabled Boolean value that indicates if a lookup should
+          #   be performed with each verification started and associated info returned
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset)
-            context.update(friendly_name: friendly_name, code_length: code_length, )
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset)
+            context.update(
+                friendly_name: friendly_name,
+                code_length: code_length,
+                lookup_enabled: lookup_enabled,
+            )
           end
 
           ##

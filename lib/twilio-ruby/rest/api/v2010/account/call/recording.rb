@@ -39,7 +39,8 @@ module Twilio
               #   values separate them with a space. Defaults to `completed`.
               # @param [String] recording_status_callback The URL which Twilio will make its GET
               #   or POST request to for the recording events specified in parameter
-              #   RecordingStatusCallbackEvent.
+              #   RecordingStatusCallbackEvent. See [RecordingStatusCallback
+              #   parameters](https://www.twilio.com/docs/voice/api/recording#recordingstatuscallback) for more details.
               # @param [String] recording_status_callback_method The HTTP method Twilio should
               #   use when making a request to the RecordingStatusCallback URL. Possible values:
               #   `GET`, `POST`. Defaults to `POST`.

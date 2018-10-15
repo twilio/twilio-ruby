@@ -19,7 +19,8 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The sid
+        # @param [String] sid A 34 character string that uniquely identifies this
+        #   resource.
         # @return [Twilio::REST::Preview::Understand::AssistantContext] if sid was passed.
         # @return [Twilio::REST::Preview::Understand::AssistantList]
         def assistants(sid=:unset)

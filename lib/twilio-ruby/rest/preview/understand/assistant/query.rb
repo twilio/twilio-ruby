@@ -144,20 +144,20 @@ module Twilio
             # @param [String] language An ISO language-country string of the sample.
             # @param [String] query A user-provided string that uniquely identifies this
             #   resource as an alternative to the sid. It can be up to 2048 characters long.
-            # @param [String] intents Constraints the query to a set of intents. Useful when
-            #   you need to constrain the paths the user can take. Intents should be comma
-            #   separated *intent-unique-name-1*, *intent-unique-name-2*
+            # @param [String] tasks Constraints the query to a set of tasks. Useful when you
+            #   need to constrain the paths the user can take. Tasks should be comma separated
+            #   *task-unique-name-1*, *task-unique-name-2*
             # @param [String] model_build The Model Build Sid or unique name of the Model
             #   Build to be queried.
-            # @param [String] field Constraints the query to a given Field with an intent.
+            # @param [String] field Constraints the query to a given Field with an task.
             #   Useful when you know the Field you are expecting. It accepts one field in the
-            #   format *intent-unique-name-1*:*field-unique-name*
+            #   format *task-unique-name-1*:*field-unique-name*
             # @return [QueryInstance] Newly created QueryInstance
-            def create(language: nil, query: nil, intents: :unset, model_build: :unset, field: :unset)
+            def create(language: nil, query: nil, tasks: :unset, model_build: :unset, field: :unset)
               data = Twilio::Values.of({
                   'Language' => language,
                   'Query' => query,
-                  'Intents' => intents,
+                  'Tasks' => tasks,
                   'ModelBuild' => model_build,
                   'Field' => field,
               })
@@ -215,8 +215,9 @@ module Twilio
             ##
             # Initialize the QueryContext
             # @param [Version] version Version that contains the resource
-            # @param [String] assistant_sid The assistant_sid
-            # @param [String] sid The sid
+            # @param [String] assistant_sid The unique ID of the Assistant.
+            # @param [String] sid A 34 character string that uniquely identifies this
+            #   resource.
             # @return [QueryContext] QueryContext
             def initialize(version, assistant_sid, sid)
               super(version)
@@ -243,7 +244,8 @@ module Twilio
 
             ##
             # Update the QueryInstance
-            # @param [String] sample_sid The sample_sid
+            # @param [String] sample_sid An optional reference to the Sample created from this
+            #   query.
             # @param [String] status A string that described the query status. The values can
             #   be: pending_review, reviewed, discarded
             # @return [QueryInstance] Updated QueryInstance
@@ -282,7 +284,8 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] assistant_sid The unique ID of the parent Assistant.
-            # @param [String] sid The sid
+            # @param [String] sid A 34 character string that uniquely identifies this
+            #   resource.
             # @return [QueryInstance] QueryInstance
             def initialize(version, payload, assistant_sid: nil, sid: nil)
               super(version)
@@ -339,7 +342,7 @@ module Twilio
             end
 
             ##
-            # @return [Hash] The natural language analysis results which include the Intent recognized, the confidence score and a list of identified Fields.
+            # @return [Hash] The natural language analysis results which include the Task recognized, the confidence score and a list of identified Fields.
             def results
               @properties['results']
             end
@@ -407,7 +410,8 @@ module Twilio
 
             ##
             # Update the QueryInstance
-            # @param [String] sample_sid The sample_sid
+            # @param [String] sample_sid An optional reference to the Sample created from this
+            #   query.
             # @param [String] status A string that described the query status. The values can
             #   be: pending_review, reviewed, discarded
             # @return [QueryInstance] Updated QueryInstance

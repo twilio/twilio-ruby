@@ -33,8 +33,10 @@ module Twilio
             # @param [String] friendly_name A human-readable name for the Channel. Optional.
             # @param [String] unique_name A unique, addressable name for the Channel. 
             #   Optional.
-            # @param [String] attributes An optional metadata field you can use to store any
-            #   data you wish. No processing or validation is done on this field.
+            # @param [String] attributes An optional string metadata field you can use to
+            #   store any data you wish. The string value must contain structurally valid JSON
+            #   if specified.  **Note** that if the attributes are not set "{}" will be
+            #   returned.
             # @param [channel.ChannelType] type The visibility of the channel - `public` or
             #   `private`. Defaults to `public`.
             # @param [Time] date_created The optional ISO8601 time specifying the datetime the
@@ -245,8 +247,10 @@ module Twilio
             # @param [String] friendly_name A human-readable name for the Channel. Optional.
             # @param [String] unique_name A unique, addressable name for the Channel. 
             #   Optional.
-            # @param [String] attributes An optional metadata field you can use to store any
-            #   data you wish. No processing or validation is done on this field.
+            # @param [String] attributes An optional string metadata field you can use to
+            #   store any data you wish. The string value must contain structurally valid JSON
+            #   if specified.  **Note** that if the attributes are not set "{}" will be
+            #   returned.
             # @param [Time] date_created The optional ISO8601 time specifying the datetime the
             #   Channel should be set as being created.
             # @param [Time] date_updated The optional ISO8601 time specifying the datetime the
@@ -520,8 +524,10 @@ module Twilio
             # @param [String] friendly_name A human-readable name for the Channel. Optional.
             # @param [String] unique_name A unique, addressable name for the Channel. 
             #   Optional.
-            # @param [String] attributes An optional metadata field you can use to store any
-            #   data you wish. No processing or validation is done on this field.
+            # @param [String] attributes An optional string metadata field you can use to
+            #   store any data you wish. The string value must contain structurally valid JSON
+            #   if specified.  **Note** that if the attributes are not set "{}" will be
+            #   returned.
             # @param [Time] date_created The optional ISO8601 time specifying the datetime the
             #   Channel should be set as being created.
             # @param [Time] date_updated The optional ISO8601 time specifying the datetime the

@@ -214,14 +214,10 @@ describe 'TaskQueue' do
 
     expect {
       @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                           .task_queues.create(friendly_name: 'friendly_name', reservation_activity_sid: 'WAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', assignment_activity_sid: 'WAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+                           .task_queues.create(friendly_name: 'friendly_name')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'FriendlyName' => 'friendly_name',
-        'ReservationActivitySid' => 'WAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        'AssignmentActivitySid' => 'WAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    }
+    values = {'FriendlyName' => 'friendly_name', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -263,7 +259,7 @@ describe 'TaskQueue' do
     ))
 
     actual = @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                  .task_queues.create(friendly_name: 'friendly_name', reservation_activity_sid: 'WAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', assignment_activity_sid: 'WAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+                                  .task_queues.create(friendly_name: 'friendly_name')
 
     expect(actual).to_not eq(nil)
   end

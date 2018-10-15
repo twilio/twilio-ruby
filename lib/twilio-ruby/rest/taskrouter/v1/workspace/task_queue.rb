@@ -147,10 +147,6 @@ module Twilio
             # Request is executed immediately.
             # @param [String] friendly_name Human readable description of this TaskQueue (for
             #   example "Support – Tier 1", "Sales" or "Escalation")
-            # @param [String] reservation_activity_sid ActivitySID to assign workers once a
-            #   task is reserved for them
-            # @param [String] assignment_activity_sid ActivitySID to assign workers once a
-            #   task is assigned for them
             # @param [String] target_workers A string describing the Worker selection criteria
             #   for any Tasks that enter this TaskQueue. For example `'"language" == "spanish"'`
             #   If no TargetWorkers parameter is provided, Tasks will wait in this TaskQueue
@@ -164,15 +160,19 @@ module Twilio
             #   recently created Task first or FIFO to assign the oldest Task. Default is FIFO.
             #   [Click here](https://www.twilio.com/docs/api/taskrouter/last-first-out-lifo) to
             #   learn more.
+            # @param [String] reservation_activity_sid ActivitySID to assign workers once a
+            #   task is reserved for them
+            # @param [String] assignment_activity_sid ActivitySID to assign workers once a
+            #   task is assigned for them
             # @return [TaskQueueInstance] Newly created TaskQueueInstance
-            def create(friendly_name: nil, reservation_activity_sid: nil, assignment_activity_sid: nil, target_workers: :unset, max_reserved_workers: :unset, task_order: :unset)
+            def create(friendly_name: nil, target_workers: :unset, max_reserved_workers: :unset, task_order: :unset, reservation_activity_sid: :unset, assignment_activity_sid: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
-                  'ReservationActivitySid' => reservation_activity_sid,
-                  'AssignmentActivitySid' => assignment_activity_sid,
                   'TargetWorkers' => target_workers,
                   'MaxReservedWorkers' => max_reserved_workers,
                   'TaskOrder' => task_order,
+                  'ReservationActivitySid' => reservation_activity_sid,
+                  'AssignmentActivitySid' => assignment_activity_sid,
               })
 
               payload = @version.create(

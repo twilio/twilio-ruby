@@ -31,6 +31,7 @@ module Twilio
           # @param [command.Status] status Only return Commands with this status value.
           # @param [command.Direction] direction Only return Commands with this direction
           #   value.
+          # @param [command.Transport] transport The transport
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -38,11 +39,12 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(sim: :unset, status: :unset, direction: :unset, limit: nil, page_size: nil)
+          def list(sim: :unset, status: :unset, direction: :unset, transport: :unset, limit: nil, page_size: nil)
             self.stream(
                 sim: sim,
                 status: status,
                 direction: direction,
+                transport: transport,
                 limit: limit,
                 page_size: page_size
             ).entries
@@ -56,6 +58,7 @@ module Twilio
           # @param [command.Status] status Only return Commands with this status value.
           # @param [command.Direction] direction Only return Commands with this direction
           #   value.
+          # @param [command.Transport] transport The transport
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -63,10 +66,16 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(sim: :unset, status: :unset, direction: :unset, limit: nil, page_size: nil)
+          def stream(sim: :unset, status: :unset, direction: :unset, transport: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(sim: sim, status: status, direction: direction, page_size: limits[:page_size], )
+            page = self.page(
+                sim: sim,
+                status: status,
+                direction: direction,
+                transport: transport,
+                page_size: limits[:page_size],
+            )
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -92,15 +101,17 @@ module Twilio
           # @param [command.Status] status Only return Commands with this status value.
           # @param [command.Direction] direction Only return Commands with this direction
           #   value.
+          # @param [command.Transport] transport The transport
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of CommandInstance
-          def page(sim: :unset, status: :unset, direction: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+          def page(sim: :unset, status: :unset, direction: :unset, transport: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'Sim' => sim,
                 'Status' => status,
                 'Direction' => direction,
+                'Transport' => transport,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
@@ -150,8 +161,9 @@ module Twilio
           #   CommandSid and the message body. The length of the CommandSid contributes toward
           #   the 160 character limit, i.e. the SMS body must be 128 characters or less before
           #   the Command Sid is included.
+          # @param [Boolean] delivery_receipt_requested The delivery_receipt_requested
           # @return [CommandInstance] Newly created CommandInstance
-          def create(command: nil, sim: :unset, callback_method: :unset, callback_url: :unset, command_mode: :unset, include_sid: :unset)
+          def create(command: nil, sim: :unset, callback_method: :unset, callback_url: :unset, command_mode: :unset, include_sid: :unset, delivery_receipt_requested: :unset)
             data = Twilio::Values.of({
                 'Command' => command,
                 'Sim' => sim,
@@ -159,6 +171,7 @@ module Twilio
                 'CallbackUrl' => callback_url,
                 'CommandMode' => command_mode,
                 'IncludeSid' => include_sid,
+                'DeliveryReceiptRequested' => delivery_receipt_requested,
             })
 
             payload = @version.create(
@@ -260,6 +273,8 @@ module Twilio
                 'sim_sid' => payload['sim_sid'],
                 'command' => payload['command'],
                 'command_mode' => payload['command_mode'],
+                'transport' => payload['transport'],
+                'delivery_receipt_requested' => payload['delivery_receipt_requested'],
                 'status' => payload['status'],
                 'direction' => payload['direction'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
@@ -311,6 +326,18 @@ module Twilio
           # @return [command.CommandMode] A string representing which mode the SMS was sent or received using.
           def command_mode
             @properties['command_mode']
+          end
+
+          ##
+          # @return [command.Transport] The transport
+          def transport
+            @properties['transport']
+          end
+
+          ##
+          # @return [Boolean] The delivery_receipt_requested
+          def delivery_receipt_requested
+            @properties['delivery_receipt_requested']
           end
 
           ##

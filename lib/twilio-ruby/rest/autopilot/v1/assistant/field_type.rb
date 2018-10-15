@@ -8,27 +8,27 @@
 
 module Twilio
   module REST
-    class Preview < Domain
-      class Understand < Version
+    class Autopilot < Domain
+      class V1 < Version
         class AssistantContext < InstanceContext
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class IntentList < ListResource
+          class FieldTypeList < ListResource
             ##
-            # Initialize the IntentList
+            # Initialize the FieldTypeList
             # @param [Version] version Version that contains the resource
             # @param [String] assistant_sid The unique ID of the Assistant.
-            # @return [IntentList] IntentList
+            # @return [FieldTypeList] FieldTypeList
             def initialize(version, assistant_sid: nil)
               super(version)
 
               # Path Solution
               @solution = {assistant_sid: assistant_sid}
-              @uri = "/Assistants/#{@solution[:assistant_sid]}/Intents"
+              @uri = "/Assistants/#{@solution[:assistant_sid]}/FieldTypes"
             end
 
             ##
-            # Lists IntentInstance records from the API as a list.
+            # Lists FieldTypeInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -43,7 +43,7 @@ module Twilio
             end
 
             ##
-            # Streams IntentInstance records from the API as an Enumerable.
+            # Streams FieldTypeInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -62,7 +62,7 @@ module Twilio
             end
 
             ##
-            # When passed a block, yields IntentInstance records from the API.
+            # When passed a block, yields FieldTypeInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             def each
@@ -76,12 +76,12 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of IntentInstance records from the API.
+            # Retrieve a single page of FieldTypeInstance records from the API.
             # Request is executed immediately.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            # @return [Page] Page of IntentInstance
+            # @return [Page] Page of FieldTypeInstance
             def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'PageToken' => page_token,
@@ -93,37 +93,32 @@ module Twilio
                   @uri,
                   params
               )
-              IntentPage.new(@version, response, @solution)
+              FieldTypePage.new(@version, response, @solution)
             end
 
             ##
-            # Retrieve a single page of IntentInstance records from the API.
+            # Retrieve a single page of FieldTypeInstance records from the API.
             # Request is executed immediately.
             # @param [String] target_url API-generated URL for the requested results page
-            # @return [Page] Page of IntentInstance
+            # @return [Page] Page of FieldTypeInstance
             def get_page(target_url)
               response = @version.domain.request(
                   'GET',
                   target_url
               )
-              IntentPage.new(@version, response, @solution)
+              FieldTypePage.new(@version, response, @solution)
             end
 
             ##
-            # Retrieve a single page of IntentInstance records from the API.
+            # Retrieve a single page of FieldTypeInstance records from the API.
             # Request is executed immediately.
             # @param [String] unique_name A user-provided string that uniquely identifies this
             #   resource as an alternative to the sid. Unique up to 64 characters long.
             # @param [String] friendly_name A user-provided string that identifies this
-            #   resource. It is non-unique and can up to 255 characters long.
-            # @param [Hash] actions The actions
-            # @return [IntentInstance] Newly created IntentInstance
-            def create(unique_name: nil, friendly_name: :unset, actions: :unset)
-              data = Twilio::Values.of({
-                  'UniqueName' => unique_name,
-                  'FriendlyName' => friendly_name,
-                  'Actions' => Twilio.serialize_object(actions),
-              })
+            #   resource. It is non-unique and can be up to 255 characters long.
+            # @return [FieldTypeInstance] Newly created FieldTypeInstance
+            def create(unique_name: nil, friendly_name: :unset)
+              data = Twilio::Values.of({'UniqueName' => unique_name, 'FriendlyName' => friendly_name, })
 
               payload = @version.create(
                   'POST',
@@ -131,25 +126,25 @@ module Twilio
                   data: data
               )
 
-              IntentInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
+              FieldTypeInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '#<Twilio.Preview.Understand.IntentList>'
+              '#<Twilio.Autopilot.V1.FieldTypeList>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class IntentPage < Page
+          class FieldTypePage < Page
             ##
-            # Initialize the IntentPage
+            # Initialize the FieldTypePage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @return [IntentPage] IntentPage
+            # @return [FieldTypePage] FieldTypePage
             def initialize(version, response, solution)
               super(version, response)
 
@@ -158,46 +153,43 @@ module Twilio
             end
 
             ##
-            # Build an instance of IntentInstance
+            # Build an instance of FieldTypeInstance
             # @param [Hash] payload Payload response from the API
-            # @return [IntentInstance] IntentInstance
+            # @return [FieldTypeInstance] FieldTypeInstance
             def get_instance(payload)
-              IntentInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
+              FieldTypeInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '<Twilio.Preview.Understand.IntentPage>'
+              '<Twilio.Autopilot.V1.FieldTypePage>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class IntentContext < InstanceContext
+          class FieldTypeContext < InstanceContext
             ##
-            # Initialize the IntentContext
+            # Initialize the FieldTypeContext
             # @param [Version] version Version that contains the resource
             # @param [String] assistant_sid The assistant_sid
             # @param [String] sid The sid
-            # @return [IntentContext] IntentContext
+            # @return [FieldTypeContext] FieldTypeContext
             def initialize(version, assistant_sid, sid)
               super(version)
 
               # Path Solution
               @solution = {assistant_sid: assistant_sid, sid: sid, }
-              @uri = "/Assistants/#{@solution[:assistant_sid]}/Intents/#{@solution[:sid]}"
+              @uri = "/Assistants/#{@solution[:assistant_sid]}/FieldTypes/#{@solution[:sid]}"
 
               # Dependents
-              @fields = nil
-              @samples = nil
-              @intent_actions = nil
-              @statistics = nil
+              @field_values = nil
             end
 
             ##
-            # Fetch a IntentInstance
-            # @return [IntentInstance] Fetched IntentInstance
+            # Fetch a FieldTypeInstance
+            # @return [FieldTypeInstance] Fetched FieldTypeInstance
             def fetch
               params = Twilio::Values.of({})
 
@@ -207,7 +199,7 @@ module Twilio
                   params,
               )
 
-              IntentInstance.new(
+              FieldTypeInstance.new(
                   @version,
                   payload,
                   assistant_sid: @solution[:assistant_sid],
@@ -216,19 +208,14 @@ module Twilio
             end
 
             ##
-            # Update the IntentInstance
+            # Update the FieldTypeInstance
             # @param [String] friendly_name A user-provided string that identifies this
-            #   resource. It is non-unique and can up to 255 characters long.
+            #   resource. It is non-unique and can be up to 255 characters long.
             # @param [String] unique_name A user-provided string that uniquely identifies this
             #   resource as an alternative to the sid. Unique up to 64 characters long.
-            # @param [Hash] actions The actions
-            # @return [IntentInstance] Updated IntentInstance
-            def update(friendly_name: :unset, unique_name: :unset, actions: :unset)
-              data = Twilio::Values.of({
-                  'FriendlyName' => friendly_name,
-                  'UniqueName' => unique_name,
-                  'Actions' => Twilio.serialize_object(actions),
-              })
+            # @return [FieldTypeInstance] Updated FieldTypeInstance
+            def update(friendly_name: :unset, unique_name: :unset)
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'UniqueName' => unique_name, })
 
               payload = @version.update(
                   'POST',
@@ -236,7 +223,7 @@ module Twilio
                   data: data,
               )
 
-              IntentInstance.new(
+              FieldTypeInstance.new(
                   @version,
                   payload,
                   assistant_sid: @solution[:assistant_sid],
@@ -245,90 +232,52 @@ module Twilio
             end
 
             ##
-            # Deletes the IntentInstance
+            # Deletes the FieldTypeInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               @version.delete('delete', @uri)
             end
 
             ##
-            # Access the fields
-            # @return [FieldList]
-            # @return [FieldContext] if sid was passed.
-            def fields(sid=:unset)
+            # Access the field_values
+            # @return [FieldValueList]
+            # @return [FieldValueContext] if sid was passed.
+            def field_values(sid=:unset)
               raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
               if sid != :unset
-                return FieldContext.new(@version, @solution[:assistant_sid], @solution[:sid], sid, )
+                return FieldValueContext.new(@version, @solution[:assistant_sid], @solution[:sid], sid, )
               end
 
-              unless @fields
-                @fields = FieldList.new(
+              unless @field_values
+                @field_values = FieldValueList.new(
                     @version,
                     assistant_sid: @solution[:assistant_sid],
-                    intent_sid: @solution[:sid],
+                    field_type_sid: @solution[:sid],
                 )
               end
 
-              @fields
-            end
-
-            ##
-            # Access the samples
-            # @return [SampleList]
-            # @return [SampleContext] if sid was passed.
-            def samples(sid=:unset)
-              raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-              if sid != :unset
-                return SampleContext.new(@version, @solution[:assistant_sid], @solution[:sid], sid, )
-              end
-
-              unless @samples
-                @samples = SampleList.new(
-                    @version,
-                    assistant_sid: @solution[:assistant_sid],
-                    intent_sid: @solution[:sid],
-                )
-              end
-
-              @samples
-            end
-
-            ##
-            # Access the intent_actions
-            # @return [IntentActionsList]
-            # @return [IntentActionsContext]
-            def intent_actions
-              IntentActionsContext.new(@version, @solution[:assistant_sid], @solution[:sid], )
-            end
-
-            ##
-            # Access the statistics
-            # @return [IntentStatisticsList]
-            # @return [IntentStatisticsContext]
-            def statistics
-              IntentStatisticsContext.new(@version, @solution[:assistant_sid], @solution[:sid], )
+              @field_values
             end
 
             ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Preview.Understand.IntentContext #{context}>"
+              "#<Twilio.Autopilot.V1.FieldTypeContext #{context}>"
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class IntentInstance < InstanceResource
+          class FieldTypeInstance < InstanceResource
             ##
-            # Initialize the IntentInstance
+            # Initialize the FieldTypeInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] assistant_sid The unique ID of the Assistant.
             # @param [String] sid The sid
-            # @return [IntentInstance] IntentInstance
+            # @return [FieldTypeInstance] FieldTypeInstance
             def initialize(version, payload, assistant_sid: nil, sid: nil)
               super(version)
 
@@ -353,16 +302,16 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return [IntentContext] IntentContext for this IntentInstance
+            # @return [FieldTypeContext] FieldTypeContext for this FieldTypeInstance
             def context
               unless @instance_context
-                @instance_context = IntentContext.new(@version, @params['assistant_sid'], @params['sid'], )
+                @instance_context = FieldTypeContext.new(@version, @params['assistant_sid'], @params['sid'], )
               end
               @instance_context
             end
 
             ##
-            # @return [String] The unique ID of the Account that created this Intent.
+            # @return [String] The unique ID of the Account that created this Field Type.
             def account_sid
               @properties['account_sid']
             end
@@ -380,7 +329,7 @@ module Twilio
             end
 
             ##
-            # @return [String] A user-provided string that identifies this resource. It is non-unique and can up to 255 characters long.
+            # @return [String] A user-provided string that identifies this resource. It is non-unique and can be up to 255 characters long.
             def friendly_name
               @properties['friendly_name']
             end
@@ -416,71 +365,49 @@ module Twilio
             end
 
             ##
-            # Fetch a IntentInstance
-            # @return [IntentInstance] Fetched IntentInstance
+            # Fetch a FieldTypeInstance
+            # @return [FieldTypeInstance] Fetched FieldTypeInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Update the IntentInstance
+            # Update the FieldTypeInstance
             # @param [String] friendly_name A user-provided string that identifies this
-            #   resource. It is non-unique and can up to 255 characters long.
+            #   resource. It is non-unique and can be up to 255 characters long.
             # @param [String] unique_name A user-provided string that uniquely identifies this
             #   resource as an alternative to the sid. Unique up to 64 characters long.
-            # @param [Hash] actions The actions
-            # @return [IntentInstance] Updated IntentInstance
-            def update(friendly_name: :unset, unique_name: :unset, actions: :unset)
-              context.update(friendly_name: friendly_name, unique_name: unique_name, actions: actions, )
+            # @return [FieldTypeInstance] Updated FieldTypeInstance
+            def update(friendly_name: :unset, unique_name: :unset)
+              context.update(friendly_name: friendly_name, unique_name: unique_name, )
             end
 
             ##
-            # Deletes the IntentInstance
+            # Deletes the FieldTypeInstance
             # @return [Boolean] true if delete succeeds, true otherwise
             def delete
               context.delete
             end
 
             ##
-            # Access the fields
-            # @return [fields] fields
-            def fields
-              context.fields
-            end
-
-            ##
-            # Access the samples
-            # @return [samples] samples
-            def samples
-              context.samples
-            end
-
-            ##
-            # Access the intent_actions
-            # @return [intent_actions] intent_actions
-            def intent_actions
-              context.intent_actions
-            end
-
-            ##
-            # Access the statistics
-            # @return [statistics] statistics
-            def statistics
-              context.statistics
+            # Access the field_values
+            # @return [field_values] field_values
+            def field_values
+              context.field_values
             end
 
             ##
             # Provide a user friendly representation
             def to_s
               values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Preview.Understand.IntentInstance #{values}>"
+              "<Twilio.Autopilot.V1.FieldTypeInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
               values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Preview.Understand.IntentInstance #{values}>"
+              "<Twilio.Autopilot.V1.FieldTypeInstance #{values}>"
             end
           end
         end

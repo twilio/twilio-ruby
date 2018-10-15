@@ -8,33 +8,34 @@
 
 module Twilio
   module REST
-    class Preview < Domain
-      class Understand < Version
+    class Autopilot < Domain
+      class V1 < Version
         class AssistantContext < InstanceContext
-          class IntentContext < InstanceContext
+          class FieldTypeContext < InstanceContext
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class SampleList < ListResource
+            class FieldValueList < ListResource
               ##
-              # Initialize the SampleList
+              # Initialize the FieldValueList
               # @param [Version] version Version that contains the resource
               # @param [String] assistant_sid The unique ID of the Assistant.
-              # @param [String] intent_sid The unique ID of the Intent associated with this
-              #   Sample.
-              # @return [SampleList] SampleList
-              def initialize(version, assistant_sid: nil, intent_sid: nil)
+              # @param [String] field_type_sid The unique ID of the Field Type associated with
+              #   this Field Value.
+              # @return [FieldValueList] FieldValueList
+              def initialize(version, assistant_sid: nil, field_type_sid: nil)
                 super(version)
 
                 # Path Solution
-                @solution = {assistant_sid: assistant_sid, intent_sid: intent_sid}
-                @uri = "/Assistants/#{@solution[:assistant_sid]}/Intents/#{@solution[:intent_sid]}/Samples"
+                @solution = {assistant_sid: assistant_sid, field_type_sid: field_type_sid}
+                @uri = "/Assistants/#{@solution[:assistant_sid]}/FieldTypes/#{@solution[:field_type_sid]}/FieldValues"
               end
 
               ##
-              # Lists SampleInstance records from the API as a list.
+              # Lists FieldValueInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] language An ISO language-country string of the sample.
+              # @param [String] language An ISO language-country string that specifies the
+              #   language used for this field value. For example: en-US
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -47,10 +48,11 @@ module Twilio
               end
 
               ##
-              # Streams SampleInstance records from the API as an Enumerable.
+              # Streams FieldValueInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] language An ISO language-country string of the sample.
+              # @param [String] language An ISO language-country string that specifies the
+              #   language used for this field value. For example: en-US
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -67,7 +69,7 @@ module Twilio
               end
 
               ##
-              # When passed a block, yields SampleInstance records from the API.
+              # When passed a block, yields FieldValueInstance records from the API.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
               def each
@@ -81,13 +83,14 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of SampleInstance records from the API.
+              # Retrieve a single page of FieldValueInstance records from the API.
               # Request is executed immediately.
-              # @param [String] language An ISO language-country string of the sample.
+              # @param [String] language An ISO language-country string that specifies the
+              #   language used for this field value. For example: en-US
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
-              # @return [Page] Page of SampleInstance
+              # @return [Page] Page of FieldValueInstance
               def page(language: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'Language' => language,
@@ -100,38 +103,34 @@ module Twilio
                     @uri,
                     params
                 )
-                SamplePage.new(@version, response, @solution)
+                FieldValuePage.new(@version, response, @solution)
               end
 
               ##
-              # Retrieve a single page of SampleInstance records from the API.
+              # Retrieve a single page of FieldValueInstance records from the API.
               # Request is executed immediately.
               # @param [String] target_url API-generated URL for the requested results page
-              # @return [Page] Page of SampleInstance
+              # @return [Page] Page of FieldValueInstance
               def get_page(target_url)
                 response = @version.domain.request(
                     'GET',
                     target_url
                 )
-                SamplePage.new(@version, response, @solution)
+                FieldValuePage.new(@version, response, @solution)
               end
 
               ##
-              # Retrieve a single page of SampleInstance records from the API.
+              # Retrieve a single page of FieldValueInstance records from the API.
               # Request is executed immediately.
-              # @param [String] language An ISO language-country string of the sample.
-              # @param [String] tagged_text The text example of how end-users may express this
-              #   intent. The sample may contain Field tag blocks.
-              # @param [String] source_channel The communication channel the sample was
-              #   captured. It can be: *voice*, *sms*, *chat*, *alexa*, *google-assistant*, or
-              #   *slack*. If not included the value will be null
-              # @return [SampleInstance] Newly created SampleInstance
-              def create(language: nil, tagged_text: nil, source_channel: :unset)
-                data = Twilio::Values.of({
-                    'Language' => language,
-                    'TaggedText' => tagged_text,
-                    'SourceChannel' => source_channel,
-                })
+              # @param [String] language An ISO language-country string that specifies the
+              #   language used for this field value. For example: en-US
+              # @param [String] value A user-provided string that uniquely identifies this
+              #   resource as an alternative to the sid. Unique up to 64 characters long.
+              # @param [String] synonym_of A string value that indicates which word this field
+              #   value is a synonym of.
+              # @return [FieldValueInstance] Newly created FieldValueInstance
+              def create(language: nil, value: nil, synonym_of: :unset)
+                data = Twilio::Values.of({'Language' => language, 'Value' => value, 'SynonymOf' => synonym_of, })
 
                 payload = @version.create(
                     'POST',
@@ -139,30 +138,30 @@ module Twilio
                     data: data
                 )
 
-                SampleInstance.new(
+                FieldValueInstance.new(
                     @version,
                     payload,
                     assistant_sid: @solution[:assistant_sid],
-                    intent_sid: @solution[:intent_sid],
+                    field_type_sid: @solution[:field_type_sid],
                 )
               end
 
               ##
               # Provide a user friendly representation
               def to_s
-                '#<Twilio.Preview.Understand.SampleList>'
+                '#<Twilio.Autopilot.V1.FieldValueList>'
               end
             end
 
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class SamplePage < Page
+            class FieldValuePage < Page
               ##
-              # Initialize the SamplePage
+              # Initialize the FieldValuePage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @return [SamplePage] SamplePage
+              # @return [FieldValuePage] FieldValuePage
               def initialize(version, response, solution)
                 super(version, response)
 
@@ -171,46 +170,46 @@ module Twilio
               end
 
               ##
-              # Build an instance of SampleInstance
+              # Build an instance of FieldValueInstance
               # @param [Hash] payload Payload response from the API
-              # @return [SampleInstance] SampleInstance
+              # @return [FieldValueInstance] FieldValueInstance
               def get_instance(payload)
-                SampleInstance.new(
+                FieldValueInstance.new(
                     @version,
                     payload,
                     assistant_sid: @solution[:assistant_sid],
-                    intent_sid: @solution[:intent_sid],
+                    field_type_sid: @solution[:field_type_sid],
                 )
               end
 
               ##
               # Provide a user friendly representation
               def to_s
-                '<Twilio.Preview.Understand.SamplePage>'
+                '<Twilio.Autopilot.V1.FieldValuePage>'
               end
             end
 
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class SampleContext < InstanceContext
+            class FieldValueContext < InstanceContext
               ##
-              # Initialize the SampleContext
+              # Initialize the FieldValueContext
               # @param [Version] version Version that contains the resource
               # @param [String] assistant_sid The assistant_sid
-              # @param [String] intent_sid The intent_sid
+              # @param [String] field_type_sid The field_type_sid
               # @param [String] sid The sid
-              # @return [SampleContext] SampleContext
-              def initialize(version, assistant_sid, intent_sid, sid)
+              # @return [FieldValueContext] FieldValueContext
+              def initialize(version, assistant_sid, field_type_sid, sid)
                 super(version)
 
                 # Path Solution
-                @solution = {assistant_sid: assistant_sid, intent_sid: intent_sid, sid: sid, }
-                @uri = "/Assistants/#{@solution[:assistant_sid]}/Intents/#{@solution[:intent_sid]}/Samples/#{@solution[:sid]}"
+                @solution = {assistant_sid: assistant_sid, field_type_sid: field_type_sid, sid: sid, }
+                @uri = "/Assistants/#{@solution[:assistant_sid]}/FieldTypes/#{@solution[:field_type_sid]}/FieldValues/#{@solution[:sid]}"
               end
 
               ##
-              # Fetch a SampleInstance
-              # @return [SampleInstance] Fetched SampleInstance
+              # Fetch a FieldValueInstance
+              # @return [FieldValueInstance] Fetched FieldValueInstance
               def fetch
                 params = Twilio::Values.of({})
 
@@ -220,48 +219,17 @@ module Twilio
                     params,
                 )
 
-                SampleInstance.new(
+                FieldValueInstance.new(
                     @version,
                     payload,
                     assistant_sid: @solution[:assistant_sid],
-                    intent_sid: @solution[:intent_sid],
+                    field_type_sid: @solution[:field_type_sid],
                     sid: @solution[:sid],
                 )
               end
 
               ##
-              # Update the SampleInstance
-              # @param [String] language An ISO language-country string of the sample.
-              # @param [String] tagged_text The text example of how end-users may express this
-              #   intent. The sample may contain Field tag blocks.
-              # @param [String] source_channel The communication channel the sample was
-              #   captured. It can be: *voice*, *sms*, *chat*, *alexa*, *google-assistant*, or
-              #   *slack*. If not included the value will be null
-              # @return [SampleInstance] Updated SampleInstance
-              def update(language: :unset, tagged_text: :unset, source_channel: :unset)
-                data = Twilio::Values.of({
-                    'Language' => language,
-                    'TaggedText' => tagged_text,
-                    'SourceChannel' => source_channel,
-                })
-
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
-
-                SampleInstance.new(
-                    @version,
-                    payload,
-                    assistant_sid: @solution[:assistant_sid],
-                    intent_sid: @solution[:intent_sid],
-                    sid: @solution[:sid],
-                )
-              end
-
-              ##
-              # Deletes the SampleInstance
+              # Deletes the FieldValueInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
                 @version.delete('delete', @uri)
@@ -271,23 +239,23 @@ module Twilio
               # Provide a user friendly representation
               def to_s
                 context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-                "#<Twilio.Preview.Understand.SampleContext #{context}>"
+                "#<Twilio.Autopilot.V1.FieldValueContext #{context}>"
               end
             end
 
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class SampleInstance < InstanceResource
+            class FieldValueInstance < InstanceResource
               ##
-              # Initialize the SampleInstance
+              # Initialize the FieldValueInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] assistant_sid The unique ID of the Assistant.
-              # @param [String] intent_sid The unique ID of the Intent associated with this
-              #   Sample.
+              # @param [String] field_type_sid The unique ID of the Field Type associated with
+              #   this Field Value.
               # @param [String] sid The sid
-              # @return [SampleInstance] SampleInstance
-              def initialize(version, payload, assistant_sid: nil, intent_sid: nil, sid: nil)
+              # @return [FieldValueInstance] FieldValueInstance
+              def initialize(version, payload, assistant_sid: nil, field_type_sid: nil, sid: nil)
                 super(version)
 
                 # Marshaled Properties
@@ -295,20 +263,20 @@ module Twilio
                     'account_sid' => payload['account_sid'],
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                    'intent_sid' => payload['intent_sid'],
+                    'field_type_sid' => payload['field_type_sid'],
                     'language' => payload['language'],
                     'assistant_sid' => payload['assistant_sid'],
                     'sid' => payload['sid'],
-                    'tagged_text' => payload['tagged_text'],
+                    'value' => payload['value'],
                     'url' => payload['url'],
-                    'source_channel' => payload['source_channel'],
+                    'synonym_of' => payload['synonym_of'],
                 }
 
                 # Context
                 @instance_context = nil
                 @params = {
                     'assistant_sid' => assistant_sid,
-                    'intent_sid' => intent_sid,
+                    'field_type_sid' => field_type_sid,
                     'sid' => sid || @properties['sid'],
                 }
               end
@@ -316,13 +284,13 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @return [SampleContext] SampleContext for this SampleInstance
+              # @return [FieldValueContext] FieldValueContext for this FieldValueInstance
               def context
                 unless @instance_context
-                  @instance_context = SampleContext.new(
+                  @instance_context = FieldValueContext.new(
                       @version,
                       @params['assistant_sid'],
-                      @params['intent_sid'],
+                      @params['field_type_sid'],
                       @params['sid'],
                   )
                 end
@@ -330,7 +298,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique ID of the Account that created this Sample.
+              # @return [String] The unique ID of the Account that created this Field Value.
               def account_sid
                 @properties['account_sid']
               end
@@ -348,13 +316,13 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique ID of the Intent associated with this Sample.
-              def intent_sid
-                @properties['intent_sid']
+              # @return [String] The unique ID of the Field Type associated with this Field Value.
+              def field_type_sid
+                @properties['field_type_sid']
               end
 
               ##
-              # @return [String] An ISO language-country string of the sample.
+              # @return [String] An ISO language-country string of the value (currently supported: `en-US`, `nl-NL`)
               def language
                 @properties['language']
               end
@@ -372,9 +340,9 @@ module Twilio
               end
 
               ##
-              # @return [String] The text example of how end-users may express this intent. The sample may contain Field tag blocks.
-              def tagged_text
-                @properties['tagged_text']
+              # @return [String] The Field Value itself.
+              def value
+                @properties['value']
               end
 
               ##
@@ -384,33 +352,20 @@ module Twilio
               end
 
               ##
-              # @return [String] The communication channel the sample was captured. It can be: voice, sms, chat, alexa, google-assistant, or slack. If not included the value will be null
-              def source_channel
-                @properties['source_channel']
+              # @return [String] A string value that indicates which word this field value is a synonym of.
+              def synonym_of
+                @properties['synonym_of']
               end
 
               ##
-              # Fetch a SampleInstance
-              # @return [SampleInstance] Fetched SampleInstance
+              # Fetch a FieldValueInstance
+              # @return [FieldValueInstance] Fetched FieldValueInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Update the SampleInstance
-              # @param [String] language An ISO language-country string of the sample.
-              # @param [String] tagged_text The text example of how end-users may express this
-              #   intent. The sample may contain Field tag blocks.
-              # @param [String] source_channel The communication channel the sample was
-              #   captured. It can be: *voice*, *sms*, *chat*, *alexa*, *google-assistant*, or
-              #   *slack*. If not included the value will be null
-              # @return [SampleInstance] Updated SampleInstance
-              def update(language: :unset, tagged_text: :unset, source_channel: :unset)
-                context.update(language: language, tagged_text: tagged_text, source_channel: source_channel, )
-              end
-
-              ##
-              # Deletes the SampleInstance
+              # Deletes the FieldValueInstance
               # @return [Boolean] true if delete succeeds, true otherwise
               def delete
                 context.delete
@@ -420,14 +375,14 @@ module Twilio
               # Provide a user friendly representation
               def to_s
                 values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Preview.Understand.SampleInstance #{values}>"
+                "<Twilio.Autopilot.V1.FieldValueInstance #{values}>"
               end
 
               ##
               # Provide a detailed, user friendly representation
               def inspect
                 values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Preview.Understand.SampleInstance #{values}>"
+                "<Twilio.Autopilot.V1.FieldValueInstance #{values}>"
               end
             end
           end

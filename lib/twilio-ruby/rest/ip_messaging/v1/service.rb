@@ -580,7 +580,7 @@ module Twilio
           end
 
           ##
-          # @return [Boolean] Enable the Message Constumption Horizon feature.
+          # @return [Boolean] Enable the Message Consumption Horizon feature.
           def read_status_enabled
             @properties['read_status_enabled']
           end
