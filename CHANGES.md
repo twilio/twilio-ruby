@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+[2018-10-15] Version 5.15.1
+----------------------------
+**Api**
+- Add <Pay> Verb Transactions category to usage records
+
+**Twiml**
+- Add support for `Pay` verb
+
+
 [2018-10-15] Version 5.15.0
 ----------------------------
 **Library**

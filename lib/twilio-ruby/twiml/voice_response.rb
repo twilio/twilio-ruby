@@ -207,15 +207,109 @@ module Twilio
       def sms(message, to: nil, from: nil, action: nil, method: nil, status_callback: nil, **keyword_args)
         append(Sms.new(message, to: to, from: from, action: action, method: method, status_callback: status_callback, **keyword_args))
       end
+
+      ##
+      # Create a new <Pay> element
+      # input:: Input type Twilio should accept
+      # action:: Action URL
+      # status_callback:: Status callback URL
+      # status_callback_method:: Status callback method
+      # timeout:: Time to wait to gather input
+      # max_attempts:: Maximum number of allowed retries when gathering input
+      # security_code:: Prompt for security code
+      # postal_code:: Prompt for postal code and it should be true/false or default postal code
+      # payment_connector:: Unique name for payment connector
+      # token_type:: Type of token
+      # charge_amount:: Amount to process. If value is greater than 0 then make the payment else create a payment token
+      # currency:: Currency of the amount attribute
+      # credential_sid:: SID for API keys to communicate with payment provider
+      # description:: Details regarding the payment
+      # valid_card_types:: Comma separated accepted card types
+      # language:: Language to use
+      # keyword_args:: additional attributes
+      def pay(input: nil, action: nil, status_callback: nil, status_callback_method: nil, timeout: nil, max_attempts: nil, security_code: nil, postal_code: nil, payment_connector: nil, token_type: nil, charge_amount: nil, currency: nil, credential_sid: nil, description: nil, valid_card_types: nil, language: nil, **keyword_args)
+        pay = Pay.new(input: input, action: action, status_callback: status_callback, status_callback_method: status_callback_method, timeout: timeout, max_attempts: max_attempts, security_code: security_code, postal_code: postal_code, payment_connector: payment_connector, token_type: token_type, charge_amount: charge_amount, currency: currency, credential_sid: credential_sid, description: description, valid_card_types: valid_card_types, language: language, **keyword_args)
+
+        yield(pay) if block_given?
+        append(pay)
+      end
+
+      ##
+      # Create a new <Prompt> element
+      # for_:: Name of the credit card data element
+      # error_type:: Type of error
+      # card_type:: Type of the credit card
+      # attempt:: Current attempt count
+      # keyword_args:: additional attributes
+      def prompt(for_: nil, error_type: nil, card_type: nil, attempt: nil, **keyword_args)
+        prompt = Prompt.new(for_: for_, error_type: error_type, card_type: card_type, attempt: attempt, **keyword_args)
+
+        yield(prompt) if block_given?
+        append(prompt)
+      end
     end
 
     ##
-    # <Sms> TwiML Noun
-    class Sms < TwiML
-      def initialize(message, **keyword_args)
+    # <Prompt> Twiml Verb
+    class Prompt < TwiML
+      def initialize(**keyword_args)
         super(**keyword_args)
-        @name = 'Sms'
-        @value = message
+        @name = 'Prompt'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Say> element
+      # message:: Message to say
+      # voice:: Voice to use
+      # loop:: Times to loop message
+      # language:: Message langauge
+      # keyword_args:: additional attributes
+      def say(message: nil, voice: nil, loop: nil, language: nil, **keyword_args)
+        say = Say.new(message: message, voice: voice, loop: loop, language: language, **keyword_args)
+
+        yield(say) if block_given?
+        append(say)
+      end
+
+      ##
+      # Create a new <Play> element
+      # url:: Media URL
+      # loop:: Times to loop media
+      # digits:: Play DTMF tones for digits
+      # keyword_args:: additional attributes
+      def play(url: nil, loop: nil, digits: nil, **keyword_args)
+        append(Play.new(url: url, loop: loop, digits: digits, **keyword_args))
+      end
+
+      ##
+      # Create a new <Pause> element
+      # length:: Length in seconds to pause
+      # keyword_args:: additional attributes
+      def pause(length: nil, **keyword_args)
+        append(Pause.new(length: length, **keyword_args))
+      end
+    end
+
+    ##
+    # <Pause> TwiML Verb
+    class Pause < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Pause'
+
+        yield(self) if block_given?
+      end
+    end
+
+    ##
+    # <Play> TwiML Verb
+    class Play < TwiML
+      def initialize(url: nil, **keyword_args)
+        super(**keyword_args)
+        @name = 'Play'
+        @value = url unless url.nil?
         yield(self) if block_given?
       end
     end
@@ -434,6 +528,42 @@ module Twilio
     end
 
     ##
+    # <Pay> Twiml Verb
+    class Pay < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Pay'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Prompt> element
+      # for_:: Name of the credit card data element
+      # error_type:: Type of error
+      # card_type:: Type of the credit card
+      # attempt:: Current attempt count
+      # keyword_args:: additional attributes
+      def prompt(for_: nil, error_type: nil, card_type: nil, attempt: nil, **keyword_args)
+        prompt = Prompt.new(for_: for_, error_type: error_type, card_type: card_type, attempt: attempt, **keyword_args)
+
+        yield(prompt) if block_given?
+        append(prompt)
+      end
+    end
+
+    ##
+    # <Sms> TwiML Noun
+    class Sms < TwiML
+      def initialize(message, **keyword_args)
+        super(**keyword_args)
+        @name = 'Sms'
+        @value = message
+        yield(self) if block_given?
+      end
+    end
+
+    ##
     # <Reject> TwiML Verb
     class Reject < TwiML
       def initialize(**keyword_args)
@@ -473,28 +603,6 @@ module Twilio
         super(**keyword_args)
         @name = 'Queue'
         @value = name
-        yield(self) if block_given?
-      end
-    end
-
-    ##
-    # <Play> TwiML Verb
-    class Play < TwiML
-      def initialize(url: nil, **keyword_args)
-        super(**keyword_args)
-        @name = 'Play'
-        @value = url unless url.nil?
-        yield(self) if block_given?
-      end
-    end
-
-    ##
-    # <Pause> TwiML Verb
-    class Pause < TwiML
-      def initialize(**keyword_args)
-        super(**keyword_args)
-        @name = 'Pause'
-
         yield(self) if block_given?
       end
     end
