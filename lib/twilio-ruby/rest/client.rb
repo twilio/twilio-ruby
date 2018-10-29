@@ -264,6 +264,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Api::V2010::AccountContext::BalanceInstance]
+      def balance
+        self.api.v2010.account.balance
+      end
+
+      ##
       # @param [String] sid A 34-character string that uniquely identifies the Call
       #   resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::CallInstance] if sid was passed.

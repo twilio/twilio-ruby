@@ -18,7 +18,7 @@ module Twilio
               ##
               # Initialize the FieldList
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The unique ID of the parent Assistant.
+              # @param [String] assistant_sid The unique ID of the Assistant.
               # @param [String] task_sid The unique ID of the Task associated with this Field.
               # @return [FieldList] FieldList
               def initialize(version, assistant_sid: nil, task_sid: nil)
@@ -114,10 +114,10 @@ module Twilio
               ##
               # Retrieve a single page of FieldInstance records from the API.
               # Request is executed immediately.
-              # @param [String] field_type The unique name or sid of the FieldType. It can be
-              #   any [Built-in Field
+              # @param [String] field_type The Field Type of this field. It can be either a
+              #   [Built-in Field
               #   Type](https://www.twilio.com/docs/assistant/api/built-in-field-types) or the
-              #   unique_name or the Field Type sid of a custom Field Type.
+              #   unique_name or sid of a custom Field Type.
               # @param [String] unique_name A user-provided string that uniquely identifies this
               #   resource as an alternative to the sid. Unique up to 64 characters long.
               # @return [FieldInstance] Newly created FieldInstance
@@ -187,9 +187,10 @@ module Twilio
               ##
               # Initialize the FieldContext
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The assistant_sid
-              # @param [String] task_sid The task_sid
-              # @param [String] sid The sid
+              # @param [String] assistant_sid The unique ID of the Assistant.
+              # @param [String] task_sid The unique ID of the Task associated with this Field.
+              # @param [String] sid A 34-character string that uniquely identifies this
+              #   resource.
               # @return [FieldContext] FieldContext
               def initialize(version, assistant_sid, task_sid, sid)
                 super(version)
@@ -242,9 +243,10 @@ module Twilio
               # Initialize the FieldInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] assistant_sid The unique ID of the parent Assistant.
+              # @param [String] assistant_sid The unique ID of the Assistant.
               # @param [String] task_sid The unique ID of the Task associated with this Field.
-              # @param [String] sid The sid
+              # @param [String] sid A 34-character string that uniquely identifies this
+              #   resource.
               # @return [FieldInstance] FieldInstance
               def initialize(version, payload, assistant_sid: nil, task_sid: nil, sid: nil)
                 super(version)
@@ -306,7 +308,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The Field Type of this field. It can be any Built-in Field Type or unique_name or the Field Type sid of a custom Field Type.
+              # @return [String] The Field Type of this field. It can be either a Built-in Field Type or the unique_name or sid of a custom Field Type.
               def field_type
                 @properties['field_type']
               end
@@ -318,13 +320,13 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique ID of the parent Assistant.
+              # @return [String] The unique ID of the Assistant.
               def assistant_sid
                 @properties['assistant_sid']
               end
 
               ##
-              # @return [String] A 34 character string that uniquely identifies this resource.
+              # @return [String] A 34-character string that uniquely identifies this resource.
               def sid
                 @properties['sid']
               end

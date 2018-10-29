@@ -62,6 +62,10 @@ module Twilio
           self.account.available_phone_numbers(country_code)
         end
 
+        def balance
+          self.account.balance()
+        end
+
         def calls(sid=:unset)
           self.account.calls(sid)
         end

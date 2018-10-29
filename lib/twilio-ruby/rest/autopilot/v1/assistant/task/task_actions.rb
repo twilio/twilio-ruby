@@ -110,8 +110,9 @@ module Twilio
 
               ##
               # Update the TaskActionsInstance
-              # @param [Hash] actions The JSON actions that instruct the Assistant how to
-              #   perform this task.
+              # @param [Hash] actions The JSON
+              #   [actions](https://www.twilio.com/docs/autopilot/actions) that instruct the
+              #   Assistant how to perform this task.
               # @return [TaskActionsInstance] Updated TaskActionsInstance
               def update(actions: :unset)
                 data = Twilio::Values.of({'Actions' => Twilio.serialize_object(actions), })
@@ -201,7 +202,7 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The data
+              # @return [Hash] The JSON [actions](https://www.twilio.com/docs/autopilot/actions) that instruct the Assistant how to perform this task.
               def data
                 @properties['data']
               end
@@ -215,8 +216,9 @@ module Twilio
 
               ##
               # Update the TaskActionsInstance
-              # @param [Hash] actions The JSON actions that instruct the Assistant how to
-              #   perform this task.
+              # @param [Hash] actions The JSON
+              #   [actions](https://www.twilio.com/docs/autopilot/actions) that instruct the
+              #   Assistant how to perform this task.
               # @return [TaskActionsInstance] Updated TaskActionsInstance
               def update(actions: :unset)
                 context.update(actions: actions, )

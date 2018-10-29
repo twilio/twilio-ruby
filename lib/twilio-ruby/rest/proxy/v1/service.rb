@@ -128,8 +128,11 @@ module Twilio
           #   continuing.
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
           #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session).
+          # @param [String] chat_instance_sid The Chat Service Instance sid managed by Proxy
+          #   Service. Enables Proxy to forward sms and channel messages to this chat
+          #   instance. This is a one-to-one relationship.
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(unique_name: nil, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
+          def create(unique_name: nil, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset, chat_instance_sid: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'DefaultTtl' => default_ttl,
@@ -138,6 +141,7 @@ module Twilio
                 'NumberSelectionBehavior' => number_selection_behavior,
                 'InterceptCallbackUrl' => intercept_callback_url,
                 'OutOfSessionCallbackUrl' => out_of_session_callback_url,
+                'ChatInstanceSid' => chat_instance_sid,
             })
 
             payload = @version.create(
@@ -250,8 +254,11 @@ module Twilio
           #   continuing.
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
           #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session).
+          # @param [String] chat_instance_sid The Chat Service Instance sid managed by Proxy
+          #   Service. Enables Proxy to forward sms and channel messages to this chat
+          #   instance. This is a one-to-one relationship.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(unique_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
+          def update(unique_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset, chat_instance_sid: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'DefaultTtl' => default_ttl,
@@ -260,6 +267,7 @@ module Twilio
                 'NumberSelectionBehavior' => number_selection_behavior,
                 'InterceptCallbackUrl' => intercept_callback_url,
                 'OutOfSessionCallbackUrl' => out_of_session_callback_url,
+                'ChatInstanceSid' => chat_instance_sid,
             })
 
             payload = @version.update(
@@ -350,6 +358,7 @@ module Twilio
                 'sid' => payload['sid'],
                 'unique_name' => payload['unique_name'],
                 'account_sid' => payload['account_sid'],
+                'chat_instance_sid' => payload['chat_instance_sid'],
                 'callback_url' => payload['callback_url'],
                 'default_ttl' => payload['default_ttl'].to_i,
                 'number_selection_behavior' => payload['number_selection_behavior'],
@@ -394,6 +403,12 @@ module Twilio
           # @return [String] Account Sid.
           def account_sid
             @properties['account_sid']
+          end
+
+          ##
+          # @return [String] The Chat Service Instance sid managed by Proxy Service
+          def chat_instance_sid
+            @properties['chat_instance_sid']
           end
 
           ##
@@ -490,8 +505,11 @@ module Twilio
           #   continuing.
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
           #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session).
+          # @param [String] chat_instance_sid The Chat Service Instance sid managed by Proxy
+          #   Service. Enables Proxy to forward sms and channel messages to this chat
+          #   instance. This is a one-to-one relationship.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(unique_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset)
+          def update(unique_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset, chat_instance_sid: :unset)
             context.update(
                 unique_name: unique_name,
                 default_ttl: default_ttl,
@@ -500,6 +518,7 @@ module Twilio
                 number_selection_behavior: number_selection_behavior,
                 intercept_callback_url: intercept_callback_url,
                 out_of_session_callback_url: out_of_session_callback_url,
+                chat_instance_sid: chat_instance_sid,
             )
           end
 

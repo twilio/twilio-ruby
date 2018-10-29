@@ -31,10 +31,11 @@ module Twilio
             # Lists QueryInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] language An ISO language-country string that specifies the
-            #   language used for this query. For example: en-US.
-            # @param [String] model_build The Model Build Sid or unique name of the Model
-            #   Build to be queried.
+            # @param [String] language An [ISO language-country
+            #   string](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+            #   that specifies the language used for this query. For example: `en-US`.
+            # @param [String] model_build The Sid or unique name of the [Model
+            #   Build](https://www.twilio.com/docs/autopilot/api/model-build) to be queried.
             # @param [String] status A string that described the query status. The values can
             #   be: `pending_review`, `reviewed`, `discarded`
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -58,10 +59,11 @@ module Twilio
             # Streams QueryInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] language An ISO language-country string that specifies the
-            #   language used for this query. For example: en-US.
-            # @param [String] model_build The Model Build Sid or unique name of the Model
-            #   Build to be queried.
+            # @param [String] language An [ISO language-country
+            #   string](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+            #   that specifies the language used for this query. For example: `en-US`.
+            # @param [String] model_build The Sid or unique name of the [Model
+            #   Build](https://www.twilio.com/docs/autopilot/api/model-build) to be queried.
             # @param [String] status A string that described the query status. The values can
             #   be: `pending_review`, `reviewed`, `discarded`
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -101,10 +103,11 @@ module Twilio
             ##
             # Retrieve a single page of QueryInstance records from the API.
             # Request is executed immediately.
-            # @param [String] language An ISO language-country string that specifies the
-            #   language used for this query. For example: en-US.
-            # @param [String] model_build The Model Build Sid or unique name of the Model
-            #   Build to be queried.
+            # @param [String] language An [ISO language-country
+            #   string](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+            #   that specifies the language used for this query. For example: `en-US`.
+            # @param [String] model_build The Sid or unique name of the [Model
+            #   Build](https://www.twilio.com/docs/autopilot/api/model-build) to be queried.
             # @param [String] status A string that described the query status. The values can
             #   be: `pending_review`, `reviewed`, `discarded`
             # @param [String] page_token PageToken provided by the API
@@ -144,15 +147,16 @@ module Twilio
             ##
             # Retrieve a single page of QueryInstance records from the API.
             # Request is executed immediately.
-            # @param [String] language An ISO language-country string that specifies the
-            #   language used for this query. For example: en-US.
+            # @param [String] language An [ISO language-country
+            #   string](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+            #   that specifies the language used for this query. For example: `en-US`.
             # @param [String] query A user-provided string that uniquely identifies this
             #   resource as an alternative to the sid. It can be up to 2048 characters long.
             # @param [String] tasks Constraints the query to a set of tasks. Useful when you
             #   need to constrain the paths the user can take. Tasks should be comma separated
             #   *task-unique-name-1*, *task-unique-name-2*
-            # @param [String] model_build The Model Build Sid or unique name of the Model
-            #   Build to be queried.
+            # @param [String] model_build The Sid or unique name of the [Model
+            #   Build](https://www.twilio.com/docs/autopilot/api/model-build) to be queried.
             # @return [QueryInstance] Newly created QueryInstance
             def create(language: nil, query: nil, tasks: :unset, model_build: :unset)
               data = Twilio::Values.of({
@@ -215,8 +219,9 @@ module Twilio
             ##
             # Initialize the QueryContext
             # @param [Version] version Version that contains the resource
-            # @param [String] assistant_sid The assistant_sid
-            # @param [String] sid The sid
+            # @param [String] assistant_sid The unique ID of the Assistant.
+            # @param [String] sid A 34-character string that uniquely identifies this
+            #   resource.
             # @return [QueryContext] QueryContext
             def initialize(version, assistant_sid, sid)
               super(version)
@@ -243,7 +248,8 @@ module Twilio
 
             ##
             # Update the QueryInstance
-            # @param [String] sample_sid The sample_sid
+            # @param [String] sample_sid An optional reference to the Sample created from this
+            #   query.
             # @param [String] status A string that described the query status. The values can
             #   be: `pending_review`, `reviewed`, `discarded`
             # @return [QueryInstance] Updated QueryInstance
@@ -282,7 +288,8 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] assistant_sid The unique ID of the parent Assistant.
-            # @param [String] sid The sid
+            # @param [String] sid A 34-character string that uniquely identifies this
+            #   resource.
             # @return [QueryInstance] QueryInstance
             def initialize(version, payload, assistant_sid: nil, sid: nil)
               super(version)
@@ -339,19 +346,19 @@ module Twilio
             end
 
             ##
-            # @return [Hash] The natural language analysis results which include the Task recognized, the confidence score and a list of identified Fields.
+            # @return [Hash] The natural language analysis results which include the [Task](https://www.twilio.com/docs/autopilot/api/task) recognized, the confidence score, and a list of identified [Fields](https://www.twilio.com/docs/autopilot/api/task-field).
             def results
               @properties['results']
             end
 
             ##
-            # @return [String] An ISO language-country string that specifies the language used for this query. For example: en-US
+            # @return [String] An [ISO language-country string](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) that specifies the language used for this query. For example: `en-US`
             def language
               @properties['language']
             end
 
             ##
-            # @return [String] The unique ID of the Model Build queried.
+            # @return [String] The unique ID of the [Model Build](https://www.twilio.com/docs/autopilot/api/model-build) queried.
             def model_build_sid
               @properties['model_build_sid']
             end
@@ -375,7 +382,7 @@ module Twilio
             end
 
             ##
-            # @return [String] A 34 character string that uniquely identifies this resource.
+            # @return [String] A 34-character string that uniquely identifies this resource.
             def sid
               @properties['sid']
             end
@@ -407,7 +414,8 @@ module Twilio
 
             ##
             # Update the QueryInstance
-            # @param [String] sample_sid The sample_sid
+            # @param [String] sample_sid An optional reference to the Sample created from this
+            #   query.
             # @param [String] status A string that described the query status. The values can
             #   be: `pending_review`, `reviewed`, `discarded`
             # @return [QueryInstance] Updated QueryInstance

@@ -116,8 +116,10 @@ module Twilio
             #   resource as an alternative to the sid. Unique up to 64 characters long.
             # @param [String] friendly_name A user-provided string that identifies this
             #   resource. It is non-unique and can be up to 255 characters long.
-            # @param [Hash] actions The actions
-            # @param [String] actions_url The actions_url
+            # @param [Hash] actions A user-provided JSON object encoded as a string to specify
+            #   the actions for this task. It is optional and non-unique.
+            # @param [String] actions_url User-provided HTTP endpoint where the assistant can
+            #   fetch actions.
             # @return [TaskInstance] Newly created TaskInstance
             def create(unique_name: nil, friendly_name: :unset, actions: :unset, actions_url: :unset)
               data = Twilio::Values.of({
@@ -180,8 +182,9 @@ module Twilio
             ##
             # Initialize the TaskContext
             # @param [Version] version Version that contains the resource
-            # @param [String] assistant_sid The assistant_sid
-            # @param [String] sid The sid
+            # @param [String] assistant_sid The unique ID of the Assistant.
+            # @param [String] sid A 34-character string that uniquely identifies this
+            #   resource.
             # @return [TaskContext] TaskContext
             def initialize(version, assistant_sid, sid)
               super(version)
@@ -217,9 +220,12 @@ module Twilio
             # @param [String] friendly_name A user-provided string that identifies this
             #   resource. It is non-unique and can be up to 255 characters long.
             # @param [String] unique_name A user-provided string that uniquely identifies this
-            #   resource as an alternative to the sid. Unique up to 64 characters long.
-            # @param [Hash] actions The actions
-            # @param [String] actions_url The actions_url
+            #   resource as an alternative to the sid. You can use the unique name in the URL
+            #   path when addressing this resource. Unique up to 64 characters long.
+            # @param [Hash] actions A user-provided JSON object encoded as a string to specify
+            #   the actions for this task. It is optional and non-unique.
+            # @param [String] actions_url User-provided HTTP endpoint where the assistant can
+            #   fetch actions.
             # @return [TaskInstance] Updated TaskInstance
             def update(friendly_name: :unset, unique_name: :unset, actions: :unset, actions_url: :unset)
               data = Twilio::Values.of({
@@ -321,7 +327,8 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] assistant_sid The unique ID of the Assistant.
-            # @param [String] sid The sid
+            # @param [String] sid A 34-character string that uniquely identifies this
+            #   resource.
             # @return [TaskInstance] TaskInstance
             def initialize(version, payload, assistant_sid: nil, sid: nil)
               super(version)
@@ -393,7 +400,7 @@ module Twilio
             end
 
             ##
-            # @return [String] A 34 character string that uniquely identifies this resource.
+            # @return [String] A 34-character string that uniquely identifies this resource.
             def sid
               @properties['sid']
             end
@@ -405,7 +412,7 @@ module Twilio
             end
 
             ##
-            # @return [String] User-provided HTTP endpoint where the assistant can fetch actions.
+            # @return [String] A user-provided HTTP endpoint where the assistant can fetch actions.
             def actions_url
               @properties['actions_url']
             end
@@ -428,9 +435,12 @@ module Twilio
             # @param [String] friendly_name A user-provided string that identifies this
             #   resource. It is non-unique and can be up to 255 characters long.
             # @param [String] unique_name A user-provided string that uniquely identifies this
-            #   resource as an alternative to the sid. Unique up to 64 characters long.
-            # @param [Hash] actions The actions
-            # @param [String] actions_url The actions_url
+            #   resource as an alternative to the sid. You can use the unique name in the URL
+            #   path when addressing this resource. Unique up to 64 characters long.
+            # @param [Hash] actions A user-provided JSON object encoded as a string to specify
+            #   the actions for this task. It is optional and non-unique.
+            # @param [String] actions_url User-provided HTTP endpoint where the assistant can
+            #   fetch actions.
             # @return [TaskInstance] Updated TaskInstance
             def update(friendly_name: :unset, unique_name: :unset, actions: :unset, actions_url: :unset)
               context.update(

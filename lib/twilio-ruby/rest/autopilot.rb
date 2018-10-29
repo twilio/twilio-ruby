@@ -29,7 +29,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
+      # @param [String] sid A 34-character string that uniquely identifies this
       #   resource.
       # @return [Twilio::REST::Autopilot::V1::AssistantInstance] if sid was passed.
       # @return [Twilio::REST::Autopilot::V1::AssistantList]

@@ -173,8 +173,9 @@ module Twilio
             ##
             # Initialize the FieldTypeContext
             # @param [Version] version Version that contains the resource
-            # @param [String] assistant_sid The assistant_sid
-            # @param [String] sid The sid
+            # @param [String] assistant_sid The unique ID of the Assistant.
+            # @param [String] sid A 34-character string that uniquely identifies this
+            #   resource.
             # @return [FieldTypeContext] FieldTypeContext
             def initialize(version, assistant_sid, sid)
               super(version)
@@ -276,7 +277,8 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] assistant_sid The unique ID of the Assistant.
-            # @param [String] sid The sid
+            # @param [String] sid A 34-character string that uniquely identifies this
+            #   resource.
             # @return [FieldTypeInstance] FieldTypeInstance
             def initialize(version, payload, assistant_sid: nil, sid: nil)
               super(version)
@@ -347,7 +349,7 @@ module Twilio
             end
 
             ##
-            # @return [String] A 34 character string that uniquely identifies this resource.
+            # @return [String] A 34-character string that uniquely identifies this resource.
             def sid
               @properties['sid']
             end

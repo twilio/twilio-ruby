@@ -33,8 +33,9 @@ module Twilio
               # Lists SampleInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] language An ISO language-country string that specifies the
-              #   language used for this sample. For example: en-US.
+              # @param [String] language An [ISO language-country
+              #   string](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              #   that specifies the language used for this sample. For example: `en-US`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -50,8 +51,9 @@ module Twilio
               # Streams SampleInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] language An ISO language-country string that specifies the
-              #   language used for this sample. For example: en-US.
+              # @param [String] language An [ISO language-country
+              #   string](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              #   that specifies the language used for this sample. For example: `en-US`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -84,8 +86,9 @@ module Twilio
               ##
               # Retrieve a single page of SampleInstance records from the API.
               # Request is executed immediately.
-              # @param [String] language An ISO language-country string that specifies the
-              #   language used for this sample. For example: en-US.
+              # @param [String] language An [ISO language-country
+              #   string](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              #   that specifies the language used for this sample. For example: `en-US`.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -121,13 +124,15 @@ module Twilio
               ##
               # Retrieve a single page of SampleInstance records from the API.
               # Request is executed immediately.
-              # @param [String] language An ISO language-country string that specifies the
-              #   language used for this sample. For example: en-US.
+              # @param [String] language An [ISO language-country
+              #   string](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              #   that specifies the language used for this sample. For example: `en-US`.
               # @param [String] tagged_text The text example of how end-users may express this
-              #   task. The sample may contain Field tag blocks.
+              #   task. The sample may contain [Field tag
+              #   blocks](https://www.twilio.com/docs/autopilot/api/task-sample#field-tagging).
               # @param [String] source_channel The communication channel from which the sample
               #   was captured. It can be: *voice*, *sms*, *chat*, *alexa*, *google-assistant*, or
-              #   *slack*. If not included the value will be null
+              #   *slack*. If not included, the value will be `null`
               # @return [SampleInstance] Newly created SampleInstance
               def create(language: nil, tagged_text: nil, source_channel: :unset)
                 data = Twilio::Values.of({
@@ -199,9 +204,10 @@ module Twilio
               ##
               # Initialize the SampleContext
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The assistant_sid
-              # @param [String] task_sid The task_sid
-              # @param [String] sid The sid
+              # @param [String] assistant_sid The unique ID of the Assistant.
+              # @param [String] task_sid The unique ID of the Task associated with this Sample.
+              # @param [String] sid A 34-character string that uniquely identifies this
+              #   resource.
               # @return [SampleContext] SampleContext
               def initialize(version, assistant_sid, task_sid, sid)
                 super(version)
@@ -234,13 +240,15 @@ module Twilio
 
               ##
               # Update the SampleInstance
-              # @param [String] language An ISO language-country string that specifies the
-              #   language used for this sample. For example: en-US.
+              # @param [String] language An [ISO language-country
+              #   string](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              #   that specifies the language used for this sample. For example: `en-US`.
               # @param [String] tagged_text The text example of how end-users may express this
-              #   task. The sample may contain Field tag blocks.
+              #   task. The sample may contain [Field tag
+              #   blocks](https://www.twilio.com/docs/autopilot/api/task-sample#field-tagging).
               # @param [String] source_channel The communication channel from which the sample
               #   was captured. It can be: *voice*, *sms*, *chat*, *alexa*, *google-assistant*, or
-              #   *slack*. If not included the value will be null
+              #   *slack*. If not included, the value will be `null`
               # @return [SampleInstance] Updated SampleInstance
               def update(language: :unset, tagged_text: :unset, source_channel: :unset)
                 data = Twilio::Values.of({
@@ -288,7 +296,8 @@ module Twilio
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] assistant_sid The unique ID of the Assistant.
               # @param [String] task_sid The unique ID of the Task associated with this Sample.
-              # @param [String] sid The sid
+              # @param [String] sid A 34-character string that uniquely identifies this
+              #   resource.
               # @return [SampleInstance] SampleInstance
               def initialize(version, payload, assistant_sid: nil, task_sid: nil, sid: nil)
                 super(version)
@@ -357,7 +366,7 @@ module Twilio
               end
 
               ##
-              # @return [String] An ISO language-country string that specifies the language used for this sample. For example: en-US.
+              # @return [String] An [ISO language-country string](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) that specifies the language used for this sample. For example: `en-US`.
               def language
                 @properties['language']
               end
@@ -369,13 +378,13 @@ module Twilio
               end
 
               ##
-              # @return [String] A 34 character string that uniquely identifies this resource.
+              # @return [String] A 34-character string that uniquely identifies this resource.
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The text example of how end-users may express this task. The sample may contain Field tag blocks.
+              # @return [String] The text example of how end-users may express this task. The sample may contain [Field tag blocks](https://www.twilio.com/docs/autopilot/api/task-sample#field-tagging).
               def tagged_text
                 @properties['tagged_text']
               end
@@ -387,7 +396,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The communication channel from which the sample was captured. It can be: voice, sms, chat, alexa, google-assistant, or slack. If not included the value will be null
+              # @return [String] The communication channel from which the sample was captured. It can be: voice, sms, chat, alexa, google-assistant, or slack. If not included, the value will be `null`
               def source_channel
                 @properties['source_channel']
               end
@@ -401,13 +410,15 @@ module Twilio
 
               ##
               # Update the SampleInstance
-              # @param [String] language An ISO language-country string that specifies the
-              #   language used for this sample. For example: en-US.
+              # @param [String] language An [ISO language-country
+              #   string](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              #   that specifies the language used for this sample. For example: `en-US`.
               # @param [String] tagged_text The text example of how end-users may express this
-              #   task. The sample may contain Field tag blocks.
+              #   task. The sample may contain [Field tag
+              #   blocks](https://www.twilio.com/docs/autopilot/api/task-sample#field-tagging).
               # @param [String] source_channel The communication channel from which the sample
               #   was captured. It can be: *voice*, *sms*, *chat*, *alexa*, *google-assistant*, or
-              #   *slack*. If not included the value will be null
+              #   *slack*. If not included, the value will be `null`
               # @return [SampleInstance] Updated SampleInstance
               def update(language: :unset, tagged_text: :unset, source_channel: :unset)
                 context.update(language: language, tagged_text: tagged_text, source_channel: source_channel, )

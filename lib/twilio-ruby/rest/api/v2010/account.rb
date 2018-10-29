@@ -197,6 +197,7 @@ module Twilio
             @applications = nil
             @authorized_connect_apps = nil
             @available_phone_numbers = nil
+            @balance = nil
             @calls = nil
             @conferences = nil
             @connect_apps = nil
@@ -326,6 +327,18 @@ module Twilio
             end
 
             @available_phone_numbers
+          end
+
+          ##
+          # Access the balance
+          # @return [BalanceList]
+          # @return [BalanceContext]
+          def balance
+            unless @balance
+              @balance = BalanceList.new(@version, account_sid: @solution[:sid], )
+            end
+
+            @balance
           end
 
           ##
@@ -788,6 +801,13 @@ module Twilio
           # @return [available_phone_numbers] available_phone_numbers
           def available_phone_numbers
             context.available_phone_numbers
+          end
+
+          ##
+          # Access the balance
+          # @return [balance] balance
+          def balance
+            context.balance
           end
 
           ##

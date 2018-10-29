@@ -18,8 +18,10 @@ module Twilio
               ##
               # Initialize the TaskStatisticsList
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The unique ID of the parent Assistant.
-              # @param [String] task_sid The unique ID of the Task associated with this Field.
+              # @param [String] assistant_sid The unique ID of the
+              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant).
+              # @param [String] task_sid The unique ID of the
+              #   [Task](https://www.twilio.com/docs/autopilot/api/task).
               # @return [TaskStatisticsList] TaskStatisticsList
               def initialize(version, assistant_sid: nil, task_sid: nil)
                 super(version)
@@ -77,8 +79,10 @@ module Twilio
               ##
               # Initialize the TaskStatisticsContext
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The assistant_sid
-              # @param [String] task_sid The task_sid
+              # @param [String] assistant_sid The unique ID of the
+              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant).
+              # @param [String] task_sid The unique ID of the
+              #   [Task](https://www.twilio.com/docs/autopilot/api/task).
               # @return [TaskStatisticsContext] TaskStatisticsContext
               def initialize(version, assistant_sid, task_sid)
                 super(version)
@@ -123,8 +127,10 @@ module Twilio
               # Initialize the TaskStatisticsInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] assistant_sid The unique ID of the parent Assistant.
-              # @param [String] task_sid The unique ID of the Task associated with this Field.
+              # @param [String] assistant_sid The unique ID of the
+              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant).
+              # @param [String] task_sid The unique ID of the
+              #   [Task](https://www.twilio.com/docs/autopilot/api/task).
               # @return [TaskStatisticsInstance] TaskStatisticsInstance
               def initialize(version, payload, assistant_sid: nil, task_sid: nil)
                 super(version)
@@ -160,13 +166,13 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique ID of the Account that created this Field.
+              # @return [String] The unique ID of the Account that created this resource.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The unique ID of the parent Assistant.
+              # @return [String] The unique ID of the Assistant.
               def assistant_sid
                 @properties['assistant_sid']
               end

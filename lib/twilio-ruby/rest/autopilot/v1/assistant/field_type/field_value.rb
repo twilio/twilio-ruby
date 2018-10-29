@@ -195,9 +195,10 @@ module Twilio
               ##
               # Initialize the FieldValueContext
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The assistant_sid
-              # @param [String] field_type_sid The field_type_sid
-              # @param [String] sid The sid
+              # @param [String] assistant_sid The unique ID of the Assistant
+              # @param [String] field_type_sid The unique ID of the Field Type associated with
+              #   this Field Value
+              # @param [String] sid A 34 character string that uniquely identifies this resource
               # @return [FieldValueContext] FieldValueContext
               def initialize(version, assistant_sid, field_type_sid, sid)
                 super(version)
@@ -253,7 +254,7 @@ module Twilio
               # @param [String] assistant_sid The unique ID of the Assistant.
               # @param [String] field_type_sid The unique ID of the Field Type associated with
               #   this Field Value.
-              # @param [String] sid The sid
+              # @param [String] sid A 34 character string that uniquely identifies this resource
               # @return [FieldValueInstance] FieldValueInstance
               def initialize(version, payload, assistant_sid: nil, field_type_sid: nil, sid: nil)
                 super(version)
