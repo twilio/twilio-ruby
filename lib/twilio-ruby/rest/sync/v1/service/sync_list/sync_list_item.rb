@@ -36,13 +36,23 @@ module Twilio
               # Request is executed immediately.
               # @param [Hash] data Contains arbitrary user-defined, schema-less data that this
               #   List Item stores, represented by a JSON object, up to 16KB.
-              # @param [String] ttl Time-to-live of this item in seconds, defaults to no
+              # @param [String] ttl Alias for item_ttl. If both are provided, this value is
+              #   ignored.
+              # @param [String] item_ttl Time-to-live of this item in seconds, defaults to no
               #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity. Upon
               #   expiry, the list item will be cleaned up at least in a matter of hours, and
               #   often within seconds, making this a good tool for garbage management.
+              # @param [String] collection_ttl Time-to-live of this item's parent List in
+              #   seconds, defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0
+              #   for infinity.
               # @return [SyncListItemInstance] Newly created SyncListItemInstance
-              def create(data: nil, ttl: :unset)
-                data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), 'Ttl' => ttl, })
+              def create(data: nil, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
+                data = Twilio::Values.of({
+                    'Data' => Twilio.serialize_object(data),
+                    'Ttl' => ttl,
+                    'ItemTtl' => item_ttl,
+                    'CollectionTtl' => collection_ttl,
+                })
 
                 payload = @version.create(
                     'POST',
@@ -251,13 +261,23 @@ module Twilio
               # Update the SyncListItemInstance
               # @param [Hash] data Contains arbitrary user-defined, schema-less data that this
               #   List Item stores, represented by a JSON object, up to 16KB.
-              # @param [String] ttl Time-to-live of this item in seconds, defaults to no
+              # @param [String] ttl Alias for item_ttl. If both are provided, this value is
+              #   ignored.
+              # @param [String] item_ttl Time-to-live of this item in seconds, defaults to no
               #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity. Upon
               #   expiry, the list item will be cleaned up at least in a matter of hours, and
               #   often within seconds, making this a good tool for garbage management.
+              # @param [String] collection_ttl Time-to-live of this item's parent List in
+              #   seconds, defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0
+              #   for infinity.
               # @return [SyncListItemInstance] Updated SyncListItemInstance
-              def update(data: :unset, ttl: :unset)
-                data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), 'Ttl' => ttl, })
+              def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
+                data = Twilio::Values.of({
+                    'Data' => Twilio.serialize_object(data),
+                    'Ttl' => ttl,
+                    'ItemTtl' => item_ttl,
+                    'CollectionTtl' => collection_ttl,
+                })
 
                 payload = @version.update(
                     'POST',
@@ -422,13 +442,18 @@ module Twilio
               # Update the SyncListItemInstance
               # @param [Hash] data Contains arbitrary user-defined, schema-less data that this
               #   List Item stores, represented by a JSON object, up to 16KB.
-              # @param [String] ttl Time-to-live of this item in seconds, defaults to no
+              # @param [String] ttl Alias for item_ttl. If both are provided, this value is
+              #   ignored.
+              # @param [String] item_ttl Time-to-live of this item in seconds, defaults to no
               #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity. Upon
               #   expiry, the list item will be cleaned up at least in a matter of hours, and
               #   often within seconds, making this a good tool for garbage management.
+              # @param [String] collection_ttl Time-to-live of this item's parent List in
+              #   seconds, defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0
+              #   for infinity.
               # @return [SyncListItemInstance] Updated SyncListItemInstance
-              def update(data: :unset, ttl: :unset)
-                context.update(data: data, ttl: ttl, )
+              def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
+                context.update(data: data, ttl: ttl, item_ttl: item_ttl, collection_ttl: collection_ttl, )
               end
 
               ##

@@ -32,11 +32,17 @@ module Twilio
             # Retrieve a single page of SyncListInstance records from the API.
             # Request is executed immediately.
             # @param [String] unique_name Human-readable name for this list
-            # @param [String] ttl Time-to-live of this List in seconds, defaults to no
-            #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] ttl Alias for collection_ttl. If both are provided, this value
+            #   is ignored.
+            # @param [String] collection_ttl Time-to-live of this List in seconds, defaults to
+            #   no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [SyncListInstance] Newly created SyncListInstance
-            def create(unique_name: :unset, ttl: :unset)
-              data = Twilio::Values.of({'UniqueName' => unique_name, 'Ttl' => ttl, })
+            def create(unique_name: :unset, ttl: :unset, collection_ttl: :unset)
+              data = Twilio::Values.of({
+                  'UniqueName' => unique_name,
+                  'Ttl' => ttl,
+                  'CollectionTtl' => collection_ttl,
+              })
 
               payload = @version.create(
                   'POST',
@@ -212,11 +218,13 @@ module Twilio
 
             ##
             # Update the SyncListInstance
-            # @param [String] ttl Time-to-live of this List in seconds, defaults to no
-            #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] ttl Alias for collection_ttl. If both are provided, this value
+            #   is ignored.
+            # @param [String] collection_ttl Time-to-live of this List in seconds, defaults to
+            #   no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [SyncListInstance] Updated SyncListInstance
-            def update(ttl: :unset)
-              data = Twilio::Values.of({'Ttl' => ttl, })
+            def update(ttl: :unset, collection_ttl: :unset)
+              data = Twilio::Values.of({'Ttl' => ttl, 'CollectionTtl' => collection_ttl, })
 
               payload = @version.update(
                   'POST',
@@ -406,11 +414,13 @@ module Twilio
 
             ##
             # Update the SyncListInstance
-            # @param [String] ttl Time-to-live of this List in seconds, defaults to no
-            #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] ttl Alias for collection_ttl. If both are provided, this value
+            #   is ignored.
+            # @param [String] collection_ttl Time-to-live of this List in seconds, defaults to
+            #   no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [SyncListInstance] Updated SyncListInstance
-            def update(ttl: :unset)
-              context.update(ttl: ttl, )
+            def update(ttl: :unset, collection_ttl: :unset)
+              context.update(ttl: ttl, collection_ttl: collection_ttl, )
             end
 
             ##

@@ -222,13 +222,12 @@ module Twilio
       # token_type:: Type of token
       # charge_amount:: Amount to process. If value is greater than 0 then make the payment else create a payment token
       # currency:: Currency of the amount attribute
-      # credential_sid:: SID for API keys to communicate with payment provider
       # description:: Details regarding the payment
       # valid_card_types:: Comma separated accepted card types
       # language:: Language to use
       # keyword_args:: additional attributes
-      def pay(input: nil, action: nil, status_callback: nil, status_callback_method: nil, timeout: nil, max_attempts: nil, security_code: nil, postal_code: nil, payment_connector: nil, token_type: nil, charge_amount: nil, currency: nil, credential_sid: nil, description: nil, valid_card_types: nil, language: nil, **keyword_args)
-        pay = Pay.new(input: input, action: action, status_callback: status_callback, status_callback_method: status_callback_method, timeout: timeout, max_attempts: max_attempts, security_code: security_code, postal_code: postal_code, payment_connector: payment_connector, token_type: token_type, charge_amount: charge_amount, currency: currency, credential_sid: credential_sid, description: description, valid_card_types: valid_card_types, language: language, **keyword_args)
+      def pay(input: nil, action: nil, status_callback: nil, status_callback_method: nil, timeout: nil, max_attempts: nil, security_code: nil, postal_code: nil, payment_connector: nil, token_type: nil, charge_amount: nil, currency: nil, description: nil, valid_card_types: nil, language: nil, **keyword_args)
+        pay = Pay.new(input: input, action: action, status_callback: status_callback, status_callback_method: status_callback_method, timeout: timeout, max_attempts: max_attempts, security_code: security_code, postal_code: postal_code, payment_connector: payment_connector, token_type: token_type, charge_amount: charge_amount, currency: currency, description: description, valid_card_types: valid_card_types, language: language, **keyword_args)
 
         yield(pay) if block_given?
         append(pay)

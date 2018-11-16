@@ -127,7 +127,10 @@ module Twilio
           #   Interaction. Returning a 403 status code will prevent the interaction from
           #   continuing.
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
-          #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session).
+          #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session). See
+          #   [Out-of-Session Callback Response
+          #   Guide](https://www.twilio.com/docs/proxy/out-session-callback-response-guide)
+          #   for more information.
           # @param [String] chat_instance_sid The Chat Service Instance sid managed by Proxy
           #   Service. Enables Proxy to forward sms and channel messages to this chat
           #   instance. This is a one-to-one relationship.
@@ -253,7 +256,10 @@ module Twilio
           #   Interaction. Returning a 403 status code will prevent the interaction from
           #   continuing.
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
-          #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session).
+          #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session). See
+          #   [Out-of-Session Callback Response
+          #   Guide](https://www.twilio.com/docs/proxy/out-session-callback-response-guide)
+          #   for more information.
           # @param [String] chat_instance_sid The Chat Service Instance sid managed by Proxy
           #   Service. Enables Proxy to forward sms and channel messages to this chat
           #   instance. This is a one-to-one relationship.
@@ -504,7 +510,10 @@ module Twilio
           #   Interaction. Returning a 403 status code will prevent the interaction from
           #   continuing.
           # @param [String] out_of_session_callback_url A URL for Twilio call when a new
-          #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session).
+          #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session). See
+          #   [Out-of-Session Callback Response
+          #   Guide](https://www.twilio.com/docs/proxy/out-session-callback-response-guide)
+          #   for more information.
           # @param [String] chat_instance_sid The Chat Service Instance sid managed by Proxy
           #   Service. Enables Proxy to forward sms and channel messages to this chat
           #   instance. This is a one-to-one relationship.

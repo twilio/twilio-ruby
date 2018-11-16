@@ -44,7 +44,7 @@ describe 'Query' do
                   "task_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "confidence": 0.9
               },
-              "entities": [
+              "fields": [
                   {
                       "name": "name",
                       "value": "value",
@@ -128,7 +128,7 @@ describe 'Query' do
                           "task_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                           "confidence": 0.9
                       },
-                      "entities": [
+                      "fields": [
                           {
                               "name": "name",
                               "value": "value",
@@ -197,7 +197,7 @@ describe 'Query' do
                   "task_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "confidence": 0.9
               },
-              "entities": [
+              "fields": [
                   {
                       "name": "name",
                       "value": "value",
@@ -254,7 +254,7 @@ describe 'Query' do
                   "task_sid": "UDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "confidence": 0.9
               },
-              "entities": [
+              "fields": [
                   {
                       "name": "name",
                       "value": "value",

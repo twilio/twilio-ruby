@@ -37,7 +37,9 @@ module Twilio
             #   would like to assign to your Proxy Service. Provide number in
             #   [E.164](https://en.wikipedia.org/wiki/E.164) format (e.g. `+16175551212`).
             # @param [Boolean] is_reserved Whether or not the number should be excluded from
-            #   being assigned to a participant using proxy pool logic
+            #   being assigned to a participant using proxy pool logic. See [Reserved Phone
+            #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
+            #   information.
             # @return [PhoneNumberInstance] Newly created PhoneNumberInstance
             def create(sid: :unset, phone_number: :unset, is_reserved: :unset)
               data = Twilio::Values.of({'Sid' => sid, 'PhoneNumber' => phone_number, 'IsReserved' => is_reserved, })
@@ -220,7 +222,9 @@ module Twilio
             ##
             # Update the PhoneNumberInstance
             # @param [Boolean] is_reserved Whether or not the number should be excluded from
-            #   being assigned to a participant using proxy pool logic
+            #   being assigned to a participant using proxy pool logic. See [Reserved Phone
+            #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
+            #   information.
             # @return [PhoneNumberInstance] Updated PhoneNumberInstance
             def update(is_reserved: :unset)
               data = Twilio::Values.of({'IsReserved' => is_reserved, })
@@ -376,7 +380,9 @@ module Twilio
             ##
             # Update the PhoneNumberInstance
             # @param [Boolean] is_reserved Whether or not the number should be excluded from
-            #   being assigned to a participant using proxy pool logic
+            #   being assigned to a participant using proxy pool logic. See [Reserved Phone
+            #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
+            #   information.
             # @return [PhoneNumberInstance] Updated PhoneNumberInstance
             def update(is_reserved: :unset)
               context.update(is_reserved: is_reserved, )

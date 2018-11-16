@@ -38,11 +38,24 @@ module Twilio
               #   characters long.
               # @param [Hash] data Contains arbitrary user-defined, schema-less data that this
               #   Map Item stores, represented by a JSON object, up to 16KB.
-              # @param [String] ttl Time-to-live of this Map in seconds, defaults to no
-              #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
+              # @param [String] ttl Alias for item_ttl. If both are provided, this value is
+              #   ignored.
+              # @param [String] item_ttl Time-to-live of this item in seconds, defaults to no
+              #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity. Upon
+              #   expiry, the map item will be cleaned up at least in a matter of hours, and often
+              #   within seconds, making this a good tool for garbage management.
+              # @param [String] collection_ttl Time-to-live of this item's parent Map in
+              #   seconds, defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0
+              #   for infinity.
               # @return [SyncMapItemInstance] Newly created SyncMapItemInstance
-              def create(key: nil, data: nil, ttl: :unset)
-                data = Twilio::Values.of({'Key' => key, 'Data' => Twilio.serialize_object(data), 'Ttl' => ttl, })
+              def create(key: nil, data: nil, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
+                data = Twilio::Values.of({
+                    'Key' => key,
+                    'Data' => Twilio.serialize_object(data),
+                    'Ttl' => ttl,
+                    'ItemTtl' => item_ttl,
+                    'CollectionTtl' => collection_ttl,
+                })
 
                 payload = @version.create(
                     'POST',
@@ -260,11 +273,23 @@ module Twilio
               # Update the SyncMapItemInstance
               # @param [Hash] data Contains an arbitrary JSON object to be stored in this Map
               #   Item. Serialized to string to respect HTTP form input, up to 16KB.
-              # @param [String] ttl New time-to-live of this Map in seconds. In the range [1, 31
-              #   536 000 (1 year)], or 0 for infinity.
+              # @param [String] ttl Alias for item_ttl. If both are provided, this value is
+              #   ignored.
+              # @param [String] item_ttl Time-to-live of this item in seconds, defaults to no
+              #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity. Upon
+              #   expiry, the map item will be cleaned up at least in a matter of hours, and often
+              #   within seconds, making this a good tool for garbage management.
+              # @param [String] collection_ttl Time-to-live of this item's parent Map in
+              #   seconds, defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0
+              #   for infinity.
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
-              def update(data: :unset, ttl: :unset)
-                data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), 'Ttl' => ttl, })
+              def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
+                data = Twilio::Values.of({
+                    'Data' => Twilio.serialize_object(data),
+                    'Ttl' => ttl,
+                    'ItemTtl' => item_ttl,
+                    'CollectionTtl' => collection_ttl,
+                })
 
                 payload = @version.update(
                     'POST',
@@ -425,11 +450,18 @@ module Twilio
               # Update the SyncMapItemInstance
               # @param [Hash] data Contains an arbitrary JSON object to be stored in this Map
               #   Item. Serialized to string to respect HTTP form input, up to 16KB.
-              # @param [String] ttl New time-to-live of this Map in seconds. In the range [1, 31
-              #   536 000 (1 year)], or 0 for infinity.
+              # @param [String] ttl Alias for item_ttl. If both are provided, this value is
+              #   ignored.
+              # @param [String] item_ttl Time-to-live of this item in seconds, defaults to no
+              #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity. Upon
+              #   expiry, the map item will be cleaned up at least in a matter of hours, and often
+              #   within seconds, making this a good tool for garbage management.
+              # @param [String] collection_ttl Time-to-live of this item's parent Map in
+              #   seconds, defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0
+              #   for infinity.
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
-              def update(data: :unset, ttl: :unset)
-                context.update(data: data, ttl: ttl, )
+              def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
+                context.update(data: data, ttl: ttl, item_ttl: item_ttl, collection_ttl: collection_ttl, )
               end
 
               ##

@@ -29,20 +29,20 @@ module Twilio
       end
 
       ##
+      # @param [String] sid A 34 character string that uniquely identifies this Service.
+      # @return [Twilio::REST::Authy::V1::ServiceInstance] if sid was passed.
+      # @return [Twilio::REST::Authy::V1::ServiceList]
+      def services(sid=:unset)
+        self.v1.services(sid)
+      end
+
+      ##
       # @param [form.FormType] form_type The Form Type of this Form. One of
       #   `form-app-push`, `form-sms` or `form-totp`.
       # @return [Twilio::REST::Authy::V1::FormInstance] if form_type was passed.
       # @return [Twilio::REST::Authy::V1::FormList]
       def forms(form_type=:unset)
         self.v1.forms(form_type)
-      end
-
-      ##
-      # @param [String] sid A 34 character string that uniquely identifies this Service.
-      # @return [Twilio::REST::Authy::V1::ServiceInstance] if sid was passed.
-      # @return [Twilio::REST::Authy::V1::ServiceList]
-      def services(sid=:unset)
-        self.v1.services(sid)
       end
 
       ##
