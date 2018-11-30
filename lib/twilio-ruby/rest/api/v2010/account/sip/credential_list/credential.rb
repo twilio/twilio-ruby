@@ -117,7 +117,7 @@ module Twilio
                 # @param [String] username The username that will be passed when authenticating
                 #   SIP requests. The username should be sent in response to Twilio’s challenge of
                 #   the initial INVITE. It can be up to 32 characters long.
-                # @param [String] password The password that the username will use when when
+                # @param [String] password The password that the username will use when
                 #   authenticating SIP requests. The password must be a minimum of 12 characters,
                 #   contain at least 1 digit, and have mixed case. (eg “IWasAtSignal2018”)
                 # @return [CredentialInstance] Newly created CredentialInstance
@@ -218,7 +218,7 @@ module Twilio
 
                 ##
                 # Update the CredentialInstance
-                # @param [String] password The password that the username will use when when
+                # @param [String] password The password that the username will use when
                 #   authenticating SIP requests. The password must be a minimum of 12 characters,
                 #   contain at least 1 digit, and have mixed case. (eg “IWasAtSignal2018”)
                 # @return [CredentialInstance] Updated CredentialInstance
@@ -355,7 +355,7 @@ module Twilio
 
                 ##
                 # Update the CredentialInstance
-                # @param [String] password The password that the username will use when when
+                # @param [String] password The password that the username will use when
                 #   authenticating SIP requests. The password must be a minimum of 12 characters,
                 #   contain at least 1 digit, and have mixed case. (eg “IWasAtSignal2018”)
                 # @return [CredentialInstance] Updated CredentialInstance

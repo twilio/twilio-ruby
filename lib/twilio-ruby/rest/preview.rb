@@ -19,7 +19,6 @@ module Twilio
         @port = 443
 
         # Versions
-        @authy = nil
         @bulk_exports = nil
         @deployed_devices = nil
         @hosted_numbers = nil
@@ -28,12 +27,6 @@ module Twilio
         @sync = nil
         @understand = nil
         @wireless = nil
-      end
-
-      ##
-      # Version authy of preview
-      def authy
-        @authy ||= Authy.new self
       end
 
       ##
@@ -85,14 +78,6 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
-      # @return [Twilio::REST::Preview::Sync::ServiceInstance] if sid was passed.
-      # @return [Twilio::REST::Preview::Sync::ServiceList]
-      def services(sid=:unset)
-        self.sync.services(sid)
-      end
-
-      ##
       # @param [String] resource_type The resource_type
       # @return [Twilio::REST::Preview::BulkExports::ExportInstance] if resource_type was passed.
       # @return [Twilio::REST::Preview::BulkExports::ExportList]
@@ -136,6 +121,14 @@ module Twilio
       end
 
       ##
+      # @param [String] sid A 34 character string that uniquely identifies this Add-on.
+      # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnInstance] if sid was passed.
+      # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnList]
+      def available_add_ons(sid=:unset)
+        self.marketplace.available_add_ons(sid)
+      end
+
+      ##
       # @param [String] sid 34 character string that uniquely identifies the Add-on.
       #   This Sid can also be found in the Console on that specific Add-ons page as the
       #   'Available Add-on Sid'.
@@ -146,11 +139,11 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this Add-on.
-      # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnInstance] if sid was passed.
-      # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnList]
-      def available_add_ons(sid=:unset)
-        self.marketplace.available_add_ons(sid)
+      # @param [String] sid The sid
+      # @return [Twilio::REST::Preview::Sync::ServiceInstance] if sid was passed.
+      # @return [Twilio::REST::Preview::Sync::ServiceList]
+      def services(sid=:unset)
+        self.sync.services(sid)
       end
 
       ##

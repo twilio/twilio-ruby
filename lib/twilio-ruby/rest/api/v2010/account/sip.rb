@@ -56,7 +56,7 @@ module Twilio
 
             ##
             # Access the ip_access_control_lists
-            # @param [String] sid The ip-access-control-list Sid that uniquely identifies this
+            # @param [String] sid The IpAccessControlList Sid that uniquely identifies this
             #   resource
             # @return [IpAccessControlListList]
             # @return [IpAccessControlListContext] if sid was passed.

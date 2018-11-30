@@ -221,9 +221,8 @@ module Twilio
                       'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                       'date_responded' => Twilio.deserialize_iso8601_datetime(payload['date_responded']),
                       'expiration_date' => Twilio.deserialize_iso8601_datetime(payload['expiration_date']),
-                      'verification_sid' => payload['verification_sid'],
                       'status' => payload['status'],
-                      'reason' => payload['reason'],
+                      'responded_reason' => payload['responded_reason'],
                       'details' => payload['details'],
                       'hidden_details' => payload['hidden_details'],
                       'type' => payload['type'],
@@ -318,21 +317,15 @@ module Twilio
                 end
 
                 ##
-                # @return [String] Verification Sid.
-                def verification_sid
-                  @properties['verification_sid']
-                end
-
-                ##
-                # @return [challenge.ChallengeStatus] The Status of this Challenge
+                # @return [challenge.ChallengeStatuses] The Status of this Challenge
                 def status
                   @properties['status']
                 end
 
                 ##
-                # @return [challenge.ChallengeReason] The Reason of this Challenge `status`
-                def reason
-                  @properties['reason']
+                # @return [challenge.ChallengeReasons] The Reason of this Challenge `status`
+                def responded_reason
+                  @properties['responded_reason']
                 end
 
                 ##
@@ -348,7 +341,7 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The Factor Type of this Challenge
+                # @return [challenge.FactorTypes] The Type of this Challenge
                 def type
                   @properties['type']
                 end

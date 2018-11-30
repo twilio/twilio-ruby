@@ -55,8 +55,12 @@ module Twilio
               #   Chat service if not specified.  Note that this should only be used in cases
               #   where a Member is being recreated from a backup/separate source  and where a
               #   Member was previously updated.
+              # @param [String] attributes An optional string metadata field you can use to
+              #   store any data you wish. The string value must contain structurally valid JSON
+              #   if specified.  **Note** that if the attributes are not set "{}" will be
+              #   returned.
               # @return [MemberInstance] Newly created MemberInstance
-              def create(identity: nil, role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset)
+              def create(identity: nil, role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
                 data = Twilio::Values.of({
                     'Identity' => identity,
                     'RoleSid' => role_sid,
@@ -64,6 +68,7 @@ module Twilio
                     'LastConsumptionTimestamp' => Twilio.serialize_iso8601_datetime(last_consumption_timestamp),
                     'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                     'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
+                    'Attributes' => attributes,
                 })
 
                 payload = @version.create(
@@ -287,14 +292,19 @@ module Twilio
               #   Chat service if not specified.  Note that this should only be used in cases
               #   where a Member is being recreated from a backup/separate source  and where a
               #   Member was previously updated.
+              # @param [String] attributes An optional string metadata field you can use to
+              #   store any data you wish. The string value must contain structurally valid JSON
+              #   if specified.  **Note** that if the attributes are not set "{}" will be
+              #   returned.
               # @return [MemberInstance] Updated MemberInstance
-              def update(role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset)
+              def update(role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
                 data = Twilio::Values.of({
                     'RoleSid' => role_sid,
                     'LastConsumedMessageIndex' => last_consumed_message_index,
                     'LastConsumptionTimestamp' => Twilio.serialize_iso8601_datetime(last_consumption_timestamp),
                     'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                     'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
+                    'Attributes' => attributes,
                 })
 
                 payload = @version.update(
@@ -349,6 +359,7 @@ module Twilio
                     'last_consumed_message_index' => payload['last_consumed_message_index'] == nil ? payload['last_consumed_message_index'] : payload['last_consumed_message_index'].to_i,
                     'last_consumption_timestamp' => Twilio.deserialize_iso8601_datetime(payload['last_consumption_timestamp']),
                     'url' => payload['url'],
+                    'attributes' => payload['attributes'],
                 }
 
                 # Context
@@ -443,6 +454,12 @@ module Twilio
               end
 
               ##
+              # @return [String] An optional string metadata field you can use to store any data you wish.
+              def attributes
+                @properties['attributes']
+              end
+
+              ##
               # Fetch a MemberInstance
               # @return [MemberInstance] Fetched MemberInstance
               def fetch
@@ -475,14 +492,19 @@ module Twilio
               #   Chat service if not specified.  Note that this should only be used in cases
               #   where a Member is being recreated from a backup/separate source  and where a
               #   Member was previously updated.
+              # @param [String] attributes An optional string metadata field you can use to
+              #   store any data you wish. The string value must contain structurally valid JSON
+              #   if specified.  **Note** that if the attributes are not set "{}" will be
+              #   returned.
               # @return [MemberInstance] Updated MemberInstance
-              def update(role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset)
+              def update(role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
                 context.update(
                     role_sid: role_sid,
                     last_consumed_message_index: last_consumed_message_index,
                     last_consumption_timestamp: last_consumption_timestamp,
                     date_created: date_created,
                     date_updated: date_updated,
+                    attributes: attributes,
                 )
               end
 

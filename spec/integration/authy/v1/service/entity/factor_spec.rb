@@ -15,10 +15,10 @@ describe 'Factor' do
     expect {
       @client.authy.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                       .entities('identity') \
-                      .factors.create(binding: 'binding', factor_type: 'factor_type', friendly_name: 'friendly_name')
+                      .factors.create(binding: 'binding', friendly_name: 'friendly_name', type: 'app-push')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Binding' => 'binding', 'FactorType' => 'factor_type', 'FriendlyName' => 'friendly_name', }
+    values = {'Binding' => 'binding', 'FriendlyName' => 'friendly_name', 'Type' => 'app-push', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -52,7 +52,7 @@ describe 'Factor' do
 
     actual = @client.authy.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .entities('identity') \
-                             .factors.create(binding: 'binding', factor_type: 'factor_type', friendly_name: 'friendly_name')
+                             .factors.create(binding: 'binding', friendly_name: 'friendly_name', type: 'app-push')
 
     expect(actual).to_not eq(nil)
   end

@@ -40,14 +40,17 @@ module Twilio
             # @param [String] locale Supported values are af, ar, ca, cs, da, de, el, en, es,
             #   fi, fr, he, hi, hr, hu, id, it, ja, ko, ms, nb, nl, pl, pt, pr-BR, ro, ru, sv,
             #   th, tl, tr, vi, zh, zh-CN, zh-HK
+            # @param [String] custom_code Pass in a pre-generated code. Code length can be
+            #   between 4-10 characters.
             # @return [VerificationInstance] Newly created VerificationInstance
-            def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset, locale: :unset)
+            def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'Channel' => channel,
                   'CustomMessage' => custom_message,
                   'SendDigits' => send_digits,
                   'Locale' => locale,
+                  'CustomCode' => custom_code,
               })
 
               payload = @version.create(

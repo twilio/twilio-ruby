@@ -46,7 +46,8 @@ module Twilio
               #   within seconds, making this a good tool for garbage management.
               # @param [String] collection_ttl Time-to-live of this item's parent Map in
               #   seconds, defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0
-              #   for infinity.
+              #   for infinity. This parameter can only be used when the map item's data or ttl is
+              #   updated in the same request.
               # @return [SyncMapItemInstance] Newly created SyncMapItemInstance
               def create(key: nil, data: nil, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
                 data = Twilio::Values.of({
@@ -281,7 +282,8 @@ module Twilio
               #   within seconds, making this a good tool for garbage management.
               # @param [String] collection_ttl Time-to-live of this item's parent Map in
               #   seconds, defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0
-              #   for infinity.
+              #   for infinity. This parameter can only be used when the map item's data or ttl is
+              #   updated in the same request.
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
               def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
                 data = Twilio::Values.of({
@@ -458,7 +460,8 @@ module Twilio
               #   within seconds, making this a good tool for garbage management.
               # @param [String] collection_ttl Time-to-live of this item's parent Map in
               #   seconds, defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0
-              #   for infinity.
+              #   for infinity. This parameter can only be used when the map item's data or ttl is
+              #   updated in the same request.
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
               def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
                 context.update(data: data, ttl: ttl, item_ttl: item_ttl, collection_ttl: collection_ttl, )

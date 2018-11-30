@@ -168,7 +168,7 @@ module Twilio
               # Initialize the IpAccessControlListContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The account_sid
-              # @param [String] sid The ip-access-control-list Sid that uniquely identifies this
+              # @param [String] sid The IpAccessControlList Sid that uniquely identifies this
               #   resource
               # @return [IpAccessControlListContext] IpAccessControlListContext
               def initialize(version, account_sid, sid)
@@ -268,7 +268,7 @@ module Twilio
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid A 34 character string that uniquely identifies this
               #   resource.
-              # @param [String] sid The ip-access-control-list Sid that uniquely identifies this
+              # @param [String] sid The IpAccessControlList Sid that uniquely identifies this
               #   resource
               # @return [IpAccessControlListInstance] IpAccessControlListInstance
               def initialize(version, payload, account_sid: nil, sid: nil)

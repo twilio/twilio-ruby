@@ -113,7 +113,7 @@ module Twilio
               # Retrieve a single page of CredentialListInstance records from the API.
               # Request is executed immediately.
               # @param [String] friendly_name A human readable descriptive text that describes
-              #   the IpAccessControlList, up to 64 characters long.
+              #   the CredentialList, up to 64 characters long.
               # @return [CredentialListInstance] Newly created CredentialListInstance
               def create(friendly_name: nil)
                 data = Twilio::Values.of({'FriendlyName' => friendly_name, })

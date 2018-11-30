@@ -68,15 +68,15 @@ module Twilio
           ##
           # Initialize the FormContext
           # @param [Version] version Version that contains the resource
-          # @param [form.FormType] form_type The Form Type of this Form. One of
-          #   `form-app-push`, `form-sms` or `form-totp`.
+          # @param [form.FormTypes] type The Type of this Form. One of `form-app-push`,
+          #   `form-sms` or `form-totp`.
           # @return [FormContext] FormContext
-          def initialize(version, form_type)
+          def initialize(version, type)
             super(version)
 
             # Path Solution
-            @solution = {form_type: form_type, }
-            @uri = "/Forms/#{@solution[:form_type]}"
+            @solution = {type: type, }
+            @uri = "/Forms/#{@solution[:type]}"
           end
 
           ##
@@ -91,7 +91,7 @@ module Twilio
                 params,
             )
 
-            FormInstance.new(@version, payload, form_type: @solution[:form_type], )
+            FormInstance.new(@version, payload, type: @solution[:type], )
           end
 
           ##
@@ -109,15 +109,15 @@ module Twilio
           # Initialize the FormInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [form.FormType] form_type The Form Type of this Form. One of
-          #   `form-app-push`, `form-sms` or `form-totp`.
+          # @param [form.FormTypes] type The Type of this Form. One of `form-app-push`,
+          #   `form-sms` or `form-totp`.
           # @return [FormInstance] FormInstance
-          def initialize(version, payload, form_type: nil)
+          def initialize(version, payload, type: nil)
             super(version)
 
             # Marshaled Properties
             @properties = {
-                'form_type' => payload['form_type'],
+                'type' => payload['type'],
                 'forms' => payload['forms'],
                 'form_meta' => payload['form_meta'],
                 'url' => payload['url'],
@@ -125,7 +125,7 @@ module Twilio
 
             # Context
             @instance_context = nil
-            @params = {'form_type' => form_type || @properties['form_type'], }
+            @params = {'type' => type || @properties['type'], }
           end
 
           ##
@@ -134,31 +134,31 @@ module Twilio
           # @return [FormContext] FormContext for this FormInstance
           def context
             unless @instance_context
-              @instance_context = FormContext.new(@version, @params['form_type'], )
+              @instance_context = FormContext.new(@version, @params['type'], )
             end
             @instance_context
           end
 
           ##
-          # @return [form.FormType] The Form Type of this Form
-          def form_type
-            @properties['form_type']
+          # @return [form.FormTypes] The Type of this Form
+          def type
+            @properties['type']
           end
 
           ##
-          # @return [Hash] Object that contains the available forms for this form type.
+          # @return [Hash] Object that contains the available forms for this type.
           def forms
             @properties['forms']
           end
 
           ##
-          # @return [Hash] Additional information for the available forms for this form type.
+          # @return [Hash] Additional information for the available forms for this type.
           def form_meta
             @properties['form_meta']
           end
 
           ##
-          # @return [String] The URL to access the forms for this form type.
+          # @return [String] The URL to access the forms for this type.
           def url
             @properties['url']
           end
