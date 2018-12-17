@@ -17,9 +17,10 @@ module Twilio
                 ##
                 # Initialize the IpAddressList
                 # @param [Version] version Version that contains the resource
-                # @param [String] account_sid The unique id of the Account that responsible for
+                # @param [String] account_sid The unique id of the Account that is responsible for
                 #   this resource.
-                # @param [String] ip_access_control_list_sid The ip_access_control_list_sid
+                # @param [String] ip_access_control_list_sid The unique id of the
+                #   IpAccessControlList resource that includes this resource.
                 # @return [IpAddressList] IpAddressList
                 def initialize(version, account_sid: nil, ip_access_control_list_sid: nil)
                   super(version)
@@ -114,9 +115,14 @@ module Twilio
                 ##
                 # Retrieve a single page of IpAddressInstance records from the API.
                 # Request is executed immediately.
-                # @param [String] friendly_name The friendly_name
-                # @param [String] ip_address The ip_address
-                # @param [String] cidr_prefix_length The cidr_prefix_length
+                # @param [String] friendly_name A human readable descriptive text for this
+                #   resource, up to 64 characters long.
+                # @param [String] ip_address An IP address in dotted decimal notation from which
+                #   you want to accept traffic. Any SIP requests from this IP address will be
+                #   allowed by Twilio. IPv4 only supported today.
+                # @param [String] cidr_prefix_length An integer representing the length of the
+                #   CIDR prefix to use with this IP address when accepting traffic. By default the
+                #   entire IP address is used.
                 # @return [IpAddressInstance] Newly created IpAddressInstance
                 def create(friendly_name: nil, ip_address: nil, cidr_prefix_length: :unset)
                   data = Twilio::Values.of({
@@ -184,9 +190,13 @@ module Twilio
                 ##
                 # Initialize the IpAddressContext
                 # @param [Version] version Version that contains the resource
-                # @param [String] account_sid The account_sid
-                # @param [String] ip_access_control_list_sid The ip_access_control_list_sid
-                # @param [String] sid The sid
+                # @param [String] account_sid The unique id of the
+                #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+                #   resource.
+                # @param [String] ip_access_control_list_sid The IpAccessControlList Sid that
+                #   identifies the IpAddress resources to fetch.
+                # @param [String] sid A 34 character string that uniquely identifies the IpAddress
+                #   resource to fetch.
                 # @return [IpAddressContext] IpAddressContext
                 def initialize(version, account_sid, ip_access_control_list_sid, sid)
                   super(version)
@@ -223,9 +233,14 @@ module Twilio
 
                 ##
                 # Update the IpAddressInstance
-                # @param [String] ip_address The ip_address
-                # @param [String] friendly_name The friendly_name
-                # @param [String] cidr_prefix_length The cidr_prefix_length
+                # @param [String] ip_address An IP address in dotted decimal notation from which
+                #   you want to accept traffic. Any SIP requests from this IP address will be
+                #   allowed by Twilio. IPv4 only supported today.
+                # @param [String] friendly_name A human readable descriptive text for this
+                #   resource, up to 64 characters long.
+                # @param [String] cidr_prefix_length An integer representing the length of the
+                #   CIDR prefix to use with this IP address when accepting traffic. By default the
+                #   entire IP address is used.
                 # @return [IpAddressInstance] Updated IpAddressInstance
                 def update(ip_address: :unset, friendly_name: :unset, cidr_prefix_length: :unset)
                   data = Twilio::Values.of({
@@ -269,10 +284,12 @@ module Twilio
                 # Initialize the IpAddressInstance
                 # @param [Version] version Version that contains the resource
                 # @param [Hash] payload payload that contains response from Twilio
-                # @param [String] account_sid The unique id of the Account that responsible for
+                # @param [String] account_sid The unique id of the Account that is responsible for
                 #   this resource.
-                # @param [String] ip_access_control_list_sid The ip_access_control_list_sid
-                # @param [String] sid The sid
+                # @param [String] ip_access_control_list_sid The unique id of the
+                #   IpAccessControlList resource that includes this resource.
+                # @param [String] sid A 34 character string that uniquely identifies the IpAddress
+                #   resource to fetch.
                 # @return [IpAddressInstance] IpAddressInstance
                 def initialize(version, payload, account_sid: nil, ip_access_control_list_sid: nil, sid: nil)
                   super(version)
@@ -322,7 +339,7 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The unique id of the Account that responsible for this resource.
+                # @return [String] The unique id of the Account that is responsible for this resource.
                 def account_sid
                   @properties['account_sid']
                 end
@@ -346,7 +363,7 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The ip_access_control_list_sid
+                # @return [String] The unique id of the IpAccessControlList resource that includes this resource.
                 def ip_access_control_list_sid
                   @properties['ip_access_control_list_sid']
                 end
@@ -378,9 +395,14 @@ module Twilio
 
                 ##
                 # Update the IpAddressInstance
-                # @param [String] ip_address The ip_address
-                # @param [String] friendly_name The friendly_name
-                # @param [String] cidr_prefix_length The cidr_prefix_length
+                # @param [String] ip_address An IP address in dotted decimal notation from which
+                #   you want to accept traffic. Any SIP requests from this IP address will be
+                #   allowed by Twilio. IPv4 only supported today.
+                # @param [String] friendly_name A human readable descriptive text for this
+                #   resource, up to 64 characters long.
+                # @param [String] cidr_prefix_length An integer representing the length of the
+                #   CIDR prefix to use with this IP address when accepting traffic. By default the
+                #   entire IP address is used.
                 # @return [IpAddressInstance] Updated IpAddressInstance
                 def update(ip_address: :unset, friendly_name: :unset, cidr_prefix_length: :unset)
                   context.update(

@@ -35,7 +35,7 @@ module Twilio
               # Request is executed immediately.
               # @param [String] recording_status_callback_event The recording status changes
               #   that should generate a request to the URL specified in RecordingStatusCallback.
-              #   Possible values: `in-progress`, `completed`, `failed`. To specify multiple
+              #   Possible values: `in-progress`, `completed` and `absent`. To specify multiple
               #   values separate them with a space. Defaults to `completed`.
               # @param [String] recording_status_callback The URL which Twilio will make its GET
               #   or POST request to for the recording events specified in parameter
@@ -224,7 +224,9 @@ module Twilio
               ##
               # Initialize the RecordingContext
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
+              # @param [String] account_sid The unique ID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+              #   recording.
               # @param [String] call_sid The call Sid that uniquely identifies this resource
               # @param [String] sid The recording Sid that uniquely identifies this resource
               # @return [RecordingContext] RecordingContext
@@ -453,7 +455,7 @@ module Twilio
               end
 
               ##
-              # @return [String] More information about the recording failure, if Status is failed.
+              # @return [String] More information about why the recording is missing, if Status is `absent`.
               def error_code
                 @properties['error_code']
               end

@@ -225,7 +225,7 @@ module Twilio
                       'responded_reason' => payload['responded_reason'],
                       'details' => payload['details'],
                       'hidden_details' => payload['hidden_details'],
-                      'type' => payload['type'],
+                      'factor_type' => payload['factor_type'],
                       'url' => payload['url'],
                   }
 
@@ -341,9 +341,9 @@ module Twilio
                 end
 
                 ##
-                # @return [challenge.FactorTypes] The Type of this Challenge
-                def type
-                  @properties['type']
+                # @return [challenge.FactorTypes] The Factor Type of this Challenge
+                def factor_type
+                  @properties['factor_type']
                 end
 
                 ##

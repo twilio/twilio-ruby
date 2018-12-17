@@ -36,7 +36,8 @@ module Twilio
             # @param [Time] date_created_after Filter by date created
             # @param [String] call_sid Only show recordings made during the call indicated by
             #   this call SID
-            # @param [String] conference_sid The conference_sid
+            # @param [String] conference_sid The unique ID for the conference associated with
+            #   the recording, if the recording is of a conference.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -65,7 +66,8 @@ module Twilio
             # @param [Time] date_created_after Filter by date created
             # @param [String] call_sid Only show recordings made during the call indicated by
             #   this call SID
-            # @param [String] conference_sid The conference_sid
+            # @param [String] conference_sid The unique ID for the conference associated with
+            #   the recording, if the recording is of a conference.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -110,7 +112,8 @@ module Twilio
             # @param [Time] date_created_after Filter by date created
             # @param [String] call_sid Only show recordings made during the call indicated by
             #   this call SID
-            # @param [String] conference_sid The conference_sid
+            # @param [String] conference_sid The unique ID for the conference associated with
+            #   the recording, if the recording is of a conference.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -187,7 +190,9 @@ module Twilio
             ##
             # Initialize the RecordingContext
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The account_sid
+            # @param [String] account_sid The unique ID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+            #   recording.
             # @param [String] sid The unique recording SID that identifies this resource
             # @return [RecordingContext] RecordingContext
             def initialize(version, account_sid, sid)
@@ -412,7 +417,7 @@ module Twilio
             end
 
             ##
-            # @return [String] More information about the recording failure, if Status is failed.
+            # @return [String] More information about why the recording is missing, if Status is `absent`.
             def error_code
               @properties['error_code']
             end
@@ -430,7 +435,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The subresource_uris
+            # @return [String] A dictionary of URIs for related resources
             def subresource_uris
               @properties['subresource_uris']
             end

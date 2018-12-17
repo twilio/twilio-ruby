@@ -107,10 +107,9 @@ module Twilio
             #   firing a voice request with `AnsweredBy` of `unknown`. Defaults to 30 seconds.
             # @param [String] recording_status_callback_event The recording status events that
             #   will trigger Twilio to send webhooks on to the URL specified in
-            #   `RecordingStatusCallback`. The available values are `in-progress`, `completed`,
-            #   and `failed`. Defaults are `completed` and `failed`. To specify multiple values,
-            #   separate them with a space. If any values are specified, the defaults are no
-            #   longer applicable.
+            #   `RecordingStatusCallback`. The available values are `in-progress`, `completed`
+            #   and `absent`. Defaults to `completed`. To specify multiple values, separate them
+            #   with a space.
             # @param [String] trim `trim-silence` or `do-not-trim`. Set this parameter to
             #   define whether leading and trailing silence is trimmed from the recording. 
             #   Defaults to `trim-silence`.
@@ -328,7 +327,8 @@ module Twilio
 
             ##
             # Access the feedback_summaries
-            # @param [String] sid The sid
+            # @param [String] sid A 34 character string that uniquely identifies this
+            #   resource.
             # @return [FeedbackSummaryList]
             # @return [FeedbackSummaryContext] if sid was passed.
             def feedback_summaries(sid=:unset)

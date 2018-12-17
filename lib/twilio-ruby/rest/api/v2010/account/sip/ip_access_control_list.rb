@@ -167,9 +167,11 @@ module Twilio
               ##
               # Initialize the IpAccessControlListContext
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] sid The IpAccessControlList Sid that uniquely identifies this
-              #   resource
+              # @param [String] account_sid The unique id of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+              #   resource.
+              # @param [String] sid A 34 character string that uniquely identifies the resource
+              #   to fetch.
               # @return [IpAccessControlListContext] IpAccessControlListContext
               def initialize(version, account_sid, sid)
                 super(version)
@@ -268,8 +270,8 @@ module Twilio
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid A 34 character string that uniquely identifies this
               #   resource.
-              # @param [String] sid The IpAccessControlList Sid that uniquely identifies this
-              #   resource
+              # @param [String] sid A 34 character string that uniquely identifies the resource
+              #   to fetch.
               # @return [IpAccessControlListInstance] IpAccessControlListInstance
               def initialize(version, payload, account_sid: nil, sid: nil)
                 super(version)
@@ -332,7 +334,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The subresource_uris
+              # @return [String] The IP addresses associated with this resource.
               def subresource_uris
                 @properties['subresource_uris']
               end

@@ -16,7 +16,9 @@ module Twilio
               ##
               # Initialize the FeedbackList
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
+              # @param [String] account_sid The unique id of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+              #   resource.
               # @param [String] call_sid A 34-character string that uniquely identifies the Call
               #   resource.
               # @return [FeedbackList] FeedbackList
@@ -72,7 +74,9 @@ module Twilio
               ##
               # Initialize the FeedbackContext
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
+              # @param [String] account_sid The unique id of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+              #   resource.
               # @param [String] call_sid The call sid that uniquely identifies the call
               # @return [FeedbackContext] FeedbackContext
               def initialize(version, account_sid, call_sid)
@@ -86,11 +90,13 @@ module Twilio
               ##
               # Retrieve a single page of FeedbackInstance records from the API.
               # Request is executed immediately.
-              # @param [String] quality_score An integer `1` to `5` quality score where `1`
-              #   represents very poor call quality and `5` represents a perfect call.
-              # @param [feedback.Issues] issue One or more issues experienced during the call.
-              #   The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`,
-              #   `post-dial-delay`, `digits-not-captured`, `audio-latency`, or `one-way-audio`.
+              # @param [String] quality_score The call quality expressed as an integer from `1`
+              #   to `5` where `1` represents very poor call quality and `5` represents a perfect
+              #   call.
+              # @param [feedback.Issues] issue A list of one or more issues experienced during
+              #   the call. Issues can be: `imperfect-audio`, `dropped-call`,
+              #   `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`,
+              #   `audio-latency`, or `one-way-audio`.
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(quality_score: nil, issue: :unset)
                 data = Twilio::Values.of({
@@ -134,8 +140,9 @@ module Twilio
 
               ##
               # Update the FeedbackInstance
-              # @param [String] quality_score An integer `1` to `5` quality score where `1`
-              #   represents very poor call quality and `5` represents a perfect call.
+              # @param [String] quality_score The call quality expressed as an integer from `1`
+              #   to `5` where `1` represents very poor call quality and `5` represents a perfect
+              #   call.
               # @param [feedback.Issues] issue One or more issues experienced during the call.
               #   The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`,
               #   `post-dial-delay`, `digits-not-captured`, `audio-latency`, or `one-way-audio`.
@@ -173,7 +180,9 @@ module Twilio
               # Initialize the FeedbackInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] account_sid The account_sid
+              # @param [String] account_sid The unique id of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+              #   resource.
               # @param [String] call_sid A 34-character string that uniquely identifies the Call
               #   resource.
               # @return [FeedbackInstance] FeedbackInstance
@@ -207,25 +216,25 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The unique sid that identifies this account
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The date this resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The date this resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [feedback.Issues] The issues
+              # @return [feedback.Issues] Issues experienced during the call
               def issues
                 @properties['issues']
               end
@@ -237,7 +246,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] A string that uniquely identifies this feedback resource
               def sid
                 @properties['sid']
               end
@@ -245,11 +254,13 @@ module Twilio
               ##
               # Retrieve a single page of FeedbackInstance records from the API.
               # Request is executed immediately.
-              # @param [String] quality_score An integer `1` to `5` quality score where `1`
-              #   represents very poor call quality and `5` represents a perfect call.
-              # @param [feedback.Issues] issue One or more issues experienced during the call.
-              #   The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`,
-              #   `post-dial-delay`, `digits-not-captured`, `audio-latency`, or `one-way-audio`.
+              # @param [String] quality_score The call quality expressed as an integer from `1`
+              #   to `5` where `1` represents very poor call quality and `5` represents a perfect
+              #   call.
+              # @param [feedback.Issues] issue A list of one or more issues experienced during
+              #   the call. Issues can be: `imperfect-audio`, `dropped-call`,
+              #   `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`,
+              #   `audio-latency`, or `one-way-audio`.
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(quality_score: nil, issue: :unset)
                 context.create(quality_score: quality_score, issue: issue, )
@@ -264,8 +275,9 @@ module Twilio
 
               ##
               # Update the FeedbackInstance
-              # @param [String] quality_score An integer `1` to `5` quality score where `1`
-              #   represents very poor call quality and `5` represents a perfect call.
+              # @param [String] quality_score The call quality expressed as an integer from `1`
+              #   to `5` where `1` represents very poor call quality and `5` represents a perfect
+              #   call.
               # @param [feedback.Issues] issue One or more issues experienced during the call.
               #   The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`,
               #   `post-dial-delay`, `digits-not-captured`, `audio-latency`, or `one-way-audio`.

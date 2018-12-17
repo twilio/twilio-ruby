@@ -15,7 +15,8 @@ module Twilio
             ##
             # Initialize the TaskChannelList
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The workspace_sid
+            # @param [String] workspace_sid The unique ID of the Workspace that this
+            #   TaskChannel belongs to.
             # @return [TaskChannelList] TaskChannelList
             def initialize(version, workspace_sid: nil)
               super(version)
@@ -108,6 +109,25 @@ module Twilio
             end
 
             ##
+            # Retrieve a single page of TaskChannelInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] friendly_name String representing user-friendly name for the
+            #   TaskChannel
+            # @param [String] unique_name String representing unique name for the TaskChannel
+            # @return [TaskChannelInstance] Newly created TaskChannelInstance
+            def create(friendly_name: nil, unique_name: nil)
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'UniqueName' => unique_name, })
+
+              payload = @version.create(
+                  'POST',
+                  @uri,
+                  data: data
+              )
+
+              TaskChannelInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], )
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Taskrouter.V1.TaskChannelList>'
@@ -179,6 +199,34 @@ module Twilio
             end
 
             ##
+            # Update the TaskChannelInstance
+            # @param [String] friendly_name Toggle the FriendlyName for the TaskChannel
+            # @return [TaskChannelInstance] Updated TaskChannelInstance
+            def update(friendly_name: :unset)
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, })
+
+              payload = @version.update(
+                  'POST',
+                  @uri,
+                  data: data,
+              )
+
+              TaskChannelInstance.new(
+                  @version,
+                  payload,
+                  workspace_sid: @solution[:workspace_sid],
+                  sid: @solution[:sid],
+              )
+            end
+
+            ##
+            # Deletes the TaskChannelInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              @version.delete('delete', @uri)
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -191,7 +239,8 @@ module Twilio
             # Initialize the TaskChannelInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] workspace_sid The workspace_sid
+            # @param [String] workspace_sid The unique ID of the Workspace that this
+            #   TaskChannel belongs to.
             # @param [String] sid The sid
             # @return [TaskChannelInstance] TaskChannelInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
@@ -207,6 +256,7 @@ module Twilio
                   'unique_name' => payload['unique_name'],
                   'workspace_sid' => payload['workspace_sid'],
                   'url' => payload['url'],
+                  'links' => payload['links'],
               }
 
               # Context
@@ -226,43 +276,43 @@ module Twilio
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The unique ID of the Account that owns this TaskChannel.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date this TaskChannel was created.
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date this TaskChannel was updated.
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The friendly_name
+            # @return [String] The friendly name of this TaskChannel
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] The unique ID for this TaskChannel.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The unique_name
+            # @return [String] The unique name of TaskChannel, such as 'voice', 'sms', etc.
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [String] The workspace_sid
+            # @return [String] The unique ID of the Workspace that this TaskChannel belongs to.
             def workspace_sid
               @properties['workspace_sid']
             end
@@ -274,10 +324,31 @@ module Twilio
             end
 
             ##
+            # @return [String] The links
+            def links
+              @properties['links']
+            end
+
+            ##
             # Fetch a TaskChannelInstance
             # @return [TaskChannelInstance] Fetched TaskChannelInstance
             def fetch
               context.fetch
+            end
+
+            ##
+            # Update the TaskChannelInstance
+            # @param [String] friendly_name Toggle the FriendlyName for the TaskChannel
+            # @return [TaskChannelInstance] Updated TaskChannelInstance
+            def update(friendly_name: :unset)
+              context.update(friendly_name: friendly_name, )
+            end
+
+            ##
+            # Deletes the TaskChannelInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              context.delete
             end
 
             ##

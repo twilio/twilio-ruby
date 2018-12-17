@@ -402,7 +402,7 @@ module Twilio
               end
 
               ##
-              # @return [String] More information about the recording failure, if Status is failed.
+              # @return [String] More information about why the recording is missing, if Status is `absent`.
               def error_code
                 @properties['error_code']
               end

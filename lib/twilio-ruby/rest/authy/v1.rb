@@ -15,23 +15,8 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
-          @forms = nil
           @services = nil
-        end
-
-        ##
-        # @param [form.FormTypes] type The Type of this Form. One of `form-app-push`,
-        #   `form-sms` or `form-totp`.
-        # @return [Twilio::REST::Authy::V1::FormContext] if type was passed.
-        # @return [Twilio::REST::Authy::V1::FormList]
-        def forms(type=:unset)
-          if type.nil?
-            raise ArgumentError, 'type cannot be nil'
-          elsif type == :unset
-            @forms ||= FormList.new self
-          else
-            FormContext.new(self, type)
-          end
+          @forms = nil
         end
 
         ##
@@ -45,6 +30,21 @@ module Twilio
             @services ||= ServiceList.new self
           else
             ServiceContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [form.FormTypes] form_type The Type of this Form. One of `form-app-push`,
+        #   `form-sms` or `form-totp`.
+        # @return [Twilio::REST::Authy::V1::FormContext] if form_type was passed.
+        # @return [Twilio::REST::Authy::V1::FormList]
+        def forms(form_type=:unset)
+          if form_type.nil?
+            raise ArgumentError, 'form_type cannot be nil'
+          elsif form_type == :unset
+            @forms ||= FormList.new self
+          else
+            FormContext.new(self, form_type)
           end
         end
 

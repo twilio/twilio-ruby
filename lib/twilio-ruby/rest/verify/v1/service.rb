@@ -34,12 +34,21 @@ module Twilio
           #   Must be an integer value between 4-10
           # @param [Boolean] lookup_enabled Boolean value that indicates if a lookup should
           #   be performed with each verification started and associated info returned
+          # @param [Boolean] skip_sms_to_landlines Boolean value that indicates whether or
+          #   not to ignore SMS verifications for landlines, depends on lookup_enabled flag
+          # @param [Boolean] dtmf_input_required Boolean value that indicates whether or not
+          #   to require a random number input to deliver the verify code via phone calls
+          # @param [String] tts_name Alternative to be used as Service friendly name in
+          #   phone calls, only applies to TTS languages
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset)
+          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
                 'LookupEnabled' => lookup_enabled,
+                'SkipSmsToLandlines' => skip_sms_to_landlines,
+                'DtmfInputRequired' => dtmf_input_required,
+                'TtsName' => tts_name,
             })
 
             payload = @version.create(
@@ -221,12 +230,21 @@ module Twilio
           #   Must be an integer value between 4-10
           # @param [Boolean] lookup_enabled Boolean value that indicates if a lookup should
           #   be performed with each verification started and associated info returned
+          # @param [Boolean] skip_sms_to_landlines Boolean value that indicates whether or
+          #   not to ignore SMS verifications for landlines, depends on lookup_enabled flag
+          # @param [Boolean] dtmf_input_required Boolean value that indicates whether or not
+          #   to require a random number input to deliver the verify code via phone calls
+          # @param [String] tts_name Alternative to be used as Service friendly name in
+          #   phone calls, only applies to TTS languages
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
                 'LookupEnabled' => lookup_enabled,
+                'SkipSmsToLandlines' => skip_sms_to_landlines,
+                'DtmfInputRequired' => dtmf_input_required,
+                'TtsName' => tts_name,
             })
 
             payload = @version.update(
@@ -289,6 +307,9 @@ module Twilio
                 'friendly_name' => payload['friendly_name'],
                 'code_length' => payload['code_length'].to_i,
                 'lookup_enabled' => payload['lookup_enabled'],
+                'skip_sms_to_landlines' => payload['skip_sms_to_landlines'],
+                'dtmf_input_required' => payload['dtmf_input_required'],
+                'tts_name' => payload['tts_name'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
@@ -342,6 +363,24 @@ module Twilio
           end
 
           ##
+          # @return [Boolean] Indicates whether or not to ignore SMS verifications for landlines
+          def skip_sms_to_landlines
+            @properties['skip_sms_to_landlines']
+          end
+
+          ##
+          # @return [Boolean] Indicates whether or not to require a random number input to deliver the verify code via phone calls
+          def dtmf_input_required
+            @properties['dtmf_input_required']
+          end
+
+          ##
+          # @return [String] Alternative to be used as Service friendly name in phone calls
+          def tts_name
+            @properties['tts_name']
+          end
+
+          ##
           # @return [Time] The date this Service was created
           def date_created
             @properties['date_created']
@@ -387,12 +426,21 @@ module Twilio
           #   Must be an integer value between 4-10
           # @param [Boolean] lookup_enabled Boolean value that indicates if a lookup should
           #   be performed with each verification started and associated info returned
+          # @param [Boolean] skip_sms_to_landlines Boolean value that indicates whether or
+          #   not to ignore SMS verifications for landlines, depends on lookup_enabled flag
+          # @param [Boolean] dtmf_input_required Boolean value that indicates whether or not
+          #   to require a random number input to deliver the verify code via phone calls
+          # @param [String] tts_name Alternative to be used as Service friendly name in
+          #   phone calls, only applies to TTS languages
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset)
             context.update(
                 friendly_name: friendly_name,
                 code_length: code_length,
                 lookup_enabled: lookup_enabled,
+                skip_sms_to_landlines: skip_sms_to_landlines,
+                dtmf_input_required: dtmf_input_required,
+                tts_name: tts_name,
             )
           end
 

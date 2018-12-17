@@ -275,8 +275,11 @@ module Twilio
               #   executing the Supervise instruction
               # @param [String] supervisor Supervisor sid/uri when executing the Supervise
               #   instruction
+              # @param [Boolean] end_conference_on_customer_exit The
+              #   end_conference_on_customer_exit
+              # @param [Boolean] beep_on_customer_entrance The beep_on_customer_entrance
               # @return [ReservationInstance] Updated ReservationInstance
-              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset, to: :unset, from: :unset, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, conference_record: :unset, conference_trim: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, region: :unset, sip_auth_username: :unset, sip_auth_password: :unset, dequeue_status_callback_event: :unset, post_work_activity_sid: :unset, supervisor_mode: :unset, supervisor: :unset)
+              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset, to: :unset, from: :unset, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, conference_record: :unset, conference_trim: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, region: :unset, sip_auth_username: :unset, sip_auth_password: :unset, dequeue_status_callback_event: :unset, post_work_activity_sid: :unset, supervisor_mode: :unset, supervisor: :unset, end_conference_on_customer_exit: :unset, beep_on_customer_entrance: :unset)
                 data = Twilio::Values.of({
                     'ReservationStatus' => reservation_status,
                     'WorkerActivitySid' => worker_activity_sid,
@@ -329,6 +332,8 @@ module Twilio
                     'PostWorkActivitySid' => post_work_activity_sid,
                     'SupervisorMode' => supervisor_mode,
                     'Supervisor' => supervisor,
+                    'EndConferenceOnCustomerExit' => end_conference_on_customer_exit,
+                    'BeepOnCustomerEntrance' => beep_on_customer_entrance,
                 })
 
                 payload = @version.update(
@@ -560,8 +565,11 @@ module Twilio
               #   executing the Supervise instruction
               # @param [String] supervisor Supervisor sid/uri when executing the Supervise
               #   instruction
+              # @param [Boolean] end_conference_on_customer_exit The
+              #   end_conference_on_customer_exit
+              # @param [Boolean] beep_on_customer_entrance The beep_on_customer_entrance
               # @return [ReservationInstance] Updated ReservationInstance
-              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset, to: :unset, from: :unset, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, conference_record: :unset, conference_trim: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, region: :unset, sip_auth_username: :unset, sip_auth_password: :unset, dequeue_status_callback_event: :unset, post_work_activity_sid: :unset, supervisor_mode: :unset, supervisor: :unset)
+              def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset, to: :unset, from: :unset, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, conference_record: :unset, conference_trim: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, region: :unset, sip_auth_username: :unset, sip_auth_password: :unset, dequeue_status_callback_event: :unset, post_work_activity_sid: :unset, supervisor_mode: :unset, supervisor: :unset, end_conference_on_customer_exit: :unset, beep_on_customer_entrance: :unset)
                 context.update(
                     reservation_status: reservation_status,
                     worker_activity_sid: worker_activity_sid,
@@ -614,6 +622,8 @@ module Twilio
                     post_work_activity_sid: post_work_activity_sid,
                     supervisor_mode: supervisor_mode,
                     supervisor: supervisor,
+                    end_conference_on_customer_exit: end_conference_on_customer_exit,
+                    beep_on_customer_entrance: beep_on_customer_entrance,
                 )
               end
 

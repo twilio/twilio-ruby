@@ -167,7 +167,8 @@ module Twilio
               ##
               # Initialize the CredentialListContext
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
+              # @param [String] account_sid The unique id of the Account that is responsible for
+              #   this resource.
               # @param [String] sid The credential list Sid that uniquely identifies this
               #   resource
               # @return [CredentialListContext] CredentialListContext
@@ -332,7 +333,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The subresource_uris
+              # @return [String] The list of credentials associated with this credential list.
               def subresource_uris
                 @properties['subresource_uris']
               end

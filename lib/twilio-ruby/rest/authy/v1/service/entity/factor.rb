@@ -37,11 +37,15 @@ module Twilio
               #   E.g. a phone number for `sms` factors. Required when creating a new Factor. This
               #   value is never returned because it can contain customer secrets.
               # @param [String] friendly_name The friendly name of this Factor
-              # @param [factor.FactorTypes] type The Type of this Factor. One of `app-push`,
-              #   `sms`, `totp`, etc.
+              # @param [factor.FactorTypes] factor_type The Type of this Factor. One of
+              #   `app-push`, `sms`, `totp`, etc.
               # @return [FactorInstance] Newly created FactorInstance
-              def create(binding: nil, friendly_name: nil, type: nil)
-                data = Twilio::Values.of({'Binding' => binding, 'FriendlyName' => friendly_name, 'Type' => type, })
+              def create(binding: nil, friendly_name: nil, factor_type: nil)
+                data = Twilio::Values.of({
+                    'Binding' => binding,
+                    'FriendlyName' => friendly_name,
+                    'FactorType' => factor_type,
+                })
 
                 payload = @version.create(
                     'POST',
@@ -318,7 +322,7 @@ module Twilio
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                     'friendly_name' => payload['friendly_name'],
                     'status' => payload['status'],
-                    'type' => payload['type'],
+                    'factor_type' => payload['factor_type'],
                     'url' => payload['url'],
                     'links' => payload['links'],
                 }
@@ -400,8 +404,8 @@ module Twilio
 
               ##
               # @return [factor.FactorTypes] The Type of this Factor
-              def type
-                @properties['type']
+              def factor_type
+                @properties['factor_type']
               end
 
               ##

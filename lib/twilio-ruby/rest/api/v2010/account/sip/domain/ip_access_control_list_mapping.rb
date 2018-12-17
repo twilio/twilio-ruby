@@ -17,7 +17,7 @@ module Twilio
                 ##
                 # Initialize the IpAccessControlListMappingList
                 # @param [Version] version Version that contains the resource
-                # @param [String] account_sid The unique id of the Account that responsible for
+                # @param [String] account_sid The unique id of the Account that is responsible for
                 #   this resource.
                 # @param [String] domain_sid A 34 character string that uniquely identifies the
                 #   SIP domain in Twilio.
@@ -33,7 +33,8 @@ module Twilio
                 ##
                 # Retrieve a single page of IpAccessControlListMappingInstance records from the API.
                 # Request is executed immediately.
-                # @param [String] ip_access_control_list_sid The ip_access_control_list_sid
+                # @param [String] ip_access_control_list_sid The unique id of the IP access
+                #   control list to map to the SIP domain.
                 # @return [IpAccessControlListMappingInstance] Newly created IpAccessControlListMappingInstance
                 def create(ip_access_control_list_sid: nil)
                   data = Twilio::Values.of({'IpAccessControlListSid' => ip_access_control_list_sid, })
@@ -179,9 +180,12 @@ module Twilio
                 ##
                 # Initialize the IpAccessControlListMappingContext
                 # @param [Version] version Version that contains the resource
-                # @param [String] account_sid The account_sid
-                # @param [String] domain_sid The domain_sid
-                # @param [String] sid The sid
+                # @param [String] account_sid The unique id of the Account that is responsible for
+                #   this resource.
+                # @param [String] domain_sid A 34 character string that uniquely identifies the
+                #   SIP domain.
+                # @param [String] sid A 34 character string that uniquely identifies the resource
+                #   to fetch.
                 # @return [IpAccessControlListMappingContext] IpAccessControlListMappingContext
                 def initialize(version, account_sid, domain_sid, sid)
                   super(version)
@@ -232,11 +236,12 @@ module Twilio
                 # Initialize the IpAccessControlListMappingInstance
                 # @param [Version] version Version that contains the resource
                 # @param [Hash] payload payload that contains response from Twilio
-                # @param [String] account_sid The unique id of the Account that responsible for
+                # @param [String] account_sid The unique id of the Account that is responsible for
                 #   this resource.
                 # @param [String] domain_sid A 34 character string that uniquely identifies the
                 #   SIP domain in Twilio.
-                # @param [String] sid The sid
+                # @param [String] sid A 34 character string that uniquely identifies the resource
+                #   to fetch.
                 # @return [IpAccessControlListMappingInstance] IpAccessControlListMappingInstance
                 def initialize(version, payload, account_sid: nil, domain_sid: nil, sid: nil)
                   super(version)
@@ -278,7 +283,7 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The unique id of the Account that responsible for this resource.
+                # @return [String] The unique id of the Account that is responsible for this resource.
                 def account_sid
                   @properties['account_sid']
                 end
@@ -314,7 +319,7 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The subresource_uris
+                # @return [String] The list of IP addresses associated with this domain.
                 def subresource_uris
                   @properties['subresource_uris']
                 end

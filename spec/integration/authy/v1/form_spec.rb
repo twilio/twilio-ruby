@@ -29,7 +29,7 @@ describe 'Form' do
         200,
       %q[
       {
-          "type": "form-sms",
+          "form_type": "form-sms",
           "forms": {
               "create_factor": {},
               "verify_factor": {},

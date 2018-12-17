@@ -31,7 +31,8 @@ module Twilio
           # @param [command.Status] status Only return Commands with this status value.
           # @param [command.Direction] direction Only return Commands with this direction
           #   value.
-          # @param [command.Transport] transport The transport
+          # @param [command.Transport] transport Only return Commands with this transport
+          #   value.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -58,7 +59,8 @@ module Twilio
           # @param [command.Status] status Only return Commands with this status value.
           # @param [command.Direction] direction Only return Commands with this direction
           #   value.
-          # @param [command.Transport] transport The transport
+          # @param [command.Transport] transport Only return Commands with this transport
+          #   value.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -101,7 +103,8 @@ module Twilio
           # @param [command.Status] status Only return Commands with this status value.
           # @param [command.Direction] direction Only return Commands with this direction
           #   value.
-          # @param [command.Transport] transport The transport
+          # @param [command.Transport] transport Only return Commands with this transport
+          #   value.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -161,7 +164,10 @@ module Twilio
           #   CommandSid and the message body. The length of the CommandSid contributes toward
           #   the 160 character limit, i.e. the SMS body must be 128 characters or less before
           #   the Command Sid is included.
-          # @param [Boolean] delivery_receipt_requested The delivery_receipt_requested
+          # @param [Boolean] delivery_receipt_requested A boolean representing whether to
+          #   request delivery receipt from the recipient. For Commands that request delivery
+          #   receipt, the Command state transitions to 'delivered' once the server has
+          #   received a delivery receipt from the device. Defaults to true.
           # @return [CommandInstance] Newly created CommandInstance
           def create(command: nil, sim: :unset, callback_method: :unset, callback_url: :unset, command_mode: :unset, include_sid: :unset, delivery_receipt_requested: :unset)
             data = Twilio::Values.of({
@@ -223,7 +229,8 @@ module Twilio
           ##
           # Initialize the CommandContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this
+          #   resource.
           # @return [CommandContext] CommandContext
           def initialize(version, sid)
             super(version)
@@ -249,6 +256,13 @@ module Twilio
           end
 
           ##
+          # Deletes the CommandInstance
+          # @return [Boolean] true if delete succeeds, true otherwise
+          def delete
+            @version.delete('delete', @uri)
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -261,7 +275,8 @@ module Twilio
           # Initialize the CommandInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this
+          #   resource.
           # @return [CommandInstance] CommandInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -375,6 +390,13 @@ module Twilio
           # @return [CommandInstance] Fetched CommandInstance
           def fetch
             context.fetch
+          end
+
+          ##
+          # Deletes the CommandInstance
+          # @return [Boolean] true if delete succeeds, true otherwise
+          def delete
+            context.delete
           end
 
           ##

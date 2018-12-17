@@ -31,8 +31,9 @@ module Twilio
           # @param [String] iccid Return Sims with this Iccid. Currently this should be a
           #   list with maximum size 1.
           # @param [String] rate_plan Only return Sims with this Rate Plan.
-          # @param [String] e_id The e_id
-          # @param [String] sim_registration_code The sim_registration_code
+          # @param [String] e_id Only return Sims with this EID.
+          # @param [String] sim_registration_code Only return Sims with this registration
+          #   code.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -60,8 +61,9 @@ module Twilio
           # @param [String] iccid Return Sims with this Iccid. Currently this should be a
           #   list with maximum size 1.
           # @param [String] rate_plan Only return Sims with this Rate Plan.
-          # @param [String] e_id The e_id
-          # @param [String] sim_registration_code The sim_registration_code
+          # @param [String] e_id Only return Sims with this EID.
+          # @param [String] sim_registration_code Only return Sims with this registration
+          #   code.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -105,8 +107,9 @@ module Twilio
           # @param [String] iccid Return Sims with this Iccid. Currently this should be a
           #   list with maximum size 1.
           # @param [String] rate_plan Only return Sims with this Rate Plan.
-          # @param [String] e_id The e_id
-          # @param [String] sim_registration_code The sim_registration_code
+          # @param [String] e_id Only return Sims with this EID.
+          # @param [String] sim_registration_code Only return Sims with this registration
+          #   code.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -183,7 +186,8 @@ module Twilio
           ##
           # Initialize the SimContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this
+          #   resource.
           # @return [SimContext] SimContext
           def initialize(version, sid)
             super(version)
@@ -289,6 +293,13 @@ module Twilio
           end
 
           ##
+          # Deletes the SimInstance
+          # @return [Boolean] true if delete succeeds, true otherwise
+          def delete
+            @version.delete('delete', @uri)
+          end
+
+          ##
           # Access the usage_records
           # @return [UsageRecordList]
           # @return [UsageRecordContext]
@@ -325,7 +336,8 @@ module Twilio
           # Initialize the SimInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this
+          #   resource.
           # @return [SimInstance] SimInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -584,6 +596,13 @@ module Twilio
                 voice_method: voice_method,
                 voice_url: voice_url,
             )
+          end
+
+          ##
+          # Deletes the SimInstance
+          # @return [Boolean] true if delete succeeds, true otherwise
+          def delete
+            context.delete
           end
 
           ##

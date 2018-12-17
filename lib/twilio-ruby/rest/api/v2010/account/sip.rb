@@ -56,8 +56,8 @@ module Twilio
 
             ##
             # Access the ip_access_control_lists
-            # @param [String] sid The IpAccessControlList Sid that uniquely identifies this
-            #   resource
+            # @param [String] sid A 34 character string that uniquely identifies the resource
+            #   to fetch.
             # @return [IpAccessControlListList]
             # @return [IpAccessControlListContext] if sid was passed.
             def ip_access_control_lists(sid=:unset)

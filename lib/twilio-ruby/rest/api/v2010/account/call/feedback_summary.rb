@@ -31,17 +31,17 @@ module Twilio
               ##
               # Retrieve a single page of FeedbackSummaryInstance records from the API.
               # Request is executed immediately.
-              # @param [Date] start_date Only include usage that has occurred on or after this
-              #   date. Format is YYYY-MM-DD. All dates are in UTC.
-              # @param [Date] end_date Only include usage that has occurred on or before this
-              #   date. Format is YYYY-MM-DD. All dates are in UTC.
-              # @param [Boolean] include_subaccounts true to include feedback entries for the
-              #   master account and all subaccounts. false to include feedback entries for the
-              #   specified account. IncludeSubaccounts is false by default.
-              # @param [String] status_callback The URL that Twilio will request when the
-              #   Feedback Summary is completed.
-              # @param [String] status_callback_method The HTTP method Twilio will use to make
-              #   requests to the StatusCallback URL. Either GET or POST.
+              # @param [Date] start_date Only include feedback given on or after this date.
+              #   Format is `YYYY-MM-DD` and specified in UTC.
+              # @param [Date] end_date Only include feedback given on or before this date.
+              #   Format is `YYYY-MM-DD` and specified in UTC.
+              # @param [Boolean] include_subaccounts Whether to also include Feedback resources
+              #   from all subaccounts. `true` includes feedback from all subaccounts and `false`,
+              #   the default, includes feedback from only the specified account.
+              # @param [String] status_callback The URL that we will request when the feedback
+              #   summary is complete.
+              # @param [String] status_callback_method The HTTP method (`GET` or `POST`) we use
+              #   to make the request to the `StatusCallback` URL.
               # @return [FeedbackSummaryInstance] Newly created FeedbackSummaryInstance
               def create(start_date: nil, end_date: nil, include_subaccounts: :unset, status_callback: :unset, status_callback_method: :unset)
                 data = Twilio::Values.of({
@@ -101,8 +101,11 @@ module Twilio
               ##
               # Initialize the FeedbackSummaryContext
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] sid The sid
+              # @param [String] account_sid The unique id of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+              #   resource.
+              # @param [String] sid A 34 character string that uniquely identifies this
+              #   resource.
               # @return [FeedbackSummaryContext] FeedbackSummaryContext
               def initialize(version, account_sid, sid)
                 super(version)
@@ -155,7 +158,8 @@ module Twilio
               # @param [String] account_sid The unique id of the
               #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for creating
               #   this Call.
-              # @param [String] sid The sid
+              # @param [String] sid A 34 character string that uniquely identifies this
+              #   resource.
               # @return [FeedbackSummaryInstance] FeedbackSummaryInstance
               def initialize(version, payload, account_sid: nil, sid: nil)
                 super(version)
@@ -195,85 +199,85 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The unique sid that identifies this account
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The call_count
+              # @return [String] The total number of calls
               def call_count
                 @properties['call_count']
               end
 
               ##
-              # @return [String] The call_feedback_count
+              # @return [String] The total number of calls with a feedback entry
               def call_feedback_count
                 @properties['call_feedback_count']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The date this resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The date this resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [Time] The end_date
+              # @return [Time] The latest feedback entry date in the summary
               def end_date
                 @properties['end_date']
               end
 
               ##
-              # @return [Boolean] The include_subaccounts
+              # @return [Boolean] Whether the feedback summary includes subaccounts
               def include_subaccounts
                 @properties['include_subaccounts']
               end
 
               ##
-              # @return [String] The issues
+              # @return [String] Issues experienced during the call
               def issues
                 @properties['issues']
               end
 
               ##
-              # @return [String] The quality_score_average
+              # @return [String] The average QualityScore of the feedback entries
               def quality_score_average
                 @properties['quality_score_average']
               end
 
               ##
-              # @return [String] The quality_score_median
+              # @return [String] The median QualityScore of the feedback entries
               def quality_score_median
                 @properties['quality_score_median']
               end
 
               ##
-              # @return [String] The quality_score_standard_deviation
+              # @return [String] The standard deviation of the quality scores
               def quality_score_standard_deviation
                 @properties['quality_score_standard_deviation']
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] A string that uniquely identifies this feedback entry
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [Time] The start_date
+              # @return [Time] The earliest feedback entry date in the summary
               def start_date
                 @properties['start_date']
               end
 
               ##
-              # @return [feedback_summary.Status] The status
+              # @return [feedback_summary.Status] The status of the feedback summary
               def status
                 @properties['status']
               end

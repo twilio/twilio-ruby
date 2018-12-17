@@ -157,11 +157,12 @@ module Twilio
       # trim:: Trim the recording
       # recording_status_callback:: Status callback URL
       # recording_status_callback_method:: Status callback URL method
+      # recording_status_callback_event:: Recording status callback events
       # transcribe:: Transcribe the recording
       # transcribe_callback:: Transcribe callback URL
       # keyword_args:: additional attributes
-      def record(action: nil, method: nil, timeout: nil, finish_on_key: nil, max_length: nil, play_beep: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, transcribe: nil, transcribe_callback: nil, **keyword_args)
-        append(Record.new(action: action, method: method, timeout: timeout, finish_on_key: finish_on_key, max_length: max_length, play_beep: play_beep, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, transcribe: transcribe, transcribe_callback: transcribe_callback, **keyword_args))
+      def record(action: nil, method: nil, timeout: nil, finish_on_key: nil, max_length: nil, play_beep: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, transcribe: nil, transcribe_callback: nil, **keyword_args)
+        append(Record.new(action: action, method: method, timeout: timeout, finish_on_key: finish_on_key, max_length: max_length, play_beep: play_beep, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, transcribe: transcribe, transcribe_callback: transcribe_callback, **keyword_args))
       end
 
       ##

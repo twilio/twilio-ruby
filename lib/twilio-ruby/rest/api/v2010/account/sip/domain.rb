@@ -116,8 +116,6 @@ module Twilio
               #   you route your SIP traffic. Domain names can contain letters, digits, and "-".
               # @param [String] friendly_name A human readable descriptive text, up to 64
               #   characters long.
-              # @param [String] auth_type The types of authentication you have mapped to your
-              #   domain
               # @param [String] voice_url The URL Twilio will request when this domain receives
               #   a call.
               # @param [String] voice_method The HTTP method Twilio will use when requesting the
@@ -130,13 +128,13 @@ module Twilio
               #   pass status parameters (such as call ended) to your application.
               # @param [String] voice_status_callback_method The HTTP method Twilio will use to
               #   make requests to the StatusCallback URL. Either `GET` or `POST`.
-              # @param [Boolean] sip_registration The sip_registration
+              # @param [Boolean] sip_registration This boolean can be enabled to allow SIP
+              #   Endpoints to register with this domain to receive calls.
               # @return [DomainInstance] Newly created DomainInstance
-              def create(domain_name: nil, friendly_name: :unset, auth_type: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, voice_status_callback_url: :unset, voice_status_callback_method: :unset, sip_registration: :unset)
+              def create(domain_name: nil, friendly_name: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, voice_status_callback_url: :unset, voice_status_callback_method: :unset, sip_registration: :unset)
                 data = Twilio::Values.of({
                     'DomainName' => domain_name,
                     'FriendlyName' => friendly_name,
-                    'AuthType' => auth_type,
                     'VoiceUrl' => voice_url,
                     'VoiceMethod' => voice_method,
                     'VoiceFallbackUrl' => voice_fallback_url,
@@ -195,7 +193,9 @@ module Twilio
               ##
               # Initialize the DomainContext
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
+              # @param [String] account_sid The unique id of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+              #   resource.
               # @param [String] sid The domain sid that uniquely identifies the resource
               # @return [DomainContext] DomainContext
               def initialize(version, account_sid, sid)
@@ -228,20 +228,26 @@ module Twilio
 
               ##
               # Update the DomainInstance
-              # @param [String] auth_type The auth_type
-              # @param [String] friendly_name A user-specified, human-readable name for the
-              #   trigger.
-              # @param [String] voice_fallback_method The voice_fallback_method
-              # @param [String] voice_fallback_url The voice_fallback_url
+              # @param [String] friendly_name A human readable descriptive text, up to 64
+              #   characters long.
+              # @param [String] voice_fallback_method The HTTP method Twilio will use when
+              #   requesting the VoiceFallbackUrl. Either `GET` or `POST`.
+              # @param [String] voice_fallback_url The URL that Twilio will request if an error
+              #   occurs retrieving or executing the TwiML requested by VoiceUrl.
               # @param [String] voice_method The HTTP method to use with the voice_url
-              # @param [String] voice_status_callback_method The voice_status_callback_method
-              # @param [String] voice_status_callback_url The voice_status_callback_url
-              # @param [String] voice_url The voice_url
-              # @param [Boolean] sip_registration The sip_registration
+              # @param [String] voice_status_callback_method The HTTP method Twilio will use to
+              #   make requests to the StatusCallback URL. Either `GET` or `POST`.
+              # @param [String] voice_status_callback_url The URL that Twilio will request to
+              #   pass status parameters (such as call ended) to your application.
+              # @param [String] voice_url The URL Twilio will request when this domain receives
+              #   a call.
+              # @param [Boolean] sip_registration This boolean can be enabled to allow SIP
+              #   Endpoints to register with this domain to receive calls.
+              # @param [String] domain_name The unique address you reserve on Twilio to which
+              #   you route your SIP traffic. Domain names can contain letters, digits, and "-".
               # @return [DomainInstance] Updated DomainInstance
-              def update(auth_type: :unset, friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset, sip_registration: :unset)
+              def update(friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset, sip_registration: :unset, domain_name: :unset)
                 data = Twilio::Values.of({
-                    'AuthType' => auth_type,
                     'FriendlyName' => friendly_name,
                     'VoiceFallbackMethod' => voice_fallback_method,
                     'VoiceFallbackUrl' => voice_fallback_url,
@@ -250,6 +256,7 @@ module Twilio
                     'VoiceStatusCallbackUrl' => voice_status_callback_url,
                     'VoiceUrl' => voice_url,
                     'SipRegistration' => sip_registration,
+                    'DomainName' => domain_name,
                 })
 
                 payload = @version.update(
@@ -391,7 +398,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique id of the account that sent the call
+              # @return [String] The unique id of the account responsible for this domain
               def account_sid
                 @properties['account_sid']
               end
@@ -427,7 +434,7 @@ module Twilio
               end
 
               ##
-              # @return [String] A user-specified, human-readable name for the trigger.
+              # @return [String] A user-specified, human-readable name for the domain.
               def friendly_name
                 @properties['friendly_name']
               end
@@ -481,7 +488,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The subresource_uris
+              # @return [String] The list mapping resources associated with this resource.
               def subresource_uris
                 @properties['subresource_uris']
               end
@@ -501,20 +508,26 @@ module Twilio
 
               ##
               # Update the DomainInstance
-              # @param [String] auth_type The auth_type
-              # @param [String] friendly_name A user-specified, human-readable name for the
-              #   trigger.
-              # @param [String] voice_fallback_method The voice_fallback_method
-              # @param [String] voice_fallback_url The voice_fallback_url
+              # @param [String] friendly_name A human readable descriptive text, up to 64
+              #   characters long.
+              # @param [String] voice_fallback_method The HTTP method Twilio will use when
+              #   requesting the VoiceFallbackUrl. Either `GET` or `POST`.
+              # @param [String] voice_fallback_url The URL that Twilio will request if an error
+              #   occurs retrieving or executing the TwiML requested by VoiceUrl.
               # @param [String] voice_method The HTTP method to use with the voice_url
-              # @param [String] voice_status_callback_method The voice_status_callback_method
-              # @param [String] voice_status_callback_url The voice_status_callback_url
-              # @param [String] voice_url The voice_url
-              # @param [Boolean] sip_registration The sip_registration
+              # @param [String] voice_status_callback_method The HTTP method Twilio will use to
+              #   make requests to the StatusCallback URL. Either `GET` or `POST`.
+              # @param [String] voice_status_callback_url The URL that Twilio will request to
+              #   pass status parameters (such as call ended) to your application.
+              # @param [String] voice_url The URL Twilio will request when this domain receives
+              #   a call.
+              # @param [Boolean] sip_registration This boolean can be enabled to allow SIP
+              #   Endpoints to register with this domain to receive calls.
+              # @param [String] domain_name The unique address you reserve on Twilio to which
+              #   you route your SIP traffic. Domain names can contain letters, digits, and "-".
               # @return [DomainInstance] Updated DomainInstance
-              def update(auth_type: :unset, friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset, sip_registration: :unset)
+              def update(friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset, sip_registration: :unset, domain_name: :unset)
                 context.update(
-                    auth_type: auth_type,
                     friendly_name: friendly_name,
                     voice_fallback_method: voice_fallback_method,
                     voice_fallback_url: voice_fallback_url,
@@ -523,6 +536,7 @@ module Twilio
                     voice_status_callback_url: voice_status_callback_url,
                     voice_url: voice_url,
                     sip_registration: sip_registration,
+                    domain_name: domain_name,
                 )
               end
 

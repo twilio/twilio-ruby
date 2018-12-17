@@ -17,9 +17,10 @@ module Twilio
                 ##
                 # Initialize the CredentialList
                 # @param [Version] version Version that contains the resource
-                # @param [String] account_sid The unique id of the Account that responsible for
+                # @param [String] account_sid The unique id of the Account that is responsible for
                 #   this resource.
-                # @param [String] credential_list_sid The credential_list_sid
+                # @param [String] credential_list_sid The unique id that identifies the credential
+                #   list that includes this credential.
                 # @return [CredentialList] CredentialList
                 def initialize(version, account_sid: nil, credential_list_sid: nil)
                   super(version)
@@ -183,9 +184,11 @@ module Twilio
                 ##
                 # Initialize the CredentialContext
                 # @param [Version] version Version that contains the resource
-                # @param [String] account_sid The account_sid
-                # @param [String] credential_list_sid The credential_list_sid
-                # @param [String] sid The sid
+                # @param [String] account_sid The unique id of the Account that is responsible for
+                #   this resource.
+                # @param [String] credential_list_sid The unique id that identifies the credential
+                #   list that contains the desired credential.
+                # @param [String] sid The unique id that identifies the resource to fetch.
                 # @return [CredentialContext] CredentialContext
                 def initialize(version, account_sid, credential_list_sid, sid)
                   super(version)
@@ -260,10 +263,11 @@ module Twilio
                 # Initialize the CredentialInstance
                 # @param [Version] version Version that contains the resource
                 # @param [Hash] payload payload that contains response from Twilio
-                # @param [String] account_sid The unique id of the Account that responsible for
+                # @param [String] account_sid The unique id of the Account that is responsible for
                 #   this resource.
-                # @param [String] credential_list_sid The credential_list_sid
-                # @param [String] sid The sid
+                # @param [String] credential_list_sid The unique id that identifies the credential
+                #   list that includes this credential.
+                # @param [String] sid The unique id that identifies the resource to fetch.
                 # @return [CredentialInstance] CredentialInstance
                 def initialize(version, payload, account_sid: nil, credential_list_sid: nil, sid: nil)
                   super(version)
@@ -311,13 +315,13 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The unique id of the Account that responsible for this resource.
+                # @return [String] The unique id of the Account that is responsible for this resource.
                 def account_sid
                   @properties['account_sid']
                 end
 
                 ##
-                # @return [String] The credential_list_sid
+                # @return [String] The unique id that identifies the credential list that includes this credential
                 def credential_list_sid
                   @properties['credential_list_sid']
                 end

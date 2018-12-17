@@ -112,7 +112,7 @@ module Twilio
             # Request is executed immediately.
             # @param [String] friendly_name A user-provided string that identifies this queue.
             # @param [String] max_size The upper limit of calls allowed to be in the queue.
-            #   The default is 100. The maximum is 1000.
+            #   The default is 100. The maximum is 5000.
             # @return [QueueInstance] Newly created QueueInstance
             def create(friendly_name: nil, max_size: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, 'MaxSize' => max_size, })
