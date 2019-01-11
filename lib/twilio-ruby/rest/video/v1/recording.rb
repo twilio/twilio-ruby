@@ -33,9 +33,11 @@ module Twilio
           # @param [String] grouping_sid Only show Recordings that have this GroupingSid,
           #   which may include a ParticipantSid and/or a RoomSid.
           # @param [Time] date_created_after Only show Recordings that started on or after
-          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          #   this ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [Time] date_created_before Only show Recordings that started before this
-          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -65,9 +67,11 @@ module Twilio
           # @param [String] grouping_sid Only show Recordings that have this GroupingSid,
           #   which may include a ParticipantSid and/or a RoomSid.
           # @param [Time] date_created_after Only show Recordings that started on or after
-          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          #   this ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [Time] date_created_before Only show Recordings that started before this
-          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -113,9 +117,11 @@ module Twilio
           # @param [String] grouping_sid Only show Recordings that have this GroupingSid,
           #   which may include a ParticipantSid and/or a RoomSid.
           # @param [Time] date_created_after Only show Recordings that started on or after
-          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          #   this ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [Time] date_created_before Only show Recordings that started before this
-          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -358,7 +364,7 @@ module Twilio
           end
 
           ##
-          # @return [String] Offset in miliseconds for this track.
+          # @return [String] Offset in milliseconds for this track.
           def offset
             @properties['offset']
           end

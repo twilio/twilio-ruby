@@ -15,9 +15,9 @@ module Twilio
             ##
             # Initialize the CallList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for creating
-            #   this Call.
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Call
+            #   resource.
             # @return [CallList] CallList
             def initialize(version, account_sid: nil)
               super(version)
@@ -37,94 +37,96 @@ module Twilio
             # @param [String] from The phone number or client identifier to use as the caller
             #   id. If using a phone number, it must be a Twilio number or a Verified [outgoing
             #   caller id](https://www.twilio.com/docs/voice/api/outgoing-caller-ids) for your
-            #   account. If the `To` parameter is a phone number, `From` must also be a phone
+            #   account. If the `to` parameter is a phone number, `From` must also be a phone
             #   number.
-            # @param [String] method The HTTP method Twilio should use when making its request
-            #   to the `Url` parameter's value. Defaults to `POST`. If an `ApplicationSid`
-            #   parameter is present, this parameter is ignored.
-            # @param [String] fallback_url A URL that Twilio will request if an error occurs
-            #   requesting or executing the TwiML at `Url`. If an `ApplicationSid` parameter is
-            #   present, this parameter is ignored.
-            # @param [String] fallback_method The HTTP method that Twilio should use to
-            #   request the `FallbackUrl`. Must be either `GET` or `POST`. Defaults to `POST`.
-            #   If an `ApplicationSid` parameter is present, this parameter is ignored.
-            # @param [String] status_callback A URL that Twilio will send asynchronous webhook
-            #   requests to on every call event specified in the `StatusCallbackEvent`
-            #   parameter. If no event is specified, Twilio will send `completed` by default. If
-            #   an `ApplicationSid` parameter is present, this parameter is ignored. URLs must
+            # @param [String] method The HTTP method we should use when calling the `url`
+            #   parameter's value. Can be: `GET` or `POST` and the default is `POST`. If an
+            #   `application_sid` parameter is present, this parameter is ignored.
+            # @param [String] fallback_url The URL that we call using the `fallback_method` if
+            #   an error occurs when requesting or executing the TwiML at `url`. If an
+            #   `application_sid` parameter is present, this parameter is ignored.
+            # @param [String] fallback_method The HTTP method that we should use to request
+            #   the `fallback_url`. Can be: `GET` or `POST` and the default is `POST`. If an
+            #   `application_sid` parameter is present, this parameter is ignored.
+            # @param [String] status_callback The URL we should call using the
+            #   `status_callback_method` to send status information to your application. If no
+            #   `status_callback_event` is specified, we will send the `completed` status. If an
+            #   `application_sid` parameter is present, this parameter is ignored. URLs must
             #   contain a valid hostname (underscores are not permitted).
-            # @param [String] status_callback_event The call progress events that will trigger
-            #   a webhook from Twilio. Available values are `initiated`, `ringing`, `answered`,
-            #   and `completed`. If no event is specified, defaults to `completed`. If you want
-            #   to receive multiple events, please provide multiple `StatusCallbackEvent` values
-            #   as individual parameters in the `POST` request. See the code sample for
-            #   [monitoring call
-            #   progress](https://www.twilio.com/docs/voice/api/call?code-sample=code-create-a-call-and-specify-a-statuscallbackevent). If an `ApplicationSid` is present, this parameter is ignored.
-            # @param [String] status_callback_method The HTTP method Twilio should use when
-            #   requesting the `StatusCallback` URL. Defaults to `POST`. If an `ApplicationSid`
-            #   parameter is present, this parameter is ignored.
+            # @param [String] status_callback_event The call progress events that we will send
+            #   to the `status_callback` URL. Can be: `initiated`, `ringing`, `answered`, and
+            #   `completed`. If no event is specified, we send the `completed` status. If you
+            #   want to receive multiple events, specify each one in a separate
+            #   `status_callback_event` parameter. See the code sample for [monitoring call
+            #   progress](https://www.twilio.com/docs/voice/api/call?code-sample=code-create-a-call-and-specify-a-statuscallbackevent). If an `application_sid` is present, this parameter is ignored.
+            # @param [String] status_callback_method The HTTP method we should use when
+            #   calling the `status_callback` URL. Can be: `GET` or `POST` and the default is
+            #   `POST`. If an `application_sid` parameter is present, this parameter is ignored.
             # @param [String] send_digits A string of keys to dial after connecting to the
             #   number, maximum of 32 digits. Valid digits in the string include: any digit
-            #   (`0`-`9`), '`#`', '`*`' and '`w`' (to insert a half second pause). For example,
+            #   (`0`-`9`), '`#`', '`*`' and '`w`', to insert a half second pause. For example,
             #   if you connected to a company phone number and wanted to pause for one second,
-            #   dial extension 1234, and then the pound key, use `SendDigits=ww1234#`. Remember
-            #   to URL-encode this string, since the '`#`' character has special meaning in a
-            #   URL. If both `SendDigits` and `MachineDetection` parameters are provided, then
-            #   `MachineDetection` will be ignored.
-            # @param [String] if_machine The if_machine
-            # @param [String] timeout The integer number of seconds that Twilio should allow
-            #   the phone to ring before assuming there is no answer. Default is `60` seconds,
-            #   the maximum is `600` seconds. For some call flows, Twilio will add a 5-second
-            #   buffer to the timeout value provided, so if you enter a timeout value of 10
-            #   seconds, you could see actual timeout closer to 15 seconds. Note, you could set
-            #   this to a low value like `15` to hang up before reaching an answering machine or
-            #   voicemail.
-            # @param [Boolean] record Set this parameter to `true` to record the entirety of a
-            #   phone call. The `RecordingUrl` will be sent to the `StatusCallback` URL.
-            #   Defaults to false.
-            # @param [String] recording_channels `mono` or `dual` – defaults to `mono`. Set
-            #   this parameter to specify the number of channels in the final recording. In a
-            #   mono-channel recording, both legs of the call are mixed down into a single
-            #   channel within a single recording file. With dual-channel recording, both legs
-            #   use separate channels within a single recording file. In dual-channel
-            #   recordings, the parent call will always be in the first channel, and the child
-            #   call will always be in the second channel.
-            # @param [String] recording_status_callback A URL that Twilio will send a webhook
-            #   request to when the recording is available for access.
-            # @param [String] recording_status_callback_method The HTTP method Twilio should
-            #   use when requesting the `RecordingStatusCallback` URL. Defaults to `POST`.
-            # @param [String] sip_auth_username The sip_auth_username
-            # @param [String] sip_auth_password The sip_auth_password
+            #   and then dial extension 1234 followed by the pound key, the value of this
+            #   parameter would be `ww1234#`. Remember to URL-encode this string, since the
+            #   '`#`' character has special meaning in a URL. If both `SendDigits` and
+            #   `MachineDetection` parameters are provided, then `MachineDetection` will be
+            #   ignored.
+            # @param [String] if_machine The action to take if an answering machine is
+            #   detected. Can be: `Continue`, `Hangup`, or `False`. `False` disables the
+            #   detection of an answering machine.
+            # @param [String] timeout The integer number of seconds that we should allow the
+            #   phone to ring before assuming there is no answer. The default is `60` seconds
+            #   and the maximum is `600` seconds. For some call flows, we will add a 5-second
+            #   buffer to the timeout value you provide. For this reason, a timeout value of 10
+            #   seconds could result in an actual timeout closer to 15 seconds. You can set this
+            #   to a short time, such as `15` seconds, to hang up before reaching an answering
+            #   machine or voicemail.
+            # @param [Boolean] record Set this parameter to `true` to record the phone call.
+            #   The `recording_url` will be sent to the `status_callback` URL. The default is
+            #   `false`.
+            # @param [String] recording_channels The number of channels in the final
+            #   recording. Can be: `mono` or `dual`. The default is `mono`. `mono` records both
+            #   legs of the call in a single channel of the recording file. `dual` records each
+            #   leg to a separate channel of the recording file. The first channel of a
+            #   dual-channel recording contains the parent call and the second channel contains
+            #   the child call.
+            # @param [String] recording_status_callback The URL that we call when the
+            #   recording is available to be accessed.
+            # @param [String] recording_status_callback_method The HTTP method we should use
+            #   when calling the `recording_status_callback` URL. Can be: `GET` or `POST` and
+            #   the default is `POST`.
+            # @param [String] sip_auth_username The username used to authenticate the caller
+            #   making a SIP call.
+            # @param [String] sip_auth_password The password required to authenticate the user
+            #   account specified in `sip_auth_username`.
             # @param [String] machine_detection Detect if a human, answering machine, or fax
-            #   has picked up the call. Use `Enable` if you would like Twilio to return an
-            #   `AnsweredBy` value as soon as it identifies the called party. If you would like
-            #   to leave a message on an answering machine, specify `DetectMessageEnd`. If both
-            #   `SendDigits` and `MachineDetection` parameters are provided, then
-            #   MachineDetection will be ignored. [Detailed documentation is
-            #   here](https://www.twilio.com/docs/voice/answering-machine-detection).
-            # @param [String] machine_detection_timeout The number of seconds that Twilio
-            #   should attempt to perform answering machine detection before timing out and
-            #   firing a voice request with `AnsweredBy` of `unknown`. Defaults to 30 seconds.
+            #   has picked up the call. Can be: `Enable` or `DetectMessageEnd`. Use `Enable` if
+            #   you would like us to return `AnsweredBy` as soon as the called party is
+            #   identified. Use `DetectMessageEnd`, if you would like to leave a message on an
+            #   answering machine. If `send_digits` is provided, this parameter is ignored. For
+            #   more information, see [Answering Machine
+            #   Detection](https://www.twilio.com/docs/voice/answering-machine-detection).
+            # @param [String] machine_detection_timeout The number of seconds that we should
+            #   attempt to detect an answering machine before timing out and sending a voice
+            #   request with `AnsweredBy` of `unknown`. The default timeout is 30 seconds.
             # @param [String] recording_status_callback_event The recording status events that
-            #   will trigger Twilio to send webhooks on to the URL specified in
-            #   `RecordingStatusCallback`. The available values are `in-progress`, `completed`
-            #   and `absent`. Defaults to `completed`. To specify multiple values, separate them
-            #   with a space.
-            # @param [String] trim `trim-silence` or `do-not-trim`. Set this parameter to
-            #   define whether leading and trailing silence is trimmed from the recording. 
-            #   Defaults to `trim-silence`.
+            #   will trigger calls to the URL specified in `recording_status_callback`. Can be:
+            #   `in-progress`, `completed` and `absent`. Defaults to `completed`. Separate 
+            #   multiple values with a space.
+            # @param [String] trim Whether to trim any leading and trailing silence from the
+            #   recording. Can be: `trim-silence` or `do-not-trim` and the default is
+            #   `trim-silence`.
             # @param [String] caller_id The phone number, SIP address, or Client identifier
-            #   that made this Call. Phone numbers are in [E.164
-            #   format](https://www.twilio.com/docs/glossary/what-e164) (e.g., +16175551212).
+            #   that made this call. Phone numbers are in [E.164
+            #   format](https://wwnw.twilio.com/docs/glossary/what-e164) (e.g., +16175551212).
             #   SIP addresses are formatted as `name@company.com`.
-            # @param [String] url The fully qualified URL that hosts instructions for the
-            #   call. Twilio will consult this URL when the call connects. See the [Url
-            #   Parameter](https://www.twilio.com/docs/voice/make-calls#specify-a-url-parameter) details in [Making Calls](https://www.twilio.com/docs/voice/make-calls) for more details.
-            # @param [String] application_sid The 34-character SID of the application Twilio
-            #   should use to handle this phone call. If this parameter is present, Twilio will
-            #   ignore all of the voice URLs passed and use the URLs set on the application. See
-            #   the [ApplicationSid
-            #   Parameter](https://www.twilio.com/docs/voice/make-calls#specify-an-applicationsid-parameter) section in [Making Calls](https://www.twilio.com/docs/voice/make-calls) for more details.
+            # @param [String] url The absolute URL that returns the TwiML instructions for the
+            #   call. We will call this URL using the `method` when the call connects. For more
+            #   information, see the [Url
+            #   Parameter](https://www.twilio.com/docs/voice/make-calls#specify-a-url-parameter)
+            #   section in [Making Calls](https://www.twilio.com/docs/voice/make-calls).
+            # @param [String] application_sid The SID of the Application resource that will
+            #   handle the call, if the call will be handled by an application.
             # @return [CallInstance] Newly created CallInstance
             def create(to: nil, from: nil, method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, send_digits: :unset, if_machine: :unset, timeout: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, machine_detection: :unset, machine_detection_timeout: :unset, recording_status_callback_event: :unset, trim: :unset, caller_id: :unset, url: :unset, application_sid: :unset)
               data = Twilio::Values.of({
@@ -169,19 +171,19 @@ module Twilio
             # memory before returning.
             # @param [String] to Only show calls to this phone number, SIP address, Client
             #   identifier or SIM SID.
-            # @param [String] from Only show calls from this phone number, SIP address, Client
-            #   identifier or SIM SID.
-            # @param [String] parent_call_sid Only show calls spawned by the Call with this
+            # @param [String] from Only include calls from this phone number, SIP address,
+            #   Client identifier or SIM SID.
+            # @param [String] parent_call_sid Only include calls spawned by calls with this
             #   SID.
-            # @param [call.Status] status Only show calls currently in the specified status.
-            #   May be `queued`, `ringing`, `in-progress`, `canceled`, `completed`, `failed`,
-            #   `busy`, or `no-answer`.
-            # @param [Time] start_time_before StartTime to filter on
-            # @param [Time] start_time StartTime to filter on
-            # @param [Time] start_time_after StartTime to filter on
-            # @param [Time] end_time_before EndTime to filter on
-            # @param [Time] end_time EndTime to filter on
-            # @param [Time] end_time_after EndTime to filter on
+            # @param [call.Status] status The status of the calls to include. Can be:
+            #   `queued`, `ringing`, `in-progress`, `canceled`, `completed`, `failed`, `busy`,
+            #   or `no-answer`.
+            # @param [Time] start_time_before Only include calls that started on or after this date
+            # @param [Time] start_time Only include calls that started on or after this date
+            # @param [Time] start_time_after Only include calls that started on or after this date
+            # @param [Time] end_time_before Only include usage that occurred on or before this date
+            # @param [Time] end_time Only include usage that occurred on or before this date
+            # @param [Time] end_time_after Only include usage that occurred on or before this date
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -212,19 +214,19 @@ module Twilio
             # is reached.
             # @param [String] to Only show calls to this phone number, SIP address, Client
             #   identifier or SIM SID.
-            # @param [String] from Only show calls from this phone number, SIP address, Client
-            #   identifier or SIM SID.
-            # @param [String] parent_call_sid Only show calls spawned by the Call with this
+            # @param [String] from Only include calls from this phone number, SIP address,
+            #   Client identifier or SIM SID.
+            # @param [String] parent_call_sid Only include calls spawned by calls with this
             #   SID.
-            # @param [call.Status] status Only show calls currently in the specified status.
-            #   May be `queued`, `ringing`, `in-progress`, `canceled`, `completed`, `failed`,
-            #   `busy`, or `no-answer`.
-            # @param [Time] start_time_before StartTime to filter on
-            # @param [Time] start_time StartTime to filter on
-            # @param [Time] start_time_after StartTime to filter on
-            # @param [Time] end_time_before EndTime to filter on
-            # @param [Time] end_time EndTime to filter on
-            # @param [Time] end_time_after EndTime to filter on
+            # @param [call.Status] status The status of the calls to include. Can be:
+            #   `queued`, `ringing`, `in-progress`, `canceled`, `completed`, `failed`, `busy`,
+            #   or `no-answer`.
+            # @param [Time] start_time_before Only include calls that started on or after this date
+            # @param [Time] start_time Only include calls that started on or after this date
+            # @param [Time] start_time_after Only include calls that started on or after this date
+            # @param [Time] end_time_before Only include usage that occurred on or before this date
+            # @param [Time] end_time Only include usage that occurred on or before this date
+            # @param [Time] end_time_after Only include usage that occurred on or before this date
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -271,19 +273,19 @@ module Twilio
             # Request is executed immediately.
             # @param [String] to Only show calls to this phone number, SIP address, Client
             #   identifier or SIM SID.
-            # @param [String] from Only show calls from this phone number, SIP address, Client
-            #   identifier or SIM SID.
-            # @param [String] parent_call_sid Only show calls spawned by the Call with this
+            # @param [String] from Only include calls from this phone number, SIP address,
+            #   Client identifier or SIM SID.
+            # @param [String] parent_call_sid Only include calls spawned by calls with this
             #   SID.
-            # @param [call.Status] status Only show calls currently in the specified status.
-            #   May be `queued`, `ringing`, `in-progress`, `canceled`, `completed`, `failed`,
-            #   `busy`, or `no-answer`.
-            # @param [Time] start_time_before StartTime to filter on
-            # @param [Time] start_time StartTime to filter on
-            # @param [Time] start_time_after StartTime to filter on
-            # @param [Time] end_time_before EndTime to filter on
-            # @param [Time] end_time EndTime to filter on
-            # @param [Time] end_time_after EndTime to filter on
+            # @param [call.Status] status The status of the calls to include. Can be:
+            #   `queued`, `ringing`, `in-progress`, `canceled`, `completed`, `failed`, `busy`,
+            #   or `no-answer`.
+            # @param [Time] start_time_before Only include calls that started on or after this date
+            # @param [Time] start_time Only include calls that started on or after this date
+            # @param [Time] start_time_after Only include calls that started on or after this date
+            # @param [Time] end_time_before Only include usage that occurred on or before this date
+            # @param [Time] end_time Only include usage that occurred on or before this date
+            # @param [Time] end_time_after Only include usage that occurred on or before this date
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -381,8 +383,11 @@ module Twilio
             ##
             # Initialize the CallContext
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The account_sid
-            # @param [String] sid The Call Sid that uniquely identifies the Call to fetch
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Call
+            #   resource(s) to fetch.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the Call
+            #   resource to fetch
             # @return [CallContext] CallContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -421,32 +426,33 @@ module Twilio
 
             ##
             # Update the CallInstance
-            # @param [String] url that hosts instructions for the call. Twilio will consult
-            #   this URL when the call connects. See the [Url
+            # @param [String] url The absolute URL that returns the TwiML instructions for the
+            #   call. We will call this URL using the `method` when the call connects. For more
+            #   information, see the [Url
             #   Parameter](https://www.twilio.com/docs/voice/make-calls#specify-a-url-parameter)
-            #   section in [Making Calls](https://www.twilio.com/docs/voice/make-calls) for more
-            #   details.
-            # @param [String] method The HTTP method Twilio should use when making its request
-            #   to the `Url` parameter's value. Defaults to `POST`. If an `ApplicationSid`
-            #   parameter is present, this parameter is ignored.
-            # @param [call.UpdateStatus] status Either `canceled` or `completed`.
-            #   Specifying `canceled` will attempt to hang up calls that are queued or ringing,
-            #   but will not affect calls already in progress. Specifying `completed` will
-            #   attempt to hang up a call even if it's already in progress.
-            # @param [String] fallback_url A URL that Twilio will request if an error occurs
-            #   when requesting or executing the TwiML at `Url`. If an `ApplicationSid`
-            #   parameter is present, this parameter is ignored.
-            # @param [String] fallback_method The HTTP method that Twilio should use to
-            #   request the `FallbackUrl`. Must be either `GET` or `POST`. Defaults to `POST`.
-            #   If an `ApplicationSid` parameter is present, this parameter is ignored.
-            # @param [String] status_callback A URL that Twilio will send asynchronous webhook
-            #   requests to on every call event specified in the `StatusCallbackEvent`
-            #   parameter. If no event is specified, Twilio will send `completed` by default. If
-            #   an `ApplicationSid` parameter is present, this parameter is ignored. URLs must
+            #   section in [Making Calls](https://www.twilio.com/docs/voice/make-calls).
+            # @param [String] method The HTTP method we should use when calling the `url`. Can
+            #   be: `GET` or `POST` and the default is `POST`. If an `application_sid` parameter
+            #   is present, this parameter is ignored.
+            # @param [call.UpdateStatus] status The new status of the resource. Can be:
+            #   `canceled` or `completed`. Specifying `canceled` will attempt to hang up calls
+            #   that are queued or ringing; however, it will not affect calls already in
+            #   progress. Specifying `completed` will attempt to hang up a call even if it's
+            #   already in progress.
+            # @param [String] fallback_url The URL that we call using the `fallback_method` if
+            #   an error occurs when requesting or executing the TwiML at `url`. If an
+            #   `application_sid` parameter is present, this parameter is ignored.
+            # @param [String] fallback_method The HTTP method that we should use to request
+            #   the `fallback_url`. Can be: `GET` or `POST` and the default is `POST`. If an
+            #   `application_sid` parameter is present, this parameter is ignored.
+            # @param [String] status_callback The URL we should call using the
+            #   `status_callback_method` to send status information to your application. If no
+            #   `status_callback_event` is specified, we will send the `completed` status. If an
+            #   `application_sid` parameter is present, this parameter is ignored. URLs must
             #   contain a valid hostname (underscores are not permitted).
-            # @param [String] status_callback_method The HTTP method Twilio should use when
-            #   requesting the `StatusCallback` URL. Defaults to `POST`. If an `ApplicationSid`
-            #   parameter is present, this parameter is ignored.
+            # @param [String] status_callback_method The HTTP method we should use when
+            #   requesting the `status_callback` URL. Can be: `GET` or `POST` and the default is
+            #   `POST`. If an `application_sid` parameter is present, this parameter is ignored.
             # @return [CallInstance] Updated CallInstance
             def update(url: :unset, method: :unset, status: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_method: :unset)
               data = Twilio::Values.of({
@@ -533,10 +539,11 @@ module Twilio
             # Initialize the CallInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for creating
-            #   this Call.
-            # @param [String] sid The Call Sid that uniquely identifies the Call to fetch
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Call
+            #   resource.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the Call
+            #   resource to fetch
             # @return [CallInstance] CallInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
@@ -587,103 +594,103 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique id of the Account responsible for creating this Call
+            # @return [String] The SID of the Account that created this resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The annotation provided for the Call
+            # @return [String] The annotation provided for the call
             def annotation
               @properties['annotation']
             end
 
             ##
-            # @return [String] Either `human` or `machine` if this Call was initiated with answering machine detection. Empty otherwise.
+            # @return [String] Either `human` or `machine` if this call was initiated with answering machine detection. Empty otherwise.
             def answered_by
               @properties['answered_by']
             end
 
             ##
-            # @return [String] The API Version used to create the Call
+            # @return [String] The API Version used to create the call
             def api_version
               @properties['api_version']
             end
 
             ##
-            # @return [String] The caller's name if this Call was an incoming call to a phone number with Caller ID Lookup enabled. Empty otherwise.
+            # @return [String] The caller's name if this call was an incoming call to a phone number with caller ID Lookup enabled. Otherwise, empty.
             def caller_name
               @properties['caller_name']
             end
 
             ##
-            # @return [Time] The date that this resource was created
+            # @return [Time] The RFC 2822 date and time in GMT that this resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date that this resource was last updated
+            # @return [Time] The RFC 2822 date and time in GMT that this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] A string describing the direction of the Call. `inbound` for inbound calls, `outbound-api` for calls initiated via the REST API or `outbound-dial` for calls initiated by a `Dial` verb.
+            # @return [String] A string describing the direction of the call. `inbound` for inbound calls, `outbound-api` for calls initiated via the REST API or `outbound-dial` for calls initiated by a `Dial` verb.
             def direction
               @properties['direction']
             end
 
             ##
-            # @return [String] The length of the Call in seconds.
+            # @return [String] The length of the call in seconds.
             def duration
               @properties['duration']
             end
 
             ##
-            # @return [Time] The end time of the Call. Null if the call did not complete successfully.
+            # @return [Time] The end time of the call. Null if the call did not complete successfully.
             def end_time
               @properties['end_time']
             end
 
             ##
-            # @return [String] The forwarding phone number if this Call was an incoming call forwarded from another number (depends on carrier supporting forwarding). Empty otherwise.
+            # @return [String] The forwarding phone number if this call was an incoming call forwarded from another number (depends on carrier supporting forwarding). Otherwise, empty.
             def forwarded_from
               @properties['forwarded_from']
             end
 
             ##
-            # @return [String] The phone number, SIP address or Client identifier that made this Call. Phone numbers are in E.164 format (e.g., +16175551212). SIP addresses are formatted as `name@company.com`. Client identifiers are formatted `client:name`.
+            # @return [String] The phone number, SIP address or Client identifier that made this call. Phone numbers are in E.164 format (e.g., +16175551212). SIP addresses are formatted as `name@company.com`. Client identifiers are formatted `client:name`.
             def from
               @properties['from']
             end
 
             ##
-            # @return [String] The phone number, SIP address or Client identifier that made this Call. Formatted for display.
+            # @return [String] The calling phone number, SIP address, or Client identifier formatted for display.
             def from_formatted
               @properties['from_formatted']
             end
 
             ##
-            # @return [String] A 34-character Group Sid associated with this Call. Empty if no Group is associated with the Call.
+            # @return [String] The Group SID associated with this call. If no Group is associated with the call, the field is empty.
             def group_sid
               @properties['group_sid']
             end
 
             ##
-            # @return [String] A 34-character string that uniquely identifies the Call that created this leg.
+            # @return [String] The SID that identifies the call that created this leg.
             def parent_call_sid
               @properties['parent_call_sid']
             end
 
             ##
-            # @return [String] If the call was inbound, this is the Sid of the `IncomingPhoneNumber` that received the call. If the call was outbound, it is the Sid of the `OutgoingCallerId` from which the call was placed.
+            # @return [String] If the call was inbound, this is the SID of the IncomingPhoneNumber resource that received the call. If the call was outbound, it is the SID of the OutgoingCallerId resource from which the call was placed.
             def phone_number_sid
               @properties['phone_number_sid']
             end
 
             ##
-            # @return [String] The charge for this Call, in the currency associated with the account. Populated after the call is completed. May not be immediately available.
+            # @return [String] The charge for this call, in the currency associated with the account. Populated after the call is completed. May not be immediately available.
             def price
               @properties['price']
             end
@@ -695,43 +702,43 @@ module Twilio
             end
 
             ##
-            # @return [String] A 34-character string that uniquely identifies the Call resource.
+            # @return [String] The unique string that identifies this resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [Time] The start time of the Call. Null if the call has not yet been dialed.
+            # @return [Time] The start time of the call. Null if the call has not yet been dialed.
             def start_time
               @properties['start_time']
             end
 
             ##
-            # @return [call.Status] A string representing the status of the Call.
+            # @return [call.Status] The status of this call.
             def status
               @properties['status']
             end
 
             ##
-            # @return [String] Call Instance Subresources
+            # @return [String] A list of related subresources identified by their relative URIs
             def subresource_uris
               @properties['subresource_uris']
             end
 
             ##
-            # @return [String] The phone number, SIP address or Client identifier that received this Call. Phone numbers are in E.164 format (e.g., +16175551212). SIP addresses are formatted as `name@company.com`. Client identifiers are formatted `client:name`.
+            # @return [String] The phone number, SIP address or Client identifier that received this call. Phone numbers are in E.164 format (e.g., +16175551212). SIP addresses are formatted as `name@company.com`. Client identifiers are formatted `client:name`.
             def to
               @properties['to']
             end
 
             ##
-            # @return [String] The phone number, SIP address or Client identifier that received this Call. Formatted for display.
+            # @return [String] The phone number, SIP address or Client identifier that received this call. Formatted for display.
             def to_formatted
               @properties['to_formatted']
             end
 
             ##
-            # @return [String] The URI for this resource, relative to `https://api.twilio.com`
+            # @return [String] The URI of this resource, relative to `https://api.twilio.com`
             def uri
               @properties['uri']
             end
@@ -752,32 +759,33 @@ module Twilio
 
             ##
             # Update the CallInstance
-            # @param [String] url that hosts instructions for the call. Twilio will consult
-            #   this URL when the call connects. See the [Url
+            # @param [String] url The absolute URL that returns the TwiML instructions for the
+            #   call. We will call this URL using the `method` when the call connects. For more
+            #   information, see the [Url
             #   Parameter](https://www.twilio.com/docs/voice/make-calls#specify-a-url-parameter)
-            #   section in [Making Calls](https://www.twilio.com/docs/voice/make-calls) for more
-            #   details.
-            # @param [String] method The HTTP method Twilio should use when making its request
-            #   to the `Url` parameter's value. Defaults to `POST`. If an `ApplicationSid`
-            #   parameter is present, this parameter is ignored.
-            # @param [call.UpdateStatus] status Either `canceled` or `completed`.
-            #   Specifying `canceled` will attempt to hang up calls that are queued or ringing,
-            #   but will not affect calls already in progress. Specifying `completed` will
-            #   attempt to hang up a call even if it's already in progress.
-            # @param [String] fallback_url A URL that Twilio will request if an error occurs
-            #   when requesting or executing the TwiML at `Url`. If an `ApplicationSid`
-            #   parameter is present, this parameter is ignored.
-            # @param [String] fallback_method The HTTP method that Twilio should use to
-            #   request the `FallbackUrl`. Must be either `GET` or `POST`. Defaults to `POST`.
-            #   If an `ApplicationSid` parameter is present, this parameter is ignored.
-            # @param [String] status_callback A URL that Twilio will send asynchronous webhook
-            #   requests to on every call event specified in the `StatusCallbackEvent`
-            #   parameter. If no event is specified, Twilio will send `completed` by default. If
-            #   an `ApplicationSid` parameter is present, this parameter is ignored. URLs must
+            #   section in [Making Calls](https://www.twilio.com/docs/voice/make-calls).
+            # @param [String] method The HTTP method we should use when calling the `url`. Can
+            #   be: `GET` or `POST` and the default is `POST`. If an `application_sid` parameter
+            #   is present, this parameter is ignored.
+            # @param [call.UpdateStatus] status The new status of the resource. Can be:
+            #   `canceled` or `completed`. Specifying `canceled` will attempt to hang up calls
+            #   that are queued or ringing; however, it will not affect calls already in
+            #   progress. Specifying `completed` will attempt to hang up a call even if it's
+            #   already in progress.
+            # @param [String] fallback_url The URL that we call using the `fallback_method` if
+            #   an error occurs when requesting or executing the TwiML at `url`. If an
+            #   `application_sid` parameter is present, this parameter is ignored.
+            # @param [String] fallback_method The HTTP method that we should use to request
+            #   the `fallback_url`. Can be: `GET` or `POST` and the default is `POST`. If an
+            #   `application_sid` parameter is present, this parameter is ignored.
+            # @param [String] status_callback The URL we should call using the
+            #   `status_callback_method` to send status information to your application. If no
+            #   `status_callback_event` is specified, we will send the `completed` status. If an
+            #   `application_sid` parameter is present, this parameter is ignored. URLs must
             #   contain a valid hostname (underscores are not permitted).
-            # @param [String] status_callback_method The HTTP method Twilio should use when
-            #   requesting the `StatusCallback` URL. Defaults to `POST`. If an `ApplicationSid`
-            #   parameter is present, this parameter is ignored.
+            # @param [String] status_callback_method The HTTP method we should use when
+            #   requesting the `status_callback` URL. Can be: `GET` or `POST` and the default is
+            #   `POST`. If an `application_sid` parameter is present, this parameter is ignored.
             # @return [CallInstance] Updated CallInstance
             def update(url: :unset, method: :unset, status: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_method: :unset)
               context.update(

@@ -30,10 +30,12 @@ module Twilio
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [composition.Status] status Only show Compositions with the given status.
-          # @param [Time] date_created_after Only show Compositions that started on or after
-          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
-          # @param [Time] date_created_before Only show Compositions that started before
-          #   this this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          # @param [Time] date_created_after Only show Compositions created on or after this
+          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
+          # @param [Time] date_created_before Only show Compositions created before this
+          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [String] room_sid Only show Compositions with the given Room SID.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
@@ -58,10 +60,12 @@ module Twilio
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [composition.Status] status Only show Compositions with the given status.
-          # @param [Time] date_created_after Only show Compositions that started on or after
-          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
-          # @param [Time] date_created_before Only show Compositions that started before
-          #   this this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          # @param [Time] date_created_after Only show Compositions created on or after this
+          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
+          # @param [Time] date_created_before Only show Compositions created before this
+          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [String] room_sid Only show Compositions with the given Room SID.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
@@ -102,10 +106,12 @@ module Twilio
           # Retrieve a single page of CompositionInstance records from the API.
           # Request is executed immediately.
           # @param [composition.Status] status Only show Compositions with the given status.
-          # @param [Time] date_created_after Only show Compositions that started on or after
-          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
-          # @param [Time] date_created_before Only show Compositions that started before
-          #   this this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          # @param [Time] date_created_after Only show Compositions created on or after this
+          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
+          # @param [Time] date_created_before Only show Compositions created before this
+          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [String] room_sid Only show Compositions with the given Room SID.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
@@ -152,6 +158,7 @@ module Twilio
           #   Layouts](#managing-video-layouts) below for further information.
           # @param [String] audio_sources An array of audio sources to merge. All the
           #   specified sources must belong to the same Group Room. It can include: 
+          # 
           #   * Zero or more `RecordingTrackSid`
           #   * Zero or more `MediaTrackSid`
           #   * Zero or more `ParticipantSid`
@@ -162,23 +169,28 @@ module Twilio
           #   the Composition. Any new Composition shall include all audio sources specified
           #   in `AudioSources` except for the ones specified in `AudioSourcesExcluded`. This
           #   parameter may include: 
+          # 
           #   * Zero or more `RecordingTrackSid`
           #   * Zero or more `MediaTrackSid`
           #   * Zero or more `ParticipantSid`
           #   * Zero or more Track names. These can be specified using wildcards (e.g.
           #   `student*`)
-          # @param [String] resolution A string representing the numbers of pixels for rows
+          # @param [String] resolution A string representing the number of pixels for rows
           #   (width) and columns (height) of the generated composed video. This string must
           #   have the format `{width}x{height}`. This parameter must comply with the
           #   following constraints: 
+          # 
           #   * `width >= 16 && width <= 1280`
           #   * `height >= 16 && height <= 1280`
           #   * `width * height <= 921,600`
+          # 
           #   Typical values are: 
+          # 
           #   * HD = `1280x720`
           #   * PAL = `1024x576`
           #   * VGA = `640x480`
           #   * CIF = `320x240`
+          # 
           #   Note that the `Resolution` implicitly imposes an aspect ratio to the resulting
           #   composition. When the original video tracks get constrained by this aspect ratio
           #   they are scaled-down to fit. You can find detailed information in the [Managing

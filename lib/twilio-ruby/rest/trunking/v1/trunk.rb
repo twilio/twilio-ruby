@@ -198,7 +198,8 @@ module Twilio
           ##
           # Initialize the TrunkContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies the SIP Trunk
+          #   in Twilio.
           # @return [TrunkContext] TrunkContext
           def initialize(version, sid)
             super(version)
@@ -373,7 +374,8 @@ module Twilio
           # Initialize the TrunkInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies the SIP Trunk
+          #   in Twilio.
           # @return [TrunkInstance] TrunkInstance
           def initialize(version, payload, sid: nil)
             super(version)

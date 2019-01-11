@@ -34,7 +34,7 @@ module Twilio
               ##
               # Retrieve a single page of SyncMapItemInstance records from the API.
               # Request is executed immediately.
-              # @param [String] key The unique user-defined key of this Map Item. Up to 256
+              # @param [String] key The unique user-defined key of this Map Item. Up to 320
               #   characters long.
               # @param [Hash] data Contains arbitrary user-defined, schema-less data that this
               #   Map Item stores, represented by a JSON object, up to 16KB.

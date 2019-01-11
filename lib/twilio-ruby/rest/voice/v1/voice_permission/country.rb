@@ -38,14 +38,14 @@ module Twilio
             # @param [String] country_code Filter the results by specified [country
             #   codes](https://www.itu.int/itudoc/itu-t/ob-lists/icc/e164_763.html)
             # @param [Boolean] low_risk_numbers_enabled Filter to retrieve the country
-            #   permissions with dialing to low-risk numbers enabled set to true / false
+            #   permissions with dialing to low-risk numbers enabled. Can be: `true` or `false`.
             # @param [Boolean] high_risk_special_numbers_enabled Filter to retrieve the
-            #   country permissions with dialing to high-risk special service numbers enabled
-            #   set to true / false
+            #   country permissions with dialing to high-risk special service numbers enabled.
+            #   Can be: `true` or `false`
             # @param [Boolean] high_risk_tollfraud_numbers_enabled Filter to retrieve the
             #   country permissions with dialing to high-risk [toll
-            #   fraud](https://www.twilio.com/learn/voice-and-video/toll-fraud) numbers enabled
-            #   set to true / false
+            #   fraud](https://www.twilio.com/learn/voice-and-video/toll-fraud) numbers enabled.
+            #   Can be: `true` or `false`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -78,14 +78,14 @@ module Twilio
             # @param [String] country_code Filter the results by specified [country
             #   codes](https://www.itu.int/itudoc/itu-t/ob-lists/icc/e164_763.html)
             # @param [Boolean] low_risk_numbers_enabled Filter to retrieve the country
-            #   permissions with dialing to low-risk numbers enabled set to true / false
+            #   permissions with dialing to low-risk numbers enabled. Can be: `true` or `false`.
             # @param [Boolean] high_risk_special_numbers_enabled Filter to retrieve the
-            #   country permissions with dialing to high-risk special service numbers enabled
-            #   set to true / false
+            #   country permissions with dialing to high-risk special service numbers enabled.
+            #   Can be: `true` or `false`
             # @param [Boolean] high_risk_tollfraud_numbers_enabled Filter to retrieve the
             #   country permissions with dialing to high-risk [toll
-            #   fraud](https://www.twilio.com/learn/voice-and-video/toll-fraud) numbers enabled
-            #   set to true / false
+            #   fraud](https://www.twilio.com/learn/voice-and-video/toll-fraud) numbers enabled.
+            #   Can be: `true` or `false`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -134,14 +134,14 @@ module Twilio
             # @param [String] country_code Filter the results by specified [country
             #   codes](https://www.itu.int/itudoc/itu-t/ob-lists/icc/e164_763.html)
             # @param [Boolean] low_risk_numbers_enabled Filter to retrieve the country
-            #   permissions with dialing to low-risk numbers enabled set to true / false
+            #   permissions with dialing to low-risk numbers enabled. Can be: `true` or `false`.
             # @param [Boolean] high_risk_special_numbers_enabled Filter to retrieve the
-            #   country permissions with dialing to high-risk special service numbers enabled
-            #   set to true / false
+            #   country permissions with dialing to high-risk special service numbers enabled.
+            #   Can be: `true` or `false`
             # @param [Boolean] high_risk_tollfraud_numbers_enabled Filter to retrieve the
             #   country permissions with dialing to high-risk [toll
-            #   fraud](https://www.twilio.com/learn/voice-and-video/toll-fraud) numbers enabled
-            #   set to true / false
+            #   fraud](https://www.twilio.com/learn/voice-and-video/toll-fraud) numbers enabled.
+            #   Can be: `true` or `false`.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -339,31 +339,31 @@ module Twilio
             end
 
             ##
-            # @return [Boolean] true, if dialing to low-risk numbers is enabled, else false
+            # @return [Boolean] `true`, if dialing to low-risk numbers is enabled, else `false`
             def low_risk_numbers_enabled
               @properties['low_risk_numbers_enabled']
             end
 
             ##
-            # @return [Boolean] true, if dialing to high-risk special services numbers is enabled, else false. This group of prefixes, are number ranges allocated by the corresponding country. They consist of number types such as premium numbers, special services, shared cost and others
+            # @return [Boolean] `true`, if dialing to high-risk special services numbers is enabled, else `false`
             def high_risk_special_numbers_enabled
               @properties['high_risk_special_numbers_enabled']
             end
 
             ##
-            # @return [Boolean] true, if dialing to high-risk toll fraud numbers is enabled, else false. This group of prefixes are narrow number ranges that have a high-risk of international revenue sharing fraud (IRSF) attacks also called toll fraud. The group of prefixes is formed through integration with anti-fraud databases and verified by analyzing calls on the Twilio Super Network. This group of prefixes are not available for download and are updated frequently
+            # @return [Boolean] `true`, if dialing to high-risk toll fraud numbers is enabled, else `false`
             def high_risk_tollfraud_numbers_enabled
               @properties['high_risk_tollfraud_numbers_enabled']
             end
 
             ##
-            # @return [String] The URL for this resource
+            # @return [String] The absolute URL of this resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] A list of URLs related to this resource
             def links
               @properties['links']
             end

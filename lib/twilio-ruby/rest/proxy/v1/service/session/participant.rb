@@ -35,7 +35,6 @@ module Twilio
               # Lists ParticipantInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] identifier The identifier
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -43,15 +42,14 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(identifier: :unset, limit: nil, page_size: nil)
-                self.stream(identifier: identifier, limit: limit, page_size: page_size).entries
+              def list(limit: nil, page_size: nil)
+                self.stream(limit: limit, page_size: page_size).entries
               end
 
               ##
               # Streams ParticipantInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] identifier The identifier
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -59,10 +57,10 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(identifier: :unset, limit: nil, page_size: nil)
+              def stream(limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(identifier: identifier, page_size: limits[:page_size], )
+                page = self.page(page_size: limits[:page_size], )
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -84,14 +82,12 @@ module Twilio
               ##
               # Retrieve a single page of ParticipantInstance records from the API.
               # Request is executed immediately.
-              # @param [String] identifier The identifier
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of ParticipantInstance
-              def page(identifier: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              def page(page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
-                    'Identifier' => identifier,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,

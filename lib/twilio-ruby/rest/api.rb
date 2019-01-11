@@ -84,7 +84,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34-character string that uniquely identifies the Call
+      # @param [String] sid The unique string that that we created to identify this Call
       #   resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::CallInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::CallList]
@@ -93,8 +93,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
-      #   conference.
+      # @param [String] sid The unique string that that we created to identify this
+      #   Conference resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::ConferenceInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::ConferenceList]
       def conferences(sid=:unset)
@@ -167,7 +167,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this queue.
+      # @param [String] sid The unique string that that we created to identify this
+      #   Queue resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::QueueInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::QueueList]
       def queues(sid=:unset)
@@ -198,8 +199,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
-      #   resource.
+      # @param [String] sid The unique string that that we created to identify this
+      #   ShortCode resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::ShortCodeInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::ShortCodeList]
       def short_codes(sid=:unset)

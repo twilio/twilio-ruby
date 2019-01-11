@@ -16,9 +16,9 @@ module Twilio
               ##
               # Initialize the MediaList
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The unique id of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
-              #   media.
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Media
+              #   resource.
               # @param [String] message_sid A 34 character string that uniquely identifies this
               #   resource.
               # @return [MediaList] MediaList
@@ -34,9 +34,9 @@ module Twilio
               # Lists MediaInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [Time] date_created_before Filter by date created
-              # @param [Time] date_created Filter by date created
-              # @param [Time] date_created_after Filter by date created
+              # @param [Time] date_created_before The `YYYY-MM-DD` value of the resources to read
+              # @param [Time] date_created The `YYYY-MM-DD` value of the resources to read
+              # @param [Time] date_created_after The `YYYY-MM-DD` value of the resources to read
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -58,9 +58,9 @@ module Twilio
               # Streams MediaInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Time] date_created_before Filter by date created
-              # @param [Time] date_created Filter by date created
-              # @param [Time] date_created_after Filter by date created
+              # @param [Time] date_created_before The `YYYY-MM-DD` value of the resources to read
+              # @param [Time] date_created The `YYYY-MM-DD` value of the resources to read
+              # @param [Time] date_created_after The `YYYY-MM-DD` value of the resources to read
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -98,9 +98,9 @@ module Twilio
               ##
               # Retrieve a single page of MediaInstance records from the API.
               # Request is executed immediately.
-              # @param [Time] date_created_before Filter by date created
-              # @param [Time] date_created Filter by date created
-              # @param [Time] date_created_after Filter by date created
+              # @param [Time] date_created_before The `YYYY-MM-DD` value of the resources to read
+              # @param [Time] date_created The `YYYY-MM-DD` value of the resources to read
+              # @param [Time] date_created_after The `YYYY-MM-DD` value of the resources to read
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -180,9 +180,13 @@ module Twilio
               ##
               # Initialize the MediaContext
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] message_sid The message_sid
-              # @param [String] sid The media Sid that uniquely identifies this resource
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Media
+              #   resource(s) to fetch.
+              # @param [String] message_sid The SID of the Message resource that this Media
+              #   resource belongs to.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   Media resource to fetch
               # @return [MediaContext] MediaContext
               def initialize(version, account_sid, message_sid, sid)
                 super(version)
@@ -233,12 +237,13 @@ module Twilio
               # Initialize the MediaInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] account_sid The unique id of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
-              #   media.
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Media
+              #   resource.
               # @param [String] message_sid A 34 character string that uniquely identifies this
               #   resource.
-              # @param [String] sid The media Sid that uniquely identifies this resource
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   Media resource to fetch
               # @return [MediaInstance] MediaInstance
               def initialize(version, payload, account_sid: nil, message_sid: nil, sid: nil)
                 super(version)
@@ -280,7 +285,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique sid that identifies this account
+              # @return [String] The SID of the Account that created this resource
               def account_sid
                 @properties['account_sid']
               end
@@ -292,31 +297,31 @@ module Twilio
               end
 
               ##
-              # @return [Time] The date this resource was created
+              # @return [Time] The RFC 2822 date and time in GMT that this resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date this resource was last updated
+              # @return [Time] The RFC 2822 date and time in GMT that this resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The unique id of the resource that created the media.
+              # @return [String] The SID of the resource that created the media
               def parent_sid
                 @properties['parent_sid']
               end
 
               ##
-              # @return [String] A string that uniquely identifies this media
+              # @return [String] The unique string that identifies this resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The URI for this resource
+              # @return [String] The URI of this resource, relative to `https://api.twilio.com`
               def uri
                 @properties['uri']
               end

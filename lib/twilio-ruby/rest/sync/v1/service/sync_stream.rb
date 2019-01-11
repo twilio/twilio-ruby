@@ -32,7 +32,7 @@ module Twilio
             # Retrieve a single page of SyncStreamInstance records from the API.
             # Request is executed immediately.
             # @param [String] unique_name The unique and addressable name of this Stream.
-            #   Optional, up to 256 characters long.
+            #   Optional, up to 320 characters long.
             # @param [String] ttl Time-to-live of this Stream in seconds, defaults to no
             #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
             # @return [SyncStreamInstance] Newly created SyncStreamInstance

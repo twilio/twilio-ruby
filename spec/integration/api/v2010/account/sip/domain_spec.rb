@@ -52,7 +52,8 @@ describe 'Domain' do
                   "voice_method": "POST",
                   "voice_status_callback_method": "POST",
                   "voice_status_callback_url": null,
-                  "voice_url": "https://dundermifflin.example.com/twilio/app.php"
+                  "voice_url": "https://dundermifflin.example.com/twilio/app.php",
+                  "trunk_sid": "TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
           ],
           "start": 0,
@@ -141,7 +142,8 @@ describe 'Domain' do
           "voice_method": "POST",
           "voice_status_callback_method": "POST",
           "voice_status_callback_url": null,
-          "voice_url": "https://dundermifflin.example.com/twilio/app.php"
+          "voice_url": "https://dundermifflin.example.com/twilio/app.php",
+          "trunk_sid": null
       }
       ]
     ))
@@ -194,7 +196,8 @@ describe 'Domain' do
           "voice_method": "POST",
           "voice_status_callback_method": "POST",
           "voice_status_callback_url": null,
-          "voice_url": "https://dundermifflin.example.com/twilio/app.php"
+          "voice_url": "https://dundermifflin.example.com/twilio/app.php",
+          "trunk_sid": "TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
     ))
@@ -247,7 +250,8 @@ describe 'Domain' do
           "voice_method": "POST",
           "voice_status_callback_method": "POST",
           "voice_status_callback_url": null,
-          "voice_url": "https://dundermifflin.example.com/twilio/app.php"
+          "voice_url": "https://dundermifflin.example.com/twilio/app.php",
+          "trunk_sid": "TRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
     ))

@@ -17,7 +17,9 @@ module Twilio
             ##
             # Initialize the ShortCodeList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The 34 character unique sid of the Service.
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this resource is
+            #   associated with.
             # @return [ShortCodeList] ShortCodeList
             def initialize(version, service_sid: nil)
               super(version)
@@ -30,8 +32,8 @@ module Twilio
             ##
             # Retrieve a single page of ShortCodeInstance records from the API.
             # Request is executed immediately.
-            # @param [String] short_code_sid ShortCodeSid for the Shortcode being added to the
-            #   Service..
+            # @param [String] short_code_sid SID of the ShortCode resource being added to the
+            #   Service.
             # @return [ShortCodeInstance] Newly created ShortCodeInstance
             def create(short_code_sid: nil)
               data = Twilio::Values.of({'ShortCodeSid' => short_code_sid, })
@@ -171,8 +173,11 @@ module Twilio
             ##
             # Initialize the ShortCodeContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) to fetch the
+            #   resource from.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   ShortCode resource to fetch
             # @return [ShortCodeContext] ShortCodeContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -219,8 +224,11 @@ module Twilio
             # Initialize the ShortCodeInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The 34 character unique sid of the Service.
-            # @param [String] sid The sid
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this resource is
+            #   associated with.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   ShortCode resource to fetch
             # @return [ShortCodeInstance] ShortCodeInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -255,31 +263,31 @@ module Twilio
             end
 
             ##
-            # @return [String] The 34 character unique sid of the Short Code
+            # @return [String] The unique string that identifies this resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The 34 character unique sid of the Account.
+            # @return [String] The SID of the Account that created this resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The 34 character unique sid of the Service.
+            # @return [String] The SID of the Service that this resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [Time] he date that this resource was created.
+            # @return [Time] The RFC 2822 date and time in GMT that this resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date that this resource was last updated.
+            # @return [Time] The RFC 2822 date and time in GMT that this resource was last updated
             def date_updated
               @properties['date_updated']
             end
@@ -291,7 +299,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The 2 character ISO Country Code of the number.
+            # @return [String] The 2-character ISO Country Code of the number.
             def country_code
               @properties['country_code']
             end
@@ -303,7 +311,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of this ShortCode resource
             def url
               @properties['url']
             end

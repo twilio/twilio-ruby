@@ -32,9 +32,11 @@ module Twilio
           # @param [Boolean] enabled Only show Composition Hooks that are enabled or
           #   disabled.
           # @param [Time] date_created_after Only show Composition Hooks created on or after
-          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          #   this ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [Time] date_created_before Only show Composition Hooks created before
-          #   this this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          #   this ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -59,9 +61,11 @@ module Twilio
           # @param [Boolean] enabled Only show Composition Hooks that are enabled or
           #   disabled.
           # @param [Time] date_created_after Only show Composition Hooks created on or after
-          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          #   this ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [Time] date_created_before Only show Composition Hooks created before
-          #   this this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          #   this ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -102,9 +106,11 @@ module Twilio
           # @param [Boolean] enabled Only show Composition Hooks that are enabled or
           #   disabled.
           # @param [Time] date_created_after Only show Composition Hooks created on or after
-          #   this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          #   this ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [Time] date_created_before Only show Composition Hooks created before
-          #   this this ISO8601 date-time, given as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+          #   this ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
+          #   `YYYY-MM-DDThh:mm:ssZ`.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -143,37 +149,40 @@ module Twilio
           # Retrieve a single page of CompositionHookInstance records from the API.
           # Request is executed immediately.
           # @param [String] friendly_name Friendly name of the Composition Hook to be shown
-          #   in the console.
-          # @param [Boolean] enabled When activated, the Composition Hook is enabled and a
-          #   composition will be triggered for every Video room completed by this account
-          #   from this point onwards; `false` indicates the Composition Hook is left
-          #   inactive.
+          #   in the console, must be unique per account and up to 100 characters.
+          # @param [Boolean] enabled Boolean flag indicating if the Composition Hook is
+          #   active. Possible values are `true` or `false`. When `true`, the Composition Hook
+          #   will be triggered for every completed Group Room on this account. When `false`,
+          #   the Composition Hook never triggers.
           # @param [Hash] video_layout A JSON object defining the video layout of the
           #   Composition Hook in terms of regions. See the section [Managing Video
           #   Layouts](#managing-video-layouts) below for further information.
           # @param [String] audio_sources An array of audio sources to merge. All the
-          #   specified sources must belong to the same Group Room. It can include: 
-          #   * Zero or more Track names. These can be specified using wildcards (e.g.
-          #   `student*`). The use of `[*]` has semantics "all if any" meaning zero or more
-          #   (i.e. all) depending on whether the Group Room had audio tracks.
+          #   specified sources must belong to the same Group Room. It can include zero or
+          #   more Track names. These can be specified using wildcards (e.g. `student*`). The
+          #   use of `[*]` has semantics "all if any" meaning zero or more (i.e. all)
+          #   depending on whether the Group Room had audio tracks.
           # @param [String] audio_sources_excluded An array of audio sources to exclude from
           #   the Composition Hook. Any new Composition triggered by the Composition Hook
           #   shall include all audio sources specified in `AudioSources` except for the ones
-          #   specified in `AudioSourcesExcluded`. This parameter may include: 
-          #   * Zero or more Track names. These can be specified using wildcards (e.g.
-          #   `student*`)
-          # @param [String] resolution A string representing the numbers of pixels for rows
+          #   specified in `AudioSourcesExcluded`. This parameter may include zero or more
+          #   Track names. These can be specified using wildcards (e.g. `student*`).
+          # @param [String] resolution A string representing the number of pixels for rows
           #   (width) and columns (height) of the generated composed video. This string must
           #   have the format `{width}x{height}`. This parameter must comply with the
           #   following constraints: 
+          # 
           #   * `width >= 16 && width <= 1280`
           #   * `height >= 16 && height <= 1280`
           #   * `width * height <= 921,600`
+          # 
           #   Typical values are: 
+          # 
           #   * HD = `1280x720`
           #   * PAL = `1024x576`
           #   * VGA = `640x480`
           #   * CIF = `320x240`
+          # 
           #   Note that the `Resolution` implicitly imposes an aspect ratio to the resulting
           #   composition. When the original video tracks get constrained by this aspect ratio
           #   they are scaled-down to fit. You can find detailed information in the [Managing
@@ -299,25 +308,24 @@ module Twilio
           ##
           # Update the CompositionHookInstance
           # @param [String] friendly_name Friendly name of the Composition Hook to be shown
-          #   in the console.
-          # @param [Boolean] enabled When activated, the Composition Hook is enabled and a
-          #   composition will be triggered for every Video room completed by this account
-          #   from this point onwards; `false` indicates the Composition Hook is left
-          #   inactive.
+          #   in the console, must be unique per account and up to 100 characters.
+          # @param [Boolean] enabled Boolean flag indicating if the Composition Hook is
+          #   active. Possible values are `true` or `false`. When `true`, the Composition Hook
+          #   will be triggered for every completed Group Room on this account. When `false`,
+          #   the Composition Hook never triggers.
           # @param [Hash] video_layout A JSON object defining the video layout of the
           #   Composition Hook in terms of regions. See the section [Managing Video
           #   Layouts](#managing-video-layouts) below for further information.
           # @param [String] audio_sources An array of audio sources to merge. All the
-          #   specified sources must belong to the same Group Room. It can include: 
-          #   * Zero or more Track names. These can be specified using wildcards (e.g.
-          #   `student*`). The use of `[*]` has semantics "all if any" meaning zero or more
-          #   (i.e. all) depending on whether the Group Room had audio tracks.
+          #   specified sources must belong to the same Group Room. It can include zero or
+          #   more Track names. These can be specified using wildcards (e.g. `student*`). The
+          #   use of `[*]` has semantics "all if any" meaning zero or more (i.e. all)
+          #   depending on whether the Group Room had audio tracks.
           # @param [String] audio_sources_excluded An array of audio sources to exclude from
           #   the Composition Hook. Any new Composition triggered by the Composition Hook
           #   shall include all audio sources specified in `AudioSources` except for the ones
-          #   specified in `AudioSourcesExcluded`. This parameter may include: 
-          #   * Zero or more Track names. These can be specified using wildcards (e.g.
-          #   `student*`)
+          #   specified in `AudioSourcesExcluded`. This parameter may include zero or more
+          #   Track names. These can be specified using wildcards (e.g. `student*`).
           # @param [Boolean] trim When activated, clips all the intervals where there is no
           #   active media in the Compositions triggered by the Composition Hook. This results
           #   in shorter compositions in cases when the Room was created but no Participant
@@ -330,22 +338,16 @@ module Twilio
           #   `webm`. The use of `mp4` or `webm` makes mandatory the specification of
           #   `AudioSources` and/or one `VideoLayout` element containing a valid
           #   `video_sources` list, otherwise an error is fired. Defaults to `webm`.
-          # @param [String] resolution A string representing the numbers of pixels for rows
+          # @param [String] resolution A string representing the number of pixels for rows
           #   (width) and columns (height) of the generated composed video. This string must
           #   have the format `{width}x{height}`. This parameter must comply with the
-          #   following constraints: 
-          #   * `width >= 16 && width <= 1280`
-          #   * `height >= 16 && height <= 1280`
-          #   * `width * height <= 921,600`
-          #   Typical values are: 
-          #   * HD = `1280x720`
-          #   * PAL = `1024x576`
-          #   * VGA = `640x480`
-          #   * CIF = `320x240`
-          #   Note that the `Resolution` implicitly imposes an aspect ratio to the resulting
-          #   composition. When the original video tracks get constrained by this aspect ratio
-          #   they are scaled-down to fit. You can find detailed information in the [Managing
-          #   Video Layouts](#managing-video-layouts) section. Defaults to `640x480`.
+          #   following constraints: `width >= 16 && width <= 1280`, `height >= 16 && height
+          #   <= 1280`, `width * height <= 921,600`. Typical values are: HD = `1280x720`, PAL
+          #   = `1024x576`, VGA = `640x480`, CIF = `320x240`. Note that the `Resolution`
+          #   implicitly imposes an aspect ratio to the resulting composition. When the
+          #   original video tracks get constrained by this aspect ratio they are scaled-down
+          #   to fit. You can find detailed information in the [Managing Video
+          #   Layouts](#managing-video-layouts) section. Defaults to `640x480`.
           # @param [String] status_callback A URL that Twilio sends asynchronous webhook
           #   requests to on every composition event. If not provided, status callback events
           #   will not be dispatched.
@@ -444,7 +446,7 @@ module Twilio
           end
 
           ##
-          # @return [Boolean] Boolean flag for activating the Composition Hook.
+          # @return [Boolean] Boolean flag indicating if the Composition Hook is active.
           def enabled
             @properties['enabled']
           end
@@ -504,13 +506,13 @@ module Twilio
           end
 
           ##
-          # @return [String] The status_callback
+          # @return [String] A URL that Twilio sends asynchronous webhook requests to on every composition event.
           def status_callback
             @properties['status_callback']
           end
 
           ##
-          # @return [String] The status_callback_method
+          # @return [String] HTTP method Twilio should use when requesting the above URL.
           def status_callback_method
             @properties['status_callback_method']
           end
@@ -538,25 +540,24 @@ module Twilio
           ##
           # Update the CompositionHookInstance
           # @param [String] friendly_name Friendly name of the Composition Hook to be shown
-          #   in the console.
-          # @param [Boolean] enabled When activated, the Composition Hook is enabled and a
-          #   composition will be triggered for every Video room completed by this account
-          #   from this point onwards; `false` indicates the Composition Hook is left
-          #   inactive.
+          #   in the console, must be unique per account and up to 100 characters.
+          # @param [Boolean] enabled Boolean flag indicating if the Composition Hook is
+          #   active. Possible values are `true` or `false`. When `true`, the Composition Hook
+          #   will be triggered for every completed Group Room on this account. When `false`,
+          #   the Composition Hook never triggers.
           # @param [Hash] video_layout A JSON object defining the video layout of the
           #   Composition Hook in terms of regions. See the section [Managing Video
           #   Layouts](#managing-video-layouts) below for further information.
           # @param [String] audio_sources An array of audio sources to merge. All the
-          #   specified sources must belong to the same Group Room. It can include: 
-          #   * Zero or more Track names. These can be specified using wildcards (e.g.
-          #   `student*`). The use of `[*]` has semantics "all if any" meaning zero or more
-          #   (i.e. all) depending on whether the Group Room had audio tracks.
+          #   specified sources must belong to the same Group Room. It can include zero or
+          #   more Track names. These can be specified using wildcards (e.g. `student*`). The
+          #   use of `[*]` has semantics "all if any" meaning zero or more (i.e. all)
+          #   depending on whether the Group Room had audio tracks.
           # @param [String] audio_sources_excluded An array of audio sources to exclude from
           #   the Composition Hook. Any new Composition triggered by the Composition Hook
           #   shall include all audio sources specified in `AudioSources` except for the ones
-          #   specified in `AudioSourcesExcluded`. This parameter may include: 
-          #   * Zero or more Track names. These can be specified using wildcards (e.g.
-          #   `student*`)
+          #   specified in `AudioSourcesExcluded`. This parameter may include zero or more
+          #   Track names. These can be specified using wildcards (e.g. `student*`).
           # @param [Boolean] trim When activated, clips all the intervals where there is no
           #   active media in the Compositions triggered by the Composition Hook. This results
           #   in shorter compositions in cases when the Room was created but no Participant
@@ -569,22 +570,16 @@ module Twilio
           #   `webm`. The use of `mp4` or `webm` makes mandatory the specification of
           #   `AudioSources` and/or one `VideoLayout` element containing a valid
           #   `video_sources` list, otherwise an error is fired. Defaults to `webm`.
-          # @param [String] resolution A string representing the numbers of pixels for rows
+          # @param [String] resolution A string representing the number of pixels for rows
           #   (width) and columns (height) of the generated composed video. This string must
           #   have the format `{width}x{height}`. This parameter must comply with the
-          #   following constraints: 
-          #   * `width >= 16 && width <= 1280`
-          #   * `height >= 16 && height <= 1280`
-          #   * `width * height <= 921,600`
-          #   Typical values are: 
-          #   * HD = `1280x720`
-          #   * PAL = `1024x576`
-          #   * VGA = `640x480`
-          #   * CIF = `320x240`
-          #   Note that the `Resolution` implicitly imposes an aspect ratio to the resulting
-          #   composition. When the original video tracks get constrained by this aspect ratio
-          #   they are scaled-down to fit. You can find detailed information in the [Managing
-          #   Video Layouts](#managing-video-layouts) section. Defaults to `640x480`.
+          #   following constraints: `width >= 16 && width <= 1280`, `height >= 16 && height
+          #   <= 1280`, `width * height <= 921,600`. Typical values are: HD = `1280x720`, PAL
+          #   = `1024x576`, VGA = `640x480`, CIF = `320x240`. Note that the `Resolution`
+          #   implicitly imposes an aspect ratio to the resulting composition. When the
+          #   original video tracks get constrained by this aspect ratio they are scaled-down
+          #   to fit. You can find detailed information in the [Managing Video
+          #   Layouts](#managing-video-layouts) section. Defaults to `640x480`.
           # @param [String] status_callback A URL that Twilio sends asynchronous webhook
           #   requests to on every composition event. If not provided, status callback events
           #   will not be dispatched.

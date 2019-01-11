@@ -1,6 +1,26 @@
 twilio-ruby changelog
 =====================
 
+[2019-01-11] Version 5.19.0
+----------------------------
+**Library**
+- PR #436: Remove jruby-openssl requirement. Thanks to @philnash!
+
+**Chat**
+- Mark Member attributes as PII
+
+**Insights**
+- Initial revision.
+
+**Proxy**
+- Remove unsupported query parameters **(breaking change)**
+- Remove invalid session statuses in doc
+
+**Verify**
+- Add `lookup` information in the response when creating a new verification (depends on the LookupEnabled flag being enabled at the service level)
+- Add `VerificationSid` optional parameter on Verification check.
+
+
 [2018-12-17] Version 5.18.0
 ----------------------------
 **Authy**

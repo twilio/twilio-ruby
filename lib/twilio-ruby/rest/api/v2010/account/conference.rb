@@ -15,9 +15,9 @@ module Twilio
             ##
             # Initialize the ConferenceList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for creating
-            #   this conference.
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
+            #   Conference resource.
             # @return [ConferenceList] ConferenceList
             def initialize(version, account_sid: nil)
               super(version)
@@ -31,16 +31,16 @@ module Twilio
             # Lists ConferenceInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [Time] date_created_before Filter by date created
-            # @param [Time] date_created Filter by date created
-            # @param [Time] date_created_after Filter by date created
-            # @param [Time] date_updated_before Filter by date updated
-            # @param [Time] date_updated Filter by date updated
-            # @param [Time] date_updated_after Filter by date updated
-            # @param [String] friendly_name Only show results who's friendly name exactly
-            #   matches the string
-            # @param [conference.Status] status A string representing the status of the
-            #   conference. May be `init`, `in-progress`, or `completed`.
+            # @param [Time] date_created_before The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_created The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_created_after The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_updated_before The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_updated The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_updated_after The `YYYY-MM-DD` value of the resources to read
+            # @param [String] friendly_name The string that identifies the Conference
+            #   resources to read.
+            # @param [conference.Status] status The status of the resources to read. Can be:
+            #   `init`, `in-progress`, or `completed`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -67,16 +67,16 @@ module Twilio
             # Streams ConferenceInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Time] date_created_before Filter by date created
-            # @param [Time] date_created Filter by date created
-            # @param [Time] date_created_after Filter by date created
-            # @param [Time] date_updated_before Filter by date updated
-            # @param [Time] date_updated Filter by date updated
-            # @param [Time] date_updated_after Filter by date updated
-            # @param [String] friendly_name Only show results who's friendly name exactly
-            #   matches the string
-            # @param [conference.Status] status A string representing the status of the
-            #   conference. May be `init`, `in-progress`, or `completed`.
+            # @param [Time] date_created_before The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_created The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_created_after The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_updated_before The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_updated The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_updated_after The `YYYY-MM-DD` value of the resources to read
+            # @param [String] friendly_name The string that identifies the Conference
+            #   resources to read.
+            # @param [conference.Status] status The status of the resources to read. Can be:
+            #   `init`, `in-progress`, or `completed`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -119,16 +119,16 @@ module Twilio
             ##
             # Retrieve a single page of ConferenceInstance records from the API.
             # Request is executed immediately.
-            # @param [Time] date_created_before Filter by date created
-            # @param [Time] date_created Filter by date created
-            # @param [Time] date_created_after Filter by date created
-            # @param [Time] date_updated_before Filter by date updated
-            # @param [Time] date_updated Filter by date updated
-            # @param [Time] date_updated_after Filter by date updated
-            # @param [String] friendly_name Only show results who's friendly name exactly
-            #   matches the string
-            # @param [conference.Status] status A string representing the status of the
-            #   conference. May be `init`, `in-progress`, or `completed`.
+            # @param [Time] date_created_before The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_created The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_created_after The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_updated_before The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_updated The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_updated_after The `YYYY-MM-DD` value of the resources to read
+            # @param [String] friendly_name The string that identifies the Conference
+            #   resources to read.
+            # @param [conference.Status] status The status of the resources to read. Can be:
+            #   `init`, `in-progress`, or `completed`.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -208,8 +208,11 @@ module Twilio
             ##
             # Initialize the ConferenceContext
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The account_sid
-            # @param [String] sid The conference Sid that uniquely identifies this resource
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   Conference resource(s) to fetch.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Conference resource to fetch
             # @return [ConferenceContext] ConferenceContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -245,12 +248,14 @@ module Twilio
 
             ##
             # Update the ConferenceInstance
-            # @param [conference.UpdateStatus] status Specifying `completed` will end the
-            #   conference and kick all participants
-            # @param [String] announce_url The 'AnnounceUrl' attribute lets you specify a URL
-            #   for announcing something into a conference. The URL may return an MP3, a WAV or
-            #   a TwiML document with `<Play>` or `<Say>`.
-            # @param [String] announce_method Specify GET or POST, defaults to POST
+            # @param [conference.UpdateStatus] status The new status of the resource. Can be: 
+            #   Can be: `init`, `in-progress`, or `completed`. Specifying `completed` will end
+            #   the conference and hang up all participants
+            # @param [String] announce_url The URL we should call to announce something into
+            #   the conference. The URL can return an MP3, a WAV, or a TwiML document with
+            #   `<Play>` or `<Say>`.
+            # @param [String] announce_method The HTTP method used to call `announce_url`. Can
+            #   be: `GET` or `POST` and the default is `POST`
             # @return [ConferenceInstance] Updated ConferenceInstance
             def update(status: :unset, announce_url: :unset, announce_method: :unset)
               data = Twilio::Values.of({
@@ -330,10 +335,11 @@ module Twilio
             # Initialize the ConferenceInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for creating
-            #   this conference.
-            # @param [String] sid The conference Sid that uniquely identifies this resource
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
+            #   Conference resource.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Conference resource to fetch
             # @return [ConferenceInstance] ConferenceInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
@@ -369,61 +375,61 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique sid that identifies this account
+            # @return [String] The SID of the Account that created this resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [Time] The date this resource was created
+            # @return [Time] The RFC 2822 date and time in GMT that this resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this resource was last updated
+            # @return [Time] The RFC 2822 date and time in GMT that this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The api_version
+            # @return [String] The API version used to create this conference
             def api_version
               @properties['api_version']
             end
 
             ##
-            # @return [String] A human readable description of this resource
+            # @return [String] A string that you assigned to describe this conference room
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] A string representing the Twilio Region where the conference was mixed.
+            # @return [String] A string that represents the Twilio Region where the conference was mixed
             def region
               @properties['region']
             end
 
             ##
-            # @return [String] A string that uniquely identifies this conference
+            # @return [String] The unique string that identifies this resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [conference.Status] The status of the conference
+            # @return [conference.Status] The status of this conference
             def status
               @properties['status']
             end
 
             ##
-            # @return [String] The URI for this resource
+            # @return [String] The URI of this resource, relative to `https://api.twilio.com`
             def uri
               @properties['uri']
             end
 
             ##
-            # @return [String] The subresource_uris
+            # @return [String] A list of related resources identified by their relative URIs
             def subresource_uris
               @properties['subresource_uris']
             end
@@ -437,12 +443,14 @@ module Twilio
 
             ##
             # Update the ConferenceInstance
-            # @param [conference.UpdateStatus] status Specifying `completed` will end the
-            #   conference and kick all participants
-            # @param [String] announce_url The 'AnnounceUrl' attribute lets you specify a URL
-            #   for announcing something into a conference. The URL may return an MP3, a WAV or
-            #   a TwiML document with `<Play>` or `<Say>`.
-            # @param [String] announce_method Specify GET or POST, defaults to POST
+            # @param [conference.UpdateStatus] status The new status of the resource. Can be: 
+            #   Can be: `init`, `in-progress`, or `completed`. Specifying `completed` will end
+            #   the conference and hang up all participants
+            # @param [String] announce_url The URL we should call to announce something into
+            #   the conference. The URL can return an MP3, a WAV, or a TwiML document with
+            #   `<Play>` or `<Say>`.
+            # @param [String] announce_method The HTTP method used to call `announce_url`. Can
+            #   be: `GET` or `POST` and the default is `POST`
             # @return [ConferenceInstance] Updated ConferenceInstance
             def update(status: :unset, announce_url: :unset, announce_method: :unset)
               context.update(status: status, announce_url: announce_url, announce_method: announce_method, )

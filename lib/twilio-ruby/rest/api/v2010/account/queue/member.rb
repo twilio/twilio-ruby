@@ -16,9 +16,11 @@ module Twilio
               ##
               # Initialize the MemberList
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] queue_sid A 34 character string that uniquely identifies this
-              #   queue.
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Queue
+              #   resource.
+              # @param [String] queue_sid The unique string that that we created to identify
+              #   this Queue resource.
               # @return [MemberList] MemberList
               def initialize(version, account_sid: nil, queue_sid: nil)
                 super(version)
@@ -155,9 +157,12 @@ module Twilio
               ##
               # Initialize the MemberContext
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] queue_sid The Queue in which to find the members
-              # @param [String] call_sid The call_sid
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Member
+              #   resource(s) to fetch.
+              # @param [String] queue_sid The Queue in which to find the members to fetch.
+              # @param [String] call_sid The [Call](https://www.twilio.com/docs/api/voice/call)
+              #   SID of the resource(s) to fetch.
               # @return [MemberContext] MemberContext
               def initialize(version, account_sid, queue_sid, call_sid)
                 super(version)
@@ -190,8 +195,10 @@ module Twilio
 
               ##
               # Update the MemberInstance
-              # @param [String] url The url
-              # @param [String] method The method
+              # @param [String] url The absolute URL of this Queue resource.
+              # @param [String] method How to pass the update request data. Can be `GET` or
+              #   `POST` and the default is `POST`. `POST` sends the data as encoded form data and
+              #   `GET` sends the data as query parameters.
               # @return [MemberInstance] Updated MemberInstance
               def update(url: nil, method: nil)
                 data = Twilio::Values.of({'Url' => url, 'Method' => method, })
@@ -224,10 +231,13 @@ module Twilio
               # Initialize the MemberInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] account_sid The account_sid
-              # @param [String] queue_sid A 34 character string that uniquely identifies this
-              #   queue.
-              # @param [String] call_sid The call_sid
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Queue
+              #   resource.
+              # @param [String] queue_sid The unique string that that we created to identify
+              #   this Queue resource.
+              # @param [String] call_sid The [Call](https://www.twilio.com/docs/api/voice/call)
+              #   SID of the resource(s) to fetch.
               # @return [MemberInstance] MemberInstance
               def initialize(version, payload, account_sid: nil, queue_sid: nil, call_sid: nil)
                 super(version)
@@ -267,7 +277,7 @@ module Twilio
               end
 
               ##
-              # @return [String] Unique string that identifies this resource
+              # @return [String] The SID of the Call this resource is associated with
               def call_sid
                 @properties['call_sid']
               end
@@ -285,7 +295,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The uri
+              # @return [String] The URI of this resource, relative to `https://api.twilio.com`
               def uri
                 @properties['uri']
               end
@@ -305,8 +315,10 @@ module Twilio
 
               ##
               # Update the MemberInstance
-              # @param [String] url The url
-              # @param [String] method The method
+              # @param [String] url The absolute URL of this Queue resource.
+              # @param [String] method How to pass the update request data. Can be `GET` or
+              #   `POST` and the default is `POST`. `POST` sends the data as encoded form data and
+              #   `GET` sends the data as query parameters.
               # @return [MemberInstance] Updated MemberInstance
               def update(url: nil, method: nil)
                 context.update(url: url, method: method, )

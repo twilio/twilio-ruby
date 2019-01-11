@@ -16,9 +16,9 @@ module Twilio
               ##
               # Initialize the FeedbackSummaryList
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The unique id of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for creating
-              #   this Call.
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Call
+              #   resource.
               # @return [FeedbackSummaryList] FeedbackSummaryList
               def initialize(version, account_sid: nil)
                 super(version)
@@ -155,9 +155,9 @@ module Twilio
               # Initialize the FeedbackSummaryInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] account_sid The unique id of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for creating
-              #   this Call.
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Call
+              #   resource.
               # @param [String] sid A 34 character string that uniquely identifies this
               #   resource.
               # @return [FeedbackSummaryInstance] FeedbackSummaryInstance

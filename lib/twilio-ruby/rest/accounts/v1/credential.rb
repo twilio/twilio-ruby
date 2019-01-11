@@ -44,7 +44,8 @@ module Twilio
 
           ##
           # Access the aws
-          # @param [String] sid The sid
+          # @param [String] sid The Credential Sid that uniquely identifies the Credential
+          #   to fetch
           # @return [AwsList]
           # @return [AwsContext] if sid was passed.
           def aws(sid=:unset)

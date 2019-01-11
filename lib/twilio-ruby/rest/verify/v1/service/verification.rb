@@ -121,6 +121,7 @@ module Twilio
                   'channel' => payload['channel'],
                   'status' => payload['status'],
                   'valid' => payload['valid'],
+                  'lookup' => payload['lookup'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
               }
@@ -166,6 +167,12 @@ module Twilio
             # @return [Boolean] successful verification
             def valid
               @properties['valid']
+            end
+
+            ##
+            # @return [Hash] Info about the phone number
+            def lookup
+              @properties['lookup']
             end
 
             ##

@@ -15,7 +15,9 @@ module Twilio
             ##
             # Initialize the QueueList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The account_sid
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Queue
+            #   resource.
             # @return [QueueList] QueueList
             def initialize(version, account_sid: nil)
               super(version)
@@ -110,8 +112,9 @@ module Twilio
             ##
             # Retrieve a single page of QueueInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name A user-provided string that identifies this queue.
-            # @param [String] max_size The upper limit of calls allowed to be in the queue.
+            # @param [String] friendly_name A descriptive string that you created to describe
+            #   this resource. It can be up to 64 characters long.
+            # @param [String] max_size The maximum number of calls allowed to be in the queue.
             #   The default is 100. The maximum is 5000.
             # @return [QueueInstance] Newly created QueueInstance
             def create(friendly_name: nil, max_size: :unset)
@@ -166,8 +169,11 @@ module Twilio
             ##
             # Initialize the QueueContext
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The account_sid
-            # @param [String] sid The queue Sid that uniquely identifies this resource
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Queue
+            #   resource(s) to fetch.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Queue resource to fetch
             # @return [QueueContext] QueueContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -197,9 +203,10 @@ module Twilio
 
             ##
             # Update the QueueInstance
-            # @param [String] friendly_name A human readable description of the queue
-            # @param [String] max_size The maximum number of members that can be in the queue
-            #   at a time
+            # @param [String] friendly_name A descriptive string that you created to describe
+            #   this resource. It can be up to 64 characters long.
+            # @param [String] max_size The maximum number of calls allowed to be in the queue.
+            #   The default is 100. The maximum is 5000.
             # @return [QueueInstance] Updated QueueInstance
             def update(friendly_name: :unset, max_size: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, 'MaxSize' => max_size, })
@@ -255,8 +262,11 @@ module Twilio
             # Initialize the QueueInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The account_sid
-            # @param [String] sid The queue Sid that uniquely identifies this resource
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Queue
+            #   resource.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Queue resource to fetch
             # @return [QueueInstance] QueueInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
@@ -291,7 +301,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The SID of the Account that created this resource
             def account_sid
               @properties['account_sid']
             end
@@ -303,25 +313,25 @@ module Twilio
             end
 
             ##
-            # @return [String] The count of calls currently in the queue.
+            # @return [String] The number of calls currently in the queue.
             def current_size
               @properties['current_size']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The RFC 2822 date and time in GMT that this resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The RFC 2822 date and time in GMT that this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] A user-provided string that identifies this queue.
+            # @return [String] A string that you assigned to describe this resource
             def friendly_name
               @properties['friendly_name']
             end
@@ -333,13 +343,13 @@ module Twilio
             end
 
             ##
-            # @return [String] A string that uniquely identifies this queue
+            # @return [String] The unique string that identifies this resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The uri
+            # @return [String] The URI of this resource, relative to `https://api.twilio.com`
             def uri
               @properties['uri']
             end
@@ -353,9 +363,10 @@ module Twilio
 
             ##
             # Update the QueueInstance
-            # @param [String] friendly_name A human readable description of the queue
-            # @param [String] max_size The maximum number of members that can be in the queue
-            #   at a time
+            # @param [String] friendly_name A descriptive string that you created to describe
+            #   this resource. It can be up to 64 characters long.
+            # @param [String] max_size The maximum number of calls allowed to be in the queue.
+            #   The default is 100. The maximum is 5000.
             # @return [QueueInstance] Updated QueueInstance
             def update(friendly_name: :unset, max_size: :unset)
               context.update(friendly_name: friendly_name, max_size: max_size, )

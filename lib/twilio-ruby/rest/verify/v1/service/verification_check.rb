@@ -31,10 +31,13 @@ module Twilio
             # Retrieve a single page of VerificationCheckInstance records from the API.
             # Request is executed immediately.
             # @param [String] code The 4-10 character string being verified
-            # @param [String] to The To phonenumber of the phone being verified
+            # @param [String] to The To phone number of the phone being verified
+            # @param [String] verification_sid A SID that uniquely identifies this
+            #   Verification Check, either this parameter or the To phone number must be
+            #   specified
             # @return [VerificationCheckInstance] Newly created VerificationCheckInstance
-            def create(code: nil, to: :unset)
-              data = Twilio::Values.of({'Code' => code, 'To' => to, })
+            def create(code: nil, to: :unset, verification_sid: :unset)
+              data = Twilio::Values.of({'Code' => code, 'To' => to, 'VerificationSid' => verification_sid, })
 
               payload = @version.create(
                   'POST',
@@ -128,7 +131,7 @@ module Twilio
             end
 
             ##
-            # @return [String] To phonenumber
+            # @return [String] To phone number
             def to
               @properties['to']
             end

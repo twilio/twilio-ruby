@@ -15,9 +15,9 @@ module Twilio
             ##
             # Initialize the ShortCodeList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that owns this short
-            #   code.
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
+            #   ShortCode resource.
             # @return [ShortCodeList] ShortCodeList
             def initialize(version, account_sid: nil)
               super(version)
@@ -31,8 +31,8 @@ module Twilio
             # Lists ShortCodeInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] friendly_name Only show the ShortCode resources with friendly
-            #   names that exactly match this name.
+            # @param [String] friendly_name The string that identifies the ShortCode resources
+            #   to read.
             # @param [String] short_code Only show the ShortCode resources that match this
             #   pattern. You can specify partial numbers and use '*' as a wildcard for any
             #   digit.
@@ -56,8 +56,8 @@ module Twilio
             # Streams ShortCodeInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] friendly_name Only show the ShortCode resources with friendly
-            #   names that exactly match this name.
+            # @param [String] friendly_name The string that identifies the ShortCode resources
+            #   to read.
             # @param [String] short_code Only show the ShortCode resources that match this
             #   pattern. You can specify partial numbers and use '*' as a wildcard for any
             #   digit.
@@ -97,8 +97,8 @@ module Twilio
             ##
             # Retrieve a single page of ShortCodeInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name Only show the ShortCode resources with friendly
-            #   names that exactly match this name.
+            # @param [String] friendly_name The string that identifies the ShortCode resources
+            #   to read.
             # @param [String] short_code Only show the ShortCode resources that match this
             #   pattern. You can specify partial numbers and use '*' as a wildcard for any
             #   digit.
@@ -175,8 +175,11 @@ module Twilio
             ##
             # Initialize the ShortCodeContext
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The account_sid
-            # @param [String] sid The short-code Sid that uniquely identifies this resource
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   ShortCode resource(s) to fetch.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   ShortCode resource to fetch
             # @return [ShortCodeContext] ShortCodeContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -203,19 +206,19 @@ module Twilio
 
             ##
             # Update the ShortCodeInstance
-            # @param [String] friendly_name A human readable descriptive text for this
-            #   resource, up to 64 characters long. By default, the `FriendlyName` is just the
-            #   short code.
-            # @param [String] api_version SMSs to this short code will start a new TwiML
-            #   session with this API version. Either `2010-04-01` or `2008-08-01`.
-            # @param [String] sms_url The URL Twilio will request when receiving an incoming
-            #   SMS message to this short code.
-            # @param [String] sms_method The HTTP method Twilio will use when making requests
-            #   to the `SmsUrl`. Either `GET` or `POST`.
-            # @param [String] sms_fallback_url The URL that Twilio will request if an error
-            #   occurs retrieving or executing the TwiML from `SmsUrl`.
-            # @param [String] sms_fallback_method The HTTP method that should be used to
-            #   request the `SmsFallbackUrl`. Either `GET` or `POST`.
+            # @param [String] friendly_name A descriptive string that you created to describe
+            #   this resource. It can be up to 64 characters long. By default, the
+            #   `FriendlyName` is the short code.
+            # @param [String] api_version The API version to use to start a new TwiML session.
+            #   Can be: `2010-04-01` or `2008-08-01`.
+            # @param [String] sms_url The URL we should call when receiving an incoming SMS
+            #   message to this short code.
+            # @param [String] sms_method The HTTP method we should use when calling the
+            #   `sms_url`. Can be: `GET` or `POST`.
+            # @param [String] sms_fallback_url The URL that we should call if an error occurs
+            #   while retrieving or executing the TwiML from `sms_url`.
+            # @param [String] sms_fallback_method The HTTP method that we should use to call
+            #   the `sms_fallback_url`. Can be: `GET` or `POST`.
             # @return [ShortCodeInstance] Updated ShortCodeInstance
             def update(friendly_name: :unset, api_version: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset)
               data = Twilio::Values.of({
@@ -249,10 +252,11 @@ module Twilio
             # Initialize the ShortCodeInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that owns this short
-            #   code.
-            # @param [String] sid The short-code Sid that uniquely identifies this resource
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
+            #   ShortCode resource.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   ShortCode resource to fetch
             # @return [ShortCodeInstance] ShortCodeInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
@@ -290,31 +294,31 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique sid that identifies this account
+            # @return [String] The SID of the Account that created this resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The API version to use
+            # @return [String] The API version used to start a new TwiML session
             def api_version
               @properties['api_version']
             end
 
             ##
-            # @return [Time] The date this resource was created
+            # @return [Time] The RFC 2822 date and time in GMT that this resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this resource was last updated
+            # @return [Time] The RFC 2822 date and time in GMT that this resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] A human readable description of this resource
+            # @return [String] A string that you assigned to describe this resource
             def friendly_name
               @properties['friendly_name']
             end
@@ -326,13 +330,13 @@ module Twilio
             end
 
             ##
-            # @return [String] A string that uniquely identifies this short-codes
+            # @return [String] The unique string that identifies this resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] HTTP method Twilio will use with sms fallback url
+            # @return [String] HTTP method we use to call the sms_fallback_url
             def sms_fallback_method
               @properties['sms_fallback_method']
             end
@@ -350,13 +354,13 @@ module Twilio
             end
 
             ##
-            # @return [String] URL Twilio will request when receiving an SMS
+            # @return [String] URL we call when receiving an incoming SMS message to this short code
             def sms_url
               @properties['sms_url']
             end
 
             ##
-            # @return [String] The URI for this resource
+            # @return [String] The URI of this resource, relative to `https://api.twilio.com`
             def uri
               @properties['uri']
             end
@@ -370,19 +374,19 @@ module Twilio
 
             ##
             # Update the ShortCodeInstance
-            # @param [String] friendly_name A human readable descriptive text for this
-            #   resource, up to 64 characters long. By default, the `FriendlyName` is just the
-            #   short code.
-            # @param [String] api_version SMSs to this short code will start a new TwiML
-            #   session with this API version. Either `2010-04-01` or `2008-08-01`.
-            # @param [String] sms_url The URL Twilio will request when receiving an incoming
-            #   SMS message to this short code.
-            # @param [String] sms_method The HTTP method Twilio will use when making requests
-            #   to the `SmsUrl`. Either `GET` or `POST`.
-            # @param [String] sms_fallback_url The URL that Twilio will request if an error
-            #   occurs retrieving or executing the TwiML from `SmsUrl`.
-            # @param [String] sms_fallback_method The HTTP method that should be used to
-            #   request the `SmsFallbackUrl`. Either `GET` or `POST`.
+            # @param [String] friendly_name A descriptive string that you created to describe
+            #   this resource. It can be up to 64 characters long. By default, the
+            #   `FriendlyName` is the short code.
+            # @param [String] api_version The API version to use to start a new TwiML session.
+            #   Can be: `2010-04-01` or `2008-08-01`.
+            # @param [String] sms_url The URL we should call when receiving an incoming SMS
+            #   message to this short code.
+            # @param [String] sms_method The HTTP method we should use when calling the
+            #   `sms_url`. Can be: `GET` or `POST`.
+            # @param [String] sms_fallback_url The URL that we should call if an error occurs
+            #   while retrieving or executing the TwiML from `sms_url`.
+            # @param [String] sms_fallback_method The HTTP method that we should use to call
+            #   the `sms_fallback_url`. Can be: `GET` or `POST`.
             # @return [ShortCodeInstance] Updated ShortCodeInstance
             def update(friendly_name: :unset, api_version: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset)
               context.update(
