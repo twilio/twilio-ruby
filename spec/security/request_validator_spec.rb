@@ -40,9 +40,7 @@ describe Twilio::Security::RequestValidator do
 
     let(:body) { '{"property": "value", "boolean": true}' }
 
-    let(:body_hash) { 'Ch/3Y02as7ldtcmi3+lBbkFQKyg6gMfPGWMmMvluZiA=' }
-
-    let(:body_hash_encoded) { body_hash.gsub('+', '%2B').gsub('=', '%3D') }
+    let(:body_hash) { '0a1ff7634d9ab3b95db5c9a2dfe9416e41502b283a80c7cf19632632f96e6620' }
 
     let(:params) do
       {
@@ -70,13 +68,13 @@ describe Twilio::Security::RequestValidator do
     end
 
     it 'should validate requests with body correctly' do
-      url_with_hash = "#{url}&bodySHA256=#{body_hash_encoded}"
-      expect(validator.validate(url_with_hash, body, 'afcFvPLPYT8mg/JyIVkdnqQKa2s=')).to eq(true)
+      url_with_hash = "#{url}&bodySHA256=#{body_hash}"
+      expect(validator.validate(url_with_hash, body, 'a9nBmqA0ju/hNViExpshrM61xv4=')).to eq(true)
     end
 
     it 'should validate with no other GET parameters' do
-      url_with_hash = "https://mycompany.com/myapp.php?bodySHA256=#{body_hash_encoded}"
-      expect(validator.validate(url_with_hash, body, 'DXnNFCj8DJ/hZmiSg4UzaDHw5Og=')).to eq(true)
+      url_with_hash = "https://mycompany.com/myapp.php?bodySHA256=#{body_hash}"
+      expect(validator.validate(url_with_hash, body, 'y77kIzt2vzLz71DgmJGsen2scGs=')).to eq(true)
     end
 
     it 'should fail validation with body but no signature' do

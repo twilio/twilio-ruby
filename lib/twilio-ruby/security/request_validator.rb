@@ -42,10 +42,10 @@ module Twilio
       #
       # @param [String] body String to hash
       #
-      # @return [String] A base64-encoded SHA256 of the body string
+      # @return [String] A hex-encoded SHA256 of the body string
       def build_hash_for(body)
         hasher = OpenSSL::Digest.new('sha256')
-        Base64.encode64(hasher.digest(body)).strip
+        hasher.hexdigest(body)
       end
 
       ##
