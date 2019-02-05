@@ -41,19 +41,22 @@ module Twilio
               # Lists RecordInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [record.Category] category Only include usage of this [usage
-              #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
+              # @param [record.Category] category The [usage
+              #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories)
+              #   of the UsageRecord resources to read. Only UsageRecord resources in the
+              #   specified category are retrieved.
               # @param [Date] start_date Only include usage that has occurred on or after this
-              #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
-              #   also specify offsets to today.  For example, `StartDate=-30days` will make
-              #   `StartDate` be 30 days before today.
-              # @param [Date] end_date Only include usage that has occurred on or before this
-              #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
-              #   also specify offsets to today.  For example, `EndDate=+30days` will make
-              #   `EndDate` be 30 days from today.
-              # @param [Boolean] include_subaccounts `true` to include usage from the master
-              #   account and all subaccounts. `false` to only retrieve usage from the specified
-              #   account. `IncludeSubaccounts` is `true` by default.
+              #   date. Specify the date in GMT and format as `YYYY-MM-DD`. You can also specify
+              #   offsets from the current date, such as: `-30days`, which will set the start date
+              #   to be 30 days before the current date.
+              # @param [Date] end_date Only include usage that occurred on or before this date.
+              #   Specify the date in GMT and format as `YYYY-MM-DD`.  You can also specify
+              #   offsets from the current date, such as: `+30days`, which will set the end date
+              #   to 30 days from the current date.
+              # @param [Boolean] include_subaccounts Whether to include usage from the master
+              #   account and all its subaccounts. Can be: `true` (the default) to include usage
+              #   from the master account and all subaccounts or `false` to retrieve usage from
+              #   only the specified account.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -76,19 +79,22 @@ module Twilio
               # Streams RecordInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [record.Category] category Only include usage of this [usage
-              #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
+              # @param [record.Category] category The [usage
+              #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories)
+              #   of the UsageRecord resources to read. Only UsageRecord resources in the
+              #   specified category are retrieved.
               # @param [Date] start_date Only include usage that has occurred on or after this
-              #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
-              #   also specify offsets to today.  For example, `StartDate=-30days` will make
-              #   `StartDate` be 30 days before today.
-              # @param [Date] end_date Only include usage that has occurred on or before this
-              #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
-              #   also specify offsets to today.  For example, `EndDate=+30days` will make
-              #   `EndDate` be 30 days from today.
-              # @param [Boolean] include_subaccounts `true` to include usage from the master
-              #   account and all subaccounts. `false` to only retrieve usage from the specified
-              #   account. `IncludeSubaccounts` is `true` by default.
+              #   date. Specify the date in GMT and format as `YYYY-MM-DD`. You can also specify
+              #   offsets from the current date, such as: `-30days`, which will set the start date
+              #   to be 30 days before the current date.
+              # @param [Date] end_date Only include usage that occurred on or before this date.
+              #   Specify the date in GMT and format as `YYYY-MM-DD`.  You can also specify
+              #   offsets from the current date, such as: `+30days`, which will set the end date
+              #   to 30 days from the current date.
+              # @param [Boolean] include_subaccounts Whether to include usage from the master
+              #   account and all its subaccounts. Can be: `true` (the default) to include usage
+              #   from the master account and all subaccounts or `false` to retrieve usage from
+              #   only the specified account.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -127,19 +133,22 @@ module Twilio
               ##
               # Retrieve a single page of RecordInstance records from the API.
               # Request is executed immediately.
-              # @param [record.Category] category Only include usage of this [usage
-              #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
+              # @param [record.Category] category The [usage
+              #   category](https://www.twilio.com/docs/api/rest/usage-records#usage-categories)
+              #   of the UsageRecord resources to read. Only UsageRecord resources in the
+              #   specified category are retrieved.
               # @param [Date] start_date Only include usage that has occurred on or after this
-              #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
-              #   also specify offsets to today.  For example, `StartDate=-30days` will make
-              #   `StartDate` be 30 days before today.
-              # @param [Date] end_date Only include usage that has occurred on or before this
-              #   date.  Format is YYYY-MM-DD.  All dates are in GMT.  As a convenience, you can
-              #   also specify offsets to today.  For example, `EndDate=+30days` will make
-              #   `EndDate` be 30 days from today.
-              # @param [Boolean] include_subaccounts `true` to include usage from the master
-              #   account and all subaccounts. `false` to only retrieve usage from the specified
-              #   account. `IncludeSubaccounts` is `true` by default.
+              #   date. Specify the date in GMT and format as `YYYY-MM-DD`. You can also specify
+              #   offsets from the current date, such as: `-30days`, which will set the start date
+              #   to be 30 days before the current date.
+              # @param [Date] end_date Only include usage that occurred on or before this date.
+              #   Specify the date in GMT and format as `YYYY-MM-DD`.  You can also specify
+              #   offsets from the current date, such as: `+30days`, which will set the end date
+              #   to 30 days from the current date.
+              # @param [Boolean] include_subaccounts Whether to include usage from the master
+              #   account and all its subaccounts. Can be: `true` (the default) to include usage
+              #   from the master account and all subaccounts or `false` to retrieve usage from
+              #   only the specified account.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -306,13 +315,13 @@ module Twilio
               end
 
               ##
-              # @return [String] The Account that accrued the usage
+              # @return [String] The SID of the Account accrued the usage
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The api_version
+              # @return [String] The API version used to create the resource
               def api_version
                 @properties['api_version']
               end
@@ -324,25 +333,25 @@ module Twilio
               end
 
               ##
-              # @return [String] The number of usage events (e.g. the number of calls).
+              # @return [String] The number of usage events
               def count
                 @properties['count']
               end
 
               ##
-              # @return [String] The unit in which `Count` is measured
+              # @return [String] The units in which count is measured
               def count_unit
                 @properties['count_unit']
               end
 
               ##
-              # @return [String] A human-readable description of the usage category.
+              # @return [String] A plain-language description of the usage category
               def description
                 @properties['description']
               end
 
               ##
-              # @return [Date] The last date usage is included in this record
+              # @return [Date] The last date for which usage is included in the UsageRecord
               def end_date
                 @properties['end_date']
               end
@@ -354,25 +363,25 @@ module Twilio
               end
 
               ##
-              # @return [String] The currency in which `Price` is measured
+              # @return [String] The currency in which `price` is measured
               def price_unit
                 @properties['price_unit']
               end
 
               ##
-              # @return [Date] The first date usage is included in this record
+              # @return [Date] The first date for which usage is included in this UsageRecord
               def start_date
                 @properties['start_date']
               end
 
               ##
-              # @return [String] Subresources Uris for this UsageRecord
+              # @return [String] A list of related resources identified by their relative URIs
               def subresource_uris
                 @properties['subresource_uris']
               end
 
               ##
-              # @return [String] The URI for this resource
+              # @return [String] The URI of the resource, relative to `https://api.twilio.com`
               def uri
                 @properties['uri']
               end
@@ -384,7 +393,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The units in which `Usage` is measured
+              # @return [String] The units in which usage is measured
               def usage_unit
                 @properties['usage_unit']
               end

@@ -18,11 +18,11 @@ module Twilio
                   ##
                   # Initialize the AuthTypeRegistrationsList
                   # @param [Version] version Version that contains the resource
-                  # @param [String] account_sid The unique id of the
-                  #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
-                  #   domain.
-                  # @param [String] domain_sid A 34 character string that uniquely identifies the
-                  #   SIP domain in Twilio.
+                  # @param [String] account_sid The SID of the
+                  #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                  #   SipDomain resource.
+                  # @param [String] domain_sid The unique string that that we created to identify
+                  #   the SipDomain resource.
                   # @return [AuthTypeRegistrationsList] AuthTypeRegistrationsList
                   def initialize(version, account_sid: nil, domain_sid: nil)
                     super(version)
@@ -36,8 +36,8 @@ module Twilio
 
                   ##
                   # Access the credential_list_mappings
-                  # @param [String] sid The credential list Sid that uniquely identifies this
-                  #   resource
+                  # @param [String] sid The Twilio-provided string that uniquely identifies the
+                  #   CredentialListMapping resource to fetch.
                   # @return [AuthRegistrationsCredentialListMappingList]
                   # @return [AuthRegistrationsCredentialListMappingContext] if sid was passed.
                   def credential_list_mappings(sid=:unset)
@@ -105,11 +105,11 @@ module Twilio
                   # Initialize the AuthTypeRegistrationsInstance
                   # @param [Version] version Version that contains the resource
                   # @param [Hash] payload payload that contains response from Twilio
-                  # @param [String] account_sid The unique id of the
-                  #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
-                  #   domain.
-                  # @param [String] domain_sid A 34 character string that uniquely identifies the
-                  #   SIP domain in Twilio.
+                  # @param [String] account_sid The SID of the
+                  #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                  #   SipDomain resource.
+                  # @param [String] domain_sid The unique string that that we created to identify
+                  #   the SipDomain resource.
                   # @return [AuthTypeRegistrationsInstance] AuthTypeRegistrationsInstance
                   def initialize(version, payload, account_sid: nil, domain_sid: nil)
                     super(version)

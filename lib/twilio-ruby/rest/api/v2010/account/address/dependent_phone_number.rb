@@ -17,8 +17,8 @@ module Twilio
               # Initialize the DependentPhoneNumberList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The account_sid
-              # @param [String] address_sid A 34 character string that uniquely identifies this
-              #   address.
+              # @param [String] address_sid The unique string that that we created to identify
+              #   the Address resource.
               # @return [DependentPhoneNumberList] DependentPhoneNumberList
               def initialize(version, account_sid: nil, address_sid: nil)
                 super(version)
@@ -157,8 +157,8 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The account_sid
-              # @param [String] address_sid A 34 character string that uniquely identifies this
-              #   address.
+              # @param [String] address_sid The unique string that that we created to identify
+              #   the Address resource.
               # @return [DependentPhoneNumberInstance] DependentPhoneNumberInstance
               def initialize(version, payload, account_sid: nil, address_sid: nil)
                 super(version)

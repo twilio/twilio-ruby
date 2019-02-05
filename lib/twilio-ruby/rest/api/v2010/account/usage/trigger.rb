@@ -30,27 +30,28 @@ module Twilio
               ##
               # Retrieve a single page of TriggerInstance records from the API.
               # Request is executed immediately.
-              # @param [String] callback_url Twilio will make a request to this url when the
-              #   trigger fires.
-              # @param [String] trigger_value The trigger will fire when usage reaches this
-              #   value.  For convenience, you can use an offset like `+30`, which tells Twilio to
-              #   create the UsageTrigger with its TriggerValue 30 units higher than the current
-              #   usage. (just be sure to urlencode the `+` as `%2B`).
-              # @param [trigger.UsageCategory] usage_category The trigger will watch this usage
-              #   category.  One of the supported [usage
-              #   categories](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
-              # @param [String] callback_method Twilio will use this HTTP method when making a
-              #   request to the CallbackUrl.  `GET` or `POST`.  The default is `POST`.
-              # @param [String] friendly_name A human readable description of the new trigger. 
-              #   Maximum 64 characters.
-              # @param [trigger.Recurring] recurring How this trigger recurs. Empty for
-              #   non-recurring triggers. One of `daily`, `monthly`, or `yearly` for recurring
-              #   triggers.  A trigger will only fire once during each recurring period. 
-              #   Recurring periods are in GMT.
+              # @param [String] callback_url The URL we should call using `callback_method` when
+              #   the trigger fires.
+              # @param [String] trigger_value The usage value at which the trigger should fire. 
+              #   For convenience, you can use an offset value such as `+30` to specify a
+              #   trigger_value that is 30 units more than the current usage value. Be sure to
+              #   urlencode a `+` as `%2B`.
+              # @param [trigger.UsageCategory] usage_category The usage category that the
+              #   trigger should watch.  Use one of the supported [usage
+              #   categories](https://www.twilio.com/docs/api/rest/usage-records#usage-categories)
+              #   for this value.
+              # @param [String] callback_method The HTTP method we should use to call
+              #   `callback_url`. Can be: `GET` or `POST` and the default is `POST`.
+              # @param [String] friendly_name A descriptive string that you create to describe
+              #   the resource. It can be up to 64 characters long.
+              # @param [trigger.Recurring] recurring The frequency of a recurring UsageTrigger. 
+              #   Can be: `daily`, `monthly`, or `yearly` for recurring triggers or empty for
+              #   non-recurring triggers. A trigger will only fire once during each period.
+              #   Recurring times are in GMT.
               # @param [trigger.TriggerField] trigger_by The field in the
-              #   [UsageRecord](https://www.twilio.com/docs/api/rest/usage-records) that will fire
-              #   the trigger.  One of `count`, `usage`, or `price` as described in the
-              #   [UsageRecords
+              #   [UsageRecord](https://www.twilio.com/docs/api/rest/usage-records) resource that
+              #   should fire the trigger.  Can be: `count`, `usage`, or `price` as described in
+              #   the [UsageRecords
               #   documentation](https://www.twilio.com/docs/api/rest/usage-records#usage-count-price).  The default is `usage`.
               # @return [TriggerInstance] Newly created TriggerInstance
               def create(callback_url: nil, trigger_value: nil, usage_category: nil, callback_method: :unset, friendly_name: :unset, recurring: :unset, trigger_by: :unset)
@@ -77,15 +78,14 @@ module Twilio
               # Lists TriggerInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [trigger.Recurring] recurring Only show UsageTriggers that count over
-              #   this interval.  One of `daily`, `monthly`, or `yearly`.  To retrieve
-              #   non-recurring triggers, leave this empty or use `alltime`.
-              # @param [trigger.TriggerField] trigger_by Only show UsageTriggers that trigger by
-              #   this field in the UsageRecord.  Must be one of: `count`, `usage`, or `price` as
-              #   described in the [UsageRecords
+              # @param [trigger.Recurring] recurring The frequency of recurring UsageTriggers to
+              #   read. Can be: `daily`, `monthly`, or `yearly` to read recurring UsageTriggers.
+              #   An empty value or a value of `alltime` reads non-recurring UsageTriggers.
+              # @param [trigger.TriggerField] trigger_by The trigger field of the UsageTriggers
+              #   to read.  Can be: `count`, `usage`, or `price` as described in the [UsageRecords
               #   documentation](https://www.twilio.com/docs/api/rest/usage-records#usage-count-price).
-              # @param [trigger.UsageCategory] usage_category Only show UsageTriggers that watch
-              #   this usage category.  Must be one of the supported [usage
+              # @param [trigger.UsageCategory] usage_category The usage category of the
+              #   UsageTriggers to read. Must be a supported [usage
               #   categories](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
@@ -108,15 +108,14 @@ module Twilio
               # Streams TriggerInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [trigger.Recurring] recurring Only show UsageTriggers that count over
-              #   this interval.  One of `daily`, `monthly`, or `yearly`.  To retrieve
-              #   non-recurring triggers, leave this empty or use `alltime`.
-              # @param [trigger.TriggerField] trigger_by Only show UsageTriggers that trigger by
-              #   this field in the UsageRecord.  Must be one of: `count`, `usage`, or `price` as
-              #   described in the [UsageRecords
+              # @param [trigger.Recurring] recurring The frequency of recurring UsageTriggers to
+              #   read. Can be: `daily`, `monthly`, or `yearly` to read recurring UsageTriggers.
+              #   An empty value or a value of `alltime` reads non-recurring UsageTriggers.
+              # @param [trigger.TriggerField] trigger_by The trigger field of the UsageTriggers
+              #   to read.  Can be: `count`, `usage`, or `price` as described in the [UsageRecords
               #   documentation](https://www.twilio.com/docs/api/rest/usage-records#usage-count-price).
-              # @param [trigger.UsageCategory] usage_category Only show UsageTriggers that watch
-              #   this usage category.  Must be one of the supported [usage
+              # @param [trigger.UsageCategory] usage_category The usage category of the
+              #   UsageTriggers to read. Must be a supported [usage
               #   categories](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
@@ -155,15 +154,14 @@ module Twilio
               ##
               # Retrieve a single page of TriggerInstance records from the API.
               # Request is executed immediately.
-              # @param [trigger.Recurring] recurring Only show UsageTriggers that count over
-              #   this interval.  One of `daily`, `monthly`, or `yearly`.  To retrieve
-              #   non-recurring triggers, leave this empty or use `alltime`.
-              # @param [trigger.TriggerField] trigger_by Only show UsageTriggers that trigger by
-              #   this field in the UsageRecord.  Must be one of: `count`, `usage`, or `price` as
-              #   described in the [UsageRecords
+              # @param [trigger.Recurring] recurring The frequency of recurring UsageTriggers to
+              #   read. Can be: `daily`, `monthly`, or `yearly` to read recurring UsageTriggers.
+              #   An empty value or a value of `alltime` reads non-recurring UsageTriggers.
+              # @param [trigger.TriggerField] trigger_by The trigger field of the UsageTriggers
+              #   to read.  Can be: `count`, `usage`, or `price` as described in the [UsageRecords
               #   documentation](https://www.twilio.com/docs/api/rest/usage-records#usage-count-price).
-              # @param [trigger.UsageCategory] usage_category Only show UsageTriggers that watch
-              #   this usage category.  Must be one of the supported [usage
+              # @param [trigger.UsageCategory] usage_category The usage category of the
+              #   UsageTriggers to read. Must be a supported [usage
               #   categories](https://www.twilio.com/docs/api/rest/usage-records#usage-categories).
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
@@ -239,8 +237,11 @@ module Twilio
               ##
               # Initialize the TriggerContext
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] sid The usage-trigger Sid that uniquely identifies this resource
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   UsageTrigger resource to fetch.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   UsageTrigger resource to fetch.
               # @return [TriggerContext] TriggerContext
               def initialize(version, account_sid, sid)
                 super(version)
@@ -267,12 +268,12 @@ module Twilio
 
               ##
               # Update the TriggerInstance
-              # @param [String] callback_method The HTTP method Twilio will use when making a
-              #   request to the CallbackUrl.  `GET` or `POST`.
-              # @param [String] callback_url Twilio will make a request to this url when the
-              #   trigger fires.
-              # @param [String] friendly_name A user-specified, human-readable name for the
-              #   trigger.
+              # @param [String] callback_method The HTTP method we should use to call
+              #   `callback_url`. Can be: `GET` or `POST` and the default is `POST`.
+              # @param [String] callback_url The URL we should call using `callback_method` when
+              #   the trigger fires.
+              # @param [String] friendly_name A descriptive string that you create to describe
+              #   the resource. It can be up to 64 characters long.
               # @return [TriggerInstance] Updated TriggerInstance
               def update(callback_method: :unset, callback_url: :unset, friendly_name: :unset)
                 data = Twilio::Values.of({
@@ -312,7 +313,8 @@ module Twilio
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid A 34 character string that uniquely identifies this
               #   resource.
-              # @param [String] sid The usage-trigger Sid that uniquely identifies this resource
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   UsageTrigger resource to fetch.
               # @return [TriggerInstance] TriggerInstance
               def initialize(version, payload, account_sid: nil, sid: nil)
                 super(version)
@@ -354,85 +356,85 @@ module Twilio
               end
 
               ##
-              # @return [String] The account this trigger monitors.
+              # @return [String] The SID of the Account that this trigger monitors
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The api_version
+              # @return [String] The API version used to create the resource
               def api_version
                 @properties['api_version']
               end
 
               ##
-              # @return [String] HTTP method to use with callback_url
+              # @return [String] The HTTP method we use to call callback_url
               def callback_method
                 @properties['callback_method']
               end
 
               ##
-              # @return [String] URL Twilio will request when the trigger fires
+              # @return [String] he URL we call when the trigger fires
               def callback_url
                 @properties['callback_url']
               end
 
               ##
-              # @return [String] The current value of the field the trigger is watching.
+              # @return [String] The current value of the field the trigger is watching
               def current_value
                 @properties['current_value']
               end
 
               ##
-              # @return [Time] The date this resource was created
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date the trigger was last fired
+              # @return [Time] The RFC 2822 date and time in GMT that the trigger was last fired
               def date_fired
                 @properties['date_fired']
               end
 
               ##
-              # @return [Time] The date this resource was last updated
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] A user-specified, human-readable name for the trigger.
+              # @return [String] The string that you assigned to describe the trigger
               def friendly_name
                 @properties['friendly_name']
               end
 
               ##
-              # @return [trigger.Recurring] How this trigger recurs
+              # @return [trigger.Recurring] The frequency of a recurring UsageTrigger
               def recurring
                 @properties['recurring']
               end
 
               ##
-              # @return [String] The trigger's unique Sid
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [trigger.TriggerField] The field in the UsageRecord that fires the trigger
+              # @return [trigger.TriggerField] The field in the UsageRecord resource that fires the trigger
               def trigger_by
                 @properties['trigger_by']
               end
 
               ##
-              # @return [String] the value at which the trigger will fire
+              # @return [String] The value at which the trigger will fire
               def trigger_value
                 @properties['trigger_value']
               end
 
               ##
-              # @return [String] The URI for this resource
+              # @return [String] The URI of the resource, relative to `https://api.twilio.com`
               def uri
                 @properties['uri']
               end
@@ -444,7 +446,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The URI of the UsageRecord this trigger is watching
+              # @return [String] The URI of the UsageRecord resource this trigger watches
               def usage_record_uri
                 @properties['usage_record_uri']
               end
@@ -458,12 +460,12 @@ module Twilio
 
               ##
               # Update the TriggerInstance
-              # @param [String] callback_method The HTTP method Twilio will use when making a
-              #   request to the CallbackUrl.  `GET` or `POST`.
-              # @param [String] callback_url Twilio will make a request to this url when the
-              #   trigger fires.
-              # @param [String] friendly_name A user-specified, human-readable name for the
-              #   trigger.
+              # @param [String] callback_method The HTTP method we should use to call
+              #   `callback_url`. Can be: `GET` or `POST` and the default is `POST`.
+              # @param [String] callback_url The URL we should call using `callback_method` when
+              #   the trigger fires.
+              # @param [String] friendly_name A descriptive string that you create to describe
+              #   the resource. It can be up to 64 characters long.
               # @return [TriggerInstance] Updated TriggerInstance
               def update(callback_method: :unset, callback_url: :unset, friendly_name: :unset)
                 context.update(

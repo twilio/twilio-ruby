@@ -38,6 +38,8 @@ module Twilio
           # @param [Time] date_created_before Only show Recordings that started before this
           #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
           #   `YYYY-MM-DDThh:mm:ssZ`.
+          # @param [recording.Type] media_type Only show Recordings that have this media
+          #   type. Can be either `audio` or `video`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -45,13 +47,14 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(status: :unset, source_sid: :unset, grouping_sid: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
+          def list(status: :unset, source_sid: :unset, grouping_sid: :unset, date_created_after: :unset, date_created_before: :unset, media_type: :unset, limit: nil, page_size: nil)
             self.stream(
                 status: status,
                 source_sid: source_sid,
                 grouping_sid: grouping_sid,
                 date_created_after: date_created_after,
                 date_created_before: date_created_before,
+                media_type: media_type,
                 limit: limit,
                 page_size: page_size
             ).entries
@@ -72,6 +75,8 @@ module Twilio
           # @param [Time] date_created_before Only show Recordings that started before this
           #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
           #   `YYYY-MM-DDThh:mm:ssZ`.
+          # @param [recording.Type] media_type Only show Recordings that have this media
+          #   type. Can be either `audio` or `video`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -79,7 +84,7 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(status: :unset, source_sid: :unset, grouping_sid: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
+          def stream(status: :unset, source_sid: :unset, grouping_sid: :unset, date_created_after: :unset, date_created_before: :unset, media_type: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
@@ -88,6 +93,7 @@ module Twilio
                 grouping_sid: grouping_sid,
                 date_created_after: date_created_after,
                 date_created_before: date_created_before,
+                media_type: media_type,
                 page_size: limits[:page_size],
             )
 
@@ -122,17 +128,20 @@ module Twilio
           # @param [Time] date_created_before Only show Recordings that started before this
           #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
           #   `YYYY-MM-DDThh:mm:ssZ`.
+          # @param [recording.Type] media_type Only show Recordings that have this media
+          #   type. Can be either `audio` or `video`.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of RecordingInstance
-          def page(status: :unset, source_sid: :unset, grouping_sid: :unset, date_created_after: :unset, date_created_before: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+          def page(status: :unset, source_sid: :unset, grouping_sid: :unset, date_created_after: :unset, date_created_before: :unset, media_type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'Status' => status,
                 'SourceSid' => source_sid,
                 'GroupingSid' => Twilio.serialize_list(grouping_sid) { |e| e },
                 'DateCreatedAfter' => Twilio.serialize_iso8601_datetime(date_created_after),
                 'DateCreatedBefore' => Twilio.serialize_iso8601_datetime(date_created_before),
+                'MediaType' => media_type,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,

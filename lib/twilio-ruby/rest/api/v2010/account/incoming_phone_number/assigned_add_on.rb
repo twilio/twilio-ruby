@@ -18,10 +18,11 @@ module Twilio
               ##
               # Initialize the AssignedAddOnList
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The unique id of the Account that has installed this
-              #   Add-on.
-              # @param [String] resource_sid The unique id of the Phone Number to which the
-              #   Add-on is assigned.
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   resource.
+              # @param [String] resource_sid The SID of the Phone Number to which the Add-on is
+              #   assigned.
               # @return [AssignedAddOnList] AssignedAddOnList
               def initialize(version, account_sid: nil, resource_sid: nil)
                 super(version)
@@ -116,8 +117,8 @@ module Twilio
               ##
               # Retrieve a single page of AssignedAddOnInstance records from the API.
               # Request is executed immediately.
-              # @param [String] installed_add_on_sid A 34 character string that uniquely
-              #   identifies the Add-on installation.
+              # @param [String] installed_add_on_sid The SID that identifies the Add-on
+              #   installation.
               # @return [AssignedAddOnInstance] Newly created AssignedAddOnInstance
               def create(installed_add_on_sid: nil)
                 data = Twilio::Values.of({'InstalledAddOnSid' => installed_add_on_sid, })
@@ -185,10 +186,13 @@ module Twilio
               ##
               # Initialize the AssignedAddOnContext
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] resource_sid The resource_sid
-              # @param [String] sid The Installed Add-on Sid that uniquely identifies the
-              #   assignment
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   resource to fetch.
+              # @param [String] resource_sid The SID of the Phone Number to which the Add-on is
+              #   assigned.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   resource to fetch.
               # @return [AssignedAddOnContext] AssignedAddOnContext
               def initialize(version, account_sid, resource_sid, sid)
                 super(version)
@@ -273,12 +277,13 @@ module Twilio
               # Initialize the AssignedAddOnInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] account_sid The unique id of the Account that has installed this
-              #   Add-on.
-              # @param [String] resource_sid The unique id of the Phone Number to which the
-              #   Add-on is assigned.
-              # @param [String] sid The Installed Add-on Sid that uniquely identifies the
-              #   assignment
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   resource.
+              # @param [String] resource_sid The SID of the Phone Number to which the Add-on is
+              #   assigned.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   resource to fetch.
               # @return [AssignedAddOnInstance] AssignedAddOnInstance
               def initialize(version, payload, account_sid: nil, resource_sid: nil, sid: nil)
                 super(version)
@@ -324,25 +329,25 @@ module Twilio
               end
 
               ##
-              # @return [String] A string that uniquely identifies this assigned Add-on installation
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The Account id that has installed this Add-on
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The Phone Number id that has installed this Add-on
+              # @return [String] The SID of the Phone Number that installed this Add-on
               def resource_sid
                 @properties['resource_sid']
               end
 
               ##
-              # @return [String] A description of this Add-on installation
+              # @return [String] The string that you assigned to describe the resource
               def friendly_name
                 @properties['friendly_name']
               end
@@ -354,37 +359,37 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The JSON object representing the current configuration
+              # @return [Hash] A JSON string that represents the current configuration
               def configuration
                 @properties['configuration']
               end
 
               ##
-              # @return [String] The string that uniquely identifies this Add-on installation
+              # @return [String] An application-defined string that uniquely identifies the resource
               def unique_name
                 @properties['unique_name']
               end
 
               ##
-              # @return [Time] The date this Add-on was installed
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date this Add-on installation was last updated
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The uri
+              # @return [String] The URI of the resource, relative to `https://api.twilio.com`
               def uri
                 @properties['uri']
               end
 
               ##
-              # @return [String] The subresource_uris
+              # @return [String] A list of related resources identified by their relative URIs
               def subresource_uris
                 @properties['subresource_uris']
               end

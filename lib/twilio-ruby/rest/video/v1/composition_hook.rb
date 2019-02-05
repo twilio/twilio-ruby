@@ -37,6 +37,10 @@ module Twilio
           # @param [Time] date_created_before Only show Composition Hooks created before
           #   this ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
           #   `YYYY-MM-DDThh:mm:ssZ`.
+          # @param [String] friendly_name Only show Composition Hooks with friendly name
+          #   that match this case-insensitive string, of up to 100 characters in length.
+          #   Filtering by partial friendly names is allowed, using wildcards (e.g.
+          #   `*my*hook*`).
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -44,11 +48,12 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(enabled: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
+          def list(enabled: :unset, date_created_after: :unset, date_created_before: :unset, friendly_name: :unset, limit: nil, page_size: nil)
             self.stream(
                 enabled: enabled,
                 date_created_after: date_created_after,
                 date_created_before: date_created_before,
+                friendly_name: friendly_name,
                 limit: limit,
                 page_size: page_size
             ).entries
@@ -66,6 +71,10 @@ module Twilio
           # @param [Time] date_created_before Only show Composition Hooks created before
           #   this ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
           #   `YYYY-MM-DDThh:mm:ssZ`.
+          # @param [String] friendly_name Only show Composition Hooks with friendly name
+          #   that match this case-insensitive string, of up to 100 characters in length.
+          #   Filtering by partial friendly names is allowed, using wildcards (e.g.
+          #   `*my*hook*`).
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -73,13 +82,14 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(enabled: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
+          def stream(enabled: :unset, date_created_after: :unset, date_created_before: :unset, friendly_name: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
                 enabled: enabled,
                 date_created_after: date_created_after,
                 date_created_before: date_created_before,
+                friendly_name: friendly_name,
                 page_size: limits[:page_size],
             )
 
@@ -111,15 +121,20 @@ module Twilio
           # @param [Time] date_created_before Only show Composition Hooks created before
           #   this ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
           #   `YYYY-MM-DDThh:mm:ssZ`.
+          # @param [String] friendly_name Only show Composition Hooks with friendly name
+          #   that match this case-insensitive string, of up to 100 characters in length.
+          #   Filtering by partial friendly names is allowed, using wildcards (e.g.
+          #   `*my*hook*`).
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of CompositionHookInstance
-          def page(enabled: :unset, date_created_after: :unset, date_created_before: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+          def page(enabled: :unset, date_created_after: :unset, date_created_before: :unset, friendly_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'Enabled' => enabled,
                 'DateCreatedAfter' => Twilio.serialize_iso8601_datetime(date_created_after),
                 'DateCreatedBefore' => Twilio.serialize_iso8601_datetime(date_created_before),
+                'FriendlyName' => friendly_name,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
@@ -155,8 +170,8 @@ module Twilio
           #   will be triggered for every completed Group Room on this account. When `false`,
           #   the Composition Hook never triggers.
           # @param [Hash] video_layout A JSON object defining the video layout of the
-          #   Composition Hook in terms of regions. See the section [Managing Video
-          #   Layouts](#managing-video-layouts) below for further information.
+          #   Composition Hook in terms of regions. See the section [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for further information.
           # @param [String] audio_sources An array of audio sources to merge. All the
           #   specified sources must belong to the same Group Room. It can include zero or
           #   more Track names. These can be specified using wildcards (e.g. `student*`). The
@@ -185,8 +200,9 @@ module Twilio
           # 
           #   Note that the `Resolution` implicitly imposes an aspect ratio to the resulting
           #   composition. When the original video tracks get constrained by this aspect ratio
-          #   they are scaled-down to fit. You can find detailed information in the [Managing
-          #   Video Layouts](#managing-video-layouts) section. Defaults to `640x480`.
+          #   they are scaled-down to fit. You can find detailed information in the
+          #   [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) section. Defaults to `640x480`.
           # @param [composition_hook.Format] format Container format of the Composition
           #   media files created by the Composition Hook. Can be any of the following: `mp4`,
           #   `webm`. The use of `mp4` or `webm` makes mandatory the specification of
@@ -202,8 +218,8 @@ module Twilio
           #   in shorter compositions in cases when the Room was created but no Participant
           #   joined for some time, or if all the Participants left the room and joined at a
           #   later stage, as those gaps will be removed. You can find further information in
-          #   the [Managing Video Layouts](#managing-video-layouts) section. Defaults to
-          #   `true`.
+          #   the [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) section. Defaults to `true`.
           # @return [CompositionHookInstance] Newly created CompositionHookInstance
           def create(friendly_name: nil, enabled: :unset, video_layout: :unset, audio_sources: :unset, audio_sources_excluded: :unset, resolution: :unset, format: :unset, status_callback: :unset, status_callback_method: :unset, trim: :unset)
             data = Twilio::Values.of({
@@ -314,8 +330,8 @@ module Twilio
           #   will be triggered for every completed Group Room on this account. When `false`,
           #   the Composition Hook never triggers.
           # @param [Hash] video_layout A JSON object defining the video layout of the
-          #   Composition Hook in terms of regions. See the section [Managing Video
-          #   Layouts](#managing-video-layouts) below for further information.
+          #   Composition Hook in terms of regions. See the section [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for further information.
           # @param [String] audio_sources An array of audio sources to merge. All the
           #   specified sources must belong to the same Group Room. It can include zero or
           #   more Track names. These can be specified using wildcards (e.g. `student*`). The
@@ -331,8 +347,8 @@ module Twilio
           #   in shorter compositions in cases when the Room was created but no Participant
           #   joined for some time, or if all the Participants left the room and joined at a
           #   later stage, as those gaps will be removed. You can find further information in
-          #   the [Managing Video Layouts](#managing-video-layouts) section. Defaults to
-          #   `true`.
+          #   the [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) section. Defaults to `true`.
           # @param [composition_hook.Format] format Container format of the Composition
           #   media files created by the Composition Hook. Can be any of the following: `mp4`,
           #   `webm`. The use of `mp4` or `webm` makes mandatory the specification of
@@ -346,8 +362,8 @@ module Twilio
           #   = `1024x576`, VGA = `640x480`, CIF = `320x240`. Note that the `Resolution`
           #   implicitly imposes an aspect ratio to the resulting composition. When the
           #   original video tracks get constrained by this aspect ratio they are scaled-down
-          #   to fit. You can find detailed information in the [Managing Video
-          #   Layouts](#managing-video-layouts) section. Defaults to `640x480`.
+          #   to fit. You can find detailed information in the [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) section. Defaults to `640x480`.
           # @param [String] status_callback A URL that Twilio sends asynchronous webhook
           #   requests to on every composition event. If not provided, status callback events
           #   will not be dispatched.
@@ -546,8 +562,8 @@ module Twilio
           #   will be triggered for every completed Group Room on this account. When `false`,
           #   the Composition Hook never triggers.
           # @param [Hash] video_layout A JSON object defining the video layout of the
-          #   Composition Hook in terms of regions. See the section [Managing Video
-          #   Layouts](#managing-video-layouts) below for further information.
+          #   Composition Hook in terms of regions. See the section [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for further information.
           # @param [String] audio_sources An array of audio sources to merge. All the
           #   specified sources must belong to the same Group Room. It can include zero or
           #   more Track names. These can be specified using wildcards (e.g. `student*`). The
@@ -563,8 +579,8 @@ module Twilio
           #   in shorter compositions in cases when the Room was created but no Participant
           #   joined for some time, or if all the Participants left the room and joined at a
           #   later stage, as those gaps will be removed. You can find further information in
-          #   the [Managing Video Layouts](#managing-video-layouts) section. Defaults to
-          #   `true`.
+          #   the [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) section. Defaults to `true`.
           # @param [composition_hook.Format] format Container format of the Composition
           #   media files created by the Composition Hook. Can be any of the following: `mp4`,
           #   `webm`. The use of `mp4` or `webm` makes mandatory the specification of
@@ -578,8 +594,8 @@ module Twilio
           #   = `1024x576`, VGA = `640x480`, CIF = `320x240`. Note that the `Resolution`
           #   implicitly imposes an aspect ratio to the resulting composition. When the
           #   original video tracks get constrained by this aspect ratio they are scaled-down
-          #   to fit. You can find detailed information in the [Managing Video
-          #   Layouts](#managing-video-layouts) section. Defaults to `640x480`.
+          #   to fit. You can find detailed information in the [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) section. Defaults to `640x480`.
           # @param [String] status_callback A URL that Twilio sends asynchronous webhook
           #   requests to on every composition event. If not provided, status callback events
           #   will not be dispatched.

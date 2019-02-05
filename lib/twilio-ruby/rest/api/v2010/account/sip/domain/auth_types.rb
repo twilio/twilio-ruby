@@ -17,11 +17,11 @@ module Twilio
                 ##
                 # Initialize the AuthTypesList
                 # @param [Version] version Version that contains the resource
-                # @param [String] account_sid The unique id of the
-                #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
-                #   domain.
-                # @param [String] domain_sid A 34 character string that uniquely identifies the
-                #   SIP domain in Twilio.
+                # @param [String] account_sid The SID of the
+                #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                #   SipDomain resource.
+                # @param [String] domain_sid The unique string that that we created to identify
+                #   the SipDomain resource.
                 # @return [AuthTypesList] AuthTypesList
                 def initialize(version, account_sid: nil, domain_sid: nil)
                   super(version)
@@ -104,11 +104,11 @@ module Twilio
                 # Initialize the AuthTypesInstance
                 # @param [Version] version Version that contains the resource
                 # @param [Hash] payload payload that contains response from Twilio
-                # @param [String] account_sid The unique id of the
-                #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
-                #   domain.
-                # @param [String] domain_sid A 34 character string that uniquely identifies the
-                #   SIP domain in Twilio.
+                # @param [String] account_sid The SID of the
+                #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                #   SipDomain resource.
+                # @param [String] domain_sid The unique string that that we created to identify
+                #   the SipDomain resource.
                 # @return [AuthTypesInstance] AuthTypesInstance
                 def initialize(version, payload, account_sid: nil, domain_sid: nil)
                   super(version)

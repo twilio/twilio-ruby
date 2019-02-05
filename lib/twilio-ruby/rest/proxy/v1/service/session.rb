@@ -114,8 +114,9 @@ module Twilio
             # Request is executed immediately.
             # @param [String] unique_name Your unique identifier for this Session such as a
             #   Job ID or conversation ID. *Should not contain PII.*
-            # @param [Time] date_expiry An absolute time (ISO 8601) at which this Session
-            #   should close. If this is populated, it takes precedence over TTL values.
+            # @param [Time] date_expiry An absolute time (ISO 8601) in the future at which
+            #   this Session should close. If this is populated, it takes precedence over TTL
+            #   values.
             # @param [String] ttl The time, in seconds, after the latest of Session create
             #   time or the Session's last Interaction time at which the session will expire.
             # @param [session.Mode] mode The type of communications mediums allowed on a

@@ -19,12 +19,13 @@ module Twilio
                 ##
                 # Initialize the AssignedAddOnExtensionList
                 # @param [Version] version Version that contains the resource
-                # @param [String] account_sid The unique id of the Account that has installed this
-                #   Add-on.
-                # @param [String] resource_sid The unique id of the Phone Number to which the
-                #   Add-on is assigned.
-                # @param [String] assigned_add_on_sid A 34 character string that uniquely
-                #   identifies the assigned Add-on installation.
+                # @param [String] account_sid The SID of the
+                #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                #   resource.
+                # @param [String] resource_sid The SID of the Phone Number to which the Add-on is
+                #   assigned.
+                # @param [String] assigned_add_on_sid The SID that uniquely identifies the
+                #   assigned Add-on installation.
                 # @return [AssignedAddOnExtensionList] AssignedAddOnExtensionList
                 def initialize(version, account_sid: nil, resource_sid: nil, assigned_add_on_sid: nil)
                   super(version)
@@ -170,10 +171,15 @@ module Twilio
                 ##
                 # Initialize the AssignedAddOnExtensionContext
                 # @param [Version] version Version that contains the resource
-                # @param [String] account_sid The account_sid
-                # @param [String] resource_sid The resource_sid
-                # @param [String] assigned_add_on_sid The assigned_add_on_sid
-                # @param [String] sid The Extension Sid that uniquely identifies this resource
+                # @param [String] account_sid The SID of the
+                #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                #   resource to fetch.
+                # @param [String] resource_sid The SID of the Phone Number to which the Add-on is
+                #   assigned.
+                # @param [String] assigned_add_on_sid The SID that uniquely identifies the
+                #   assigned Add-on installation.
+                # @param [String] sid The Twilio-provided string that uniquely identifies the
+                #   resource to fetch.
                 # @return [AssignedAddOnExtensionContext] AssignedAddOnExtensionContext
                 def initialize(version, account_sid, resource_sid, assigned_add_on_sid, sid)
                   super(version)
@@ -225,13 +231,15 @@ module Twilio
                 # Initialize the AssignedAddOnExtensionInstance
                 # @param [Version] version Version that contains the resource
                 # @param [Hash] payload payload that contains response from Twilio
-                # @param [String] account_sid The unique id of the Account that has installed this
-                #   Add-on.
-                # @param [String] resource_sid The unique id of the Phone Number to which the
-                #   Add-on is assigned.
-                # @param [String] assigned_add_on_sid A 34 character string that uniquely
-                #   identifies the assigned Add-on installation.
-                # @param [String] sid The Extension Sid that uniquely identifies this resource
+                # @param [String] account_sid The SID of the
+                #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                #   resource.
+                # @param [String] resource_sid The SID of the Phone Number to which the Add-on is
+                #   assigned.
+                # @param [String] assigned_add_on_sid The SID that uniquely identifies the
+                #   assigned Add-on installation.
+                # @param [String] sid The Twilio-provided string that uniquely identifies the
+                #   resource to fetch.
                 # @return [AssignedAddOnExtensionInstance] AssignedAddOnExtensionInstance
                 def initialize(version, payload, account_sid: nil, resource_sid: nil, assigned_add_on_sid: nil, sid: nil)
                   super(version)
@@ -277,55 +285,55 @@ module Twilio
                 end
 
                 ##
-                # @return [String] A string that uniquely identifies this Extension
+                # @return [String] The unique string that identifies the resource
                 def sid
                   @properties['sid']
                 end
 
                 ##
-                # @return [String] The Account id that has installed this Add-on
+                # @return [String] The SID of the Account that created the resource
                 def account_sid
                   @properties['account_sid']
                 end
 
                 ##
-                # @return [String] The Phone Number id that has installed this Add-on
+                # @return [String] The SID of the Phone Number to which the Add-on is assigned
                 def resource_sid
                   @properties['resource_sid']
                 end
 
                 ##
-                # @return [String] A string that uniquely identifies the assigned Add-on installation
+                # @return [String] The SID that uniquely identifies the assigned Add-on installation
                 def assigned_add_on_sid
                   @properties['assigned_add_on_sid']
                 end
 
                 ##
-                # @return [String] A human-readable description of this Extension
+                # @return [String] The string that you assigned to describe the resource
                 def friendly_name
                   @properties['friendly_name']
                 end
 
                 ##
-                # @return [String] A human-readable description of the Extension's Product
+                # @return [String] A string that you assigned to describe the Product this Extension is used within
                 def product_name
                   @properties['product_name']
                 end
 
                 ##
-                # @return [String] The string that uniquely identifies this Extension
+                # @return [String] An application-defined string that uniquely identifies the resource
                 def unique_name
                   @properties['unique_name']
                 end
 
                 ##
-                # @return [String] The uri
+                # @return [String] The URI of the resource, relative to `https://api.twilio.com`
                 def uri
                   @properties['uri']
                 end
 
                 ##
-                # @return [Boolean] A Boolean indicating if the Extension will be invoked
+                # @return [Boolean] Whether the Extension will be invoked
                 def enabled
                   @properties['enabled']
                 end

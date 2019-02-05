@@ -15,8 +15,22 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
-          @forms = nil
           @services = nil
+          @forms = nil
+        end
+
+        ##
+        # @param [String] sid A 34 character string that uniquely identifies this Service.
+        # @return [Twilio::REST::Authy::V1::ServiceContext] if sid was passed.
+        # @return [Twilio::REST::Authy::V1::ServiceList]
+        def services(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @services ||= ServiceList.new self
+          else
+            ServiceContext.new(self, sid)
+          end
         end
 
         ##
@@ -31,20 +45,6 @@ module Twilio
             @forms ||= FormList.new self
           else
             FormContext.new(self, form_type)
-          end
-        end
-
-        ##
-        # @param [String] sid A 34 character string that uniquely identifies this Service.
-        # @return [Twilio::REST::Authy::V1::ServiceContext] if sid was passed.
-        # @return [Twilio::REST::Authy::V1::ServiceList]
-        def services(sid=:unset)
-          if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @services ||= ServiceList.new self
-          else
-            ServiceContext.new(self, sid)
           end
         end
 

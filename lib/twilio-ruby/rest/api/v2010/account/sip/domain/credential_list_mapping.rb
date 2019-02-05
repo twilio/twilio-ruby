@@ -19,8 +19,8 @@ module Twilio
                 # @param [Version] version Version that contains the resource
                 # @param [String] account_sid The unique id of the Account that is responsible for
                 #   this resource.
-                # @param [String] domain_sid A 34 character string that uniquely identifies the
-                #   SIP domain in Twilio.
+                # @param [String] domain_sid The unique string that that we created to identify
+                #   the SipDomain resource.
                 # @return [CredentialListMappingList] CredentialListMappingList
                 def initialize(version, account_sid: nil, domain_sid: nil)
                   super(version)
@@ -239,8 +239,8 @@ module Twilio
                 # @param [Hash] payload payload that contains response from Twilio
                 # @param [String] account_sid The unique id of the Account that is responsible for
                 #   this resource.
-                # @param [String] domain_sid A 34 character string that uniquely identifies the
-                #   SIP domain in Twilio.
+                # @param [String] domain_sid The unique string that that we created to identify
+                #   the SipDomain resource.
                 # @param [String] sid A 34 character string that uniquely identifies the resource
                 #   to fetch.
                 # @return [CredentialListMappingInstance] CredentialListMappingInstance

@@ -16,8 +16,11 @@ module Twilio
               ##
               # Initialize the FeedbackList
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] message_sid The message_sid
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   MessageFeedback resource.
+              # @param [String] message_sid The SID of the Message resource for which the
+              #   feedback was provided.
               # @return [FeedbackList] FeedbackList
               def initialize(version, account_sid: nil, message_sid: nil)
                 super(version)
@@ -30,7 +33,11 @@ module Twilio
               ##
               # Retrieve a single page of FeedbackInstance records from the API.
               # Request is executed immediately.
-              # @param [feedback.Outcome] outcome The outcome
+              # @param [feedback.Outcome] outcome Whether the feedback has arrived. Can be:
+              #   `unconfirmed` or `confirmed`. If `provide_feedback`=`true` in [the initial HTTP
+              #   POST](https://www.twilio.com/docs/sms/api/message#create-a-message-resource),
+              #   the initial value of this property is `unconfirmed`. After the message arrives,
+              #   update the value to `confirmed`.
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(outcome: :unset)
                 data = Twilio::Values.of({'Outcome' => outcome, })
@@ -95,8 +102,11 @@ module Twilio
               # Initialize the FeedbackInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] account_sid The account_sid
-              # @param [String] message_sid The message_sid
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   MessageFeedback resource.
+              # @param [String] message_sid The SID of the Message resource for which the
+              #   feedback was provided.
               # @return [FeedbackInstance] FeedbackInstance
               def initialize(version, payload, account_sid: nil, message_sid: nil)
                 super(version)
@@ -113,37 +123,37 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The message_sid
+              # @return [String] The SID of the Message resource for which the feedback was provided
               def message_sid
                 @properties['message_sid']
               end
 
               ##
-              # @return [feedback.Outcome] unconfirmed or confirmed. If ProvideFeedback=true in the initial HTTP POST, this value will default to unconfirmed. Make an HTTP POST to update this value to confirmed after the message arrives.
+              # @return [feedback.Outcome] Whether the feedback has arrived
               def outcome
                 @properties['outcome']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The uri
+              # @return [String] The URI of the resource, relative to `https://api.twilio.com`
               def uri
                 @properties['uri']
               end

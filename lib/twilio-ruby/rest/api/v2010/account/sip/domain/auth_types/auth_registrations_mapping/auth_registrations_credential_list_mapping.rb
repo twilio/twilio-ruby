@@ -19,11 +19,11 @@ module Twilio
                     ##
                     # Initialize the AuthRegistrationsCredentialListMappingList
                     # @param [Version] version Version that contains the resource
-                    # @param [String] account_sid The unique id of the
-                    #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
-                    #   domain.
-                    # @param [String] domain_sid A 34 character string that uniquely identifies the
-                    #   SIP domain in Twilio.
+                    # @param [String] account_sid The SID of the
+                    #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                    #   SipDomain resource.
+                    # @param [String] domain_sid The unique string that that we created to identify
+                    #   the SipDomain resource.
                     # @return [AuthRegistrationsCredentialListMappingList] AuthRegistrationsCredentialListMappingList
                     def initialize(version, account_sid: nil, domain_sid: nil)
                       super(version)
@@ -36,8 +36,8 @@ module Twilio
                     ##
                     # Retrieve a single page of AuthRegistrationsCredentialListMappingInstance records from the API.
                     # Request is executed immediately.
-                    # @param [String] credential_list_sid A 34 character string that uniquely
-                    #   identifies this credential list resource
+                    # @param [String] credential_list_sid The SID of the CredentialList resource to
+                    #   map to the SIP domain.
                     # @return [AuthRegistrationsCredentialListMappingInstance] Newly created AuthRegistrationsCredentialListMappingInstance
                     def create(credential_list_sid: nil)
                       data = Twilio::Values.of({'CredentialListSid' => credential_list_sid, })
@@ -183,10 +183,13 @@ module Twilio
                     ##
                     # Initialize the AuthRegistrationsCredentialListMappingContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] account_sid The account_sid
-                    # @param [String] domain_sid The domain_sid
-                    # @param [String] sid The credential list Sid that uniquely identifies this
-                    #   resource
+                    # @param [String] account_sid The SID of the
+                    #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                    #   CredentialListMapping resource to fetch.
+                    # @param [String] domain_sid The SID of the SIP domain that contains the resource
+                    #   to fetch.
+                    # @param [String] sid The Twilio-provided string that uniquely identifies the
+                    #   CredentialListMapping resource to fetch.
                     # @return [AuthRegistrationsCredentialListMappingContext] AuthRegistrationsCredentialListMappingContext
                     def initialize(version, account_sid, domain_sid, sid)
                       super(version)
@@ -237,13 +240,13 @@ module Twilio
                     # Initialize the AuthRegistrationsCredentialListMappingInstance
                     # @param [Version] version Version that contains the resource
                     # @param [Hash] payload payload that contains response from Twilio
-                    # @param [String] account_sid The unique id of the
-                    #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
-                    #   domain.
-                    # @param [String] domain_sid A 34 character string that uniquely identifies the
-                    #   SIP domain in Twilio.
-                    # @param [String] sid The credential list Sid that uniquely identifies this
-                    #   resource
+                    # @param [String] account_sid The SID of the
+                    #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                    #   SipDomain resource.
+                    # @param [String] domain_sid The unique string that that we created to identify
+                    #   the SipDomain resource.
+                    # @param [String] sid The Twilio-provided string that uniquely identifies the
+                    #   CredentialListMapping resource to fetch.
                     # @return [AuthRegistrationsCredentialListMappingInstance] AuthRegistrationsCredentialListMappingInstance
                     def initialize(version, payload, account_sid: nil, domain_sid: nil, sid: nil)
                       super(version)
@@ -283,31 +286,31 @@ module Twilio
                     end
 
                     ##
-                    # @return [String] The unique sid that identifies this account
+                    # @return [String] The SID of the Account that created the resource
                     def account_sid
                       @properties['account_sid']
                     end
 
                     ##
-                    # @return [Time] The date this resource was created
+                    # @return [Time] The RFC 2822 date and time in GMT that the resource was created
                     def date_created
                       @properties['date_created']
                     end
 
                     ##
-                    # @return [Time] The date this resource was last updated
+                    # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
                     def date_updated
                       @properties['date_updated']
                     end
 
                     ##
-                    # @return [String] A human readable description of this resource
+                    # @return [String] The string that you assigned to describe the resource
                     def friendly_name
                       @properties['friendly_name']
                     end
 
                     ##
-                    # @return [String] A string that uniquely identifies this resource
+                    # @return [String] The unique string that identifies the resource
                     def sid
                       @properties['sid']
                     end

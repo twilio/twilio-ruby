@@ -15,9 +15,9 @@ module Twilio
             ##
             # Initialize the IncomingPhoneNumberList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
-            #   phone number.
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
+            #   IncomingPhoneNumber resource.
             # @return [IncomingPhoneNumberList] IncomingPhoneNumberList
             def initialize(version, account_sid: nil)
               super(version)
@@ -36,16 +36,16 @@ module Twilio
             # Lists IncomingPhoneNumberInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [Boolean] beta Include phone numbers new to the Twilio platform. Possible
-            #   values are either `true` or `false`. Default is `true`.
-            # @param [String] friendly_name Only show the incoming phone number resources with
-            #   friendly names that exactly match this name.
-            # @param [String] phone_number Only show the incoming phone number resources that
-            #   match this pattern. You can specify partial numbers and use '*' as a wildcard
-            #   for any digit.
-            # @param [String] origin Include phone numbers based on the origin, by default,
-            #   phone numbers of all origin are included. Possible values are either `twilio` or
-            #   `hosted`.
+            # @param [Boolean] beta Whether to include phone numbers new to the Twilio
+            #   platform. Can be: `true` or `false` and the default is `true`.
+            # @param [String] friendly_name A string that identifies the IncomingPhoneNumber
+            #   resources to read.
+            # @param [String] phone_number The phone numbers of the IncomingPhoneNumber
+            #   resources to read. You can specify partial numbers and use '*' as a wildcard for
+            #   any digit.
+            # @param [String] origin Whether to include phone numbers based on their origin.
+            #   Can be: `twilio` or `hosted`. By default, phone numbers of all origin are
+            #   included.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -68,16 +68,16 @@ module Twilio
             # Streams IncomingPhoneNumberInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Boolean] beta Include phone numbers new to the Twilio platform. Possible
-            #   values are either `true` or `false`. Default is `true`.
-            # @param [String] friendly_name Only show the incoming phone number resources with
-            #   friendly names that exactly match this name.
-            # @param [String] phone_number Only show the incoming phone number resources that
-            #   match this pattern. You can specify partial numbers and use '*' as a wildcard
-            #   for any digit.
-            # @param [String] origin Include phone numbers based on the origin, by default,
-            #   phone numbers of all origin are included. Possible values are either `twilio` or
-            #   `hosted`.
+            # @param [Boolean] beta Whether to include phone numbers new to the Twilio
+            #   platform. Can be: `true` or `false` and the default is `true`.
+            # @param [String] friendly_name A string that identifies the IncomingPhoneNumber
+            #   resources to read.
+            # @param [String] phone_number The phone numbers of the IncomingPhoneNumber
+            #   resources to read. You can specify partial numbers and use '*' as a wildcard for
+            #   any digit.
+            # @param [String] origin Whether to include phone numbers based on their origin.
+            #   Can be: `twilio` or `hosted`. By default, phone numbers of all origin are
+            #   included.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -116,16 +116,16 @@ module Twilio
             ##
             # Retrieve a single page of IncomingPhoneNumberInstance records from the API.
             # Request is executed immediately.
-            # @param [Boolean] beta Include phone numbers new to the Twilio platform. Possible
-            #   values are either `true` or `false`. Default is `true`.
-            # @param [String] friendly_name Only show the incoming phone number resources with
-            #   friendly names that exactly match this name.
-            # @param [String] phone_number Only show the incoming phone number resources that
-            #   match this pattern. You can specify partial numbers and use '*' as a wildcard
-            #   for any digit.
-            # @param [String] origin Include phone numbers based on the origin, by default,
-            #   phone numbers of all origin are included. Possible values are either `twilio` or
-            #   `hosted`.
+            # @param [Boolean] beta Whether to include phone numbers new to the Twilio
+            #   platform. Can be: `true` or `false` and the default is `true`.
+            # @param [String] friendly_name A string that identifies the IncomingPhoneNumber
+            #   resources to read.
+            # @param [String] phone_number The phone numbers of the IncomingPhoneNumber
+            #   resources to read. You can specify partial numbers and use '*' as a wildcard for
+            #   any digit.
+            # @param [String] origin Whether to include phone numbers based on their origin.
+            #   Can be: `twilio` or `hosted`. By default, phone numbers of all origin are
+            #   included.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -164,76 +164,71 @@ module Twilio
             ##
             # Retrieve a single page of IncomingPhoneNumberInstance records from the API.
             # Request is executed immediately.
-            # @param [String] api_version The Twilio REST API version to use for incoming
-            #   calls made to this number. If omitted, uses `2010-04-01`.
-            # @param [String] friendly_name A human readable descriptive text for this
-            #   resource, up to 64 characters long. By default, the `FriendlyName` is a nicely
-            #   formatted version of the phone number.
-            # @param [String] sms_application_sid The 34 character sid of the application
-            #   Twilio should use to handle SMSs sent to the new number. If a
-            #   `SmsApplicationSid` is present, Twilio will ignore all of the SMS urls above and
-            #   use those set on the application.
-            # @param [String] sms_fallback_method The HTTP method that should be used to
-            #   request the `SmsFallbackUrl`. Must be either `GET` or `POST`. Defaults to
-            #   `POST`.
-            # @param [String] sms_fallback_url A URL that Twilio will request if an error
-            #   occurs requesting or executing the TwiML defined by `SmsUrl`.
-            # @param [String] sms_method The HTTP method that should be used to request the
-            #   `SmsUrl`. Must be either `GET` or `POST`. Defaults to `POST`.
-            # @param [String] sms_url The URL Twilio will request when receiving an incoming
-            #   SMS message to this number.
-            # @param [String] status_callback The URL that Twilio will request to pass status
-            #   parameters (such as call ended) to your application.
-            # @param [String] status_callback_method The HTTP method Twilio will use to make
-            #   requests to the `StatusCallback` URL. Either `GET` or `POST`. Defaults to
-            #   `POST`.
-            # @param [String] voice_application_sid The 34 character sid of the application
-            #   Twilio should use to handle phone calls to the new number. If a
-            #   `VoiceApplicationSid` is present, Twilio will ignore all of the voice urls above
-            #   and use those set on the application. Setting a `VoiceApplicationSid` will
-            #   automatically delete your `TrunkSid` and vice versa.
-            # @param [Boolean] voice_caller_id_lookup Do a lookup of a caller's name from the
-            #   CNAM database and post it to your app. Either `true` or `false`. Defaults to
-            #   `false`.
-            # @param [String] voice_fallback_method The HTTP method that should be used to
-            #   request the `VoiceFallbackUrl`. Either `GET` or `POST`. Defaults to `POST`.
-            # @param [String] voice_fallback_url The URL that Twilio will request if an error
-            #   occurs retrieving or executing the TwiML requested by `Url`.
-            # @param [String] voice_method The HTTP method that should be used to request the
-            #   `VoiceUrl`. Must be either `GET` or `POST`. Defaults to `POST`.
-            # @param [String] voice_url The URL that Twilio should request when somebody dials
-            #   the new phone number. The VoiceURL will  no longer be used if a
-            #   `VoiceApplicationSid` or a `TrunkSid` is set.
+            # @param [String] api_version The API version to use for incoming calls made to
+            #   the new phone number. The default is `2010-04-01`.
+            # @param [String] friendly_name A descriptive string that you created to describe
+            #   the new phone number. It can be up to 64 characters long. By default, this is a
+            #   formatted version of the new phone number.
+            # @param [String] sms_application_sid The SID of the application that should
+            #   handle SMS messages sent to the new phone number. If an `sms_application_sid` is
+            #   present, we ignore all of the `sms_*_url` urls and use those set on the
+            #   application.
+            # @param [String] sms_fallback_method The HTTP method that we should use to call
+            #   `sms_fallback_url`. Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] sms_fallback_url The URL that we should call when an error
+            #   occurs while requesting or executing the TwiML defined by `sms_url`.
+            # @param [String] sms_method The HTTP method that we should use to call `sms_url`.
+            #   Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] sms_url The URL we should call when the new phone number
+            #   receives an incoming SMS message.
+            # @param [String] status_callback The URL we should call using the
+            #   `status_callback_method` to send status information to your application.
+            # @param [String] status_callback_method The HTTP method we should use to call
+            #   `status_callback`. Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] voice_application_sid The SID of the application we should use
+            #   to handle calls to the new phone number. If a `voice_application_sid` is
+            #   present, we ignore all of the voice urls and use only those set on the
+            #   application. Setting a `voice_application_sid` will automatically delete your
+            #   `trunk_sid` and vice versa.
+            # @param [Boolean] voice_caller_id_lookup Whether to lookup the caller's name from
+            #   the CNAM database and post it to your app. Can be: `true` or `false` and
+            #   defaults to `false`.
+            # @param [String] voice_fallback_method The HTTP method that we should use to call
+            #   `voice_fallback_url`. Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] voice_fallback_url The URL that we should call when an error
+            #   occurs retrieving or executing the TwiML requested by `url`.
+            # @param [String] voice_method The HTTP method that we should use to call
+            #   `voice_url`. Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] voice_url The URL that we should call to answer a call to the
+            #   new phone number. The `voice_url` will not be called if a
+            #   `voice_application_sid` or a `trunk_sid` is set.
             # @param [incoming_phone_number.EmergencyStatus] emergency_status The
-            #   configuration status parameter determining whether this phone number is enabled
-            #   for emergency calling
-            # @param [String] emergency_address_sid The 34 character sid of the
-            #   EmergencyAddress configuration to leverage emergency calling for this phone
-            #   number
-            # @param [String] trunk_sid The 34 character sid of the Trunk Twilio should use to
-            #   handle phone calls to this number. If a `TrunkSid` is present, Twilio will
-            #   ignore all of the voice urls  and voice applications above and use those set on
-            #   the Trunk. Setting a `TrunkSid` will automatically delete your
-            #   `VoiceApplicationSid` and vice versa.
-            # @param [String] identity_sid The 34 character sid of the identity Twilio should
-            #   use to associate with the number. Identities are required in some regions to
-            #   meet local regulations
-            # @param [String] address_sid The 34 character sid of the address Twilio should
-            #   use to associate with the number. Addresses are required in some regions to meet
-            #   local regulations
+            #   configuration status parameter that determines whether the new phone number is
+            #   enabled for emergency calling.
+            # @param [String] emergency_address_sid The SID of the emergency address
+            #   configuration to use for emergency calling from the new phone number.
+            # @param [String] trunk_sid The SID of the Trunk we should use to handle calls to
+            #   the new phone number. If a `trunk_sid` is present, we ignore all of the voice
+            #   urls and voice applications and use only those set on the Trunk. Setting a
+            #   `trunk_sid` will automatically delete your `voice_application_sid` and vice
+            #   versa.
+            # @param [String] identity_sid The SID of the Identity resource that we should
+            #   associate with the new phone number. Some regions require an identity to meet
+            #   local regulations.
+            # @param [String] address_sid The SID of the Address resource we should associate
+            #   with the new phone number. Some regions require addresses to meet local
+            #   regulations.
             # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
-            #   configuration parameter for this phone number to receive incoming voice calls or
-            #   faxes. Must be either `fax` or `voice`. Defaults to `voice`
-            # @param [String] phone_number The phone number you want to purchase. The number
-            #   should be formatted starting with a '+' followed by the country code and the
-            #   number in [E.164](http://en.wikipedia.org/wiki/E.164) format e.g.,
-            #   '+15105555555'. **You must include either this or an `AreaCode` parameter to
-            #   have your POST succeed.**
+            #   configuration parameter for the new phone number to receive incoming voice calls
+            #   or faxes. Can be: `fax` or `voice` and defaults to `voice`.
+            # @param [String] phone_number The phone number to purchase specified in
+            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format.  E.164 phone
+            #   numbers consist of a + followed by the country code and subscriber number
+            #   without punctuation characters. For example, +14155551234.
             # @param [String] area_code The desired area code for your new incoming phone
-            #   number. Any three digit, US or Canada area code is valid. Twilio will provision
-            #   a random phone number within this area code for you. **You must include either
-            #   this or a `PhoneNumber` parameter to have your POST succeed.** (US and Canada
-            #   only)
+            #   number. Can be any three-digit, US or Canada area code. We will provision an
+            #   available phone number within this area code for you. **You must provide an
+            #   `area_code` or a `phone_number`.** (US and Canada only).
             # @return [IncomingPhoneNumberInstance] Newly created IncomingPhoneNumberInstance
             def create(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, identity_sid: :unset, address_sid: :unset, voice_receive_mode: :unset, phone_number: :unset, area_code: :unset)
               data = Twilio::Values.of({
@@ -335,11 +330,11 @@ module Twilio
             ##
             # Initialize the IncomingPhoneNumberContext
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
-            #   phone number.
-            # @param [String] sid The incoming-phone-number Sid that uniquely identifies this
-            #   resource
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   IncomingPhoneNumber resource to fetch.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   IncomingPhoneNumber resource to fetch.
             # @return [IncomingPhoneNumberContext] IncomingPhoneNumberContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -354,66 +349,66 @@ module Twilio
 
             ##
             # Update the IncomingPhoneNumberInstance
-            # @param [String] account_sid The unique 34 character id of the account to which
-            #   you wish to transfer this phone number. See [Exchanging Numbers Between
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   IncomingPhoneNumber resource to update.  For more information, see [Exchanging
+            #   Numbers Between
             #   Subaccounts](https://www.twilio.com/docs/iam/api/subaccounts#exchanging-numbers).
-            # @param [String] api_version Calls to this phone number will start a new TwiML
-            #   session with this API version. Either `2010-04-01` or `2008-08-01`.
-            # @param [String] friendly_name A human readable descriptive text for this
-            #   resource, up to 64 characters long. By default, the `FriendlyName` is a nicely
+            # @param [String] api_version The API version to use for incoming calls made to
+            #   the phone number. The default is `2010-04-01`.
+            # @param [String] friendly_name A descriptive string that you created to describe
+            #   this phone number. It can be up to 64 characters long. By default, this is a
             #   formatted version of the phone number.
-            # @param [String] sms_application_sid The 34 character sid of the application
-            #   Twilio should use to handle SMSs sent to this number. If a `SmsApplicationSid`
-            #   is present, Twilio will ignore all of the SMS urls above and use those set on
-            #   the application instead.
-            # @param [String] sms_fallback_method The HTTP method that should be used to
-            #   request the `SmsFallbackUrl`. Either `GET` or `POST`.
-            # @param [String] sms_fallback_url A URL that Twilio will request if an error
-            #   occurs requesting or executing the TwiML defined by `SmsUrl`.
-            # @param [String] sms_method The HTTP method Twilio will use when making requests
-            #   to the `SmsUrl`. Either `GET` or `POST`.
-            # @param [String] sms_url The URL that Twilio should request when somebody sends
-            #   an SMS to the new phone number.
-            # @param [String] status_callback The URL that Twilio will request to pass status
-            #   parameters (such as call ended) to your application.
-            # @param [String] status_callback_method The HTTP method Twilio will use to make
-            #   requests to the `StatusCallback` URL. Either `GET` or `POST`.
-            # @param [String] voice_application_sid The 34 character sid of the application
-            #   Twilio should use to handle phone calls to this number. If a
-            #   `VoiceApplicationSid` is present, Twilio will ignore all of the voice urls above
-            #   and use those set on the application instead. Setting a `VoiceApplicationSid`
-            #   will automatically delete your `TrunkSid` and vice versa.
-            # @param [Boolean] voice_caller_id_lookup Look up the caller's caller-ID name from
-            #   the CNAM database ($0.01 per look up). Either `true` or `false`.
-            # @param [String] voice_fallback_method The HTTP method Twilio will use when
-            #   requesting the `VoiceFallbackUrl`. Either `GET` or `POST`.
-            # @param [String] voice_fallback_url A URL that Twilio will request if an error
-            #   occurs requesting or executing the TwiML defined by `VoiceUrl`.
-            # @param [String] voice_method The HTTP method Twilio will use when requesting the
-            #   above `Url`. Either `GET` or `POST`.
-            # @param [String] voice_url The URL that Twilio should request when somebody dials
-            #   the phone number. The VoiceURL will  no longer be used if a
-            #   `VoiceApplicationSid` or a `TrunkSid` is set.
+            # @param [String] sms_application_sid The SID of the application that should
+            #   handle SMS messages sent to the number. If an `sms_application_sid` is present,
+            #   we ignore all of the `sms_*_url` urls and use those set on the application.
+            # @param [String] sms_fallback_method The HTTP method that we should use to call
+            #   `sms_fallback_url`. Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] sms_fallback_url The URL that we should call when an error
+            #   occurs while requesting or executing the TwiML defined by `sms_url`.
+            # @param [String] sms_method The HTTP method that we should use to call `sms_url`.
+            #   Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] sms_url The URL we should call when the phone number receives an
+            #   incoming SMS message.
+            # @param [String] status_callback The URL we should call using the
+            #   `status_callback_method` to send status information to your application.
+            # @param [String] status_callback_method The HTTP method we should use to call
+            #   `status_callback`. Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] voice_application_sid The SID of the application we should use
+            #   to handle phone calls to the phone number. If a `voice_application_sid` is
+            #   present, we ignore all of the voice urls and use only those set on the
+            #   application. Setting a `voice_application_sid` will automatically delete your
+            #   `trunk_sid` and vice versa.
+            # @param [Boolean] voice_caller_id_lookup Whether to lookup the caller's name from
+            #   the CNAM database and post it to your app. Can be: `true` or `false` and
+            #   defaults to `false`.
+            # @param [String] voice_fallback_method The HTTP method that we should use to call
+            #   `voice_fallback_url`. Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] voice_fallback_url The URL that we should call when an error
+            #   occurs retrieving or executing the TwiML requested by `url`.
+            # @param [String] voice_method The HTTP method that we should use to call
+            #   `voice_url`. Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] voice_url The URL that we should call to answer a call to the
+            #   phone number. The `voice_url` will not be called if a `voice_application_sid` or
+            #   a `trunk_sid` is set.
             # @param [incoming_phone_number.EmergencyStatus] emergency_status The
-            #   configuration status parameter determining whether this phone number is enabled
-            #   for emergency calling
-            # @param [String] emergency_address_sid The 34 character sid of the
-            #   EmergencyAddress configuration to leverage emergency calling for this phone
-            #   number
-            # @param [String] trunk_sid The 34 character sid of the Trunk Twilio should use to
-            #   handle phone calls to this number. If a `TrunkSid` is present, Twilio will
-            #   ignore all of the voice urls  and voice applications above and use those set on
-            #   the Trunk. Setting a `TrunkSid` will automatically delete your
-            #   `VoiceApplicationSid` and vice versa.
+            #   configuration status parameter that determines whether the phone number is
+            #   enabled for emergency calling.
+            # @param [String] emergency_address_sid The SID of the emergency address
+            #   configuration to use for emergency calling from this phone number.
+            # @param [String] trunk_sid The SID of the Trunk we should use to handle phone
+            #   calls to the phone number. If a `trunk_sid` is present, we ignore all of the
+            #   voice urls and voice applications and use only those set on the Trunk. Setting a
+            #   `trunk_sid` will automatically delete your `voice_application_sid` and vice
+            #   versa.
             # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
-            #   configuration parameter for this phone number to receive incoming voice calls or
-            #   faxes. Must be either `fax` or `voice`. Defaults to `voice`
-            # @param [String] identity_sid The 34 character sid of the identity Twilio should
-            #   use to associate with the number. Identities are required in some regions to
-            #   meet local regulations
-            # @param [String] address_sid The 34 character sid of the address Twilio should
-            #   associate with the number. If the number has address restrictions, only another
-            #   address that satisfies the requirement can replace the existing one.
+            #   configuration parameter for the phone number to receive incoming voice calls or
+            #   faxes. Can be: `fax` or `voice` and defaults to `voice`.
+            # @param [String] identity_sid The SID of the Identity resource that we should
+            #   associate with the phone number. Some regions require an identity to meet local
+            #   regulations.
+            # @param [String] address_sid The SID of the Address resource we should associate
+            #   with the phone number. Some regions require addresses to meet local regulations.
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
             def update(account_sid: :unset, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset, identity_sid: :unset, address_sid: :unset)
               data = Twilio::Values.of({
@@ -517,11 +512,11 @@ module Twilio
             # Initialize the IncomingPhoneNumberInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
-            #   phone number.
-            # @param [String] sid The incoming-phone-number Sid that uniquely identifies this
-            #   resource
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
+            #   IncomingPhoneNumber resource.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   IncomingPhoneNumber resource to fetch.
             # @return [IncomingPhoneNumberInstance] IncomingPhoneNumberInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
@@ -577,31 +572,31 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique sid that identifies this account
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] Unique string that identifies the address associated with number
+            # @return [String] The SID of the Address resource associated with the phone number
             def address_sid
               @properties['address_sid']
             end
 
             ##
-            # @return [incoming_phone_number.AddressRequirement] Indicates if the customer requires an address
+            # @return [incoming_phone_number.AddressRequirement] Whether the phone number requires an Address registered with Twilio.
             def address_requirements
               @properties['address_requirements']
             end
 
             ##
-            # @return [String] The Twilio REST API version to use
+            # @return [String] The API version used to start a new TwiML session
             def api_version
               @properties['api_version']
             end
 
             ##
-            # @return [Boolean] Indicates if the phone number is a beta number
+            # @return [Boolean] Whether the phone number is new to the Twilio platform
             def beta
               @properties['beta']
             end
@@ -613,211 +608,211 @@ module Twilio
             end
 
             ##
-            # @return [Time] The date this resource was created
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this resource was last updated
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] A human readable description of this resouce
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] Unique string that identifies the identity associated with number
+            # @return [String] The SID of the Identity resource associated with number
             def identity_sid
               @properties['identity_sid']
             end
 
             ##
-            # @return [String] The incoming phone number
+            # @return [String] The phone number in E.164 format
             def phone_number
               @properties['phone_number']
             end
 
             ##
-            # @return [String] Twilio owned phone numbers are marked as twilio while hosted phone numbers are marked as hosted.
+            # @return [String] The phone number's origin. Can be twilio or hosted.
             def origin
               @properties['origin']
             end
 
             ##
-            # @return [String] A string that uniquely identifies this resource
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] Unique string that identifies the application
+            # @return [String] The SID of the application that handles SMS messages sent to the phone number
             def sms_application_sid
               @properties['sms_application_sid']
             end
 
             ##
-            # @return [String] HTTP method used with sms fallback url
+            # @return [String] The HTTP method used with sms_fallback_url
             def sms_fallback_method
               @properties['sms_fallback_method']
             end
 
             ##
-            # @return [String] URL Twilio will request if an error occurs in executing TwiML
+            # @return [String] The URL that we call when an error occurs while retrieving or executing the TwiML
             def sms_fallback_url
               @properties['sms_fallback_url']
             end
 
             ##
-            # @return [String] HTTP method to use with sms url
+            # @return [String] The HTTP method to use with sms_url
             def sms_method
               @properties['sms_method']
             end
 
             ##
-            # @return [String] URL Twilio will request when receiving an SMS
+            # @return [String] The URL we call when the phone number receives an incoming SMS message
             def sms_url
               @properties['sms_url']
             end
 
             ##
-            # @return [String] URL Twilio will use to pass status parameters
+            # @return [String] The URL to send status information to your application
             def status_callback
               @properties['status_callback']
             end
 
             ##
-            # @return [String] HTTP method twilio will use with status callback
+            # @return [String] The HTTP method we use to call status_callback
             def status_callback_method
               @properties['status_callback_method']
             end
 
             ##
-            # @return [String] Unique string to identify the trunk
+            # @return [String] The SID of the Trunk that handles calls to the phone number
             def trunk_sid
               @properties['trunk_sid']
             end
 
             ##
-            # @return [String] The URI for this resource
+            # @return [String] The URI of the resource, relative to `https://api.twilio.com`
             def uri
               @properties['uri']
             end
 
             ##
-            # @return [String] The unique sid of the application to handle this number
+            # @return [String] The SID of the application that handles calls to the phone number
             def voice_application_sid
               @properties['voice_application_sid']
             end
 
             ##
-            # @return [Boolean] Look up the caller's caller-ID
+            # @return [Boolean] Whether to lookup the caller's name
             def voice_caller_id_lookup
               @properties['voice_caller_id_lookup']
             end
 
             ##
-            # @return [String] HTTP method used with fallback_url
+            # @return [String] The HTTP method used with voice_fallback_url
             def voice_fallback_method
               @properties['voice_fallback_method']
             end
 
             ##
-            # @return [String] URL Twilio will request when an error occurs in TwiML
+            # @return [String] The URL we call when an error occurs in TwiML
             def voice_fallback_url
               @properties['voice_fallback_url']
             end
 
             ##
-            # @return [String] HTTP method used with the voice url
+            # @return [String] The HTTP method used with the voice_url
             def voice_method
               @properties['voice_method']
             end
 
             ##
-            # @return [String] URL Twilio will request when receiving a call
+            # @return [String] The URL we call when the phone number receives a call
             def voice_url
               @properties['voice_url']
             end
 
             ##
-            # @return [incoming_phone_number.EmergencyStatus] The emergency_status
+            # @return [incoming_phone_number.EmergencyStatus] Whether the phone number is enabled for emergency calling
             def emergency_status
               @properties['emergency_status']
             end
 
             ##
-            # @return [String] The emergency_address_sid
+            # @return [String] The emergency address configuration to use for emergency calling
             def emergency_address_sid
               @properties['emergency_address_sid']
             end
 
             ##
             # Update the IncomingPhoneNumberInstance
-            # @param [String] account_sid The unique 34 character id of the account to which
-            #   you wish to transfer this phone number. See [Exchanging Numbers Between
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   IncomingPhoneNumber resource to update.  For more information, see [Exchanging
+            #   Numbers Between
             #   Subaccounts](https://www.twilio.com/docs/iam/api/subaccounts#exchanging-numbers).
-            # @param [String] api_version Calls to this phone number will start a new TwiML
-            #   session with this API version. Either `2010-04-01` or `2008-08-01`.
-            # @param [String] friendly_name A human readable descriptive text for this
-            #   resource, up to 64 characters long. By default, the `FriendlyName` is a nicely
+            # @param [String] api_version The API version to use for incoming calls made to
+            #   the phone number. The default is `2010-04-01`.
+            # @param [String] friendly_name A descriptive string that you created to describe
+            #   this phone number. It can be up to 64 characters long. By default, this is a
             #   formatted version of the phone number.
-            # @param [String] sms_application_sid The 34 character sid of the application
-            #   Twilio should use to handle SMSs sent to this number. If a `SmsApplicationSid`
-            #   is present, Twilio will ignore all of the SMS urls above and use those set on
-            #   the application instead.
-            # @param [String] sms_fallback_method The HTTP method that should be used to
-            #   request the `SmsFallbackUrl`. Either `GET` or `POST`.
-            # @param [String] sms_fallback_url A URL that Twilio will request if an error
-            #   occurs requesting or executing the TwiML defined by `SmsUrl`.
-            # @param [String] sms_method The HTTP method Twilio will use when making requests
-            #   to the `SmsUrl`. Either `GET` or `POST`.
-            # @param [String] sms_url The URL that Twilio should request when somebody sends
-            #   an SMS to the new phone number.
-            # @param [String] status_callback The URL that Twilio will request to pass status
-            #   parameters (such as call ended) to your application.
-            # @param [String] status_callback_method The HTTP method Twilio will use to make
-            #   requests to the `StatusCallback` URL. Either `GET` or `POST`.
-            # @param [String] voice_application_sid The 34 character sid of the application
-            #   Twilio should use to handle phone calls to this number. If a
-            #   `VoiceApplicationSid` is present, Twilio will ignore all of the voice urls above
-            #   and use those set on the application instead. Setting a `VoiceApplicationSid`
-            #   will automatically delete your `TrunkSid` and vice versa.
-            # @param [Boolean] voice_caller_id_lookup Look up the caller's caller-ID name from
-            #   the CNAM database ($0.01 per look up). Either `true` or `false`.
-            # @param [String] voice_fallback_method The HTTP method Twilio will use when
-            #   requesting the `VoiceFallbackUrl`. Either `GET` or `POST`.
-            # @param [String] voice_fallback_url A URL that Twilio will request if an error
-            #   occurs requesting or executing the TwiML defined by `VoiceUrl`.
-            # @param [String] voice_method The HTTP method Twilio will use when requesting the
-            #   above `Url`. Either `GET` or `POST`.
-            # @param [String] voice_url The URL that Twilio should request when somebody dials
-            #   the phone number. The VoiceURL will  no longer be used if a
-            #   `VoiceApplicationSid` or a `TrunkSid` is set.
+            # @param [String] sms_application_sid The SID of the application that should
+            #   handle SMS messages sent to the number. If an `sms_application_sid` is present,
+            #   we ignore all of the `sms_*_url` urls and use those set on the application.
+            # @param [String] sms_fallback_method The HTTP method that we should use to call
+            #   `sms_fallback_url`. Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] sms_fallback_url The URL that we should call when an error
+            #   occurs while requesting or executing the TwiML defined by `sms_url`.
+            # @param [String] sms_method The HTTP method that we should use to call `sms_url`.
+            #   Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] sms_url The URL we should call when the phone number receives an
+            #   incoming SMS message.
+            # @param [String] status_callback The URL we should call using the
+            #   `status_callback_method` to send status information to your application.
+            # @param [String] status_callback_method The HTTP method we should use to call
+            #   `status_callback`. Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] voice_application_sid The SID of the application we should use
+            #   to handle phone calls to the phone number. If a `voice_application_sid` is
+            #   present, we ignore all of the voice urls and use only those set on the
+            #   application. Setting a `voice_application_sid` will automatically delete your
+            #   `trunk_sid` and vice versa.
+            # @param [Boolean] voice_caller_id_lookup Whether to lookup the caller's name from
+            #   the CNAM database and post it to your app. Can be: `true` or `false` and
+            #   defaults to `false`.
+            # @param [String] voice_fallback_method The HTTP method that we should use to call
+            #   `voice_fallback_url`. Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] voice_fallback_url The URL that we should call when an error
+            #   occurs retrieving or executing the TwiML requested by `url`.
+            # @param [String] voice_method The HTTP method that we should use to call
+            #   `voice_url`. Can be: `GET` or `POST` and defaults to `POST`.
+            # @param [String] voice_url The URL that we should call to answer a call to the
+            #   phone number. The `voice_url` will not be called if a `voice_application_sid` or
+            #   a `trunk_sid` is set.
             # @param [incoming_phone_number.EmergencyStatus] emergency_status The
-            #   configuration status parameter determining whether this phone number is enabled
-            #   for emergency calling
-            # @param [String] emergency_address_sid The 34 character sid of the
-            #   EmergencyAddress configuration to leverage emergency calling for this phone
-            #   number
-            # @param [String] trunk_sid The 34 character sid of the Trunk Twilio should use to
-            #   handle phone calls to this number. If a `TrunkSid` is present, Twilio will
-            #   ignore all of the voice urls  and voice applications above and use those set on
-            #   the Trunk. Setting a `TrunkSid` will automatically delete your
-            #   `VoiceApplicationSid` and vice versa.
+            #   configuration status parameter that determines whether the phone number is
+            #   enabled for emergency calling.
+            # @param [String] emergency_address_sid The SID of the emergency address
+            #   configuration to use for emergency calling from this phone number.
+            # @param [String] trunk_sid The SID of the Trunk we should use to handle phone
+            #   calls to the phone number. If a `trunk_sid` is present, we ignore all of the
+            #   voice urls and voice applications and use only those set on the Trunk. Setting a
+            #   `trunk_sid` will automatically delete your `voice_application_sid` and vice
+            #   versa.
             # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
-            #   configuration parameter for this phone number to receive incoming voice calls or
-            #   faxes. Must be either `fax` or `voice`. Defaults to `voice`
-            # @param [String] identity_sid The 34 character sid of the identity Twilio should
-            #   use to associate with the number. Identities are required in some regions to
-            #   meet local regulations
-            # @param [String] address_sid The 34 character sid of the address Twilio should
-            #   associate with the number. If the number has address restrictions, only another
-            #   address that satisfies the requirement can replace the existing one.
+            #   configuration parameter for the phone number to receive incoming voice calls or
+            #   faxes. Can be: `fax` or `voice` and defaults to `voice`.
+            # @param [String] identity_sid The SID of the Identity resource that we should
+            #   associate with the phone number. Some regions require an identity to meet local
+            #   regulations.
+            # @param [String] address_sid The SID of the Address resource we should associate
+            #   with the phone number. Some regions require addresses to meet local regulations.
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
             def update(account_sid: :unset, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset, identity_sid: :unset, address_sid: :unset)
               context.update(

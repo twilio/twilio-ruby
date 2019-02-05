@@ -15,8 +15,9 @@ module Twilio
             ##
             # Initialize the AuthorizedConnectAppList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the SubAccount this Connect App has
-            #   access to.
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   AuthorizedConnectApp resource.
             # @return [AuthorizedConnectAppList] AuthorizedConnectAppList
             def initialize(version, account_sid: nil)
               super(version)
@@ -148,8 +149,10 @@ module Twilio
             ##
             # Initialize the AuthorizedConnectAppContext
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The account_sid
-            # @param [String] connect_app_sid The connect_app_sid
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   AuthorizedConnectApp resource to fetch.
+            # @param [String] connect_app_sid The SID of the Connect App to fetch.
             # @return [AuthorizedConnectAppContext] AuthorizedConnectAppContext
             def initialize(version, account_sid, connect_app_sid)
               super(version)
@@ -192,9 +195,10 @@ module Twilio
             # Initialize the AuthorizedConnectAppInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the SubAccount this Connect App has
-            #   access to.
-            # @param [String] connect_app_sid The connect_app_sid
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   AuthorizedConnectApp resource.
+            # @param [String] connect_app_sid The SID of the Connect App to fetch.
             # @return [AuthorizedConnectAppInstance] AuthorizedConnectAppInstance
             def initialize(version, payload, account_sid: nil, connect_app_sid: nil)
               super(version)
@@ -237,61 +241,61 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique sid that identifies this account
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The company name set for this Connect App.
+            # @return [String] The company name set for the Connect App
             def connect_app_company_name
               @properties['connect_app_company_name']
             end
 
             ##
-            # @return [String] Human readable description of the app
+            # @return [String] A detailed description of the app
             def connect_app_description
               @properties['connect_app_description']
             end
 
             ##
-            # @return [String] A human readable name for the Connect App.
+            # @return [String] The name of the Connect App
             def connect_app_friendly_name
               @properties['connect_app_friendly_name']
             end
 
             ##
-            # @return [String] The public URL for this Connect App.
+            # @return [String] The public URL for the Connect App
             def connect_app_homepage_url
               @properties['connect_app_homepage_url']
             end
 
             ##
-            # @return [String] A string that uniquely identifies this app
+            # @return [String] The SID that we assigned to the Connect App
             def connect_app_sid
               @properties['connect_app_sid']
             end
 
             ##
-            # @return [Time] The date this resource was created
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this resource was last updated
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [authorized_connect_app.Permission] Permissions authorized to this app
+            # @return [authorized_connect_app.Permission] Permissions authorized to the app
             def permissions
               @properties['permissions']
             end
 
             ##
-            # @return [String] The URI for this resource
+            # @return [String] The URI of the resource, relative to `https://api.twilio.com`
             def uri
               @properties['uri']
             end

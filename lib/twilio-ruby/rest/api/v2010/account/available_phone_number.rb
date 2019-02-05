@@ -148,8 +148,12 @@ module Twilio
             ##
             # Initialize the AvailablePhoneNumberCountryContext
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The account_sid
-            # @param [String] country_code The country_code
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) requesting the available
+            #   phone number Country resource.
+            # @param [String] country_code The
+            #   [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of
+            #   the country to fetch available phone number information about.
             # @return [AvailablePhoneNumberCountryContext] AvailablePhoneNumberCountryContext
             def initialize(version, account_sid, country_code)
               super(version)
@@ -315,7 +319,9 @@ module Twilio
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
-            # @param [String] country_code The country_code
+            # @param [String] country_code The
+            #   [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of
+            #   the country to fetch available phone number information about.
             # @return [AvailablePhoneNumberCountryInstance] AvailablePhoneNumberCountryInstance
             def initialize(version, payload, account_sid: nil, country_code: nil)
               super(version)
@@ -353,31 +359,31 @@ module Twilio
             end
 
             ##
-            # @return [String] The ISO Country code to lookup phone numbers for.
+            # @return [String] The ISO-3166-1 country code of the country.
             def country_code
               @properties['country_code']
             end
 
             ##
-            # @return [String] The country
+            # @return [String] The name of the country
             def country
               @properties['country']
             end
 
             ##
-            # @return [String] The uri
+            # @return [String] The URI of the Country resource, relative to `https://api.twilio.com`
             def uri
               @properties['uri']
             end
 
             ##
-            # @return [Boolean] True if new to Twilio platform.
+            # @return [Boolean] Whether all phone numbers available in the country are new to the Twilio platform.
             def beta
               @properties['beta']
             end
 
             ##
-            # @return [String] The subresource_uris
+            # @return [String] A list of related resources identified by their relative URIs
             def subresource_uris
               @properties['subresource_uris']
             end

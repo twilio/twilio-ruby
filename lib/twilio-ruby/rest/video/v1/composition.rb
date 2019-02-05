@@ -154,8 +154,8 @@ module Twilio
           # @param [String] room_sid Group Room SID owning the media tracks to be used as
           #   Composition sources.
           # @param [Hash] video_layout A JSON object defining the video layout of the
-          #   Composition in terms of regions. See the section [Managing Video
-          #   Layouts](#managing-video-layouts) below for further information.
+          #   Composition in terms of regions. See the section [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) below for further information.
           # @param [String] audio_sources An array of audio sources to merge. All the
           #   specified sources must belong to the same Group Room. It can include: 
           # 
@@ -193,8 +193,9 @@ module Twilio
           # 
           #   Note that the `Resolution` implicitly imposes an aspect ratio to the resulting
           #   composition. When the original video tracks get constrained by this aspect ratio
-          #   they are scaled-down to fit. You can find detailed information in the [Managing
-          #   Video Layouts](#managing-video-layouts) section. Defaults to `640x480`.
+          #   they are scaled-down to fit. You can find detailed information in the
+          #   [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) section. Defaults to `640x480`.
           # @param [composition.Format] format Container format of the Composition media
           #   file. Can be any of the following: `mp4`, `webm`. The use of `mp4` or `webm`
           #   makes mandatory the specification of `AudioSources` and/or one `VideoLayout`
@@ -209,8 +210,8 @@ module Twilio
           #   there is no active media. This results in shorter compositions in cases when the
           #   Room was created but no Participant joined for some time, or if all the
           #   Participants left the room and joined at a later stage, as those gaps will be
-          #   removed. You can find further information in the [Managing Video
-          #   Layouts](#managing-video-layouts) section. Defaults to `true`.
+          #   removed. You can find further information in the [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) section. Defaults to `true`.
           # @return [CompositionInstance] Newly created CompositionInstance
           def create(room_sid: :unset, video_layout: :unset, audio_sources: :unset, audio_sources_excluded: :unset, resolution: :unset, format: :unset, status_callback: :unset, status_callback_method: :unset, trim: :unset)
             data = Twilio::Values.of({

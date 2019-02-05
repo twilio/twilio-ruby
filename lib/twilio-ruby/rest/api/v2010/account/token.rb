@@ -15,8 +15,9 @@ module Twilio
             ##
             # Initialize the TokenList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this Token.
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Token
+            #   resource.
             # @return [TokenList] TokenList
             def initialize(version, account_sid: nil)
               super(version)
@@ -30,7 +31,7 @@ module Twilio
             # Retrieve a single page of TokenInstance records from the API.
             # Request is executed immediately.
             # @param [String] ttl The duration in seconds for which the generated credentials
-            #   are valid, the default value is 86400 (24 hours).
+            #   are valid. The default value is 86400 (24 hours).
             # @return [TokenInstance] Newly created TokenInstance
             def create(ttl: :unset)
               data = Twilio::Values.of({'Ttl' => ttl, })
@@ -85,8 +86,9 @@ module Twilio
             # Initialize the TokenInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this Token.
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Token
+            #   resource.
             # @return [TokenInstance] TokenInstance
             def initialize(version, payload, account_sid: nil)
               super(version)
@@ -104,19 +106,19 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique sid that identifies this account
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [Time] The date this resource was created
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this resource was last updated
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
             def date_updated
               @properties['date_updated']
             end
@@ -140,7 +142,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The temporary username that uniquely identifies a Token.
+            # @return [String] The temporary username that uniquely identifies a Token
             def username
               @properties['username']
             end

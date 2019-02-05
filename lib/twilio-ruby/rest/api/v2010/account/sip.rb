@@ -33,7 +33,8 @@ module Twilio
 
             ##
             # Access the domains
-            # @param [String] sid The domain sid that uniquely identifies the resource
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   SipDomain resource to fetch.
             # @return [DomainList]
             # @return [DomainContext] if sid was passed.
             def domains(sid=:unset)

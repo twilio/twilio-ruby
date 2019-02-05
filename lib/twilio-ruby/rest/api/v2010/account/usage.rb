@@ -39,7 +39,8 @@ module Twilio
 
             ##
             # Access the triggers
-            # @param [String] sid The usage-trigger Sid that uniquely identifies this resource
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   UsageTrigger resource to fetch.
             # @return [TriggerList]
             # @return [TriggerContext] if sid was passed.
             def triggers(sid=:unset)

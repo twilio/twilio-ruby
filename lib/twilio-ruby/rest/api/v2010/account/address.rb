@@ -15,9 +15,9 @@ module Twilio
             ##
             # Initialize the AddressList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
-            #   address.
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that is responsible for
+            #   the Address resource.
             # @return [AddressList] AddressList
             def initialize(version, account_sid: nil)
               super(version)
@@ -30,24 +30,20 @@ module Twilio
             ##
             # Retrieve a single page of AddressInstance records from the API.
             # Request is executed immediately.
-            # @param [String] customer_name Your name or business name, or that of your
-            #   customer.
-            # @param [String] street The number and street address where you or your customer
-            #   is located.
-            # @param [String] city The city in which you or your customer is located.
-            # @param [String] region The state or region in which you or your customer is
-            #   located.
-            # @param [String] postal_code The postal code in which you or your customer is
-            #   located.
-            # @param [String] iso_country The ISO country code of your or your customer's
-            #   address.
-            # @param [String] friendly_name A human-readable description of the new address.
-            #   Maximum 64 characters.
-            # @param [Boolean] emergency_enabled The emergency_enabled
-            # @param [Boolean] auto_correct_address If you don't set a value for this
-            #   parameter, or if you set it to `true`, then the system will, if necessary,
-            #   auto-correct the address you provide. If you don't want the system to
-            #   auto-correct the address, you will explicitly need to set this value to `false`.
+            # @param [String] customer_name The name to associate with the new address.
+            # @param [String] street The number and street address of the new address.
+            # @param [String] city The city of the new address.
+            # @param [String] region The state or region of the new address.
+            # @param [String] postal_code The postal code of the new address.
+            # @param [String] iso_country The ISO country code of the new address.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the new address. It can be up to 64 characters long.
+            # @param [Boolean] emergency_enabled Whether to enable emergency calling on the
+            #   new address. Can be: `true` or `false`.
+            # @param [Boolean] auto_correct_address Whether we should automatically correct
+            #   the address. Can be: `true` or `false` and the default is `true`. If empty or
+            #   `true`, we will correct the address you provide if necessary. If `false`, we
+            #   won't alter the address you provide.
             # @return [AddressInstance] Newly created AddressInstance
             def create(customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil, iso_country: nil, friendly_name: :unset, emergency_enabled: :unset, auto_correct_address: :unset)
               data = Twilio::Values.of({
@@ -75,11 +71,12 @@ module Twilio
             # Lists AddressInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] customer_name Only return the Address resources with customer
-            #   names that exactly match this name.
-            # @param [String] friendly_name Only return the Address resources with friendly
-            #   names that exactly match this name.
-            # @param [String] iso_country Only return the Address resources in this country.
+            # @param [String] customer_name The `customer_name` of the Address resources to
+            #   read.
+            # @param [String] friendly_name The string that identifies the Address resources
+            #   to read.
+            # @param [String] iso_country The ISO country code of the Address resources to
+            #   read.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -101,11 +98,12 @@ module Twilio
             # Streams AddressInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] customer_name Only return the Address resources with customer
-            #   names that exactly match this name.
-            # @param [String] friendly_name Only return the Address resources with friendly
-            #   names that exactly match this name.
-            # @param [String] iso_country Only return the Address resources in this country.
+            # @param [String] customer_name The `customer_name` of the Address resources to
+            #   read.
+            # @param [String] friendly_name The string that identifies the Address resources
+            #   to read.
+            # @param [String] iso_country The ISO country code of the Address resources to
+            #   read.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -143,11 +141,12 @@ module Twilio
             ##
             # Retrieve a single page of AddressInstance records from the API.
             # Request is executed immediately.
-            # @param [String] customer_name Only return the Address resources with customer
-            #   names that exactly match this name.
-            # @param [String] friendly_name Only return the Address resources with friendly
-            #   names that exactly match this name.
-            # @param [String] iso_country Only return the Address resources in this country.
+            # @param [String] customer_name The `customer_name` of the Address resources to
+            #   read.
+            # @param [String] friendly_name The string that identifies the Address resources
+            #   to read.
+            # @param [String] iso_country The ISO country code of the Address resources to
+            #   read.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -222,8 +221,11 @@ module Twilio
             ##
             # Initialize the AddressContext
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The account_sid
-            # @param [String] sid The sid
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that is responsible for
+            #   the Address resource to fetch.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Address resource to fetch.
             # @return [AddressContext] AddressContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -260,22 +262,19 @@ module Twilio
 
             ##
             # Update the AddressInstance
-            # @param [String] friendly_name A human-readable description of the address.
-            #   Maximum 64 characters.
-            # @param [String] customer_name Your name or business name, or that of your
-            #   customer.
-            # @param [String] street The number and street address where you or your customer
-            #   is located.
-            # @param [String] city The city in which you or your customer is located.
-            # @param [String] region The state or region in which you or your customer is
-            #   located.
-            # @param [String] postal_code The postal code in which you or your customer is
-            #   located.
-            # @param [Boolean] emergency_enabled The emergency_enabled
-            # @param [Boolean] auto_correct_address If you don't set a value for this
-            #   parameter, or if you set it to `true`, then the system will, if necessary,
-            #   auto-correct the address you provide. If you don't want the system to
-            #   auto-correct the address, you will explicitly need to set this value to `false`.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the address. It can be up to 64 characters long.
+            # @param [String] customer_name The name to associate with the address.
+            # @param [String] street The number and street address of the address.
+            # @param [String] city The city of the address.
+            # @param [String] region The state or region of the address.
+            # @param [String] postal_code The postal code of the address.
+            # @param [Boolean] emergency_enabled Whether to enable emergency calling on the
+            #   address. Can be: `true` or `false`.
+            # @param [Boolean] auto_correct_address Whether we should automatically correct
+            #   the address. Can be: `true` or `false` and the default is `true`. If empty or
+            #   `true`, we will correct the address you provide if necessary. If `false`, we
+            #   won't alter the address you provide.
             # @return [AddressInstance] Updated AddressInstance
             def update(friendly_name: :unset, customer_name: :unset, street: :unset, city: :unset, region: :unset, postal_code: :unset, emergency_enabled: :unset, auto_correct_address: :unset)
               data = Twilio::Values.of({
@@ -327,10 +326,11 @@ module Twilio
             # Initialize the AddressInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
-            #   address.
-            # @param [String] sid The sid
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that is responsible for
+            #   the Address resource.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Address resource to fetch.
             # @return [AddressInstance] AddressInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
@@ -370,85 +370,85 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique id of the Account responsible for this address.
+            # @return [String] The SID of the Account that is responsible for the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The city in which you or your customer is located.
+            # @return [String] The city in which the address is located
             def city
               @properties['city']
             end
 
             ##
-            # @return [String] Your name or business name, or that of your customer.
+            # @return [String] The name associated with the address
             def customer_name
               @properties['customer_name']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] A human-readable description of the address.
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] The ISO country code of your or your customer's address.
+            # @return [String] The ISO country code of the address
             def iso_country
               @properties['iso_country']
             end
 
             ##
-            # @return [String] The postal code in which you or your customer is located.
+            # @return [String] The postal code of the address
             def postal_code
               @properties['postal_code']
             end
 
             ##
-            # @return [String] The state or region in which you or your customer is located.
+            # @return [String] The state or region of the address
             def region
               @properties['region']
             end
 
             ##
-            # @return [String] A 34 character string that uniquely identifies this address.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The number and street address where you or your customer is located.
+            # @return [String] The number and street address of the address
             def street
               @properties['street']
             end
 
             ##
-            # @return [String] The URI for this resource, relative to https://api.
+            # @return [String] The URI of the resource, relative to `https://api.twilio.com`
             def uri
               @properties['uri']
             end
 
             ##
-            # @return [Boolean] This is a value that indicates if emergency calling has been enabled on this number.
+            # @return [Boolean] Whether emergency calling has been enabled on this number
             def emergency_enabled
               @properties['emergency_enabled']
             end
 
             ##
-            # @return [Boolean] In some countries, addresses are validated to comply with local regulation.
+            # @return [Boolean] Whether the address has been validated to comply with local regulation
             def validated
               @properties['validated']
             end
@@ -469,22 +469,19 @@ module Twilio
 
             ##
             # Update the AddressInstance
-            # @param [String] friendly_name A human-readable description of the address.
-            #   Maximum 64 characters.
-            # @param [String] customer_name Your name or business name, or that of your
-            #   customer.
-            # @param [String] street The number and street address where you or your customer
-            #   is located.
-            # @param [String] city The city in which you or your customer is located.
-            # @param [String] region The state or region in which you or your customer is
-            #   located.
-            # @param [String] postal_code The postal code in which you or your customer is
-            #   located.
-            # @param [Boolean] emergency_enabled The emergency_enabled
-            # @param [Boolean] auto_correct_address If you don't set a value for this
-            #   parameter, or if you set it to `true`, then the system will, if necessary,
-            #   auto-correct the address you provide. If you don't want the system to
-            #   auto-correct the address, you will explicitly need to set this value to `false`.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the address. It can be up to 64 characters long.
+            # @param [String] customer_name The name to associate with the address.
+            # @param [String] street The number and street address of the address.
+            # @param [String] city The city of the address.
+            # @param [String] region The state or region of the address.
+            # @param [String] postal_code The postal code of the address.
+            # @param [Boolean] emergency_enabled Whether to enable emergency calling on the
+            #   address. Can be: `true` or `false`.
+            # @param [Boolean] auto_correct_address Whether we should automatically correct
+            #   the address. Can be: `true` or `false` and the default is `true`. If empty or
+            #   `true`, we will correct the address you provide if necessary. If `false`, we
+            #   won't alter the address you provide.
             # @return [AddressInstance] Updated AddressInstance
             def update(friendly_name: :unset, customer_name: :unset, street: :unset, city: :unset, region: :unset, postal_code: :unset, emergency_enabled: :unset, auto_correct_address: :unset)
               context.update(

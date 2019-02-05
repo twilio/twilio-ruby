@@ -44,7 +44,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this address.
+      # @param [String] sid The unique string that that we created to identify the
+      #   Address resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::AddressInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::AddressList]
       def addresses(sid=:unset)
@@ -52,8 +53,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
-      #   resource.
+      # @param [String] sid The unique string that that we created to identify the
+      #   Application resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::ApplicationInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::ApplicationList]
       def applications(sid=:unset)
@@ -61,8 +62,7 @@ module Twilio
       end
 
       ##
-      # @param [String] connect_app_sid The unique id of the Connect App that was
-      #   authorized.
+      # @param [String] connect_app_sid The SID that we assigned to the Connect App.
       # @return [Twilio::REST::Api::V2010::AccountContext::AuthorizedConnectAppInstance] if connect_app_sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::AuthorizedConnectAppList]
       def authorized_connect_apps(connect_app_sid=:unset)
@@ -70,7 +70,9 @@ module Twilio
       end
 
       ##
-      # @param [String] country_code The ISO Country code to lookup phone numbers for.
+      # @param [String] country_code The
+      #   [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of
+      #   the country.
       # @return [Twilio::REST::Api::V2010::AccountContext::AvailablePhoneNumberCountryInstance] if country_code was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::AvailablePhoneNumberCountryList]
       def available_phone_numbers(country_code=:unset)
@@ -102,7 +104,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The unique id of this Connect App.
+      # @param [String] sid The unique string that that we created to identify the
+      #   ConnectApp resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::ConnectAppInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::ConnectAppList]
       def connect_apps(sid=:unset)
@@ -110,8 +113,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
-      #   resource.
+      # @param [String] sid The unique string that that we created to identify this
+      #   IncomingPhoneNumber resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::IncomingPhoneNumberInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::IncomingPhoneNumberList]
       def incoming_phone_numbers(sid=:unset)
@@ -149,8 +152,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
-      #   resource.
+      # @param [String] sid The unique string that that we created to identify the
+      #   Notification resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::NotificationInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::NotificationList]
       def notifications(sid=:unset)
@@ -158,8 +161,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
-      #   resource.
+      # @param [String] sid The unique string that that we created to identify the
+      #   OutgoingCallerId resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::OutgoingCallerIdInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::OutgoingCallerIdList]
       def outgoing_caller_ids(sid=:unset)

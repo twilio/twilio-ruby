@@ -16,9 +16,10 @@ module Twilio
               ##
               # Initialize the VoipList
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The 34 character string that uniquely identifies
-              #   your account.
-              # @param [String] country_code The ISO Country code to lookup phone numbers for.
+              # @param [String] account_sid The account_sid
+              # @param [String] country_code The
+              #   [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of
+              #   the country.
               # @return [VoipList] VoipList
               def initialize(version, account_sid: nil, country_code: nil)
                 super(version)
@@ -32,26 +33,57 @@ module Twilio
               # Lists VoipInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] area_code The area_code
-              # @param [String] contains The contains
-              # @param [Boolean] sms_enabled The sms_enabled
-              # @param [Boolean] mms_enabled The mms_enabled
-              # @param [Boolean] voice_enabled The voice_enabled
-              # @param [Boolean] exclude_all_address_required The exclude_all_address_required
-              # @param [Boolean] exclude_local_address_required The
-              #   exclude_local_address_required
-              # @param [Boolean] exclude_foreign_address_required The
-              #   exclude_foreign_address_required
-              # @param [Boolean] beta The beta
-              # @param [String] near_number The near_number
-              # @param [String] near_lat_long The near_lat_long
-              # @param [String] distance The distance
-              # @param [String] in_postal_code The in_postal_code
-              # @param [String] in_region The in_region
-              # @param [String] in_rate_center The in_rate_center
-              # @param [String] in_lata The in_lata
-              # @param [String] in_locality The in_locality
-              # @param [Boolean] fax_enabled The fax_enabled
+              # @param [String] area_code The area code of the phone numbers to read. Applies to
+              #   only phone numbers in the US and Canada.
+              # @param [String] contains The pattern on which to match phone numbers. Valid
+              #   characters are `*`, `0-9`, `a-z`, and `A-Z`. The `*` character matches any
+              #   single digit. For examples, see [Example
+              #   2](https://www.twilio.com/docs/api/rest/available-phone-numbers#local-get-basic-example-2) and [Example 3](https://www.twilio.com/docs/api/rest/available-phone-numbers#local-get-basic-example-3). If specified, this value must have at least two characters.
+              # @param [Boolean] sms_enabled Whether the phone numbers can receive text
+              #   messages. Can be: `true` or `false`.
+              # @param [Boolean] mms_enabled Whether the phone numbers can receive MMS messages.
+              #   Can be: `true` or `false`.
+              # @param [Boolean] voice_enabled Whether the phone numbers can receive calls. Can
+              #   be: `true` or `false`.
+              # @param [Boolean] exclude_all_address_required Whether to exclude phone numbers
+              #   that require an [Address](https://www.twilio.com/docs/usage/api/addresses). Can
+              #   be: `true` or `false` and the default is `false`.
+              # @param [Boolean] exclude_local_address_required Whether to exclude phone numbers
+              #   that require a local [Address](https://www.twilio.com/docs/usage/api/addresses).
+              #   Can be: `true` or `false` and the default is `false`.
+              # @param [Boolean] exclude_foreign_address_required Whether to exclude phone
+              #   numbers that require a foreign
+              #   [Address](https://www.twilio.com/docs/usage/api/addresses). Can be: `true` or
+              #   `false` and the default is `false`.
+              # @param [Boolean] beta Whether to read phone numbers that are new to the Twilio
+              #   platform. Can be: `true` or `false` and the default is `true`.
+              # @param [String] near_number Given a phone number, find a geographically close
+              #   number within `distance` miles. Distance defaults to 25 miles. Applies to only
+              #   phone numbers in the US and Canada.
+              # @param [String] near_lat_long Given a latitude/longitude pair `lat,long` find
+              #   geographically close numbers within `distance` miles. Applies to only phone
+              #   numbers in the US and Canada.
+              # @param [String] distance The search radius, in miles, for a `near_` query.  Can
+              #   be up to `500` and the default is `25`. Applies to only phone numbers in the US
+              #   and Canada.
+              # @param [String] in_postal_code Limit results to a particular postal code. Given
+              #   a phone number, search within the same postal code as that number. Applies to
+              #   only phone numbers in the US and Canada.
+              # @param [String] in_region Limit results to a particular region, state, or
+              #   province. Given a phone number, search within the same region as that number.
+              #   Applies to only phone numbers in the US and Canada.
+              # @param [String] in_rate_center Limit results to a specific rate center, or given
+              #   a phone number search within the same rate center as that number. Requires
+              #   `in_lata` to be set as well. Applies to only phone numbers in the US and Canada.
+              # @param [String] in_lata Limit results to a specific local access and transport
+              #   area ([LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area)).
+              #   Given a phone number, search within the same
+              #   [LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area) as that
+              #   number. Applies to only phone numbers in the US and Canada.
+              # @param [String] in_locality Limit results to a particular locality or city.
+              #   Given a phone number, search within the same Locality as that number.
+              # @param [Boolean] fax_enabled Whether the phone numbers can receive faxes. Can
+              #   be: `true` or `false`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -88,26 +120,57 @@ module Twilio
               # Streams VoipInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] area_code The area_code
-              # @param [String] contains The contains
-              # @param [Boolean] sms_enabled The sms_enabled
-              # @param [Boolean] mms_enabled The mms_enabled
-              # @param [Boolean] voice_enabled The voice_enabled
-              # @param [Boolean] exclude_all_address_required The exclude_all_address_required
-              # @param [Boolean] exclude_local_address_required The
-              #   exclude_local_address_required
-              # @param [Boolean] exclude_foreign_address_required The
-              #   exclude_foreign_address_required
-              # @param [Boolean] beta The beta
-              # @param [String] near_number The near_number
-              # @param [String] near_lat_long The near_lat_long
-              # @param [String] distance The distance
-              # @param [String] in_postal_code The in_postal_code
-              # @param [String] in_region The in_region
-              # @param [String] in_rate_center The in_rate_center
-              # @param [String] in_lata The in_lata
-              # @param [String] in_locality The in_locality
-              # @param [Boolean] fax_enabled The fax_enabled
+              # @param [String] area_code The area code of the phone numbers to read. Applies to
+              #   only phone numbers in the US and Canada.
+              # @param [String] contains The pattern on which to match phone numbers. Valid
+              #   characters are `*`, `0-9`, `a-z`, and `A-Z`. The `*` character matches any
+              #   single digit. For examples, see [Example
+              #   2](https://www.twilio.com/docs/api/rest/available-phone-numbers#local-get-basic-example-2) and [Example 3](https://www.twilio.com/docs/api/rest/available-phone-numbers#local-get-basic-example-3). If specified, this value must have at least two characters.
+              # @param [Boolean] sms_enabled Whether the phone numbers can receive text
+              #   messages. Can be: `true` or `false`.
+              # @param [Boolean] mms_enabled Whether the phone numbers can receive MMS messages.
+              #   Can be: `true` or `false`.
+              # @param [Boolean] voice_enabled Whether the phone numbers can receive calls. Can
+              #   be: `true` or `false`.
+              # @param [Boolean] exclude_all_address_required Whether to exclude phone numbers
+              #   that require an [Address](https://www.twilio.com/docs/usage/api/addresses). Can
+              #   be: `true` or `false` and the default is `false`.
+              # @param [Boolean] exclude_local_address_required Whether to exclude phone numbers
+              #   that require a local [Address](https://www.twilio.com/docs/usage/api/addresses).
+              #   Can be: `true` or `false` and the default is `false`.
+              # @param [Boolean] exclude_foreign_address_required Whether to exclude phone
+              #   numbers that require a foreign
+              #   [Address](https://www.twilio.com/docs/usage/api/addresses). Can be: `true` or
+              #   `false` and the default is `false`.
+              # @param [Boolean] beta Whether to read phone numbers that are new to the Twilio
+              #   platform. Can be: `true` or `false` and the default is `true`.
+              # @param [String] near_number Given a phone number, find a geographically close
+              #   number within `distance` miles. Distance defaults to 25 miles. Applies to only
+              #   phone numbers in the US and Canada.
+              # @param [String] near_lat_long Given a latitude/longitude pair `lat,long` find
+              #   geographically close numbers within `distance` miles. Applies to only phone
+              #   numbers in the US and Canada.
+              # @param [String] distance The search radius, in miles, for a `near_` query.  Can
+              #   be up to `500` and the default is `25`. Applies to only phone numbers in the US
+              #   and Canada.
+              # @param [String] in_postal_code Limit results to a particular postal code. Given
+              #   a phone number, search within the same postal code as that number. Applies to
+              #   only phone numbers in the US and Canada.
+              # @param [String] in_region Limit results to a particular region, state, or
+              #   province. Given a phone number, search within the same region as that number.
+              #   Applies to only phone numbers in the US and Canada.
+              # @param [String] in_rate_center Limit results to a specific rate center, or given
+              #   a phone number search within the same rate center as that number. Requires
+              #   `in_lata` to be set as well. Applies to only phone numbers in the US and Canada.
+              # @param [String] in_lata Limit results to a specific local access and transport
+              #   area ([LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area)).
+              #   Given a phone number, search within the same
+              #   [LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area) as that
+              #   number. Applies to only phone numbers in the US and Canada.
+              # @param [String] in_locality Limit results to a particular locality or city.
+              #   Given a phone number, search within the same Locality as that number.
+              # @param [Boolean] fax_enabled Whether the phone numbers can receive faxes. Can
+              #   be: `true` or `false`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -160,26 +223,57 @@ module Twilio
               ##
               # Retrieve a single page of VoipInstance records from the API.
               # Request is executed immediately.
-              # @param [String] area_code The area_code
-              # @param [String] contains The contains
-              # @param [Boolean] sms_enabled The sms_enabled
-              # @param [Boolean] mms_enabled The mms_enabled
-              # @param [Boolean] voice_enabled The voice_enabled
-              # @param [Boolean] exclude_all_address_required The exclude_all_address_required
-              # @param [Boolean] exclude_local_address_required The
-              #   exclude_local_address_required
-              # @param [Boolean] exclude_foreign_address_required The
-              #   exclude_foreign_address_required
-              # @param [Boolean] beta The beta
-              # @param [String] near_number The near_number
-              # @param [String] near_lat_long The near_lat_long
-              # @param [String] distance The distance
-              # @param [String] in_postal_code The in_postal_code
-              # @param [String] in_region The in_region
-              # @param [String] in_rate_center The in_rate_center
-              # @param [String] in_lata The in_lata
-              # @param [String] in_locality The in_locality
-              # @param [Boolean] fax_enabled The fax_enabled
+              # @param [String] area_code The area code of the phone numbers to read. Applies to
+              #   only phone numbers in the US and Canada.
+              # @param [String] contains The pattern on which to match phone numbers. Valid
+              #   characters are `*`, `0-9`, `a-z`, and `A-Z`. The `*` character matches any
+              #   single digit. For examples, see [Example
+              #   2](https://www.twilio.com/docs/api/rest/available-phone-numbers#local-get-basic-example-2) and [Example 3](https://www.twilio.com/docs/api/rest/available-phone-numbers#local-get-basic-example-3). If specified, this value must have at least two characters.
+              # @param [Boolean] sms_enabled Whether the phone numbers can receive text
+              #   messages. Can be: `true` or `false`.
+              # @param [Boolean] mms_enabled Whether the phone numbers can receive MMS messages.
+              #   Can be: `true` or `false`.
+              # @param [Boolean] voice_enabled Whether the phone numbers can receive calls. Can
+              #   be: `true` or `false`.
+              # @param [Boolean] exclude_all_address_required Whether to exclude phone numbers
+              #   that require an [Address](https://www.twilio.com/docs/usage/api/addresses). Can
+              #   be: `true` or `false` and the default is `false`.
+              # @param [Boolean] exclude_local_address_required Whether to exclude phone numbers
+              #   that require a local [Address](https://www.twilio.com/docs/usage/api/addresses).
+              #   Can be: `true` or `false` and the default is `false`.
+              # @param [Boolean] exclude_foreign_address_required Whether to exclude phone
+              #   numbers that require a foreign
+              #   [Address](https://www.twilio.com/docs/usage/api/addresses). Can be: `true` or
+              #   `false` and the default is `false`.
+              # @param [Boolean] beta Whether to read phone numbers that are new to the Twilio
+              #   platform. Can be: `true` or `false` and the default is `true`.
+              # @param [String] near_number Given a phone number, find a geographically close
+              #   number within `distance` miles. Distance defaults to 25 miles. Applies to only
+              #   phone numbers in the US and Canada.
+              # @param [String] near_lat_long Given a latitude/longitude pair `lat,long` find
+              #   geographically close numbers within `distance` miles. Applies to only phone
+              #   numbers in the US and Canada.
+              # @param [String] distance The search radius, in miles, for a `near_` query.  Can
+              #   be up to `500` and the default is `25`. Applies to only phone numbers in the US
+              #   and Canada.
+              # @param [String] in_postal_code Limit results to a particular postal code. Given
+              #   a phone number, search within the same postal code as that number. Applies to
+              #   only phone numbers in the US and Canada.
+              # @param [String] in_region Limit results to a particular region, state, or
+              #   province. Given a phone number, search within the same region as that number.
+              #   Applies to only phone numbers in the US and Canada.
+              # @param [String] in_rate_center Limit results to a specific rate center, or given
+              #   a phone number search within the same rate center as that number. Requires
+              #   `in_lata` to be set as well. Applies to only phone numbers in the US and Canada.
+              # @param [String] in_lata Limit results to a specific local access and transport
+              #   area ([LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area)).
+              #   Given a phone number, search within the same
+              #   [LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area) as that
+              #   number. Applies to only phone numbers in the US and Canada.
+              # @param [String] in_locality Limit results to a particular locality or city.
+              #   Given a phone number, search within the same Locality as that number.
+              # @param [Boolean] fax_enabled Whether the phone numbers can receive faxes. Can
+              #   be: `true` or `false`.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -275,9 +369,10 @@ module Twilio
               # Initialize the VoipInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] account_sid The 34 character string that uniquely identifies
-              #   your account.
-              # @param [String] country_code The ISO Country code to lookup phone numbers for.
+              # @param [String] account_sid The account_sid
+              # @param [String] country_code The
+              #   [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of
+              #   the country.
               # @return [VoipInstance] VoipInstance
               def initialize(version, payload, account_sid: nil, country_code: nil)
                 super(version)
@@ -301,79 +396,79 @@ module Twilio
               end
 
               ##
-              # @return [String] The friendly_name
+              # @return [String] A formatted version of the phone number
               def friendly_name
                 @properties['friendly_name']
               end
 
               ##
-              # @return [String] The phone_number
+              # @return [String] The phone number in E.164 format
               def phone_number
                 @properties['phone_number']
               end
 
               ##
-              # @return [String] The lata
+              # @return [String] The LATA of this phone number
               def lata
                 @properties['lata']
               end
 
               ##
-              # @return [String] The locality
+              # @return [String] The locality or city of this phone number's location
               def locality
                 @properties['locality']
               end
 
               ##
-              # @return [String] The rate_center
+              # @return [String] The rate center of this phone number
               def rate_center
                 @properties['rate_center']
               end
 
               ##
-              # @return [String] The latitude
+              # @return [String] The latitude of this phone number's location
               def latitude
                 @properties['latitude']
               end
 
               ##
-              # @return [String] The longitude
+              # @return [String] The longitude of this phone number's location
               def longitude
                 @properties['longitude']
               end
 
               ##
-              # @return [String] The region
+              # @return [String] The two-letter state or province abbreviation of this phone number's location
               def region
                 @properties['region']
               end
 
               ##
-              # @return [String] The postal_code
+              # @return [String] The postal or ZIP code of this phone number's location
               def postal_code
                 @properties['postal_code']
               end
 
               ##
-              # @return [String] The iso_country
+              # @return [String] The ISO country code of this phone number
               def iso_country
                 @properties['iso_country']
               end
 
               ##
-              # @return [String] The address_requirements
+              # @return [String] The type of Address resource the phone number requires
               def address_requirements
                 @properties['address_requirements']
               end
 
               ##
-              # @return [Boolean] The beta
+              # @return [Boolean] Whether the phone number is new to the Twilio platform
               def beta
                 @properties['beta']
               end
 
               ##
-              # @return [String] The capabilities
+              # @return [String] Whether a phone number can receive calls or messages
               def capabilities
                 @properties['capabilities']
               end
