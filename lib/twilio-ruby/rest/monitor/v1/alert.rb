@@ -233,6 +233,13 @@ module Twilio
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
             "#<Twilio.Monitor.V1.AlertContext #{context}>"
           end
+
+          ##
+          # Provide a detailed, user friendly representation
+          def inspect
+            context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+            "#<Twilio.Monitor.V1.AlertContext #{context}>"
+          end
         end
 
         class AlertInstance < InstanceResource

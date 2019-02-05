@@ -228,6 +228,13 @@ module Twilio
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
               "#<Twilio.Accounts.V1.PublicKeyContext #{context}>"
             end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Accounts.V1.PublicKeyContext #{context}>"
+            end
           end
 
           class PublicKeyInstance < InstanceResource

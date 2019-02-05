@@ -357,6 +357,13 @@ module Twilio
                 context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
                 "#<Twilio.Taskrouter.V1.ReservationContext #{context}>"
               end
+
+              ##
+              # Provide a detailed, user friendly representation
+              def inspect
+                context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                "#<Twilio.Taskrouter.V1.ReservationContext #{context}>"
+              end
             end
 
             class ReservationInstance < InstanceResource

@@ -274,6 +274,13 @@ module Twilio
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
               "#<Twilio.Studio.V1.ExecutionContext #{context}>"
             end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Studio.V1.ExecutionContext #{context}>"
+            end
           end
 
           class ExecutionInstance < InstanceResource

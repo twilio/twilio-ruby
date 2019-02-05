@@ -131,6 +131,13 @@ module Twilio
                 context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
                 "#<Twilio.Taskrouter.V1.TaskQueueCumulativeStatisticsContext #{context}>"
               end
+
+              ##
+              # Provide a detailed, user friendly representation
+              def inspect
+                context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                "#<Twilio.Taskrouter.V1.TaskQueueCumulativeStatisticsContext #{context}>"
+              end
             end
 
             class TaskQueueCumulativeStatisticsInstance < InstanceResource

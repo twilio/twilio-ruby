@@ -99,6 +99,13 @@ module Twilio
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
             "#<Twilio.Insights.V1.CallSummaryContext #{context}>"
           end
+
+          ##
+          # Provide a detailed, user friendly representation
+          def inspect
+            context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+            "#<Twilio.Insights.V1.CallSummaryContext #{context}>"
+          end
         end
 
         ##
