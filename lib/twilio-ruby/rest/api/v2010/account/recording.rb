@@ -279,6 +279,13 @@ module Twilio
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
               "#<Twilio.Api.V2010.RecordingContext #{context}>"
             end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Api.V2010.RecordingContext #{context}>"
+            end
           end
 
           class RecordingInstance < InstanceResource

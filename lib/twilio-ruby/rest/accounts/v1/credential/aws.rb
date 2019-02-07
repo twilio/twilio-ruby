@@ -229,6 +229,13 @@ module Twilio
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
               "#<Twilio.Accounts.V1.AwsContext #{context}>"
             end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Accounts.V1.AwsContext #{context}>"
+            end
           end
 
           class AwsInstance < InstanceResource

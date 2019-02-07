@@ -241,6 +241,13 @@ module Twilio
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
               "#<Twilio.Api.V2010.OutgoingCallerIdContext #{context}>"
             end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Api.V2010.OutgoingCallerIdContext #{context}>"
+            end
           end
 
           class OutgoingCallerIdInstance < InstanceResource

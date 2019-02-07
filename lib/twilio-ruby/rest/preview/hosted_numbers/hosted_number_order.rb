@@ -374,6 +374,13 @@ module Twilio
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
             "#<Twilio.Preview.HostedNumbers.HostedNumberOrderContext #{context}>"
           end
+
+          ##
+          # Provide a detailed, user friendly representation
+          def inspect
+            context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+            "#<Twilio.Preview.HostedNumbers.HostedNumberOrderContext #{context}>"
+          end
         end
 
         ##

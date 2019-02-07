@@ -386,6 +386,13 @@ module Twilio
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
             "#<Twilio.Autopilot.V1.AssistantContext #{context}>"
           end
+
+          ##
+          # Provide a detailed, user friendly representation
+          def inspect
+            context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+            "#<Twilio.Autopilot.V1.AssistantContext #{context}>"
+          end
         end
 
         ##
