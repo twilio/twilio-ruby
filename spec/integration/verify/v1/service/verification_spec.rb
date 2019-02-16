@@ -48,7 +48,9 @@ describe 'Verification' do
                   "mobile_network_code": "150",
                   "type": "mobile"
               }
-          }
+          },
+          "amount": "$29.99",
+          "payee": "Acme"
       }
       ]
     ))

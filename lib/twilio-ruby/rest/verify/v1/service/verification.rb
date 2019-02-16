@@ -42,8 +42,12 @@ module Twilio
             #   th, tl, tr, vi, zh, zh-CN, zh-HK
             # @param [String] custom_code Pass in a pre-generated code. Code length can be
             #   between 4-10 characters.
+            # @param [String] amount Amount of the associated PSD2 compliant transaction.
+            #   Requires the PSD2 Service flag enabled.
+            # @param [String] payee Payee of the associated PSD2 compliant transaction.
+            #   Requires the PSD2 Service flag enabled.
             # @return [VerificationInstance] Newly created VerificationInstance
-            def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset)
+            def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'Channel' => channel,
@@ -51,6 +55,8 @@ module Twilio
                   'SendDigits' => send_digits,
                   'Locale' => locale,
                   'CustomCode' => custom_code,
+                  'Amount' => amount,
+                  'Payee' => payee,
               })
 
               payload = @version.create(
@@ -122,6 +128,8 @@ module Twilio
                   'status' => payload['status'],
                   'valid' => payload['valid'],
                   'lookup' => payload['lookup'],
+                  'amount' => payload['amount'],
+                  'payee' => payload['payee'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
               }
@@ -173,6 +181,18 @@ module Twilio
             # @return [Hash] Info about the phone number
             def lookup
               @properties['lookup']
+            end
+
+            ##
+            # @return [String] Amount of the associated PSD2 compliant transaction.
+            def amount
+              @properties['amount']
+            end
+
+            ##
+            # @return [String] Payee of the associated PSD2 compliant transaction.
+            def payee
+              @properties['payee']
             end
 
             ##

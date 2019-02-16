@@ -35,9 +35,19 @@ module Twilio
             # @param [String] verification_sid A SID that uniquely identifies this
             #   Verification Check, either this parameter or the To phone number must be
             #   specified
+            # @param [String] amount Amount of the associated PSD2 compliant transaction.
+            #   Requires the PSD2 Service flag enabled.
+            # @param [String] payee Payee of the associated PSD2 compliant transaction.
+            #   Requires the PSD2 Service flag enabled.
             # @return [VerificationCheckInstance] Newly created VerificationCheckInstance
-            def create(code: nil, to: :unset, verification_sid: :unset)
-              data = Twilio::Values.of({'Code' => code, 'To' => to, 'VerificationSid' => verification_sid, })
+            def create(code: nil, to: :unset, verification_sid: :unset, amount: :unset, payee: :unset)
+              data = Twilio::Values.of({
+                  'Code' => code,
+                  'To' => to,
+                  'VerificationSid' => verification_sid,
+                  'Amount' => amount,
+                  'Payee' => payee,
+              })
 
               payload = @version.create(
                   'POST',
@@ -107,6 +117,8 @@ module Twilio
                   'channel' => payload['channel'],
                   'status' => payload['status'],
                   'valid' => payload['valid'],
+                  'amount' => payload['amount'],
+                  'payee' => payload['payee'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
               }
@@ -152,6 +164,18 @@ module Twilio
             # @return [Boolean] successful verification
             def valid
               @properties['valid']
+            end
+
+            ##
+            # @return [String] Amount of the associated PSD2 compliant transaction.
+            def amount
+              @properties['amount']
+            end
+
+            ##
+            # @return [String] Payee of the associated PSD2 compliant transaction.
+            def payee
+              @properties['payee']
             end
 
             ##

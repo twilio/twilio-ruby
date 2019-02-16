@@ -40,8 +40,10 @@ module Twilio
           #   to require a random number input to deliver the verify code via phone calls
           # @param [String] tts_name Alternative to be used as Service friendly name in
           #   phone calls, only applies to TTS languages
+          # @param [Boolean] psd2_enabled Boolean value that enables to pass PSD2
+          #   transaction parameters when starting a verification
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset)
+          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
@@ -49,6 +51,7 @@ module Twilio
                 'SkipSmsToLandlines' => skip_sms_to_landlines,
                 'DtmfInputRequired' => dtmf_input_required,
                 'TtsName' => tts_name,
+                'Psd2Enabled' => psd2_enabled,
             })
 
             payload = @version.create(
@@ -236,8 +239,10 @@ module Twilio
           #   to require a random number input to deliver the verify code via phone calls
           # @param [String] tts_name Alternative to be used as Service friendly name in
           #   phone calls, only applies to TTS languages
+          # @param [Boolean] psd2_enabled Boolean value that enables to pass PSD2
+          #   transaction parameters when starting a verification
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
@@ -245,6 +250,7 @@ module Twilio
                 'SkipSmsToLandlines' => skip_sms_to_landlines,
                 'DtmfInputRequired' => dtmf_input_required,
                 'TtsName' => tts_name,
+                'Psd2Enabled' => psd2_enabled,
             })
 
             payload = @version.update(
@@ -314,6 +320,7 @@ module Twilio
                 'friendly_name' => payload['friendly_name'],
                 'code_length' => payload['code_length'].to_i,
                 'lookup_enabled' => payload['lookup_enabled'],
+                'psd2_enabled' => payload['psd2_enabled'],
                 'skip_sms_to_landlines' => payload['skip_sms_to_landlines'],
                 'dtmf_input_required' => payload['dtmf_input_required'],
                 'tts_name' => payload['tts_name'],
@@ -367,6 +374,12 @@ module Twilio
           # @return [Boolean] Indicates whether or not to perform a lookup with each verification started
           def lookup_enabled
             @properties['lookup_enabled']
+          end
+
+          ##
+          # @return [Boolean] Indicates whether PSD2 parameters are enabled or not
+          def psd2_enabled
+            @properties['psd2_enabled']
           end
 
           ##
@@ -439,8 +452,10 @@ module Twilio
           #   to require a random number input to deliver the verify code via phone calls
           # @param [String] tts_name Alternative to be used as Service friendly name in
           #   phone calls, only applies to TTS languages
+          # @param [Boolean] psd2_enabled Boolean value that enables to pass PSD2
+          #   transaction parameters when starting a verification
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset)
             context.update(
                 friendly_name: friendly_name,
                 code_length: code_length,
@@ -448,6 +463,7 @@ module Twilio
                 skip_sms_to_landlines: skip_sms_to_landlines,
                 dtmf_input_required: dtmf_input_required,
                 tts_name: tts_name,
+                psd2_enabled: psd2_enabled,
             )
           end
 

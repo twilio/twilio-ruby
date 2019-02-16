@@ -77,6 +77,8 @@ module Twilio
             # @param [String] interactive_data A JSON string that represents interactive
             #   message which is a category of messages including list picker, time picker, and
             #   an Apple Pay request.
+            # @param [Boolean] force_opt_in A boolean that forcefully whitelists a from:to
+            #   pair when set to true.
             # @param [String] from A Twilio phone number (in
             #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format),  [alphanumeric
             #   sender
@@ -107,7 +109,7 @@ module Twilio
             #   You may include up to 10 MediaUrls per message. *Sending images via SMS is
             #   currently only possible in the US and Canada*
             # @return [MessageInstance] Newly created MessageInstance
-            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, max_rate: :unset, force_delivery: :unset, provider_sid: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, interactive_data: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
+            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, max_rate: :unset, force_delivery: :unset, provider_sid: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, interactive_data: :unset, force_opt_in: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -126,6 +128,7 @@ module Twilio
                   'AddressRetention' => address_retention,
                   'SmartEncoded' => smart_encoded,
                   'InteractiveData' => interactive_data,
+                  'ForceOptIn' => force_opt_in,
               })
 
               payload = @version.create(

@@ -122,6 +122,7 @@ module Twilio
                   'account_sid' => payload['account_sid'],
                   'activity_statistics' => payload['activity_statistics'],
                   'longest_task_waiting_age' => payload['longest_task_waiting_age'].to_i,
+                  'longest_task_waiting_sid' => payload['longest_task_waiting_sid'],
                   'tasks_by_priority' => payload['tasks_by_priority'],
                   'tasks_by_status' => payload['tasks_by_status'],
                   'total_tasks' => payload['total_tasks'].to_i,
@@ -162,6 +163,12 @@ module Twilio
             # @return [String] The age of the longest waiting Task
             def longest_task_waiting_age
               @properties['longest_task_waiting_age']
+            end
+
+            ##
+            # @return [String] The SID of the longest waiting Task
+            def longest_task_waiting_sid
+              @properties['longest_task_waiting_sid']
             end
 
             ##

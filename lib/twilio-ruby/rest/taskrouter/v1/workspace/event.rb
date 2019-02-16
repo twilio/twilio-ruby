@@ -15,7 +15,7 @@ module Twilio
             ##
             # Initialize the EventList
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The unique ID of the Workspace
+            # @param [String] workspace_sid The workspace_sid
             # @return [EventList] EventList
             def initialize(version, workspace_sid: nil)
               super(version)
@@ -44,7 +44,11 @@ module Twilio
             # @param [String] task_sid Filter events by those pertaining to a particular task
             # @param [String] worker_sid Filter events by those pertaining to a particular
             #   worker
-            # @param [String] workflow_sid The workflow_sid
+            # @param [String] workflow_sid Filter events by those pertaining to a particular
+            #   workflow
+            # @param [String] task_channel Filter events by those pertaining to a particular
+            #   task channel
+            # @param [String] sid Filter events by those pertaining to a particular event
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -52,7 +56,7 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(end_date: :unset, event_type: :unset, minutes: :unset, reservation_sid: :unset, start_date: :unset, task_queue_sid: :unset, task_sid: :unset, worker_sid: :unset, workflow_sid: :unset, limit: nil, page_size: nil)
+            def list(end_date: :unset, event_type: :unset, minutes: :unset, reservation_sid: :unset, start_date: :unset, task_queue_sid: :unset, task_sid: :unset, worker_sid: :unset, workflow_sid: :unset, task_channel: :unset, sid: :unset, limit: nil, page_size: nil)
               self.stream(
                   end_date: end_date,
                   event_type: event_type,
@@ -63,6 +67,8 @@ module Twilio
                   task_sid: task_sid,
                   worker_sid: worker_sid,
                   workflow_sid: workflow_sid,
+                  task_channel: task_channel,
+                  sid: sid,
                   limit: limit,
                   page_size: page_size
               ).entries
@@ -87,7 +93,11 @@ module Twilio
             # @param [String] task_sid Filter events by those pertaining to a particular task
             # @param [String] worker_sid Filter events by those pertaining to a particular
             #   worker
-            # @param [String] workflow_sid The workflow_sid
+            # @param [String] workflow_sid Filter events by those pertaining to a particular
+            #   workflow
+            # @param [String] task_channel Filter events by those pertaining to a particular
+            #   task channel
+            # @param [String] sid Filter events by those pertaining to a particular event
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -95,7 +105,7 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(end_date: :unset, event_type: :unset, minutes: :unset, reservation_sid: :unset, start_date: :unset, task_queue_sid: :unset, task_sid: :unset, worker_sid: :unset, workflow_sid: :unset, limit: nil, page_size: nil)
+            def stream(end_date: :unset, event_type: :unset, minutes: :unset, reservation_sid: :unset, start_date: :unset, task_queue_sid: :unset, task_sid: :unset, worker_sid: :unset, workflow_sid: :unset, task_channel: :unset, sid: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -108,6 +118,8 @@ module Twilio
                   task_sid: task_sid,
                   worker_sid: worker_sid,
                   workflow_sid: workflow_sid,
+                  task_channel: task_channel,
+                  sid: sid,
                   page_size: limits[:page_size],
               )
 
@@ -146,12 +158,16 @@ module Twilio
             # @param [String] task_sid Filter events by those pertaining to a particular task
             # @param [String] worker_sid Filter events by those pertaining to a particular
             #   worker
-            # @param [String] workflow_sid The workflow_sid
+            # @param [String] workflow_sid Filter events by those pertaining to a particular
+            #   workflow
+            # @param [String] task_channel Filter events by those pertaining to a particular
+            #   task channel
+            # @param [String] sid Filter events by those pertaining to a particular event
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of EventInstance
-            def page(end_date: :unset, event_type: :unset, minutes: :unset, reservation_sid: :unset, start_date: :unset, task_queue_sid: :unset, task_sid: :unset, worker_sid: :unset, workflow_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            def page(end_date: :unset, event_type: :unset, minutes: :unset, reservation_sid: :unset, start_date: :unset, task_queue_sid: :unset, task_sid: :unset, worker_sid: :unset, workflow_sid: :unset, task_channel: :unset, sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'EndDate' => Twilio.serialize_iso8601_datetime(end_date),
                   'EventType' => event_type,
@@ -162,6 +178,8 @@ module Twilio
                   'TaskSid' => task_sid,
                   'WorkerSid' => worker_sid,
                   'WorkflowSid' => workflow_sid,
+                  'TaskChannel' => task_channel,
+                  'Sid' => sid,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
@@ -273,7 +291,7 @@ module Twilio
             # Initialize the EventInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] workspace_sid The unique ID of the Workspace
+            # @param [String] workspace_sid The workspace_sid
             # @param [String] sid The sid
             # @return [EventInstance] EventInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
@@ -288,6 +306,7 @@ module Twilio
                   'description' => payload['description'],
                   'event_data' => payload['event_data'],
                   'event_date' => Twilio.deserialize_iso8601_datetime(payload['event_date']),
+                  'event_date_ms' => payload['event_date_ms'].to_i,
                   'event_type' => payload['event_type'],
                   'resource_sid' => payload['resource_sid'],
                   'resource_type' => payload['resource_type'],
@@ -296,6 +315,7 @@ module Twilio
                   'source' => payload['source'],
                   'source_ip_address' => payload['source_ip_address'],
                   'url' => payload['url'],
+                  'workspace_sid' => payload['workspace_sid'],
               }
 
               # Context
@@ -345,7 +365,7 @@ module Twilio
             end
 
             ##
-            # @return [String] Data about this specific event.
+            # @return [Hash] Data about this specific event.
             def event_data
               @properties['event_data']
             end
@@ -354,6 +374,12 @@ module Twilio
             # @return [Time] The time this event was sent
             def event_date
               @properties['event_date']
+            end
+
+            ##
+            # @return [String] The time this event was sent in ms
+            def event_date_ms
+              @properties['event_date_ms']
             end
 
             ##
@@ -402,6 +428,12 @@ module Twilio
             # @return [String] The url
             def url
               @properties['url']
+            end
+
+            ##
+            # @return [String] The workspace_sid
+            def workspace_sid
+              @properties['workspace_sid']
             end
 
             ##

@@ -31,6 +31,7 @@ module Twilio
         @autopilot = nil
         @chat = nil
         @fax = nil
+        @flex_api = nil
         @ip_messaging = nil
         @lookups = nil
         @monitor = nil
@@ -132,6 +133,12 @@ module Twilio
       # Access the Fax Twilio Domain
       def fax
         @fax ||= Fax.new self
+      end
+
+      ##
+      # Access the FlexApi Twilio Domain
+      def flex_api
+        @flex_api ||= FlexApi.new self
       end
 
       ##

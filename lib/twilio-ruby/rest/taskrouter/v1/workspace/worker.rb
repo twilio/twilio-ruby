@@ -304,12 +304,14 @@ module Twilio
             # @param [String] activity_sid The activity_sid
             # @param [String] attributes The attributes
             # @param [String] friendly_name The friendly_name
+            # @param [Boolean] reject_pending_reservations The reject_pending_reservations
             # @return [WorkerInstance] Updated WorkerInstance
-            def update(activity_sid: :unset, attributes: :unset, friendly_name: :unset)
+            def update(activity_sid: :unset, attributes: :unset, friendly_name: :unset, reject_pending_reservations: :unset)
               data = Twilio::Values.of({
                   'ActivitySid' => activity_sid,
                   'Attributes' => attributes,
                   'FriendlyName' => friendly_name,
+                  'RejectPendingReservations' => reject_pending_reservations,
               })
 
               payload = @version.update(
@@ -551,9 +553,15 @@ module Twilio
             # @param [String] activity_sid The activity_sid
             # @param [String] attributes The attributes
             # @param [String] friendly_name The friendly_name
+            # @param [Boolean] reject_pending_reservations The reject_pending_reservations
             # @return [WorkerInstance] Updated WorkerInstance
-            def update(activity_sid: :unset, attributes: :unset, friendly_name: :unset)
-              context.update(activity_sid: activity_sid, attributes: attributes, friendly_name: friendly_name, )
+            def update(activity_sid: :unset, attributes: :unset, friendly_name: :unset, reject_pending_reservations: :unset)
+              context.update(
+                  activity_sid: activity_sid,
+                  attributes: attributes,
+                  friendly_name: friendly_name,
+                  reject_pending_reservations: reject_pending_reservations,
+              )
             end
 
             ##
