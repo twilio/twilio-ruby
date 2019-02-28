@@ -185,7 +185,7 @@ implementations:
 
 [capability]: https://github.com/twilio/twilio-ruby/wiki/JWT-Tokens
 [examples]: https://github.com/twilio/twilio-ruby/blob/master/examples
-[documentation]: http://twilio.github.io/twilio-ruby
+[documentation]: https://www.twilio.com/docs/libraries/ruby
 [wiki]: https://github.com/twilio/twilio-ruby/wiki
 [bundler]: http://bundler.io
 [rubygems]: http://rubygems.org
