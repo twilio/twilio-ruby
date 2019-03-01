@@ -109,13 +109,14 @@ module Twilio
             ##
             # Retrieve a single page of AwsInstance records from the API.
             # Request is executed immediately.
-            # @param [String] credentials String containing AWS access credentials with format
-            #   <AWS_ACCESS_KEY_ID>:<AWS_SECRET_ACCESS_KEY>, e.g.
-            #   AKIAIOSFODNN7EXAMPLE:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-            # @param [String] friendly_name A human readable description of this resource, up
-            #   to 64 characters.
-            # @param [String] account_sid The Subaccount this Credential should be associated
-            #   with. Needs to be a valid Subaccount of the account issuing the request
+            # @param [String] credentials A string that contains the AWS access credentials in
+            #   the format `<AWS_ACCESS_KEY_ID>:<AWS_SECRET_ACCESS_KEY>`. For example,
+            #   `AKIAIOSFODNN7EXAMPLE:wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY`
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the resource. It can be up to 64 characters long.
+            # @param [String] account_sid The SID of the Subaccount that this Credential
+            #   should be associated with. Must be a valid Subaccount of the account issuing the
+            #   request.
             # @return [AwsInstance] Newly created AwsInstance
             def create(credentials: nil, friendly_name: :unset, account_sid: :unset)
               data = Twilio::Values.of({
@@ -173,8 +174,8 @@ module Twilio
             ##
             # Initialize the AwsContext
             # @param [Version] version Version that contains the resource
-            # @param [String] sid The Credential Sid that uniquely identifies the Credential
-            #   to fetch
+            # @param [String] sid The Twilio-provided string that uniquely identifies the AWS
+            #   resource to fetch.
             # @return [AwsContext] AwsContext
             def initialize(version, sid)
               super(version)
@@ -201,8 +202,8 @@ module Twilio
 
             ##
             # Update the AwsInstance
-            # @param [String] friendly_name A human readable description of this resource, up
-            #   to 64 characters.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the resource. It can be up to 64 characters long.
             # @return [AwsInstance] Updated AwsInstance
             def update(friendly_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -243,8 +244,8 @@ module Twilio
             # Initialize the AwsInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] sid The Credential Sid that uniquely identifies the Credential
-            #   to fetch
+            # @param [String] sid The Twilio-provided string that uniquely identifies the AWS
+            #   resource to fetch.
             # @return [AwsInstance] AwsInstance
             def initialize(version, payload, sid: nil)
               super(version)
@@ -276,31 +277,31 @@ module Twilio
             end
 
             ##
-            # @return [String] A 34 character string that uniquely identifies this resource.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] AccountSid the Credential resource belongs to
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] A human readable description of this resource
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [Time] The date this resource was created
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this resource was last updated
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
@@ -320,8 +321,8 @@ module Twilio
 
             ##
             # Update the AwsInstance
-            # @param [String] friendly_name A human readable description of this resource, up
-            #   to 64 characters.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the resource. It can be up to 64 characters long.
             # @return [AwsInstance] Updated AwsInstance
             def update(friendly_name: :unset)
               context.update(friendly_name: friendly_name, )

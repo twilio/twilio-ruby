@@ -15,8 +15,9 @@ module Twilio
             ##
             # Initialize the MessageList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that sent this message.
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that sent the message
+            #   that created the resource.
             # @return [MessageList] MessageList
             def initialize(version, account_sid: nil)
               super(version)
@@ -29,87 +30,76 @@ module Twilio
             ##
             # Retrieve a single page of MessageInstance records from the API.
             # Request is executed immediately.
-            # @param [String] to The destination phone number for SMS/MMS or a [Channel user
+            # @param [String] to The destination phone number in
+            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format for SMS/MMS or
+            #   [Channel user
             #   address](https://www.twilio.com/docs/sms/channels#channel-addresses) for other
-            #   3rd party channels. Destination phone numbers should be formatted with a '+' and
-            #   country code e.g., `+16175551212`
-            #   ([E.164](https://www.twilio.com/docs/glossary/what-e164) format).
-            # @param [String] status_callback A URL where Twilio will POST each time your
-            #   message status changes to one of the following: `queued`, `failed`, `sent`,
-            #   `delivered`, or `undelivered`. Twilio will POST its [standard request
+            #   3rd-party channels.
+            # @param [String] status_callback The URL we should call using the
+            #   `status_callback_method` to send status information to your application. If
+            #   specified, we POST these message status changes to the URL: `queued`, `failed`,
+            #   `sent`, `delivered`, or `undelivered`. Twilio will POST its [standard request
             #   parameters](https://www.twilio.com/docs/sms/twiml#request-parameters) as well as
             #   some additional parameters including `MessageSid`, `MessageStatus`, and
-            #   `ErrorCode`(see more details [below](#statuscallback-request-parameters)). If
-            #   you include this parameter in addition to a `MessagingServiceSid`, Twilio will
-            #   override the Status Callback URL of the [Messaging
+            #   `ErrorCode`. If you include this parameter with the `messaging_service_sid`, we
+            #   use this URL instead of the Status Callback URL of the [Messaging
             #   Service](https://www.twilio.com/docs/sms/services/api). URLs must contain a
-            #   valid hostname – underscores are not allowed.
-            # @param [String] application_sid Twilio will POST a `MessageSid` as well as
-            #   `MessageStatus=sent` or `MessageStatus=failed` to the URL in the
-            #   `MessageStatusCallback` property of this
-            #   [application](https://www.twilio.com/docs/usage/api/applications). If the
-            #   `StatusCallback` parameter is also passed, the application's
-            #   `MessageStatusCallback` parameter will take precedence.
-            # @param [String] max_price The total maximum price up to the fourth decimal
-            #   (0.0001) in US dollars acceptable for the message to be delivered. *All messages
-            #   will be queued for delivery regardless of the price point.* A POST request will
-            #   later be made to your Status Callback URL with a status change of `Sent` or
-            #   `Failed`. When the price of the message is greater than this value, the message
-            #   will fail and not be sent. When `MaxPrice` is not set, all prices for the
-            #   message are accepted.
-            # @param [Boolean] provide_feedback Set this value to `true` if you are sending
-            #   messages that have a trackable user action and you intend to confirm delivery of
-            #   the message using the [Message Feedback
-            #   API](https://www.twilio.com/docs/sms/api/message-feedback). This parameter is
-            #   `false` by default.
-            # @param [String] validity_period The number of seconds that the message can
-            #   remain in a Twilio queue. After exceeding this time limit, the message will fail
-            #   and a POST request will later be made to your Status Callback URL. Valid values
-            #   are between 1 and 14400 seconds (the default). Please note that Twilio cannot
-            #   guarantee that a message will not be queued by the carrier after they accept the
-            #   message. We do not recommend setting validity periods of less than 5 seconds.
-            # @param [String] max_rate The max_rate
-            # @param [Boolean] force_delivery The force_delivery
-            # @param [String] provider_sid The provider_sid
-            # @param [message.ContentRetention] content_retention The content_retention
-            # @param [message.AddressRetention] address_retention The address_retention
-            # @param [Boolean] smart_encoded The smart_encoded
-            # @param [String] interactive_data A JSON string that represents interactive
-            #   message which is a category of messages including list picker, time picker, and
-            #   an Apple Pay request.
-            # @param [Boolean] force_opt_in A boolean that forcefully whitelists a from:to
-            #   pair when set to true.
-            # @param [String] from A Twilio phone number (in
-            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format),  [alphanumeric
+            #   valid hostname and underscores are not allowed.
+            # @param [String] application_sid The SID of the application that should receive
+            #   message status. We POST a `message_sid` parameter and a `message_status`
+            #   parameter with a value of `sent` or `failed` to the
+            #   [application](https://www.twilio.com/docs/usage/api/applications)'s
+            #   `message_status_callback`. If a `status_callback` parameter is also passed, it
+            #   will be ignored and the application's `message_status_callback` parameter will
+            #   be used.
+            # @param [String] max_price The maximum total price in US dollars that you will
+            #   pay for the message to be delivered. Can be a decimal value that has up to 4
+            #   decimal places. All messages are queued for delivery and the message cost is
+            #   checked before the message is sent. If the cost exceeds `max_price`, the message
+            #   will fail and a status of `Failed` is sent to the status callback. If `MaxPrice`
+            #   is not set, the message cost is not checked.
+            # @param [Boolean] provide_feedback Whether to confirm delivery of the message.
+            #   Set this value to `true` if you are sending messages that have a trackable user
+            #   action and you intend to confirm delivery of the message using the [Message
+            #   Feedback API](https://www.twilio.com/docs/sms/api/message-feedback). This
+            #   parameter is `false` by default.
+            # @param [String] validity_period How long in seconds the message can remain in
+            #   our outgoing message queue. After this period elapses, the message fails and we
+            #   call your status callback. Can be between 1 and the default value of 14,400
+            #   seconds. After a message has been accepted by a carrier, however, we cannot
+            #   guarantee that the message will not be queued after this period. We recommend
+            #   that this value be at least 5 seconds.
+            # @param [Boolean] smart_encoded Whether to detect Unicode characters that have a
+            #   similar GSM-7 character and replace them. Can be: `true` or `false`.
+            # @param [String] interactive_data A JSON string that represents an interactive
+            #   message. An interactive message is a category of messages that includes a list
+            #   picker, a time picker, and an Apple Pay request.
+            # @param [Boolean] force_opt_in Whether to forcefully whitelist a from:to pair.
+            #   Can be: `true` or `false`.
+            # @param [String] from A Twilio phone number in
+            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, an [alphanumeric
             #   sender
-            #   ID](https://www.twilio.com/docs/sms/send-messages#use-an-alphanumeric-sender-id)
-            #   or a [Channel Endpoint
-            #   address](https://www.twilio.com/docs/sms/channels#channel-addresses) enabled for
-            #   the type of message you wish to send. Phone numbers or [short
-            #   codes](https://www.twilio.com/docs/sms/api/short-codes) purchased from Twilio
-            #   work here. You cannot (for example) spoof messages from your own cell phone
-            #   number. *Do not use this parameter if you are using `MessagingServiceSid`.*
-            # @param [String] messaging_service_sid The 34-character unique ID of the
-            #   [Messaging
+            #   ID](https://www.twilio.com/docs/sms/send-messages#use-an-alphanumeric-sender-id), or a [Channel Endpoint address](https://www.twilio.com/docs/sms/channels#channel-addresses) that is enabled for the type of message you want to send. Phone numbers or [short codes](https://www.twilio.com/docs/sms/api/short-codes) purchased from Twilio also work here. You cannot, for example, spoof messages from a private cell phone number. If you are using `messaging_service_sid`, this parameter must be empty.
+            # @param [String] messaging_service_sid The SID of the [Messaging
             #   Service](https://www.twilio.com/docs/sms/services#send-a-message-with-copilot)
-            #   you want to associate with this Message. Set this parameter to use the
-            #   [Messaging Service Settings and Copilot
-            #   Features](https://www.twilio.com/console/sms/services) you have configured. When
-            #   only this parameter is set, Twilio will use your enabled Copilot Features to
-            #   select the `From` phone number for delivery. *Do not pass this value if you are
-            #   using `From`.*
-            # @param [String] body The text of the message you want to send, limited to 1600
-            #   characters.
-            # @param [String] media_url The URL containing the media you wish to send with the
-            #   message. `gif` , `png` and `jpeg` content is currently supported and will be
-            #   formatted correctly on the recipient's device. [Other
-            #   types](https://www.twilio.com/docs/sms/accepted-mime-types) are also accepted by
-            #   the API. The media size limit is 5MB. If you wish to send more than one image in
-            #   the message body, please provide multiple `MediaUrl` values in the POST request.
-            #   You may include up to 10 MediaUrls per message. *Sending images via SMS is
-            #   currently only possible in the US and Canada*
+            #   you want to associate with the Message. Set this parameter to use the [Messaging
+            #   Service Settings and Copilot
+            #   Features](https://www.twilio.com/console/sms/services) you have configured and
+            #   leave the `from` parameter empty. When only this parameter is set, Twilio will
+            #   use your enabled Copilot Features to select the `from` phone number for
+            #   delivery.
+            # @param [String] body The text of the message you want to send. Can be up to
+            #   1,600 characters in length.
+            # @param [String] media_url The URL of the media to send with the message. The
+            #   media can be of type `gif`, `png`, and `jpeg` and will be formatted correctly on
+            #   the recipient's device. [Other
+            #   types](https://www.twilio.com/docs/sms/accepted-mime-types) of media are also
+            #   accepted. The media size limit is 5MB. To send more than one image in the
+            #   message body, provide multiple `media_url` parameters in the POST request. You
+            #   can include up to 10 `media_url` parameters per message. You can send images in
+            #   an SMS message in only the US and Canada.
             # @return [MessageInstance] Newly created MessageInstance
-            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, max_rate: :unset, force_delivery: :unset, provider_sid: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, interactive_data: :unset, force_opt_in: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
+            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, smart_encoded: :unset, interactive_data: :unset, force_opt_in: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -121,11 +111,6 @@ module Twilio
                   'MaxPrice' => max_price,
                   'ProvideFeedback' => provide_feedback,
                   'ValidityPeriod' => validity_period,
-                  'MaxRate' => max_rate,
-                  'ForceDelivery' => force_delivery,
-                  'ProviderSid' => provider_sid,
-                  'ContentRetention' => content_retention,
-                  'AddressRetention' => address_retention,
                   'SmartEncoded' => smart_encoded,
                   'InteractiveData' => interactive_data,
                   'ForceOptIn' => force_opt_in,
@@ -144,9 +129,9 @@ module Twilio
             # Lists MessageInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] to Only show messages to this phone number.
-            # @param [String] from Only show messages from this phone number or alphanumeric
-            #   sender ID.
+            # @param [String] to Read messages sent to only this phone number.
+            # @param [String] from Read messages sent from only this phone number or
+            #   alphanumeric sender ID.
             # @param [Time] date_sent_before Filter by date sent
             # @param [Time] date_sent Filter by date sent
             # @param [Time] date_sent_after Filter by date sent
@@ -173,9 +158,9 @@ module Twilio
             # Streams MessageInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] to Only show messages to this phone number.
-            # @param [String] from Only show messages from this phone number or alphanumeric
-            #   sender ID.
+            # @param [String] to Read messages sent to only this phone number.
+            # @param [String] from Read messages sent from only this phone number or
+            #   alphanumeric sender ID.
             # @param [Time] date_sent_before Filter by date sent
             # @param [Time] date_sent Filter by date sent
             # @param [Time] date_sent_after Filter by date sent
@@ -218,9 +203,9 @@ module Twilio
             ##
             # Retrieve a single page of MessageInstance records from the API.
             # Request is executed immediately.
-            # @param [String] to Only show messages to this phone number.
-            # @param [String] from Only show messages from this phone number or alphanumeric
-            #   sender ID.
+            # @param [String] to Read messages sent to only this phone number.
+            # @param [String] from Read messages sent from only this phone number or
+            #   alphanumeric sender ID.
             # @param [Time] date_sent_before Filter by date sent
             # @param [Time] date_sent Filter by date sent
             # @param [Time] date_sent_after Filter by date sent
@@ -300,8 +285,11 @@ module Twilio
             ##
             # Initialize the MessageContext
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The account_sid
-            # @param [String] sid The message Sid that uniquely identifies this resource
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Message
+            #   resource to fetch.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Message resource to fetch.
             # @return [MessageContext] MessageContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -339,8 +327,8 @@ module Twilio
 
             ##
             # Update the MessageInstance
-            # @param [String] body The text of the message you want to send, limited to 1600
-            #   characters.
+            # @param [String] body The text of the message you want to send. Can be up to
+            #   1,600 characters long.
             # @return [MessageInstance] Updated MessageInstance
             def update(body: nil)
               data = Twilio::Values.of({'Body' => body, })
@@ -408,9 +396,11 @@ module Twilio
             # Initialize the MessageInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that sent this message.
-            # @param [String] sid The message Sid that uniquely identifies this resource
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that sent the message
+            #   that created the resource.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Message resource to fetch.
             # @return [MessageInstance] MessageInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
@@ -456,37 +446,37 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique sid that identifies this account
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The version of the Twilio API used to process the message.
+            # @return [String] The API version used to process the message
             def api_version
               @properties['api_version']
             end
 
             ##
-            # @return [String] The text body of the message. Up to 1600 characters long.
+            # @return [String] The message text
             def body
               @properties['body']
             end
 
             ##
-            # @return [Time] The date this resource was created
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this resource was last updated
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [Time] The date the message was sent
+            # @return [Time] The RFC 2822 date and time in GMT when the message was sent
             def date_sent
               @properties['date_sent']
             end
@@ -504,7 +494,7 @@ module Twilio
             end
 
             ##
-            # @return [String] Human readable description of the ErrorCode
+            # @return [String] The description of the error_code
             def error_message
               @properties['error_message']
             end
@@ -516,19 +506,19 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique id of the Messaging Service used with the message.
+            # @return [String] The SID of the Messaging Service used with the message.
             def messaging_service_sid
               @properties['messaging_service_sid']
             end
 
             ##
-            # @return [String] Number of media files associated with the message
+            # @return [String] The number of media files associated with the message
             def num_media
               @properties['num_media']
             end
 
             ##
-            # @return [String] Indicates number of messages used to delivery the body
+            # @return [String] The number of messages used to deliver the message body
             def num_segments
               @properties['num_segments']
             end
@@ -540,25 +530,25 @@ module Twilio
             end
 
             ##
-            # @return [String] The currency in which Price is measured
+            # @return [String] The currency in which price is measured
             def price_unit
               @properties['price_unit']
             end
 
             ##
-            # @return [String] A string that uniquely identifies this message
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [message.Status] The status of this message
+            # @return [message.Status] The status of the message
             def status
               @properties['status']
             end
 
             ##
-            # @return [String] The URI for any subresources
+            # @return [String] A list of related resources identified by their relative URIs
             def subresource_uris
               @properties['subresource_uris']
             end
@@ -570,7 +560,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The URI for this resource
+            # @return [String] The URI of the resource, relative to `https://api.twilio.com`
             def uri
               @properties['uri']
             end
@@ -591,8 +581,8 @@ module Twilio
 
             ##
             # Update the MessageInstance
-            # @param [String] body The text of the message you want to send, limited to 1600
-            #   characters.
+            # @param [String] body The text of the message you want to send. Can be up to
+            #   1,600 characters long.
             # @return [MessageInstance] Updated MessageInstance
             def update(body: nil)
               context.update(body: body, )

@@ -29,7 +29,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this fax.
+      # @param [String] sid The unique string that we created to identify the Fax
+      #   resource.
       # @return [Twilio::REST::Fax::V1::FaxInstance] if sid was passed.
       # @return [Twilio::REST::Fax::V1::FaxList]
       def faxes(sid=:unset)

@@ -108,14 +108,91 @@ module Twilio
 
           ##
           # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+          class VerificationContext < InstanceContext
+            ##
+            # Initialize the VerificationContext
+            # @param [Version] version Version that contains the resource
+            # @param [String] service_sid The unique SID identifier of the Service.
+            # @param [String] sid A 34 character string that uniquely identifies this
+            #   Verification or the associated phone number.
+            # @return [VerificationContext] VerificationContext
+            def initialize(version, service_sid, sid)
+              super(version)
+
+              # Path Solution
+              @solution = {service_sid: service_sid, sid: sid, }
+              @uri = "/Services/#{@solution[:service_sid]}/Verifications/#{@solution[:sid]}"
+            end
+
+            ##
+            # Update the VerificationInstance
+            # @param [verification.Status] status New status to set for the Verification, only
+            #   canceled is allowed at the moment.
+            # @return [VerificationInstance] Updated VerificationInstance
+            def update(status: nil)
+              data = Twilio::Values.of({'Status' => status, })
+
+              payload = @version.update(
+                  'POST',
+                  @uri,
+                  data: data,
+              )
+
+              VerificationInstance.new(
+                  @version,
+                  payload,
+                  service_sid: @solution[:service_sid],
+                  sid: @solution[:sid],
+              )
+            end
+
+            ##
+            # Fetch a VerificationInstance
+            # @return [VerificationInstance] Fetched VerificationInstance
+            def fetch
+              params = Twilio::Values.of({})
+
+              payload = @version.fetch(
+                  'GET',
+                  @uri,
+                  params,
+              )
+
+              VerificationInstance.new(
+                  @version,
+                  payload,
+                  service_sid: @solution[:service_sid],
+                  sid: @solution[:sid],
+              )
+            end
+
+            ##
+            # Provide a user friendly representation
+            def to_s
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Verify.V1.VerificationContext #{context}>"
+            end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Verify.V1.VerificationContext #{context}>"
+            end
+          end
+
+          ##
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class VerificationInstance < InstanceResource
             ##
             # Initialize the VerificationInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The unique SID identifier of the Service.
+            # @param [String] sid A 34 character string that uniquely identifies this
+            #   Verification or the associated phone number.
             # @return [VerificationInstance] VerificationInstance
-            def initialize(version, payload, service_sid: nil)
+            def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
 
               # Marshaled Properties
@@ -132,7 +209,23 @@ module Twilio
                   'payee' => payload['payee'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
+                  'url' => payload['url'],
               }
+
+              # Context
+              @instance_context = nil
+              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'], }
+            end
+
+            ##
+            # Generate an instance context for the instance, the context is capable of
+            # performing various actions.  All instance actions are proxied to the context
+            # @return [VerificationContext] VerificationContext for this VerificationInstance
+            def context
+              unless @instance_context
+                @instance_context = VerificationContext.new(@version, @params['service_sid'], @params['sid'], )
+              end
+              @instance_context
             end
 
             ##
@@ -208,15 +301,39 @@ module Twilio
             end
 
             ##
+            # @return [String] The URL of this resource.
+            def url
+              @properties['url']
+            end
+
+            ##
+            # Update the VerificationInstance
+            # @param [verification.Status] status New status to set for the Verification, only
+            #   canceled is allowed at the moment.
+            # @return [VerificationInstance] Updated VerificationInstance
+            def update(status: nil)
+              context.update(status: status, )
+            end
+
+            ##
+            # Fetch a VerificationInstance
+            # @return [VerificationInstance] Fetched VerificationInstance
+            def fetch
+              context.fetch
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
-              "<Twilio.Verify.V1.VerificationInstance>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Verify.V1.VerificationInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
-              "<Twilio.Verify.V1.VerificationInstance>"
+              values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Verify.V1.VerificationInstance #{values}>"
             end
           end
         end

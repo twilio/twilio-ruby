@@ -148,8 +148,11 @@ module Twilio
             ##
             # Initialize the KeyContext
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The account_sid
-            # @param [String] sid The sid
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Key
+            #   resource to fetch.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the Key
+            #   resource to fetch.
             # @return [KeyContext] KeyContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -176,8 +179,8 @@ module Twilio
 
             ##
             # Update the KeyInstance
-            # @param [String] friendly_name A descriptive string for this resource, chosen by
-            #   your application, up to 64 characters long.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the resource. It can be up to 64 characters long.
             # @return [KeyInstance] Updated KeyInstance
             def update(friendly_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -220,7 +223,8 @@ module Twilio
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
-            # @param [String] sid The sid
+            # @param [String] sid The Twilio-provided string that uniquely identifies the Key
+            #   resource to fetch.
             # @return [KeyInstance] KeyInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
@@ -250,25 +254,25 @@ module Twilio
             end
 
             ##
-            # @return [String] A 34 character string that uniquely identifies this API Key.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] A descriptive string for this resource, chosen by your application, up to 64 characters long.
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [Time] The date-time this API Key was created, given as a RFC 2822 Timestamp.
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date-time this API Key was most recently updated, given as a  RFC 2822 Timestamp.
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
             def date_updated
               @properties['date_updated']
             end
@@ -282,8 +286,8 @@ module Twilio
 
             ##
             # Update the KeyInstance
-            # @param [String] friendly_name A descriptive string for this resource, chosen by
-            #   your application, up to 64 characters long.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the resource. It can be up to 64 characters long.
             # @return [KeyInstance] Updated KeyInstance
             def update(friendly_name: :unset)
               context.update(friendly_name: friendly_name, )

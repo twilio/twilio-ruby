@@ -15,9 +15,9 @@ module Twilio
             ##
             # Initialize the TranscriptionList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
-            #   transcription.
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   Transcription resource.
             # @return [TranscriptionList] TranscriptionList
             def initialize(version, account_sid: nil)
               super(version)
@@ -149,8 +149,11 @@ module Twilio
             ##
             # Initialize the TranscriptionContext
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The account_sid
-            # @param [String] sid The unique SID that identifies this Transcription
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   Transcription resource to fetch.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Transcription resource to fetch.
             # @return [TranscriptionContext] TranscriptionContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -207,10 +210,11 @@ module Twilio
             # Initialize the TranscriptionInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique id of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
-            #   transcription.
-            # @param [String] sid The unique SID that identifies this Transcription
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   Transcription resource.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Transcription resource to fetch.
             # @return [TranscriptionInstance] TranscriptionInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)
@@ -249,55 +253,55 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique sid that identifies this account
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The api_version
+            # @return [String] The API version used to create the transcription
             def api_version
               @properties['api_version']
             end
 
             ##
-            # @return [Time] The date this resource was created
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this resource was last updated
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The duration of the transcribed audio, in seconds.
+            # @return [String] The duration of the transcribed audio in seconds.
             def duration
               @properties['duration']
             end
 
             ##
-            # @return [String] The charge for this transcription
+            # @return [String] The charge for the transcription
             def price
               @properties['price']
             end
 
             ##
-            # @return [String] The currency in which Price is measured
+            # @return [String] The currency in which price is measured
             def price_unit
               @properties['price_unit']
             end
 
             ##
-            # @return [String] The string that uniquely identifies the recording
+            # @return [String] The SID that identifies the transcription's recording
             def recording_sid
               @properties['recording_sid']
             end
 
             ##
-            # @return [String] A string that uniquely identifies this transcription
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
@@ -315,13 +319,13 @@ module Twilio
             end
 
             ##
-            # @return [String] The type
+            # @return [String] The transcription type
             def type
               @properties['type']
             end
 
             ##
-            # @return [String] The URI for this resource
+            # @return [String] The URI of the resource, relative to `https://api.twilio.com`
             def uri
               @properties['uri']
             end

@@ -265,8 +265,14 @@ module Twilio
           ##
           # Access the verifications
           # @return [VerificationList]
-          # @return [VerificationContext]
-          def verifications
+          # @return [VerificationContext] if sid was passed.
+          def verifications(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return VerificationContext.new(@version, @solution[:sid], sid, )
+            end
+
             unless @verifications
               @verifications = VerificationList.new(@version, service_sid: @solution[:sid], )
             end

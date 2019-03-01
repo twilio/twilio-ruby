@@ -15,9 +15,9 @@ module Twilio
             ##
             # Initialize the ValidationRequestList
             # @param [Version] version Version that contains the resource
-            # @param [String] account_sid The unique ID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
-            #   Caller Id.
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for the
+            #   Caller ID.
             # @return [ValidationRequestList] ValidationRequestList
             def initialize(version, account_sid: nil)
               super(version)
@@ -30,22 +30,22 @@ module Twilio
             ##
             # Retrieve a single page of ValidationRequestInstance records from the API.
             # Request is executed immediately.
-            # @param [String] phone_number The phone number to verify. Should be formatted
-            #   with a '+' and country code e.g., +16175551212
-            #   ([E.164](http://en.wikipedia.org/wiki/E.164) format).  Twilio will also accept
-            #   unformatted US numbers e.g., (415) 555-1212, 415-555-1212.
-            # @param [String] friendly_name A human readable description for the new caller ID
-            #   with maximum length 64 characters. Defaults to a nicely formatted version of the
-            #   number.
-            # @param [String] call_delay The number of seconds, between 0 and 60, to delay
-            #   before initiating the verification call. Defaults to 0.
-            # @param [String] extension Digits to dial after connecting the verification call.
-            # @param [String] status_callback A URL that Twilio will request when the
-            #   verification call ends to notify your app if the verification process was
-            #   successful or not. See [StatusCallback
-            #   parameter](https://www.twilio.com/docs/api/voice/outgoing-caller-ids#statuscallback-parameter) below.
-            # @param [String] status_callback_method The HTTP method Twilio should use when
-            #   requesting the above URL. Defaults to POST.
+            # @param [String] phone_number The phone number to verify in
+            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, which consists
+            #   of a + followed by the country code and subscriber number.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the new caller ID resource. It can be up to 64 characters long. The default
+            #   value is a formatted version of the phone number.
+            # @param [String] call_delay The number of seconds to delay before initiating the
+            #   verification call. Can be an integer between `0` and `60`, inclusive. The
+            #   default is `0`.
+            # @param [String] extension The digits to dial after connecting the verification
+            #   call.
+            # @param [String] status_callback The URL we should call using the
+            #   `status_callback_method` to send status information about the verification
+            #   process to your application.
+            # @param [String] status_callback_method The HTTP method we should use to call
+            #   `status_callback`. Can be: `GET` or `POST`, and the default is `POST`.
             # @return [ValidationRequestInstance] Newly created ValidationRequestInstance
             def create(phone_number: nil, friendly_name: :unset, call_delay: :unset, extension: :unset, status_callback: :unset, status_callback_method: :unset)
               data = Twilio::Values.of({
@@ -107,9 +107,9 @@ module Twilio
             # Initialize the ValidationRequestInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] account_sid The unique ID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
-            #   Caller Id.
+            # @param [String] account_sid The SID of the
+            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for the
+            #   Caller ID.
             # @return [ValidationRequestInstance] ValidationRequestInstance
             def initialize(version, payload, account_sid: nil)
               super(version)
@@ -125,31 +125,31 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique ID of the Account responsible for this Caller Id.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The incoming phone number.
+            # @return [String] The phone number to verify in E.164 format
             def phone_number
               @properties['phone_number']
             end
 
             ##
-            # @return [String] A human readable descriptive text for this resource, up to 64 characters long.
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] The 6 digit validation code that must be entered via the phone to validate this phone number for Caller ID.
+            # @return [String] The 6 digit validation code that someone must enter to validate the Caller ID  when `phone_number` is called
             def validation_code
               @properties['validation_code']
             end
 
             ##
-            # @return [String] The unique id of the Call created for this validation attempt.
+            # @return [String] The SID of the Call the resource is associated with
             def call_sid
               @properties['call_sid']
             end

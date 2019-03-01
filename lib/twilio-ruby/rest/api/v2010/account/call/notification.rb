@@ -16,8 +16,12 @@ module Twilio
               ##
               # Initialize the NotificationList
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] call_sid The call_sid
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Call
+              #   Notification resource.
+              # @param [String] call_sid The SID of the
+              #   [Call](https://www.twilio.com/docs/api/voice/call) the Call Notification
+              #   resource is associated with.
               # @return [NotificationList] NotificationList
               def initialize(version, account_sid: nil, call_sid: nil)
                 super(version)
@@ -31,10 +35,12 @@ module Twilio
               # Lists NotificationInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] log The log
-              # @param [Time] message_date_before The message_date
-              # @param [Time] message_date The message_date
-              # @param [Time] message_date_after The message_date
+              # @param [String] log Only read notifications of the specified log level. Can be: 
+              #   `0` to read only ERROR notifications or `1` to read only WARNING notifications.
+              #   By default, all notifications are read.
+              # @param [Time] message_date_before Filter by date
+              # @param [Time] message_date Filter by date
+              # @param [Time] message_date_after Filter by date
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -57,10 +63,12 @@ module Twilio
               # Streams NotificationInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] log The log
-              # @param [Time] message_date_before The message_date
-              # @param [Time] message_date The message_date
-              # @param [Time] message_date_after The message_date
+              # @param [String] log Only read notifications of the specified log level. Can be: 
+              #   `0` to read only ERROR notifications or `1` to read only WARNING notifications.
+              #   By default, all notifications are read.
+              # @param [Time] message_date_before Filter by date
+              # @param [Time] message_date Filter by date
+              # @param [Time] message_date_after Filter by date
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -99,10 +107,12 @@ module Twilio
               ##
               # Retrieve a single page of NotificationInstance records from the API.
               # Request is executed immediately.
-              # @param [String] log The log
-              # @param [Time] message_date_before The message_date
-              # @param [Time] message_date The message_date
-              # @param [Time] message_date_after The message_date
+              # @param [String] log Only read notifications of the specified log level. Can be: 
+              #   `0` to read only ERROR notifications or `1` to read only WARNING notifications.
+              #   By default, all notifications are read.
+              # @param [Time] message_date_before Filter by date
+              # @param [Time] message_date Filter by date
+              # @param [Time] message_date_after Filter by date
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -183,9 +193,13 @@ module Twilio
               ##
               # Initialize the NotificationContext
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] call_sid The call_sid
-              # @param [String] sid The sid
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Call
+              #   Notification resource to fetch.
+              # @param [String] call_sid The [Call](https://www.twilio.com/docs/api/voice/call)
+              #   SID of the Call Notification resource to fetch.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the Call
+              #   Notification resource to fetch.
               # @return [NotificationContext] NotificationContext
               def initialize(version, account_sid, call_sid, sid)
                 super(version)
@@ -243,9 +257,14 @@ module Twilio
               # Initialize the NotificationInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] account_sid The account_sid
-              # @param [String] call_sid The call_sid
-              # @param [String] sid The sid
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Call
+              #   Notification resource.
+              # @param [String] call_sid The SID of the
+              #   [Call](https://www.twilio.com/docs/api/voice/call) the Call Notification
+              #   resource is associated with.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the Call
+              #   Notification resource to fetch.
               # @return [NotificationInstance] NotificationInstance
               def initialize(version, payload, account_sid: nil, call_sid: nil, sid: nil)
                 super(version)
@@ -293,103 +312,103 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The api_version
+              # @return [String] The API version used to create the Call Notification resource
               def api_version
                 @properties['api_version']
               end
 
               ##
-              # @return [String] The call_sid
+              # @return [String] The SID of the Call the resource is associated with
               def call_sid
                 @properties['call_sid']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The error_code
+              # @return [String] A unique error code corresponding to the notification
               def error_code
                 @properties['error_code']
               end
 
               ##
-              # @return [String] The log
+              # @return [String] An integer log level
               def log
                 @properties['log']
               end
 
               ##
-              # @return [Time] The message_date
+              # @return [Time] The date the notification was generated
               def message_date
                 @properties['message_date']
               end
 
               ##
-              # @return [String] The message_text
+              # @return [String] The text of the notification
               def message_text
                 @properties['message_text']
               end
 
               ##
-              # @return [String] The more_info
+              # @return [String] A URL for more information about the error code
               def more_info
                 @properties['more_info']
               end
 
               ##
-              # @return [String] The request_method
+              # @return [String] HTTP method used with the request url
               def request_method
                 @properties['request_method']
               end
 
               ##
-              # @return [String] The request_url
+              # @return [String] URL of the resource that generated the notification
               def request_url
                 @properties['request_url']
               end
 
               ##
-              # @return [String] The request_variables
+              # @return [String] Twilio-generated HTTP variables sent to the server
               def request_variables
                 @properties['request_variables']
               end
 
               ##
-              # @return [String] The response_body
+              # @return [String] The HTTP body returned by your server
               def response_body
                 @properties['response_body']
               end
 
               ##
-              # @return [String] The response_headers
+              # @return [String] The HTTP headers returned by your server
               def response_headers
                 @properties['response_headers']
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The uri
+              # @return [String] The URI of the resource, relative to `https://api.twilio.com`
               def uri
                 @properties['uri']
               end

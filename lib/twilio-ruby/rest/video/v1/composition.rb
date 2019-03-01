@@ -213,7 +213,7 @@ module Twilio
           #   removed. You can find further information in the [Specifying Video
           #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) section. Defaults to `true`.
           # @return [CompositionInstance] Newly created CompositionInstance
-          def create(room_sid: :unset, video_layout: :unset, audio_sources: :unset, audio_sources_excluded: :unset, resolution: :unset, format: :unset, status_callback: :unset, status_callback_method: :unset, trim: :unset)
+          def create(room_sid: nil, video_layout: :unset, audio_sources: :unset, audio_sources_excluded: :unset, resolution: :unset, format: :unset, status_callback: :unset, status_callback_method: :unset, trim: :unset)
             data = Twilio::Values.of({
                 'RoomSid' => room_sid,
                 'VideoLayout' => Twilio.serialize_object(video_layout),

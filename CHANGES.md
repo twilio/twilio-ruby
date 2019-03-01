@@ -1,6 +1,28 @@
 twilio-ruby changelog
 =====================
 
+[2019-03-01] Version 5.21.0
+----------------------------
+**Api**
+- Make conference participant preview parameters public
+
+**Authy**
+- Added support for FactorType and FactorStrength for Factors and Challenges
+
+**Iam**
+- First public release
+
+**Verify**
+- Add endpoint to update/cancel a Verification **(breaking change)**
+
+**Video**
+- [Composer] Make RoomSid mandatory **(breaking change)**
+- [Composer] Add `enqueued` state to Composition
+
+**Twiml**
+- Update message body to not be required for TwiML `Dial` noun.
+
+
 [2019-02-15] Version 5.20.1
 ----------------------------
 **Library**

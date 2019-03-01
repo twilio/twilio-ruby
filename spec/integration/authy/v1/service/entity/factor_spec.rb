@@ -41,6 +41,7 @@ describe 'Factor' do
           "date_updated": "2015-07-30T20:00:00Z",
           "friendly_name": "friendly_name",
           "status": "unverified",
+          "factor_strength": "low",
           "factor_type": "sms",
           "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
@@ -118,6 +119,7 @@ describe 'Factor' do
           "date_updated": "2015-07-30T20:00:00Z",
           "friendly_name": "friendly_name",
           "status": "unverified",
+          "factor_strength": "low",
           "factor_type": "sms",
           "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
@@ -193,6 +195,7 @@ describe 'Factor' do
                   "date_updated": "2015-07-30T20:00:00Z",
                   "friendly_name": "friendly_name",
                   "status": "unverified",
+                  "factor_strength": "low",
                   "factor_type": "sms",
                   "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "links": {
@@ -251,6 +254,7 @@ describe 'Factor' do
           "date_updated": "2015-07-30T20:00:00Z",
           "friendly_name": "friendly_name",
           "status": "verified",
+          "factor_strength": "low",
           "factor_type": "sms",
           "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {

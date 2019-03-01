@@ -16,7 +16,9 @@ module Twilio
               ##
               # Initialize the DependentPhoneNumberList
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   DependentPhoneNumber resource.
               # @param [String] address_sid The unique string that that we created to identify
               #   the Address resource.
               # @return [DependentPhoneNumberList] DependentPhoneNumberList
@@ -156,7 +158,9 @@ module Twilio
               # Initialize the DependentPhoneNumberInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] account_sid The account_sid
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   DependentPhoneNumber resource.
               # @param [String] address_sid The unique string that that we created to identify
               #   the Address resource.
               # @return [DependentPhoneNumberInstance] DependentPhoneNumberInstance
@@ -195,157 +199,157 @@ module Twilio
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The friendly_name
+              # @return [String] The string that you assigned to describe the resource
               def friendly_name
                 @properties['friendly_name']
               end
 
               ##
-              # @return [String] The phone_number
+              # @return [String] The phone number in E.164 format
               def phone_number
                 @properties['phone_number']
               end
 
               ##
-              # @return [String] The voice_url
+              # @return [String] The URL we call when the phone number receives a call
               def voice_url
                 @properties['voice_url']
               end
 
               ##
-              # @return [String] The voice_method
+              # @return [String] The HTTP method used with the voice_url
               def voice_method
                 @properties['voice_method']
               end
 
               ##
-              # @return [String] The voice_fallback_method
+              # @return [String] The HTTP method used with voice_fallback_url
               def voice_fallback_method
                 @properties['voice_fallback_method']
               end
 
               ##
-              # @return [String] The voice_fallback_url
+              # @return [String] The URL we call when an error occurs in TwiML
               def voice_fallback_url
                 @properties['voice_fallback_url']
               end
 
               ##
-              # @return [Boolean] The voice_caller_id_lookup
+              # @return [Boolean] Whether to lookup the caller's name
               def voice_caller_id_lookup
                 @properties['voice_caller_id_lookup']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The sms_fallback_method
+              # @return [String] The HTTP method used with sms_fallback_url
               def sms_fallback_method
                 @properties['sms_fallback_method']
               end
 
               ##
-              # @return [String] The sms_fallback_url
+              # @return [String] The URL that we call when an error occurs while retrieving or executing the TwiML
               def sms_fallback_url
                 @properties['sms_fallback_url']
               end
 
               ##
-              # @return [String] The sms_method
+              # @return [String] The HTTP method to use with sms_url
               def sms_method
                 @properties['sms_method']
               end
 
               ##
-              # @return [String] The sms_url
+              # @return [String] The URL we call when the phone number receives an incoming SMS message
               def sms_url
                 @properties['sms_url']
               end
 
               ##
-              # @return [dependent_phone_number.AddressRequirement] The address_requirements
+              # @return [dependent_phone_number.AddressRequirement] Whether the phone number requires an Address registered with Twilio
               def address_requirements
                 @properties['address_requirements']
               end
 
               ##
-              # @return [Hash] The capabilities
+              # @return [Hash] Indicate if a phone can receive calls or messages
               def capabilities
                 @properties['capabilities']
               end
 
               ##
-              # @return [String] The status_callback
+              # @return [String] The URL to send status information to your application
               def status_callback
                 @properties['status_callback']
               end
 
               ##
-              # @return [String] The status_callback_method
+              # @return [String] The HTTP method we use to call status_callback
               def status_callback_method
                 @properties['status_callback_method']
               end
 
               ##
-              # @return [String] The api_version
+              # @return [String] The API version used to start a new TwiML session
               def api_version
                 @properties['api_version']
               end
 
               ##
-              # @return [String] The sms_application_sid
+              # @return [String] The SID of the application that handles SMS messages sent to the phone number
               def sms_application_sid
                 @properties['sms_application_sid']
               end
 
               ##
-              # @return [String] The voice_application_sid
+              # @return [String] The SID of the application that handles calls to the phone number
               def voice_application_sid
                 @properties['voice_application_sid']
               end
 
               ##
-              # @return [String] The trunk_sid
+              # @return [String] The SID of the Trunk that handles calls to the phone number
               def trunk_sid
                 @properties['trunk_sid']
               end
 
               ##
-              # @return [dependent_phone_number.EmergencyStatus] The emergency_status
+              # @return [dependent_phone_number.EmergencyStatus] Whether the phone number is enabled for emergency calling
               def emergency_status
                 @properties['emergency_status']
               end
 
               ##
-              # @return [String] The emergency_address_sid
+              # @return [String] The emergency address configuration to use for emergency calling
               def emergency_address_sid
                 @properties['emergency_address_sid']
               end
 
               ##
-              # @return [String] The uri
+              # @return [String] The URI of the resource, relative to `https://api.twilio.com`
               def uri
                 @properties['uri']
               end

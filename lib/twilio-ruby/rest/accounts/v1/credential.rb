@@ -28,8 +28,8 @@ module Twilio
 
           ##
           # Access the public_key
-          # @param [String] sid The Credential Sid that uniquely identifies the Credential
-          #   to fetch
+          # @param [String] sid The Twilio-provided string that uniquely identifies the
+          #   PublicKey resource to fetch.
           # @return [PublicKeyList]
           # @return [PublicKeyContext] if sid was passed.
           def public_key(sid=:unset)
@@ -44,8 +44,8 @@ module Twilio
 
           ##
           # Access the aws
-          # @param [String] sid The Credential Sid that uniquely identifies the Credential
-          #   to fetch
+          # @param [String] sid The Twilio-provided string that uniquely identifies the AWS
+          #   resource to fetch.
           # @return [AwsList]
           # @return [AwsContext] if sid was passed.
           def aws(sid=:unset)

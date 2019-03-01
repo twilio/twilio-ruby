@@ -109,12 +109,14 @@ module Twilio
             ##
             # Retrieve a single page of PublicKeyInstance records from the API.
             # Request is executed immediately.
-            # @param [String] public_key URL encoded representation of the public key, e.g.
-            #   -----BEGIN PUBLIC KEY-----MIIBIjANB.pa9xQIDAQAB-----END PUBLIC KEY-----
-            # @param [String] friendly_name A human readable description of this resource, up
-            #   to 64 characters.
-            # @param [String] account_sid The Subaccount this Credential should be associated
-            #   with. Needs to be a valid Subaccount of the account issuing the request
+            # @param [String] public_key A URL encoded representation of the public key. For
+            #   example, `-----BEGIN PUBLIC KEY-----MIIBIjANB.pa9xQIDAQAB-----END PUBLIC
+            #   KEY-----`
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the resource. It can be up to 64 characters long.
+            # @param [String] account_sid The SID of the Subaccount that this Credential
+            #   should be associated with. Must be a valid Subaccount of the account issuing the
+            #   request
             # @return [PublicKeyInstance] Newly created PublicKeyInstance
             def create(public_key: nil, friendly_name: :unset, account_sid: :unset)
               data = Twilio::Values.of({
@@ -172,8 +174,8 @@ module Twilio
             ##
             # Initialize the PublicKeyContext
             # @param [Version] version Version that contains the resource
-            # @param [String] sid The Credential Sid that uniquely identifies the Credential
-            #   to fetch
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   PublicKey resource to fetch.
             # @return [PublicKeyContext] PublicKeyContext
             def initialize(version, sid)
               super(version)
@@ -200,8 +202,8 @@ module Twilio
 
             ##
             # Update the PublicKeyInstance
-            # @param [String] friendly_name A human readable description of this resource, up
-            #   to 64 characters.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the resource. It can be up to 64 characters long.
             # @return [PublicKeyInstance] Updated PublicKeyInstance
             def update(friendly_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -242,8 +244,8 @@ module Twilio
             # Initialize the PublicKeyInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] sid The Credential Sid that uniquely identifies the Credential
-            #   to fetch
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   PublicKey resource to fetch.
             # @return [PublicKeyInstance] PublicKeyInstance
             def initialize(version, payload, sid: nil)
               super(version)
@@ -275,31 +277,31 @@ module Twilio
             end
 
             ##
-            # @return [String] A 34 character string that uniquely identifies this resource.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] AccountSid the Credential resource belongs to
+            # @return [String] The SID of the Account that created the Credential that the PublicKey resource belongs to
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] A human readable description of this resource
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [Time] The date this resource was created
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this resource was last updated
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
@@ -319,8 +321,8 @@ module Twilio
 
             ##
             # Update the PublicKeyInstance
-            # @param [String] friendly_name A human readable description of this resource, up
-            #   to 64 characters.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the resource. It can be up to 64 characters long.
             # @return [PublicKeyInstance] Updated PublicKeyInstance
             def update(friendly_name: :unset)
               context.update(friendly_name: friendly_name, )
