@@ -1,6 +1,12 @@
 twilio-ruby changelog
 =====================
 
+[2019-03-06] Version 5.21.1
+----------------------------
+**Twiml**
+- Add `de1` to `<Conference>` regions
+
+
 [2019-03-01] Version 5.21.0
 ----------------------------
 **Api**

@@ -71,9 +71,9 @@ module Twilio
             #   '`#`' character has special meaning in a URL. If both `SendDigits` and
             #   `MachineDetection` parameters are provided, then `MachineDetection` will be
             #   ignored.
-            # @param [String] if_machine The action to take if an answering machine is
-            #   detected. Can be: `Continue`, `Hangup`, or `False`. `False` disables the
-            #   detection of an answering machine.
+            # @param [String] if_machine Deprecated. Tell Twilio to try and determine if a
+            #   machine (like voicemail) or a human has answered the call. Possible value are
+            #   `Continue` and `Hangup`.
             # @param [String] timeout The integer number of seconds that we should allow the
             #   phone to ring before assuming there is no answer. The default is `60` seconds
             #   and the maximum is `600` seconds. For some call flows, we will add a 5-second
