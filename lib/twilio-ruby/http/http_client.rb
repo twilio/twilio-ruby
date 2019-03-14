@@ -10,10 +10,8 @@ module Twilio
 
       def initialize(proxy_addr = nil, proxy_port = nil, proxy_user = nil, proxy_pass = nil, ssl_ca_file = nil,
                      timeout: nil)
-        @proxy_addr = proxy_addr
-        @proxy_port = proxy_port
-        @proxy_user = proxy_user
-        @proxy_pass = proxy_pass
+        @proxy_path = "#{proxy_addr}:#{proxy_port}" if proxy_addr && proxy_port
+        @proxy_auth = "#{proxy_user}:#{proxy_pass}@" if proxy_pass && proxy_user
         @ssl_ca_file = ssl_ca_file
         @timeout = timeout
         @adapter = Faraday.default_adapter
@@ -26,9 +24,7 @@ module Twilio
           f.adapter @adapter
           f.headers = request.headers
           f.basic_auth(request.auth[0], request.auth[1])
-          if @proxy_addr
-            f.proxy "#{@proxy_user}:#{@proxy_pass}@#{@proxy_addr}:#{@proxy_port}"
-          end
+          f.proxy = "#{@proxy_auth}#{@proxy_path}" if @proxy_path
           f.options.open_timeout = request.timeout || @timeout
           f.options.timeout = request.timeout || @timeout
         end
