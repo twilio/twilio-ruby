@@ -96,7 +96,7 @@ module Twilio
               # @param [feedback.Issues] issue A list of one or more issues experienced during
               #   the call. Issues can be: `imperfect-audio`, `dropped-call`,
               #   `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`,
-              #   `audio-latency`, or `one-way-audio`.
+              #   `audio-latency`, `unsolicited-call`, or `one-way-audio`.
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(quality_score: nil, issue: :unset)
                 data = Twilio::Values.of({
@@ -145,7 +145,8 @@ module Twilio
               #   call.
               # @param [feedback.Issues] issue One or more issues experienced during the call.
               #   The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`,
-              #   `post-dial-delay`, `digits-not-captured`, `audio-latency`, or `one-way-audio`.
+              #   `post-dial-delay`, `digits-not-captured`, `audio-latency`, `unsolicited-call`,
+              #   or `one-way-audio`.
               # @return [FeedbackInstance] Updated FeedbackInstance
               def update(quality_score: nil, issue: :unset)
                 data = Twilio::Values.of({
@@ -267,7 +268,7 @@ module Twilio
               # @param [feedback.Issues] issue A list of one or more issues experienced during
               #   the call. Issues can be: `imperfect-audio`, `dropped-call`,
               #   `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`,
-              #   `audio-latency`, or `one-way-audio`.
+              #   `audio-latency`, `unsolicited-call`, or `one-way-audio`.
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(quality_score: nil, issue: :unset)
                 context.create(quality_score: quality_score, issue: issue, )
@@ -287,7 +288,8 @@ module Twilio
               #   call.
               # @param [feedback.Issues] issue One or more issues experienced during the call.
               #   The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`,
-              #   `post-dial-delay`, `digits-not-captured`, `audio-latency`, or `one-way-audio`.
+              #   `post-dial-delay`, `digits-not-captured`, `audio-latency`, `unsolicited-call`,
+              #   or `one-way-audio`.
               # @return [FeedbackInstance] Updated FeedbackInstance
               def update(quality_score: nil, issue: :unset)
                 context.update(quality_score: quality_score, issue: issue, )

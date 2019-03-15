@@ -15,7 +15,22 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @flex_flow = nil
           @configuration = nil
+        end
+
+        ##
+        # @param [String] sid The unique ID of the FlexFlow
+        # @return [Twilio::REST::Flex_api::V1::FlexFlowContext] if sid was passed.
+        # @return [Twilio::REST::Flex_api::V1::FlexFlowList]
+        def flex_flow(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @flex_flow ||= FlexFlowList.new self
+          else
+            FlexFlowContext.new(self, sid)
+          end
         end
 
         ##

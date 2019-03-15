@@ -1,6 +1,19 @@
 twilio-ruby changelog
 =====================
 
+[2019-03-15] Version 5.21.2
+----------------------------
+**Library**
+- PR #444: Add Help Center and Support Ticket links to the README. Thanks to @childish-sambino!
+
+**Api**
+- Add `machine_detection_speech_threshold`, `machine_detection_speech_end_threshold`, `machine_detection_silence_timeout` optional params to Call create request
+
+**Flex**
+- Adding Flex Channel Orchestration
+- Adding Flex Flow
+
+
 [2019-03-06] Version 5.21.1
 ----------------------------
 **Twiml**

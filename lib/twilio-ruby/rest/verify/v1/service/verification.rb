@@ -33,8 +33,6 @@ module Twilio
             # @param [String] to The To phonenumber of the phone being verified
             # @param [String] channel The method in which the phone will be verified. Either
             #   sms or call
-            # @param [String] custom_message A character string containing a custom message
-            #   for this verification
             # @param [String] send_digits Digits to send when a phone call is started, same
             #   parameters as in Programmable Voice are supported
             # @param [String] locale Supported values are af, ar, ca, cs, da, de, el, en, es,
@@ -47,11 +45,10 @@ module Twilio
             # @param [String] payee Payee of the associated PSD2 compliant transaction.
             #   Requires the PSD2 Service flag enabled.
             # @return [VerificationInstance] Newly created VerificationInstance
-            def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset)
+            def create(to: nil, channel: nil, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'Channel' => channel,
-                  'CustomMessage' => custom_message,
                   'SendDigits' => send_digits,
                   'Locale' => locale,
                   'CustomCode' => custom_code,
