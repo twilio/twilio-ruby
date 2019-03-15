@@ -53,8 +53,11 @@ make install
 ## Docker Image
 The `Dockerfile` present in this repository and its respective `twilio/twilio-ruby` Docker image are currently used by Twilio for testing purposes only.
 
-## Feedback
-During the Release Candidate period of this library, please leave all feedback and issues in the [Github Issues][issues] for `twilio-ruby`.
+## Getting help
+
+If you need help installing or using the library, please check the [Twilio Support Help Center](https://support.twilio.com) first, and [file a support ticket](https://twilio.com/help/contact) if you don't find an answer to your question.
+
+If you've instead found a bug in the library or would like new features added, go ahead and open issues or pull requests against this repo!
 
 ## Getting Started
 
