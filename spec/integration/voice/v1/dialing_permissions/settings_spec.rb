@@ -13,7 +13,7 @@ describe 'Settings' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.voice.v1.voice_permissions \
+      @client.voice.v1.dialing_permissions \
                       .settings().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -36,7 +36,7 @@ describe 'Settings' do
       ]
     ))
 
-    actual = @client.voice.v1.voice_permissions \
+    actual = @client.voice.v1.dialing_permissions \
                              .settings().fetch()
 
     expect(actual).to_not eq(nil)
@@ -46,7 +46,7 @@ describe 'Settings' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.voice.v1.voice_permissions \
+      @client.voice.v1.dialing_permissions \
                       .settings().update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -69,7 +69,7 @@ describe 'Settings' do
       ]
     ))
 
-    actual = @client.voice.v1.voice_permissions \
+    actual = @client.voice.v1.dialing_permissions \
                              .settings().update()
 
     expect(actual).to_not eq(nil)

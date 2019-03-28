@@ -63,7 +63,7 @@ module Twilio
             ##
             # Initialize the NumberContext
             # @param [Version] version Version that contains the resource
-            # @param [String] number The number
+            # @param [String] number The phone number to fetch.
             # @return [NumberContext] NumberContext
             def initialize(version, number)
               super(version)
@@ -108,7 +108,7 @@ module Twilio
             # Initialize the NumberInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] number The number
+            # @param [String] number The phone number to fetch.
             # @return [NumberInstance] NumberInstance
             def initialize(version, payload, number: nil)
               super(version)
@@ -141,13 +141,13 @@ module Twilio
             end
 
             ##
-            # @return [String] The number
+            # @return [String] The phone number
             def number
               @properties['number']
             end
 
             ##
-            # @return [String] Name of the country
+            # @return [String] The name of the country
             def country
               @properties['country']
             end
@@ -159,25 +159,25 @@ module Twilio
             end
 
             ##
-            # @return [String] See OutboundCallPrice record
+            # @return [String] The OutboundCallPrice record
             def outbound_call_price
               @properties['outbound_call_price']
             end
 
             ##
-            # @return [String] See InboundCallPrice record (returned as null if the Phone Number provided is not a Twilio number owned by this account)
+            # @return [String] The InboundCallPrice record
             def inbound_call_price
               @properties['inbound_call_price']
             end
 
             ##
-            # @return [String] The currency in which prices are measured, in ISO 4127 format (e.g. usd, eur, jpy).
+            # @return [String] The currency in which prices are measured, in ISO 4127 format (e.g. usd, eur, jpy)
             def price_unit
               @properties['price_unit']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the resource
             def url
               @properties['url']
             end

@@ -146,8 +146,9 @@ module Twilio
             ##
             # Initialize the CountryContext
             # @param [Version] version Version that contains the resource
-            # @param [String] iso_country This fetches the origin-based voice pricing
-            #   information for a specific country
+            # @param [String] iso_country The [ISO country
+            #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the origin-based voice
+            #   pricing information to fetch.
             # @return [CountryContext] CountryContext
             def initialize(version, iso_country)
               super(version)
@@ -192,8 +193,9 @@ module Twilio
             # Initialize the CountryInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] iso_country This fetches the origin-based voice pricing
-            #   information for a specific country
+            # @param [String] iso_country The [ISO country
+            #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the origin-based voice
+            #   pricing information to fetch.
             # @return [CountryInstance] CountryInstance
             def initialize(version, payload, iso_country: nil)
               super(version)
@@ -225,7 +227,7 @@ module Twilio
             end
 
             ##
-            # @return [String] Name of the country
+            # @return [String] The name of the country
             def country
               @properties['country']
             end
@@ -237,25 +239,25 @@ module Twilio
             end
 
             ##
-            # @return [String] List of OutboundPrefixPriceWithOrigin records
+            # @return [String] The list of OutboundPrefixPriceWithOrigin records
             def outbound_prefix_prices
               @properties['outbound_prefix_prices']
             end
 
             ##
-            # @return [String] List of InboundCallPrice records
+            # @return [String] The list of InboundCallPrice records
             def inbound_call_prices
               @properties['inbound_call_prices']
             end
 
             ##
-            # @return [String] The currency in which prices are measured, in ISO 4127 format (e.g. usd, eur, jpy).
+            # @return [String] The currency in which prices are measured, in ISO 4127 format (e.g. usd, eur, jpy)
             def price_unit
               @properties['price_unit']
             end
 
             ##
-            # @return [String] The URL of this resource.
+            # @return [String] The absolute URL of the resource
             def url
               @properties['url']
             end

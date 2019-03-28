@@ -8,5 +8,5 @@
 
 require 'spec_helper.rb'
 
-describe 'VoicePermission' do
+describe 'DialingPermissions' do
 end

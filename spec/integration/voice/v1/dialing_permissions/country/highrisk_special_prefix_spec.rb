@@ -13,7 +13,7 @@ describe 'HighriskSpecialPrefix' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.voice.v1.voice_permissions \
+      @client.voice.v1.dialing_permissions \
                       .countries('US') \
                       .highrisk_special_prefixes.list()
     }.to raise_exception(Twilio::REST::TwilioError)
@@ -26,7 +26,7 @@ describe 'HighriskSpecialPrefix' do
     ))).to eq(true)
   end
 
-  it "receives read_us responses" do
+  it "receives read_lv responses" do
     @holodeck.mock(Twilio::Response.new(
         200,
       %q[
@@ -52,7 +52,7 @@ describe 'HighriskSpecialPrefix' do
       ]
     ))
 
-    actual = @client.voice.v1.voice_permissions \
+    actual = @client.voice.v1.dialing_permissions \
                              .countries('US') \
                              .highrisk_special_prefixes.list()
 

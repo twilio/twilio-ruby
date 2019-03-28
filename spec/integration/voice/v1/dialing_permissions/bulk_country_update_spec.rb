@@ -13,7 +13,7 @@ describe 'BulkCountryUpdate' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.voice.v1.voice_permissions \
+      @client.voice.v1.dialing_permissions \
                       .bulk_country_updates.create(update_request: 'update_request')
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -37,7 +37,7 @@ describe 'BulkCountryUpdate' do
       ]
     ))
 
-    actual = @client.voice.v1.voice_permissions \
+    actual = @client.voice.v1.dialing_permissions \
                              .bulk_country_updates.create(update_request: 'update_request')
 
     expect(actual).to_not eq(nil)

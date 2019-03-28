@@ -28,8 +28,9 @@ module Twilio
 
           ##
           # Access the countries
-          # @param [String] iso_country This fetches the origin-based voice pricing
-          #   information for a specific country
+          # @param [String] iso_country The [ISO country
+          #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the origin-based voice
+          #   pricing information to fetch.
           # @return [CountryList]
           # @return [CountryContext] if iso_country was passed.
           def countries(iso_country=:unset)
@@ -44,8 +45,10 @@ module Twilio
 
           ##
           # Access the numbers
-          # @param [String] destination_number This fetches the origin-based voice pricing
-          #   information for a phone number
+          # @param [String] destination_number The destination phone number, in
+          #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, for which to
+          #   fetch the origin-based voice pricing information. E.164 format consists of a +
+          #   followed by the country code and subscriber number.
           # @return [NumberList]
           # @return [NumberContext] if destination_number was passed.
           def numbers(destination_number=:unset)
@@ -108,19 +111,19 @@ module Twilio
           end
 
           ##
-          # @return [String] The name
+          # @return [String] The resource name
           def name
             @properties['name']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The absolute URL of the resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] The URLs of the related Countries and Numbers resources
           def links
             @properties['links']
           end

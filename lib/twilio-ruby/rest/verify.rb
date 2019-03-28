@@ -20,6 +20,7 @@ module Twilio
 
         # Versions
         @v1 = nil
+        @v2 = nil
       end
 
       ##
@@ -29,11 +30,17 @@ module Twilio
       end
 
       ##
+      # Version v2 of verify
+      def v2
+        @v2 ||= V2.new self
+      end
+
+      ##
       # @param [String] sid A 34 character string that uniquely identifies this Service.
-      # @return [Twilio::REST::Verify::V1::ServiceInstance] if sid was passed.
-      # @return [Twilio::REST::Verify::V1::ServiceList]
+      # @return [Twilio::REST::Verify::V2::ServiceInstance] if sid was passed.
+      # @return [Twilio::REST::Verify::V2::ServiceList]
       def services(sid=:unset)
-        self.v1.services(sid)
+        self.v2.services(sid)
       end
 
       ##

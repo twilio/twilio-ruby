@@ -15,13 +15,13 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
-          @voice_permissions = nil
+          @dialing_permissions = nil
         end
 
         ##
-        # @return [Twilio::REST::Voice::V1::VoicePermissionContext]
-        def voice_permissions
-          @voice_permissions ||= VoicePermissionList.new self
+        # @return [Twilio::REST::Voice::V1::DialingPermissionsContext]
+        def dialing_permissions
+          @dialing_permissions ||= DialingPermissionsList.new self
         end
 
         ##

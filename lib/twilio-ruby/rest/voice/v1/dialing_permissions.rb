@@ -12,11 +12,11 @@ module Twilio
       class V1 < Version
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class VoicePermissionList < ListResource
+        class DialingPermissionsList < ListResource
           ##
-          # Initialize the VoicePermissionList
+          # Initialize the DialingPermissionsList
           # @param [Version] version Version that contains the resource
-          # @return [VoicePermissionList] VoicePermissionList
+          # @return [DialingPermissionsList] DialingPermissionsList
           def initialize(version)
             super(version)
 
@@ -66,19 +66,19 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Voice.V1.VoicePermissionList>'
+            '#<Twilio.Voice.V1.DialingPermissionsList>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class VoicePermissionPage < Page
+        class DialingPermissionsPage < Page
           ##
-          # Initialize the VoicePermissionPage
+          # Initialize the DialingPermissionsPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [VoicePermissionPage] VoicePermissionPage
+          # @return [DialingPermissionsPage] DialingPermissionsPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -87,28 +87,28 @@ module Twilio
           end
 
           ##
-          # Build an instance of VoicePermissionInstance
+          # Build an instance of DialingPermissionsInstance
           # @param [Hash] payload Payload response from the API
-          # @return [VoicePermissionInstance] VoicePermissionInstance
+          # @return [DialingPermissionsInstance] DialingPermissionsInstance
           def get_instance(payload)
-            VoicePermissionInstance.new(@version, payload, )
+            DialingPermissionsInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Voice.V1.VoicePermissionPage>'
+            '<Twilio.Voice.V1.DialingPermissionsPage>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class VoicePermissionInstance < InstanceResource
+        class DialingPermissionsInstance < InstanceResource
           ##
-          # Initialize the VoicePermissionInstance
+          # Initialize the DialingPermissionsInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @return [VoicePermissionInstance] VoicePermissionInstance
+          # @return [DialingPermissionsInstance] DialingPermissionsInstance
           def initialize(version, payload)
             super(version)
           end
@@ -116,13 +116,13 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            "<Twilio.Voice.V1.VoicePermissionInstance>"
+            "<Twilio.Voice.V1.DialingPermissionsInstance>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
-            "<Twilio.Voice.V1.VoicePermissionInstance>"
+            "<Twilio.Voice.V1.DialingPermissionsInstance>"
           end
         end
       end

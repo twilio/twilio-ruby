@@ -19,8 +19,7 @@ module Twilio
               # @param [String] account_sid The SID of the
               #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Queue
               #   resource.
-              # @param [String] queue_sid The unique string that that we created to identify
-              #   this Queue resource.
+              # @param [String] queue_sid The SID of the Queue the member is in.
               # @return [MemberList] MemberList
               def initialize(version, account_sid: nil, queue_sid: nil)
                 super(version)
@@ -160,7 +159,8 @@ module Twilio
               # @param [String] account_sid The SID of the
               #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Member
               #   resource(s) to fetch.
-              # @param [String] queue_sid The Queue in which to find the members to fetch.
+              # @param [String] queue_sid The SID of the Queue in which to find the members to
+              #   fetch.
               # @param [String] call_sid The [Call](https://www.twilio.com/docs/api/voice/call)
               #   SID of the resource(s) to fetch.
               # @return [MemberContext] MemberContext
@@ -195,7 +195,7 @@ module Twilio
 
               ##
               # Update the MemberInstance
-              # @param [String] url The absolute URL of this Queue resource.
+              # @param [String] url The absolute URL of the Queue resource.
               # @param [String] method How to pass the update request data. Can be `GET` or
               #   `POST` and the default is `POST`. `POST` sends the data as encoded form data and
               #   `GET` sends the data as query parameters.
@@ -241,8 +241,7 @@ module Twilio
               # @param [String] account_sid The SID of the
               #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Queue
               #   resource.
-              # @param [String] queue_sid The unique string that that we created to identify
-              #   this Queue resource.
+              # @param [String] queue_sid The SID of the Queue the member is in.
               # @param [String] call_sid The [Call](https://www.twilio.com/docs/api/voice/call)
               #   SID of the resource(s) to fetch.
               # @return [MemberInstance] MemberInstance
@@ -256,6 +255,7 @@ module Twilio
                     'position' => payload['position'].to_i,
                     'uri' => payload['uri'],
                     'wait_time' => payload['wait_time'].to_i,
+                    'queue_sid' => payload['queue_sid'],
                 }
 
                 # Context
@@ -284,7 +284,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The SID of the Call this resource is associated with
+              # @return [String] The SID of the Call the resource is associated with
               def call_sid
                 @properties['call_sid']
               end
@@ -302,7 +302,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The URI of this resource, relative to `https://api.twilio.com`
+              # @return [String] The URI of the resource, relative to `https://api.twilio.com`
               def uri
                 @properties['uri']
               end
@@ -314,6 +314,12 @@ module Twilio
               end
 
               ##
+              # @return [String] The SID of the Queue the member is in
+              def queue_sid
+                @properties['queue_sid']
+              end
+
+              ##
               # Fetch a MemberInstance
               # @return [MemberInstance] Fetched MemberInstance
               def fetch
@@ -322,7 +328,7 @@ module Twilio
 
               ##
               # Update the MemberInstance
-              # @param [String] url The absolute URL of this Queue resource.
+              # @param [String] url The absolute URL of the Queue resource.
               # @param [String] method How to pass the update request data. Can be `GET` or
               #   `POST` and the default is `POST`. `POST` sends the data as encoded form data and
               #   `GET` sends the data as query parameters.

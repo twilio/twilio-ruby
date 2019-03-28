@@ -13,7 +13,7 @@ describe 'Country' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.voice.v1.voice_permissions \
+      @client.voice.v1.dialing_permissions \
                       .countries('US').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -47,7 +47,7 @@ describe 'Country' do
       ]
     ))
 
-    actual = @client.voice.v1.voice_permissions \
+    actual = @client.voice.v1.dialing_permissions \
                              .countries('US').fetch()
 
     expect(actual).to_not eq(nil)
@@ -57,7 +57,7 @@ describe 'Country' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.voice.v1.voice_permissions \
+      @client.voice.v1.dialing_permissions \
                       .countries.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -104,7 +104,7 @@ describe 'Country' do
       ]
     ))
 
-    actual = @client.voice.v1.voice_permissions \
+    actual = @client.voice.v1.dialing_permissions \
                              .countries.list()
 
     expect(actual).to_not eq(nil)

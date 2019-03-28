@@ -204,6 +204,7 @@ module Twilio
             # Dependents
             @participants = nil
             @messages = nil
+            @webhooks = nil
           end
 
           ##
@@ -292,6 +293,24 @@ module Twilio
             end
 
             @messages
+          end
+
+          ##
+          # Access the webhooks
+          # @return [WebhookList]
+          # @return [WebhookContext] if sid was passed.
+          def webhooks(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return WebhookContext.new(@version, @solution[:sid], sid, )
+            end
+
+            unless @webhooks
+              @webhooks = WebhookList.new(@version, session_sid: @solution[:sid], )
+            end
+
+            @webhooks
           end
 
           ##
@@ -467,6 +486,13 @@ module Twilio
           # @return [messages] messages
           def messages
             context.messages
+          end
+
+          ##
+          # Access the webhooks
+          # @return [webhooks] webhooks
+          def webhooks
+            context.webhooks
           end
 
           ##

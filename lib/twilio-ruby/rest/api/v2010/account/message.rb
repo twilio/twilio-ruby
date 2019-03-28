@@ -69,6 +69,7 @@ module Twilio
             #   seconds. After a message has been accepted by a carrier, however, we cannot
             #   guarantee that the message will not be queued after this period. We recommend
             #   that this value be at least 5 seconds.
+            # @param [Boolean] force_delivery Reserved
             # @param [Boolean] smart_encoded Whether to detect Unicode characters that have a
             #   similar GSM-7 character and replace them. Can be: `true` or `false`.
             # @param [String] interactive_data A JSON string that represents an interactive
@@ -99,7 +100,7 @@ module Twilio
             #   can include up to 10 `media_url` parameters per message. You can send images in
             #   an SMS message in only the US and Canada.
             # @return [MessageInstance] Newly created MessageInstance
-            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, smart_encoded: :unset, interactive_data: :unset, force_opt_in: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
+            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, force_delivery: :unset, smart_encoded: :unset, interactive_data: :unset, force_opt_in: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -111,6 +112,7 @@ module Twilio
                   'MaxPrice' => max_price,
                   'ProvideFeedback' => provide_feedback,
                   'ValidityPeriod' => validity_period,
+                  'ForceDelivery' => force_delivery,
                   'SmartEncoded' => smart_encoded,
                   'InteractiveData' => interactive_data,
                   'ForceOptIn' => force_opt_in,
