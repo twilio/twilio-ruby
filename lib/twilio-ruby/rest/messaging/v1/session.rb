@@ -39,12 +39,8 @@ module Twilio
           # @param [Time] date_updated The date that this resource was last updated.
           # @param [String] created_by Identity of the session's creator. If the Session was
           #   created through the API, the value will be `system`
-          # @param [String] twilio_address Twilio address the participant is contacting to.
-          #   Together with User address defines the participant.
-          # @param [String] user_address Address the participant is contacting from.
-          #   Together with Twilio address defines the participant.
           # @return [SessionInstance] Newly created SessionInstance
-          def create(messaging_service_sid: nil, friendly_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset, twilio_address: :unset, user_address: :unset)
+          def create(messaging_service_sid: nil, friendly_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
             data = Twilio::Values.of({
                 'MessagingServiceSid' => messaging_service_sid,
                 'FriendlyName' => friendly_name,
@@ -52,8 +48,6 @@ module Twilio
                 'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                 'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                 'CreatedBy' => created_by,
-                'TwilioAddress' => twilio_address,
-                'UserAddress' => user_address,
             })
 
             payload = @version.create(

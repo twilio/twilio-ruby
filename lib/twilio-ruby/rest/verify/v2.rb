@@ -19,7 +19,8 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The unique SID identifier of Verification Service Instance.
+        # @param [String] sid The Twilio-provided string that uniquely identifies the
+        #   Verification Service resource to fetch.
         # @return [Twilio::REST::Verify::V2::ServiceContext] if sid was passed.
         # @return [Twilio::REST::Verify::V2::ServiceList]
         def services(sid=:unset)

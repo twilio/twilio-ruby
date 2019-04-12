@@ -8,10 +8,10 @@
 
 module Twilio
   module REST
-    class Verify
+    class Serverless
       class V1 < Version
         ##
-        # Initialize the V1 version of Verify
+        # Initialize the V1 version of Serverless
         def initialize(domain)
           super
           @version = 'v1'
@@ -19,9 +19,9 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The unique SID identifier of Verification Service Instance.
-        # @return [Twilio::REST::Verify::V1::ServiceContext] if sid was passed.
-        # @return [Twilio::REST::Verify::V1::ServiceList]
+        # @param [String] sid The sid
+        # @return [Twilio::REST::Serverless::V1::ServiceContext] if sid was passed.
+        # @return [Twilio::REST::Serverless::V1::ServiceList]
         def services(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'
@@ -35,7 +35,7 @@ module Twilio
         ##
         # Provide a user friendly representation
         def to_s
-          '<Twilio::REST::Verify::V1>'
+          '<Twilio::REST::Serverless::V1>'
         end
       end
     end

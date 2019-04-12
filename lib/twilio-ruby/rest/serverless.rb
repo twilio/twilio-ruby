@@ -8,14 +8,14 @@
 
 module Twilio
   module REST
-    class Proxy < Domain
+    class Serverless < Domain
       ##
-      # Initialize the Proxy Domain
+      # Initialize the Serverless Domain
       def initialize(twilio)
         super
 
-        @base_url = 'https://proxy.twilio.com'
-        @host = 'proxy.twilio.com'
+        @base_url = 'https://serverless.twilio.com'
+        @host = 'serverless.twilio.com'
         @port = 443
 
         # Versions
@@ -23,16 +23,15 @@ module Twilio
       end
 
       ##
-      # Version v1 of proxy
+      # Version v1 of serverless
       def v1
         @v1 ||= V1.new self
       end
 
       ##
-      # @param [String] sid The unique string that we created to identify the Service
-      #   resource.
-      # @return [Twilio::REST::Proxy::V1::ServiceInstance] if sid was passed.
-      # @return [Twilio::REST::Proxy::V1::ServiceList]
+      # @param [String] sid The sid
+      # @return [Twilio::REST::Serverless::V1::ServiceInstance] if sid was passed.
+      # @return [Twilio::REST::Serverless::V1::ServiceList]
       def services(sid=:unset)
         self.v1.services(sid)
       end
@@ -40,7 +39,7 @@ module Twilio
       ##
       # Provide a user friendly representation
       def to_s
-        '#<Twilio::REST::Proxy>'
+        '#<Twilio::REST::Serverless>'
       end
     end
   end

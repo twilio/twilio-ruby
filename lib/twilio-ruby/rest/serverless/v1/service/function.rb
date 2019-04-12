@@ -8,47 +8,27 @@
 
 module Twilio
   module REST
-    class Proxy < Domain
+    class Serverless < Domain
       class V1 < Version
         class ServiceContext < InstanceContext
           ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-          class ShortCodeList < ListResource
+          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          class FunctionList < ListResource
             ##
-            # Initialize the ShortCodeList
+            # Initialize the FunctionList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The SID of the ShortCode resource's parent
-            #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
-            # @return [ShortCodeList] ShortCodeList
+            # @param [String] service_sid The service_sid
+            # @return [FunctionList] FunctionList
             def initialize(version, service_sid: nil)
               super(version)
 
               # Path Solution
               @solution = {service_sid: service_sid}
-              @uri = "/Services/#{@solution[:service_sid]}/ShortCodes"
+              @uri = "/Services/#{@solution[:service_sid]}/Functions"
             end
 
             ##
-            # Retrieve a single page of ShortCodeInstance records from the API.
-            # Request is executed immediately.
-            # @param [String] sid The SID of a Twilio
-            #   [ShortCode](https://www.twilio.com/docs/sms/api/short-code) resource that
-            #   represents the short code you would like to assign to your Proxy Service.
-            # @return [ShortCodeInstance] Newly created ShortCodeInstance
-            def create(sid: nil)
-              data = Twilio::Values.of({'Sid' => sid, })
-
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
-
-              ShortCodeInstance.new(@version, payload, service_sid: @solution[:service_sid], )
-            end
-
-            ##
-            # Lists ShortCodeInstance records from the API as a list.
+            # Lists FunctionInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -63,7 +43,7 @@ module Twilio
             end
 
             ##
-            # Streams ShortCodeInstance records from the API as an Enumerable.
+            # Streams FunctionInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -82,7 +62,7 @@ module Twilio
             end
 
             ##
-            # When passed a block, yields ShortCodeInstance records from the API.
+            # When passed a block, yields FunctionInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             def each
@@ -96,12 +76,12 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of ShortCodeInstance records from the API.
+            # Retrieve a single page of FunctionInstance records from the API.
             # Request is executed immediately.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            # @return [Page] Page of ShortCodeInstance
+            # @return [Page] Page of FunctionInstance
             def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'PageToken' => page_token,
@@ -113,38 +93,55 @@ module Twilio
                   @uri,
                   params
               )
-              ShortCodePage.new(@version, response, @solution)
+              FunctionPage.new(@version, response, @solution)
             end
 
             ##
-            # Retrieve a single page of ShortCodeInstance records from the API.
+            # Retrieve a single page of FunctionInstance records from the API.
             # Request is executed immediately.
             # @param [String] target_url API-generated URL for the requested results page
-            # @return [Page] Page of ShortCodeInstance
+            # @return [Page] Page of FunctionInstance
             def get_page(target_url)
               response = @version.domain.request(
                   'GET',
                   target_url
               )
-              ShortCodePage.new(@version, response, @solution)
+              FunctionPage.new(@version, response, @solution)
+            end
+
+            ##
+            # Retrieve a single page of FunctionInstance records from the API.
+            # Request is executed immediately.
+            # @param [String] friendly_name The friendly_name
+            # @return [FunctionInstance] Newly created FunctionInstance
+            def create(friendly_name: nil)
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, })
+
+              payload = @version.create(
+                  'POST',
+                  @uri,
+                  data: data
+              )
+
+              FunctionInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '#<Twilio.Proxy.V1.ShortCodeList>'
+              '#<Twilio.Serverless.V1.FunctionList>'
             end
           end
 
           ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-          class ShortCodePage < Page
+          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          class FunctionPage < Page
             ##
-            # Initialize the ShortCodePage
+            # Initialize the FunctionPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @return [ShortCodePage] ShortCodePage
+            # @return [FunctionPage] FunctionPage
             def initialize(version, response, solution)
               super(version, response)
 
@@ -153,50 +150,43 @@ module Twilio
             end
 
             ##
-            # Build an instance of ShortCodeInstance
+            # Build an instance of FunctionInstance
             # @param [Hash] payload Payload response from the API
-            # @return [ShortCodeInstance] ShortCodeInstance
+            # @return [FunctionInstance] FunctionInstance
             def get_instance(payload)
-              ShortCodeInstance.new(@version, payload, service_sid: @solution[:service_sid], )
+              FunctionInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '<Twilio.Proxy.V1.ShortCodePage>'
+              '<Twilio.Serverless.V1.FunctionPage>'
             end
           end
 
           ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-          class ShortCodeContext < InstanceContext
+          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          class FunctionContext < InstanceContext
             ##
-            # Initialize the ShortCodeContext
+            # Initialize the FunctionContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The SID of the parent
-            #   [Service](https://www.twilio.com/docs/proxy/api/service) to fetch the resource
-            #   from.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the
-            #   ShortCode resource to fetch.
-            # @return [ShortCodeContext] ShortCodeContext
+            # @param [String] service_sid The service_sid
+            # @param [String] sid The sid
+            # @return [FunctionContext] FunctionContext
             def initialize(version, service_sid, sid)
               super(version)
 
               # Path Solution
               @solution = {service_sid: service_sid, sid: sid, }
-              @uri = "/Services/#{@solution[:service_sid]}/ShortCodes/#{@solution[:sid]}"
+              @uri = "/Services/#{@solution[:service_sid]}/Functions/#{@solution[:sid]}"
+
+              # Dependents
+              @function_versions = nil
             end
 
             ##
-            # Deletes the ShortCodeInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
-            def delete
-              @version.delete('delete', @uri)
-            end
-
-            ##
-            # Fetch a ShortCodeInstance
-            # @return [ShortCodeInstance] Fetched ShortCodeInstance
+            # Fetch a FunctionInstance
+            # @return [FunctionInstance] Fetched FunctionInstance
             def fetch
               params = Twilio::Values.of({})
 
@@ -206,18 +196,15 @@ module Twilio
                   params,
               )
 
-              ShortCodeInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+              FunctionInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Update the ShortCodeInstance
-            # @param [Boolean] is_reserved Whether the short code should be reserved and not
-            #   be assigned to a participant using proxy pool logic. See [Reserved Phone
-            #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
-            #   information.
-            # @return [ShortCodeInstance] Updated ShortCodeInstance
-            def update(is_reserved: :unset)
-              data = Twilio::Values.of({'IsReserved' => is_reserved, })
+            # Update the FunctionInstance
+            # @param [String] friendly_name The friendly_name
+            # @return [FunctionInstance] Updated FunctionInstance
+            def update(friendly_name: nil)
+              data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
               payload = @version.update(
                   'POST',
@@ -225,36 +212,56 @@ module Twilio
                   data: data,
               )
 
-              ShortCodeInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+              FunctionInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+            end
+
+            ##
+            # Access the function_versions
+            # @return [FunctionVersionList]
+            # @return [FunctionVersionContext] if sid was passed.
+            def function_versions(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return FunctionVersionContext.new(@version, @solution[:service_sid], @solution[:sid], sid, )
+              end
+
+              unless @function_versions
+                @function_versions = FunctionVersionList.new(
+                    @version,
+                    service_sid: @solution[:service_sid],
+                    function_sid: @solution[:sid],
+                )
+              end
+
+              @function_versions
             end
 
             ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Proxy.V1.ShortCodeContext #{context}>"
+              "#<Twilio.Serverless.V1.FunctionContext #{context}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Proxy.V1.ShortCodeContext #{context}>"
+              "#<Twilio.Serverless.V1.FunctionContext #{context}>"
             end
           end
 
           ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-          class ShortCodeInstance < InstanceResource
+          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          class FunctionInstance < InstanceResource
             ##
-            # Initialize the ShortCodeInstance
+            # Initialize the FunctionInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The SID of the ShortCode resource's parent
-            #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the
-            #   ShortCode resource to fetch.
-            # @return [ShortCodeInstance] ShortCodeInstance
+            # @param [String] service_sid The service_sid
+            # @param [String] sid The sid
+            # @return [FunctionInstance] FunctionInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
 
@@ -263,13 +270,11 @@ module Twilio
                   'sid' => payload['sid'],
                   'account_sid' => payload['account_sid'],
                   'service_sid' => payload['service_sid'],
+                  'friendly_name' => payload['friendly_name'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                  'short_code' => payload['short_code'],
-                  'iso_country' => payload['iso_country'],
-                  'capabilities' => payload['capabilities'],
                   'url' => payload['url'],
-                  'is_reserved' => payload['is_reserved'],
+                  'links' => payload['links'],
               }
 
               # Context
@@ -280,111 +285,96 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return [ShortCodeContext] ShortCodeContext for this ShortCodeInstance
+            # @return [FunctionContext] FunctionContext for this FunctionInstance
             def context
               unless @instance_context
-                @instance_context = ShortCodeContext.new(@version, @params['service_sid'], @params['sid'], )
+                @instance_context = FunctionContext.new(@version, @params['service_sid'], @params['sid'], )
               end
               @instance_context
             end
 
             ##
-            # @return [String] The unique string that identifies the resource
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The SID of the Account that created the resource
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The SID of the resource's parent Service
+            # @return [String] The service_sid
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
+            # @return [String] The friendly_name
+            def friendly_name
+              @properties['friendly_name']
+            end
+
+            ##
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The short code's number
-            def short_code
-              @properties['short_code']
-            end
-
-            ##
-            # @return [String] The ISO Country Code
-            def iso_country
-              @properties['iso_country']
-            end
-
-            ##
-            # @return [String] The capabilities of the short code
-            def capabilities
-              @properties['capabilities']
-            end
-
-            ##
-            # @return [String] The absolute URL of the ShortCode resource
+            # @return [String] The url
             def url
               @properties['url']
             end
 
             ##
-            # @return [Boolean] Whether the short code should be reserved for manual assignment to participants only
-            def is_reserved
-              @properties['is_reserved']
+            # @return [String] The links
+            def links
+              @properties['links']
             end
 
             ##
-            # Deletes the ShortCodeInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
-            def delete
-              context.delete
-            end
-
-            ##
-            # Fetch a ShortCodeInstance
-            # @return [ShortCodeInstance] Fetched ShortCodeInstance
+            # Fetch a FunctionInstance
+            # @return [FunctionInstance] Fetched FunctionInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Update the ShortCodeInstance
-            # @param [Boolean] is_reserved Whether the short code should be reserved and not
-            #   be assigned to a participant using proxy pool logic. See [Reserved Phone
-            #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
-            #   information.
-            # @return [ShortCodeInstance] Updated ShortCodeInstance
-            def update(is_reserved: :unset)
-              context.update(is_reserved: is_reserved, )
+            # Update the FunctionInstance
+            # @param [String] friendly_name The friendly_name
+            # @return [FunctionInstance] Updated FunctionInstance
+            def update(friendly_name: nil)
+              context.update(friendly_name: friendly_name, )
+            end
+
+            ##
+            # Access the function_versions
+            # @return [function_versions] function_versions
+            def function_versions
+              context.function_versions
             end
 
             ##
             # Provide a user friendly representation
             def to_s
               values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Proxy.V1.ShortCodeInstance #{values}>"
+              "<Twilio.Serverless.V1.FunctionInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
               values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Proxy.V1.ShortCodeInstance #{values}>"
+              "<Twilio.Serverless.V1.FunctionInstance #{values}>"
             end
           end
         end

@@ -28,20 +28,20 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name A 1-64 character string with friendly name of
-          #   service
-          # @param [String] code_length The length of the verification code to be generated.
-          #   Must be an integer value between 4-10
-          # @param [Boolean] lookup_enabled Boolean value that indicates if a lookup should
-          #   be performed with each verification started and associated info returned
-          # @param [Boolean] skip_sms_to_landlines Boolean value that indicates whether or
-          #   not to ignore SMS verifications for landlines, depends on lookup_enabled flag
-          # @param [Boolean] dtmf_input_required Boolean value that indicates whether or not
-          #   to require a random number input to deliver the verify code via phone calls
-          # @param [String] tts_name Alternative to be used as Service friendly name in
-          #   phone calls, only applies to TTS languages
-          # @param [Boolean] psd2_enabled Boolean value that enables to pass PSD2
-          #   transaction parameters when starting a verification
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the verification service. It can be up to 64 characters long.
+          # @param [String] code_length The length of the verification code to generate.
+          #   Must be an integer value between 4 and 10, inclusive.
+          # @param [Boolean] lookup_enabled Whether to perform a lookup with each
+          #   verification started and return info about the phone number.
+          # @param [Boolean] skip_sms_to_landlines Whether to skip sending SMS verifications
+          #   to landlines. Requires `lookup_enabled`.
+          # @param [Boolean] dtmf_input_required Whether to ask the user to press a number
+          #   before delivering the verify code in a phone call.
+          # @param [String] tts_name The name of an alternative text-to-speech service to
+          #   use in phone calls. Applies only to TTS languages.
+          # @param [Boolean] psd2_enabled Whether to pass PSD2 transaction parameters when
+          #   starting a verification.
           # @return [ServiceInstance] Newly created ServiceInstance
           def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset)
             data = Twilio::Values.of({
@@ -189,7 +189,8 @@ module Twilio
           ##
           # Initialize the ServiceContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The unique SID identifier of Verification Service Instance.
+          # @param [String] sid The Twilio-provided string that uniquely identifies the
+          #   Verification Service resource to fetch.
           # @return [ServiceContext] ServiceContext
           def initialize(version, sid)
             super(version)
@@ -227,20 +228,20 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] friendly_name A 1-64 character string with friendly name of
-          #   service
-          # @param [String] code_length The length of the verification code to be generated.
-          #   Must be an integer value between 4-10
-          # @param [Boolean] lookup_enabled Boolean value that indicates if a lookup should
-          #   be performed with each verification started and associated info returned
-          # @param [Boolean] skip_sms_to_landlines Boolean value that indicates whether or
-          #   not to ignore SMS verifications for landlines, depends on lookup_enabled flag
-          # @param [Boolean] dtmf_input_required Boolean value that indicates whether or not
-          #   to require a random number input to deliver the verify code via phone calls
-          # @param [String] tts_name Alternative to be used as Service friendly name in
-          #   phone calls, only applies to TTS languages
-          # @param [Boolean] psd2_enabled Boolean value that enables to pass PSD2
-          #   transaction parameters when starting a verification
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the verification service. It can be up to 64 characters long.
+          # @param [String] code_length The length of the verification code to generate.
+          #   Must be an integer value between 4 and 10, inclusive.
+          # @param [Boolean] lookup_enabled Whether to perform a lookup with each
+          #   verification started and return info about the phone number.
+          # @param [Boolean] skip_sms_to_landlines Whether to skip sending SMS verifications
+          #   to landlines. Requires `lookup_enabled`.
+          # @param [Boolean] dtmf_input_required Whether to ask the user to press a number
+          #   before delivering the verify code in a phone call.
+          # @param [String] tts_name The name of an alternative text-to-speech service to
+          #   use in phone calls. Applies only to TTS languages.
+          # @param [Boolean] psd2_enabled Whether to pass PSD2 transaction parameters when
+          #   starting a verification.
           # @return [ServiceInstance] Updated ServiceInstance
           def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset)
             data = Twilio::Values.of({
@@ -314,7 +315,8 @@ module Twilio
           # Initialize the ServiceInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The unique SID identifier of Verification Service Instance.
+          # @param [String] sid The Twilio-provided string that uniquely identifies the
+          #   Verification Service resource to fetch.
           # @return [ServiceInstance] ServiceInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -353,79 +355,79 @@ module Twilio
           end
 
           ##
-          # @return [String] A string that uniquely identifies this Service.
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] Account Sid.
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] Friendly name of the service
+          # @return [String] The string that you assigned to describe the verification service
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [String] Length of verification code. Valid values are 4-10
+          # @return [String] The length of the verification code
           def code_length
             @properties['code_length']
           end
 
           ##
-          # @return [Boolean] Indicates whether or not to perform a lookup with each verification started
+          # @return [Boolean] Whether to perform a lookup with each verification
           def lookup_enabled
             @properties['lookup_enabled']
           end
 
           ##
-          # @return [Boolean] Indicates whether PSD2 parameters are enabled or not
+          # @return [Boolean] Whether to pass PSD2 transaction parameters when starting a verification
           def psd2_enabled
             @properties['psd2_enabled']
           end
 
           ##
-          # @return [Boolean] Indicates whether or not to ignore SMS verifications for landlines
+          # @return [Boolean] Whether to skip sending SMS verifications to landlines
           def skip_sms_to_landlines
             @properties['skip_sms_to_landlines']
           end
 
           ##
-          # @return [Boolean] Indicates whether or not to require a random number input to deliver the verify code via phone calls
+          # @return [Boolean] Whether to ask the user to press a number before delivering the verify code in a phone call
           def dtmf_input_required
             @properties['dtmf_input_required']
           end
 
           ##
-          # @return [String] Alternative to be used as Service friendly name in phone calls
+          # @return [String] The name of an alternative text-to-speech service to use in phone calls
           def tts_name
             @properties['tts_name']
           end
 
           ##
-          # @return [Time] The date this Service was created
+          # @return [Time] The RFC 2822 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date this Service was updated
+          # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The absolute URL of the resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] The URLs of related resources
           def links
             @properties['links']
           end
@@ -446,20 +448,20 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] friendly_name A 1-64 character string with friendly name of
-          #   service
-          # @param [String] code_length The length of the verification code to be generated.
-          #   Must be an integer value between 4-10
-          # @param [Boolean] lookup_enabled Boolean value that indicates if a lookup should
-          #   be performed with each verification started and associated info returned
-          # @param [Boolean] skip_sms_to_landlines Boolean value that indicates whether or
-          #   not to ignore SMS verifications for landlines, depends on lookup_enabled flag
-          # @param [Boolean] dtmf_input_required Boolean value that indicates whether or not
-          #   to require a random number input to deliver the verify code via phone calls
-          # @param [String] tts_name Alternative to be used as Service friendly name in
-          #   phone calls, only applies to TTS languages
-          # @param [Boolean] psd2_enabled Boolean value that enables to pass PSD2
-          #   transaction parameters when starting a verification
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the verification service. It can be up to 64 characters long.
+          # @param [String] code_length The length of the verification code to generate.
+          #   Must be an integer value between 4 and 10, inclusive.
+          # @param [Boolean] lookup_enabled Whether to perform a lookup with each
+          #   verification started and return info about the phone number.
+          # @param [Boolean] skip_sms_to_landlines Whether to skip sending SMS verifications
+          #   to landlines. Requires `lookup_enabled`.
+          # @param [Boolean] dtmf_input_required Whether to ask the user to press a number
+          #   before delivering the verify code in a phone call.
+          # @param [String] tts_name The name of an alternative text-to-speech service to
+          #   use in phone calls. Applies only to TTS languages.
+          # @param [Boolean] psd2_enabled Whether to pass PSD2 transaction parameters when
+          #   starting a verification.
           # @return [ServiceInstance] Updated ServiceInstance
           def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset)
             context.update(

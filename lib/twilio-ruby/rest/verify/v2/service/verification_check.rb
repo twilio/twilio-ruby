@@ -17,7 +17,9 @@ module Twilio
             ##
             # Initialize the VerificationCheckList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the Service.
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+            #   associated with.
             # @return [VerificationCheckList] VerificationCheckList
             def initialize(version, service_sid: nil)
               super(version)
@@ -30,14 +32,14 @@ module Twilio
             ##
             # Retrieve a single page of VerificationCheckInstance records from the API.
             # Request is executed immediately.
-            # @param [String] code The 4-10 character string being verified
-            # @param [String] to The To phone number of the phone being verified
-            # @param [String] verification_sid A SID that uniquely identifies this
-            #   Verification Check, either this parameter or the To phone number must be
-            #   specified
-            # @param [String] amount Amount of the associated PSD2 compliant transaction.
+            # @param [String] code The 4-10 character string being verified.
+            # @param [String] to The phone number to verify. Either this parameter or the
+            #   `verification_sid` must be specified
+            # @param [String] verification_sid A SID that uniquely identifies the Verification
+            #   Check. Either this parameter or the `to` phone number must be specified.
+            # @param [String] amount The amount of the associated PSD2 compliant transaction.
             #   Requires the PSD2 Service flag enabled.
-            # @param [String] payee Payee of the associated PSD2 compliant transaction.
+            # @param [String] payee The payee of the associated PSD2 compliant transaction.
             #   Requires the PSD2 Service flag enabled.
             # @return [VerificationCheckInstance] Newly created VerificationCheckInstance
             def create(code: nil, to: :unset, verification_sid: :unset, amount: :unset, payee: :unset)
@@ -103,7 +105,9 @@ module Twilio
             # Initialize the VerificationCheckInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The unique SID identifier of the Service.
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+            #   associated with.
             # @return [VerificationCheckInstance] VerificationCheckInstance
             def initialize(version, payload, service_sid: nil)
               super(version)
@@ -125,67 +129,67 @@ module Twilio
             end
 
             ##
-            # @return [String] A string that uniquely identifies this Verification Check.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] Service Sid.
+            # @return [String] The SID of the Service that the resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] Account Sid.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] To phone number
+            # @return [String] The phone number being verified
             def to
               @properties['to']
             end
 
             ##
-            # @return [verification_check.Channel] sms or call
+            # @return [verification_check.Channel] The verification method to use
             def channel
               @properties['channel']
             end
 
             ##
-            # @return [String] pending, approved, denied or expired
+            # @return [String] The status of the verification resource
             def status
               @properties['status']
             end
 
             ##
-            # @return [Boolean] successful verification
+            # @return [Boolean] Whether the verification was successful
             def valid
               @properties['valid']
             end
 
             ##
-            # @return [String] Amount of the associated PSD2 compliant transaction.
+            # @return [String] The amount of the associated PSD2 compliant transaction.
             def amount
               @properties['amount']
             end
 
             ##
-            # @return [String] Payee of the associated PSD2 compliant transaction.
+            # @return [String] The payee of the associated PSD2 compliant transaction
             def payee
               @properties['payee']
             end
 
             ##
-            # @return [Time] The date this Verification Check was created
+            # @return [Time] The ISO 8601 date and time in GMT when the Verification Check resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this Verification Check was updated
+            # @return [Time] The ISO 8601 date and time in GMT when the Verification Check resource was last updated
             def date_updated
               @properties['date_updated']
             end

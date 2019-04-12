@@ -172,6 +172,8 @@ module Twilio
                 'crm_fallback_url' => payload['crm_fallback_url'],
                 'crm_attributes' => payload['crm_attributes'],
                 'public_attributes' => payload['public_attributes'],
+                'plugin_service_enabled' => payload['plugin_service_enabled'],
+                'plugin_service_attributes' => payload['plugin_service_attributes'],
                 'url' => payload['url'],
             }
 
@@ -357,6 +359,18 @@ module Twilio
           # @return [Hash] Public Attributes
           def public_attributes
             @properties['public_attributes']
+          end
+
+          ##
+          # @return [Boolean] Is plugin service Enabled
+          def plugin_service_enabled
+            @properties['plugin_service_enabled']
+          end
+
+          ##
+          # @return [Hash] Plugin service Attributes
+          def plugin_service_attributes
+            @properties['plugin_service_attributes']
           end
 
           ##

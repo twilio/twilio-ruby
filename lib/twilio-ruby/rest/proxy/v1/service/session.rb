@@ -17,7 +17,9 @@ module Twilio
             ##
             # Initialize the SessionList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the Service.
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/proxy/api/service) the session is
+            #   associated with.
             # @return [SessionList] SessionList
             def initialize(version, service_sid: nil)
               super(version)
@@ -112,20 +114,22 @@ module Twilio
             ##
             # Retrieve a single page of SessionInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name Your unique identifier for this Session such as a
-            #   Job ID or conversation ID. *Should not contain PII.*
-            # @param [Time] date_expiry An absolute time (ISO 8601) in the future at which
-            #   this Session should close. If this is populated, it takes precedence over TTL
-            #   values.
-            # @param [String] ttl The time, in seconds, after the latest of Session create
-            #   time or the Session's last Interaction time at which the session will expire.
-            # @param [session.Mode] mode The type of communications mediums allowed on a
-            #   Session. Defaults to `voice-and-message`. Other options are `voice-only` or
-            #   `message-only`.
-            # @param [session.Status] status Set this value to `closed` to close the session.
-            #   A Session can be re-opened by posting to a closed session with the value
-            #   `in-progress`.  This will be `open` by default on create.
-            # @param [Hash] participants The participants
+            # @param [String] unique_name An application-defined string that uniquely
+            #   identifies the resource. This value must be 191 characters or fewer in length
+            #   and be unique. **This value should not have PII.**
+            # @param [Time] date_expiry The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            #   date when the Session should expire. If this is value is present, it overrides
+            #   the `ttl` value.
+            # @param [String] ttl The time, in seconds, when the session will expire. The time
+            #   is measured from the last Session create or the Session's last Interaction.
+            # @param [session.Mode] mode The Mode of the Session. Can be: `message-only`,
+            #   `voice-only`, or `voice-and-message` and the default value is
+            #   `voice-and-message`.
+            # @param [session.Status] status The initial status of the Session. Can be:
+            #   `open`, `in-progress`, `closed`, `failed`, or `unknown`. The default is `open`
+            #   on create.
+            # @param [Hash] participants The Participant objects to include in the new
+            #   session.
             # @return [SessionInstance] Newly created SessionInstance
             def create(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
               data = Twilio::Values.of({
@@ -190,9 +194,11 @@ module Twilio
             ##
             # Initialize the SessionContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the parent
-            #   [Service](https://www.twilio.com/docs/proxy/api/service).
-            # @param [String] sid A 34 character string that uniquely identifies this Session.
+            # @param [String] service_sid The SID of the parent
+            #   [Service](https://www.twilio.com/docs/proxy/api/service) of the resource to
+            #   fetch.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Session resource to fetch.
             # @return [SessionContext] SessionContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -230,14 +236,17 @@ module Twilio
 
             ##
             # Update the SessionInstance
-            # @param [Time] date_expiry The date that this Session should expire, given in ISO
-            #   8601 format.
-            # @param [String] ttl The time, in seconds, after the latest of Session create
-            #   time or the Session's last Interaction time at which the session will expire.
-            # @param [session.Mode] mode The mode
-            # @param [session.Status] status The Status of this Session. Set to `in-progress`
-            #   to re-open a session or `closed` to close a session.
-            # @param [Hash] participants The participants
+            # @param [Time] date_expiry The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            #   date when the Session should expire. If this is value is present, it overrides
+            #   the `ttl` value.
+            # @param [String] ttl The time, in seconds, when the session will expire. The time
+            #   is measured from the last Session create or the Session's last Interaction.
+            # @param [session.Mode] mode The Mode of the Session. Can be: `message-only`,
+            #   `voice-only`, or `voice-and-message` and the default value is
+            #   `voice-and-message`.
+            # @param [session.Status] status The new status of the resource. Can be:
+            #   `in-progress` to re-open a session or `closed` to close a session.
+            # @param [Hash] participants The Participant objects to include in the session.
             # @return [SessionInstance] Updated SessionInstance
             def update(date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
               data = Twilio::Values.of({
@@ -323,8 +332,11 @@ module Twilio
             # Initialize the SessionInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The unique SID identifier of the Service.
-            # @param [String] sid A 34 character string that uniquely identifies this Session.
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/proxy/api/service) the session is
+            #   associated with.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Session resource to fetch.
             # @return [SessionInstance] SessionInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -366,97 +378,97 @@ module Twilio
             end
 
             ##
-            # @return [String] A string that uniquely identifies this Session.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] Service Sid.
+            # @return [String] The SID of the resource's parent Service
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] Account Sid.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [Time] The date this Session was started
+            # @return [Time] The ISO 8601 date when the Session started
             def date_started
               @properties['date_started']
             end
 
             ##
-            # @return [Time] The date this Session was ended
+            # @return [Time] The ISO 8601 date when the Session ended
             def date_ended
               @properties['date_ended']
             end
 
             ##
-            # @return [Time] The date this Session last had an interaction
+            # @return [Time] The ISO 8601 date when the Session last had an interaction
             def date_last_interaction
               @properties['date_last_interaction']
             end
 
             ##
-            # @return [Time] The date this Session should expire
+            # @return [Time] The ISO 8601 date when the Session should expire
             def date_expiry
               @properties['date_expiry']
             end
 
             ##
-            # @return [String] A unique, developer assigned identifier for this Session.
+            # @return [String] An application-defined string that uniquely identifies the resource
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [session.Status] The Status of this Session
+            # @return [session.Status] The status of the Session
             def status
               @properties['status']
             end
 
             ##
-            # @return [String] Reason Session ended.
+            # @return [String] The reason the Session ended
             def closed_reason
               @properties['closed_reason']
             end
 
             ##
-            # @return [String] TTL for a Session, in seconds.
+            # @return [String] When the session will expire
             def ttl
               @properties['ttl']
             end
 
             ##
-            # @return [session.Mode] The Mode of this Session
+            # @return [session.Mode] The Mode of the Session
             def mode
               @properties['mode']
             end
 
             ##
-            # @return [Time] The date this Session was created
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this Session was last updated
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The URL of this resource.
+            # @return [String] The absolute URL of the Session resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] Nested resource URLs.
+            # @return [String] The URLs of resources related to the Session
             def links
               @properties['links']
             end
@@ -477,14 +489,17 @@ module Twilio
 
             ##
             # Update the SessionInstance
-            # @param [Time] date_expiry The date that this Session should expire, given in ISO
-            #   8601 format.
-            # @param [String] ttl The time, in seconds, after the latest of Session create
-            #   time or the Session's last Interaction time at which the session will expire.
-            # @param [session.Mode] mode The mode
-            # @param [session.Status] status The Status of this Session. Set to `in-progress`
-            #   to re-open a session or `closed` to close a session.
-            # @param [Hash] participants The participants
+            # @param [Time] date_expiry The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            #   date when the Session should expire. If this is value is present, it overrides
+            #   the `ttl` value.
+            # @param [String] ttl The time, in seconds, when the session will expire. The time
+            #   is measured from the last Session create or the Session's last Interaction.
+            # @param [session.Mode] mode The Mode of the Session. Can be: `message-only`,
+            #   `voice-only`, or `voice-and-message` and the default value is
+            #   `voice-and-message`.
+            # @param [session.Status] status The new status of the resource. Can be:
+            #   `in-progress` to re-open a session or `closed` to close a session.
+            # @param [Hash] participants The Participant objects to include in the session.
             # @return [SessionInstance] Updated SessionInstance
             def update(date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
               context.update(

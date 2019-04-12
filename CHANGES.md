@@ -1,6 +1,21 @@
 twilio-ruby changelog
 =====================
 
+[2019-04-12] Version 5.22.1
+----------------------------
+**Flex**
+- Adding PluginService to Flex Configuration
+
+**Numbers**
+- Add API for Proof of Addresses
+
+**Proxy**
+- Clarify documentation for Service and Session fetch
+
+**Serverless**
+- Serverless scaffolding
+
+
 [2019-03-28] Version 5.22.0
 ----------------------------
 **Api**

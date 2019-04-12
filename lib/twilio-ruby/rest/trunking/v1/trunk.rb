@@ -213,6 +213,7 @@ module Twilio
             @credentials_lists = nil
             @ip_access_control_lists = nil
             @phone_numbers = nil
+            @terminating_sip_domains = nil
           end
 
           ##
@@ -359,6 +360,24 @@ module Twilio
             end
 
             @phone_numbers
+          end
+
+          ##
+          # Access the terminating_sip_domains
+          # @return [TerminatingSipDomainList]
+          # @return [TerminatingSipDomainContext] if sid was passed.
+          def terminating_sip_domains(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return TerminatingSipDomainContext.new(@version, @solution[:sid], sid, )
+            end
+
+            unless @terminating_sip_domains
+              @terminating_sip_domains = TerminatingSipDomainList.new(@version, trunk_sid: @solution[:sid], )
+            end
+
+            @terminating_sip_domains
           end
 
           ##
@@ -596,6 +615,13 @@ module Twilio
           # @return [phone_numbers] phone_numbers
           def phone_numbers
             context.phone_numbers
+          end
+
+          ##
+          # Access the terminating_sip_domains
+          # @return [terminating_sip_domains] terminating_sip_domains
+          def terminating_sip_domains
+            context.terminating_sip_domains
           end
 
           ##

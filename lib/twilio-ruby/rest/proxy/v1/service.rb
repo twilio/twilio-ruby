@@ -110,30 +110,44 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] unique_name The human-readable string that uniquely identifies
-          #   this Service, up to 64 characters. *Should not contain PII.*
-          # @param [String] default_ttl The default time delay in seconds after the latest
-          #   of Session create time or the Session's last Interaction time, after which a
-          #   session will expire.  Used for sessions where TTL is not specified.
-          # @param [String] callback_url The URL to which Twilio will make callbacks on
-          #   interaction status changes.
-          # @param [service.GeoMatchLevel] geo_match_level Whether proxy number selected
-          #   must be in the same area code as the participant identifier. Options: `country`,
-          #   `area-code`, `extended-area-code`. Default: `country`. Levels lower than country
-          #   are only available in North America.
-          # @param [service.NumberSelectionBehavior] number_selection_behavior Options:
-          #   `prefer-sticky`, `avoid-sticky`. Default: `prefer-sticky`.
-          # @param [String] intercept_callback_url A URL for Twilio call before each
-          #   Interaction. Returning a 403 status code will prevent the interaction from
-          #   continuing.
-          # @param [String] out_of_session_callback_url A URL for Twilio call when a new
-          #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session). See
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. This value must be 191 characters or fewer in length
+          #   and be unique. **This value should not have PII.**
+          # @param [String] default_ttl The default `ttl` value to set for Sessions created
+          #   in the Service. The TTL (time to live) is measured in seconds after the
+          #   Session's last create or last Interaction. The default value of `0` indicates an
+          #   unlimited Session length. You can override a Session's default TTL value by
+          #   setting its `ttl` value.
+          # @param [String] callback_url The URL we should call when the interaction status
+          #   changes.
+          # @param [service.GeoMatchLevel] geo_match_level Where a proxy number must be
+          #   located relative to the participant identifier. Can be: `country`, `area-code`,
+          #   or `extended-area-code`. The default value is `country` and more specific areas
+          #   than `country` are only available in North America.
+          # @param [service.NumberSelectionBehavior] number_selection_behavior The
+          #   preference for Proxy Number selection in the Service instance. Can be:
+          #   `prefer-sticky` or `avoid-sticky` and the default is `prefer-sticky`.
+          #   `prefer-sticky` means that we will try and select the same Proxy Number for a
+          #   given participant if they have previous
+          #   [Sessions](https://www.twilio.com/docs/proxy/api/session), but we will not fail
+          #   if that Proxy Number cannot be used.  `avoid-sticky` means that we will try to
+          #   use different Proxy Numbers as long as that is possible within a given pool
+          #   rather than try and use a previously assigned number.
+          # @param [String] intercept_callback_url The URL we call on each interaction. If
+          #   we receive a 403 status, we block the interaction; otherwise the interaction
+          #   continues.
+          # @param [String] out_of_session_callback_url The URL we should call when an
+          #   inbound call or SMS action occurs on a closed or non-existent Session. If your
+          #   server (or a Twilio [function](https://www.twilio.com/functions)) responds with
+          #   valid [TwiML](https://www.twilio.com/docs/voice/twiml), we will process it. This
+          #   means it is possible, for example, to play a message for a call, send an
+          #   automated text message response, or redirect a call to another Phone Number. See
           #   [Out-of-Session Callback Response
           #   Guide](https://www.twilio.com/docs/proxy/out-session-callback-response-guide)
           #   for more information.
-          # @param [String] chat_instance_sid The Chat Service Instance sid managed by Proxy
-          #   Service. Enables Proxy to forward sms and channel messages to this chat
-          #   instance. This is a one-to-one relationship.
+          # @param [String] chat_instance_sid The SID of the Chat Service Instance managed
+          #   by Proxy Service. The Chat Service enables Proxy to forward SMS and channel
+          #   messages to this chat instance. This is a one-to-one relationship.
           # @return [ServiceInstance] Newly created ServiceInstance
           def create(unique_name: nil, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset, chat_instance_sid: :unset)
             data = Twilio::Values.of({
@@ -200,7 +214,8 @@ module Twilio
           ##
           # Initialize the ServiceContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid A 34 character string that uniquely identifies this Service.
+          # @param [String] sid The Twilio-provided string that uniquely identifies the
+          #   Service resource to fetch.
           # @return [ServiceContext] ServiceContext
           def initialize(version, sid)
             super(version)
@@ -239,30 +254,44 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] unique_name A human-readable description of this resource, up to
-          #   64 characters. *Should not contain PII.*
-          # @param [String] default_ttl The default time delay in seconds after the latest
-          #   of Session create time or the Session's last Interaction time, after which a
-          #   session will expire.  Used for sessions where TTL is not specified.
-          # @param [String] callback_url The URL to which Twilio will make callbacks on
-          #   interaction status changes.
-          # @param [service.GeoMatchLevel] geo_match_level Whether proxy number selected
-          #   must be in the same area code as the participant identifier. Options: `country`,
-          #   `area-code`, `extended-area-code`. Default: `country`. Levels lower than country
-          #   are only available in North America.
-          # @param [service.NumberSelectionBehavior] number_selection_behavior Options:
-          #   `prefer-sticky`, `avoid-sticky`. Default: `prefer-sticky`.
-          # @param [String] intercept_callback_url A URL for Twilio call before each
-          #   Interaction. Returning a 403 status code will prevent the interaction from
-          #   continuing.
-          # @param [String] out_of_session_callback_url A URL for Twilio call when a new
-          #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session). See
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. This value must be 191 characters or fewer in length
+          #   and be unique. **This value should not have PII.**
+          # @param [String] default_ttl The default `ttl` value to set for Sessions created
+          #   in the Service. The TTL (time to live) is measured in seconds after the
+          #   Session's last create or last Interaction. The default value of `0` indicates an
+          #   unlimited Session length. You can override a Session's default TTL value by
+          #   setting its `ttl` value.
+          # @param [String] callback_url The URL we should call when the interaction status
+          #   changes.
+          # @param [service.GeoMatchLevel] geo_match_level Where a proxy number must be
+          #   located relative to the participant identifier. Can be: `country`, `area-code`,
+          #   or `extended-area-code`. The default value is `country` and more specific areas
+          #   than `country` are only available in North America.
+          # @param [service.NumberSelectionBehavior] number_selection_behavior The
+          #   preference for Proxy Number selection in the Service instance. Can be:
+          #   `prefer-sticky` or `avoid-sticky` and the default is `prefer-sticky`.
+          #   `prefer-sticky` means that we will try and select the same Proxy Number for a
+          #   given participant if they have previous
+          #   [Sessions](https://www.twilio.com/docs/proxy/api/session), but we will not fail
+          #   if that Proxy Number cannot be used.  `avoid-sticky` means that we will try to
+          #   use different Proxy Numbers as long as that is possible within a given pool
+          #   rather than try and use a previously assigned number.
+          # @param [String] intercept_callback_url The URL we call on each interaction. If
+          #   we receive a 403 status, we block the interaction; otherwise the interaction
+          #   continues.
+          # @param [String] out_of_session_callback_url The URL we should call when an
+          #   inbound call or SMS action occurs on a closed or non-existent Session. If your
+          #   server (or a Twilio [function](https://www.twilio.com/functions)) responds with
+          #   valid [TwiML](https://www.twilio.com/docs/voice/twiml), we will process it. This
+          #   means it is possible, for example, to play a message for a call, send an
+          #   automated text message response, or redirect a call to another Phone Number. See
           #   [Out-of-Session Callback Response
           #   Guide](https://www.twilio.com/docs/proxy/out-session-callback-response-guide)
           #   for more information.
-          # @param [String] chat_instance_sid The Chat Service Instance sid managed by Proxy
-          #   Service. Enables Proxy to forward sms and channel messages to this chat
-          #   instance. This is a one-to-one relationship.
+          # @param [String] chat_instance_sid The SID of the Chat Service Instance managed
+          #   by Proxy Service. The Chat Service enables Proxy to forward SMS and channel
+          #   messages to this chat instance. This is a one-to-one relationship.
           # @return [ServiceInstance] Updated ServiceInstance
           def update(unique_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset, chat_instance_sid: :unset)
             data = Twilio::Values.of({
@@ -361,7 +390,8 @@ module Twilio
           # Initialize the ServiceInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid A 34 character string that uniquely identifies this Service.
+          # @param [String] sid The Twilio-provided string that uniquely identifies the
+          #   Service resource to fetch.
           # @return [ServiceInstance] ServiceInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -401,85 +431,85 @@ module Twilio
           end
 
           ##
-          # @return [String] A string that uniquely identifies this Service.
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] A human-readable description of this resource.
+          # @return [String] An application-defined string that uniquely identifies the resource
           def unique_name
             @properties['unique_name']
           end
 
           ##
-          # @return [String] Account Sid.
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The Chat Service Instance sid managed by Proxy Service
+          # @return [String] The SID of the Chat Service Instance
           def chat_instance_sid
             @properties['chat_instance_sid']
           end
 
           ##
-          # @return [String] URL Twilio will send callbacks to
+          # @return [String] The URL we call when the interaction status changes
           def callback_url
             @properties['callback_url']
           end
 
           ##
-          # @return [String] Default TTL for a Session, in seconds.
+          # @return [String] Default TTL for a Session, in seconds
           def default_ttl
             @properties['default_ttl']
           end
 
           ##
-          # @return [service.NumberSelectionBehavior] What behavior to use when choosing a proxy number.
+          # @return [service.NumberSelectionBehavior] The preference for Proxy Number selection for the Service instance
           def number_selection_behavior
             @properties['number_selection_behavior']
           end
 
           ##
-          # @return [service.GeoMatchLevel] Whether proxy number selected must be in the same area code as the participant identifier.
+          # @return [service.GeoMatchLevel] Where a proxy number must be located relative to the participant identifier
           def geo_match_level
             @properties['geo_match_level']
           end
 
           ##
-          # @return [String] A URL for Twilio call before each Interaction.
+          # @return [String] The URL we call on each interaction
           def intercept_callback_url
             @properties['intercept_callback_url']
           end
 
           ##
-          # @return [String] A URL for Twilio call when a new Interaction has no Session.
+          # @return [String] The URL we call when an inbound call or SMS action occurs on a closed or non-existent Session
           def out_of_session_callback_url
             @properties['out_of_session_callback_url']
           end
 
           ##
-          # @return [Time] The date this Service was created
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date this Service was last updated
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The URL of this resource.
+          # @return [String] The absolute URL of the Service resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] Nested resource URLs.
+          # @return [String] The URLs of resources related to the Service
           def links
             @properties['links']
           end
@@ -500,30 +530,44 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] unique_name A human-readable description of this resource, up to
-          #   64 characters. *Should not contain PII.*
-          # @param [String] default_ttl The default time delay in seconds after the latest
-          #   of Session create time or the Session's last Interaction time, after which a
-          #   session will expire.  Used for sessions where TTL is not specified.
-          # @param [String] callback_url The URL to which Twilio will make callbacks on
-          #   interaction status changes.
-          # @param [service.GeoMatchLevel] geo_match_level Whether proxy number selected
-          #   must be in the same area code as the participant identifier. Options: `country`,
-          #   `area-code`, `extended-area-code`. Default: `country`. Levels lower than country
-          #   are only available in North America.
-          # @param [service.NumberSelectionBehavior] number_selection_behavior Options:
-          #   `prefer-sticky`, `avoid-sticky`. Default: `prefer-sticky`.
-          # @param [String] intercept_callback_url A URL for Twilio call before each
-          #   Interaction. Returning a 403 status code will prevent the interaction from
-          #   continuing.
-          # @param [String] out_of_session_callback_url A URL for Twilio call when a new
-          #   Interaction has no [Session](https://www.twilio.com/docs/proxy/api/session). See
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. This value must be 191 characters or fewer in length
+          #   and be unique. **This value should not have PII.**
+          # @param [String] default_ttl The default `ttl` value to set for Sessions created
+          #   in the Service. The TTL (time to live) is measured in seconds after the
+          #   Session's last create or last Interaction. The default value of `0` indicates an
+          #   unlimited Session length. You can override a Session's default TTL value by
+          #   setting its `ttl` value.
+          # @param [String] callback_url The URL we should call when the interaction status
+          #   changes.
+          # @param [service.GeoMatchLevel] geo_match_level Where a proxy number must be
+          #   located relative to the participant identifier. Can be: `country`, `area-code`,
+          #   or `extended-area-code`. The default value is `country` and more specific areas
+          #   than `country` are only available in North America.
+          # @param [service.NumberSelectionBehavior] number_selection_behavior The
+          #   preference for Proxy Number selection in the Service instance. Can be:
+          #   `prefer-sticky` or `avoid-sticky` and the default is `prefer-sticky`.
+          #   `prefer-sticky` means that we will try and select the same Proxy Number for a
+          #   given participant if they have previous
+          #   [Sessions](https://www.twilio.com/docs/proxy/api/session), but we will not fail
+          #   if that Proxy Number cannot be used.  `avoid-sticky` means that we will try to
+          #   use different Proxy Numbers as long as that is possible within a given pool
+          #   rather than try and use a previously assigned number.
+          # @param [String] intercept_callback_url The URL we call on each interaction. If
+          #   we receive a 403 status, we block the interaction; otherwise the interaction
+          #   continues.
+          # @param [String] out_of_session_callback_url The URL we should call when an
+          #   inbound call or SMS action occurs on a closed or non-existent Session. If your
+          #   server (or a Twilio [function](https://www.twilio.com/functions)) responds with
+          #   valid [TwiML](https://www.twilio.com/docs/voice/twiml), we will process it. This
+          #   means it is possible, for example, to play a message for a call, send an
+          #   automated text message response, or redirect a call to another Phone Number. See
           #   [Out-of-Session Callback Response
           #   Guide](https://www.twilio.com/docs/proxy/out-session-callback-response-guide)
           #   for more information.
-          # @param [String] chat_instance_sid The Chat Service Instance sid managed by Proxy
-          #   Service. Enables Proxy to forward sms and channel messages to this chat
-          #   instance. This is a one-to-one relationship.
+          # @param [String] chat_instance_sid The SID of the Chat Service Instance managed
+          #   by Proxy Service. The Chat Service enables Proxy to forward SMS and channel
+          #   messages to this chat instance. This is a one-to-one relationship.
           # @return [ServiceInstance] Updated ServiceInstance
           def update(unique_name: :unset, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset, chat_instance_sid: :unset)
             context.update(

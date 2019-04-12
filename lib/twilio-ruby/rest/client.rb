@@ -39,6 +39,7 @@ module Twilio
         @preview = nil
         @pricing = nil
         @proxy = nil
+        @serverless = nil
         @taskrouter = nil
         @trunking = nil
         @video = nil
@@ -181,6 +182,12 @@ module Twilio
       # Access the Proxy Twilio Domain
       def proxy
         @proxy ||= Proxy.new self
+      end
+
+      ##
+      # Access the Serverless Twilio Domain
+      def serverless
+        @serverless ||= Serverless.new self
       end
 
       ##

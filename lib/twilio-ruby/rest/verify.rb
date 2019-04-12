@@ -19,14 +19,7 @@ module Twilio
         @port = 443
 
         # Versions
-        @v1 = nil
         @v2 = nil
-      end
-
-      ##
-      # Version v1 of verify
-      def v1
-        @v1 ||= V1.new self
       end
 
       ##
@@ -36,7 +29,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this Service.
+      # @param [String] sid The unique string that we created to identify the Service
+      #   resource.
       # @return [Twilio::REST::Verify::V2::ServiceInstance] if sid was passed.
       # @return [Twilio::REST::Verify::V2::ServiceList]
       def services(sid=:unset)

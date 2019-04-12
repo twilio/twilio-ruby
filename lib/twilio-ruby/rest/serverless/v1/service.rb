@@ -8,10 +8,10 @@
 
 module Twilio
   module REST
-    class Verify < Domain
+    class Serverless < Domain
       class V1 < Version
         ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class ServiceList < ListResource
           ##
           # Initialize the ServiceList
@@ -23,44 +23,6 @@ module Twilio
             # Path Solution
             @solution = {}
             @uri = "/Services"
-          end
-
-          ##
-          # Retrieve a single page of ServiceInstance records from the API.
-          # Request is executed immediately.
-          # @param [String] friendly_name A 1-64 character string with friendly name of
-          #   service
-          # @param [String] code_length The length of the verification code to be generated.
-          #   Must be an integer value between 4-10
-          # @param [Boolean] lookup_enabled Boolean value that indicates if a lookup should
-          #   be performed with each verification started and associated info returned
-          # @param [Boolean] skip_sms_to_landlines Boolean value that indicates whether or
-          #   not to ignore SMS verifications for landlines, depends on lookup_enabled flag
-          # @param [Boolean] dtmf_input_required Boolean value that indicates whether or not
-          #   to require a random number input to deliver the verify code via phone calls
-          # @param [String] tts_name Alternative to be used as Service friendly name in
-          #   phone calls, only applies to TTS languages
-          # @param [Boolean] psd2_enabled Boolean value that enables to pass PSD2
-          #   transaction parameters when starting a verification
-          # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset)
-            data = Twilio::Values.of({
-                'FriendlyName' => friendly_name,
-                'CodeLength' => code_length,
-                'LookupEnabled' => lookup_enabled,
-                'SkipSmsToLandlines' => skip_sms_to_landlines,
-                'DtmfInputRequired' => dtmf_input_required,
-                'TtsName' => tts_name,
-                'Psd2Enabled' => psd2_enabled,
-            })
-
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
-
-            ServiceInstance.new(@version, payload, )
           end
 
           ##
@@ -146,14 +108,37 @@ module Twilio
           end
 
           ##
+          # Retrieve a single page of ServiceInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] unique_name The unique_name
+          # @param [String] friendly_name The friendly_name
+          # @param [Boolean] include_credentials The include_credentials
+          # @return [ServiceInstance] Newly created ServiceInstance
+          def create(unique_name: nil, friendly_name: nil, include_credentials: :unset)
+            data = Twilio::Values.of({
+                'UniqueName' => unique_name,
+                'FriendlyName' => friendly_name,
+                'IncludeCredentials' => include_credentials,
+            })
+
+            payload = @version.create(
+                'POST',
+                @uri,
+                data: data
+            )
+
+            ServiceInstance.new(@version, payload, )
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Verify.V1.ServiceList>'
+            '#<Twilio.Serverless.V1.ServiceList>'
           end
         end
 
         ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class ServicePage < Page
           ##
           # Initialize the ServicePage
@@ -179,17 +164,17 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Verify.V1.ServicePage>'
+            '<Twilio.Serverless.V1.ServicePage>'
           end
         end
 
         ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class ServiceContext < InstanceContext
           ##
           # Initialize the ServiceContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The unique SID identifier of Verification Service Instance.
+          # @param [String] sid The sid
           # @return [ServiceContext] ServiceContext
           def initialize(version, sid)
             super(version)
@@ -199,8 +184,10 @@ module Twilio
             @uri = "/Services/#{@solution[:sid]}"
 
             # Dependents
-            @verifications = nil
-            @verification_checks = nil
+            @environments = nil
+            @functions = nil
+            @assets = nil
+            @builds = nil
           end
 
           ##
@@ -219,38 +206,14 @@ module Twilio
           end
 
           ##
-          # Deletes the ServiceInstance
-          # @return [Boolean] true if delete succeeds, true otherwise
-          def delete
-            @version.delete('delete', @uri)
-          end
-
-          ##
           # Update the ServiceInstance
-          # @param [String] friendly_name A 1-64 character string with friendly name of
-          #   service
-          # @param [String] code_length The length of the verification code to be generated.
-          #   Must be an integer value between 4-10
-          # @param [Boolean] lookup_enabled Boolean value that indicates if a lookup should
-          #   be performed with each verification started and associated info returned
-          # @param [Boolean] skip_sms_to_landlines Boolean value that indicates whether or
-          #   not to ignore SMS verifications for landlines, depends on lookup_enabled flag
-          # @param [Boolean] dtmf_input_required Boolean value that indicates whether or not
-          #   to require a random number input to deliver the verify code via phone calls
-          # @param [String] tts_name Alternative to be used as Service friendly name in
-          #   phone calls, only applies to TTS languages
-          # @param [Boolean] psd2_enabled Boolean value that enables to pass PSD2
-          #   transaction parameters when starting a verification
+          # @param [Boolean] include_credentials The include_credentials
+          # @param [String] friendly_name The friendly_name
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset)
+          def update(include_credentials: :unset, friendly_name: :unset)
             data = Twilio::Values.of({
+                'IncludeCredentials' => include_credentials,
                 'FriendlyName' => friendly_name,
-                'CodeLength' => code_length,
-                'LookupEnabled' => lookup_enabled,
-                'SkipSmsToLandlines' => skip_sms_to_landlines,
-                'DtmfInputRequired' => dtmf_input_required,
-                'TtsName' => tts_name,
-                'Psd2Enabled' => psd2_enabled,
             })
 
             payload = @version.update(
@@ -263,58 +226,100 @@ module Twilio
           end
 
           ##
-          # Access the verifications
-          # @return [VerificationList]
-          # @return [VerificationContext] if sid was passed.
-          def verifications(sid=:unset)
+          # Access the environments
+          # @return [EnvironmentList]
+          # @return [EnvironmentContext] if sid was passed.
+          def environments(sid=:unset)
             raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
             if sid != :unset
-              return VerificationContext.new(@version, @solution[:sid], sid, )
+              return EnvironmentContext.new(@version, @solution[:sid], sid, )
             end
 
-            unless @verifications
-              @verifications = VerificationList.new(@version, service_sid: @solution[:sid], )
+            unless @environments
+              @environments = EnvironmentList.new(@version, service_sid: @solution[:sid], )
             end
 
-            @verifications
+            @environments
           end
 
           ##
-          # Access the verification_checks
-          # @return [VerificationCheckList]
-          # @return [VerificationCheckContext]
-          def verification_checks
-            unless @verification_checks
-              @verification_checks = VerificationCheckList.new(@version, service_sid: @solution[:sid], )
+          # Access the functions
+          # @return [FunctionList]
+          # @return [FunctionContext] if sid was passed.
+          def functions(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return FunctionContext.new(@version, @solution[:sid], sid, )
             end
 
-            @verification_checks
+            unless @functions
+              @functions = FunctionList.new(@version, service_sid: @solution[:sid], )
+            end
+
+            @functions
+          end
+
+          ##
+          # Access the assets
+          # @return [AssetList]
+          # @return [AssetContext] if sid was passed.
+          def assets(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return AssetContext.new(@version, @solution[:sid], sid, )
+            end
+
+            unless @assets
+              @assets = AssetList.new(@version, service_sid: @solution[:sid], )
+            end
+
+            @assets
+          end
+
+          ##
+          # Access the builds
+          # @return [BuildList]
+          # @return [BuildContext] if sid was passed.
+          def builds(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return BuildContext.new(@version, @solution[:sid], sid, )
+            end
+
+            unless @builds
+              @builds = BuildList.new(@version, service_sid: @solution[:sid], )
+            end
+
+            @builds
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Verify.V1.ServiceContext #{context}>"
+            "#<Twilio.Serverless.V1.ServiceContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Verify.V1.ServiceContext #{context}>"
+            "#<Twilio.Serverless.V1.ServiceContext #{context}>"
           end
         end
 
         ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class ServiceInstance < InstanceResource
           ##
           # Initialize the ServiceInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The unique SID identifier of Verification Service Instance.
+          # @param [String] sid The sid
           # @return [ServiceInstance] ServiceInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -324,12 +329,8 @@ module Twilio
                 'sid' => payload['sid'],
                 'account_sid' => payload['account_sid'],
                 'friendly_name' => payload['friendly_name'],
-                'code_length' => payload['code_length'].to_i,
-                'lookup_enabled' => payload['lookup_enabled'],
-                'psd2_enabled' => payload['psd2_enabled'],
-                'skip_sms_to_landlines' => payload['skip_sms_to_landlines'],
-                'dtmf_input_required' => payload['dtmf_input_required'],
-                'tts_name' => payload['tts_name'],
+                'unique_name' => payload['unique_name'],
+                'include_credentials' => payload['include_credentials'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
@@ -353,67 +354,43 @@ module Twilio
           end
 
           ##
-          # @return [String] A string that uniquely identifies this Service.
+          # @return [String] The sid
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] Account Sid.
+          # @return [String] The account_sid
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] Friendly name of the service
+          # @return [String] The friendly_name
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [String] Length of verification code. Valid values are 4-10
-          def code_length
-            @properties['code_length']
+          # @return [String] The unique_name
+          def unique_name
+            @properties['unique_name']
           end
 
           ##
-          # @return [Boolean] Indicates whether or not to perform a lookup with each verification started
-          def lookup_enabled
-            @properties['lookup_enabled']
+          # @return [Boolean] The include_credentials
+          def include_credentials
+            @properties['include_credentials']
           end
 
           ##
-          # @return [Boolean] Indicates whether PSD2 parameters are enabled or not
-          def psd2_enabled
-            @properties['psd2_enabled']
-          end
-
-          ##
-          # @return [Boolean] Indicates whether or not to ignore SMS verifications for landlines
-          def skip_sms_to_landlines
-            @properties['skip_sms_to_landlines']
-          end
-
-          ##
-          # @return [Boolean] Indicates whether or not to require a random number input to deliver the verify code via phone calls
-          def dtmf_input_required
-            @properties['dtmf_input_required']
-          end
-
-          ##
-          # @return [String] Alternative to be used as Service friendly name in phone calls
-          def tts_name
-            @properties['tts_name']
-          end
-
-          ##
-          # @return [Time] The date this Service was created
+          # @return [Time] The date_created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date this Service was updated
+          # @return [Time] The date_updated
           def date_updated
             @properties['date_updated']
           end
@@ -438,67 +415,54 @@ module Twilio
           end
 
           ##
-          # Deletes the ServiceInstance
-          # @return [Boolean] true if delete succeeds, true otherwise
-          def delete
-            context.delete
-          end
-
-          ##
           # Update the ServiceInstance
-          # @param [String] friendly_name A 1-64 character string with friendly name of
-          #   service
-          # @param [String] code_length The length of the verification code to be generated.
-          #   Must be an integer value between 4-10
-          # @param [Boolean] lookup_enabled Boolean value that indicates if a lookup should
-          #   be performed with each verification started and associated info returned
-          # @param [Boolean] skip_sms_to_landlines Boolean value that indicates whether or
-          #   not to ignore SMS verifications for landlines, depends on lookup_enabled flag
-          # @param [Boolean] dtmf_input_required Boolean value that indicates whether or not
-          #   to require a random number input to deliver the verify code via phone calls
-          # @param [String] tts_name Alternative to be used as Service friendly name in
-          #   phone calls, only applies to TTS languages
-          # @param [Boolean] psd2_enabled Boolean value that enables to pass PSD2
-          #   transaction parameters when starting a verification
+          # @param [Boolean] include_credentials The include_credentials
+          # @param [String] friendly_name The friendly_name
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset)
-            context.update(
-                friendly_name: friendly_name,
-                code_length: code_length,
-                lookup_enabled: lookup_enabled,
-                skip_sms_to_landlines: skip_sms_to_landlines,
-                dtmf_input_required: dtmf_input_required,
-                tts_name: tts_name,
-                psd2_enabled: psd2_enabled,
-            )
+          def update(include_credentials: :unset, friendly_name: :unset)
+            context.update(include_credentials: include_credentials, friendly_name: friendly_name, )
           end
 
           ##
-          # Access the verifications
-          # @return [verifications] verifications
-          def verifications
-            context.verifications
+          # Access the environments
+          # @return [environments] environments
+          def environments
+            context.environments
           end
 
           ##
-          # Access the verification_checks
-          # @return [verification_checks] verification_checks
-          def verification_checks
-            context.verification_checks
+          # Access the functions
+          # @return [functions] functions
+          def functions
+            context.functions
+          end
+
+          ##
+          # Access the assets
+          # @return [assets] assets
+          def assets
+            context.assets
+          end
+
+          ##
+          # Access the builds
+          # @return [builds] builds
+          def builds
+            context.builds
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Verify.V1.ServiceInstance #{values}>"
+            "<Twilio.Serverless.V1.ServiceInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Verify.V1.ServiceInstance #{values}>"
+            "<Twilio.Serverless.V1.ServiceInstance #{values}>"
           end
         end
       end

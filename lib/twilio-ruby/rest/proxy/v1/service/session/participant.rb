@@ -18,10 +18,10 @@ module Twilio
               ##
               # Initialize the ParticipantList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique SID identifier of the parent
-              #   [Service](https://www.twilio.com/docs/proxy/api/service).
-              # @param [String] session_sid The unique SID identifier of the parent
-              #   [Session](https://www.twilio.com/docs/proxy/api/session).
+              # @param [String] service_sid The SID of the resource's parent
+              #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
+              # @param [String] session_sid The SID of the parent
+              #   [Session](https://www.twilio.com/docs/proxy/api/session) resource.
               # @return [ParticipantList] ParticipantList
               def initialize(version, service_sid: nil, session_sid: nil)
                 super(version)
@@ -116,12 +116,14 @@ module Twilio
               ##
               # Retrieve a single page of ParticipantInstance records from the API.
               # Request is executed immediately.
-              # @param [String] identifier The phone number of this Participant.
-              # @param [String] friendly_name A human-readable description of this resource, up
-              #   to 64 characters. Should not include PII.
-              # @param [String] proxy_identifier The proxy phone number to use for this
+              # @param [String] identifier The phone number of the Participant.
+              # @param [String] friendly_name The string that you assigned to describe the
+              #   participant. This value must be 255 characters or fewer. **This value should not
+              #   have PII.**
+              # @param [String] proxy_identifier The proxy phone number to use for the
               #   Participant. If not specified, Proxy will select a number from the pool.
-              # @param [String] proxy_identifier_sid The proxy_identifier_sid
+              # @param [String] proxy_identifier_sid The SID of the Proxy Identifier to assign
+              #   to the Participant.
               # @return [ParticipantInstance] Newly created ParticipantInstance
               def create(identifier: nil, friendly_name: :unset, proxy_identifier: :unset, proxy_identifier_sid: :unset)
                 data = Twilio::Values.of({
@@ -194,12 +196,14 @@ module Twilio
               ##
               # Initialize the ParticipantContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique SID identifier of the parent
-              #   [Service](https://www.twilio.com/docs/proxy/api/service).
-              # @param [String] session_sid The unique SID identifier of the parent
-              #   [Session](https://www.twilio.com/docs/proxy/api/session).
-              # @param [String] sid A 34 character string that uniquely identifies this
-              #   Participant.
+              # @param [String] service_sid The SID of the parent
+              #   [Service](https://www.twilio.com/docs/proxy/api/service) of the resource to
+              #   fetch.
+              # @param [String] session_sid The SID of the parent
+              #   [Session](https://www.twilio.com/docs/proxy/api/session) of the resource to
+              #   fetch.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   Participant resource to fetch.
               # @return [ParticipantContext] ParticipantContext
               def initialize(version, service_sid, session_sid, sid)
                 super(version)
@@ -291,12 +295,12 @@ module Twilio
               # Initialize the ParticipantInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The unique SID identifier of the parent
-              #   [Service](https://www.twilio.com/docs/proxy/api/service).
-              # @param [String] session_sid The unique SID identifier of the parent
-              #   [Session](https://www.twilio.com/docs/proxy/api/session).
-              # @param [String] sid A 34 character string that uniquely identifies this
-              #   Participant.
+              # @param [String] service_sid The SID of the resource's parent
+              #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
+              # @param [String] session_sid The SID of the parent
+              #   [Session](https://www.twilio.com/docs/proxy/api/session) resource.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   Participant resource to fetch.
               # @return [ParticipantInstance] ParticipantInstance
               def initialize(version, payload, service_sid: nil, session_sid: nil, sid: nil)
                 super(version)
@@ -344,79 +348,79 @@ module Twilio
               end
 
               ##
-              # @return [String] A string that uniquely identifies this Participant.
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] Session Sid.
+              # @return [String] The SID of the resource's parent Session
               def session_sid
                 @properties['session_sid']
               end
 
               ##
-              # @return [String] Service Sid.
+              # @return [String] The SID of the resource's parent Service
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] Account Sid.
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] A human-readable description of this resource.
+              # @return [String] The string that you assigned to describe the participant
               def friendly_name
                 @properties['friendly_name']
               end
 
               ##
-              # @return [String] The phone number of this Participant.
+              # @return [String] The phone number of the Participant
               def identifier
                 @properties['identifier']
               end
 
               ##
-              # @return [String] Proxy Identifier.
+              # @return [String] The phone number or short code of the participant's partner
               def proxy_identifier
                 @properties['proxy_identifier']
               end
 
               ##
-              # @return [String] Proxy Identifier Sid.
+              # @return [String] The SID of the Proxy Identifier assigned to the Participant
               def proxy_identifier_sid
                 @properties['proxy_identifier_sid']
               end
 
               ##
-              # @return [Time] The date this Participant was removed
+              # @return [Time] The ISO 8601 date the Participant was removed
               def date_deleted
                 @properties['date_deleted']
               end
 
               ##
-              # @return [Time] The date this Participant was created
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date this Participant was last updated
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The URL of this resource.
+              # @return [String] The absolute URL of the Participant resource
               def url
                 @properties['url']
               end
 
               ##
-              # @return [String] Nested resource URLs.
+              # @return [String] The URLs to resources related the participant
               def links
                 @properties['links']
               end
