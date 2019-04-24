@@ -17,7 +17,9 @@ module Twilio
             ##
             # Initialize the DefaultsList
             # @param [Version] version Version that contains the resource
-            # @param [String] assistant_sid The assistant_sid
+            # @param [String] assistant_sid The SID of the
+            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   parent of the resource.
             # @return [DefaultsList] DefaultsList
             def initialize(version, assistant_sid: nil)
               super(version)
@@ -70,7 +72,9 @@ module Twilio
             ##
             # Initialize the DefaultsContext
             # @param [Version] version Version that contains the resource
-            # @param [String] assistant_sid The assistant_sid
+            # @param [String] assistant_sid The SID of the
+            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   parent of the resource to fetch.
             # @return [DefaultsContext] DefaultsContext
             def initialize(version, assistant_sid)
               super(version)
@@ -97,7 +101,8 @@ module Twilio
 
             ##
             # Update the DefaultsInstance
-            # @param [Hash] defaults The defaults
+            # @param [Hash] defaults A JSON string that describes the default task links for
+            #   the `assistant_initiation`, `collect`, and `fallback` situations.
             # @return [DefaultsInstance] Updated DefaultsInstance
             def update(defaults: :unset)
               data = Twilio::Values.of({'Defaults' => Twilio.serialize_object(defaults), })
@@ -133,7 +138,9 @@ module Twilio
             # Initialize the DefaultsInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] assistant_sid The assistant_sid
+            # @param [String] assistant_sid The SID of the
+            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   parent of the resource.
             # @return [DefaultsInstance] DefaultsInstance
             def initialize(version, payload, assistant_sid: nil)
               super(version)
@@ -163,25 +170,25 @@ module Twilio
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The assistant_sid
+            # @return [String] The SID of the Assistant that is the parent of the resource
             def assistant_sid
               @properties['assistant_sid']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the Defaults resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [Hash] The data
+            # @return [Hash] The JSON string that describes the default task links
             def data
               @properties['data']
             end
@@ -195,7 +202,8 @@ module Twilio
 
             ##
             # Update the DefaultsInstance
-            # @param [Hash] defaults The defaults
+            # @param [Hash] defaults A JSON string that describes the default task links for
+            #   the `assistant_initiation`, `collect`, and `fallback` situations.
             # @return [DefaultsInstance] Updated DefaultsInstance
             def update(defaults: :unset)
               context.update(defaults: defaults, )

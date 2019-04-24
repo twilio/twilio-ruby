@@ -94,9 +94,10 @@ module Twilio
       # hints:: Speech recognition hints
       # barge_in:: Stop playing media upon speech
       # debug:: Allow debug for gather
+      # action_on_empty_result:: Force webhook to the action URL event if there is no input
       # keyword_args:: additional attributes
-      def gather(input: nil, action: nil, method: nil, timeout: nil, speech_timeout: nil, max_speech_time: nil, profanity_filter: nil, finish_on_key: nil, num_digits: nil, partial_result_callback: nil, partial_result_callback_method: nil, language: nil, hints: nil, barge_in: nil, debug: nil, **keyword_args)
-        gather = Gather.new(input: input, action: action, method: method, timeout: timeout, speech_timeout: speech_timeout, max_speech_time: max_speech_time, profanity_filter: profanity_filter, finish_on_key: finish_on_key, num_digits: num_digits, partial_result_callback: partial_result_callback, partial_result_callback_method: partial_result_callback_method, language: language, hints: hints, barge_in: barge_in, debug: debug, **keyword_args)
+      def gather(input: nil, action: nil, method: nil, timeout: nil, speech_timeout: nil, max_speech_time: nil, profanity_filter: nil, finish_on_key: nil, num_digits: nil, partial_result_callback: nil, partial_result_callback_method: nil, language: nil, hints: nil, barge_in: nil, debug: nil, action_on_empty_result: nil, **keyword_args)
+        gather = Gather.new(input: input, action: action, method: method, timeout: timeout, speech_timeout: speech_timeout, max_speech_time: max_speech_time, profanity_filter: profanity_filter, finish_on_key: finish_on_key, num_digits: num_digits, partial_result_callback: partial_result_callback, partial_result_callback_method: partial_result_callback_method, language: language, hints: hints, barge_in: barge_in, debug: debug, action_on_empty_result: action_on_empty_result, **keyword_args)
 
         yield(gather) if block_given?
         append(gather)

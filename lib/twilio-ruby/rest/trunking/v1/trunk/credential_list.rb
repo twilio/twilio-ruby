@@ -15,7 +15,8 @@ module Twilio
             ##
             # Initialize the CredentialListList
             # @param [Version] version Version that contains the resource
-            # @param [String] trunk_sid The trunk_sid
+            # @param [String] trunk_sid The SID of the Trunk the credential list in associated
+            #   with.
             # @return [CredentialListList] CredentialListList
             def initialize(version, trunk_sid: nil)
               super(version)
@@ -30,8 +31,8 @@ module Twilio
             # Request is executed immediately.
             # @param [String] credential_list_sid The SID of the [Credential
             #   List](https://www.twilio.com/docs/api/rest/credential-list) that you want to
-            #   associate with this trunk. Once associated, Twilio will start authenticating
-            #   access to the trunk against this list.
+            #   associate with the trunk. Once associated, we will authenticate access to the
+            #   trunk against this list.
             # @return [CredentialListInstance] Newly created CredentialListInstance
             def create(credential_list_sid: nil)
               data = Twilio::Values.of({'CredentialListSid' => credential_list_sid, })
@@ -167,8 +168,10 @@ module Twilio
             ##
             # Initialize the CredentialListContext
             # @param [Version] version Version that contains the resource
-            # @param [String] trunk_sid The trunk_sid
-            # @param [String] sid The sid
+            # @param [String] trunk_sid The SID of the Trunk from which to fetch the
+            #   credential list.
+            # @param [String] sid The unique string that we created to identify the
+            #   CredentialList resource to fetch.
             # @return [CredentialListContext] CredentialListContext
             def initialize(version, trunk_sid, sid)
               super(version)
@@ -225,8 +228,10 @@ module Twilio
             # Initialize the CredentialListInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] trunk_sid The trunk_sid
-            # @param [String] sid The sid
+            # @param [String] trunk_sid The SID of the Trunk the credential list in associated
+            #   with.
+            # @param [String] sid The unique string that we created to identify the
+            #   CredentialList resource to fetch.
             # @return [CredentialListInstance] CredentialListInstance
             def initialize(version, payload, trunk_sid: nil, sid: nil)
               super(version)
@@ -259,43 +264,43 @@ module Twilio
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The trunk_sid
+            # @return [String] The SID of the Trunk the credential list in associated with
             def trunk_sid
               @properties['trunk_sid']
             end
 
             ##
-            # @return [String] The friendly_name
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the resource
             def url
               @properties['url']
             end

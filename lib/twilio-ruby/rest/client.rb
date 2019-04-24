@@ -32,24 +32,24 @@ module Twilio
         @chat = nil
         @fax = nil
         @flex_api = nil
+        @insights = nil
         @ip_messaging = nil
         @lookups = nil
+        @messaging = nil
         @monitor = nil
         @notify = nil
         @preview = nil
         @pricing = nil
         @proxy = nil
         @serverless = nil
+        @studio = nil
+        @sync = nil
         @taskrouter = nil
         @trunking = nil
-        @video = nil
-        @messaging = nil
-        @wireless = nil
-        @sync = nil
-        @studio = nil
         @verify = nil
+        @video = nil
         @voice = nil
-        @insights = nil
+        @wireless = nil
       end
 
       ##
@@ -143,6 +143,12 @@ module Twilio
       end
 
       ##
+      # Access the Insights Twilio Domain
+      def insights
+        @insights ||= Insights.new self
+      end
+
+      ##
       # Access the IpMessaging Twilio Domain
       def ip_messaging
         @ip_messaging ||= IpMessaging.new self
@@ -152,6 +158,12 @@ module Twilio
       # Access the Lookups Twilio Domain
       def lookups
         @lookups ||= Lookups.new self
+      end
+
+      ##
+      # Access the Messaging Twilio Domain
+      def messaging
+        @messaging ||= Messaging.new self
       end
 
       ##
@@ -191,6 +203,18 @@ module Twilio
       end
 
       ##
+      # Access the Studio Twilio Domain
+      def studio
+        @studio ||= Studio.new self
+      end
+
+      ##
+      # Access the Sync Twilio Domain
+      def sync
+        @sync ||= Sync.new self
+      end
+
+      ##
       # Access the Taskrouter Twilio Domain
       def taskrouter
         @taskrouter ||= Taskrouter.new self
@@ -203,39 +227,15 @@ module Twilio
       end
 
       ##
-      # Access the Video Twilio Domain
-      def video
-        @video ||= Video.new self
-      end
-
-      ##
-      # Access the Messaging Twilio Domain
-      def messaging
-        @messaging ||= Messaging.new self
-      end
-
-      ##
-      # Access the Wireless Twilio Domain
-      def wireless
-        @wireless ||= Wireless.new self
-      end
-
-      ##
-      # Access the Sync Twilio Domain
-      def sync
-        @sync ||= Sync.new self
-      end
-
-      ##
-      # Access the Studio Twilio Domain
-      def studio
-        @studio ||= Studio.new self
-      end
-
-      ##
       # Access the Verify Twilio Domain
       def verify
         @verify ||= Verify.new self
+      end
+
+      ##
+      # Access the Video Twilio Domain
+      def video
+        @video ||= Video.new self
       end
 
       ##
@@ -245,9 +245,9 @@ module Twilio
       end
 
       ##
-      # Access the Insights Twilio Domain
-      def insights
-        @insights ||= Insights.new self
+      # Access the Wireless Twilio Domain
+      def wireless
+        @wireless ||= Wireless.new self
       end
 
       ##

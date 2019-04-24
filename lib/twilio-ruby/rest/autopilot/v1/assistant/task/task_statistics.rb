@@ -18,10 +18,12 @@ module Twilio
               ##
               # Initialize the TaskStatisticsList
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The unique ID of the
-              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant).
-              # @param [String] task_sid The unique ID of the
-              #   [Task](https://www.twilio.com/docs/autopilot/api/task).
+              # @param [String] assistant_sid The SID of the
+              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   parent of the Task associated with the resource.
+              # @param [String] task_sid The SID of the
+              #   [Task](https://www.twilio.com/docs/autopilot/api/task) for which the statistics
+              #   were collected.
               # @return [TaskStatisticsList] TaskStatisticsList
               def initialize(version, assistant_sid: nil, task_sid: nil)
                 super(version)
@@ -79,10 +81,12 @@ module Twilio
               ##
               # Initialize the TaskStatisticsContext
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The unique ID of the
-              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant).
-              # @param [String] task_sid The unique ID of the
-              #   [Task](https://www.twilio.com/docs/autopilot/api/task).
+              # @param [String] assistant_sid The SID of the
+              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   parent of the resource to fetch.
+              # @param [String] task_sid The SID of the
+              #   [Task](https://www.twilio.com/docs/autopilot/api/task) that is associated with
+              #   the resource to fetch.
               # @return [TaskStatisticsContext] TaskStatisticsContext
               def initialize(version, assistant_sid, task_sid)
                 super(version)
@@ -134,10 +138,12 @@ module Twilio
               # Initialize the TaskStatisticsInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] assistant_sid The unique ID of the
-              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant).
-              # @param [String] task_sid The unique ID of the
-              #   [Task](https://www.twilio.com/docs/autopilot/api/task).
+              # @param [String] assistant_sid The SID of the
+              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   parent of the Task associated with the resource.
+              # @param [String] task_sid The SID of the
+              #   [Task](https://www.twilio.com/docs/autopilot/api/task) for which the statistics
+              #   were collected.
               # @return [TaskStatisticsInstance] TaskStatisticsInstance
               def initialize(version, payload, assistant_sid: nil, task_sid: nil)
                 super(version)
@@ -173,37 +179,37 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique ID of the Account that created this resource.
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The unique ID of the Assistant.
+              # @return [String] The SID of the Assistant that is the parent of the Task associated with the resource
               def assistant_sid
                 @properties['assistant_sid']
               end
 
               ##
-              # @return [String] The unique ID of the Task associated with this Field.
+              # @return [String] The SID of the Task for which the statistics were collected
               def task_sid
                 @properties['task_sid']
               end
 
               ##
-              # @return [String] The total number of Samples associated with this Task.
+              # @return [String] The total number of Samples associated with the Task
               def samples_count
                 @properties['samples_count']
               end
 
               ##
-              # @return [String] The total number of Fields associated with this Task.
+              # @return [String] The total number of Fields associated with the Task
               def fields_count
                 @properties['fields_count']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] The absolute URL of the TaskStatistics resource
               def url
                 @properties['url']
               end

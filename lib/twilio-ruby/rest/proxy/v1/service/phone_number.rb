@@ -288,6 +288,7 @@ module Twilio
                   'capabilities' => payload['capabilities'],
                   'url' => payload['url'],
                   'is_reserved' => payload['is_reserved'],
+                  'in_use' => payload['in_use'].to_i,
               }
 
               # Context
@@ -370,6 +371,12 @@ module Twilio
             # @return [Boolean] Reserve the phone number for manual assignment to participants only
             def is_reserved
               @properties['is_reserved']
+            end
+
+            ##
+            # @return [String] The number of open session assigned to the number.
+            def in_use
+              @properties['in_use']
             end
 
             ##

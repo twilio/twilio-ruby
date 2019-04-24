@@ -1,6 +1,18 @@
 twilio-ruby changelog
 =====================
 
+[2019-04-24] Version 5.22.2
+----------------------------
+**Api**
+- Add `verified` property to Addresses
+
+**Numbers**
+- Add API for Identites and documents
+
+**Proxy**
+- Add in use count on number instance
+
+
 [2019-04-12] Version 5.22.1
 ----------------------------
 **Flex**

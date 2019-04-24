@@ -15,10 +15,9 @@ module Twilio
             ##
             # Initialize the TerminatingSipDomainList
             # @param [Version] version Version that contains the resource
-            # @param [String] trunk_sid The 34 character sid of the Trunk Twilio should route
-            #   calls arriving at this domain. If a `TrunkSid` is present, Twilio will ignore
-            #   all of the voice urls present and calls will be terminated through the specified
-            #   trunk.
+            # @param [String] trunk_sid The SID of the Trunk to which we should route calls
+            #   that arrive at the domain. If a `trunk_sid` is present, we ignore all of the
+            #   voice URLs present and terminate calls through the specified trunk.
             # @return [TerminatingSipDomainList] TerminatingSipDomainList
             def initialize(version, trunk_sid: nil)
               super(version)
@@ -33,7 +32,7 @@ module Twilio
             # Request is executed immediately.
             # @param [String] sip_domain_sid The SID of the [SIP
             #   Domain](https://www.twilio.com/docs/voice/sip/api/sip-domain-resource) that you
-            #   want to associate with this trunk.
+            #   want to associate with the trunk.
             # @return [TerminatingSipDomainInstance] Newly created TerminatingSipDomainInstance
             def create(sip_domain_sid: nil)
               data = Twilio::Values.of({'SipDomainSid' => sip_domain_sid, })
@@ -169,9 +168,10 @@ module Twilio
             ##
             # Initialize the TerminatingSipDomainContext
             # @param [Version] version Version that contains the resource
-            # @param [String] trunk_sid A unique string that identifies the trunk.
-            # @param [String] sid A unique string that identifies the associated domain to
-            #   fetch.
+            # @param [String] trunk_sid The SID of the Trunk with the TerminatingSipDomain
+            #   resource to fetch.
+            # @param [String] sid The unique string that we created to identify the
+            #   TerminatingSipDomain resource to fetch.
             # @return [TerminatingSipDomainContext] TerminatingSipDomainContext
             def initialize(version, trunk_sid, sid)
               super(version)
@@ -228,12 +228,11 @@ module Twilio
             # Initialize the TerminatingSipDomainInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] trunk_sid The 34 character sid of the Trunk Twilio should route
-            #   calls arriving at this domain. If a `TrunkSid` is present, Twilio will ignore
-            #   all of the voice urls present and calls will be terminated through the specified
-            #   trunk.
-            # @param [String] sid A unique string that identifies the associated domain to
-            #   fetch.
+            # @param [String] trunk_sid The SID of the Trunk to which we should route calls
+            #   that arrive at the domain. If a `trunk_sid` is present, we ignore all of the
+            #   voice URLs present and terminate calls through the specified trunk.
+            # @param [String] sid The unique string that we created to identify the
+            #   TerminatingSipDomain resource to fetch.
             # @return [TerminatingSipDomainInstance] TerminatingSipDomainInstance
             def initialize(version, payload, trunk_sid: nil, sid: nil)
               super(version)
@@ -277,13 +276,13 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique id of the account responsible for this domain
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The Twilio API version used to process the call
+            # @return [String] The API version used to process the call
             def api_version
               @properties['api_version']
             end
@@ -295,91 +294,91 @@ module Twilio
             end
 
             ##
-            # @return [Time] The date this resource was created
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this resource was last updated
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The unique address on Twilio to route SIP traffic
+            # @return [String] The unique address you reserve on Twilio to which you route your SIP traffic
             def domain_name
               @properties['domain_name']
             end
 
             ##
-            # @return [String] A user-specified, human-readable name for the domain.
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] A string that uniquely identifies the SIP Domain
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] HTTP method used with voice_fallback_url
+            # @return [String] The HTTP method used with voice_fallback_url
             def voice_fallback_method
               @properties['voice_fallback_method']
             end
 
             ##
-            # @return [String] URL Twilio will request if an error occurs in executing TwiML
+            # @return [String] The URL that we call when an error occurs in executing TwiML
             def voice_fallback_url
               @properties['voice_fallback_url']
             end
 
             ##
-            # @return [String] HTTP method to use with voice_url
+            # @return [String] The HTTP method used with voice_url
             def voice_method
               @properties['voice_method']
             end
 
             ##
-            # @return [String] The HTTP method Twilio will use to make requests to the StatusCallback URL.
+            # @return [String] The HTTP method that we use to call the voice_status_callback_url
             def voice_status_callback_method
               @properties['voice_status_callback_method']
             end
 
             ##
-            # @return [String] URL that Twilio will request with status updates
+            # @return [String] The URL that we call to pass status parameters to your application
             def voice_status_callback_url
               @properties['voice_status_callback_url']
             end
 
             ##
-            # @return [String] URL Twilio will request when receiving a call
+            # @return [String] The URL we call when the domain receives a call
             def voice_url
               @properties['voice_url']
             end
 
             ##
-            # @return [Boolean] If SIP registration is allowed
+            # @return [Boolean] Whether SIP Endpoints can register with the domain to receive calls
             def sip_registration
               @properties['sip_registration']
             end
 
             ##
-            # @return [String] Unique string to identify an associated trunk
+            # @return [String] The SID of the Trunk to which we should route calls
             def trunk_sid
               @properties['trunk_sid']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] The URLs of related resources
             def links
               @properties['links']
             end

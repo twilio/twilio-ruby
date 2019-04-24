@@ -17,7 +17,9 @@ module Twilio
             ##
             # Initialize the DialogueList
             # @param [Version] version Version that contains the resource
-            # @param [String] assistant_sid The unique ID of the parent Assistant.
+            # @param [String] assistant_sid The SID of the
+            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   parent of the resource.
             # @return [DialogueList] DialogueList
             def initialize(version, assistant_sid: nil)
               super(version)
@@ -70,8 +72,11 @@ module Twilio
             ##
             # Initialize the DialogueContext
             # @param [Version] version Version that contains the resource
-            # @param [String] assistant_sid The assistant_sid
-            # @param [String] sid The sid
+            # @param [String] assistant_sid The SID of the
+            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   parent of the resource to fetch.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Dialogue resource to fetch.
             # @return [DialogueContext] DialogueContext
             def initialize(version, assistant_sid, sid)
               super(version)
@@ -123,8 +128,11 @@ module Twilio
             # Initialize the DialogueInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] assistant_sid The unique ID of the parent Assistant.
-            # @param [String] sid The sid
+            # @param [String] assistant_sid The SID of the
+            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   parent of the resource.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Dialogue resource to fetch.
             # @return [DialogueInstance] DialogueInstance
             def initialize(version, payload, assistant_sid: nil, sid: nil)
               super(version)
@@ -155,31 +163,31 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique ID of the Account that created this Field.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The unique ID of the parent Assistant.
+            # @return [String] The SID of the Assistant that is the parent of the resource
             def assistant_sid
               @properties['assistant_sid']
             end
 
             ##
-            # @return [String] The unique ID of the Dialogue
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [Hash] The dialogue session object as json
+            # @return [Hash] The JSON string that describes the dialogue session object
             def data
               @properties['data']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the Dialogue resource
             def url
               @properties['url']
             end

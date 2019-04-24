@@ -29,8 +29,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies the SIP Trunk
-      #   in Twilio.
+      # @param [String] sid The unique string that we created to identify the Trunk
+      #   resource.
       # @return [Twilio::REST::Trunking::V1::TrunkInstance] if sid was passed.
       # @return [Twilio::REST::Trunking::V1::TrunkList]
       def trunks(sid=:unset)

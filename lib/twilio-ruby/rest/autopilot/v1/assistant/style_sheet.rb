@@ -17,7 +17,9 @@ module Twilio
             ##
             # Initialize the StyleSheetList
             # @param [Version] version Version that contains the resource
-            # @param [String] assistant_sid The unique ID of the Assistant
+            # @param [String] assistant_sid The SID of the
+            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   parent of the resource.
             # @return [StyleSheetList] StyleSheetList
             def initialize(version, assistant_sid: nil)
               super(version)
@@ -70,7 +72,9 @@ module Twilio
             ##
             # Initialize the StyleSheetContext
             # @param [Version] version Version that contains the resource
-            # @param [String] assistant_sid The unique ID of the Assistant
+            # @param [String] assistant_sid The SID of the
+            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   parent of the resource to fetch.
             # @return [StyleSheetContext] StyleSheetContext
             def initialize(version, assistant_sid)
               super(version)
@@ -97,7 +101,7 @@ module Twilio
 
             ##
             # Update the StyleSheetInstance
-            # @param [Hash] style_sheet The JSON Style sheet string
+            # @param [Hash] style_sheet The JSON string that describes the style sheet object.
             # @return [StyleSheetInstance] Updated StyleSheetInstance
             def update(style_sheet: :unset)
               data = Twilio::Values.of({'StyleSheet' => Twilio.serialize_object(style_sheet), })
@@ -133,7 +137,9 @@ module Twilio
             # Initialize the StyleSheetInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] assistant_sid The unique ID of the Assistant
+            # @param [String] assistant_sid The SID of the
+            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   parent of the resource.
             # @return [StyleSheetInstance] StyleSheetInstance
             def initialize(version, payload, assistant_sid: nil)
               super(version)
@@ -163,25 +169,25 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique ID of the Account that created this Assistant
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The unique ID of the Assistant
+            # @return [String] The SID of the Assistant that is the parent of the resource
             def assistant_sid
               @properties['assistant_sid']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the StyleSheet resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [Hash] The JSON style sheet object
+            # @return [Hash] The JSON string that describes the style sheet object
             def data
               @properties['data']
             end
@@ -195,7 +201,7 @@ module Twilio
 
             ##
             # Update the StyleSheetInstance
-            # @param [Hash] style_sheet The JSON Style sheet string
+            # @param [Hash] style_sheet The JSON string that describes the style sheet object.
             # @return [StyleSheetInstance] Updated StyleSheetInstance
             def update(style_sheet: :unset)
               context.update(style_sheet: style_sheet, )

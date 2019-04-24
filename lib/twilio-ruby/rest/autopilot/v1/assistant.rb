@@ -110,23 +110,21 @@ module Twilio
           ##
           # Retrieve a single page of AssistantInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name A text description for the Assistant. It is
-          #   non-unique and can be up to 255 characters long.
-          # @param [Boolean] log_queries A boolean that specifies whether queries should be
-          #   logged for 30 days past training. If `false`, no queries will be stored. If
-          #   `true`, queries will be stored for 30 days and deleted thereafter. Defaults to
-          #   `true` if no value is provided.
-          # @param [String] unique_name A user-provided string that uniquely identifies this
-          #   resource as an alternative to the sid. You can use the unique name in the URL
-          #   path when addressing this resource. Unique up to 64 characters long.
-          # @param [String] callback_url The callback_url
-          # @param [String] callback_events A space-separated list of callback events that
-          #   will trigger callbacks
-          # @param [Hash] style_sheet A JSON object that defines the assistant [style
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the new resource. It is not unique and can be up to 255 characters long.
+          # @param [Boolean] log_queries Whether queries should be logged and kept after
+          #   training. Can be: `true` or `false` and defaults to `true`. If `true`, queries
+          #   are stored for 30 days, and then deleted. If `false`, no queries are stored.
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the new resource. It can be used as an alternative to the `sid` in
+          #   the URL path to address the resource. The first 64 characters must be unique.
+          # @param [String] callback_url Reserved.
+          # @param [String] callback_events Reserved.
+          # @param [Hash] style_sheet The JSON string that defines the Assistant's [style
           #   sheet](https://www.twilio.com/docs/autopilot/api/assistant/stylesheet)
-          # @param [Hash] defaults A JSON object that defines the assistant's [default
+          # @param [Hash] defaults A JSON object that defines the Assistant's [default
           #   tasks](https://www.twilio.com/docs/autopilot/api/assistant/defaults) for various
-          #   scenarios, including initation actions and fallback tasks.
+          #   scenarios, including initiation actions and fallback tasks.
           # @return [AssistantInstance] Newly created AssistantInstance
           def create(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, style_sheet: :unset, defaults: :unset)
             data = Twilio::Values.of({
@@ -192,8 +190,8 @@ module Twilio
           ##
           # Initialize the AssistantContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid A 34-character string that uniquely identifies this
-          #   resource.
+          # @param [String] sid The Twilio-provided string that uniquely identifies the
+          #   Assistant resource to fetch.
           # @return [AssistantContext] AssistantContext
           def initialize(version, sid)
             super(version)
@@ -229,23 +227,21 @@ module Twilio
 
           ##
           # Update the AssistantInstance
-          # @param [String] friendly_name A text description for the Assistant. It is
-          #   non-unique and can be up to 255 characters long.
-          # @param [Boolean] log_queries A boolean that specifies whether queries should be
-          #   logged for 30 days past training. If `false`, no queries will be stored. If
-          #   `true`, queries will be stored for 30 days and deleted thereafter. Defaults to
-          #   `true` if no value is provided.
-          # @param [String] unique_name A user-provided string that uniquely identifies this
-          #   resource as an alternative to the sid. You can use the unique name in the URL
-          #   path when addressing this resource. Unique up to 64 characters long.
-          # @param [String] callback_url The callback_url
-          # @param [String] callback_events A space-separated list of callback events that
-          #   will trigger callbacks
-          # @param [Hash] style_sheet A JSON object that defines the assistant [style
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the resource. It is not unique and can be up to 255 characters long.
+          # @param [Boolean] log_queries Whether queries should be logged and kept after
+          #   training. Can be: `true` or `false` and defaults to `true`. If `true`, queries
+          #   are stored for 30 days, and then deleted. If `false`, no queries are stored.
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. It can be used as an alternative to the `sid` in the
+          #   URL path to address the resource. The first 64 characters must be unique.
+          # @param [String] callback_url Reserved.
+          # @param [String] callback_events Reserved.
+          # @param [Hash] style_sheet The JSON string that defines the Assistant's [style
           #   sheet](https://www.twilio.com/docs/autopilot/api/assistant/stylesheet)
-          # @param [Hash] defaults A JSON object that defines the assistant's [default
+          # @param [Hash] defaults A JSON object that defines the Assistant's [default
           #   tasks](https://www.twilio.com/docs/autopilot/api/assistant/defaults) for various
-          #   scenarios, including initation actions and fallback tasks.
+          #   scenarios, including initiation actions and fallback tasks.
           # @return [AssistantInstance] Updated AssistantInstance
           def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, style_sheet: :unset, defaults: :unset)
             data = Twilio::Values.of({
@@ -402,8 +398,8 @@ module Twilio
           # Initialize the AssistantInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid A 34-character string that uniquely identifies this
-          #   resource.
+          # @param [String] sid The Twilio-provided string that uniquely identifies the
+          #   Assistant resource to fetch.
           # @return [AssistantInstance] AssistantInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -441,73 +437,73 @@ module Twilio
           end
 
           ##
-          # @return [String] The unique ID of the Account that created this Assistant.
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [Time] The date that this resource was created
+          # @return [Time] The RFC 2822 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date that this resource was last updated
+          # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] A text description for the Assistant. It is non-unique and can be up to 255 characters long.
+          # @return [String] The string that you assigned to describe the resource
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [String] The latest_model_build_sid
+          # @return [String] Reserved
           def latest_model_build_sid
             @properties['latest_model_build_sid']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] A list of the URLs of the Assistant's related resources
           def links
             @properties['links']
           end
 
           ##
-          # @return [Boolean] A boolean that specifies whether queries should be logged for 30 days past training. If `false`, no queries will be stored. If `true`, queries will be stored for 30 days and deleted thereafter.
+          # @return [Boolean] Whether queries should be logged and kept after training
           def log_queries
             @properties['log_queries']
           end
 
           ##
-          # @return [String] A 34-character string that uniquely identifies this resource.
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] A user-provided string that uniquely identifies this resource as an alternative to the sid. Unique up to 64 characters long.
+          # @return [String] An application-defined string that uniquely identifies the resource
           def unique_name
             @properties['unique_name']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The absolute URL of the Assistant resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The callback_url
+          # @return [String] Reserved
           def callback_url
             @properties['callback_url']
           end
 
           ##
-          # @return [String] The callback_events
+          # @return [String] Reserved
           def callback_events
             @properties['callback_events']
           end
@@ -521,23 +517,21 @@ module Twilio
 
           ##
           # Update the AssistantInstance
-          # @param [String] friendly_name A text description for the Assistant. It is
-          #   non-unique and can be up to 255 characters long.
-          # @param [Boolean] log_queries A boolean that specifies whether queries should be
-          #   logged for 30 days past training. If `false`, no queries will be stored. If
-          #   `true`, queries will be stored for 30 days and deleted thereafter. Defaults to
-          #   `true` if no value is provided.
-          # @param [String] unique_name A user-provided string that uniquely identifies this
-          #   resource as an alternative to the sid. You can use the unique name in the URL
-          #   path when addressing this resource. Unique up to 64 characters long.
-          # @param [String] callback_url The callback_url
-          # @param [String] callback_events A space-separated list of callback events that
-          #   will trigger callbacks
-          # @param [Hash] style_sheet A JSON object that defines the assistant [style
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the resource. It is not unique and can be up to 255 characters long.
+          # @param [Boolean] log_queries Whether queries should be logged and kept after
+          #   training. Can be: `true` or `false` and defaults to `true`. If `true`, queries
+          #   are stored for 30 days, and then deleted. If `false`, no queries are stored.
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. It can be used as an alternative to the `sid` in the
+          #   URL path to address the resource. The first 64 characters must be unique.
+          # @param [String] callback_url Reserved.
+          # @param [String] callback_events Reserved.
+          # @param [Hash] style_sheet The JSON string that defines the Assistant's [style
           #   sheet](https://www.twilio.com/docs/autopilot/api/assistant/stylesheet)
-          # @param [Hash] defaults A JSON object that defines the assistant's [default
+          # @param [Hash] defaults A JSON object that defines the Assistant's [default
           #   tasks](https://www.twilio.com/docs/autopilot/api/assistant/defaults) for various
-          #   scenarios, including initation actions and fallback tasks.
+          #   scenarios, including initiation actions and fallback tasks.
           # @return [AssistantInstance] Updated AssistantInstance
           def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, style_sheet: :unset, defaults: :unset)
             context.update(

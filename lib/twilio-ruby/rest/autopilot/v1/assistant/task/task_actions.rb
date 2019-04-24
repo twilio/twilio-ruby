@@ -18,8 +18,12 @@ module Twilio
               ##
               # Initialize the TaskActionsList
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The unique ID of the parent Assistant.
-              # @param [String] task_sid The unique ID of the Task.
+              # @param [String] assistant_sid The SID of the
+              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   parent of the Task associated with the resource.
+              # @param [String] task_sid The SID of the
+              #   [Task](https://www.twilio.com/docs/autopilot/api/task) associated with the
+              #   resource.
               # @return [TaskActionsList] TaskActionsList
               def initialize(version, assistant_sid: nil, task_sid: nil)
                 super(version)
@@ -77,8 +81,12 @@ module Twilio
               ##
               # Initialize the TaskActionsContext
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The unique ID of the parent Assistant.
-              # @param [String] task_sid The unique ID of the Task.
+              # @param [String] assistant_sid The SID of the
+              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   parent of the Task for which the task actions to fetch were defined.
+              # @param [String] task_sid The SID of the
+              #   [Task](https://www.twilio.com/docs/autopilot/api/task) for which the task
+              #   actions to fetch were defined.
               # @return [TaskActionsContext] TaskActionsContext
               def initialize(version, assistant_sid, task_sid)
                 super(version)
@@ -110,9 +118,9 @@ module Twilio
 
               ##
               # Update the TaskActionsInstance
-              # @param [Hash] actions The JSON
+              # @param [Hash] actions The JSON string that specifies the
               #   [actions](https://www.twilio.com/docs/autopilot/actions) that instruct the
-              #   Assistant how to perform this task.
+              #   Assistant on how to perform the task.
               # @return [TaskActionsInstance] Updated TaskActionsInstance
               def update(actions: :unset)
                 data = Twilio::Values.of({'Actions' => Twilio.serialize_object(actions), })
@@ -153,8 +161,12 @@ module Twilio
               # Initialize the TaskActionsInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] assistant_sid The unique ID of the parent Assistant.
-              # @param [String] task_sid The unique ID of the Task.
+              # @param [String] assistant_sid The SID of the
+              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   parent of the Task associated with the resource.
+              # @param [String] task_sid The SID of the
+              #   [Task](https://www.twilio.com/docs/autopilot/api/task) associated with the
+              #   resource.
               # @return [TaskActionsInstance] TaskActionsInstance
               def initialize(version, payload, assistant_sid: nil, task_sid: nil)
                 super(version)
@@ -185,31 +197,31 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique ID of the Account that created this Field.
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The unique ID of the parent Assistant.
+              # @return [String] The SID of the Assistant that is the parent of the Task associated with the resource
               def assistant_sid
                 @properties['assistant_sid']
               end
 
               ##
-              # @return [String] The unique ID of the Task.
+              # @return [String] The SID of the Task associated with the resource
               def task_sid
                 @properties['task_sid']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] The absolute URL of the TaskActions resource
               def url
                 @properties['url']
               end
 
               ##
-              # @return [Hash] The JSON [actions](https://www.twilio.com/docs/autopilot/actions) that instruct the Assistant how to perform this task.
+              # @return [Hash] The JSON string that specifies the actions that instruct the Assistant on how to perform the task
               def data
                 @properties['data']
               end
@@ -223,9 +235,9 @@ module Twilio
 
               ##
               # Update the TaskActionsInstance
-              # @param [Hash] actions The JSON
+              # @param [Hash] actions The JSON string that specifies the
               #   [actions](https://www.twilio.com/docs/autopilot/actions) that instruct the
-              #   Assistant how to perform this task.
+              #   Assistant on how to perform the task.
               # @return [TaskActionsInstance] Updated TaskActionsInstance
               def update(actions: :unset)
                 context.update(actions: actions, )

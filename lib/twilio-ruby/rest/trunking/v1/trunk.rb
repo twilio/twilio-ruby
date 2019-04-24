@@ -26,35 +26,35 @@ module Twilio
           ##
           # Retrieve a single page of TrunkInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name A human-readable name for the Trunk.
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the resource. It can be up to 64 characters long.
           # @param [String] domain_name The unique address you reserve on Twilio to which
           #   you route your SIP traffic. Domain names can contain letters, digits, and `-`
-          #   and must always end with `pstn.twilio.com`. See [Termination
+          #   and must end with `pstn.twilio.com`. See [Termination
           #   Settings](https://www.twilio.com/docs/sip-trunking/getting-started#termination)
           #   for more information.
-          # @param [String] disaster_recovery_url The HTTP URL that Twilio will request if
-          #   an error occurs while sending SIP traffic towards your configured Origination
-          #   URL. Twilio will retrieve TwiML from this URL and execute those instructions
-          #   like any other normal TwiML call. See [Disaster
+          # @param [String] disaster_recovery_url The URL we should call using the
+          #   `disaster_recovery_method` if an error occurs while sending SIP traffic towards
+          #   the configured Origination URL. We retrieve TwiML from the URL and execute the
+          #   instructions like any other normal TwiML call. See [Disaster
           #   Recovery](https://www.twilio.com/docs/sip-trunking/getting-started#disaster-recovery) for more information.
-          # @param [String] disaster_recovery_method The HTTP method Twilio will use when
-          #   requesting the `DisasterRecoveryUrl`. Either `GET` or `POST`.
-          # @param [trunk.RecordingSetting] recording The recording settings for this trunk.
-          #   If turned on, all calls going through this trunk will be recorded and the
-          #   recording can either start when the call is ringing or when the call is
-          #   answered. See
+          # @param [String] disaster_recovery_method The HTTP method we should use to call
+          #   the `disaster_recovery_url`. Can be: `GET` or `POST`.
+          # @param [trunk.RecordingSetting] recording The recording settings for the trunk.
+          #   Can be: `do-not-record`, `record-from-ringing`, `record-from-answer`. If set to
+          #   `record-from-ringing` or `record-from-answer`, all calls going through the trunk
+          #   will be recorded. See
           #   [Recording](https://www.twilio.com/docs/sip-trunking/getting-started#recording)
           #   for more information.
-          # @param [Boolean] secure The Secure Trunking  settings for this trunk. If turned
-          #   on, all calls going through this trunk will be secure using SRTP for media and
-          #   TLS for signalling. If turned off, then RTP will be used for media. See [Secure
+          # @param [Boolean] secure Whether Secure Trunking is enabled for the trunk. If
+          #   enabled, all calls going through the trunk will be secure using SRTP for media
+          #   and TLS for signaling. If disabled, then RTP will be used for media. See [Secure
           #   Trunking](https://www.twilio.com/docs/sip-trunking/getting-started#securetrunking) for more information.
-          # @param [Boolean] cnam_lookup_enabled The Caller ID Name (CNAM) lookup setting
-          #   for this trunk. If turned on, all inbound calls to this SIP Trunk from the
-          #   United States and Canada will automatically perform a CNAM Lookup and display
-          #   Caller ID data on your phone. See
-          #   [CNAM](https://www.twilio.com/docs/sip-trunking#CNAM) Lookups for more
-          #   information.
+          # @param [Boolean] cnam_lookup_enabled Whether Caller ID Name (CNAM) lookup should
+          #   be enabled for the trunk. If enabled, all inbound calls to the SIP Trunk from
+          #   the United States and Canada automatically perform a CNAM Lookup and display
+          #   Caller ID data on your phone. See [CNAM
+          #   Lookups](https://www.twilio.com/docs/sip-trunking#CNAM) for more information.
           # @return [TrunkInstance] Newly created TrunkInstance
           def create(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             data = Twilio::Values.of({
@@ -198,8 +198,8 @@ module Twilio
           ##
           # Initialize the TrunkContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid A 34 character string that uniquely identifies the SIP Trunk
-          #   in Twilio.
+          # @param [String] sid The unique string that we created to identify the Trunk
+          #   resource to fetch.
           # @return [TrunkContext] TrunkContext
           def initialize(version, sid)
             super(version)
@@ -240,35 +240,35 @@ module Twilio
 
           ##
           # Update the TrunkInstance
-          # @param [String] friendly_name A human-readable name for the Trunk.
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the resource. It can be up to 64 characters long.
           # @param [String] domain_name The unique address you reserve on Twilio to which
           #   you route your SIP traffic. Domain names can contain letters, digits, and `-`
-          #   and must always end with `pstn.twilio.com`. See [Termination
+          #   and must end with `pstn.twilio.com`. See [Termination
           #   Settings](https://www.twilio.com/docs/sip-trunking/getting-started#termination)
           #   for more information.
-          # @param [String] disaster_recovery_url The HTTP URL that Twilio will request if
-          #   an error occurs while sending SIP traffic towards your configured Origination
-          #   URL. Twilio will retrieve TwiML from this URL and execute those instructions
-          #   like any other normal TwiML call. See [Disaster
+          # @param [String] disaster_recovery_url The URL we should call using the
+          #   `disaster_recovery_method` if an error occurs while sending SIP traffic towards
+          #   the configured Origination URL. We retrieve TwiML from the URL and execute the
+          #   instructions like any other normal TwiML call. See [Disaster
           #   Recovery](https://www.twilio.com/docs/sip-trunking/getting-started#disaster-recovery) for more information.
-          # @param [String] disaster_recovery_method The HTTP method Twilio will use when
-          #   requesting the `DisasterRecoveryUrl`. Either `GET` or `POST`.
-          # @param [trunk.RecordingSetting] recording The recording settings for this trunk.
-          #   If turned on, all calls going through this trunk will be recorded and the
-          #   recording can either start when the call is ringing or when the call is
-          #   answered. See
+          # @param [String] disaster_recovery_method The HTTP method we should use to call
+          #   the `disaster_recovery_url`. Can be: `GET` or `POST`.
+          # @param [trunk.RecordingSetting] recording The recording settings for the trunk.
+          #   Can be: `do-not-record`, `record-from-ringing`, `record-from-answer`. If set to
+          #   `record-from-ringing` or `record-from-answer`, all calls going through the trunk
+          #   will be recorded. See
           #   [Recording](https://www.twilio.com/docs/sip-trunking/getting-started#recording)
           #   for more information.
-          # @param [Boolean] secure The Secure Trunking  settings for this trunk. If turned
-          #   on, all calls going through this trunk will be secure using SRTP for media and
-          #   TLS for signalling. If turned off, then RTP will be used for media. See [Secure
+          # @param [Boolean] secure Whether Secure Trunking is enabled for the trunk. If
+          #   enabled, all calls going through the trunk will be secure using SRTP for media
+          #   and TLS for signaling. If disabled, then RTP will be used for media. See [Secure
           #   Trunking](https://www.twilio.com/docs/sip-trunking/getting-started#securetrunking) for more information.
-          # @param [Boolean] cnam_lookup_enabled The Caller ID Name (CNAM) lookup setting
-          #   for this trunk. If turned on, all inbound calls to this SIP Trunk from the
-          #   United States and Canada will automatically perform a CNAM Lookup and display
-          #   Caller ID data on your phone. See
-          #   [CNAM](https://www.twilio.com/docs/sip-trunking#CNAM) Lookups for more
-          #   information.
+          # @param [Boolean] cnam_lookup_enabled Whether Caller ID Name (CNAM) lookup should
+          #   be enabled for the trunk. If enabled, all inbound calls to the SIP Trunk from
+          #   the United States and Canada automatically perform a CNAM Lookup and display
+          #   Caller ID data on your phone. See [CNAM
+          #   Lookups](https://www.twilio.com/docs/sip-trunking#CNAM) for more information.
           # @return [TrunkInstance] Updated TrunkInstance
           def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             data = Twilio::Values.of({
@@ -400,8 +400,8 @@ module Twilio
           # Initialize the TrunkInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid A 34 character string that uniquely identifies the SIP Trunk
-          #   in Twilio.
+          # @param [String] sid The unique string that we created to identify the Trunk
+          #   resource to fetch.
           # @return [TrunkInstance] TrunkInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -442,91 +442,91 @@ module Twilio
           end
 
           ##
-          # @return [String] The unique ID of the Account that owns this Trunk.
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The unique address you reserve on Twilio to which you route your SIP traffic.
+          # @return [String] The unique address you reserve on Twilio to which you route your SIP traffic
           def domain_name
             @properties['domain_name']
           end
 
           ##
-          # @return [String] The HTTP method Twilio will use when requesting the DisasterRecoveryUrl.
+          # @return [String] The HTTP method we use to call the disaster_recovery_url
           def disaster_recovery_method
             @properties['disaster_recovery_method']
           end
 
           ##
-          # @return [String] The HTTP URL that Twilio will request if an error occurs while sending SIP traffic towards your configured Origination URL.
+          # @return [String] The HTTP URL that we call if an error occurs while sending SIP traffic towards your configured Origination URL
           def disaster_recovery_url
             @properties['disaster_recovery_url']
           end
 
           ##
-          # @return [String] A human-readable name for the Trunk.
+          # @return [String] The string that you assigned to describe the resource
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [Boolean] The Secure Trunking  settings for this trunk.
+          # @return [Boolean] Whether Secure Trunking is enabled for the trunk
           def secure
             @properties['secure']
           end
 
           ##
-          # @return [Hash] The recording settings for this trunk.
+          # @return [Hash] The recording settings for the trunk
           def recording
             @properties['recording']
           end
 
           ##
-          # @return [Boolean] The Caller ID Name (CNAM) lookup setting for this trunk.
+          # @return [Boolean] Whether Caller ID Name (CNAM) lookup is enabled for the trunk
           def cnam_lookup_enabled
             @properties['cnam_lookup_enabled']
           end
 
           ##
-          # @return [String] The types of authentication you have mapped to your domain.
+          # @return [String] The types of authentication mapped to the domain
           def auth_type
             @properties['auth_type']
           end
 
           ##
-          # @return [String] The auth_type_set
+          # @return [String] Reserved
           def auth_type_set
             @properties['auth_type_set']
           end
 
           ##
-          # @return [Time] The date this Activity was created.
+          # @return [Time] The RFC 2822 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date this Activity was updated.
+          # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] A 34 character string that uniquely identifies the SIP Trunk in Twilio.
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The URL for this resource, relative to https://trunking.
+          # @return [String] The absolute URL of the resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] The URLs of related resources
           def links
             @properties['links']
           end
@@ -547,35 +547,35 @@ module Twilio
 
           ##
           # Update the TrunkInstance
-          # @param [String] friendly_name A human-readable name for the Trunk.
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the resource. It can be up to 64 characters long.
           # @param [String] domain_name The unique address you reserve on Twilio to which
           #   you route your SIP traffic. Domain names can contain letters, digits, and `-`
-          #   and must always end with `pstn.twilio.com`. See [Termination
+          #   and must end with `pstn.twilio.com`. See [Termination
           #   Settings](https://www.twilio.com/docs/sip-trunking/getting-started#termination)
           #   for more information.
-          # @param [String] disaster_recovery_url The HTTP URL that Twilio will request if
-          #   an error occurs while sending SIP traffic towards your configured Origination
-          #   URL. Twilio will retrieve TwiML from this URL and execute those instructions
-          #   like any other normal TwiML call. See [Disaster
+          # @param [String] disaster_recovery_url The URL we should call using the
+          #   `disaster_recovery_method` if an error occurs while sending SIP traffic towards
+          #   the configured Origination URL. We retrieve TwiML from the URL and execute the
+          #   instructions like any other normal TwiML call. See [Disaster
           #   Recovery](https://www.twilio.com/docs/sip-trunking/getting-started#disaster-recovery) for more information.
-          # @param [String] disaster_recovery_method The HTTP method Twilio will use when
-          #   requesting the `DisasterRecoveryUrl`. Either `GET` or `POST`.
-          # @param [trunk.RecordingSetting] recording The recording settings for this trunk.
-          #   If turned on, all calls going through this trunk will be recorded and the
-          #   recording can either start when the call is ringing or when the call is
-          #   answered. See
+          # @param [String] disaster_recovery_method The HTTP method we should use to call
+          #   the `disaster_recovery_url`. Can be: `GET` or `POST`.
+          # @param [trunk.RecordingSetting] recording The recording settings for the trunk.
+          #   Can be: `do-not-record`, `record-from-ringing`, `record-from-answer`. If set to
+          #   `record-from-ringing` or `record-from-answer`, all calls going through the trunk
+          #   will be recorded. See
           #   [Recording](https://www.twilio.com/docs/sip-trunking/getting-started#recording)
           #   for more information.
-          # @param [Boolean] secure The Secure Trunking  settings for this trunk. If turned
-          #   on, all calls going through this trunk will be secure using SRTP for media and
-          #   TLS for signalling. If turned off, then RTP will be used for media. See [Secure
+          # @param [Boolean] secure Whether Secure Trunking is enabled for the trunk. If
+          #   enabled, all calls going through the trunk will be secure using SRTP for media
+          #   and TLS for signaling. If disabled, then RTP will be used for media. See [Secure
           #   Trunking](https://www.twilio.com/docs/sip-trunking/getting-started#securetrunking) for more information.
-          # @param [Boolean] cnam_lookup_enabled The Caller ID Name (CNAM) lookup setting
-          #   for this trunk. If turned on, all inbound calls to this SIP Trunk from the
-          #   United States and Canada will automatically perform a CNAM Lookup and display
-          #   Caller ID data on your phone. See
-          #   [CNAM](https://www.twilio.com/docs/sip-trunking#CNAM) Lookups for more
-          #   information.
+          # @param [Boolean] cnam_lookup_enabled Whether Caller ID Name (CNAM) lookup should
+          #   be enabled for the trunk. If enabled, all inbound calls to the SIP Trunk from
+          #   the United States and Canada automatically perform a CNAM Lookup and display
+          #   Caller ID data on your phone. See [CNAM
+          #   Lookups](https://www.twilio.com/docs/sip-trunking#CNAM) for more information.
           # @return [TrunkInstance] Updated TrunkInstance
           def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             context.update(
