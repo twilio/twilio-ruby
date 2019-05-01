@@ -43,7 +43,9 @@ module Twilio
           # @param [trunk.RecordingSetting] recording The recording settings for the trunk.
           #   Can be: `do-not-record`, `record-from-ringing`, `record-from-answer`. If set to
           #   `record-from-ringing` or `record-from-answer`, all calls going through the trunk
-          #   will be recorded. See
+          #   will be recorded. The only way to change recording parameters is on a
+          #   sub-resource of a Trunk after it has been created.
+          #   e.g.`/Trunks/[Trunk_SID]/Recording -XPOST -d'Mode=record-from-answer'`. See
           #   [Recording](https://www.twilio.com/docs/sip-trunking/getting-started#recording)
           #   for more information.
           # @param [Boolean] secure Whether Secure Trunking is enabled for the trunk. If

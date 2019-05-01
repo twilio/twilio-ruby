@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+[2019-05-01] Version 5.22.3
+----------------------------
+**Serverless**
+- Documentation
+
+**Wireless**
+- Added `imeisv` to Data Session resource.
+
+
 [2019-04-24] Version 5.22.2
 ----------------------------
 **Api**

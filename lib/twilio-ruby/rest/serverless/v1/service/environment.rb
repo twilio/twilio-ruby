@@ -17,7 +17,8 @@ module Twilio
             ##
             # Initialize the EnvironmentList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The unique SID identifier of the Service for this
+            #   Environment.
             # @return [EnvironmentList] EnvironmentList
             def initialize(version, service_sid: nil)
               super(version)
@@ -112,8 +113,11 @@ module Twilio
             ##
             # Retrieve a single page of EnvironmentInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name The unique_name
-            # @param [String] domain_suffix The domain_suffix
+            # @param [String] unique_name A unique, addressable name of this Environment,
+            #   fewer than 256 characters. Required.
+            # @param [String] domain_suffix A URL-friendly name that represents this
+            #   Environment and forms part of the domain name, fewer than 32 characters.
+            #   Required.
             # @return [EnvironmentInstance] Newly created EnvironmentInstance
             def create(unique_name: nil, domain_suffix: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, 'DomainSuffix' => domain_suffix, })
@@ -171,8 +175,9 @@ module Twilio
             ##
             # Initialize the EnvironmentContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The unique SID identifier of the Service for this
+            #   Environment.
+            # @param [String] sid The unique SID identifier of this Environment.
             # @return [EnvironmentContext] EnvironmentContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -272,8 +277,9 @@ module Twilio
             # Initialize the EnvironmentInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The unique SID identifier of the Service for this
+            #   Environment.
+            # @param [String] sid The unique SID identifier of this Environment.
             # @return [EnvironmentInstance] EnvironmentInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -310,67 +316,67 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] Environment Sid.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] Account Sid.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The service_sid
+            # @return [String] Service Sid.
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] The build_sid
+            # @return [String] Build Sid.
             def build_sid
               @properties['build_sid']
             end
 
             ##
-            # @return [String] The unique_name
+            # @return [String] A unique, addressable name of this Environment.
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [String] The domain_suffix
+            # @return [String] A URL-friendly name that represents this Environment.
             def domain_suffix
               @properties['domain_suffix']
             end
 
             ##
-            # @return [String] The domain_name
+            # @return [String] The base domain name for all Functions and Assets deployed in this Environment.
             def domain_name
               @properties['domain_name']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date that this Environment was created.
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date that this Environment was updated.
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The URL of this Environment.
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] Nested resource URLs.
             def links
               @properties['links']
             end

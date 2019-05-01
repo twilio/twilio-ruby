@@ -182,6 +182,7 @@ module Twilio
                   'last_updated' => Twilio.deserialize_iso8601_datetime(payload['last_updated']),
                   'start' => Twilio.deserialize_iso8601_datetime(payload['start']),
                   'end_' => Twilio.deserialize_iso8601_datetime(payload['end']),
+                  'imeisv' => payload['imeisv'],
               }
             end
 
@@ -273,6 +274,12 @@ module Twilio
             # @return [Time] The date that this record ended, given as GMT in ISO 8601 format.
             def end_
               @properties['end_']
+            end
+
+            ##
+            # @return [String] The unique id of the device using the SIM to connect.
+            def imeisv
+              @properties['imeisv']
             end
 
             ##

@@ -17,7 +17,8 @@ module Twilio
             ##
             # Initialize the AssetList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The unique SID identifier of the Service for this
+            #   Asset.
             # @return [AssetList] AssetList
             def initialize(version, service_sid: nil)
               super(version)
@@ -112,7 +113,8 @@ module Twilio
             ##
             # Retrieve a single page of AssetInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name The friendly_name
+            # @param [String] friendly_name A human-readable description of this Asset, fewer
+            #   than 256 characters. Required.
             # @return [AssetInstance] Newly created AssetInstance
             def create(friendly_name: nil)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -170,8 +172,9 @@ module Twilio
             ##
             # Initialize the AssetContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The unique SID identifier of the Service for this
+            #   Asset.
+            # @param [String] sid The unique SID identifier of this Asset.
             # @return [AssetContext] AssetContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -201,7 +204,8 @@ module Twilio
 
             ##
             # Update the AssetInstance
-            # @param [String] friendly_name The friendly_name
+            # @param [String] friendly_name A human-readable description of this Asset, fewer
+            #   than 256 characters. Required.
             # @return [AssetInstance] Updated AssetInstance
             def update(friendly_name: nil)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -259,8 +263,9 @@ module Twilio
             # Initialize the AssetInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The unique SID identifier of the Service for this
+            #   Asset.
+            # @param [String] sid The unique SID identifier of this Asset.
             # @return [AssetInstance] AssetInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -294,49 +299,49 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] Asset Sid.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] Account Sid.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The service_sid
+            # @return [String] Service Sid.
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] The friendly_name
+            # @return [String] A human-readable description of this Asset.
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date that this Asset was created.
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date that this Asset was updated.
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The URL of this Asset.
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] Nested resource URLs.
             def links
               @properties['links']
             end
@@ -350,7 +355,8 @@ module Twilio
 
             ##
             # Update the AssetInstance
-            # @param [String] friendly_name The friendly_name
+            # @param [String] friendly_name A human-readable description of this Asset, fewer
+            #   than 256 characters. Required.
             # @return [AssetInstance] Updated AssetInstance
             def update(friendly_name: nil)
               context.update(friendly_name: friendly_name, )

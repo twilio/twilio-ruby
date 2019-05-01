@@ -17,7 +17,8 @@ module Twilio
             ##
             # Initialize the BuildList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The unique SID identifier of the Service for this
+            #   Build.
             # @return [BuildList] BuildList
             def initialize(version, service_sid: nil)
               super(version)
@@ -112,9 +113,12 @@ module Twilio
             ##
             # Retrieve a single page of BuildInstance records from the API.
             # Request is executed immediately.
-            # @param [String] asset_versions The asset_versions
-            # @param [String] function_versions The function_versions
-            # @param [String] dependencies The dependencies
+            # @param [String] asset_versions The list of Asset Version Sids that are included
+            #   in this Build. Optional.
+            # @param [String] function_versions The list of Function Version Sids that are
+            #   included in this Build. Optional.
+            # @param [String] dependencies The list of Dependencies that are included in this
+            #   Build, each described by a `name` and a `version` in a JSON object. Optional.
             # @return [BuildInstance] Newly created BuildInstance
             def create(asset_versions: :unset, function_versions: :unset, dependencies: :unset)
               data = Twilio::Values.of({
@@ -176,8 +180,9 @@ module Twilio
             ##
             # Initialize the BuildContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The unique SID identifier of the Service for this
+            #   Build.
+            # @param [String] sid The unique SID identifier of this Build.
             # @return [BuildContext] BuildContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -224,8 +229,9 @@ module Twilio
             # Initialize the BuildInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The unique SID identifier of the Service for this
+            #   Build.
+            # @param [String] sid The unique SID identifier of this Build.
             # @return [BuildInstance] BuildInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -261,61 +267,61 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] Build Sid.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] Account Sid.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The service_sid
+            # @return [String] Service Sid.
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [build.Status] The status
+            # @return [build.Status] The current state of the Build.
             def status
               @properties['status']
             end
 
             ##
-            # @return [Hash] The asset_versions
+            # @return [Hash] List of Asset Version Sids.
             def asset_versions
               @properties['asset_versions']
             end
 
             ##
-            # @return [Hash] The function_versions
+            # @return [Hash] List of Function Version Sids.
             def function_versions
               @properties['function_versions']
             end
 
             ##
-            # @return [Hash] The dependencies
+            # @return [Hash] List of Dependencies.
             def dependencies
               @properties['dependencies']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date that this Build was created.
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date that this Build was updated.
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The URL of this Build.
             def url
               @properties['url']
             end

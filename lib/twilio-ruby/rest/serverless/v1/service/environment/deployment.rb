@@ -18,8 +18,10 @@ module Twilio
               ##
               # Initialize the DeploymentList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
-              # @param [String] environment_sid The environment_sid
+              # @param [String] service_sid The unique SID identifier of the Service for this
+              #   Deployment.
+              # @param [String] environment_sid The unique SID identifier of the Environment for
+              #   this Deployment.
               # @return [DeploymentList] DeploymentList
               def initialize(version, service_sid: nil, environment_sid: nil)
                 super(version)
@@ -114,7 +116,8 @@ module Twilio
               ##
               # Retrieve a single page of DeploymentInstance records from the API.
               # Request is executed immediately.
-              # @param [String] build_sid The build_sid
+              # @param [String] build_sid The unique SID identifier of the Build to be deployed
+              #   for this Deployment. Required.
               # @return [DeploymentInstance] Newly created DeploymentInstance
               def create(build_sid: nil)
                 data = Twilio::Values.of({'BuildSid' => build_sid, })
@@ -182,9 +185,11 @@ module Twilio
               ##
               # Initialize the DeploymentContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
-              # @param [String] environment_sid The environment_sid
-              # @param [String] sid The sid
+              # @param [String] service_sid The unique SID identifier of the Service for this
+              #   Deployment.
+              # @param [String] environment_sid The unique SID identifier of the Environment for
+              #   this Deployment.
+              # @param [String] sid The unique SID identifier of this Deployment.
               # @return [DeploymentContext] DeploymentContext
               def initialize(version, service_sid, environment_sid, sid)
                 super(version)
@@ -237,9 +242,11 @@ module Twilio
               # Initialize the DeploymentInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The service_sid
-              # @param [String] environment_sid The environment_sid
-              # @param [String] sid The sid
+              # @param [String] service_sid The unique SID identifier of the Service for this
+              #   Deployment.
+              # @param [String] environment_sid The unique SID identifier of the Environment for
+              #   this Deployment.
+              # @param [String] sid The unique SID identifier of this Deployment.
               # @return [DeploymentInstance] DeploymentInstance
               def initialize(version, payload, service_sid: nil, environment_sid: nil, sid: nil)
                 super(version)
@@ -282,49 +289,49 @@ module Twilio
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] Deployment Sid.
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] Account Sid.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The service_sid
+              # @return [String] Service Sid.
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] The environment_sid
+              # @return [String] Environment Sid.
               def environment_sid
                 @properties['environment_sid']
               end
 
               ##
-              # @return [String] The build_sid
+              # @return [String] Build Sid.
               def build_sid
                 @properties['build_sid']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The date that this Deployment was created.
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The date that this Deployment was updated.
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] The URL of this Deployment.
               def url
                 @properties['url']
               end

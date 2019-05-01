@@ -17,7 +17,8 @@ module Twilio
             ##
             # Initialize the FunctionList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The unique SID identifier of the Service for this
+            #   Function.
             # @return [FunctionList] FunctionList
             def initialize(version, service_sid: nil)
               super(version)
@@ -112,7 +113,8 @@ module Twilio
             ##
             # Retrieve a single page of FunctionInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name The friendly_name
+            # @param [String] friendly_name A human-readable description of this Function,
+            #   fewer than 256 characters. Required.
             # @return [FunctionInstance] Newly created FunctionInstance
             def create(friendly_name: nil)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -170,8 +172,9 @@ module Twilio
             ##
             # Initialize the FunctionContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The unique SID identifier of the Service for this
+            #   Function.
+            # @param [String] sid The unique SID identifier of this Function.
             # @return [FunctionContext] FunctionContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -201,7 +204,8 @@ module Twilio
 
             ##
             # Update the FunctionInstance
-            # @param [String] friendly_name The friendly_name
+            # @param [String] friendly_name A human-readable description of this Function,
+            #   fewer than 256 characters. Required.
             # @return [FunctionInstance] Updated FunctionInstance
             def update(friendly_name: nil)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -259,8 +263,9 @@ module Twilio
             # Initialize the FunctionInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The unique SID identifier of the Service for this
+            #   Function.
+            # @param [String] sid The unique SID identifier of this Function.
             # @return [FunctionInstance] FunctionInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -294,49 +299,49 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] Function Sid.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] Account Sid.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The service_sid
+            # @return [String] Service Sid.
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] The friendly_name
+            # @return [String] A human-readable description of this Function.
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The date that this Function was created.
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The date that this Function was updated.
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The URL of this Function.
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] Nested resource URLs.
             def links
               @properties['links']
             end
@@ -350,7 +355,8 @@ module Twilio
 
             ##
             # Update the FunctionInstance
-            # @param [String] friendly_name The friendly_name
+            # @param [String] friendly_name A human-readable description of this Function,
+            #   fewer than 256 characters. Required.
             # @return [FunctionInstance] Updated FunctionInstance
             def update(friendly_name: nil)
               context.update(friendly_name: friendly_name, )

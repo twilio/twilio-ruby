@@ -110,9 +110,13 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] unique_name The unique_name
-          # @param [String] friendly_name The friendly_name
-          # @param [Boolean] include_credentials The include_credentials
+          # @param [String] unique_name A unique, addressable name of this Service which
+          #   forms part of the domain name, fewer than 256 characters. Required.
+          # @param [String] friendly_name A human-readable description of this Service,
+          #   fewer than 256 characters. Required
+          # @param [Boolean] include_credentials A boolean value that indicates whether to
+          #   inject Account credentials into a Function invocation context. Optional, default
+          #   `false`.
           # @return [ServiceInstance] Newly created ServiceInstance
           def create(unique_name: nil, friendly_name: nil, include_credentials: :unset)
             data = Twilio::Values.of({
@@ -174,7 +178,7 @@ module Twilio
           ##
           # Initialize the ServiceContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid The unique SID identifier of this Service.
           # @return [ServiceContext] ServiceContext
           def initialize(version, sid)
             super(version)
@@ -207,8 +211,10 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [Boolean] include_credentials The include_credentials
-          # @param [String] friendly_name The friendly_name
+          # @param [Boolean] include_credentials A boolean value that indicates whether to
+          #   inject Account credentials into a Function invocation context. Optional.
+          # @param [String] friendly_name A human-readable description of this Service,
+          #   fewer than 256 characters. Optional
           # @return [ServiceInstance] Updated ServiceInstance
           def update(include_credentials: :unset, friendly_name: :unset)
             data = Twilio::Values.of({
@@ -319,7 +325,7 @@ module Twilio
           # Initialize the ServiceInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid The unique SID identifier of this Service.
           # @return [ServiceInstance] ServiceInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -354,55 +360,55 @@ module Twilio
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] Service Sid.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] Account Sid.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The friendly_name
+          # @return [String] A human-readable description of this Service.
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [String] The unique_name
+          # @return [String] A unique, URL-friendly name of this Service.
           def unique_name
             @properties['unique_name']
           end
 
           ##
-          # @return [Boolean] The include_credentials
+          # @return [Boolean] Whether to inject Account credentials into a Function invocation context.
           def include_credentials
             @properties['include_credentials']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The date that this Service was created.
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The date that this Service was updated.
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The URL of this Service.
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] Nested resource URLs.
           def links
             @properties['links']
           end
@@ -416,8 +422,10 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [Boolean] include_credentials The include_credentials
-          # @param [String] friendly_name The friendly_name
+          # @param [Boolean] include_credentials A boolean value that indicates whether to
+          #   inject Account credentials into a Function invocation context. Optional.
+          # @param [String] friendly_name A human-readable description of this Service,
+          #   fewer than 256 characters. Optional
           # @return [ServiceInstance] Updated ServiceInstance
           def update(include_credentials: :unset, friendly_name: :unset)
             context.update(include_credentials: include_credentials, friendly_name: friendly_name, )

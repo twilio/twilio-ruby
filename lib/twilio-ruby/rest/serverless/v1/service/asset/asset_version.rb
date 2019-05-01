@@ -18,8 +18,10 @@ module Twilio
               ##
               # Initialize the AssetVersionList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
-              # @param [String] asset_sid The asset_sid
+              # @param [String] service_sid The unique SID identifier of the Service for this
+              #   Asset Version.
+              # @param [String] asset_sid The unique SID identifier of the Asset that is the
+              #   parent for this Asset Version.
               # @return [AssetVersionList] AssetVersionList
               def initialize(version, service_sid: nil, asset_sid: nil)
                 super(version)
@@ -114,8 +116,11 @@ module Twilio
               ##
               # Retrieve a single page of AssetVersionInstance records from the API.
               # Request is executed immediately.
-              # @param [String] path The path
-              # @param [asset_version.Visibility] visibility The visibility
+              # @param [String] path The URL-friendly string by which this Asset Version can be
+              #   referenced. (Example: `/assets/example`) Required.
+              # @param [asset_version.Visibility] visibility The access control which determines
+              #   how the Asset Version can be accessed. One of `public`, `protected`, or
+              #   `private`. Required.
               # @return [AssetVersionInstance] Newly created AssetVersionInstance
               def create(path: nil, visibility: nil)
                 data = Twilio::Values.of({'Path' => path, 'Visibility' => visibility, })
@@ -183,9 +188,11 @@ module Twilio
               ##
               # Initialize the AssetVersionContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
-              # @param [String] asset_sid The asset_sid
-              # @param [String] sid The sid
+              # @param [String] service_sid The unique SID identifier of the Service for this
+              #   Asset Version.
+              # @param [String] asset_sid The unique SID identifier of the Asset that is the
+              #   parent for this Asset Version.
+              # @param [String] sid The unique SID identifier of this Asset Version.
               # @return [AssetVersionContext] AssetVersionContext
               def initialize(version, service_sid, asset_sid, sid)
                 super(version)
@@ -238,9 +245,11 @@ module Twilio
               # Initialize the AssetVersionInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The service_sid
-              # @param [String] asset_sid The asset_sid
-              # @param [String] sid The sid
+              # @param [String] service_sid The unique SID identifier of the Service for this
+              #   Asset Version.
+              # @param [String] asset_sid The unique SID identifier of the Asset that is the
+              #   parent for this Asset Version.
+              # @param [String] sid The unique SID identifier of this Asset Version.
               # @return [AssetVersionInstance] AssetVersionInstance
               def initialize(version, payload, service_sid: nil, asset_sid: nil, sid: nil)
                 super(version)
@@ -284,55 +293,55 @@ module Twilio
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] Asset Version Sid.
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] Account Sid.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The service_sid
+              # @return [String] Service Sid.
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] The asset_sid
+              # @return [String] Asset Sid.
               def asset_sid
                 @properties['asset_sid']
               end
 
               ##
-              # @return [String] The path
+              # @return [String] The URL-friendly string by which this Asset Version can be referenced.
               def path
                 @properties['path']
               end
 
               ##
-              # @return [asset_version.Visibility] The visibility
+              # @return [asset_version.Visibility] The access control which determines how the Asset Version can be accessed.
               def visibility
                 @properties['visibility']
               end
 
               ##
-              # @return [Hash] The pre_signed_upload_url
+              # @return [Hash] The object which provides the details required for uploading this Asset Version.
               def pre_signed_upload_url
                 @properties['pre_signed_upload_url']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The date that this Asset Version was created.
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] The URL of this Asset Version.
               def url
                 @properties['url']
               end
