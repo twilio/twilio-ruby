@@ -80,9 +80,10 @@ module Twilio
 
           ##
           # Fetch a CallSummaryInstance
+          # @param [call_summary.ProcessingState] processing_state The processing_state
           # @return [CallSummaryInstance] Fetched CallSummaryInstance
-          def fetch
-            params = Twilio::Values.of({})
+          def fetch(processing_state: :unset)
+            params = Twilio::Values.of({'ProcessingState' => processing_state, })
 
             payload = @version.fetch(
                 'GET',
@@ -137,6 +138,7 @@ module Twilio
                 'to' => payload['to'],
                 'carrier_edge' => payload['carrier_edge'],
                 'client_edge' => payload['client_edge'],
+                'sdk_edge' => payload['sdk_edge'],
                 'sip_edge' => payload['sip_edge'],
                 'tags' => payload['tags'],
                 'url' => payload['url'],
@@ -249,6 +251,12 @@ module Twilio
           end
 
           ##
+          # @return [Hash] The sdk_edge
+          def sdk_edge
+            @properties['sdk_edge']
+          end
+
+          ##
           # @return [Hash] The sip_edge
           def sip_edge
             @properties['sip_edge']
@@ -268,9 +276,10 @@ module Twilio
 
           ##
           # Fetch a CallSummaryInstance
+          # @param [call_summary.ProcessingState] processing_state The processing_state
           # @return [CallSummaryInstance] Fetched CallSummaryInstance
-          def fetch
-            context.fetch
+          def fetch(processing_state: :unset)
+            context.fetch(processing_state: processing_state, )
           end
 
           ##

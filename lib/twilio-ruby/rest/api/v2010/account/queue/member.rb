@@ -200,7 +200,7 @@ module Twilio
               #   `POST` and the default is `POST`. `POST` sends the data as encoded form data and
               #   `GET` sends the data as query parameters.
               # @return [MemberInstance] Updated MemberInstance
-              def update(url: nil, method: nil)
+              def update(url: nil, method: :unset)
                 data = Twilio::Values.of({'Url' => url, 'Method' => method, })
 
                 payload = @version.update(
@@ -333,7 +333,7 @@ module Twilio
               #   `POST` and the default is `POST`. `POST` sends the data as encoded form data and
               #   `GET` sends the data as query parameters.
               # @return [MemberInstance] Updated MemberInstance
-              def update(url: nil, method: nil)
+              def update(url: nil, method: :unset)
                 context.update(url: url, method: method, )
               end
 

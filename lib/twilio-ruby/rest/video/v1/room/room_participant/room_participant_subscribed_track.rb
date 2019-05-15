@@ -16,26 +16,22 @@ module Twilio
               ##
               # Initialize the SubscribedTrackList
               # @param [Version] version Version that contains the resource
-              # @param [String] room_sid The room_sid
-              # @param [String] subscriber_sid The subscriber_sid
+              # @param [String] room_sid Unique Room identifier where this Track is published.
+              # @param [String] participant_sid Unique Participant identifier that subscribes to
+              #   this Track.
               # @return [SubscribedTrackList] SubscribedTrackList
-              def initialize(version, room_sid: nil, subscriber_sid: nil)
+              def initialize(version, room_sid: nil, participant_sid: nil)
                 super(version)
 
                 # Path Solution
-                @solution = {room_sid: room_sid, subscriber_sid: subscriber_sid}
-                @uri = "/Rooms/#{@solution[:room_sid]}/Participants/#{@solution[:subscriber_sid]}/SubscribedTracks"
+                @solution = {room_sid: room_sid, participant_sid: participant_sid}
+                @uri = "/Rooms/#{@solution[:room_sid]}/Participants/#{@solution[:participant_sid]}/SubscribedTracks"
               end
 
               ##
               # Lists SubscribedTrackInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [Time] date_created_after The date_created_after
-              # @param [Time] date_created_before The date_created_before
-              # @param [String] track The track
-              # @param [String] publisher The publisher
-              # @param [subscribed_track.Kind] kind The kind
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -43,27 +39,14 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(date_created_after: :unset, date_created_before: :unset, track: :unset, publisher: :unset, kind: :unset, limit: nil, page_size: nil)
-                self.stream(
-                    date_created_after: date_created_after,
-                    date_created_before: date_created_before,
-                    track: track,
-                    publisher: publisher,
-                    kind: kind,
-                    limit: limit,
-                    page_size: page_size
-                ).entries
+              def list(limit: nil, page_size: nil)
+                self.stream(limit: limit, page_size: page_size).entries
               end
 
               ##
               # Streams SubscribedTrackInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Time] date_created_after The date_created_after
-              # @param [Time] date_created_before The date_created_before
-              # @param [String] track The track
-              # @param [String] publisher The publisher
-              # @param [subscribed_track.Kind] kind The kind
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -71,17 +54,10 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(date_created_after: :unset, date_created_before: :unset, track: :unset, publisher: :unset, kind: :unset, limit: nil, page_size: nil)
+              def stream(limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(
-                    date_created_after: date_created_after,
-                    date_created_before: date_created_before,
-                    track: track,
-                    publisher: publisher,
-                    kind: kind,
-                    page_size: limits[:page_size],
-                )
+                page = self.page(page_size: limits[:page_size], )
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -103,22 +79,12 @@ module Twilio
               ##
               # Retrieve a single page of SubscribedTrackInstance records from the API.
               # Request is executed immediately.
-              # @param [Time] date_created_after The date_created_after
-              # @param [Time] date_created_before The date_created_before
-              # @param [String] track The track
-              # @param [String] publisher The publisher
-              # @param [subscribed_track.Kind] kind The kind
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of SubscribedTrackInstance
-              def page(date_created_after: :unset, date_created_before: :unset, track: :unset, publisher: :unset, kind: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              def page(page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
-                    'DateCreatedAfter' => Twilio.serialize_iso8601_datetime(date_created_after),
-                    'DateCreatedBefore' => Twilio.serialize_iso8601_datetime(date_created_before),
-                    'Track' => track,
-                    'Publisher' => publisher,
-                    'Kind' => kind,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
@@ -142,35 +108,6 @@ module Twilio
                     target_url
                 )
                 SubscribedTrackPage.new(@version, response, @solution)
-              end
-
-              ##
-              # Update the SubscribedTrackInstance
-              # @param [String] track The track
-              # @param [String] publisher The publisher
-              # @param [subscribed_track.Kind] kind The kind
-              # @param [subscribed_track.Status] status The status
-              # @return [SubscribedTrackInstance] Updated SubscribedTrackInstance
-              def update(track: :unset, publisher: :unset, kind: :unset, status: :unset)
-                data = Twilio::Values.of({
-                    'Track' => track,
-                    'Publisher' => publisher,
-                    'Kind' => kind,
-                    'Status' => status,
-                })
-
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
-
-                SubscribedTrackInstance.new(
-                    @version,
-                    payload,
-                    room_sid: @solution[:room_sid],
-                    subscriber_sid: @solution[:subscriber_sid],
-                )
               end
 
               ##
@@ -203,7 +140,7 @@ module Twilio
                     @version,
                     payload,
                     room_sid: @solution[:room_sid],
-                    subscriber_sid: @solution[:subscriber_sid],
+                    participant_sid: @solution[:participant_sid],
                 )
               end
 
@@ -214,95 +151,192 @@ module Twilio
               end
             end
 
-            class SubscribedTrackInstance < InstanceResource
+            class SubscribedTrackContext < InstanceContext
               ##
-              # Initialize the SubscribedTrackInstance
+              # Initialize the SubscribedTrackContext
               # @param [Version] version Version that contains the resource
-              # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] room_sid The room_sid
-              # @param [String] subscriber_sid The subscriber_sid
-              # @return [SubscribedTrackInstance] SubscribedTrackInstance
-              def initialize(version, payload, room_sid: nil, subscriber_sid: nil)
+              # @param [String] room_sid Unique Room identifier where this Track is subscribed.
+              # @param [String] participant_sid Unique Participant identifier that subscribes to
+              #   this Track.
+              # @param [String] sid A 34 character string that uniquely identifies this
+              #   resource.
+              # @return [SubscribedTrackContext] SubscribedTrackContext
+              def initialize(version, room_sid, participant_sid, sid)
                 super(version)
 
-                # Marshaled Properties
-                @properties = {
-                    'sid' => payload['sid'],
-                    'room_sid' => payload['room_sid'],
-                    'name' => payload['name'],
-                    'publisher_sid' => payload['publisher_sid'],
-                    'subscriber_sid' => payload['subscriber_sid'],
-                    'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
-                    'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                    'enabled' => payload['enabled'],
-                    'kind' => payload['kind'],
-                }
+                # Path Solution
+                @solution = {room_sid: room_sid, participant_sid: participant_sid, sid: sid, }
+                @uri = "/Rooms/#{@solution[:room_sid]}/Participants/#{@solution[:participant_sid]}/SubscribedTracks/#{@solution[:sid]}"
               end
 
               ##
-              # @return [String] The sid
-              def sid
-                @properties['sid']
-              end
+              # Fetch a SubscribedTrackInstance
+              # @return [SubscribedTrackInstance] Fetched SubscribedTrackInstance
+              def fetch
+                params = Twilio::Values.of({})
 
-              ##
-              # @return [String] The room_sid
-              def room_sid
-                @properties['room_sid']
-              end
+                payload = @version.fetch(
+                    'GET',
+                    @uri,
+                    params,
+                )
 
-              ##
-              # @return [String] The name
-              def name
-                @properties['name']
-              end
-
-              ##
-              # @return [String] The publisher_sid
-              def publisher_sid
-                @properties['publisher_sid']
-              end
-
-              ##
-              # @return [String] The subscriber_sid
-              def subscriber_sid
-                @properties['subscriber_sid']
-              end
-
-              ##
-              # @return [Time] The date_created
-              def date_created
-                @properties['date_created']
-              end
-
-              ##
-              # @return [Time] The date_updated
-              def date_updated
-                @properties['date_updated']
-              end
-
-              ##
-              # @return [Boolean] The enabled
-              def enabled
-                @properties['enabled']
-              end
-
-              ##
-              # @return [subscribed_track.Kind] The kind
-              def kind
-                @properties['kind']
+                SubscribedTrackInstance.new(
+                    @version,
+                    payload,
+                    room_sid: @solution[:room_sid],
+                    participant_sid: @solution[:participant_sid],
+                    sid: @solution[:sid],
+                )
               end
 
               ##
               # Provide a user friendly representation
               def to_s
-                "<Twilio.Video.V1.SubscribedTrackInstance>"
+                context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                "#<Twilio.Video.V1.SubscribedTrackContext #{context}>"
               end
 
               ##
               # Provide a detailed, user friendly representation
               def inspect
-                "<Twilio.Video.V1.SubscribedTrackInstance>"
+                context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                "#<Twilio.Video.V1.SubscribedTrackContext #{context}>"
+              end
+            end
+
+            class SubscribedTrackInstance < InstanceResource
+              ##
+              # Initialize the SubscribedTrackInstance
+              # @param [Version] version Version that contains the resource
+              # @param [Hash] payload payload that contains response from Twilio
+              # @param [String] room_sid Unique Room identifier where this Track is published.
+              # @param [String] participant_sid Unique Participant identifier that subscribes to
+              #   this Track.
+              # @param [String] sid A 34 character string that uniquely identifies this
+              #   resource.
+              # @return [SubscribedTrackInstance] SubscribedTrackInstance
+              def initialize(version, payload, room_sid: nil, participant_sid: nil, sid: nil)
+                super(version)
+
+                # Marshaled Properties
+                @properties = {
+                    'sid' => payload['sid'],
+                    'participant_sid' => payload['participant_sid'],
+                    'publisher_sid' => payload['publisher_sid'],
+                    'room_sid' => payload['room_sid'],
+                    'name' => payload['name'],
+                    'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                    'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
+                    'enabled' => payload['enabled'],
+                    'kind' => payload['kind'],
+                    'url' => payload['url'],
+                }
+
+                # Context
+                @instance_context = nil
+                @params = {
+                    'room_sid' => room_sid,
+                    'participant_sid' => participant_sid,
+                    'sid' => sid || @properties['sid'],
+                }
+              end
+
+              ##
+              # Generate an instance context for the instance, the context is capable of
+              # performing various actions.  All instance actions are proxied to the context
+              # @return [SubscribedTrackContext] SubscribedTrackContext for this SubscribedTrackInstance
+              def context
+                unless @instance_context
+                  @instance_context = SubscribedTrackContext.new(
+                      @version,
+                      @params['room_sid'],
+                      @params['participant_sid'],
+                      @params['sid'],
+                  )
+                end
+                @instance_context
+              end
+
+              ##
+              # @return [String] A 34 character string that uniquely identifies this resource.
+              def sid
+                @properties['sid']
+              end
+
+              ##
+              # @return [String] Unique Participant identifier that subscribes to this Track.
+              def participant_sid
+                @properties['participant_sid']
+              end
+
+              ##
+              # @return [String] Unique Participant identifier that publishes this Track.
+              def publisher_sid
+                @properties['publisher_sid']
+              end
+
+              ##
+              # @return [String] Unique Room identifier where this Track is published.
+              def room_sid
+                @properties['room_sid']
+              end
+
+              ##
+              # @return [String] Track name. Limited to 128 characters.
+              def name
+                @properties['name']
+              end
+
+              ##
+              # @return [Time] The date that this resource was created.
+              def date_created
+                @properties['date_created']
+              end
+
+              ##
+              # @return [Time] The date that this resource was last updated.
+              def date_updated
+                @properties['date_updated']
+              end
+
+              ##
+              # @return [Boolean] Specifies whether the Track is enabled or not.
+              def enabled
+                @properties['enabled']
+              end
+
+              ##
+              # @return [subscribed_track.Kind] Specifies whether Track represents `audio`, `video` or `data`
+              def kind
+                @properties['kind']
+              end
+
+              ##
+              # @return [String] The absolute URL for this resource.
+              def url
+                @properties['url']
+              end
+
+              ##
+              # Fetch a SubscribedTrackInstance
+              # @return [SubscribedTrackInstance] Fetched SubscribedTrackInstance
+              def fetch
+                context.fetch
+              end
+
+              ##
+              # Provide a user friendly representation
+              def to_s
+                values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Video.V1.SubscribedTrackInstance #{values}>"
+              end
+
+              ##
+              # Provide a detailed, user friendly representation
+              def inspect
+                values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+                "<Twilio.Video.V1.SubscribedTrackInstance #{values}>"
               end
             end
           end

@@ -182,7 +182,7 @@ module Twilio
                   'last_updated' => Twilio.deserialize_iso8601_datetime(payload['last_updated']),
                   'start' => Twilio.deserialize_iso8601_datetime(payload['start']),
                   'end_' => Twilio.deserialize_iso8601_datetime(payload['end']),
-                  'imeisv' => payload['imeisv'],
+                  'imei' => payload['imei'],
               }
             end
 
@@ -278,8 +278,8 @@ module Twilio
 
             ##
             # @return [String] The unique id of the device using the SIM to connect.
-            def imeisv
-              @properties['imeisv']
+            def imei
+              @properties['imei']
             end
 
             ##

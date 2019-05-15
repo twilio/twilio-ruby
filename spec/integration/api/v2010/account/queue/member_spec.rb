@@ -76,10 +76,10 @@ describe 'Member' do
     expect {
       @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .queues('QUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .members('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(url: 'https://example.com', method: 'GET')
+                       .members('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(url: 'https://example.com')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Url' => 'https://example.com', 'Method' => 'GET', }
+    values = {'Url' => 'https://example.com', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -105,7 +105,7 @@ describe 'Member' do
 
     actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .queues('QUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .members('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(url: 'https://example.com', method: 'GET')
+                              .members('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(url: 'https://example.com')
 
     expect(actual).to_not eq(nil)
   end
@@ -127,7 +127,7 @@ describe 'Member' do
 
     actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .queues('QUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .members('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(url: 'https://example.com', method: 'GET')
+                              .members('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(url: 'https://example.com')
 
     expect(actual).to_not eq(nil)
   end

@@ -40,7 +40,7 @@ module Twilio
             #   for example, to dial an extension. For more information, see the Programmable
             #   Voice documentation of
             #   [sendDigits](https://www.twilio.com/docs/voice/twiml/number#attributes-sendDigits).
-            # @param [String] locale The local to use for the verification SMS or call. Can
+            # @param [String] locale The locale to use for the verification SMS or call. Can
             #   be: `af`, `ar`, `ca`, `cs`, `da`, `de`, `el`, `en`, `es`, `fi`, `fr`, `he`,
             #   `hi`, `hr`, `hu`, `id`, `it`, `ja`, `ko`, `ms`, `nb`, `nl`, `pl`, `pt`, `pr-BR`,
             #   `ro`, `ru`, `sv`, `th`, `tl`, `tr`, `vi`, `zh`, `zh-CN`, or `zh-HK.`

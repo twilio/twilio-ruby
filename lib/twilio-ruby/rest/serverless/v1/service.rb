@@ -178,7 +178,8 @@ module Twilio
           ##
           # Initialize the ServiceContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The unique SID identifier of this Service.
+          # @param [String] sid Identifier of the Serverless Service Instance. Either a SID
+          #   or UniqueName.
           # @return [ServiceContext] ServiceContext
           def initialize(version, sid)
             super(version)
@@ -325,7 +326,8 @@ module Twilio
           # Initialize the ServiceInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The unique SID identifier of this Service.
+          # @param [String] sid Identifier of the Serverless Service Instance. Either a SID
+          #   or UniqueName.
           # @return [ServiceInstance] ServiceInstance
           def initialize(version, payload, sid: nil)
             super(version)

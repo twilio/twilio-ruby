@@ -34,7 +34,7 @@ module Twilio
             # Request is executed immediately.
             # @param [String] body The notification text. For FCM and GCM, translates to
             #   `data.twi_body`. For APNS, translates to `aps.alert.body`. For SMS, translates
-            #   to `body`. SMS requires either this `body` value, or a `media_url` attribute
+            #   to `body`. SMS requires either this `body` value, or `media_urls` attribute
             #   defined in the `sms` parameter of the notification.
             # @param [notification.Priority] priority The priority of the notification. Can
             #   be: `low` or `high` and the default is `high`. A value of `low` optimizes the

@@ -44,6 +44,7 @@ describe 'CallSummary' do
           "to": {},
           "carrier_edge": {},
           "client_edge": {},
+          "sdk_edge": {},
           "sip_edge": {},
           "tags": [
               "tags"
