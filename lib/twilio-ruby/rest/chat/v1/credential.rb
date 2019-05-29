@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -113,7 +113,7 @@ module Twilio
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the new resource. It can be up to 64 characters long.
           # @param [String] certificate [APN only] The URL encoded representation of the
-          #   certificate. For example, 
+          #   certificate. For example,
           #   `-----BEGIN CERTIFICATE-----
           #   MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEFBQAwgZYxCzAJBgNV.....A==
           #   -----END CERTIFICATE-----`
@@ -220,7 +220,7 @@ module Twilio
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource. It can be up to 64 characters long.
           # @param [String] certificate [APN only] The URL encoded representation of the
-          #   certificate. For example, 
+          #   certificate. For example,
           #   `-----BEGIN CERTIFICATE-----
           #   MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEFBQAwgZYxCzAJBgNV.....A==
           #   -----END CERTIFICATE-----`
@@ -376,7 +376,7 @@ module Twilio
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource. It can be up to 64 characters long.
           # @param [String] certificate [APN only] The URL encoded representation of the
-          #   certificate. For example, 
+          #   certificate. For example,
           #   `-----BEGIN CERTIFICATE-----
           #   MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEFBQAwgZYxCzAJBgNV.....A==
           #   -----END CERTIFICATE-----`

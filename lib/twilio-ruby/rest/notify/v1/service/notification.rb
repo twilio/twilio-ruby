@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -103,7 +103,7 @@ module Twilio
             # @param [String] segment The Segment resource is deprecated. Use the `tag`
             #   parameter, instead.
             # @param [Hash] alexa Deprecated.
-            # @param [String] to_binding The destination address specified as a JSON string. 
+            # @param [String] to_binding The destination address specified as a JSON string.
             #   Multiple `to_binding` parameters can be included but the total size of the
             #   request entity should not exceed 1MB. This is typically sufficient for 10,000
             #   phone numbers.

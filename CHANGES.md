@@ -1,6 +1,12 @@
 twilio-ruby changelog
 =====================
 
+[2019-05-29] Version 5.23.1
+----------------------------
+**Verify**
+- Add `approved` to status enum
+
+
 [2019-05-15] Version 5.23.0
 ----------------------------
 **Api**

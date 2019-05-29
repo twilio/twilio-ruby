@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -232,7 +232,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The ISO country code 
+            # @return [String] The ISO country code
             def iso_country
               @properties['iso_country']
             end

@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -39,7 +39,7 @@ module Twilio
               #   `completed` and `absent` and the default is `completed`. Separate multiple event
               #   values with a space.
               # @param [String] recording_status_callback The URL we should call using the
-              #   `recording_status_callback_method` on each recording event specified in 
+              #   `recording_status_callback_method` on each recording event specified in
               #   `recording_status_callback_event`. For more information, see
               #   [RecordingStatusCallback
               #   parameters](https://www.twilio.com/docs/voice/api/recording#recordingstatuscallback).

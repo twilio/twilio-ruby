@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -13,10 +13,10 @@ describe 'PhoneCall' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.trusted_comms.phone_calls.create(from: 'from', to: 'to', url: 'url')
+      @client.preview.trusted_comms.phone_calls.create(from: 'from', to: 'to')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'From' => 'from', 'To' => 'to', 'Url' => 'url', }
+    values = {'From' => 'from', 'To' => 'to', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -41,7 +41,7 @@ describe 'PhoneCall' do
       ]
     ))
 
-    actual = @client.preview.trusted_comms.phone_calls.create(from: 'from', to: 'to', url: 'url')
+    actual = @client.preview.trusted_comms.phone_calls.create(from: 'from', to: 'to')
 
     expect(actual).to_not eq(nil)
   end

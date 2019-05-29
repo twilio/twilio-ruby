@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -149,11 +149,11 @@ describe 'Account' do
         200,
       %q[
       {
-          "first_page_uri": "/2010-04-01/Accounts.json?PageSize=50&Page=0",
+          "first_page_uri": "/2010-04-01/Accounts.json?FriendlyName=friendly_name&Status=active&PageSize=50&Page=0",
           "end": 0,
           "previous_page_uri": null,
           "accounts": [],
-          "uri": "/2010-04-01/Accounts.json?PageSize=50&Page=0",
+          "uri": "/2010-04-01/Accounts.json?FriendlyName=friendly_name&Status=active&PageSize=50&Page=0",
           "page_size": 50,
           "start": 0,
           "next_page_uri": null,
@@ -172,7 +172,7 @@ describe 'Account' do
         200,
       %q[
       {
-          "first_page_uri": "/2010-04-01/Accounts.json?PageSize=50&Page=0",
+          "first_page_uri": "/2010-04-01/Accounts.json?FriendlyName=friendly_name&Status=active&PageSize=50&Page=0",
           "end": 0,
           "previous_page_uri": null,
           "accounts": [
@@ -210,7 +210,7 @@ describe 'Account' do
                   "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
               }
           ],
-          "uri": "/2010-04-01/Accounts.json?PageSize=50&Page=0",
+          "uri": "/2010-04-01/Accounts.json?FriendlyName=friendly_name&Status=active&PageSize=50&Page=0",
           "page_size": 50,
           "start": 0,
           "next_page_uri": null,

@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -289,7 +289,6 @@ module Twilio
                   'max_size' => payload['max_size'].to_i,
                   'sid' => payload['sid'],
                   'uri' => payload['uri'],
-                  'subresource_uris' => payload['subresource_uris'],
               }
 
               # Context
@@ -360,12 +359,6 @@ module Twilio
             # @return [String] The URI of this resource, relative to `https://api.twilio.com`
             def uri
               @properties['uri']
-            end
-
-            ##
-            # @return [String] Queue Instance Subresources
-            def subresource_uris
-              @properties['subresource_uris']
             end
 
             ##

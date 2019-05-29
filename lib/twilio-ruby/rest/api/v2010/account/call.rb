@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -108,7 +108,7 @@ module Twilio
             #   request with `AnsweredBy` of `unknown`. The default timeout is 30 seconds.
             # @param [String] recording_status_callback_event The recording status events that
             #   will trigger calls to the URL specified in `recording_status_callback`. Can be:
-            #   `in-progress`, `completed` and `absent`. Defaults to `completed`. Separate 
+            #   `in-progress`, `completed` and `absent`. Defaults to `completed`. Separate
             #   multiple values with a space.
             # @param [String] trim Whether to trim any leading and trailing silence from the
             #   recording. Can be: `trim-silence` or `do-not-trim` and the default is
