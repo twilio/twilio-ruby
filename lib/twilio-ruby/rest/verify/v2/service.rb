@@ -202,6 +202,7 @@ module Twilio
             # Dependents
             @verifications = nil
             @verification_checks = nil
+            @rate_limits = nil
           end
 
           ##
@@ -291,6 +292,24 @@ module Twilio
             end
 
             @verification_checks
+          end
+
+          ##
+          # Access the rate_limits
+          # @return [RateLimitList]
+          # @return [RateLimitContext] if sid was passed.
+          def rate_limits(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return RateLimitContext.new(@version, @solution[:sid], sid, )
+            end
+
+            unless @rate_limits
+              @rate_limits = RateLimitList.new(@version, service_sid: @solution[:sid], )
+            end
+
+            @rate_limits
           end
 
           ##
@@ -487,6 +506,13 @@ module Twilio
           # @return [verification_checks] verification_checks
           def verification_checks
             context.verification_checks
+          end
+
+          ##
+          # Access the rate_limits
+          # @return [rate_limits] rate_limits
+          def rate_limits
+            context.rate_limits
           end
 
           ##

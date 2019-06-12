@@ -142,6 +142,7 @@ module Twilio
                 'sip_edge' => payload['sip_edge'],
                 'tags' => payload['tags'],
                 'url' => payload['url'],
+                'attributes' => payload['attributes'],
             }
 
             # Context
@@ -272,6 +273,12 @@ module Twilio
           # @return [String] The url
           def url
             @properties['url']
+          end
+
+          ##
+          # @return [Hash] The attributes
+          def attributes
+            @properties['attributes']
           end
 
           ##

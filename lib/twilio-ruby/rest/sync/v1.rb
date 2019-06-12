@@ -19,7 +19,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The sid
+        # @param [String] sid A unique identifier for this service instance.
         # @return [Twilio::REST::Sync::V1::ServiceContext] if sid was passed.
         # @return [Twilio::REST::Sync::V1::ServiceList]
         def services(sid=:unset)

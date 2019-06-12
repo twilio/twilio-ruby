@@ -62,6 +62,42 @@ describe 'Verification' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives create_verification_with_rate_limits responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "sid": "VEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "to": "+14159373912",
+          "channel": "sms",
+          "status": "pending",
+          "valid": null,
+          "date_created": "2015-07-30T20:00:00Z",
+          "date_updated": "2015-07-30T20:00:00Z",
+          "lookup": {
+              "carrier": {
+                  "error_code": null,
+                  "name": "Carrier Name",
+                  "mobile_country_code": "310",
+                  "mobile_network_code": "150",
+                  "type": "mobile"
+              }
+          },
+          "amount": null,
+          "payee": null,
+          "url": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Verifications/VEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+
+    actual = @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .verifications.create(to: 'to', channel: 'channel')
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can update" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

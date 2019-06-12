@@ -50,8 +50,12 @@ module Twilio
             #   Requires the PSD2 Service flag enabled.
             # @param [String] payee The payee of the associated PSD2 compliant transaction.
             #   Requires the PSD2 Service flag enabled.
+            # @param [Hash] rate_limits The custom key-value pairs of Programmable Rate
+            #   Limits. Keys should be the unique_name configured while creating you Rate Limit
+            #   along with the associated values for each particular request. You may include
+            #   multiple Rate Limit values in each request.
             # @return [VerificationInstance] Newly created VerificationInstance
-            def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset)
+            def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'Channel' => channel,
@@ -61,6 +65,7 @@ module Twilio
                   'CustomCode' => custom_code,
                   'Amount' => amount,
                   'Payee' => payee,
+                  'RateLimits' => Twilio.serialize_object(rate_limits),
               })
 
               payload = @version.create(

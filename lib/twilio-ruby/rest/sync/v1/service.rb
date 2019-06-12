@@ -38,13 +38,27 @@ module Twilio
           #   identities must be granted access to Sync objects via the [Permissions
           #   API](https://www.twilio.com/docs/api/sync/rest/sync-rest-api-permissions) in
           #   this Service.
+          # @param [Boolean] reachability_debouncing_enabled `true` or `false` - If false,
+          #   every endpoint disconnection immediately yields a reachability webhook (if
+          #   enabled). If true, then 'disconnection' webhook events will only be fired after
+          #   a configurable delay. Intervening reconnections would effectively cancel that
+          #   webhook. Defaults to false.
+          # @param [String] reachability_debouncing_window Reachability webhook delay period
+          #   in milliseconds. Determines the delay after which a Sync identity is declared
+          #   actually offline, measured from the moment the last running client disconnects.
+          #   If all endpoints remain offline throughout this delay, then reachability
+          #   webhooks will be fired (if enabled). A reconnection by any endpoint during this
+          #   window — from the same identity — means no reachability webhook would be fired.
+          #   Must be between 1000 and 30000. Defaults to 5000.
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: :unset, webhook_url: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset)
+          def create(friendly_name: :unset, webhook_url: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset, reachability_debouncing_enabled: :unset, reachability_debouncing_window: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'WebhookUrl' => webhook_url,
                 'ReachabilityWebhooksEnabled' => reachability_webhooks_enabled,
                 'AclEnabled' => acl_enabled,
+                'ReachabilityDebouncingEnabled' => reachability_debouncing_enabled,
+                'ReachabilityDebouncingWindow' => reachability_debouncing_window,
             })
 
             payload = @version.create(
@@ -182,7 +196,7 @@ module Twilio
           ##
           # Initialize the ServiceContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid A unique identifier for this service instance.
           # @return [ServiceContext] ServiceContext
           def initialize(version, sid)
             super(version)
@@ -232,13 +246,27 @@ module Twilio
           #   identities must be granted access to Sync objects via the [Permissions
           #   API](https://www.twilio.com/docs/api/sync/rest/sync-rest-api-permissions) in
           #   this Service.
+          # @param [Boolean] reachability_debouncing_enabled `true` or `false` - If false,
+          #   every endpoint disconnection immediately yields a reachability webhook (if
+          #   enabled). If true, then 'disconnection' webhook events will only be fired after
+          #   a configurable delay. Intervening reconnections would effectively cancel that
+          #   webhook. Defaults to false.
+          # @param [String] reachability_debouncing_window Reachability webhook delay period
+          #   in milliseconds. Determines the delay after which a Sync identity is declared
+          #   actually offline, measured from the moment the last running client disconnects.
+          #   If all endpoints remain offline throughout this delay, then reachability
+          #   webhooks will be fired (if enabled). A reconnection by any endpoint during this
+          #   window — from the same identity — means no reachability webhook would be fired.
+          #   Must be between 1000 and 30000. Defaults to 5000.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(webhook_url: :unset, friendly_name: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset)
+          def update(webhook_url: :unset, friendly_name: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset, reachability_debouncing_enabled: :unset, reachability_debouncing_window: :unset)
             data = Twilio::Values.of({
                 'WebhookUrl' => webhook_url,
                 'FriendlyName' => friendly_name,
                 'ReachabilityWebhooksEnabled' => reachability_webhooks_enabled,
                 'AclEnabled' => acl_enabled,
+                'ReachabilityDebouncingEnabled' => reachability_debouncing_enabled,
+                'ReachabilityDebouncingWindow' => reachability_debouncing_window,
             })
 
             payload = @version.update(
@@ -344,7 +372,7 @@ module Twilio
           # Initialize the ServiceInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid A unique identifier for this service instance.
           # @return [ServiceInstance] ServiceInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -361,6 +389,8 @@ module Twilio
                 'webhook_url' => payload['webhook_url'],
                 'reachability_webhooks_enabled' => payload['reachability_webhooks_enabled'],
                 'acl_enabled' => payload['acl_enabled'],
+                'reachability_debouncing_enabled' => payload['reachability_debouncing_enabled'],
+                'reachability_debouncing_window' => payload['reachability_debouncing_window'].to_i,
                 'links' => payload['links'],
             }
 
@@ -381,7 +411,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A unique identifier for this service instance.
           def sid
             @properties['sid']
           end
@@ -441,6 +471,18 @@ module Twilio
           end
 
           ##
+          # @return [Boolean] true or false - Determines whether transient disconnections (i.e. an immediate reconnect succeeds) cause reachability webhooks.
+          def reachability_debouncing_enabled
+            @properties['reachability_debouncing_enabled']
+          end
+
+          ##
+          # @return [String] Determines how long an identity must be offline before reachability webhooks fire.
+          def reachability_debouncing_window
+            @properties['reachability_debouncing_window']
+          end
+
+          ##
           # @return [String] The links
           def links
             @properties['links']
@@ -472,13 +514,27 @@ module Twilio
           #   identities must be granted access to Sync objects via the [Permissions
           #   API](https://www.twilio.com/docs/api/sync/rest/sync-rest-api-permissions) in
           #   this Service.
+          # @param [Boolean] reachability_debouncing_enabled `true` or `false` - If false,
+          #   every endpoint disconnection immediately yields a reachability webhook (if
+          #   enabled). If true, then 'disconnection' webhook events will only be fired after
+          #   a configurable delay. Intervening reconnections would effectively cancel that
+          #   webhook. Defaults to false.
+          # @param [String] reachability_debouncing_window Reachability webhook delay period
+          #   in milliseconds. Determines the delay after which a Sync identity is declared
+          #   actually offline, measured from the moment the last running client disconnects.
+          #   If all endpoints remain offline throughout this delay, then reachability
+          #   webhooks will be fired (if enabled). A reconnection by any endpoint during this
+          #   window — from the same identity — means no reachability webhook would be fired.
+          #   Must be between 1000 and 30000. Defaults to 5000.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(webhook_url: :unset, friendly_name: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset)
+          def update(webhook_url: :unset, friendly_name: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset, reachability_debouncing_enabled: :unset, reachability_debouncing_window: :unset)
             context.update(
                 webhook_url: webhook_url,
                 friendly_name: friendly_name,
                 reachability_webhooks_enabled: reachability_webhooks_enabled,
                 acl_enabled: acl_enabled,
+                reachability_debouncing_enabled: reachability_debouncing_enabled,
+                reachability_debouncing_window: reachability_debouncing_window,
             )
           end
 

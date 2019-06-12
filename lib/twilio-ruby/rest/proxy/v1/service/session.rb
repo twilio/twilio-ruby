@@ -241,20 +241,14 @@ module Twilio
             #   the `ttl` value.
             # @param [String] ttl The time, in seconds, when the session will expire. The time
             #   is measured from the last Session create or the Session's last Interaction.
-            # @param [session.Mode] mode The Mode of the Session. Can be: `message-only`,
-            #   `voice-only`, or `voice-and-message` and the default value is
-            #   `voice-and-message`.
             # @param [session.Status] status The new status of the resource. Can be:
             #   `in-progress` to re-open a session or `closed` to close a session.
-            # @param [Hash] participants The Participant objects to include in the session.
             # @return [SessionInstance] Updated SessionInstance
-            def update(date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
+            def update(date_expiry: :unset, ttl: :unset, status: :unset)
               data = Twilio::Values.of({
                   'DateExpiry' => Twilio.serialize_iso8601_datetime(date_expiry),
                   'Ttl' => ttl,
-                  'Mode' => mode,
                   'Status' => status,
-                  'Participants' => Twilio.serialize_list(participants) { |e| Twilio.serialize_object(e) },
               })
 
               payload = @version.update(
@@ -494,21 +488,11 @@ module Twilio
             #   the `ttl` value.
             # @param [String] ttl The time, in seconds, when the session will expire. The time
             #   is measured from the last Session create or the Session's last Interaction.
-            # @param [session.Mode] mode The Mode of the Session. Can be: `message-only`,
-            #   `voice-only`, or `voice-and-message` and the default value is
-            #   `voice-and-message`.
             # @param [session.Status] status The new status of the resource. Can be:
             #   `in-progress` to re-open a session or `closed` to close a session.
-            # @param [Hash] participants The Participant objects to include in the session.
             # @return [SessionInstance] Updated SessionInstance
-            def update(date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
-              context.update(
-                  date_expiry: date_expiry,
-                  ttl: ttl,
-                  mode: mode,
-                  status: status,
-                  participants: participants,
-              )
+            def update(date_expiry: :unset, ttl: :unset, status: :unset)
+              context.update(date_expiry: date_expiry, ttl: ttl, status: status, )
             end
 
             ##

@@ -174,6 +174,7 @@ module Twilio
                 'public_attributes' => payload['public_attributes'],
                 'plugin_service_enabled' => payload['plugin_service_enabled'],
                 'plugin_service_attributes' => payload['plugin_service_attributes'],
+                'integrations' => payload['integrations'],
                 'url' => payload['url'],
             }
 
@@ -371,6 +372,12 @@ module Twilio
           # @return [Hash] Plugin service Attributes
           def plugin_service_attributes
             @properties['plugin_service_attributes']
+          end
+
+          ##
+          # @return [Hash] Integration parameters
+          def integrations
+            @properties['integrations']
           end
 
           ##

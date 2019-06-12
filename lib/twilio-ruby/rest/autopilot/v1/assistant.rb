@@ -208,6 +208,7 @@ module Twilio
             @style_sheet = nil
             @defaults = nil
             @dialogues = nil
+            @webhooks = nil
           end
 
           ##
@@ -374,6 +375,24 @@ module Twilio
             end
 
             @dialogues
+          end
+
+          ##
+          # Access the webhooks
+          # @return [WebhookList]
+          # @return [WebhookContext] if sid was passed.
+          def webhooks(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return WebhookContext.new(@version, @solution[:sid], sid, )
+            end
+
+            unless @webhooks
+              @webhooks = WebhookList.new(@version, assistant_sid: @solution[:sid], )
+            end
+
+            @webhooks
           end
 
           ##
@@ -599,6 +618,13 @@ module Twilio
           # @return [dialogues] dialogues
           def dialogues
             context.dialogues
+          end
+
+          ##
+          # Access the webhooks
+          # @return [webhooks] webhooks
+          def webhooks
+            context.webhooks
           end
 
           ##

@@ -925,10 +925,10 @@ module Twilio
       ##
       # Create a new <Room> element
       # name:: Room name
-      # participantIdentity:: Participant identity when connecting to the Room
+      # participant_identity:: Participant identity when connecting to the Room
       # keyword_args:: additional attributes
-      def room(name, participantIdentity: nil, **keyword_args)
-        append(Room.new(name, participantIdentity: participantIdentity, **keyword_args))
+      def room(name, participant_identity: nil, **keyword_args)
+        append(Room.new(name, participant_identity: participant_identity, **keyword_args))
       end
 
       ##

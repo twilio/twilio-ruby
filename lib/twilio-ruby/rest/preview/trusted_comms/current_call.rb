@@ -128,8 +128,16 @@ module Twilio
                 'sid' => payload['sid'],
                 'from' => payload['from'],
                 'to' => payload['to'],
+                'status' => payload['status'],
                 'reason' => payload['reason'],
                 'created_at' => Twilio.deserialize_iso8601_datetime(payload['created_at']),
+                'caller' => payload['caller'],
+                'logo' => payload['logo'],
+                'bg_color' => payload['bg_color'],
+                'font_color' => payload['font_color'],
+                'use_case' => payload['use_case'],
+                'manager' => payload['manager'],
+                'shield_img' => payload['shield_img'],
                 'url' => payload['url'],
             }
 
@@ -150,33 +158,81 @@ module Twilio
           end
 
           ##
-          # @return [String] A string that uniquely identifies this Current Call.
+          # @return [String] A string that uniquely identifies this current phone call.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The originating Phone Number
+          # @return [String] The originating phone number
           def from
             @properties['from']
           end
 
           ##
-          # @return [String] The terminating Phone Number
+          # @return [String] The terminating phone number
           def to
             @properties['to']
           end
 
           ##
-          # @return [String] The business reason for this phone call
+          # @return [String] The status of the current phone call
+          def status
+            @properties['status']
+          end
+
+          ##
+          # @return [String] The business reason for this current phone call
           def reason
             @properties['reason']
           end
 
           ##
-          # @return [Time] The date this Current Call was created
+          # @return [Time] The date this current phone call was created
           def created_at
             @properties['created_at']
+          end
+
+          ##
+          # @return [String] Caller name of the current phone call
+          def caller
+            @properties['caller']
+          end
+
+          ##
+          # @return [String] Logo URL of the caller
+          def logo
+            @properties['logo']
+          end
+
+          ##
+          # @return [String] Background color of the current phone call
+          def bg_color
+            @properties['bg_color']
+          end
+
+          ##
+          # @return [String] Font color of the current phone call
+          def font_color
+            @properties['font_color']
+          end
+
+          ##
+          # @return [String] The use case for the current phone call
+          def use_case
+            @properties['use_case']
+          end
+
+          ##
+          # @return [String] The name of the CPS organization
+          def manager
+            @properties['manager']
+          end
+
+          ##
+          # @return [String] Shield image URL that serves as authenticity proof of the current phone call
+          def shield_img
+            @properties['shield_img']
           end
 
           ##

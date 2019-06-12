@@ -1,6 +1,36 @@
 twilio-ruby changelog
 =====================
 
+[2019-06-12] Version 5.24.0
+----------------------------
+**Autopilot**
+- Add Webhooks resource to Autopilot Assistant.
+
+**Flex**
+- Added missing 'custom' type to Flex Flow
+- Adding `integrations` to Flex Configuration
+
+**Insights**
+- Added attributes to summary.
+
+**Messaging**
+- Message API Create updated with conditional params **(breaking change)**
+
+**Proxy**
+- Document that Proxy will return a maximum of 100 records for read/list endpoints **(breaking change)**
+- Remove non-updatable property parameters for Session update (mode, participants) **(breaking change)**
+
+**Sync**
+- Added reachability debouncing configuration options.
+
+**Verify**
+- Add `RateLimits` and `Buckets` resources to Verify Services
+- Add `RateLimits` optional parameter on `Verification` creation.
+
+**Twiml**
+- Fix `<Room>` participantIdentity casing
+
+
 [2019-05-29] Version 5.23.1
 ----------------------------
 **Verify**
