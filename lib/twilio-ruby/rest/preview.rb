@@ -205,6 +205,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Preview::TrustedComms::CpsInstance]
+      def cps
+        self.trusted_comms.cps()
+      end
+
+      ##
       # Provide a user friendly representation
       def to_s
         '#<Twilio::REST::Preview>'

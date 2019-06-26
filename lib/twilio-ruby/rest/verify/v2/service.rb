@@ -203,6 +203,7 @@ module Twilio
             @verifications = nil
             @verification_checks = nil
             @rate_limits = nil
+            @messaging_configurations = nil
           end
 
           ##
@@ -310,6 +311,24 @@ module Twilio
             end
 
             @rate_limits
+          end
+
+          ##
+          # Access the messaging_configurations
+          # @return [MessagingConfigurationList]
+          # @return [MessagingConfigurationContext] if country was passed.
+          def messaging_configurations(country=:unset)
+            raise ArgumentError, 'country cannot be nil' if country.nil?
+
+            if country != :unset
+              return MessagingConfigurationContext.new(@version, @solution[:sid], country, )
+            end
+
+            unless @messaging_configurations
+              @messaging_configurations = MessagingConfigurationList.new(@version, service_sid: @solution[:sid], )
+            end
+
+            @messaging_configurations
           end
 
           ##
@@ -513,6 +532,13 @@ module Twilio
           # @return [rate_limits] rate_limits
           def rate_limits
             context.rate_limits
+          end
+
+          ##
+          # Access the messaging_configurations
+          # @return [messaging_configurations] messaging_configurations
+          def messaging_configurations
+            context.messaging_configurations
           end
 
           ##

@@ -232,8 +232,7 @@ module Twilio
           #   resource. Non-unique.
           # @param [String] rate_plan The Sid or UniqueName of the
           #   [RatePlan](https://www.twilio.com/docs/api/wireless/rest-api/rate-plan) that
-          #   this Sim should use. *Note:* the RatePlan of a Sim can only be modified when the
-          #   Sim has a `suspended` or `deactivated` status.
+          #   this Sim should use.
           # @param [sim.Status] status A string representing the status of the Sim. Valid
           #   options depend on the current state of the Sim, but may include `ready`,
           #   `active`, `suspended` or `deactivated`.
@@ -563,8 +562,7 @@ module Twilio
           #   resource. Non-unique.
           # @param [String] rate_plan The Sid or UniqueName of the
           #   [RatePlan](https://www.twilio.com/docs/api/wireless/rest-api/rate-plan) that
-          #   this Sim should use. *Note:* the RatePlan of a Sim can only be modified when the
-          #   Sim has a `suspended` or `deactivated` status.
+          #   this Sim should use.
           # @param [sim.Status] status A string representing the status of the Sim. Valid
           #   options depend on the current state of the Sim, but may include `ready`,
           #   `active`, `suspended` or `deactivated`.

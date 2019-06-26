@@ -243,8 +243,10 @@ module Twilio
           # @param [Hash] defaults A JSON object that defines the Assistant's [default
           #   tasks](https://www.twilio.com/docs/autopilot/api/assistant/defaults) for various
           #   scenarios, including initiation actions and fallback tasks.
+          # @param [String] development_stage A string describing the state of the
+          #   assistant.
           # @return [AssistantInstance] Updated AssistantInstance
-          def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, style_sheet: :unset, defaults: :unset)
+          def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, style_sheet: :unset, defaults: :unset, development_stage: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'LogQueries' => log_queries,
@@ -253,6 +255,7 @@ module Twilio
                 'CallbackEvents' => callback_events,
                 'StyleSheet' => Twilio.serialize_object(style_sheet),
                 'Defaults' => Twilio.serialize_object(defaults),
+                'DevelopmentStage' => development_stage,
             })
 
             payload = @version.update(
@@ -432,6 +435,8 @@ module Twilio
                 'latest_model_build_sid' => payload['latest_model_build_sid'],
                 'links' => payload['links'],
                 'log_queries' => payload['log_queries'],
+                'development_stage' => payload['development_stage'],
+                'needs_model_build' => payload['needs_model_build'],
                 'sid' => payload['sid'],
                 'unique_name' => payload['unique_name'],
                 'url' => payload['url'],
@@ -498,6 +503,18 @@ module Twilio
           end
 
           ##
+          # @return [String] A string describing the state of the assistant.
+          def development_stage
+            @properties['development_stage']
+          end
+
+          ##
+          # @return [Boolean] Whether model needs to be rebuilt
+          def needs_model_build
+            @properties['needs_model_build']
+          end
+
+          ##
           # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
@@ -551,8 +568,10 @@ module Twilio
           # @param [Hash] defaults A JSON object that defines the Assistant's [default
           #   tasks](https://www.twilio.com/docs/autopilot/api/assistant/defaults) for various
           #   scenarios, including initiation actions and fallback tasks.
+          # @param [String] development_stage A string describing the state of the
+          #   assistant.
           # @return [AssistantInstance] Updated AssistantInstance
-          def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, style_sheet: :unset, defaults: :unset)
+          def update(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, style_sheet: :unset, defaults: :unset, development_stage: :unset)
             context.update(
                 friendly_name: friendly_name,
                 log_queries: log_queries,
@@ -561,6 +580,7 @@ module Twilio
                 callback_events: callback_events,
                 style_sheet: style_sheet,
                 defaults: defaults,
+                development_stage: development_stage,
             )
           end
 

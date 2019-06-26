@@ -18,6 +18,7 @@ module Twilio
           @devices = nil
           @phone_calls = nil
           @current_calls = nil
+          @cps = nil
         end
 
         ##
@@ -36,6 +37,12 @@ module Twilio
         # @return [Twilio::REST::Preview::TrustedComms::CurrentCallContext]
         def current_calls
           @current_calls ||= CurrentCallContext.new self
+        end
+
+        ##
+        # @return [Twilio::REST::Preview::TrustedComms::CpsContext]
+        def cps
+          @cps ||= CpsContext.new self
         end
 
         ##

@@ -37,7 +37,7 @@ describe 'Verification' do
           "to": "+14159373912",
           "channel": "sms",
           "status": "pending",
-          "valid": null,
+          "valid": false,
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "lookup": {
@@ -49,8 +49,8 @@ describe 'Verification' do
                   "type": "mobile"
               }
           },
-          "amount": "$29.99",
-          "payee": "Acme",
+          "amount": null,
+          "payee": null,
           "url": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Verifications/VEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -73,7 +73,7 @@ describe 'Verification' do
           "to": "+14159373912",
           "channel": "sms",
           "status": "pending",
-          "valid": null,
+          "valid": false,
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "lookup": {
@@ -126,7 +126,7 @@ describe 'Verification' do
           "to": "+14159373912",
           "channel": "sms",
           "status": "canceled",
-          "valid": null,
+          "valid": false,
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "lookup": {
@@ -138,8 +138,8 @@ describe 'Verification' do
                   "type": "mobile"
               }
           },
-          "amount": "$29.99",
-          "payee": "Acme",
+          "amount": null,
+          "payee": null,
           "url": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Verifications/VEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -178,7 +178,7 @@ describe 'Verification' do
           "to": "+14159373912",
           "channel": "sms",
           "status": "pending",
-          "valid": null,
+          "valid": false,
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "lookup": {
@@ -190,8 +190,8 @@ describe 'Verification' do
                   "type": "mobile"
               }
           },
-          "amount": "$29.99",
-          "payee": "Acme",
+          "amount": null,
+          "payee": null,
           "url": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Verifications/VEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]

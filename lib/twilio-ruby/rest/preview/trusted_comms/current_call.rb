@@ -79,14 +79,9 @@ module Twilio
 
           ##
           # Fetch a CurrentCallInstance
-          # @param [String] from The originating Phone Number, given in E.164 format
-          #   (https://en.wikipedia.org/wiki/E.164). This phone number should be a Twilio
-          #   number, otherwise it will return an error with HTTP Status Code 400.
-          # @param [String] to The terminating Phone Number, given in E.164 format
-          #   (https://en.wikipedia.org/wiki/E.164).
           # @return [CurrentCallInstance] Fetched CurrentCallInstance
-          def fetch(from: :unset, to: :unset)
-            params = Twilio::Values.of({'From' => from, 'To' => to, })
+          def fetch
+            params = Twilio::Values.of({})
 
             payload = @version.fetch(
                 'GET',
@@ -243,14 +238,9 @@ module Twilio
 
           ##
           # Fetch a CurrentCallInstance
-          # @param [String] from The originating Phone Number, given in E.164 format
-          #   (https://en.wikipedia.org/wiki/E.164). This phone number should be a Twilio
-          #   number, otherwise it will return an error with HTTP Status Code 400.
-          # @param [String] to The terminating Phone Number, given in E.164 format
-          #   (https://en.wikipedia.org/wiki/E.164).
           # @return [CurrentCallInstance] Fetched CurrentCallInstance
-          def fetch(from: :unset, to: :unset)
-            context.fetch(from: from, to: to, )
+          def fetch
+            context.fetch
           end
 
           ##
