@@ -154,7 +154,7 @@ module Twilio
               end
 
               ##
-              # @return [Hash] A collection of Subscribe Rules to include or exclude matching Tracks.
+              # @return [String] A collection of Subscribe Rules to include or exclude matching Tracks.
               def rules
                 @properties['rules']
               end

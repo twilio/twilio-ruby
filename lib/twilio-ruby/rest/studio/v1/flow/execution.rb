@@ -134,9 +134,10 @@ module Twilio
             # Retrieve a single page of ExecutionInstance records from the API.
             # Request is executed immediately.
             # @param [String] to The Contact phone number to start a Studio Flow Execution,
-            #   available as variable {{contact.channel.address}}.
+            #   available as variable `{{contact.channel.address}}`.
             # @param [String] from The Twilio phone number to send messages or initiate calls
-            #   from during the Flow Execution, available as variable {{flow.channel.address}}
+            #   from during the Flow Execution, available as variable
+            #   `{{flow.channel.address}}`.
             # @param [Hash] parameters JSON data that will be added to your flow's context and
             #   can accessed as variables inside your flow. For example, if you pass in
             #   `Parameters={"name":"Zeke"}`, then inside a widget you can reference the

@@ -14,15 +14,14 @@ describe 'Application' do
 
     expect {
       @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .applications.create(friendly_name: 'friendly_name')
+                       .applications.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'FriendlyName' => 'friendly_name', }
+    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Applications.json',
-        data: values,
     ))).to eq(true)
   end
 
@@ -56,7 +55,7 @@ describe 'Application' do
     ))
 
     actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .applications.create(friendly_name: 'friendly_name')
+                              .applications.create()
 
     expect(actual).to_not eq(nil)
   end

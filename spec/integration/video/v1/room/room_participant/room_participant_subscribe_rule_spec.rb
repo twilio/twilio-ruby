@@ -35,7 +35,16 @@ describe 'SubscribeRules' do
           "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": null,
           "date_updated": null,
-          "rules": []
+          "rules": [
+              {
+                  "type": "include",
+                  "all": true,
+                  "publisher": null,
+                  "track": null,
+                  "kind": null,
+                  "priority": null
+              }
+          ]
       }
       ]
     ))
@@ -76,7 +85,11 @@ describe 'SubscribeRules' do
           "rules": [
               {
                   "type": "exclude",
-                  "all": true
+                  "all": true,
+                  "publisher": null,
+                  "track": null,
+                  "kind": null,
+                  "priority": null
               }
           ]
       }

@@ -30,8 +30,6 @@ module Twilio
             ##
             # Retrieve a single page of ApplicationInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name A descriptive string that you create to describe
-            #   the new application. It can be up to 64 characters long.
             # @param [String] api_version The API version to use to start a new TwiML session.
             #   Can be: `2010-04-01` or `2008-08-01`. The default value is the account's default
             #   API version.
@@ -62,10 +60,11 @@ module Twilio
             #   to send status information about SMS messages sent by the application.
             # @param [String] message_status_callback The URL we should call using a POST
             #   method to send message status information to your application.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the new application. It can be up to 64 characters long.
             # @return [ApplicationInstance] Newly created ApplicationInstance
-            def create(friendly_name: nil, api_version: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, status_callback: :unset, status_callback_method: :unset, voice_caller_id_lookup: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, sms_status_callback: :unset, message_status_callback: :unset)
+            def create(api_version: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, status_callback: :unset, status_callback_method: :unset, voice_caller_id_lookup: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, sms_status_callback: :unset, message_status_callback: :unset, friendly_name: :unset)
               data = Twilio::Values.of({
-                  'FriendlyName' => friendly_name,
                   'ApiVersion' => api_version,
                   'VoiceUrl' => voice_url,
                   'VoiceMethod' => voice_method,
@@ -80,6 +79,7 @@ module Twilio
                   'SmsFallbackMethod' => sms_fallback_method,
                   'SmsStatusCallback' => sms_status_callback,
                   'MessageStatusCallback' => message_status_callback,
+                  'FriendlyName' => friendly_name,
               })
 
               payload = @version.create(

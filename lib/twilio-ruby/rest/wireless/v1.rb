@@ -17,6 +17,7 @@ module Twilio
           @version = 'v1'
           @commands = nil
           @rate_plans = nil
+          @usage_records = nil
           @sims = nil
         end
 
@@ -47,6 +48,12 @@ module Twilio
           else
             RatePlanContext.new(self, sid)
           end
+        end
+
+        ##
+        # @return [Twilio::REST::Wireless::V1::UsageRecordContext]
+        def usage_records
+          @usage_records ||= UsageRecordList.new self
         end
 
         ##
