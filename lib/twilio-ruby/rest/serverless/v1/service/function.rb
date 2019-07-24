@@ -203,6 +203,13 @@ module Twilio
             end
 
             ##
+            # Deletes the FunctionInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              @version.delete('delete', @uri)
+            end
+
+            ##
             # Update the FunctionInstance
             # @param [String] friendly_name A human-readable description of this Function,
             #   fewer than 256 characters. Required.
@@ -351,6 +358,13 @@ module Twilio
             # @return [FunctionInstance] Fetched FunctionInstance
             def fetch
               context.fetch
+            end
+
+            ##
+            # Deletes the FunctionInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              context.delete
             end
 
             ##

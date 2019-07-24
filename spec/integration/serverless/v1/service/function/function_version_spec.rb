@@ -80,7 +80,6 @@ describe 'FunctionVersion' do
           "function_sid": "ZH00000000000000000000000000000000",
           "path": "test-path",
           "visibility": "public",
-          "pre_signed_upload_url": null,
           "date_created": "2018-11-10T20:00:00Z",
           "url": "https://serverless.twilio.com/v1/Services/ZS00000000000000000000000000000000/Functions/ZH00000000000000000000000000000000/Versions/ZN00000000000000000000000000000000"
       }
@@ -90,54 +89,6 @@ describe 'FunctionVersion' do
     actual = @client.serverless.v1.services('ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                   .functions('ZHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                   .function_versions('ZNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
-
-    expect(actual).to_not eq(nil)
-  end
-
-  it "can create" do
-    @holodeck.mock(Twilio::Response.new(500, ''))
-
-    expect {
-      @client.serverless.v1.services('ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                           .functions('ZHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                           .function_versions.create(path: 'path', visibility: 'public')
-    }.to raise_exception(Twilio::REST::TwilioError)
-
-    values = {'Path' => 'path', 'Visibility' => 'public', }
-    expect(
-    @holodeck.has_request?(Holodeck::Request.new(
-        method: 'post',
-        url: 'https://serverless.twilio.com/v1/Services/ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Functions/ZHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Versions',
-        data: values,
-    ))).to eq(true)
-  end
-
-  it "receives create responses" do
-    @holodeck.mock(Twilio::Response.new(
-        201,
-      %q[
-      {
-          "sid": "ZN00000000000000000000000000000000",
-          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "service_sid": "ZS00000000000000000000000000000000",
-          "function_sid": "ZH00000000000000000000000000000000",
-          "path": "/some/sample/path",
-          "visibility": "protected",
-          "date_created": "2018-11-10T20:00:00Z",
-          "pre_signed_upload_url": {
-              "url": "https://s3.amazonaws.com/com.twilio.dev.serverless",
-              "expiration": "2019-01-01T00:08:00.000Z",
-              "method": "PUT",
-              "kmsARN": "arn:aws:kms:us-east-1:719084529295:key/2a7bf064-c88c-4fdd-b376-625d7bcd2d98"
-          },
-          "url": "https://serverless.twilio.com/v1/Services/ZS00000000000000000000000000000000/Functions/ZH00000000000000000000000000000000/Versions/ZN00000000000000000000000000000000"
-      }
-      ]
-    ))
-
-    actual = @client.serverless.v1.services('ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                  .functions('ZHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                  .function_versions.create(path: 'path', visibility: 'public')
 
     expect(actual).to_not eq(nil)
   end

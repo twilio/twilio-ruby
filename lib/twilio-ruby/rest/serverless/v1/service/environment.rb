@@ -212,6 +212,13 @@ module Twilio
             end
 
             ##
+            # Deletes the EnvironmentInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              @version.delete('delete', @uri)
+            end
+
+            ##
             # Access the variables
             # @return [VariableList]
             # @return [VariableContext] if sid was passed.
@@ -386,6 +393,13 @@ module Twilio
             # @return [EnvironmentInstance] Fetched EnvironmentInstance
             def fetch
               context.fetch
+            end
+
+            ##
+            # Deletes the EnvironmentInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              context.delete
             end
 
             ##

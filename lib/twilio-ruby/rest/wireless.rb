@@ -29,6 +29,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Wireless::V1::UsageRecordInstance]
+      def usage_records
+        self.v1.usage_records()
+      end
+
+      ##
       # @param [String] sid A 34 character string that uniquely identifies this
       #   resource.
       # @return [Twilio::REST::Wireless::V1::CommandInstance] if sid was passed.
@@ -44,12 +50,6 @@ module Twilio
       # @return [Twilio::REST::Wireless::V1::RatePlanList]
       def rate_plans(sid=:unset)
         self.v1.rate_plans(sid)
-      end
-
-      ##
-      # @return [Twilio::REST::Wireless::V1::UsageRecordInstance]
-      def usage_records
-        self.v1.usage_records()
       end
 
       ##

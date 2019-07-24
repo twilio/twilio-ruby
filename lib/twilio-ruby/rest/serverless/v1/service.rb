@@ -211,6 +211,13 @@ module Twilio
           end
 
           ##
+          # Deletes the ServiceInstance
+          # @return [Boolean] true if delete succeeds, true otherwise
+          def delete
+            @version.delete('delete', @uri)
+          end
+
+          ##
           # Update the ServiceInstance
           # @param [Boolean] include_credentials A boolean value that indicates whether to
           #   inject Account credentials into a Function invocation context. Optional.
@@ -420,6 +427,13 @@ module Twilio
           # @return [ServiceInstance] Fetched ServiceInstance
           def fetch
             context.fetch
+          end
+
+          ##
+          # Deletes the ServiceInstance
+          # @return [Boolean] true if delete succeeds, true otherwise
+          def delete
+            context.delete
           end
 
           ##

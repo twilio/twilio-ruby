@@ -114,32 +114,6 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of FunctionVersionInstance records from the API.
-              # Request is executed immediately.
-              # @param [String] path The URL-friendly string by which this Function Version can
-              #   be referenced. (Example: `/functions/example`) Required.
-              # @param [function_version.Visibility] visibility The access control which
-              #   determines how the Function Version can be accessed. One of `public`,
-              #   `protected`, or `private`. Required.
-              # @return [FunctionVersionInstance] Newly created FunctionVersionInstance
-              def create(path: nil, visibility: nil)
-                data = Twilio::Values.of({'Path' => path, 'Visibility' => visibility, })
-
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
-
-                FunctionVersionInstance.new(
-                    @version,
-                    payload,
-                    service_sid: @solution[:service_sid],
-                    function_sid: @solution[:function_sid],
-                )
-              end
-
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Serverless.V1.FunctionVersionList>'
@@ -261,7 +235,6 @@ module Twilio
                     'service_sid' => payload['service_sid'],
                     'function_sid' => payload['function_sid'],
                     'path' => payload['path'],
-                    'pre_signed_upload_url' => payload['pre_signed_upload_url'],
                     'visibility' => payload['visibility'],
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'url' => payload['url'],
@@ -320,12 +293,6 @@ module Twilio
               # @return [String] The URL-friendly string by which this Function Version can be referenced.
               def path
                 @properties['path']
-              end
-
-              ##
-              # @return [Hash] The object which provides the details required for uploading this Function Version.
-              def pre_signed_upload_url
-                @properties['pre_signed_upload_url']
               end
 
               ##

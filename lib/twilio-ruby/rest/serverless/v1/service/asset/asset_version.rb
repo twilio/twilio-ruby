@@ -114,32 +114,6 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of AssetVersionInstance records from the API.
-              # Request is executed immediately.
-              # @param [String] path The URL-friendly string by which this Asset Version can be
-              #   referenced. (Example: `/assets/example`) Required.
-              # @param [asset_version.Visibility] visibility The access control which determines
-              #   how the Asset Version can be accessed. One of `public`, `protected`, or
-              #   `private`. Required.
-              # @return [AssetVersionInstance] Newly created AssetVersionInstance
-              def create(path: nil, visibility: nil)
-                data = Twilio::Values.of({'Path' => path, 'Visibility' => visibility, })
-
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
-
-                AssetVersionInstance.new(
-                    @version,
-                    payload,
-                    service_sid: @solution[:service_sid],
-                    asset_sid: @solution[:asset_sid],
-                )
-              end
-
-              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Serverless.V1.AssetVersionList>'
@@ -262,7 +236,6 @@ module Twilio
                     'asset_sid' => payload['asset_sid'],
                     'path' => payload['path'],
                     'visibility' => payload['visibility'],
-                    'pre_signed_upload_url' => payload['pre_signed_upload_url'],
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'url' => payload['url'],
                 }
@@ -326,12 +299,6 @@ module Twilio
               # @return [asset_version.Visibility] The access control which determines how the Asset Version can be accessed.
               def visibility
                 @properties['visibility']
-              end
-
-              ##
-              # @return [Hash] The object which provides the details required for uploading this Asset Version.
-              def pre_signed_upload_url
-                @properties['pre_signed_upload_url']
               end
 
               ##

@@ -247,11 +247,11 @@ module Twilio
             ##
             # Update the ChannelInstance
             # @param [String] friendly_name A descriptive string that you create to describe
-            #   the resource. It can be up to 64 characters long.
+            #   the resource. It can be up to 256 characters long.
             # @param [String] unique_name An application-defined string that uniquely
             #   identifies the resource. It can be used to address the resource in place of the
-            #   resource's `sid` in the URL. This value must be 64 characters or less in length
-            #   and be unique within the Service.
+            #   resource's `sid` in the URL. This value must be 256 characters or less in length
+            #   and unique within the Service.
             # @param [String] attributes A valid JSON string that contains
             #   application-specific data.
             # @param [Time] date_created The date, specified in [ISO
@@ -534,11 +534,11 @@ module Twilio
             ##
             # Update the ChannelInstance
             # @param [String] friendly_name A descriptive string that you create to describe
-            #   the resource. It can be up to 64 characters long.
+            #   the resource. It can be up to 256 characters long.
             # @param [String] unique_name An application-defined string that uniquely
             #   identifies the resource. It can be used to address the resource in place of the
-            #   resource's `sid` in the URL. This value must be 64 characters or less in length
-            #   and be unique within the Service.
+            #   resource's `sid` in the URL. This value must be 256 characters or less in length
+            #   and unique within the Service.
             # @param [String] attributes A valid JSON string that contains
             #   application-specific data.
             # @param [Time] date_created The date, specified in [ISO

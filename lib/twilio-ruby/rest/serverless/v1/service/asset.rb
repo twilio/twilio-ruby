@@ -203,6 +203,13 @@ module Twilio
             end
 
             ##
+            # Deletes the AssetInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              @version.delete('delete', @uri)
+            end
+
+            ##
             # Update the AssetInstance
             # @param [String] friendly_name A human-readable description of this Asset, fewer
             #   than 256 characters. Required.
@@ -351,6 +358,13 @@ module Twilio
             # @return [AssetInstance] Fetched AssetInstance
             def fetch
               context.fetch
+            end
+
+            ##
+            # Deletes the AssetInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              context.delete
             end
 
             ##

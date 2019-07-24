@@ -178,4 +178,34 @@ describe 'Variable' do
 
     expect(actual).to_not eq(nil)
   end
+
+  it "can delete" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.serverless.v1.services('ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .environments('ZEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                           .variables('ZVXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {}
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'delete',
+        url: 'https://serverless.twilio.com/v1/Services/ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Environments/ZEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Variables/ZVXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    ))).to eq(true)
+  end
+
+  it "receives delete responses" do
+    @holodeck.mock(Twilio::Response.new(
+        204,
+      nil,
+    ))
+
+    actual = @client.serverless.v1.services('ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .environments('ZEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                  .variables('ZVXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+
+    expect(actual).to eq(true)
+  end
 end

@@ -248,6 +248,13 @@ module Twilio
               end
 
               ##
+              # Deletes the VariableInstance
+              # @return [Boolean] true if delete succeeds, true otherwise
+              def delete
+                @version.delete('delete', @uri)
+              end
+
+              ##
               # Provide a user friendly representation
               def to_s
                 context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -386,6 +393,13 @@ module Twilio
               # @return [VariableInstance] Updated VariableInstance
               def update(key: :unset, value: :unset)
                 context.update(key: key, value: value, )
+              end
+
+              ##
+              # Deletes the VariableInstance
+              # @return [Boolean] true if delete succeeds, true otherwise
+              def delete
+                context.delete
               end
 
               ##

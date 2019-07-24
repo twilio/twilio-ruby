@@ -29,7 +29,8 @@ module Twilio
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
           # @param [String] friendly_name A descriptive string that you create to describe
-          #   the verification service. It can be up to 64 characters long.
+          #   the verification service. It can be up to 64 characters long. **This value
+          #   should not contain PII.**
           # @param [String] code_length The length of the verification code to generate.
           #   Must be an integer value between 4 and 10, inclusive.
           # @param [Boolean] lookup_enabled Whether to perform a lookup with each
@@ -231,7 +232,8 @@ module Twilio
           ##
           # Update the ServiceInstance
           # @param [String] friendly_name A descriptive string that you create to describe
-          #   the verification service. It can be up to 64 characters long.
+          #   the verification service. It can be up to 64 characters long. **This value
+          #   should not contain PII.**
           # @param [String] code_length The length of the verification code to generate.
           #   Must be an integer value between 4 and 10, inclusive.
           # @param [Boolean] lookup_enabled Whether to perform a lookup with each
@@ -487,7 +489,8 @@ module Twilio
           ##
           # Update the ServiceInstance
           # @param [String] friendly_name A descriptive string that you create to describe
-          #   the verification service. It can be up to 64 characters long.
+          #   the verification service. It can be up to 64 characters long. **This value
+          #   should not contain PII.**
           # @param [String] code_length The length of the verification code to generate.
           #   Must be an integer value between 4 and 10, inclusive.
           # @param [Boolean] lookup_enabled Whether to perform a lookup with each

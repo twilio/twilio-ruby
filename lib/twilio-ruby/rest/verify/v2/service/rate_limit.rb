@@ -34,7 +34,7 @@ module Twilio
             # Request is executed immediately.
             # @param [String] unique_name Provides a unique and addressable name to be
             #   assigned to this Rate Limit, assigned by the developer, to be optionally used in
-            #   addition to SID.
+            #   addition to SID. **This value should not contain PII.**
             # @param [String] description Description of this Rate Limit
             # @return [RateLimitInstance] Newly created RateLimitInstance
             def create(unique_name: nil, description: :unset)

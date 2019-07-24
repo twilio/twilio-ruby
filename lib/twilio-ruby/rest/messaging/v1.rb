@@ -15,9 +15,23 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
-          @sessions = nil
           @services = nil
+          @sessions = nil
           @webhooks = nil
+        end
+
+        ##
+        # @param [String] sid The sid
+        # @return [Twilio::REST::Messaging::V1::ServiceContext] if sid was passed.
+        # @return [Twilio::REST::Messaging::V1::ServiceList]
+        def services(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @services ||= ServiceList.new self
+          else
+            ServiceContext.new(self, sid)
+          end
         end
 
         ##
@@ -32,20 +46,6 @@ module Twilio
             @sessions ||= SessionList.new self
           else
             SessionContext.new(self, sid)
-          end
-        end
-
-        ##
-        # @param [String] sid The sid
-        # @return [Twilio::REST::Messaging::V1::ServiceContext] if sid was passed.
-        # @return [Twilio::REST::Messaging::V1::ServiceList]
-        def services(sid=:unset)
-          if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @services ||= ServiceList.new self
-          else
-            ServiceContext.new(self, sid)
           end
         end
 
