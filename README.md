@@ -26,13 +26,13 @@ in-line code documentation here in the library.
 To install using [Bundler][bundler] grab the latest stable version:
 
 ```ruby
-gem 'twilio-ruby', '~> 5.25.1'
+gem 'twilio-ruby', '~> 5.25.2'
 ```
 
 To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
 
 ```bash
-gem install twilio-ruby -v 5.25.1
+gem install twilio-ruby -v 5.25.2
 ```
 
 To build and install the development branch yourself from the latest source:
