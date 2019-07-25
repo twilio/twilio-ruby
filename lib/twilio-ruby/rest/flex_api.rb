@@ -29,17 +29,17 @@ module Twilio
       end
 
       ##
-      # @return [Twilio::REST::Flex_api::V1::ConfigurationInstance]
-      def configuration
-        self.v1.configuration()
-      end
-
-      ##
       # @param [String] sid The unique ID of the FlexFlow
       # @return [Twilio::REST::Flex_api::V1::FlexFlowInstance] if sid was passed.
       # @return [Twilio::REST::Flex_api::V1::FlexFlowList]
       def flex_flow(sid=:unset)
         self.v1.flex_flow(sid)
+      end
+
+      ##
+      # @return [Twilio::REST::Flex_api::V1::ConfigurationInstance]
+      def configuration
+        self.v1.configuration()
       end
 
       ##

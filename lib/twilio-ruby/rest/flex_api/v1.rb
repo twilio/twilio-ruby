@@ -15,14 +15,8 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
-          @configuration = nil
           @flex_flow = nil
-        end
-
-        ##
-        # @return [Twilio::REST::Flex_api::V1::ConfigurationContext]
-        def configuration
-          @configuration ||= ConfigurationContext.new self
+          @configuration = nil
         end
 
         ##
@@ -37,6 +31,12 @@ module Twilio
           else
             FlexFlowContext.new(self, sid)
           end
+        end
+
+        ##
+        # @return [Twilio::REST::Flex_api::V1::ConfigurationContext]
+        def configuration
+          @configuration ||= ConfigurationContext.new self
         end
 
         ##
