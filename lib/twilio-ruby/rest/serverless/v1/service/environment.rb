@@ -189,6 +189,7 @@ module Twilio
               # Dependents
               @variables = nil
               @deployments = nil
+              @logs = nil
             end
 
             ##
@@ -260,6 +261,28 @@ module Twilio
               end
 
               @deployments
+            end
+
+            ##
+            # Access the logs
+            # @return [LogList]
+            # @return [LogContext] if sid was passed.
+            def logs(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return LogContext.new(@version, @solution[:service_sid], @solution[:sid], sid, )
+              end
+
+              unless @logs
+                @logs = LogList.new(
+                    @version,
+                    service_sid: @solution[:service_sid],
+                    environment_sid: @solution[:sid],
+                )
+              end
+
+              @logs
             end
 
             ##
@@ -414,6 +437,13 @@ module Twilio
             # @return [deployments] deployments
             def deployments
               context.deployments
+            end
+
+            ##
+            # Access the logs
+            # @return [logs] logs
+            def logs
+              context.logs
             end
 
             ##

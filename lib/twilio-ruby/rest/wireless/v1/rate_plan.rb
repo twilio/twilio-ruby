@@ -116,11 +116,12 @@ module Twilio
           #   GPRS/3G/LTE data connectivity.
           # @param [String] data_limit Network-enforced limit specifying the total Megabytes
           #   of data usage (download and upload combined) allowed during one month on the
-          #   home network. Metering begins on the day of activation and ends on the same day
-          #   of the following month.  Max value is 2TB.
+          #   'home' (T-Mobile USA) network. Metering begins on the day of activation and ends
+          #   on the same day of the following month.  Max value is 2TB. Default value is
+          #   `1000`.
           # @param [String] data_metering The model by which to meter data usage, in
-          #   accordance with the two available [data metering
-          #   models](https://www.twilio.com/docs/api/wireless/rest-api/rate-plan#explanation-of-pooled-vs-individual). Valid options are `pooled` and `individual`.
+          #   accordance with the available [data metering
+          #   models](https://www.twilio.com/docs/wireless/api/rate-plan#payg-vs-quota-data-plans). Valid options are `payg` and `quota-1`, `quota-10`, and `quota-50`. Defaults to `payg`.
           # @param [Boolean] messaging_enabled Defines whether SIMs are capable of making
           #   and sending and receiving SMS messages via either
           #   [Commands](https://www.twilio.com/docs/wireless/api/commands) or Programmable
@@ -128,15 +129,21 @@ module Twilio
           # @param [Boolean] voice_enabled Defines whether SIMs are capable of making and
           #   receiving voice calls.
           # @param [Boolean] national_roaming_enabled Defines whether SIMs can roam onto
-          #   other networks in the SIM's home country. See ['national'
+          #   networks other than the 'home' (T-Mobile USA) network in the United States. See
+          #   ['national'
           #   roaming](https://www.twilio.com/docs/api/wireless/rest-api/rate-plan#national-roaming).
-          # @param [String] international_roaming The international_roaming
+          # @param [String] international_roaming Defines whether SIMs are capable of using
+          #   GPRS/3G/4G/LTE data connectivity and messaging outside of the United States.
+          #   Acceptable values are `data` and `messaging`.
           # @param [String] national_roaming_data_limit Network-enforced limit specifying
           #   the total Megabytes of national roaming data usage (download and upload
-          #   combined) allowed during one month.  Max value is 2TB. If unspecified, the
-          #   default value is the lesser of `DataLimit` and 1000MB.
-          # @param [String] international_roaming_data_limit The
-          #   international_roaming_data_limit
+          #   combined) allowed during one month on networks in the United States other than
+          #   the 'home' (T-Mobile USA) network. See ['national'
+          #   roaming](https://www.twilio.com/docs/api/wireless/rest-api/rate-plan#national-roaming). Max value is 2TB.
+          # @param [String] international_roaming_data_limit Network-enforced limit
+          #   specifying the total Megabytes of international roaming (non-US) data usage
+          #   (download and upload combined) allowed during one month. Max value is 2TB.
+          #   Default value is the lesser of `DataLimit` and `1000`MB.
           # @return [RatePlanInstance] Newly created RatePlanInstance
           def create(unique_name: :unset, friendly_name: :unset, data_enabled: :unset, data_limit: :unset, data_metering: :unset, messaging_enabled: :unset, voice_enabled: :unset, national_roaming_enabled: :unset, international_roaming: :unset, national_roaming_data_limit: :unset, international_roaming_data_limit: :unset)
             data = Twilio::Values.of({
@@ -202,7 +209,8 @@ module Twilio
           ##
           # Initialize the RatePlanContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this
+          #   resource.
           # @return [RatePlanContext] RatePlanContext
           def initialize(version, sid)
             super(version)
@@ -273,7 +281,8 @@ module Twilio
           # Initialize the RatePlanInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this
+          #   resource.
           # @return [RatePlanInstance] RatePlanInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -345,13 +354,13 @@ module Twilio
           end
 
           ##
-          # @return [String] The model by which to meter data usage, in accordance with the two available data metering models.
+          # @return [String] The model by which to meter data usage, in accordance with the available data metering models.
           def data_metering
             @properties['data_metering']
           end
 
           ##
-          # @return [String] Network-enforced limit specifying the total Megabytes of data usage allowed during one month on the home network.
+          # @return [String] Network-enforced limit specifying the total Megabytes of data usage allowed during one month on the 'home' (T-Mobile USA) network.
           def data_limit
             @properties['data_limit']
           end
@@ -369,25 +378,25 @@ module Twilio
           end
 
           ##
-          # @return [Boolean] Defines whether SIMs can roam onto other networks in the SIM's home country.
+          # @return [Boolean] Defines whether SIMs can roam onto networks other than the 'home' (T-Mobile USA) network in the United States.
           def national_roaming_enabled
             @properties['national_roaming_enabled']
           end
 
           ##
-          # @return [String] Network-enforced limit specifying the total Megabytes of national roaming data usage allowed during one month.
+          # @return [String] Network-enforced limit specifying the total Megabytes of 'national roaming' data usage allowed during one month on networks in the United States other than the 'home' (T-Mobile USA) network.
           def national_roaming_data_limit
             @properties['national_roaming_data_limit']
           end
 
           ##
-          # @return [String] The international_roaming
+          # @return [String] Defines whether SIMs are capable of using GPRS/3G/4G/LTE data connectivity and messaging outside of the United States.
           def international_roaming
             @properties['international_roaming']
           end
 
           ##
-          # @return [String] The international_roaming_data_limit
+          # @return [String] Network-enforced limit specifying the total Megabytes of 'international roaming' (non-US) data usage (download and upload combined) allowed during one month.
           def international_roaming_data_limit
             @properties['international_roaming_data_limit']
           end

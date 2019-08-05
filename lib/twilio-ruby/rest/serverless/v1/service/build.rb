@@ -208,6 +208,13 @@ module Twilio
             end
 
             ##
+            # Deletes the BuildInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              @version.delete('delete', @uri)
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -331,6 +338,13 @@ module Twilio
             # @return [BuildInstance] Fetched BuildInstance
             def fetch
               context.fetch
+            end
+
+            ##
+            # Deletes the BuildInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              context.delete
             end
 
             ##

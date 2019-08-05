@@ -37,7 +37,8 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The sid
+        # @param [String] sid A 34 character string that uniquely identifies this
+        #   resource.
         # @return [Twilio::REST::Wireless::V1::RatePlanContext] if sid was passed.
         # @return [Twilio::REST::Wireless::V1::RatePlanList]
         def rate_plans(sid=:unset)

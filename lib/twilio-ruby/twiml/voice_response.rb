@@ -248,6 +248,153 @@ module Twilio
         yield(prompt) if block_given?
         append(prompt)
       end
+
+      ##
+      # Create a new <Start> element
+      # action:: Action URL
+      # method:: Action URL method
+      # keyword_args:: additional attributes
+      def start(action: nil, method: nil, **keyword_args)
+        start = Start.new(action: action, method: method, **keyword_args)
+
+        yield(start) if block_given?
+        append(start)
+      end
+
+      ##
+      # Create a new <Stop> element
+      # keyword_args:: additional attributes
+      def stop(**keyword_args)
+        stop = Stop.new(**keyword_args)
+
+        yield(stop) if block_given?
+        append(stop)
+      end
+    end
+
+    ##
+    # <Stop> TwiML Verb
+    class Stop < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Stop'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Stream> element
+      # name:: Friendly name given to the Stream
+      # connector_name:: Unique name for Stream Connector
+      # url:: URL of the remote service where the Stream is routed
+      # track:: Track to be streamed to remote service
+      # keyword_args:: additional attributes
+      def stream(name: nil, connector_name: nil, url: nil, track: nil, **keyword_args)
+        stream = Stream.new(name: name, connector_name: connector_name, url: url, track: track, **keyword_args)
+
+        yield(stream) if block_given?
+        append(stream)
+      end
+
+      ##
+      # Create a new <Siprec> element
+      # name:: Friendly name given to SIPREC
+      # connector_name:: Unique name for Connector
+      # keyword_args:: additional attributes
+      def siprec(name: nil, connector_name: nil, **keyword_args)
+        siprec = Siprec.new(name: name, connector_name: connector_name, **keyword_args)
+
+        yield(siprec) if block_given?
+        append(siprec)
+      end
+    end
+
+    ##
+    # <Siprec> TwiML Noun
+    class Siprec < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Siprec'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
+      end
+    end
+
+    ##
+    # <Parameter> TwiML Noun
+    class Parameter < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Parameter'
+
+        yield(self) if block_given?
+      end
+    end
+
+    ##
+    # <Stream> TwiML Noun
+    class Stream < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Stream'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
+      end
+    end
+
+    ##
+    # <Start> TwiML Verb
+    class Start < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Start'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Stream> element
+      # name:: Friendly name given to the Stream
+      # connector_name:: Unique name for Stream Connector
+      # url:: URL of the remote service where the Stream is routed
+      # track:: Track to be streamed to remote service
+      # keyword_args:: additional attributes
+      def stream(name: nil, connector_name: nil, url: nil, track: nil, **keyword_args)
+        stream = Stream.new(name: name, connector_name: connector_name, url: url, track: track, **keyword_args)
+
+        yield(stream) if block_given?
+        append(stream)
+      end
+
+      ##
+      # Create a new <Siprec> element
+      # name:: Friendly name given to SIPREC
+      # connector_name:: Unique name for Connector
+      # keyword_args:: additional attributes
+      def siprec(name: nil, connector_name: nil, **keyword_args)
+        siprec = Siprec.new(name: name, connector_name: connector_name, **keyword_args)
+
+        yield(siprec) if block_given?
+        append(siprec)
+      end
     end
 
     ##
@@ -891,17 +1038,6 @@ module Twilio
     end
 
     ##
-    # <Parameter> TwiML Noun
-    class Parameter < TwiML
-      def initialize(**keyword_args)
-        super(**keyword_args)
-        @name = 'Parameter'
-
-        yield(self) if block_given?
-      end
-    end
-
-    ##
     # <Identity> TwiML Noun
     class Identity < TwiML
       def initialize(client_identity, **keyword_args)
@@ -937,6 +1073,20 @@ module Twilio
       # keyword_args:: additional attributes
       def autopilot(name, **keyword_args)
         append(Autopilot.new(name, **keyword_args))
+      end
+
+      ##
+      # Create a new <Stream> element
+      # name:: Friendly name given to the Stream
+      # connector_name:: Unique name for Stream Connector
+      # url:: URL of the remote service where the Stream is routed
+      # track:: Track to be streamed to remote service
+      # keyword_args:: additional attributes
+      def stream(name: nil, connector_name: nil, url: nil, track: nil, **keyword_args)
+        stream = Stream.new(name: name, connector_name: connector_name, url: url, track: track, **keyword_args)
+
+        yield(stream) if block_given?
+        append(stream)
       end
     end
 
