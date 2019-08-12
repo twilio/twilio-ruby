@@ -493,7 +493,7 @@ module Twilio
       ##
       # Create a new <Lang> element
       # words:: Words to speak
-      # xml:lang:: Specify the language
+      # xmlLang:: Specify the language
       # keyword_args:: additional attributes
       def lang(words, xmlLang: nil, **keyword_args)
         append(SsmlLang.new(words, xmlLang: xmlLang, **keyword_args))
@@ -539,7 +539,7 @@ module Twilio
       ##
       # Create a new <Say-As> element
       # words:: Words to be interpreted
-      # interpret-as:: Specify the type of words are spoken
+      # interpretAs:: Specify the type of words are spoken
       # role:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
       def say_as(words, interpretAs: nil, role: nil, **keyword_args)
@@ -549,7 +549,7 @@ module Twilio
       ##
       # Create a new <Sub> element
       # words:: Words to be substituted
-      # alias:: Substitute a different word (or pronunciation) for selected text such as an acronym or abbreviation
+      # aliasAttribute:: Substitute a different word (or pronunciation) for selected text such as an acronym or abbreviation
       # keyword_args:: additional attributes
       def sub(words, aliasAttribute: nil, **keyword_args)
         append(SsmlSub.new(words, aliasAttribute: aliasAttribute, **keyword_args))
