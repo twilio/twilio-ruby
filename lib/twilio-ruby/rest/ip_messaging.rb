@@ -14,8 +14,8 @@ module Twilio
       def initialize(twilio)
         super
 
-        @base_url = 'https://ip-messaging.twilio.com'
-        @host = 'ip-messaging.twilio.com'
+        @base_url = 'https://chat.twilio.com'
+        @host = 'chat.twilio.com'
         @port = 443
 
         # Versions
