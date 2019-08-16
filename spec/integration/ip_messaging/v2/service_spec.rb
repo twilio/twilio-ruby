@@ -20,7 +20,7 @@ describe 'Service' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://ip-messaging.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -85,7 +85,7 @@ describe 'Service' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://ip-messaging.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -111,7 +111,7 @@ describe 'Service' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://ip-messaging.twilio.com/v2/Services',
+        url: 'https://chat.twilio.com/v2/Services',
         data: values,
     ))).to eq(true)
   end
@@ -177,7 +177,7 @@ describe 'Service' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://ip-messaging.twilio.com/v2/Services',
+        url: 'https://chat.twilio.com/v2/Services',
     ))).to eq(true)
   end
 
@@ -279,7 +279,7 @@ describe 'Service' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://ip-messaging.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 

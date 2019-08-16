@@ -22,7 +22,7 @@ describe 'UserChannel' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels',
     ))).to eq(true)
   end
 
