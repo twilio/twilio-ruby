@@ -175,6 +175,7 @@ module Twilio
                 'plugin_service_enabled' => payload['plugin_service_enabled'],
                 'plugin_service_attributes' => payload['plugin_service_attributes'],
                 'integrations' => payload['integrations'],
+                'outbound_call_flows' => payload['outbound_call_flows'],
                 'url' => payload['url'],
             }
 
@@ -378,6 +379,12 @@ module Twilio
           # @return [Hash] Integration parameters
           def integrations
             @properties['integrations']
+          end
+
+          ##
+          # @return [Hash] Outbound call flows Attributes
+          def outbound_call_flows
+            @properties['outbound_call_flows']
           end
 
           ##

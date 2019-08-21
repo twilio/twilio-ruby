@@ -50,8 +50,11 @@ module Twilio
           #   webhooks will be fired (if enabled). A reconnection by any endpoint during this
           #   window — from the same identity — means no reachability webhook would be fired.
           #   Must be between 1000 and 30000. Defaults to 5000.
+          # @param [Boolean] webhooks_from_rest_enabled `true` or `false` - controls whether
+          #   this instance fires webhooks when Sync objects are updated through REST.
+          #   Defaults to false.
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: :unset, webhook_url: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset, reachability_debouncing_enabled: :unset, reachability_debouncing_window: :unset)
+          def create(friendly_name: :unset, webhook_url: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset, reachability_debouncing_enabled: :unset, reachability_debouncing_window: :unset, webhooks_from_rest_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'WebhookUrl' => webhook_url,
@@ -59,6 +62,7 @@ module Twilio
                 'AclEnabled' => acl_enabled,
                 'ReachabilityDebouncingEnabled' => reachability_debouncing_enabled,
                 'ReachabilityDebouncingWindow' => reachability_debouncing_window,
+                'WebhooksFromRestEnabled' => webhooks_from_rest_enabled,
             })
 
             payload = @version.create(
@@ -258,8 +262,11 @@ module Twilio
           #   webhooks will be fired (if enabled). A reconnection by any endpoint during this
           #   window — from the same identity — means no reachability webhook would be fired.
           #   Must be between 1000 and 30000. Defaults to 5000.
+          # @param [Boolean] webhooks_from_rest_enabled `true` or `false` - controls whether
+          #   this instance fires webhooks when Sync objects are updated through REST.
+          #   Defaults to false.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(webhook_url: :unset, friendly_name: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset, reachability_debouncing_enabled: :unset, reachability_debouncing_window: :unset)
+          def update(webhook_url: :unset, friendly_name: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset, reachability_debouncing_enabled: :unset, reachability_debouncing_window: :unset, webhooks_from_rest_enabled: :unset)
             data = Twilio::Values.of({
                 'WebhookUrl' => webhook_url,
                 'FriendlyName' => friendly_name,
@@ -267,6 +274,7 @@ module Twilio
                 'AclEnabled' => acl_enabled,
                 'ReachabilityDebouncingEnabled' => reachability_debouncing_enabled,
                 'ReachabilityDebouncingWindow' => reachability_debouncing_window,
+                'WebhooksFromRestEnabled' => webhooks_from_rest_enabled,
             })
 
             payload = @version.update(
@@ -387,6 +395,7 @@ module Twilio
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
                 'webhook_url' => payload['webhook_url'],
+                'webhooks_from_rest_enabled' => payload['webhooks_from_rest_enabled'],
                 'reachability_webhooks_enabled' => payload['reachability_webhooks_enabled'],
                 'acl_enabled' => payload['acl_enabled'],
                 'reachability_debouncing_enabled' => payload['reachability_debouncing_enabled'],
@@ -459,6 +468,12 @@ module Twilio
           end
 
           ##
+          # @return [Boolean] true or false - controls whether this instance fires webhooks when Sync objects are updated through REST
+          def webhooks_from_rest_enabled
+            @properties['webhooks_from_rest_enabled']
+          end
+
+          ##
           # @return [Boolean] true or false - controls whether this instance fires webhooks when client endpoints connect to Sync
           def reachability_webhooks_enabled
             @properties['reachability_webhooks_enabled']
@@ -526,8 +541,11 @@ module Twilio
           #   webhooks will be fired (if enabled). A reconnection by any endpoint during this
           #   window — from the same identity — means no reachability webhook would be fired.
           #   Must be between 1000 and 30000. Defaults to 5000.
+          # @param [Boolean] webhooks_from_rest_enabled `true` or `false` - controls whether
+          #   this instance fires webhooks when Sync objects are updated through REST.
+          #   Defaults to false.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(webhook_url: :unset, friendly_name: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset, reachability_debouncing_enabled: :unset, reachability_debouncing_window: :unset)
+          def update(webhook_url: :unset, friendly_name: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset, reachability_debouncing_enabled: :unset, reachability_debouncing_window: :unset, webhooks_from_rest_enabled: :unset)
             context.update(
                 webhook_url: webhook_url,
                 friendly_name: friendly_name,
@@ -535,6 +553,7 @@ module Twilio
                 acl_enabled: acl_enabled,
                 reachability_debouncing_enabled: reachability_debouncing_enabled,
                 reachability_debouncing_window: reachability_debouncing_window,
+                webhooks_from_rest_enabled: webhooks_from_rest_enabled,
             )
           end
 

@@ -18,7 +18,7 @@ module Twilio
             # Initialize the VerificationList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+            #   [Service](https://www.twilio.com/docs/verify/api/service) the resource is
             #   associated with.
             # @return [VerificationList] VerificationList
             def initialize(version, service_sid: nil)
@@ -122,7 +122,7 @@ module Twilio
             # Initialize the VerificationContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the verification
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the resource
+            #   [Service](https://www.twilio.com/docs/verify/api/service) to fetch the resource
             #   from.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Verification resource to fetch.
@@ -138,7 +138,7 @@ module Twilio
             ##
             # Update the VerificationInstance
             # @param [verification.Status] status The new status of the resource. Can be:
-            #   `pending`, `approved`, `denied`, or `expired`.
+            #   `canceled` or `approved`.
             # @return [VerificationInstance] Updated VerificationInstance
             def update(status: nil)
               data = Twilio::Values.of({'Status' => status, })
@@ -200,7 +200,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+            #   [Service](https://www.twilio.com/docs/verify/api/service) the resource is
             #   associated with.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Verification resource to fetch.
@@ -322,7 +322,7 @@ module Twilio
             ##
             # Update the VerificationInstance
             # @param [verification.Status] status The new status of the resource. Can be:
-            #   `pending`, `approved`, `denied`, or `expired`.
+            #   `canceled` or `approved`.
             # @return [VerificationInstance] Updated VerificationInstance
             def update(status: nil)
               context.update(status: status, )

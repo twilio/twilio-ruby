@@ -37,6 +37,22 @@ module Twilio
       end
 
       ##
+      # @param [String] sid The unique SID identifier of the Flex Chat Channel
+      # @return [Twilio::REST::Flex_api::V1::ChannelInstance] if sid was passed.
+      # @return [Twilio::REST::Flex_api::V1::ChannelList]
+      def channel(sid=:unset)
+        self.v1.channel(sid)
+      end
+
+      ##
+      # @param [String] sid The unique SID identifier of the Flex Chat Channel
+      # @return [Twilio::REST::Flex_api::V1::WebChannelInstance] if sid was passed.
+      # @return [Twilio::REST::Flex_api::V1::WebChannelList]
+      def web_channel(sid=:unset)
+        self.v1.web_channel(sid)
+      end
+
+      ##
       # @return [Twilio::REST::Flex_api::V1::ConfigurationInstance]
       def configuration
         self.v1.configuration()

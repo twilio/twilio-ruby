@@ -72,11 +72,6 @@ module Twilio
             # @param [Boolean] force_delivery Reserved
             # @param [Boolean] smart_encoded Whether to detect Unicode characters that have a
             #   similar GSM-7 character and replace them. Can be: `true` or `false`.
-            # @param [String] interactive_data A JSON string that represents an interactive
-            #   message. An interactive message is a category of messages that includes a list
-            #   picker, a time picker, and an Apple Pay request.
-            # @param [Boolean] force_opt_in Whether to forcefully whitelist a from:to pair.
-            #   Can be: `true` or `false`.
             # @param [String] from A Twilio phone number in
             #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, an [alphanumeric
             #   sender
@@ -100,7 +95,7 @@ module Twilio
             #   can include up to 10 `media_url` parameters per message. You can send images in
             #   an SMS message in only the US and Canada.
             # @return [MessageInstance] Newly created MessageInstance
-            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, force_delivery: :unset, smart_encoded: :unset, interactive_data: :unset, force_opt_in: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
+            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, force_delivery: :unset, smart_encoded: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -114,8 +109,6 @@ module Twilio
                   'ValidityPeriod' => validity_period,
                   'ForceDelivery' => force_delivery,
                   'SmartEncoded' => smart_encoded,
-                  'InteractiveData' => interactive_data,
-                  'ForceOptIn' => force_opt_in,
               })
 
               payload = @version.create(

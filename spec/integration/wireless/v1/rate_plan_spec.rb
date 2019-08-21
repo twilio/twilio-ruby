@@ -83,6 +83,8 @@ describe 'RatePlan' do
                   ],
                   "international_roaming_data_limit": 1000,
                   "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "usage_notification_method": "POST",
+                  "usage_notification_url": "https://callback.com",
                   "url": "https://wireless.twilio.com/v1/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
           ]
@@ -134,6 +136,8 @@ describe 'RatePlan' do
           ],
           "international_roaming_data_limit": 1000,
           "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "usage_notification_method": "POST",
+          "usage_notification_url": "https://callback.com",
           "url": "https://wireless.twilio.com/v1/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -183,6 +187,8 @@ describe 'RatePlan' do
           ],
           "international_roaming_data_limit": 1000,
           "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "usage_notification_method": "POST",
+          "usage_notification_url": "https://callback.com",
           "url": "https://wireless.twilio.com/v1/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -232,6 +238,8 @@ describe 'RatePlan' do
           ],
           "international_roaming_data_limit": 1000,
           "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "usage_notification_method": "POST",
+          "usage_notification_url": "https://callback.com",
           "url": "https://wireless.twilio.com/v1/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]

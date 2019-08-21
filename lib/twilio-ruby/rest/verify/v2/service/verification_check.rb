@@ -18,7 +18,7 @@ module Twilio
             # Initialize the VerificationCheckList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+            #   [Service](https://www.twilio.com/docs/verify/api/service) the resource is
             #   associated with.
             # @return [VerificationCheckList] VerificationCheckList
             def initialize(version, service_sid: nil)
@@ -106,7 +106,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+            #   [Service](https://www.twilio.com/docs/verify/api/service) the resource is
             #   associated with.
             # @return [VerificationCheckInstance] VerificationCheckInstance
             def initialize(version, payload, service_sid: nil)

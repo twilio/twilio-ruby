@@ -214,13 +214,16 @@ module Twilio
       # Create a new <Pay> element
       # input:: Input type Twilio should accept
       # action:: Action URL
+      # bank_account_type:: Bank account type for ach transactions. If set, payment method attribute must be provided and value should be set to ach-debit. defaults to consumer-checking
       # status_callback:: Status callback URL
       # status_callback_method:: Status callback method
       # timeout:: Time to wait to gather input
       # max_attempts:: Maximum number of allowed retries when gathering input
       # security_code:: Prompt for security code
       # postal_code:: Prompt for postal code and it should be true/false or default postal code
+      # min_postal_code_length:: Prompt for minimum postal code length
       # payment_connector:: Unique name for payment connector
+      # payment_method:: Payment method to be used. defaults to credit-card
       # token_type:: Type of token
       # charge_amount:: Amount to process. If value is greater than 0 then make the payment else create a payment token
       # currency:: Currency of the amount attribute
@@ -228,8 +231,8 @@ module Twilio
       # valid_card_types:: Comma separated accepted card types
       # language:: Language to use
       # keyword_args:: additional attributes
-      def pay(input: nil, action: nil, status_callback: nil, status_callback_method: nil, timeout: nil, max_attempts: nil, security_code: nil, postal_code: nil, payment_connector: nil, token_type: nil, charge_amount: nil, currency: nil, description: nil, valid_card_types: nil, language: nil, **keyword_args)
-        pay = Pay.new(input: input, action: action, status_callback: status_callback, status_callback_method: status_callback_method, timeout: timeout, max_attempts: max_attempts, security_code: security_code, postal_code: postal_code, payment_connector: payment_connector, token_type: token_type, charge_amount: charge_amount, currency: currency, description: description, valid_card_types: valid_card_types, language: language, **keyword_args)
+      def pay(input: nil, action: nil, bank_account_type: nil, status_callback: nil, status_callback_method: nil, timeout: nil, max_attempts: nil, security_code: nil, postal_code: nil, min_postal_code_length: nil, payment_connector: nil, payment_method: nil, token_type: nil, charge_amount: nil, currency: nil, description: nil, valid_card_types: nil, language: nil, **keyword_args)
+        pay = Pay.new(input: input, action: action, bank_account_type: bank_account_type, status_callback: status_callback, status_callback_method: status_callback_method, timeout: timeout, max_attempts: max_attempts, security_code: security_code, postal_code: postal_code, min_postal_code_length: min_postal_code_length, payment_connector: payment_connector, payment_method: payment_method, token_type: token_type, charge_amount: charge_amount, currency: currency, description: description, valid_card_types: valid_card_types, language: language, **keyword_args)
 
         yield(pay) if block_given?
         append(pay)
@@ -237,7 +240,7 @@ module Twilio
 
       ##
       # Create a new <Prompt> element
-      # for_:: Name of the credit card data element
+      # for_:: Name of the payment source data element
       # error_type:: Type of error
       # card_type:: Type of the credit card
       # attempt:: Current attempt count
@@ -687,7 +690,7 @@ module Twilio
 
       ##
       # Create a new <Prompt> element
-      # for_:: Name of the credit card data element
+      # for_:: Name of the payment source data element
       # error_type:: Type of error
       # card_type:: Type of the credit card
       # attempt:: Current attempt count
@@ -697,6 +700,15 @@ module Twilio
 
         yield(prompt) if block_given?
         append(prompt)
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
       end
     end
 
