@@ -1,9 +1,13 @@
 # twilio-ruby
 
-[![Build Status](http://img.shields.io/travis/twilio/twilio-ruby.svg)][travis]
-[![Gem Version](http://img.shields.io/gem/v/twilio-ruby.svg)](https://rubygems.org/gems/twilio-ruby)
+[![Build Status](https://img.shields.io/travis/twilio/twilio-ruby.svg)][travis]
+[![Gem Version](https://img.shields.io/gem/v/twilio-ruby.svg)](https://rubygems.org/gems/twilio-ruby)
 
-A module for using the Twilio REST API and generating valid [TwiML](http://www.twilio.com/docs/api/twiml/ "TwiML - Twilio Markup Language"). [Click here to read the full documentation.][documentation]
+## Documentation
+
+The documentation for the Twilio API can be found [here][apidocs].
+
+The Ruby library documentation can be found [here][libdocs].
 
 ## Recent Update
 
@@ -19,7 +23,6 @@ product lines that were historically hidden from you due to their Beta or
 Developer Preview status. Such products are explicitly documented as
 Beta/Developer Preview both in the Twilio docs and console, as well as through
 in-line code documentation here in the library.
-
 
 ## Installation
 
@@ -44,12 +47,11 @@ make install
 ```
 
 ### Migration from 4.x
+
 [Upgrade Guide][upgrade]
 
-## Documentation
-[Here][documentation]
-
 ## Docker Image
+
 The `Dockerfile` present in this repository and its respective `twilio/twilio-ruby` Docker image are currently used by Twilio for testing purposes only.
 
 ## Getting help
@@ -108,6 +110,7 @@ message_sid = 'SMxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 ```
 
 ### Customizing your HTTP Client
+
 twilio-ruby uses [Faraday][faraday] to make HTTP requests. You can tell
 Twilio::REST::Client to use any of the Faraday adapters like so:
 
@@ -145,7 +148,9 @@ capability.add_scope(incoming_scope)
 There is a slightly more detailed document in the [Capability][capability]
 section of the wiki.
 
-## Getting Started With TwiML
+### Generating TwiML
+
+To control phone calls, your application needs to output [TwiML][twiml].
 
 You can construct a TwiML response like this:
 
@@ -185,14 +190,16 @@ implementations:
 - Ruby 2.3.0
 - Ruby 2.2.0
 
+[apidocs]: https://www.twilio.com/docs/api
+[twiml]: https://www.twilio.com/docs/api/twiml
+[libdocs]: https://twilio.github.io/twilio-ruby
 [capability]: https://github.com/twilio/twilio-ruby/wiki/JWT-Tokens
 [examples]: https://github.com/twilio/twilio-ruby/blob/master/examples
-[documentation]: http://twilio.github.io/twilio-ruby
 [wiki]: https://github.com/twilio/twilio-ruby/wiki
-[bundler]: http://bundler.io
-[rubygems]: http://rubygems.org
+[bundler]: https://bundler.io
+[rubygems]: https://rubygems.org
 [gem]: https://rubygems.org/gems/twilio
-[travis]: http://travis-ci.org/twilio/twilio-ruby
+[travis]: https://travis-ci.org/twilio/twilio-ruby
 [upgrade]: https://github.com/twilio/twilio-ruby/wiki/Ruby-Version-5.x-Upgrade-Guide
 [issues]: https://github.com/twilio/twilio-ruby/issues
 [faraday]: https://github.com/lostisland/faraday
