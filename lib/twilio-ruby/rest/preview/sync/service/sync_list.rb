@@ -202,7 +202,7 @@ module Twilio
 
             ##
             # Deletes the SyncListInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               @version.delete('delete', @uri)
             end
@@ -378,7 +378,7 @@ module Twilio
 
             ##
             # Deletes the SyncListInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
