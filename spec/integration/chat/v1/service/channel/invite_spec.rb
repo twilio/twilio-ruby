@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -120,13 +120,13 @@ describe 'Invite' do
       {
           "invites": [],
           "meta": {
-              "first_page_url": "https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Invites?PageSize=50&Page=0",
+              "first_page_url": "https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Invites?Identity=identity&PageSize=50&Page=0",
               "key": "invites",
               "next_page_url": null,
               "page": 0,
               "page_size": 50,
               "previous_page_url": null,
-              "url": "https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Invites?PageSize=50&Page=0"
+              "url": "https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Invites?Identity=identity&PageSize=50&Page=0"
           }
       }
       ]
@@ -159,13 +159,13 @@ describe 'Invite' do
               }
           ],
           "meta": {
-              "first_page_url": "https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Invites?PageSize=50&Page=0",
+              "first_page_url": "https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Invites?Identity=identity&PageSize=50&Page=0",
               "key": "invites",
               "next_page_url": null,
               "page": 0,
               "page_size": 50,
               "previous_page_url": null,
-              "url": "https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Invites?PageSize=50&Page=0"
+              "url": "https://chat.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Invites?Identity=identity&PageSize=50&Page=0"
           }
       }
       ]

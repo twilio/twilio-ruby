@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -248,7 +248,7 @@ module Twilio
 
             ##
             # Update the ConferenceInstance
-            # @param [conference.UpdateStatus] status The new status of the resource. Can be: 
+            # @param [conference.UpdateStatus] status The new status of the resource. Can be:
             #   Can be: `init`, `in-progress`, or `completed`. Specifying `completed` will end
             #   the conference and hang up all participants
             # @param [String] announce_url The URL we should call to announce something into
@@ -450,7 +450,7 @@ module Twilio
 
             ##
             # Update the ConferenceInstance
-            # @param [conference.UpdateStatus] status The new status of the resource. Can be: 
+            # @param [conference.UpdateStatus] status The new status of the resource. Can be:
             #   Can be: `init`, `in-progress`, or `completed`. Specifying `completed` will end
             #   the conference and hang up all participants
             # @param [String] announce_url The URL we should call to announce something into

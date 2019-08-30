@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -19,7 +19,8 @@ module Twilio
         end
 
         ##
-        # @param [String] sid A 34 character string that uniquely identifies this fax.
+        # @param [String] sid The Twilio-provided string that uniquely identifies the Fax
+        #   resource to fetch.
         # @return [Twilio::REST::Fax::V1::FaxContext] if sid was passed.
         # @return [Twilio::REST::Fax::V1::FaxList]
         def faxes(sid=:unset)

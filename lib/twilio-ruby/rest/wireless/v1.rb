@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -17,6 +17,7 @@ module Twilio
           @version = 'v1'
           @commands = nil
           @rate_plans = nil
+          @usage_records = nil
           @sims = nil
         end
 
@@ -36,7 +37,8 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The sid
+        # @param [String] sid A 34 character string that uniquely identifies this
+        #   resource.
         # @return [Twilio::REST::Wireless::V1::RatePlanContext] if sid was passed.
         # @return [Twilio::REST::Wireless::V1::RatePlanList]
         def rate_plans(sid=:unset)
@@ -47,6 +49,12 @@ module Twilio
           else
             RatePlanContext.new(self, sid)
           end
+        end
+
+        ##
+        # @return [Twilio::REST::Wireless::V1::UsageRecordContext]
+        def usage_records
+          @usage_records ||= UsageRecordList.new self
         end
 
         ##

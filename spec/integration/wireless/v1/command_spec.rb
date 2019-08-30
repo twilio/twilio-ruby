@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -98,13 +98,13 @@ describe 'Command' do
       {
           "commands": [],
           "meta": {
-              "first_page_url": "https://wireless.twilio.com/v1/Commands?PageSize=50&Page=0",
+              "first_page_url": "https://wireless.twilio.com/v1/Commands?Status=queued&Direction=from_sim&Sim=sim&PageSize=50&Page=0",
               "key": "commands",
               "next_page_url": null,
               "page": 0,
               "page_size": 50,
               "previous_page_url": null,
-              "url": "https://wireless.twilio.com/v1/Commands?PageSize=50&Page=0"
+              "url": "https://wireless.twilio.com/v1/Commands?Status=queued&Direction=from_sim&Sim=sim&PageSize=50&Page=0"
           }
       }
       ]
@@ -137,13 +137,13 @@ describe 'Command' do
               }
           ],
           "meta": {
-              "first_page_url": "https://wireless.twilio.com/v1/Commands?PageSize=50&Page=0",
+              "first_page_url": "https://wireless.twilio.com/v1/Commands?Status=queued&Direction=from_sim&Sim=sim&PageSize=50&Page=0",
               "key": "commands",
               "next_page_url": null,
               "page": 0,
               "page_size": 50,
               "previous_page_url": null,
-              "url": "https://wireless.twilio.com/v1/Commands?PageSize=50&Page=0"
+              "url": "https://wireless.twilio.com/v1/Commands?Status=queued&Direction=from_sim&Sim=sim&PageSize=50&Page=0"
           }
       }
       ]
@@ -176,13 +176,13 @@ describe 'Command' do
               }
           ],
           "meta": {
-              "first_page_url": "https://wireless.twilio.com/v1/Commands?PageSize=50&Page=0",
+              "first_page_url": "https://wireless.twilio.com/v1/Commands?Status=queued&Direction=to_sim&Transport=ip&Sim=sim&PageSize=50&Page=0",
               "key": "commands",
               "next_page_url": null,
               "page": 0,
               "page_size": 50,
               "previous_page_url": null,
-              "url": "https://wireless.twilio.com/v1/Commands?PageSize=50&Page=0"
+              "url": "https://wireless.twilio.com/v1/Commands?Status=queued&Direction=to_sim&Transport=ip&Sim=sim&PageSize=50&Page=0"
           }
       }
       ]

@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -113,6 +113,30 @@ describe 'Composition' do
     ))).to eq(true)
   end
 
+  it "receives read_enqueued responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "compositions": [],
+          "meta": {
+              "page": 0,
+              "page_size": 10,
+              "first_page_url": "https://video.twilio.com/v1/Compositions?Status=enqueued&PageSize=10&Page=0",
+              "previous_page_url": null,
+              "url": "https://video.twilio.com/v1/Compositions?Status=enqueued&PageSize=10&Page=0",
+              "next_page_url": null,
+              "key": "compositions"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.video.v1.compositions.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "receives read_empty responses" do
     @holodeck.mock(Twilio::Response.new(
         200,
@@ -122,9 +146,9 @@ describe 'Composition' do
           "meta": {
               "page": 0,
               "page_size": 50,
-              "first_page_url": "https://video.twilio.com/v1/Compositions?PageSize=50&Page=0",
+              "first_page_url": "https://video.twilio.com/v1/Compositions?Status=completed&PageSize=50&Page=0",
               "previous_page_url": null,
-              "url": "https://video.twilio.com/v1/Compositions?PageSize=50&Page=0",
+              "url": "https://video.twilio.com/v1/Compositions?Status=completed&PageSize=50&Page=0",
               "next_page_url": null,
               "key": "compositions"
           }
@@ -205,9 +229,9 @@ describe 'Composition' do
           "meta": {
               "page": 0,
               "page_size": 50,
-              "first_page_url": "https://video.twilio.com/v1/Compositions?PageSize=50&Page=0",
+              "first_page_url": "https://video.twilio.com/v1/Compositions?Status=completed&RoomSid=RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&DateCreatedAfter=2017-01-01T00%3A00%3A01Z&DateCreatedBefore=2017-12-31T23%3A59%3A59Z&PageSize=50&Page=0",
               "previous_page_url": null,
-              "url": "https://video.twilio.com/v1/Compositions?PageSize=50&Page=0",
+              "url": "https://video.twilio.com/v1/Compositions?Status=completed&RoomSid=RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&DateCreatedAfter=2017-01-01T00%3A00%3A01Z&DateCreatedBefore=2017-12-31T23%3A59%3A59Z&PageSize=50&Page=0",
               "next_page_url": null,
               "key": "compositions"
           }
@@ -250,14 +274,15 @@ describe 'Composition' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.video.v1.compositions.create()
+      @client.video.v1.compositions.create(room_sid: 'RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    values = {'RoomSid' => 'RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://video.twilio.com/v1/Compositions',
+        data: values,
     ))).to eq(true)
   end
 
@@ -318,7 +343,7 @@ describe 'Composition' do
       ]
     ))
 
-    actual = @client.video.v1.compositions.create()
+    actual = @client.video.v1.compositions.create(room_sid: 'RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
     expect(actual).to_not eq(nil)
   end

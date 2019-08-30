@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -185,19 +185,19 @@ module Twilio
           # @param [String] resolution A string representing the number of pixels for rows
           #   (width) and columns (height) of the generated composed video. This string must
           #   have the format `{width}x{height}`. This parameter must comply with the
-          #   following constraints: 
-          # 
+          #   following constraints:
+          #
           #   * `width >= 16 && width <= 1280`
           #   * `height >= 16 && height <= 1280`
           #   * `width * height <= 921,600`
-          # 
-          #   Typical values are: 
-          # 
+          #
+          #   Typical values are:
+          #
           #   * HD = `1280x720`
           #   * PAL = `1024x576`
           #   * VGA = `640x480`
           #   * CIF = `320x240`
-          # 
+          #
           #   Note that the `Resolution` implicitly imposes an aspect ratio to the resulting
           #   composition. When the original video tracks get constrained by this aspect ratio
           #   they are scaled-down to fit. You can find detailed information in the

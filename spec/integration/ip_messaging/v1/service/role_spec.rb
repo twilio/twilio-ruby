@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -21,7 +21,7 @@ describe 'Role' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles/RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles/RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -66,7 +66,7 @@ describe 'Role' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles/RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles/RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -98,7 +98,7 @@ describe 'Role' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles',
         data: values,
     ))).to eq(true)
   end
@@ -144,7 +144,7 @@ describe 'Role' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles',
     ))).to eq(true)
   end
 
@@ -227,7 +227,7 @@ describe 'Role' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles/RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Roles/RLXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         data: values,
     ))).to eq(true)
   end

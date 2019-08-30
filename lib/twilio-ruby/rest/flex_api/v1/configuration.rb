@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -172,6 +172,10 @@ module Twilio
                 'crm_fallback_url' => payload['crm_fallback_url'],
                 'crm_attributes' => payload['crm_attributes'],
                 'public_attributes' => payload['public_attributes'],
+                'plugin_service_enabled' => payload['plugin_service_enabled'],
+                'plugin_service_attributes' => payload['plugin_service_attributes'],
+                'integrations' => payload['integrations'],
+                'outbound_call_flows' => payload['outbound_call_flows'],
                 'url' => payload['url'],
             }
 
@@ -357,6 +361,30 @@ module Twilio
           # @return [Hash] Public Attributes
           def public_attributes
             @properties['public_attributes']
+          end
+
+          ##
+          # @return [Boolean] Is plugin service Enabled
+          def plugin_service_enabled
+            @properties['plugin_service_enabled']
+          end
+
+          ##
+          # @return [Hash] Plugin service Attributes
+          def plugin_service_attributes
+            @properties['plugin_service_attributes']
+          end
+
+          ##
+          # @return [Hash] Integration parameters
+          def integrations
+            @properties['integrations']
+          end
+
+          ##
+          # @return [Hash] Outbound call flows Attributes
+          def outbound_call_flows
+            @properties['outbound_call_flows']
           end
 
           ##

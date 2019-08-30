@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -43,7 +43,8 @@ describe 'PhoneNumber' do
               "voice_inbound": false
           },
           "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "is_reserved": false
+          "is_reserved": false,
+          "in_use": 0
       }
       ]
     ))
@@ -127,7 +128,8 @@ describe 'PhoneNumber' do
                       "voice_inbound": false
                   },
                   "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                  "is_reserved": false
+                  "is_reserved": false,
+                  "in_use": 0
               }
           ]
       }
@@ -174,7 +176,8 @@ describe 'PhoneNumber' do
               "voice_inbound": false
           },
           "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "is_reserved": false
+          "is_reserved": false,
+          "in_use": 0
       }
       ]
     ))
@@ -219,7 +222,8 @@ describe 'PhoneNumber' do
               "voice_inbound": false
           },
           "url": "https://proxy.twilio.com/v1/Services/KSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/PhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "is_reserved": true
+          "is_reserved": true,
+          "in_use": 0
       }
       ]
     ))

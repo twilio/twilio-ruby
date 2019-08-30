@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -19,8 +19,8 @@ module Twilio
               # @param [String] account_sid The SID of the
               #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Media
               #   resource.
-              # @param [String] message_sid A 34 character string that uniquely identifies this
-              #   resource.
+              # @param [String] message_sid The unique string that that we created to identify
+              #   the Message resource.
               # @return [MediaList] MediaList
               def initialize(version, account_sid: nil, message_sid: nil)
                 super(version)
@@ -247,8 +247,8 @@ module Twilio
               # @param [String] account_sid The SID of the
               #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Media
               #   resource.
-              # @param [String] message_sid A 34 character string that uniquely identifies this
-              #   resource.
+              # @param [String] message_sid The unique string that that we created to identify
+              #   the Message resource.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Media resource to fetch
               # @return [MediaInstance] MediaInstance

@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -15,7 +15,52 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @flex_flow = nil
+          @channel = nil
+          @web_channel = nil
           @configuration = nil
+        end
+
+        ##
+        # @param [String] sid The unique ID of the FlexFlow
+        # @return [Twilio::REST::Flex_api::V1::FlexFlowContext] if sid was passed.
+        # @return [Twilio::REST::Flex_api::V1::FlexFlowList]
+        def flex_flow(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @flex_flow ||= FlexFlowList.new self
+          else
+            FlexFlowContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The unique SID identifier of the Flex Chat Channel
+        # @return [Twilio::REST::Flex_api::V1::ChannelContext] if sid was passed.
+        # @return [Twilio::REST::Flex_api::V1::ChannelList]
+        def channel(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @channel ||= ChannelList.new self
+          else
+            ChannelContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The unique SID identifier of the Flex Chat Channel
+        # @return [Twilio::REST::Flex_api::V1::WebChannelContext] if sid was passed.
+        # @return [Twilio::REST::Flex_api::V1::WebChannelList]
+        def web_channel(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @web_channel ||= WebChannelList.new self
+          else
+            WebChannelContext.new(self, sid)
+          end
         end
 
         ##

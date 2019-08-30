@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -358,6 +358,7 @@ module Twilio
                   'uri' => payload['uri'],
                   'emergency_enabled' => payload['emergency_enabled'],
                   'validated' => payload['validated'],
+                  'verified' => payload['verified'],
               }
 
               # Context
@@ -458,6 +459,12 @@ module Twilio
             # @return [Boolean] Whether the address has been validated to comply with local regulation
             def validated
               @properties['validated']
+            end
+
+            ##
+            # @return [Boolean] Whether the address has been verified to comply with regulation
+            def verified
+              @properties['verified']
             end
 
             ##

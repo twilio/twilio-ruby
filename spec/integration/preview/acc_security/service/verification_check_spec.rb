@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -34,7 +34,7 @@ describe 'VerificationCheck' do
           "sid": "VEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "service_sid": "VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "to": "+14159373912",
+          "to": "+15017122661",
           "channel": "sms",
           "status": "approved",
           "valid": false,

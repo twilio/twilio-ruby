@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -94,9 +94,10 @@ module Twilio
       # hints:: Speech recognition hints
       # barge_in:: Stop playing media upon speech
       # debug:: Allow debug for gather
+      # action_on_empty_result:: Force webhook to the action URL event if there is no input
       # keyword_args:: additional attributes
-      def gather(input: nil, action: nil, method: nil, timeout: nil, speech_timeout: nil, max_speech_time: nil, profanity_filter: nil, finish_on_key: nil, num_digits: nil, partial_result_callback: nil, partial_result_callback_method: nil, language: nil, hints: nil, barge_in: nil, debug: nil, **keyword_args)
-        gather = Gather.new(input: input, action: action, method: method, timeout: timeout, speech_timeout: speech_timeout, max_speech_time: max_speech_time, profanity_filter: profanity_filter, finish_on_key: finish_on_key, num_digits: num_digits, partial_result_callback: partial_result_callback, partial_result_callback_method: partial_result_callback_method, language: language, hints: hints, barge_in: barge_in, debug: debug, **keyword_args)
+      def gather(input: nil, action: nil, method: nil, timeout: nil, speech_timeout: nil, max_speech_time: nil, profanity_filter: nil, finish_on_key: nil, num_digits: nil, partial_result_callback: nil, partial_result_callback_method: nil, language: nil, hints: nil, barge_in: nil, debug: nil, action_on_empty_result: nil, **keyword_args)
+        gather = Gather.new(input: input, action: action, method: method, timeout: timeout, speech_timeout: speech_timeout, max_speech_time: max_speech_time, profanity_filter: profanity_filter, finish_on_key: finish_on_key, num_digits: num_digits, partial_result_callback: partial_result_callback, partial_result_callback_method: partial_result_callback_method, language: language, hints: hints, barge_in: barge_in, debug: debug, action_on_empty_result: action_on_empty_result, **keyword_args)
 
         yield(gather) if block_given?
         append(gather)
@@ -213,13 +214,16 @@ module Twilio
       # Create a new <Pay> element
       # input:: Input type Twilio should accept
       # action:: Action URL
+      # bank_account_type:: Bank account type for ach transactions. If set, payment method attribute must be provided and value should be set to ach-debit. defaults to consumer-checking
       # status_callback:: Status callback URL
       # status_callback_method:: Status callback method
       # timeout:: Time to wait to gather input
       # max_attempts:: Maximum number of allowed retries when gathering input
       # security_code:: Prompt for security code
       # postal_code:: Prompt for postal code and it should be true/false or default postal code
+      # min_postal_code_length:: Prompt for minimum postal code length
       # payment_connector:: Unique name for payment connector
+      # payment_method:: Payment method to be used. defaults to credit-card
       # token_type:: Type of token
       # charge_amount:: Amount to process. If value is greater than 0 then make the payment else create a payment token
       # currency:: Currency of the amount attribute
@@ -227,8 +231,8 @@ module Twilio
       # valid_card_types:: Comma separated accepted card types
       # language:: Language to use
       # keyword_args:: additional attributes
-      def pay(input: nil, action: nil, status_callback: nil, status_callback_method: nil, timeout: nil, max_attempts: nil, security_code: nil, postal_code: nil, payment_connector: nil, token_type: nil, charge_amount: nil, currency: nil, description: nil, valid_card_types: nil, language: nil, **keyword_args)
-        pay = Pay.new(input: input, action: action, status_callback: status_callback, status_callback_method: status_callback_method, timeout: timeout, max_attempts: max_attempts, security_code: security_code, postal_code: postal_code, payment_connector: payment_connector, token_type: token_type, charge_amount: charge_amount, currency: currency, description: description, valid_card_types: valid_card_types, language: language, **keyword_args)
+      def pay(input: nil, action: nil, bank_account_type: nil, status_callback: nil, status_callback_method: nil, timeout: nil, max_attempts: nil, security_code: nil, postal_code: nil, min_postal_code_length: nil, payment_connector: nil, payment_method: nil, token_type: nil, charge_amount: nil, currency: nil, description: nil, valid_card_types: nil, language: nil, **keyword_args)
+        pay = Pay.new(input: input, action: action, bank_account_type: bank_account_type, status_callback: status_callback, status_callback_method: status_callback_method, timeout: timeout, max_attempts: max_attempts, security_code: security_code, postal_code: postal_code, min_postal_code_length: min_postal_code_length, payment_connector: payment_connector, payment_method: payment_method, token_type: token_type, charge_amount: charge_amount, currency: currency, description: description, valid_card_types: valid_card_types, language: language, **keyword_args)
 
         yield(pay) if block_given?
         append(pay)
@@ -236,7 +240,7 @@ module Twilio
 
       ##
       # Create a new <Prompt> element
-      # for_:: Name of the credit card data element
+      # for_:: Name of the payment source data element
       # error_type:: Type of error
       # card_type:: Type of the credit card
       # attempt:: Current attempt count
@@ -246,6 +250,153 @@ module Twilio
 
         yield(prompt) if block_given?
         append(prompt)
+      end
+
+      ##
+      # Create a new <Start> element
+      # action:: Action URL
+      # method:: Action URL method
+      # keyword_args:: additional attributes
+      def start(action: nil, method: nil, **keyword_args)
+        start = Start.new(action: action, method: method, **keyword_args)
+
+        yield(start) if block_given?
+        append(start)
+      end
+
+      ##
+      # Create a new <Stop> element
+      # keyword_args:: additional attributes
+      def stop(**keyword_args)
+        stop = Stop.new(**keyword_args)
+
+        yield(stop) if block_given?
+        append(stop)
+      end
+    end
+
+    ##
+    # <Stop> TwiML Verb
+    class Stop < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Stop'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Stream> element
+      # name:: Friendly name given to the Stream
+      # connector_name:: Unique name for Stream Connector
+      # url:: URL of the remote service where the Stream is routed
+      # track:: Track to be streamed to remote service
+      # keyword_args:: additional attributes
+      def stream(name: nil, connector_name: nil, url: nil, track: nil, **keyword_args)
+        stream = Stream.new(name: name, connector_name: connector_name, url: url, track: track, **keyword_args)
+
+        yield(stream) if block_given?
+        append(stream)
+      end
+
+      ##
+      # Create a new <Siprec> element
+      # name:: Friendly name given to SIPREC
+      # connector_name:: Unique name for Connector
+      # keyword_args:: additional attributes
+      def siprec(name: nil, connector_name: nil, **keyword_args)
+        siprec = Siprec.new(name: name, connector_name: connector_name, **keyword_args)
+
+        yield(siprec) if block_given?
+        append(siprec)
+      end
+    end
+
+    ##
+    # <Siprec> TwiML Noun
+    class Siprec < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Siprec'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
+      end
+    end
+
+    ##
+    # <Parameter> TwiML Noun
+    class Parameter < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Parameter'
+
+        yield(self) if block_given?
+      end
+    end
+
+    ##
+    # <Stream> TwiML Noun
+    class Stream < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Stream'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
+      end
+    end
+
+    ##
+    # <Start> TwiML Verb
+    class Start < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Start'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Stream> element
+      # name:: Friendly name given to the Stream
+      # connector_name:: Unique name for Stream Connector
+      # url:: URL of the remote service where the Stream is routed
+      # track:: Track to be streamed to remote service
+      # keyword_args:: additional attributes
+      def stream(name: nil, connector_name: nil, url: nil, track: nil, **keyword_args)
+        stream = Stream.new(name: name, connector_name: connector_name, url: url, track: track, **keyword_args)
+
+        yield(stream) if block_given?
+        append(stream)
+      end
+
+      ##
+      # Create a new <Siprec> element
+      # name:: Friendly name given to SIPREC
+      # connector_name:: Unique name for Connector
+      # keyword_args:: additional attributes
+      def siprec(name: nil, connector_name: nil, **keyword_args)
+        siprec = Siprec.new(name: name, connector_name: connector_name, **keyword_args)
+
+        yield(siprec) if block_given?
+        append(siprec)
       end
     end
 
@@ -345,7 +496,7 @@ module Twilio
       ##
       # Create a new <Lang> element
       # words:: Words to speak
-      # xml:lang:: Specify the language
+      # xmlLang:: Specify the language
       # keyword_args:: additional attributes
       def lang(words, xmlLang: nil, **keyword_args)
         append(SsmlLang.new(words, xmlLang: xmlLang, **keyword_args))
@@ -391,7 +542,7 @@ module Twilio
       ##
       # Create a new <Say-As> element
       # words:: Words to be interpreted
-      # interpret-as:: Specify the type of words are spoken
+      # interpretAs:: Specify the type of words are spoken
       # role:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
       def say_as(words, interpretAs: nil, role: nil, **keyword_args)
@@ -401,7 +552,7 @@ module Twilio
       ##
       # Create a new <Sub> element
       # words:: Words to be substituted
-      # alias:: Substitute a different word (or pronunciation) for selected text such as an acronym or abbreviation
+      # aliasAttribute:: Substitute a different word (or pronunciation) for selected text such as an acronym or abbreviation
       # keyword_args:: additional attributes
       def sub(words, aliasAttribute: nil, **keyword_args)
         append(SsmlSub.new(words, aliasAttribute: aliasAttribute, **keyword_args))
@@ -539,7 +690,7 @@ module Twilio
 
       ##
       # Create a new <Prompt> element
-      # for_:: Name of the credit card data element
+      # for_:: Name of the payment source data element
       # error_type:: Type of error
       # card_type:: Type of the credit card
       # attempt:: Current attempt count
@@ -549,6 +700,15 @@ module Twilio
 
         yield(prompt) if block_given?
         append(prompt)
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
       end
     end
 
@@ -890,17 +1050,6 @@ module Twilio
     end
 
     ##
-    # <Parameter> TwiML Noun
-    class Parameter < TwiML
-      def initialize(**keyword_args)
-        super(**keyword_args)
-        @name = 'Parameter'
-
-        yield(self) if block_given?
-      end
-    end
-
-    ##
     # <Identity> TwiML Noun
     class Identity < TwiML
       def initialize(client_identity, **keyword_args)
@@ -924,10 +1073,10 @@ module Twilio
       ##
       # Create a new <Room> element
       # name:: Room name
-      # participantIdentity:: Participant identity when connecting to the Room
+      # participant_identity:: Participant identity when connecting to the Room
       # keyword_args:: additional attributes
-      def room(name, participantIdentity: nil, **keyword_args)
-        append(Room.new(name, participantIdentity: participantIdentity, **keyword_args))
+      def room(name, participant_identity: nil, **keyword_args)
+        append(Room.new(name, participant_identity: participant_identity, **keyword_args))
       end
 
       ##
@@ -936,6 +1085,20 @@ module Twilio
       # keyword_args:: additional attributes
       def autopilot(name, **keyword_args)
         append(Autopilot.new(name, **keyword_args))
+      end
+
+      ##
+      # Create a new <Stream> element
+      # name:: Friendly name given to the Stream
+      # connector_name:: Unique name for Stream Connector
+      # url:: URL of the remote service where the Stream is routed
+      # track:: Track to be streamed to remote service
+      # keyword_args:: additional attributes
+      def stream(name: nil, connector_name: nil, url: nil, track: nil, **keyword_args)
+        stream = Stream.new(name: name, connector_name: connector_name, url: url, track: track, **keyword_args)
+
+        yield(stream) if block_given?
+        append(stream)
       end
     end
 

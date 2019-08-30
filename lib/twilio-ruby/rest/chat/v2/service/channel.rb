@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -15,9 +15,9 @@ module Twilio
             ##
             # Initialize the ChannelList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique id of the
-            #   [Service](https://www.twilio.com/docs/chat/api/services) this channel belongs
-            #   to.
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+            #   associated with.
             # @return [ChannelList] ChannelList
             def initialize(version, service_sid: nil)
               super(version)
@@ -30,26 +30,28 @@ module Twilio
             ##
             # Retrieve a single page of ChannelInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name A human-readable name for the Channel. Optional.
-            # @param [String] unique_name A unique, addressable name for the Channel. 
-            #   Optional.
-            # @param [String] attributes An optional string metadata field you can use to
-            #   store any data you wish. The string value must contain structurally valid JSON
-            #   if specified.  **Note** that if the attributes are not set "{}" will be
-            #   returned.
-            # @param [channel.ChannelType] type The visibility of the channel - `public` or
-            #   `private`. Defaults to `public`.
-            # @param [Time] date_created The optional ISO8601 time specifying the datetime the
-            #   Channel should be set as being created.  Will be set to the current time by the
-            #   Chat service if not specified.  Note that this should only be used in cases
-            #   where a a Channel is being recreated from a backup/separate source
-            # @param [Time] date_updated The optional ISO8601 time specifying the datetime the
-            #   Channel should be set as having been last updated.  Will be set to the `null` by
-            #   the Chat service if not specified.  Note that this should only be used in cases
-            #   where a Channel is being recreated from a backup/separate source  and where a
-            #   Message was previously updated.
-            # @param [String] created_by Optional field to specify the Identity of the User
-            #   that created the Channel.  Will be set to "system" if not specified.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the new resource. It can be up to 64 characters long.
+            # @param [String] unique_name An application-defined string that uniquely
+            #   identifies the resource. It can be used to address the resource in place of the
+            #   resource's `sid` in the URL. This value must be 64 characters or less in length
+            #   and be unique within the Service.
+            # @param [String] attributes A valid JSON string that contains
+            #   application-specific data.
+            # @param [channel.ChannelType] type The visibility of the channel. Can be:
+            #   `public` or `private` and defaults to `public`.
+            # @param [Time] date_created The date, specified in [ISO
+            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            #   as the date it was created. The default is the current time set by the Chat
+            #   service.  Note that this should only be used in cases where a Channel is being
+            #   recreated from a backup/separate source.
+            # @param [Time] date_updated The date, specified in [ISO
+            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            #   as the date it was last updated. The default value is `null`.  Note that this
+            #   should only be used in cases where a Channel is being recreated from a
+            #   backup/separate source  and where a Message was previously updated.
+            # @param [String] created_by The `identity` of the User that created the channel.
+            #   Default is: `system`.
             # @return [ChannelInstance] Newly created ChannelInstance
             def create(friendly_name: :unset, unique_name: :unset, attributes: :unset, type: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
               data = Twilio::Values.of({
@@ -75,8 +77,8 @@ module Twilio
             # Lists ChannelInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [channel.ChannelType] type The visibility of the channel - `public` or
-            #   `private`. Defaults to `public`.
+            # @param [channel.ChannelType] type The visibility of the Channels to read. Can
+            #   be: `public` or `private` and defaults to `public`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -92,8 +94,8 @@ module Twilio
             # Streams ChannelInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [channel.ChannelType] type The visibility of the channel - `public` or
-            #   `private`. Defaults to `public`.
+            # @param [channel.ChannelType] type The visibility of the Channels to read. Can
+            #   be: `public` or `private` and defaults to `public`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -126,8 +128,8 @@ module Twilio
             ##
             # Retrieve a single page of ChannelInstance records from the API.
             # Request is executed immediately.
-            # @param [channel.ChannelType] type The visibility of the channel - `public` or
-            #   `private`. Defaults to `public`.
+            # @param [channel.ChannelType] type The visibility of the Channels to read. Can
+            #   be: `public` or `private` and defaults to `public`.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -200,11 +202,11 @@ module Twilio
             ##
             # Initialize the ChannelContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid Sid of the
-            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) channel belongs
-            #   to.
-            # @param [String] sid Key that uniquely defines the channel to fetch. Could be Sid
-            #   or UniqueName.
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the resource
+            #   from.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Channel resource to fetch.
             # @return [ChannelContext] ChannelContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -244,19 +246,22 @@ module Twilio
 
             ##
             # Update the ChannelInstance
-            # @param [String] friendly_name A human-readable name for the Channel. Optional.
-            # @param [String] unique_name A unique, addressable name for the Channel. 
-            #   Optional.
-            # @param [String] attributes An optional string metadata field you can use to
-            #   store any data you wish. The string value must contain structurally valid JSON
-            #   if specified.  **Note** that if the attributes are not set "{}" will be
-            #   returned.
-            # @param [Time] date_created The optional ISO8601 time specifying the datetime the
-            #   Channel should be set as being created.
-            # @param [Time] date_updated The optional ISO8601 time specifying the datetime the
-            #   Channel should be set as having been last updated.
-            # @param [String] created_by Optional field to specify the Identity of the User
-            #   that created the Channel.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the resource. It can be up to 256 characters long.
+            # @param [String] unique_name An application-defined string that uniquely
+            #   identifies the resource. It can be used to address the resource in place of the
+            #   resource's `sid` in the URL. This value must be 256 characters or less in length
+            #   and unique within the Service.
+            # @param [String] attributes A valid JSON string that contains
+            #   application-specific data.
+            # @param [Time] date_created The date, specified in [ISO
+            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            #   as the date it was created.
+            # @param [Time] date_updated The date, specified in [ISO
+            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            #   as the date it was last updated.
+            # @param [String] created_by The `identity` of the User that created the channel.
+            #   Default is: `system`.
             # @return [ChannelInstance] Updated ChannelInstance
             def update(friendly_name: :unset, unique_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
               data = Twilio::Values.of({
@@ -385,11 +390,11 @@ module Twilio
             # Initialize the ChannelInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The unique id of the
-            #   [Service](https://www.twilio.com/docs/chat/api/services) this channel belongs
-            #   to.
-            # @param [String] sid Key that uniquely defines the channel to fetch. Could be Sid
-            #   or UniqueName.
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+            #   associated with.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Channel resource to fetch.
             # @return [ChannelInstance] ChannelInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -429,61 +434,61 @@ module Twilio
             end
 
             ##
-            # @return [String] A 34 character string that uniquely identifies this resource.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The unique id of the Account responsible for this channel.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The unique id of the Service this channel belongs to.
+            # @return [String] The SID of the Service that the resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] The human-readable name of this channel.
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] The unique, addressable name of this channel.
+            # @return [String] An application-defined string that uniquely identifies the resource
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [String] An optional string metadata field you can use to store any data you wish.
+            # @return [String] The JSON string that stores application-specific data
             def attributes
               @properties['attributes']
             end
 
             ##
-            # @return [channel.ChannelType] The visibility of this channel - either public or private
+            # @return [channel.ChannelType] The visibility of the channel. Can be: `public` or `private`
             def type
               @properties['type']
             end
 
             ##
-            # @return [Time] The date that this resource was created.
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date that this resource was last updated.
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] Identity of the channel's creator.
+            # @return [String] The identity of the User that created the channel
             def created_by
               @properties['created_by']
             end
@@ -501,13 +506,13 @@ module Twilio
             end
 
             ##
-            # @return [String] An absolute URL for this channel.
+            # @return [String] The absolute URL of the Channel resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] Absolute URLs to access the Members, Messages , Invites and, if it exists the last Message for this Channel.
+            # @return [String] Absolute URLs to access the Members, Messages , Invites and, if it exists, the last Message for the Channel
             def links
               @properties['links']
             end
@@ -528,19 +533,22 @@ module Twilio
 
             ##
             # Update the ChannelInstance
-            # @param [String] friendly_name A human-readable name for the Channel. Optional.
-            # @param [String] unique_name A unique, addressable name for the Channel. 
-            #   Optional.
-            # @param [String] attributes An optional string metadata field you can use to
-            #   store any data you wish. The string value must contain structurally valid JSON
-            #   if specified.  **Note** that if the attributes are not set "{}" will be
-            #   returned.
-            # @param [Time] date_created The optional ISO8601 time specifying the datetime the
-            #   Channel should be set as being created.
-            # @param [Time] date_updated The optional ISO8601 time specifying the datetime the
-            #   Channel should be set as having been last updated.
-            # @param [String] created_by Optional field to specify the Identity of the User
-            #   that created the Channel.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the resource. It can be up to 256 characters long.
+            # @param [String] unique_name An application-defined string that uniquely
+            #   identifies the resource. It can be used to address the resource in place of the
+            #   resource's `sid` in the URL. This value must be 256 characters or less in length
+            #   and unique within the Service.
+            # @param [String] attributes A valid JSON string that contains
+            #   application-specific data.
+            # @param [Time] date_created The date, specified in [ISO
+            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            #   as the date it was created.
+            # @param [Time] date_updated The date, specified in [ISO
+            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            #   as the date it was last updated.
+            # @param [String] created_by The `identity` of the User that created the channel.
+            #   Default is: `system`.
             # @return [ChannelInstance] Updated ChannelInstance
             def update(friendly_name: :unset, unique_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
               context.update(

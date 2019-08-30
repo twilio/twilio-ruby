@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -29,7 +29,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid The unique string that we created to identify the Credential
+      #   resource.
       # @return [Twilio::REST::Notify::V1::CredentialInstance] if sid was passed.
       # @return [Twilio::REST::Notify::V1::CredentialList]
       def credentials(sid=:unset)
@@ -37,7 +38,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid The unique string that we created to identify the Service
+      #   resource.
       # @return [Twilio::REST::Notify::V1::ServiceInstance] if sid was passed.
       # @return [Twilio::REST::Notify::V1::ServiceList]
       def services(sid=:unset)

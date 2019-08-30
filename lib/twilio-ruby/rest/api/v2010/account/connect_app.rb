@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -228,6 +228,13 @@ module Twilio
             end
 
             ##
+            # Deletes the ConnectAppInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              @version.delete('delete', @uri)
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -389,6 +396,13 @@ module Twilio
                   homepage_url: homepage_url,
                   permissions: permissions,
               )
+            end
+
+            ##
+            # Deletes the ConnectAppInstance
+            # @return [Boolean] true if delete succeeds, true otherwise
+            def delete
+              context.delete
             end
 
             ##

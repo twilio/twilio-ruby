@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -110,22 +110,23 @@ module Twilio
           ##
           # Retrieve a single page of CredentialInstance records from the API.
           # Request is executed immediately.
-          # @param [credential.PushService] type Credential type, one of "gcm", "fcm", or
-          #   "apn"
-          # @param [String] friendly_name Friendly name for stored credential
-          # @param [String] certificate [APN only] URL encoded representation of the
+          # @param [credential.PushService] type The Credential type. Can be: `gcm`, `fcm`,
+          #   or `apn`.
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the resource. It can be up to 64 characters long.
+          # @param [String] certificate [APN only] The URL-encoded representation of the
           #   certificate. Strip everything outside of the headers, e.g. `-----BEGIN
           #   CERTIFICATE-----MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEFBQAwgZYxCzAJBgNV.....A==-----END CERTIFICATE-----`
-          # @param [String] private_key [APN only] URL encoded representation of the private
-          #   key. Strip everything outside of the headers, e.g. `-----BEGIN RSA PRIVATE
+          # @param [String] private_key [APN only] The URL-encoded representation of the
+          #   private key. Strip everything outside of the headers, e.g. `-----BEGIN RSA
+          #   PRIVATE
           #   KEY-----MIIEpQIBAAKCAQEAuyf/lNrH9ck8DmNyo3fGgvCI1l9s+cmBY3WIz+cUDqmxiieR\n.-----END RSA PRIVATE KEY-----`
-          # @param [Boolean] sandbox [APN only] use this credential for sending to
-          #   production or sandbox APNs (string `true` or `false`)
-          # @param [String] api_key [GCM only] This is the "Server key" of your project from
-          #   Firebase console under Settings / Cloud messaging. Yes, you can use the server
-          #   key from the Firebase console for GCM.
-          # @param [String] secret [FCM only] This is the "Server key" of your project from
+          # @param [Boolean] sandbox [APN only] Whether to send the credential to sandbox
+          #   APNs. Can be `true` to send to sandbox APNs or `false` to send to production.
+          # @param [String] api_key [GCM only] The `Server key` of your project from
           #   Firebase console under Settings / Cloud messaging.
+          # @param [String] secret [FCM only] The `Server key` of your project from Firebase
+          #   console under Settings / Cloud messaging.
           # @return [CredentialInstance] Newly created CredentialInstance
           def create(type: nil, friendly_name: :unset, certificate: :unset, private_key: :unset, sandbox: :unset, api_key: :unset, secret: :unset)
             data = Twilio::Values.of({
@@ -191,7 +192,8 @@ module Twilio
           ##
           # Initialize the CredentialContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid The Twilio-provided string that uniquely identifies the
+          #   Credential resource to fetch.
           # @return [CredentialContext] CredentialContext
           def initialize(version, sid)
             super(version)
@@ -218,20 +220,21 @@ module Twilio
 
           ##
           # Update the CredentialInstance
-          # @param [String] friendly_name Friendly name for stored credential
-          # @param [String] certificate [APN only] URL encoded representation of the
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the resource. It can be up to 64 characters long.
+          # @param [String] certificate [APN only] The URL-encoded representation of the
           #   certificate. Strip everything outside of the headers, e.g. `-----BEGIN
           #   CERTIFICATE-----MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEFBQAwgZYxCzAJBgNV.....A==-----END CERTIFICATE-----`
-          # @param [String] private_key [APN only] URL encoded representation of the private
-          #   key. Strip everything outside of the headers, e.g. `-----BEGIN RSA PRIVATE
+          # @param [String] private_key [APN only] The URL-encoded representation of the
+          #   private key. Strip everything outside of the headers, e.g. `-----BEGIN RSA
+          #   PRIVATE
           #   KEY-----MIIEpQIBAAKCAQEAuyf/lNrH9ck8DmNyo3fGgvCI1l9s+cmBY3WIz+cUDqmxiieR\n.-----END RSA PRIVATE KEY-----`
-          # @param [Boolean] sandbox [APN only] use this credential for sending to
-          #   production or sandbox APNs (string `true` or `false`)
-          # @param [String] api_key [GCM only] This is the "Server key" of your project from
-          #   Firebase console under Settings / Cloud messaging. Yes, you can use the server
-          #   key from the Firebase console for GCM.
-          # @param [String] secret [FCM only] This is the "Server key" of your project from
+          # @param [Boolean] sandbox [APN only] Whether to send the credential to sandbox
+          #   APNs. Can be `true` to send to sandbox APNs or `false` to send to production.
+          # @param [String] api_key [GCM only] The `Server key` of your project from
           #   Firebase console under Settings / Cloud messaging.
+          # @param [String] secret [FCM only] The `Server key` of your project from Firebase
+          #   console under Settings / Cloud messaging.
           # @return [CredentialInstance] Updated CredentialInstance
           def update(friendly_name: :unset, certificate: :unset, private_key: :unset, sandbox: :unset, api_key: :unset, secret: :unset)
             data = Twilio::Values.of({
@@ -281,7 +284,8 @@ module Twilio
           # Initialize the CredentialInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid The Twilio-provided string that uniquely identifies the
+          #   Credential resource to fetch.
           # @return [CredentialInstance] CredentialInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -315,49 +319,49 @@ module Twilio
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] Friendly name for stored credential
+          # @return [String] The string that you assigned to describe the resource
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [credential.PushService] Credential type, one of "gcm", "fcm", or "apn"
+          # @return [credential.PushService] The Credential type, one of `gcm`, `fcm`, or `apn`
           def type
             @properties['type']
           end
 
           ##
-          # @return [String] [APN only] use this credential for sending to production or sandbox APNs
+          # @return [String] [APN only] Whether to send the credential to sandbox APNs
           def sandbox
             @properties['sandbox']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The RFC 2822 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The absolute URL of the Credential resource
           def url
             @properties['url']
           end
@@ -371,20 +375,21 @@ module Twilio
 
           ##
           # Update the CredentialInstance
-          # @param [String] friendly_name Friendly name for stored credential
-          # @param [String] certificate [APN only] URL encoded representation of the
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the resource. It can be up to 64 characters long.
+          # @param [String] certificate [APN only] The URL-encoded representation of the
           #   certificate. Strip everything outside of the headers, e.g. `-----BEGIN
           #   CERTIFICATE-----MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEFBQAwgZYxCzAJBgNV.....A==-----END CERTIFICATE-----`
-          # @param [String] private_key [APN only] URL encoded representation of the private
-          #   key. Strip everything outside of the headers, e.g. `-----BEGIN RSA PRIVATE
+          # @param [String] private_key [APN only] The URL-encoded representation of the
+          #   private key. Strip everything outside of the headers, e.g. `-----BEGIN RSA
+          #   PRIVATE
           #   KEY-----MIIEpQIBAAKCAQEAuyf/lNrH9ck8DmNyo3fGgvCI1l9s+cmBY3WIz+cUDqmxiieR\n.-----END RSA PRIVATE KEY-----`
-          # @param [Boolean] sandbox [APN only] use this credential for sending to
-          #   production or sandbox APNs (string `true` or `false`)
-          # @param [String] api_key [GCM only] This is the "Server key" of your project from
-          #   Firebase console under Settings / Cloud messaging. Yes, you can use the server
-          #   key from the Firebase console for GCM.
-          # @param [String] secret [FCM only] This is the "Server key" of your project from
+          # @param [Boolean] sandbox [APN only] Whether to send the credential to sandbox
+          #   APNs. Can be `true` to send to sandbox APNs or `false` to send to production.
+          # @param [String] api_key [GCM only] The `Server key` of your project from
           #   Firebase console under Settings / Cloud messaging.
+          # @param [String] secret [FCM only] The `Server key` of your project from Firebase
+          #   console under Settings / Cloud messaging.
           # @return [CredentialInstance] Updated CredentialInstance
           def update(friendly_name: :unset, certificate: :unset, private_key: :unset, sandbox: :unset, api_key: :unset, secret: :unset)
             context.update(

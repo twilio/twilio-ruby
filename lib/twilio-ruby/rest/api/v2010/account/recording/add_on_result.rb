@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -16,10 +16,11 @@ module Twilio
               ##
               # Initialize the AddOnResultList
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The unique id of the Account responsible for this
-              #   recording.
-              # @param [String] reference_sid A 34 character string that uniquely identifies the
-              #   recording to which this result belongs.
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   Recording AddOnResult resource.
+              # @param [String] reference_sid The SID of the recording to which the AddOnResult
+              #   resource belongs.
               # @return [AddOnResultList] AddOnResultList
               def initialize(version, account_sid: nil, reference_sid: nil)
                 super(version)
@@ -156,9 +157,13 @@ module Twilio
               ##
               # Initialize the AddOnResultContext
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] reference_sid The reference_sid
-              # @param [String] sid The result Sid that uniquely identifies this resource
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   Recording AddOnResult resource to fetch.
+              # @param [String] reference_sid The SID of the recording to which the result to
+              #   fetch belongs.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   Recording AddOnResult resource to fetch.
               # @return [AddOnResultContext] AddOnResultContext
               def initialize(version, account_sid, reference_sid, sid)
                 super(version)
@@ -248,11 +253,13 @@ module Twilio
               # Initialize the AddOnResultInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] account_sid The unique id of the Account responsible for this
-              #   recording.
-              # @param [String] reference_sid A 34 character string that uniquely identifies the
-              #   recording to which this result belongs.
-              # @param [String] sid The result Sid that uniquely identifies this resource
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   Recording AddOnResult resource.
+              # @param [String] reference_sid The SID of the recording to which the AddOnResult
+              #   resource belongs.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   Recording AddOnResult resource to fetch.
               # @return [AddOnResultInstance] AddOnResultInstance
               def initialize(version, payload, account_sid: nil, reference_sid: nil, sid: nil)
                 super(version)
@@ -297,61 +304,61 @@ module Twilio
               end
 
               ##
-              # @return [String] A string that uniquely identifies this result
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The unique sid that identifies this account
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [add_on_result.Status] The status of this result.
+              # @return [add_on_result.Status] The status of the result
               def status
                 @properties['status']
               end
 
               ##
-              # @return [String] A string that uniquely identifies the Add-on.
+              # @return [String] The SID of the Add-on to which the result belongs
               def add_on_sid
                 @properties['add_on_sid']
               end
 
               ##
-              # @return [String] A string that uniquely identifies the Add-on configuration.
+              # @return [String] The SID of the Add-on configuration
               def add_on_configuration_sid
                 @properties['add_on_configuration_sid']
               end
 
               ##
-              # @return [Time] The date this resource was created
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date this resource was last updated
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [Time] The date this result was completed.
+              # @return [Time] The date and time in GMT that the result was completed
               def date_completed
                 @properties['date_completed']
               end
 
               ##
-              # @return [String] A string that uniquely identifies the recording.
+              # @return [String] The SID of the recording to which the AddOnResult resource belongs
               def reference_sid
                 @properties['reference_sid']
               end
 
               ##
-              # @return [String] A dictionary of URIs for related resources
+              # @return [String] A list of related resources identified by their relative URIs
               def subresource_uris
                 @properties['subresource_uris']
               end

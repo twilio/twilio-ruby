@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -232,8 +232,7 @@ module Twilio
           #   resource. Non-unique.
           # @param [String] rate_plan The Sid or UniqueName of the
           #   [RatePlan](https://www.twilio.com/docs/api/wireless/rest-api/rate-plan) that
-          #   this Sim should use. *Note:* the RatePlan of a Sim can only be modified when the
-          #   Sim has a `suspended` or `deactivated` status.
+          #   this Sim should use.
           # @param [sim.Status] status A string representing the status of the Sim. Valid
           #   options depend on the current state of the Sim, but may include `ready`,
           #   `active`, `suspended` or `deactivated`.
@@ -262,8 +261,10 @@ module Twilio
           #   above Url. Either `GET` or `POST`.
           # @param [String] voice_url The URL Twilio will request when the SIM-connected
           #   device makes a call.
+          # @param [sim.ResetStatus] reset_status Pass `resetting` to initiate a
+          #   connectivity reset on a Sim, this is the only valid value for this parameter.
           # @return [SimInstance] Updated SimInstance
-          def update(unique_name: :unset, callback_method: :unset, callback_url: :unset, friendly_name: :unset, rate_plan: :unset, status: :unset, commands_callback_method: :unset, commands_callback_url: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset)
+          def update(unique_name: :unset, callback_method: :unset, callback_url: :unset, friendly_name: :unset, rate_plan: :unset, status: :unset, commands_callback_method: :unset, commands_callback_url: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, reset_status: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'CallbackMethod' => callback_method,
@@ -281,6 +282,7 @@ module Twilio
                 'VoiceFallbackUrl' => voice_fallback_url,
                 'VoiceMethod' => voice_method,
                 'VoiceUrl' => voice_url,
+                'ResetStatus' => reset_status,
             })
 
             payload = @version.update(
@@ -359,6 +361,7 @@ module Twilio
                 'iccid' => payload['iccid'],
                 'e_id' => payload['e_id'],
                 'status' => payload['status'],
+                'reset_status' => payload['reset_status'],
                 'commands_callback_url' => payload['commands_callback_url'],
                 'commands_callback_method' => payload['commands_callback_method'],
                 'sms_fallback_method' => payload['sms_fallback_method'],
@@ -438,6 +441,12 @@ module Twilio
           # @return [sim.Status] A string representing the status of the Sim.
           def status
             @properties['status']
+          end
+
+          ##
+          # @return [sim.ResetStatus] A string representing the connectivity reset status of the Sim.
+          def reset_status
+            @properties['reset_status']
           end
 
           ##
@@ -553,8 +562,7 @@ module Twilio
           #   resource. Non-unique.
           # @param [String] rate_plan The Sid or UniqueName of the
           #   [RatePlan](https://www.twilio.com/docs/api/wireless/rest-api/rate-plan) that
-          #   this Sim should use. *Note:* the RatePlan of a Sim can only be modified when the
-          #   Sim has a `suspended` or `deactivated` status.
+          #   this Sim should use.
           # @param [sim.Status] status A string representing the status of the Sim. Valid
           #   options depend on the current state of the Sim, but may include `ready`,
           #   `active`, `suspended` or `deactivated`.
@@ -583,8 +591,10 @@ module Twilio
           #   above Url. Either `GET` or `POST`.
           # @param [String] voice_url The URL Twilio will request when the SIM-connected
           #   device makes a call.
+          # @param [sim.ResetStatus] reset_status Pass `resetting` to initiate a
+          #   connectivity reset on a Sim, this is the only valid value for this parameter.
           # @return [SimInstance] Updated SimInstance
-          def update(unique_name: :unset, callback_method: :unset, callback_url: :unset, friendly_name: :unset, rate_plan: :unset, status: :unset, commands_callback_method: :unset, commands_callback_url: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset)
+          def update(unique_name: :unset, callback_method: :unset, callback_url: :unset, friendly_name: :unset, rate_plan: :unset, status: :unset, commands_callback_method: :unset, commands_callback_url: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, reset_status: :unset)
             context.update(
                 unique_name: unique_name,
                 callback_method: callback_method,
@@ -602,6 +612,7 @@ module Twilio
                 voice_fallback_url: voice_fallback_url,
                 voice_method: voice_method,
                 voice_url: voice_url,
+                reset_status: reset_status,
             )
           end
 

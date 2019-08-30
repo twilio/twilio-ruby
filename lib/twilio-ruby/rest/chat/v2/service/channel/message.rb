@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -16,10 +16,12 @@ module Twilio
               ##
               # Initialize the MessageList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique id of the
-              #   [Service](https://www.twilio.com/docs/chat/api/services) this message belongs
-              #   to.
-              # @param [String] channel_sid The channel_sid
+              # @param [String] service_sid The SID of the
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+              #   associated with.
+              # @param [String] channel_sid The unique ID of the
+              #   [Channel](https://www.twilio.com/docs/chat/channels) the Message resource
+              #   belongs to.
               # @return [MessageList] MessageList
               def initialize(version, service_sid: nil, channel_sid: nil)
                 super(version)
@@ -32,30 +34,29 @@ module Twilio
               ##
               # Retrieve a single page of MessageInstance records from the API.
               # Request is executed immediately.
-              # @param [String] from The
-              #   [identity](https://www.twilio.com/docs/api/chat/guides/identity) of the
-              #   message's author. Defaults to `system`.
-              # @param [String] attributes An string metadata field you can use to store any
-              #   data you wish. The string value must contain structurally valid JSON if
-              #   specified. **Note** that this will always be null for resources returned via
-              #   LIST GET operations, but will be present for single GET operations.
-              # @param [Time] date_created The ISO8601 time specifying the datetime the Message
-              #   should be set as being created. Will be set to the current time by the Chat
-              #   service if not specified.  Note that this should only be used in cases where a
-              #   Chat's history is being recreated from a backup/separate source.
-              # @param [Time] date_updated The ISO8601 time specifying the datetime the Message
-              #   should be set as having been last updated. Will be set to the `null` by the Chat
-              #   service if not specified.  Note that this should only be used in cases where a
-              #   Chat's history is being recreated from a backup/separate source  and where a
-              #   Message was previously updated.
-              # @param [String] last_updated_by Specify the Identity of the User that last
-              #   updated the Message (if relevant)
-              # @param [String] body A string message to send to this channel. You can also send
-              #   structured data by serializing it into a string. May be empty string or `null`,
-              #   will be set as empty string as a result in this cases.
-              # @param [String] media_sid The
-              #   [Media](https://www.twilio.com/docs/api/chat/rest/media) Sid to be attached to
-              #   this Message.
+              # @param [String] from The [identity](https://www.twilio.com/docs/chat/identity)
+              #   of the new message's author. The default value is `system`.
+              # @param [String] attributes A valid JSON string that contains
+              #   application-specific data.
+              # @param [Time] date_created The date, specified in [ISO
+              #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+              #   as the date it was created. The default is the current time set by the Chat
+              #   service. This parameter should only be used when a Chat's history is being
+              #   recreated from a backup/separate source.
+              # @param [Time] date_updated The date, specified in [ISO
+              #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+              #   as the date it was last updated. The default value is `null`. Note that this
+              #   parameter should only be used when a Chat's history is being recreated from a
+              #   backup/separate source  and where a Message was previously updated.
+              # @param [String] last_updated_by The
+              #   [identity](https://www.twilio.com/docs/chat/identity) of the User who last
+              #   updated the Message, if applicable.
+              # @param [String] body The message to send to the channel. Can also be an empty
+              #   string or `null`, which sets the value as an empty string. You can send
+              #   structured data in the body by serializing it as a string.
+              # @param [String] media_sid The SID of the
+              #   [Media](https://www.twilio.com/docs/chat/rest/media) to attach to the new
+              #   Message.
               # @return [MessageInstance] Newly created MessageInstance
               def create(from: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset, body: :unset, media_sid: :unset)
                 data = Twilio::Values.of({
@@ -86,9 +87,8 @@ module Twilio
               # Lists MessageInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [message.OrderType] order Specifies sorting order for messages list,
-              #   possible values are: `asc` or `desc`. If no value is specified, then `asc` is
-              #   used as the default.
+              # @param [message.OrderType] order The sort order of the returned messages. Can
+              #   be: `asc` (ascending) or `desc` (descending) with `asc` as the default.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -104,9 +104,8 @@ module Twilio
               # Streams MessageInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [message.OrderType] order Specifies sorting order for messages list,
-              #   possible values are: `asc` or `desc`. If no value is specified, then `asc` is
-              #   used as the default.
+              # @param [message.OrderType] order The sort order of the returned messages. Can
+              #   be: `asc` (ascending) or `desc` (descending) with `asc` as the default.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -139,9 +138,8 @@ module Twilio
               ##
               # Retrieve a single page of MessageInstance records from the API.
               # Request is executed immediately.
-              # @param [message.OrderType] order Specifies sorting order for messages list,
-              #   possible values are: `asc` or `desc`. If no value is specified, then `asc` is
-              #   used as the default.
+              # @param [message.OrderType] order The sort order of the returned messages. Can
+              #   be: `asc` (ascending) or `desc` (descending) with `asc` as the default.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -219,13 +217,14 @@ module Twilio
               ##
               # Initialize the MessageContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid Sid of the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this message
-              #   belongs to.
-              # @param [String] channel_sid Key of the
-              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) message belongs
-              #   to. Could be Sid or UniqueName
-              # @param [String] sid Key that uniquely defines the message to fetch.
+              # @param [String] service_sid The SID of the
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the resource
+              #   from.
+              # @param [String] channel_sid The unique ID of the
+              #   [Channel](https://www.twilio.com/docs/chat/channels) the message to fetch
+              #   belongs to. Can be the Channel's `sid` or `unique_name`.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   Message resource to fetch.
               # @return [MessageContext] MessageContext
               def initialize(version, service_sid, channel_sid, sid)
                 super(version)
@@ -265,22 +264,22 @@ module Twilio
 
               ##
               # Update the MessageInstance
-              # @param [String] body The message body string. You can also send structured data
-              #   by serializing it into a string. May be updated to empty string or `null`, will
-              #   be set as empty string as a result in this cases.
-              # @param [String] attributes A string metadata field you can use to store any data
-              #   you wish. The string value must contain structurally valid JSON if specified.
-              #   **Note** that this will always be null for resources returned via LIST GET
-              #   operations, but will be present for single GET operations.
-              # @param [Time] date_created The ISO8601 time specifying the datetime the Message
-              #   should be set as being created.
-              # @param [Time] date_updated The ISO8601 time specifying the datetime the Message
-              #   should be set as having been last updated.
-              # @param [String] last_updated_by Specify the Identity of the User that last
-              #   updated the Message (if relevant)
-              # @param [String] from The
-              #   [identity](https://www.twilio.com/docs/api/chat/guides/identity) of the
-              #   message's author.
+              # @param [String] body The message to send to the channel. Can also be an empty
+              #   string or `null`, which sets the value as an empty string. You can send
+              #   structured data in the body by serializing it as a string.
+              # @param [String] attributes A valid JSON string that contains
+              #   application-specific data.
+              # @param [Time] date_created The date, specified in [ISO
+              #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+              #   as the date it was created.
+              # @param [Time] date_updated The date, specified in [ISO
+              #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+              #   as the date it was last updated.
+              # @param [String] last_updated_by The
+              #   [Identity](https://www.twilio.com/docs/chat/identity) of the User who last
+              #   updated the Message, if applicable.
+              # @param [String] from The [Identity](https://www.twilio.com/docs/chat/identity)
+              #   of the message's author.
               # @return [MessageInstance] Updated MessageInstance
               def update(body: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset, from: :unset)
                 data = Twilio::Values.of({
@@ -327,11 +326,14 @@ module Twilio
               # Initialize the MessageInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The unique id of the
-              #   [Service](https://www.twilio.com/docs/chat/api/services) this message belongs
-              #   to.
-              # @param [String] channel_sid The channel_sid
-              # @param [String] sid Key that uniquely defines the message to fetch.
+              # @param [String] service_sid The SID of the
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+              #   associated with.
+              # @param [String] channel_sid The unique ID of the
+              #   [Channel](https://www.twilio.com/docs/chat/channels) the Message resource
+              #   belongs to.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   Message resource to fetch.
               # @return [MessageInstance] MessageInstance
               def initialize(version, payload, service_sid: nil, channel_sid: nil, sid: nil)
                 super(version)
@@ -382,73 +384,73 @@ module Twilio
               end
 
               ##
-              # @return [String] A 34 character string that uniquely identifies this resource.
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The unique id of the Account responsible for this message.
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] A string metadata field you can use to store any data you wish.
+              # @return [String] The JSON string that stores application-specific data
               def attributes
                 @properties['attributes']
               end
 
               ##
-              # @return [String] The unique id of the Service this message belongs to.
+              # @return [String] The SID of the Service that the resource is associated with
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] The unique id of the Channel this message was sent to.
+              # @return [String] The SID of the Channel that the message was sent to
               def to
                 @properties['to']
               end
 
               ##
-              # @return [String] The channel_sid
+              # @return [String] The unique ID of the Channel the Message resource belongs to
               def channel_sid
                 @properties['channel_sid']
               end
 
               ##
-              # @return [Time] The date that this resource was created.
+              # @return [Time] The RFC 2822 date and time in GMT when the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date that this resource was last updated.
+              # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] Field to specify the Identity of the User that last updated the Message
+              # @return [String] The Identity of the User who last updated the Message
               def last_updated_by
                 @properties['last_updated_by']
               end
 
               ##
-              # @return [Boolean] true if the message has been updated since it was created.
+              # @return [Boolean] Whether the message has been edited since  it was created
               def was_edited
                 @properties['was_edited']
               end
 
               ##
-              # @return [String] The identity of the message's author.
+              # @return [String] The identity of the message's author
               def from
                 @properties['from']
               end
 
               ##
-              # @return [String] The contents of the message.
+              # @return [String] The content of the message
               def body
                 @properties['body']
               end
@@ -460,19 +462,19 @@ module Twilio
               end
 
               ##
-              # @return [String] Message type.
+              # @return [String] The Message type
               def type
                 @properties['type']
               end
 
               ##
-              # @return [Hash] If a Media resource instance is attached to the Message, this will contain the Media object for the attached Media.
+              # @return [Hash] A Media object that describes the Message's media if attached; otherwise, null
               def media
                 @properties['media']
               end
 
               ##
-              # @return [String] An absolute URL for this message.
+              # @return [String] The absolute URL of the Message resource
               def url
                 @properties['url']
               end
@@ -493,22 +495,22 @@ module Twilio
 
               ##
               # Update the MessageInstance
-              # @param [String] body The message body string. You can also send structured data
-              #   by serializing it into a string. May be updated to empty string or `null`, will
-              #   be set as empty string as a result in this cases.
-              # @param [String] attributes A string metadata field you can use to store any data
-              #   you wish. The string value must contain structurally valid JSON if specified.
-              #   **Note** that this will always be null for resources returned via LIST GET
-              #   operations, but will be present for single GET operations.
-              # @param [Time] date_created The ISO8601 time specifying the datetime the Message
-              #   should be set as being created.
-              # @param [Time] date_updated The ISO8601 time specifying the datetime the Message
-              #   should be set as having been last updated.
-              # @param [String] last_updated_by Specify the Identity of the User that last
-              #   updated the Message (if relevant)
-              # @param [String] from The
-              #   [identity](https://www.twilio.com/docs/api/chat/guides/identity) of the
-              #   message's author.
+              # @param [String] body The message to send to the channel. Can also be an empty
+              #   string or `null`, which sets the value as an empty string. You can send
+              #   structured data in the body by serializing it as a string.
+              # @param [String] attributes A valid JSON string that contains
+              #   application-specific data.
+              # @param [Time] date_created The date, specified in [ISO
+              #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+              #   as the date it was created.
+              # @param [Time] date_updated The date, specified in [ISO
+              #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+              #   as the date it was last updated.
+              # @param [String] last_updated_by The
+              #   [Identity](https://www.twilio.com/docs/chat/identity) of the User who last
+              #   updated the Message, if applicable.
+              # @param [String] from The [Identity](https://www.twilio.com/docs/chat/identity)
+              #   of the message's author.
               # @return [MessageInstance] Updated MessageInstance
               def update(body: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset, from: :unset)
                 context.update(

@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -54,6 +54,7 @@ describe 'Sim' do
           "iccid": "iccid",
           "e_id": "e_id",
           "status": "new",
+          "reset_status": null,
           "url": "https://wireless.twilio.com/v1/Sims/DEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "ip_address": "192.168.1.1"
       }
@@ -87,13 +88,13 @@ describe 'Sim' do
       {
           "sims": [],
           "meta": {
-              "first_page_url": "https://wireless.twilio.com/v1/Sims?PageSize=50&Page=0",
+              "first_page_url": "https://wireless.twilio.com/v1/Sims?Status=new&Iccid=iccid&RatePlan=rate_plan&PageSize=50&Page=0",
               "key": "sims",
               "next_page_url": null,
               "page": 0,
               "page_size": 50,
               "previous_page_url": null,
-              "url": "https://wireless.twilio.com/v1/Sims?PageSize=50&Page=0"
+              "url": "https://wireless.twilio.com/v1/Sims?Status=new&Iccid=iccid&RatePlan=rate_plan&PageSize=50&Page=0"
           }
       }
       ]
@@ -128,6 +129,7 @@ describe 'Sim' do
                   "iccid": "iccid",
                   "e_id": "e_id",
                   "status": "new",
+                  "reset_status": "resetting",
                   "sms_fallback_method": "http_method",
                   "sms_fallback_url": "http://www.example.com",
                   "sms_method": "http_method",
@@ -141,13 +143,13 @@ describe 'Sim' do
               }
           ],
           "meta": {
-              "first_page_url": "https://wireless.twilio.com/v1/Sims?PageSize=50&Page=0",
+              "first_page_url": "https://wireless.twilio.com/v1/Sims?Status=new&Iccid=iccid&RatePlan=rate_plan&PageSize=50&Page=0",
               "key": "sims",
               "next_page_url": null,
               "page": 0,
               "page_size": 50,
               "previous_page_url": null,
-              "url": "https://wireless.twilio.com/v1/Sims?PageSize=50&Page=0"
+              "url": "https://wireless.twilio.com/v1/Sims?Status=new&Iccid=iccid&RatePlan=rate_plan&PageSize=50&Page=0"
           }
       }
       ]
@@ -195,6 +197,7 @@ describe 'Sim' do
           "iccid": "iccid",
           "e_id": "e_id",
           "status": "new",
+          "reset_status": "resetting",
           "sms_fallback_method": "http_method",
           "sms_fallback_url": "http://www.example.com",
           "sms_method": "http_method",

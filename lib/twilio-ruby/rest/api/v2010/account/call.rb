@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -71,9 +71,6 @@ module Twilio
             #   '`#`' character has special meaning in a URL. If both `SendDigits` and
             #   `MachineDetection` parameters are provided, then `MachineDetection` will be
             #   ignored.
-            # @param [String] if_machine The action to take if an answering machine is
-            #   detected. Can be: `Continue`, `Hangup`, or `False`. `False` disables the
-            #   detection of an answering machine.
             # @param [String] timeout The integer number of seconds that we should allow the
             #   phone to ring before assuming there is no answer. The default is `60` seconds
             #   and the maximum is `600` seconds. For some call flows, we will add a 5-second
@@ -111,7 +108,7 @@ module Twilio
             #   request with `AnsweredBy` of `unknown`. The default timeout is 30 seconds.
             # @param [String] recording_status_callback_event The recording status events that
             #   will trigger calls to the URL specified in `recording_status_callback`. Can be:
-            #   `in-progress`, `completed` and `absent`. Defaults to `completed`. Separate 
+            #   `in-progress`, `completed` and `absent`. Defaults to `completed`. Separate
             #   multiple values with a space.
             # @param [String] trim Whether to trim any leading and trailing silence from the
             #   recording. Can be: `trim-silence` or `do-not-trim` and the default is
@@ -120,6 +117,16 @@ module Twilio
             #   that made this call. Phone numbers are in [E.164
             #   format](https://wwnw.twilio.com/docs/glossary/what-e164) (e.g., +16175551212).
             #   SIP addresses are formatted as `name@company.com`.
+            # @param [String] machine_detection_speech_threshold The number of milliseconds
+            #   that is used as the measuring stick for the length of the speech activity, where
+            #   durations lower than this value will be interpreted as a human and longer than
+            #   this value as a machine. Possible Values: 1000-6000. Default: 2400.
+            # @param [String] machine_detection_speech_end_threshold The number of
+            #   milliseconds of silence after speech activity at which point the speech activity
+            #   is considered complete. Possible Values: 500-5000. Default: 1200.
+            # @param [String] machine_detection_silence_timeout The number of milliseconds of
+            #   initial silence after which an `unknown` AnsweredBy result will be returned.
+            #   Possible Values: 2000-10000. Default: 5000.
             # @param [String] url The absolute URL that returns the TwiML instructions for the
             #   call. We will call this URL using the `method` when the call connects. For more
             #   information, see the [Url
@@ -128,7 +135,7 @@ module Twilio
             # @param [String] application_sid The SID of the Application resource that will
             #   handle the call, if the call will be handled by an application.
             # @return [CallInstance] Newly created CallInstance
-            def create(to: nil, from: nil, method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, send_digits: :unset, if_machine: :unset, timeout: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, machine_detection: :unset, machine_detection_timeout: :unset, recording_status_callback_event: :unset, trim: :unset, caller_id: :unset, url: :unset, application_sid: :unset)
+            def create(to: nil, from: nil, method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, send_digits: :unset, timeout: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, machine_detection: :unset, machine_detection_timeout: :unset, recording_status_callback_event: :unset, trim: :unset, caller_id: :unset, machine_detection_speech_threshold: :unset, machine_detection_speech_end_threshold: :unset, machine_detection_silence_timeout: :unset, url: :unset, application_sid: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -141,7 +148,6 @@ module Twilio
                   'StatusCallbackEvent' => Twilio.serialize_list(status_callback_event) { |e| e },
                   'StatusCallbackMethod' => status_callback_method,
                   'SendDigits' => send_digits,
-                  'IfMachine' => if_machine,
                   'Timeout' => timeout,
                   'Record' => record,
                   'RecordingChannels' => recording_channels,
@@ -154,6 +160,9 @@ module Twilio
                   'RecordingStatusCallbackEvent' => Twilio.serialize_list(recording_status_callback_event) { |e| e },
                   'Trim' => trim,
                   'CallerId' => caller_id,
+                  'MachineDetectionSpeechThreshold' => machine_detection_speech_threshold,
+                  'MachineDetectionSpeechEndThreshold' => machine_detection_speech_end_threshold,
+                  'MachineDetectionSilenceTimeout' => machine_detection_silence_timeout,
               })
 
               payload = @version.create(

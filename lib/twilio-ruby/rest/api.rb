@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -122,8 +122,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this API Key.
-      #    You will use this as the basic-auth `user` when authenticating to the API.
+      # @param [String] sid The unique string that that we created to identify the Key
+      #   resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::KeyInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::KeyList]
       def keys(sid=:unset)
@@ -131,8 +131,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
-      #   resource.
+      # @param [String] sid The unique string that that we created to identify the
+      #   Message resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::MessageInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::MessageList]
       def messages(sid=:unset)
@@ -179,8 +179,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
-      #   resource.
+      # @param [String] sid The unique string that that we created to identify the
+      #   Recording resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::RecordingInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::RecordingList]
       def recordings(sid=:unset)
@@ -217,7 +217,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A unique 34-character string that identifies this resource.
+      # @param [String] sid The unique string that that we created to identify the
+      #   Transcription resource.
       # @return [Twilio::REST::Api::V2010::AccountContext::TranscriptionInstance] if sid was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::TranscriptionList]
       def transcriptions(sid=:unset)

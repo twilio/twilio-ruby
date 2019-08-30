@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -16,8 +16,12 @@ module Twilio
               ##
               # Initialize the TranscriptionList
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] recording_sid The recording_sid
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   Transcription resource.
+              # @param [String] recording_sid The SID of the
+              #   [Recording](https://www.twilio.com/docs/voice/api/recording) from which the
+              #   transcription was created.
               # @return [TranscriptionList] TranscriptionList
               def initialize(version, account_sid: nil, recording_sid: nil)
                 super(version)
@@ -154,9 +158,14 @@ module Twilio
               ##
               # Initialize the TranscriptionContext
               # @param [Version] version Version that contains the resource
-              # @param [String] account_sid The account_sid
-              # @param [String] recording_sid The recording_sid
-              # @param [String] sid The sid
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   Transcription resource to fetch.
+              # @param [String] recording_sid The SID of the
+              #   [Recording](https://www.twilio.com/docs/voice/api/recording) that created the
+              #   transcription to fetch.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   Transcription resource to fetch.
               # @return [TranscriptionContext] TranscriptionContext
               def initialize(version, account_sid, recording_sid, sid)
                 super(version)
@@ -214,9 +223,14 @@ module Twilio
               # Initialize the TranscriptionInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] account_sid The account_sid
-              # @param [String] recording_sid The recording_sid
-              # @param [String] sid The sid
+              # @param [String] account_sid The SID of the
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   Transcription resource.
+              # @param [String] recording_sid The SID of the
+              #   [Recording](https://www.twilio.com/docs/voice/api/recording) from which the
+              #   transcription was created.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   Transcription resource to fetch.
               # @return [TranscriptionInstance] TranscriptionInstance
               def initialize(version, payload, account_sid: nil, recording_sid: nil, sid: nil)
                 super(version)
@@ -264,79 +278,79 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The api_version
+              # @return [String] The API version used to create the transcription
               def api_version
                 @properties['api_version']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The duration
+              # @return [String] The duration of the transcribed audio in seconds.
               def duration
                 @properties['duration']
               end
 
               ##
-              # @return [String] The price
+              # @return [String] The charge for the transcription
               def price
                 @properties['price']
               end
 
               ##
-              # @return [String] The price_unit
+              # @return [String] The currency in which price is measured
               def price_unit
                 @properties['price_unit']
               end
 
               ##
-              # @return [String] The recording_sid
+              # @return [String] The SID that identifies the transcription's recording
               def recording_sid
                 @properties['recording_sid']
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [transcription.Status] The status
+              # @return [transcription.Status] The status of the transcription
               def status
                 @properties['status']
               end
 
               ##
-              # @return [String] The transcription_text
+              # @return [String] The text content of the transcription.
               def transcription_text
                 @properties['transcription_text']
               end
 
               ##
-              # @return [String] The type
+              # @return [String] The transcription type
               def type
                 @properties['type']
               end
 
               ##
-              # @return [String] The uri
+              # @return [String] The URI of the resource, relative to `https://api.twilio.com`
               def uri
                 @properties['uri']
               end

@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -17,10 +17,10 @@ module Twilio
               # Initialize the RecordingList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
               #   Recording resource.
               # @param [String] call_sid The SID of the
-              #   [Call](https://www.twilio.com/docs/api/voice/call) this Recording resource is
+              #   [Call](https://www.twilio.com/docs/api/voice/call) the Recording resource is
               #   associated with.
               # @return [RecordingList] RecordingList
               def initialize(version, account_sid: nil, call_sid: nil)
@@ -37,15 +37,15 @@ module Twilio
               # @param [String] recording_status_callback_event The recording status events on
               #   which we should call the `recording_status_callback` URL. Can be: `in-progress`,
               #   `completed` and `absent` and the default is `completed`. Separate multiple event
-              #   values with a space. 
-              # @param [String] recording_status_callback The URL we call using the
-              #   `recording_status_callback_method` on each recording event specified in 
+              #   values with a space.
+              # @param [String] recording_status_callback The URL we should call using the
+              #   `recording_status_callback_method` on each recording event specified in
               #   `recording_status_callback_event`. For more information, see
               #   [RecordingStatusCallback
               #   parameters](https://www.twilio.com/docs/voice/api/recording#recordingstatuscallback).
               # @param [String] recording_status_callback_method The HTTP method we should use
-              #   when calling the `recording_status_callback` URL. Can be: `GET`, `POST` and the
-              #   default is `POST`.
+              #   to call `recording_status_callback`. Can be: `GET` or `POST` and the default is
+              #   `POST`.
               # @param [String] trim Whether to trim any leading and trailing silence in the
               #   recording. Can be: `trim-silence` or `do-not-trim` and the default is
               #   `do-not-trim`. `trim-silence` trims the silence from the beginning and end of
@@ -230,11 +230,11 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
               #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
-              #   Recording resource(s) to fetch.
+              #   Recording resource to fetch.
               # @param [String] call_sid The [Call](https://www.twilio.com/docs/api/voice/call)
-              #   SID of the resource(s) to fetch.
+              #   SID of the resource to fetch.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
-              #   Recording resource to fetch
+              #   Recording resource to fetch.
               # @return [RecordingContext] RecordingContext
               def initialize(version, account_sid, call_sid, sid)
                 super(version)
@@ -247,7 +247,7 @@ module Twilio
               ##
               # Update the RecordingInstance
               # @param [recording.Status] status The new status of the recording. Can be:
-              #   `stopped`, `paused`, `in-progress`
+              #   `stopped`, `paused`, `in-progress`.
               # @param [String] pause_behavior Whether to record during a pause. Can be: `skip`
               #   or `silence` and the default is `silence`. `skip` does not record during the
               #   pause period, while `silence` will replace the actual audio of the call with
@@ -321,13 +321,13 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
+              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
               #   Recording resource.
               # @param [String] call_sid The SID of the
-              #   [Call](https://www.twilio.com/docs/api/voice/call) this Recording resource is
+              #   [Call](https://www.twilio.com/docs/api/voice/call) the Recording resource is
               #   associated with.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
-              #   Recording resource to fetch
+              #   Recording resource to fetch.
               # @return [RecordingInstance] RecordingInstance
               def initialize(version, payload, account_sid: nil, call_sid: nil, sid: nil)
                 super(version)
@@ -375,7 +375,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The SID of the Account that created this resource
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
@@ -387,7 +387,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The SID of the Call this resource is associated with
+              # @return [String] The SID of the Call the resource is associated with
               def call_sid
                 @properties['call_sid']
               end
@@ -399,13 +399,13 @@ module Twilio
               end
 
               ##
-              # @return [Time] The RFC 2822 date and time in GMT that this resource was created
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The RFC 2822 date and time in GMT that this resource was last updated
+              # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
@@ -423,55 +423,55 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique string that identifies this resource
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The one-time cost of creating this recording.
+              # @return [String] The one-time cost of creating the recording.
               def price
                 @properties['price']
               end
 
               ##
-              # @return [String] The URI of this resource, relative to `https://api.twilio.com`
+              # @return [String] The URI of the resource, relative to `https://api.twilio.com`
               def uri
                 @properties['uri']
               end
 
               ##
-              # @return [Hash] Details about how to decrypt the recording
+              # @return [Hash] How to decrypt the recording.
               def encryption_details
                 @properties['encryption_details']
               end
 
               ##
-              # @return [String] The currency used in the Price property
+              # @return [String] The currency used in the price property.
               def price_unit
                 @properties['price_unit']
               end
 
               ##
-              # @return [recording.Status] The status of this recording
+              # @return [recording.Status] The status of the recording
               def status
                 @properties['status']
               end
 
               ##
-              # @return [String] The number of channels in the final recording file as an integer
+              # @return [String] The number of channels in the final recording file
               def channels
                 @properties['channels']
               end
 
               ##
-              # @return [recording.Source] How this recording was created
+              # @return [recording.Source] How the recording was created
               def source
                 @properties['source']
               end
 
               ##
-              # @return [String] More information about why the recording is missing, if status is `absent`
+              # @return [String] More information about why the recording is missing, if status is `absent`.
               def error_code
                 @properties['error_code']
               end
@@ -479,7 +479,7 @@ module Twilio
               ##
               # Update the RecordingInstance
               # @param [recording.Status] status The new status of the recording. Can be:
-              #   `stopped`, `paused`, `in-progress`
+              #   `stopped`, `paused`, `in-progress`.
               # @param [String] pause_behavior Whether to record during a pause. Can be: `skip`
               #   or `silence` and the default is `silence`. `skip` does not record during the
               #   pause period, while `silence` will replace the actual audio of the call with

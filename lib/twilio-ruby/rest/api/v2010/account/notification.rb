@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -31,7 +31,7 @@ module Twilio
             # Lists NotificationInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] log Only read notifications of the specified log level. Can be: 
+            # @param [String] log Only read notifications of the specified log level. Can be:
             #   `0` to read only ERROR notifications or `1` to read only WARNING notifications.
             #   By default, all notifications are read.
             # @param [Time] message_date_before Filter by date
@@ -59,7 +59,7 @@ module Twilio
             # Streams NotificationInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] log Only read notifications of the specified log level. Can be: 
+            # @param [String] log Only read notifications of the specified log level. Can be:
             #   `0` to read only ERROR notifications or `1` to read only WARNING notifications.
             #   By default, all notifications are read.
             # @param [Time] message_date_before Filter by date
@@ -103,7 +103,7 @@ module Twilio
             ##
             # Retrieve a single page of NotificationInstance records from the API.
             # Request is executed immediately.
-            # @param [String] log Only read notifications of the specified log level. Can be: 
+            # @param [String] log Only read notifications of the specified log level. Can be:
             #   `0` to read only ERROR notifications or `1` to read only WARNING notifications.
             #   By default, all notifications are read.
             # @param [Time] message_date_before Filter by date

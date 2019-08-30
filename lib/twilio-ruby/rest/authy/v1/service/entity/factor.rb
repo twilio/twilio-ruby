@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -330,6 +330,7 @@ module Twilio
                     'friendly_name' => payload['friendly_name'],
                     'status' => payload['status'],
                     'factor_type' => payload['factor_type'],
+                    'factor_strength' => payload['factor_strength'],
                     'url' => payload['url'],
                     'links' => payload['links'],
                 }
@@ -413,6 +414,12 @@ module Twilio
               # @return [factor.FactorTypes] The Type of this Factor
               def factor_type
                 @properties['factor_type']
+              end
+
+              ##
+              # @return [factor.FactorStrengths] The Strength of this Factor
+              def factor_strength
+                @properties['factor_strength']
               end
 
               ##

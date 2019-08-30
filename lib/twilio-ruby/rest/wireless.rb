@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -44,6 +44,12 @@ module Twilio
       # @return [Twilio::REST::Wireless::V1::RatePlanList]
       def rate_plans(sid=:unset)
         self.v1.rate_plans(sid)
+      end
+
+      ##
+      # @return [Twilio::REST::Wireless::V1::UsageRecordInstance]
+      def usage_records
+        self.v1.usage_records()
       end
 
       ##

@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -15,9 +15,9 @@ module Twilio
             ##
             # Initialize the UserList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique id of the
-            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this user belongs
-            #   to.
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+            #   associated with.
             # @return [UserList] UserList
             def initialize(version, service_sid: nil)
               super(version)
@@ -30,16 +30,16 @@ module Twilio
             ##
             # Retrieve a single page of UserInstance records from the API.
             # Request is executed immediately.
-            # @param [String] identity A unique string that identifies the user within this
-            #   service - often a username or email address. See the [identity][identity] docs
-            #   for more details.
-            # @param [String] role_sid The unique id of the
-            #   [Role](https://www.twilio.com/docs/api/chat/rest/roles) assigned to this user.
-            # @param [String] attributes An optional string used to contain any metadata or
-            #   other information for the User.  The string must contain structurally valid JSON
-            #   if specified.
-            # @param [String] friendly_name An optional human readable string representing the
-            #   user.  Often used for display purposes.
+            # @param [String] identity The `identity` value that uniquely identifies the new
+            #   resource's [User](https://www.twilio.com/docs/chat/rest/users) within the
+            #   [Service](https://www.twilio.com/docs/chat/rest/services). This value is often a
+            #   username or email address. See the Identity documentation for more details.
+            # @param [String] role_sid The SID of the
+            #   [Role](https://www.twilio.com/docs/chat/rest/roles) assigned to the new User.
+            # @param [String] attributes A valid JSON string that contains
+            #   application-specific data.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the new resource. This value is often used for display purposes.
             # @return [UserInstance] Newly created UserInstance
             def create(identity: nil, role_sid: :unset, attributes: :unset, friendly_name: :unset)
               data = Twilio::Values.of({
@@ -180,11 +180,11 @@ module Twilio
             ##
             # Initialize the UserContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid Sid of the
-            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this user belongs
-            #   to.
-            # @param [String] sid Key that uniquely defines the user to fetch. Could be Sid or
-            #   Identity.
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the resource
+            #   from.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the User
+            #   resource to fetch.
             # @return [UserContext] UserContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -222,13 +222,12 @@ module Twilio
 
             ##
             # Update the UserInstance
-            # @param [String] role_sid The unique id of the [Role][role] assigned to this
-            #   user.
-            # @param [String] attributes An optional string used to contain any metadata or
-            #   other information for the User.  The string must contain structurally valid JSON
-            #   if specified.
-            # @param [String] friendly_name An optional human readable string representing the
-            #   user.  Often used for display purposes.
+            # @param [String] role_sid The SID of the
+            #   [Role](https://www.twilio.com/docs/chat/rest/roles) assigned to this user.
+            # @param [String] attributes A valid JSON string that contains
+            #   application-specific data.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the resource. It is often used for display purposes.
             # @return [UserInstance] Updated UserInstance
             def update(role_sid: :unset, attributes: :unset, friendly_name: :unset)
               data = Twilio::Values.of({
@@ -310,11 +309,11 @@ module Twilio
             # Initialize the UserInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The unique id of the
-            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this user belongs
-            #   to.
-            # @param [String] sid Key that uniquely defines the user to fetch. Could be Sid or
-            #   Identity.
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+            #   associated with.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the User
+            #   resource to fetch.
             # @return [UserInstance] UserInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -354,85 +353,85 @@ module Twilio
             end
 
             ##
-            # @return [String] A 34 character string that uniquely identifies this resource.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The unique id of the Account responsible for this user.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The unique id of the Service this user belongs to.
+            # @return [String] The SID of the Service that the resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] An optional string metadata field you can use to store any data you wish.
+            # @return [String] The JSON string that stores application-specific data
             def attributes
               @properties['attributes']
             end
 
             ##
-            # @return [String] The human-readable name of this user.
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] The unique id of the [Role][role] assigned to this user.
+            # @return [String] The SID of the assigned to the user
             def role_sid
               @properties['role_sid']
             end
 
             ##
-            # @return [String] A unique string that identifies the user within this service - often a username or email address.
+            # @return [String] The string that identifies the resource's User
             def identity
               @properties['identity']
             end
 
             ##
-            # @return [Boolean] Indicates whether the User is actively connected to the Service instance and online.
+            # @return [Boolean] Whether the User is actively connected to the Service instance and online
             def is_online
               @properties['is_online']
             end
 
             ##
-            # @return [Boolean] Indicates whether the User has a potentially valid Push Notification registration  for the Service instance.
+            # @return [Boolean] Whether the User has a potentially valid Push Notification registration for the Service instance
             def is_notifiable
               @properties['is_notifiable']
             end
 
             ##
-            # @return [Time] The date that this resource was created in ISO 8601 format.
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date that this resource was last updated in ISO 8601 format.
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The number of Channels this User is a Member of.
+            # @return [String] The number of Channels this User is a Member of
             def joined_channels_count
               @properties['joined_channels_count']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] The absolute URLs of the Channel and Binding resources related to the user
             def links
               @properties['links']
             end
 
             ##
-            # @return [String] An absolute URL for this user.
+            # @return [String] The absolute URL of the User resource
             def url
               @properties['url']
             end
@@ -453,13 +452,12 @@ module Twilio
 
             ##
             # Update the UserInstance
-            # @param [String] role_sid The unique id of the [Role][role] assigned to this
-            #   user.
-            # @param [String] attributes An optional string used to contain any metadata or
-            #   other information for the User.  The string must contain structurally valid JSON
-            #   if specified.
-            # @param [String] friendly_name An optional human readable string representing the
-            #   user.  Often used for display purposes.
+            # @param [String] role_sid The SID of the
+            #   [Role](https://www.twilio.com/docs/chat/rest/roles) assigned to this user.
+            # @param [String] attributes A valid JSON string that contains
+            #   application-specific data.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the resource. It is often used for display purposes.
             # @return [UserInstance] Updated UserInstance
             def update(role_sid: :unset, attributes: :unset, friendly_name: :unset)
               context.update(role_sid: role_sid, attributes: attributes, friendly_name: friendly_name, )

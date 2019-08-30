@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -17,12 +17,13 @@ module Twilio
                 ##
                 # Initialize the PayloadList
                 # @param [Version] version Version that contains the resource
-                # @param [String] account_sid The unique id of the Account responsible for the
-                #   recording.
-                # @param [String] reference_sid A 34 character string that uniquely identifies the
-                #   recording to which this payload belongs.
-                # @param [String] add_on_result_sid A 34 character string that uniquely identifies
-                #   this result to which this payload belongs.
+                # @param [String] account_sid The SID of the
+                #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                #   Recording AddOnResult Payload resource.
+                # @param [String] reference_sid The SID of the recording to which the AddOnResult
+                #   resource that contains the payload belongs.
+                # @param [String] add_on_result_sid The SID of the AddOnResult to which the
+                #   payload belongs.
                 # @return [PayloadList] PayloadList
                 def initialize(version, account_sid: nil, reference_sid: nil, add_on_result_sid: nil)
                   super(version)
@@ -164,10 +165,15 @@ module Twilio
                 ##
                 # Initialize the PayloadContext
                 # @param [Version] version Version that contains the resource
-                # @param [String] account_sid The account_sid
-                # @param [String] reference_sid The reference_sid
-                # @param [String] add_on_result_sid The add_on_result_sid
-                # @param [String] sid The paylod Sid that uniquely identifies this resource
+                # @param [String] account_sid The SID of the
+                #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                #   Recording AddOnResult Payload resource to fetch.
+                # @param [String] reference_sid The SID of the recording to which the AddOnResult
+                #   resource that contains the payload to fetch belongs.
+                # @param [String] add_on_result_sid The SID of the AddOnResult to which the
+                #   payload to fetch belongs.
+                # @param [String] sid The Twilio-provided string that uniquely identifies the
+                #   Recording AddOnResult Payload resource to fetch.
                 # @return [PayloadContext] PayloadContext
                 def initialize(version, account_sid, reference_sid, add_on_result_sid, sid)
                   super(version)
@@ -231,13 +237,15 @@ module Twilio
                 # Initialize the PayloadInstance
                 # @param [Version] version Version that contains the resource
                 # @param [Hash] payload payload that contains response from Twilio
-                # @param [String] account_sid The unique id of the Account responsible for the
-                #   recording.
-                # @param [String] reference_sid A 34 character string that uniquely identifies the
-                #   recording to which this payload belongs.
-                # @param [String] add_on_result_sid A 34 character string that uniquely identifies
-                #   this result to which this payload belongs.
-                # @param [String] sid The paylod Sid that uniquely identifies this resource
+                # @param [String] account_sid The SID of the
+                #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                #   Recording AddOnResult Payload resource.
+                # @param [String] reference_sid The SID of the recording to which the AddOnResult
+                #   resource that contains the payload belongs.
+                # @param [String] add_on_result_sid The SID of the AddOnResult to which the
+                #   payload belongs.
+                # @param [String] sid The Twilio-provided string that uniquely identifies the
+                #   Recording AddOnResult Payload resource to fetch.
                 # @return [PayloadInstance] PayloadInstance
                 def initialize(version, payload, account_sid: nil, reference_sid: nil, add_on_result_sid: nil, sid: nil)
                   super(version)
@@ -285,67 +293,67 @@ module Twilio
                 end
 
                 ##
-                # @return [String] A string that uniquely identifies this payload
+                # @return [String] The unique string that identifies the resource
                 def sid
                   @properties['sid']
                 end
 
                 ##
-                # @return [String] A string that uniquely identifies the result
+                # @return [String] The SID of the AddOnResult to which the payload belongs
                 def add_on_result_sid
                   @properties['add_on_result_sid']
                 end
 
                 ##
-                # @return [String] The unique sid that identifies this account
+                # @return [String] The SID of the Account that created the resource
                 def account_sid
                   @properties['account_sid']
                 end
 
                 ##
-                # @return [String] A string that describes the payload.
+                # @return [String] The string that describes the payload
                 def label
                   @properties['label']
                 end
 
                 ##
-                # @return [String] A string that uniquely identifies the Add-on.
+                # @return [String] The SID of the Add-on to which the result belongs
                 def add_on_sid
                   @properties['add_on_sid']
                 end
 
                 ##
-                # @return [String] A string that uniquely identifies the Add-on configuration.
+                # @return [String] The SID of the Add-on configuration
                 def add_on_configuration_sid
                   @properties['add_on_configuration_sid']
                 end
 
                 ##
-                # @return [String] The MIME type of the payload.
+                # @return [String] The MIME type of the payload
                 def content_type
                   @properties['content_type']
                 end
 
                 ##
-                # @return [Time] The date this resource was created
+                # @return [Time] The RFC 2822 date and time in GMT that the resource was created
                 def date_created
                   @properties['date_created']
                 end
 
                 ##
-                # @return [Time] The date this resource was last updated
+                # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
                 def date_updated
                   @properties['date_updated']
                 end
 
                 ##
-                # @return [String] A string that uniquely identifies the recording.
+                # @return [String] The SID of the recording to which the AddOnResult resource that contains the payload belongs
                 def reference_sid
                   @properties['reference_sid']
                 end
 
                 ##
-                # @return [String] A dictionary of URIs for related resources
+                # @return [String] A list of related resources identified by their relative URIs
                 def subresource_uris
                   @properties['subresource_uris']
                 end

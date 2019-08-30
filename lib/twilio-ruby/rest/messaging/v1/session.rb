@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -39,12 +39,8 @@ module Twilio
           # @param [Time] date_updated The date that this resource was last updated.
           # @param [String] created_by Identity of the session's creator. If the Session was
           #   created through the API, the value will be `system`
-          # @param [String] twilio_address Twilio address the participant is contacting to.
-          #   Together with User address defines the participant.
-          # @param [String] user_address Address the participant is contacting from.
-          #   Together with Twilio address defines the participant.
           # @return [SessionInstance] Newly created SessionInstance
-          def create(messaging_service_sid: nil, friendly_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset, twilio_address: :unset, user_address: :unset)
+          def create(messaging_service_sid: nil, friendly_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
             data = Twilio::Values.of({
                 'MessagingServiceSid' => messaging_service_sid,
                 'FriendlyName' => friendly_name,
@@ -52,8 +48,6 @@ module Twilio
                 'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                 'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                 'CreatedBy' => created_by,
-                'TwilioAddress' => twilio_address,
-                'UserAddress' => user_address,
             })
 
             payload = @version.create(
@@ -204,6 +198,7 @@ module Twilio
             # Dependents
             @participants = nil
             @messages = nil
+            @webhooks = nil
           end
 
           ##
@@ -292,6 +287,24 @@ module Twilio
             end
 
             @messages
+          end
+
+          ##
+          # Access the webhooks
+          # @return [WebhookList]
+          # @return [WebhookContext] if sid was passed.
+          def webhooks(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return WebhookContext.new(@version, @solution[:sid], sid, )
+            end
+
+            unless @webhooks
+              @webhooks = WebhookList.new(@version, session_sid: @solution[:sid], )
+            end
+
+            @webhooks
           end
 
           ##
@@ -467,6 +480,13 @@ module Twilio
           # @return [messages] messages
           def messages
             context.messages
+          end
+
+          ##
+          # Access the webhooks
+          # @return [webhooks] webhooks
+          def webhooks
+            context.webhooks
           end
 
           ##

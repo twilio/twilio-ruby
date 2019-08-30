@@ -1,6 +1,230 @@
 twilio-ruby changelog
 =====================
 
+[2019-08-21] Version 5.25.4
+----------------------------
+**Library**
+- [PR #460](https://github.com/twilio/twilio-ruby/pull/460): Update the IP messaging domain name to be 'chat'. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #458](https://github.com/twilio/twilio-ruby/pull/458): Update TwiML docs for naming overrides. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Conversations**
+- Add Chat Conversation SID to conversation default output properties
+
+**Flex**
+- Adding `outbound_call_flows` object to Flex Configuration
+- Adding read and fetch to channels API
+
+**Supersim**
+- Add Sims and Commands resources for the Super Sim Pilot
+
+**Sync**
+- Added configuration option for enabling webhooks from REST.
+
+**Wireless**
+- Added `usage_notification_method` and `usage_notification_url` properties to `rate_plan`.
+
+**Twiml**
+- Add support for `ach-debit` transactions in `Pay` verb
+
+
+[2019-08-05] Version 5.25.3
+----------------------------
+**Preview**
+- Added support for the header `Twilio-Sandbox-Mode` to mock all Voice dependencies
+
+**Twiml**
+- Add support for `<Siprec>` noun
+- Add support for `<Stream>` noun
+- Create verbs `<Start>` and `<Stop>`
+
+
+[2019-07-24] Version 5.25.2
+----------------------------
+**Insights**
+- Added `properties` to summary.
+
+**Preview**
+- Added endpoint to brand a call without initiating it, so it can be initiated manually by the Customer
+
+**Twiml**
+- Update `<Conference>` recording events **(breaking change)**
+
+
+[2019-07-10] Version 5.25.1
+----------------------------
+**Api**
+- Make `friendly_name` optional for applications create
+- Add new property `as_of` date to Usage Record API calls
+
+**Wireless**
+- Added Usage Records resource.
+
+
+[2019-06-26] Version 5.25.0
+----------------------------
+**Autopilot**
+- Adds two new properties in Assistant i.e needs_model_build and development_stage
+
+**Preview**
+- Changed phone numbers from _URL|Path_ to `X-XCNAM-Sensitive` headers **(breaking change)**
+
+**Verify**
+- Add `MessagingConfiguration` resource to verify service
+
+
+[2019-06-12] Version 5.24.0
+----------------------------
+**Autopilot**
+- Add Webhooks resource to Autopilot Assistant.
+
+**Flex**
+- Added missing 'custom' type to Flex Flow
+- Adding `integrations` to Flex Configuration
+
+**Insights**
+- Added attributes to summary.
+
+**Messaging**
+- Message API Create updated with conditional params **(breaking change)**
+
+**Proxy**
+- Document that Proxy will return a maximum of 100 records for read/list endpoints **(breaking change)**
+- Remove non-updatable property parameters for Session update (mode, participants) **(breaking change)**
+
+**Sync**
+- Added reachability debouncing configuration options.
+
+**Verify**
+- Add `RateLimits` and `Buckets` resources to Verify Services
+- Add `RateLimits` optional parameter on `Verification` creation.
+
+**Twiml**
+- Fix `<Room>` participantIdentity casing
+
+
+[2019-05-29] Version 5.23.1
+----------------------------
+**Verify**
+- Add `approved` to status enum
+
+
+[2019-05-15] Version 5.23.0
+----------------------------
+**Api**
+- Make `method` optional for queue members update
+
+**Chat**
+- Removed `webhook.*.format` update parameters in Service resource from public library visibility in v1 **(breaking change)**
+
+**Insights**
+- Added client metrics as sdk_edge to summary.
+- Added optional query param processing_state.
+
+**Numbers**
+- Add addtional metadata fields on a Document
+- Add status callback fields and parameters
+
+**Taskrouter**
+- Added `channel_optimized_routing` attribute to task-channel endpoint
+
+**Video**
+- [Rooms] Add Video Subscription API
+
+**Wireless**
+- Added `imei` to Data Session resource.
+- Remove `imeisv` from Data Session resource. **(breaking change)**
+
+
+[2019-05-01] Version 5.22.3
+----------------------------
+**Serverless**
+- Documentation
+
+**Wireless**
+- Added `imeisv` to Data Session resource.
+
+
+[2019-04-24] Version 5.22.2
+----------------------------
+**Api**
+- Add `verified` property to Addresses
+
+**Numbers**
+- Add API for Identites and documents
+
+**Proxy**
+- Add in use count on number instance
+
+
+[2019-04-12] Version 5.22.1
+----------------------------
+**Flex**
+- Adding PluginService to Flex Configuration
+
+**Numbers**
+- Add API for Proof of Addresses
+
+**Proxy**
+- Clarify documentation for Service and Session fetch
+
+**Serverless**
+- Serverless scaffolding
+
+
+[2019-03-28] Version 5.22.0
+----------------------------
+**Api**
+- Remove optional `if_machine` call create parameter from helper libraries **(breaking change)**
+- Changed `call_sid` path parameter type on QueueMember fetch and update requests **(breaking change)**
+
+**Voice**
+- changed file names to dialing_permissions prefix **(breaking change)**
+
+**Wireless**
+- Added `ResetStatus` property to Sim resource to allow resetting connectivity via the API.
+
+
+[2019-03-15] Version 5.21.2
+----------------------------
+**Library**
+- PR #444: Add Help Center and Support Ticket links to the README. Thanks to @childish-sambino!
+
+**Api**
+- Add `machine_detection_speech_threshold`, `machine_detection_speech_end_threshold`, `machine_detection_silence_timeout` optional params to Call create request
+
+**Flex**
+- Adding Flex Channel Orchestration
+- Adding Flex Flow
+
+
+[2019-03-06] Version 5.21.1
+----------------------------
+**Twiml**
+- Add `de1` to `<Conference>` regions
+
+
+[2019-03-01] Version 5.21.0
+----------------------------
+**Api**
+- Make conference participant preview parameters public
+
+**Authy**
+- Added support for FactorType and FactorStrength for Factors and Challenges
+
+**Iam**
+- First public release
+
+**Verify**
+- Add endpoint to update/cancel a Verification **(breaking change)**
+
+**Video**
+- [Composer] Make RoomSid mandatory **(breaking change)**
+- [Composer] Add `enqueued` state to Composition
+
+**Twiml**
+- Update message body to not be required for TwiML `Dial` noun.
+
+
 [2019-02-15] Version 5.20.1
 ----------------------------
 **Library**

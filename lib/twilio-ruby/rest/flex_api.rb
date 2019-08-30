@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -26,6 +26,30 @@ module Twilio
       # Version v1 of flex_api
       def v1
         @v1 ||= V1.new self
+      end
+
+      ##
+      # @param [String] sid The unique ID of the FlexFlow
+      # @return [Twilio::REST::Flex_api::V1::FlexFlowInstance] if sid was passed.
+      # @return [Twilio::REST::Flex_api::V1::FlexFlowList]
+      def flex_flow(sid=:unset)
+        self.v1.flex_flow(sid)
+      end
+
+      ##
+      # @param [String] sid The unique SID identifier of the Flex Chat Channel
+      # @return [Twilio::REST::Flex_api::V1::ChannelInstance] if sid was passed.
+      # @return [Twilio::REST::Flex_api::V1::ChannelList]
+      def channel(sid=:unset)
+        self.v1.channel(sid)
+      end
+
+      ##
+      # @param [String] sid The unique SID identifier of the Flex Chat Channel
+      # @return [Twilio::REST::Flex_api::V1::WebChannelInstance] if sid was passed.
+      # @return [Twilio::REST::Flex_api::V1::WebChannelList]
+      def web_channel(sid=:unset)
+        self.v1.web_channel(sid)
       end
 
       ##

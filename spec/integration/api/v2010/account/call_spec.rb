@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -297,7 +297,54 @@ describe 'Call' do
           "status": "completed",
           "subresource_uris": {
               "notifications": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications.json",
-              "recordings": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings.json"
+              "recordings": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings.json",
+              "feedback": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Feedback.json",
+              "feedback_summaries": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/FeedbackSummary.json"
+          },
+          "to": "+14158675309",
+          "to_formatted": "(415) 867-5309",
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+      }
+      ]
+    ))
+
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives cancel responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "annotation": null,
+          "answered_by": null,
+          "api_version": "2010-04-01",
+          "caller_name": null,
+          "date_created": "Tue, 31 Aug 2010 20:36:28 +0000",
+          "date_updated": "Tue, 31 Aug 2010 20:36:44 +0000",
+          "direction": "inbound",
+          "duration": "15",
+          "end_time": "Tue, 31 Aug 2010 20:36:44 +0000",
+          "forwarded_from": "+141586753093",
+          "from": "+14158675308",
+          "from_formatted": "(415) 867-5308",
+          "group_sid": null,
+          "parent_call_sid": null,
+          "phone_number_sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "price": "-0.03000",
+          "price_unit": "USD",
+          "sid": "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "start_time": "Tue, 31 Aug 2010 20:36:29 +0000",
+          "status": "canceled",
+          "subresource_uris": {
+              "notifications": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications.json",
+              "recordings": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings.json",
+              "feedback": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Feedback.json",
+              "feedback_summaries": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/FeedbackSummary.json"
           },
           "to": "+14158675309",
           "to_formatted": "(415) 867-5309",

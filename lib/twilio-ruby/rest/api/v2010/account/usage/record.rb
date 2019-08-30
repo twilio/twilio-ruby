@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -299,6 +299,7 @@ module Twilio
                 @properties = {
                     'account_sid' => payload['account_sid'],
                     'api_version' => payload['api_version'],
+                    'as_of' => payload['as_of'],
                     'category' => payload['category'],
                     'count' => payload['count'],
                     'count_unit' => payload['count_unit'],
@@ -324,6 +325,12 @@ module Twilio
               # @return [String] The API version used to create the resource
               def api_version
                 @properties['api_version']
+              end
+
+              ##
+              # @return [String] Usage records up to date as of this timestamp
+              def as_of
+                @properties['as_of']
               end
 
               ##

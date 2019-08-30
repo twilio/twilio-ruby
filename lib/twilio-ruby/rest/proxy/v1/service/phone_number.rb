@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -17,8 +17,8 @@ module Twilio
             ##
             # Initialize the PhoneNumberList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the parent
-            #   [Service](https://www.twilio.com/docs/proxy/api/service).
+            # @param [String] service_sid The SID of the PhoneNumber resource's parent
+            #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
             # @return [PhoneNumberList] PhoneNumberList
             def initialize(version, service_sid: nil)
               super(version)
@@ -31,13 +31,14 @@ module Twilio
             ##
             # Retrieve a single page of PhoneNumberInstance records from the API.
             # Request is executed immediately.
-            # @param [String] sid A Twilio
-            #   [IncomingPhoneNumber](https://www.twilio.com/docs/phone-numbers/api/incoming-phone-numbers) Sid that represents the Twilio Number you would like to assign to your Proxy Service (e.g. `PN1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d`).
-            # @param [String] phone_number A string that represents the Twilio Number you
-            #   would like to assign to your Proxy Service. Provide number in
-            #   [E.164](https://en.wikipedia.org/wiki/E.164) format (e.g. `+16175551212`).
-            # @param [Boolean] is_reserved Whether or not the number should be excluded from
-            #   being assigned to a participant using proxy pool logic. See [Reserved Phone
+            # @param [String] sid The SID of a Twilio
+            #   [IncomingPhoneNumber](https://www.twilio.com/docs/phone-numbers/api/incoming-phone-numbers) resource that represents the Twilio Number you would like to assign to your Proxy Service.
+            # @param [String] phone_number The phone number in
+            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format.  E.164 phone
+            #   numbers consist of a + followed by the country code and subscriber number
+            #   without punctuation characters. For example, +14155551234.
+            # @param [Boolean] is_reserved Whether the new phone number should be reserved and
+            #   not be assigned to a participant using proxy pool logic. See [Reserved Phone
             #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
             #   information.
             # @return [PhoneNumberInstance] Newly created PhoneNumberInstance
@@ -179,10 +180,11 @@ module Twilio
             ##
             # Initialize the PhoneNumberContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the parent
-            #   [Service](https://www.twilio.com/docs/proxy/api/service).
-            # @param [String] sid A 34 character string that uniquely identifies the Phone
-            #   Number to fetch (e.g. `PN1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d`).
+            # @param [String] service_sid The SID of the parent
+            #   [Service](https://www.twilio.com/docs/proxy/api/service) of the PhoneNumber
+            #   resource to fetch.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   PhoneNumber resource to fetch.
             # @return [PhoneNumberContext] PhoneNumberContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -221,8 +223,8 @@ module Twilio
 
             ##
             # Update the PhoneNumberInstance
-            # @param [Boolean] is_reserved Whether or not the number should be excluded from
-            #   being assigned to a participant using proxy pool logic. See [Reserved Phone
+            # @param [Boolean] is_reserved Whether the phone number should be reserved and not
+            #   be assigned to a participant using proxy pool logic. See [Reserved Phone
             #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
             #   information.
             # @return [PhoneNumberInstance] Updated PhoneNumberInstance
@@ -265,10 +267,10 @@ module Twilio
             # Initialize the PhoneNumberInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The unique SID identifier of the parent
-            #   [Service](https://www.twilio.com/docs/proxy/api/service).
-            # @param [String] sid A 34 character string that uniquely identifies the Phone
-            #   Number to fetch (e.g. `PN1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d`).
+            # @param [String] service_sid The SID of the PhoneNumber resource's parent
+            #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   PhoneNumber resource to fetch.
             # @return [PhoneNumberInstance] PhoneNumberInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -286,6 +288,7 @@ module Twilio
                   'capabilities' => payload['capabilities'],
                   'url' => payload['url'],
                   'is_reserved' => payload['is_reserved'],
+                  'in_use' => payload['in_use'].to_i,
               }
 
               # Context
@@ -305,69 +308,75 @@ module Twilio
             end
 
             ##
-            # @return [String] A string that uniquely identifies this Phone Number.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] Account Sid.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] Service Sid.
+            # @return [String] The SID of the PhoneNumber resource's parent Service resource
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [Time] The date this Phone Number was added to the service
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this Phone Number was updated
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The phone number.
+            # @return [String] The phone number in E.164 format
             def phone_number
               @properties['phone_number']
             end
 
             ##
-            # @return [String] A human-readable description of this resource.
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] ISO Country Code,
+            # @return [String] The ISO Country Code
             def iso_country
               @properties['iso_country']
             end
 
             ##
-            # @return [String] A list of capabilities.
+            # @return [String] The capabilities of the phone number
             def capabilities
               @properties['capabilities']
             end
 
             ##
-            # @return [String] The URL of this resource.
+            # @return [String] The absolute URL of the PhoneNumber resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [Boolean] Reserve for manual assignment to participants only.
+            # @return [Boolean] Reserve the phone number for manual assignment to participants only
             def is_reserved
               @properties['is_reserved']
+            end
+
+            ##
+            # @return [String] The number of open session assigned to the number.
+            def in_use
+              @properties['in_use']
             end
 
             ##
@@ -386,8 +395,8 @@ module Twilio
 
             ##
             # Update the PhoneNumberInstance
-            # @param [Boolean] is_reserved Whether or not the number should be excluded from
-            #   being assigned to a participant using proxy pool logic. See [Reserved Phone
+            # @param [Boolean] is_reserved Whether the phone number should be reserved and not
+            #   be assigned to a participant using proxy pool logic. See [Reserved Phone
             #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
             #   information.
             # @return [PhoneNumberInstance] Updated PhoneNumberInstance

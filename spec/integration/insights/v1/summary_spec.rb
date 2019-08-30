@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -34,8 +34,6 @@ describe 'CallSummary' do
           "call_type": "carrier",
           "call_state": "ringing",
           "processing_state": "complete",
-          "direction": "inbound",
-          "disconnected_by": "callee",
           "start_time": "2015-07-30T20:00:00Z",
           "end_time": "2015-07-30T20:00:00Z",
           "duration": 100,
@@ -44,10 +42,13 @@ describe 'CallSummary' do
           "to": {},
           "carrier_edge": {},
           "client_edge": {},
+          "sdk_edge": {},
           "sip_edge": {},
           "tags": [
               "tags"
           ],
+          "attributes": {},
+          "properties": {},
           "url": "https://insights.twilio.com/v1/Voice/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Summary"
       }
       ]

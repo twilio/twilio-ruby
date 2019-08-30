@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -17,8 +17,8 @@ module Twilio
             ##
             # Initialize the FaxMediaList
             # @param [Version] version Version that contains the resource
-            # @param [String] fax_sid The unique SID identifier of the fax for which this
-            #   media is associated.
+            # @param [String] fax_sid The SID of the fax the FaxMedia resource is associated
+            #   with.
             # @return [FaxMediaList] FaxMediaList
             def initialize(version, fax_sid: nil)
               super(version)
@@ -154,9 +154,9 @@ module Twilio
             ##
             # Initialize the FaxMediaContext
             # @param [Version] version Version that contains the resource
-            # @param [String] fax_sid The unique SID identifier of the fax.
-            # @param [String] sid A 34 character string that uniquely identifies this fax
-            #   media.
+            # @param [String] fax_sid The SID of the fax with the FaxMedia resource to fetch.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   FaxMedia resource to fetch.
             # @return [FaxMediaContext] FaxMediaContext
             def initialize(version, fax_sid, sid)
               super(version)
@@ -210,10 +210,10 @@ module Twilio
             # Initialize the FaxMediaInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] fax_sid The unique SID identifier of the fax for which this
-            #   media is associated.
-            # @param [String] sid A 34 character string that uniquely identifies this fax
-            #   media.
+            # @param [String] fax_sid The SID of the fax the FaxMedia resource is associated
+            #   with.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   FaxMedia resource to fetch.
             # @return [FaxMediaInstance] FaxMediaInstance
             def initialize(version, payload, fax_sid: nil, sid: nil)
               super(version)
@@ -246,43 +246,43 @@ module Twilio
             end
 
             ##
-            # @return [String] A string that uniquely identifies this fax media
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] Account SID
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] Fax SID
+            # @return [String] The SID of the fax the FaxMedia resource is associated with
             def fax_sid
               @properties['fax_sid']
             end
 
             ##
-            # @return [String] Media content type
+            # @return [String] The content type of the stored fax media
             def content_type
               @properties['content_type']
             end
 
             ##
-            # @return [Time] The date this fax media was created
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this fax media was updated
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The URL of this resource
+            # @return [String] The absolute URL of the FaxMedia resource
             def url
               @properties['url']
             end

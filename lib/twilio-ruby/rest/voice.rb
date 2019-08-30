@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -29,9 +29,9 @@ module Twilio
       end
 
       ##
-      # @return [Twilio::REST::Voice::V1::VoicePermissionInstance]
-      def voice_permissions
-        self.v1.voice_permissions()
+      # @return [Twilio::REST::Voice::V1::DialingPermissionsInstance]
+      def dialing_permissions
+        self.v1.dialing_permissions()
       end
 
       ##
