@@ -7,7 +7,7 @@
 
 The documentation for the Twilio API can be found [here][apidocs].
 
-The Ruby library documentation can be found [here][libdocs].
+The Ruby library documentation can be found [here][libdocs] and individual releases [here][refdocs].
 
 ## Recent Update
 
@@ -192,7 +192,8 @@ implementations:
 
 [apidocs]: https://www.twilio.com/docs/api
 [twiml]: https://www.twilio.com/docs/api/twiml
-[libdocs]: https://twilio.github.io/twilio-ruby
+[libdocs]: https://www.twilio.com/docs/libraries/ruby
+[refdocs]: https://twilio.github.io/twilio-ruby
 [capability]: https://github.com/twilio/twilio-ruby/wiki/JWT-Tokens
 [examples]: https://github.com/twilio/twilio-ruby/blob/master/examples
 [wiki]: https://github.com/twilio/twilio-ruby/wiki
