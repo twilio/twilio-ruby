@@ -14,7 +14,7 @@ rvm:
 services:
   - docker
 
-install: make install
+install: make test-install
 script: make test
 
 matrix:
