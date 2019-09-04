@@ -17,10 +17,11 @@ module Twilio
               # Initialize the InviteList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) the Invite resource is
               #   associated with.
               # @param [String] channel_sid The SID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) the resource belongs to.
+              #   [Channel](https://www.twilio.com/docs/chat/channels) the Invite resource belongs
+              #   to.
               # @return [InviteList] InviteList
               def initialize(version, service_sid: nil, channel_sid: nil)
                 super(version)
@@ -198,13 +199,13 @@ module Twilio
               # Initialize the InviteContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the resource
-              #   from.
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the Invite
+              #   resource from.
               # @param [String] channel_sid The SID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) the resource to fetch
-              #   belongs to.
-              # @param [String] sid The Twilio-provided string that uniquely identifies the
-              #   Invite resource to fetch.
+              #   [Channel](https://www.twilio.com/docs/chat/channels) the Invite resource to
+              #   fetch belongs to. This value can be the Channel resource's `sid` or
+              #   `unique_name`.
+              # @param [String] sid The SID of the Invite resource to fetch.
               # @return [InviteContext] InviteContext
               def initialize(version, service_sid, channel_sid, sid)
                 super(version)
@@ -263,12 +264,12 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) the Invite resource is
               #   associated with.
               # @param [String] channel_sid The SID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) the resource belongs to.
-              # @param [String] sid The Twilio-provided string that uniquely identifies the
-              #   Invite resource to fetch.
+              #   [Channel](https://www.twilio.com/docs/chat/channels) the Invite resource belongs
+              #   to.
+              # @param [String] sid The SID of the Invite resource to fetch.
               # @return [InviteInstance] InviteInstance
               def initialize(version, payload, service_sid: nil, channel_sid: nil, sid: nil)
                 super(version)
@@ -343,13 +344,13 @@ module Twilio
               end
 
               ##
-              # @return [Time] The RFC 2822 date and time in GMT when the resource was created
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
               def date_updated
                 @properties['date_updated']
               end

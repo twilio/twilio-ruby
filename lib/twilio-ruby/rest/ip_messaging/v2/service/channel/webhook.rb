@@ -17,11 +17,11 @@ module Twilio
               # Initialize the WebhookList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
-              #   associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) the Channel Webhook
+              #   resource is associated with.
               # @param [String] channel_sid The SID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) the ChannelWebhook resource
-              #   belongs to.
+              #   [Channel](https://www.twilio.com/docs/chat/channels) the Channel Webhook
+              #   resource belongs to.
               # @return [WebhookList] WebhookList
               def initialize(version, service_sid: nil, channel_sid: nil)
                 super(version)
@@ -128,7 +128,7 @@ module Twilio
               #   the list of possible events, see [Webhook Event
               #   Triggers](https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger).
               # @param [String] configuration_triggers A string that will cause us to call the
-              #   webhook when it is found in a message body. This parameter takes only one
+              #   webhook when it is present in a message body. This parameter takes only one
               #   trigger string. To specify more than one, repeat this parameter for each trigger
               #   string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
               # @param [String] configuration_flow_sid The SID of the Studio
@@ -209,13 +209,13 @@ module Twilio
               # Initialize the WebhookContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the resource
-              #   from.
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) with the Channel to
+              #   fetch the Webhook resource from.
               # @param [String] channel_sid The SID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) the resource to fetch
-              #   belongs to.
-              # @param [String] sid The Twilio-provided string that uniquely identifies the
-              #   ChannelWebhook resource to fetch.
+              #   [Channel](https://www.twilio.com/docs/chat/channels) the Channel Webhook
+              #   resource to fetch belongs to. This value can be the Channel resource's `sid` or
+              #   `unique_name`.
+              # @param [String] sid The SID of the Channel Webhook resource to fetch.
               # @return [WebhookContext] WebhookContext
               def initialize(version, service_sid, channel_sid, sid)
                 super(version)
@@ -258,7 +258,7 @@ module Twilio
               #   the list of possible events, see [Webhook Event
               #   Triggers](https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger).
               # @param [String] configuration_triggers A string that will cause us to call the
-              #   webhook when it is found in a message body. This parameter takes only one
+              #   webhook when it is present in a message body. This parameter takes only one
               #   trigger string. To specify more than one, repeat this parameter for each trigger
               #   string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
               # @param [String] configuration_flow_sid The SID of the Studio
@@ -321,13 +321,12 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
-              #   associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) the Channel Webhook
+              #   resource is associated with.
               # @param [String] channel_sid The SID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) the ChannelWebhook resource
-              #   belongs to.
-              # @param [String] sid The Twilio-provided string that uniquely identifies the
-              #   ChannelWebhook resource to fetch.
+              #   [Channel](https://www.twilio.com/docs/chat/channels) the Channel Webhook
+              #   resource belongs to.
+              # @param [String] sid The SID of the Channel Webhook resource to fetch.
               # @return [WebhookInstance] WebhookInstance
               def initialize(version, payload, service_sid: nil, channel_sid: nil, sid: nil)
                 super(version)
@@ -383,13 +382,13 @@ module Twilio
               end
 
               ##
-              # @return [String] The SID of the Service that the resource is associated with
+              # @return [String] The SID of the Service that the Channel Webhook resource is associated with
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] The SID of the Channel the ChannelWebhook resource belongs to
+              # @return [String] The SID of the Channel the Channel Webhook resource belongs to
               def channel_sid
                 @properties['channel_sid']
               end
@@ -401,7 +400,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The absolute URL of the resource
+              # @return [String] The absolute URL of the Channel Webhook resource
               def url
                 @properties['url']
               end
@@ -413,13 +412,13 @@ module Twilio
               end
 
               ##
-              # @return [Time] The RFC 2822 date and time in GMT when the resource was created
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
@@ -443,7 +442,7 @@ module Twilio
               #   the list of possible events, see [Webhook Event
               #   Triggers](https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger).
               # @param [String] configuration_triggers A string that will cause us to call the
-              #   webhook when it is found in a message body. This parameter takes only one
+              #   webhook when it is present in a message body. This parameter takes only one
               #   trigger string. To specify more than one, repeat this parameter for each trigger
               #   string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
               # @param [String] configuration_flow_sid The SID of the Studio

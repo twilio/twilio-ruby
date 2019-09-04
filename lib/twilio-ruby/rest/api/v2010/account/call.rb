@@ -462,8 +462,10 @@ module Twilio
             # @param [String] status_callback_method The HTTP method we should use when
             #   requesting the `status_callback` URL. Can be: `GET` or `POST` and the default is
             #   `POST`. If an `application_sid` parameter is present, this parameter is ignored.
+            # @param [String] twiml TwiML instructions for the call Twilio will use without
+            #   fetching Twiml from url. Twiml and url parameters are mutually exclusive
             # @return [CallInstance] Updated CallInstance
-            def update(url: :unset, method: :unset, status: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_method: :unset)
+            def update(url: :unset, method: :unset, status: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_method: :unset, twiml: :unset)
               data = Twilio::Values.of({
                   'Url' => url,
                   'Method' => method,
@@ -472,6 +474,7 @@ module Twilio
                   'FallbackMethod' => fallback_method,
                   'StatusCallback' => status_callback,
                   'StatusCallbackMethod' => status_callback_method,
+                  'Twiml' => twiml,
               })
 
               payload = @version.update(
@@ -802,8 +805,10 @@ module Twilio
             # @param [String] status_callback_method The HTTP method we should use when
             #   requesting the `status_callback` URL. Can be: `GET` or `POST` and the default is
             #   `POST`. If an `application_sid` parameter is present, this parameter is ignored.
+            # @param [String] twiml TwiML instructions for the call Twilio will use without
+            #   fetching Twiml from url. Twiml and url parameters are mutually exclusive
             # @return [CallInstance] Updated CallInstance
-            def update(url: :unset, method: :unset, status: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_method: :unset)
+            def update(url: :unset, method: :unset, status: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_method: :unset, twiml: :unset)
               context.update(
                   url: url,
                   method: method,
@@ -812,6 +817,7 @@ module Twilio
                   fallback_method: fallback_method,
                   status_callback: status_callback,
                   status_callback_method: status_callback_method,
+                  twiml: twiml,
               )
             end
 

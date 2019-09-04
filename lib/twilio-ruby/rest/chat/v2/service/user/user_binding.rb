@@ -17,13 +17,13 @@ module Twilio
               # Initialize the UserBindingList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
-              #   associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) the User Binding
+              #   resource is associated with.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/users) for the binding.  See [push
-              #   notification
+              #   [User](https://www.twilio.com/docs/chat/rest/users) with the User Binding
+              #   resource.  See [push notification
               #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
-              #   for more information.
+              #   for more info.
               # @return [UserBindingList] UserBindingList
               def initialize(version, service_sid: nil, user_sid: nil)
                 super(version)
@@ -41,7 +41,7 @@ module Twilio
               #   User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See [push
               #   notification
               #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
-              #   for more information.
+              #   for more info.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -61,7 +61,7 @@ module Twilio
               #   User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See [push
               #   notification
               #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
-              #   for more information.
+              #   for more info.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -98,7 +98,7 @@ module Twilio
               #   User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See [push
               #   notification
               #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
-              #   for more information.
+              #   for more info.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -177,15 +177,14 @@ module Twilio
               # Initialize the UserBindingContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the resource
-              #   from.
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the User
+              #   Binding resource from.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/users) for the binding.  See [push
-              #   notification
+              #   [User](https://www.twilio.com/docs/chat/rest/users) with the User Binding
+              #   resource to fetch.  See [push notification
               #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
-              #   for more information.
-              # @param [String] sid The Twilio-provided string that uniquely identifies the User
-              #   Binding resource to fetch.
+              #   for more info.
+              # @param [String] sid The SID of the User Binding resource to fetch.
               # @return [UserBindingContext] UserBindingContext
               def initialize(version, service_sid, user_sid, sid)
                 super(version)
@@ -244,15 +243,14 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
-              #   associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) the User Binding
+              #   resource is associated with.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/users) for the binding.  See [push
-              #   notification
+              #   [User](https://www.twilio.com/docs/chat/rest/users) with the User Binding
+              #   resource.  See [push notification
               #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
-              #   for more information.
-              # @param [String] sid The Twilio-provided string that uniquely identifies the User
-              #   Binding resource to fetch.
+              #   for more info.
+              # @param [String] sid The SID of the User Binding resource to fetch.
               # @return [UserBindingInstance] UserBindingInstance
               def initialize(version, payload, service_sid: nil, user_sid: nil, sid: nil)
                 super(version)
@@ -313,13 +311,13 @@ module Twilio
               end
 
               ##
-              # @return [Time] The RFC 2822 date and time in GMT when the resource was created
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
@@ -337,7 +335,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The SID of the User for the binding
+              # @return [String] The SID of the User with the binding
               def user_sid
                 @properties['user_sid']
               end

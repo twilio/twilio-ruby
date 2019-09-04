@@ -38,13 +38,17 @@ module Twilio
             # @param [Time] date_created The date that this resource was created.
             # @param [Time] date_updated The date that this resource was last updated. `null`
             #   if the message has not been edited.
+            # @param [String] attributes A string metadata field you can use to store any data
+            #   you wish. The string value must contain structurally valid JSON if specified.
+            #   **Note** that if the attributes are not set "{}" will be returned.
             # @return [MessageInstance] Newly created MessageInstance
-            def create(author: :unset, body: :unset, date_created: :unset, date_updated: :unset)
+            def create(author: :unset, body: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
               data = Twilio::Values.of({
                   'Author' => author,
                   'Body' => body,
                   'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
+                  'Attributes' => attributes,
               })
 
               payload = @version.create(
@@ -204,13 +208,17 @@ module Twilio
             # @param [Time] date_created The date that this resource was created.
             # @param [Time] date_updated The date that this resource was last updated. `null`
             #   if the message has not been edited.
+            # @param [String] attributes A string metadata field you can use to store any data
+            #   you wish. The string value must contain structurally valid JSON if specified.
+            #   **Note** that if the attributes are not set "{}" will be returned.
             # @return [MessageInstance] Updated MessageInstance
-            def update(author: :unset, body: :unset, date_created: :unset, date_updated: :unset)
+            def update(author: :unset, body: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
               data = Twilio::Values.of({
                   'Author' => author,
                   'Body' => body,
                   'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
+                  'Attributes' => attributes,
               })
 
               payload = @version.update(
@@ -292,6 +300,7 @@ module Twilio
                   'index' => payload['index'].to_i,
                   'author' => payload['author'],
                   'body' => payload['body'],
+                  'attributes' => payload['attributes'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
@@ -350,6 +359,12 @@ module Twilio
             end
 
             ##
+            # @return [String] A string metadata field you can use to store any data you wish.
+            def attributes
+              @properties['attributes']
+            end
+
+            ##
             # @return [Time] The date that this resource was created.
             def date_created
               @properties['date_created']
@@ -376,9 +391,18 @@ module Twilio
             # @param [Time] date_created The date that this resource was created.
             # @param [Time] date_updated The date that this resource was last updated. `null`
             #   if the message has not been edited.
+            # @param [String] attributes A string metadata field you can use to store any data
+            #   you wish. The string value must contain structurally valid JSON if specified.
+            #   **Note** that if the attributes are not set "{}" will be returned.
             # @return [MessageInstance] Updated MessageInstance
-            def update(author: :unset, body: :unset, date_created: :unset, date_updated: :unset)
-              context.update(author: author, body: body, date_created: date_created, date_updated: date_updated, )
+            def update(author: :unset, body: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
+              context.update(
+                  author: author,
+                  body: body,
+                  date_created: date_created,
+                  date_updated: date_updated,
+                  attributes: attributes,
+              )
             end
 
             ##

@@ -28,12 +28,12 @@ module Twilio
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [Time] end_ Only include usage that has occurred on or before this date.
-          #   Format is [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm).
+          #   Format is [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
           # @param [Time] start Only include usage that has occurred on or after this date.
-          #   Format is [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm).
-          # @param [usage_record.Granularity] granularity The time-based grouping that
-          #   results are aggregated by. Valid values are `daily`, `hourly`, `all`. `all` will
-          #   return one Usage Record for the entire period.
+          #   Format is [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+          # @param [usage_record.Granularity] granularity How to summarize the usage by
+          #   time. Can be: `daily`, `hourly`, or `all`. A value of `all` returns one Usage
+          #   Record that describes the usage for the entire period.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -56,12 +56,12 @@ module Twilio
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [Time] end_ Only include usage that has occurred on or before this date.
-          #   Format is [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm).
+          #   Format is [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
           # @param [Time] start Only include usage that has occurred on or after this date.
-          #   Format is [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm).
-          # @param [usage_record.Granularity] granularity The time-based grouping that
-          #   results are aggregated by. Valid values are `daily`, `hourly`, `all`. `all` will
-          #   return one Usage Record for the entire period.
+          #   Format is [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+          # @param [usage_record.Granularity] granularity How to summarize the usage by
+          #   time. Can be: `daily`, `hourly`, or `all`. A value of `all` returns one Usage
+          #   Record that describes the usage for the entire period.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -95,12 +95,12 @@ module Twilio
           # Retrieve a single page of UsageRecordInstance records from the API.
           # Request is executed immediately.
           # @param [Time] end_ Only include usage that has occurred on or before this date.
-          #   Format is [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm).
+          #   Format is [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
           # @param [Time] start Only include usage that has occurred on or after this date.
-          #   Format is [ISO 8601](http://www.iso.org/iso/home/standards/iso8601.htm).
-          # @param [usage_record.Granularity] granularity The time-based grouping that
-          #   results are aggregated by. Valid values are `daily`, `hourly`, `all`. `all` will
-          #   return one Usage Record for the entire period.
+          #   Format is [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+          # @param [usage_record.Granularity] granularity How to summarize the usage by
+          #   time. Can be: `daily`, `hourly`, or `all`. A value of `all` returns one Usage
+          #   Record that describes the usage for the entire period.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -190,25 +190,25 @@ module Twilio
           end
 
           ##
-          # @return [String] The unique id of the Account.
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [Hash] The time period for which usage is reported.
+          # @return [Hash] The time period for which usage is reported
           def period
             @properties['period']
           end
 
           ##
-          # @return [Hash] An object representing the aggregated Commands usage for all SIMs over the period.
+          # @return [Hash] An object that describes the aggregated Commands usage for all SIMs during the specified period
           def commands
             @properties['commands']
           end
 
           ##
-          # @return [Hash] An object representing the aggregated Data usage for all SIMs over the period.
+          # @return [Hash] An object that describes the aggregated Data usage for all SIMs over the period
           def data
             @properties['data']
           end

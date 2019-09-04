@@ -17,9 +17,9 @@ module Twilio
               # Initialize the MessageList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
-              #   associated with.
-              # @param [String] channel_sid The unique ID of the
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) the Message resource
+              #   is associated with.
+              # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) the Message resource
               #   belongs to.
               # @return [MessageList] MessageList
@@ -34,26 +34,24 @@ module Twilio
               ##
               # Retrieve a single page of MessageInstance records from the API.
               # Request is executed immediately.
-              # @param [String] from The [identity](https://www.twilio.com/docs/chat/identity)
+              # @param [String] from The [Identity](https://www.twilio.com/docs/chat/identity)
               #   of the new message's author. The default value is `system`.
               # @param [String] attributes A valid JSON string that contains
               #   application-specific data.
               # @param [Time] date_created The date, specified in [ISO
               #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
-              #   as the date it was created. The default is the current time set by the Chat
-              #   service. This parameter should only be used when a Chat's history is being
+              #   as the date it was created. The default value is the current time set by the
+              #   Chat service. This parameter should only be used when a Chat's history is being
               #   recreated from a backup/separate source.
               # @param [Time] date_updated The date, specified in [ISO
               #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
-              #   as the date it was last updated. The default value is `null`. Note that this
-              #   parameter should only be used when a Chat's history is being recreated from a
-              #   backup/separate source  and where a Message was previously updated.
+              #   as the date it was last updated.
               # @param [String] last_updated_by The
-              #   [identity](https://www.twilio.com/docs/chat/identity) of the User who last
+              #   [Identity](https://www.twilio.com/docs/chat/identity) of the User who last
               #   updated the Message, if applicable.
-              # @param [String] body The message to send to the channel. Can also be an empty
-              #   string or `null`, which sets the value as an empty string. You can send
-              #   structured data in the body by serializing it as a string.
+              # @param [String] body The message to send to the channel. Can be an empty string
+              #   or `null`, which sets the value as an empty string. You can send structured data
+              #   in the body by serializing it as a string.
               # @param [String] media_sid The SID of the
               #   [Media](https://www.twilio.com/docs/chat/rest/media) to attach to the new
               #   Message.
@@ -218,13 +216,13 @@ module Twilio
               # Initialize the MessageContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the resource
-              #   from.
-              # @param [String] channel_sid The unique ID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) the message to fetch
-              #   belongs to. Can be the Channel's `sid` or `unique_name`.
-              # @param [String] sid The Twilio-provided string that uniquely identifies the
-              #   Message resource to fetch.
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the Message
+              #   resource from.
+              # @param [String] channel_sid The SID of the
+              #   [Channel](https://www.twilio.com/docs/chat/channels) the Message resource to
+              #   fetch belongs to. This value can be the Channel resource's `sid` or
+              #   `unique_name`.
+              # @param [String] sid The SID of the Message resource to fetch.
               # @return [MessageContext] MessageContext
               def initialize(version, service_sid, channel_sid, sid)
                 super(version)
@@ -264,14 +262,16 @@ module Twilio
 
               ##
               # Update the MessageInstance
-              # @param [String] body The message to send to the channel. Can also be an empty
-              #   string or `null`, which sets the value as an empty string. You can send
-              #   structured data in the body by serializing it as a string.
+              # @param [String] body The message to send to the channel. Can be an empty string
+              #   or `null`, which sets the value as an empty string. You can send structured data
+              #   in the body by serializing it as a string.
               # @param [String] attributes A valid JSON string that contains
               #   application-specific data.
               # @param [Time] date_created The date, specified in [ISO
               #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
-              #   as the date it was created.
+              #   as the date it was created. The default value is the current time set by the
+              #   Chat service. This parameter should only be used when a Chat's history is being
+              #   recreated from a backup/separate source.
               # @param [Time] date_updated The date, specified in [ISO
               #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
               #   as the date it was last updated.
@@ -327,13 +327,12 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
-              #   associated with.
-              # @param [String] channel_sid The unique ID of the
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) the Message resource
+              #   is associated with.
+              # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) the Message resource
               #   belongs to.
-              # @param [String] sid The Twilio-provided string that uniquely identifies the
-              #   Message resource to fetch.
+              # @param [String] sid The SID of the Message resource to fetch.
               # @return [MessageInstance] MessageInstance
               def initialize(version, payload, service_sid: nil, channel_sid: nil, sid: nil)
                 super(version)
@@ -414,7 +413,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique ID of the Channel the Message resource belongs to
+              # @return [String] The SID of the Channel the Message resource belongs to
               def channel_sid
                 @properties['channel_sid']
               end
@@ -444,7 +443,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The identity of the message's author
+              # @return [String] The Identity of the message's author
               def from
                 @properties['from']
               end
@@ -495,14 +494,16 @@ module Twilio
 
               ##
               # Update the MessageInstance
-              # @param [String] body The message to send to the channel. Can also be an empty
-              #   string or `null`, which sets the value as an empty string. You can send
-              #   structured data in the body by serializing it as a string.
+              # @param [String] body The message to send to the channel. Can be an empty string
+              #   or `null`, which sets the value as an empty string. You can send structured data
+              #   in the body by serializing it as a string.
               # @param [String] attributes A valid JSON string that contains
               #   application-specific data.
               # @param [Time] date_created The date, specified in [ISO
               #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
-              #   as the date it was created.
+              #   as the date it was created. The default value is the current time set by the
+              #   Chat service. This parameter should only be used when a Chat's history is being
+              #   recreated from a backup/separate source.
               # @param [Time] date_updated The date, specified in [ISO
               #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
               #   as the date it was last updated.

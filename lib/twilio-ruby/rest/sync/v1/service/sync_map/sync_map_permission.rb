@@ -18,10 +18,10 @@ module Twilio
               ##
               # Initialize the SyncMapPermissionList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique SID identifier of the Sync Service
-              #   Instance.
-              # @param [String] map_sid The unique SID identifier of the Sync Map to which the
-              #   Permission applies.
+              # @param [String] service_sid The SID of the [Sync
+              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              #   associated with.
+              # @param [String] map_sid The SID of the Sync Map to which the Permission applies.
               # @return [SyncMapPermissionList] SyncMapPermissionList
               def initialize(version, service_sid: nil, map_sid: nil)
                 super(version)
@@ -162,12 +162,13 @@ module Twilio
               ##
               # Initialize the SyncMapPermissionContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid Identifier of the Sync Service Instance. Either a
-              #   SID or 'default'.
-              # @param [String] map_sid Identifier of the Sync Map. Either a SID or a unique
-              #   name.
-              # @param [String] identity Arbitrary string identifier representing a user
-              #   associated with an FPA token, assigned by the developer.
+              # @param [String] service_sid The SID of the [Sync
+              #   Service](https://www.twilio.com/docs/sync/api/service) with the Sync Map
+              #   Permission resource to fetch. Can be the Service's `sid` value or `default`.
+              # @param [String] map_sid The SID of the Sync Map with the Sync Map Permission
+              #   resource to fetch. Can be the Sync Map's `sid` or its `unique_name`.
+              # @param [String] identity The application-defined string that uniquely identifies
+              #   the User's Sync Map Permission resource to fetch.
               # @return [SyncMapPermissionContext] SyncMapPermissionContext
               def initialize(version, service_sid, map_sid, identity)
                 super(version)
@@ -207,12 +208,10 @@ module Twilio
 
               ##
               # Update the SyncMapPermissionInstance
-              # @param [Boolean] read Boolean flag specifying whether the identity can read the
-              #   Sync Map.
-              # @param [Boolean] write Boolean flag specifying whether the identity can create,
-              #   update and delete Items of the Sync Map.
-              # @param [Boolean] manage Boolean flag specifying whether the identity can delete
-              #   the Sync Map.
+              # @param [Boolean] read Whether the identity can read the Sync Map and its Items.
+              # @param [Boolean] write Whether the identity can create, update and delete Items
+              #   of the Sync Map.
+              # @param [Boolean] manage Whether the identity can delete the Sync Map.
               # @return [SyncMapPermissionInstance] Updated SyncMapPermissionInstance
               def update(read: nil, write: nil, manage: nil)
                 data = Twilio::Values.of({'Read' => read, 'Write' => write, 'Manage' => manage, })
@@ -254,12 +253,12 @@ module Twilio
               # Initialize the SyncMapPermissionInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The unique SID identifier of the Sync Service
-              #   Instance.
-              # @param [String] map_sid The unique SID identifier of the Sync Map to which the
-              #   Permission applies.
-              # @param [String] identity Arbitrary string identifier representing a user
-              #   associated with an FPA token, assigned by the developer.
+              # @param [String] service_sid The SID of the [Sync
+              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              #   associated with.
+              # @param [String] map_sid The SID of the Sync Map to which the Permission applies.
+              # @param [String] identity The application-defined string that uniquely identifies
+              #   the User's Sync Map Permission resource to fetch.
               # @return [SyncMapPermissionInstance] SyncMapPermissionInstance
               def initialize(version, payload, service_sid: nil, map_sid: nil, identity: nil)
                 super(version)
@@ -302,49 +301,49 @@ module Twilio
               end
 
               ##
-              # @return [String] Twilio Account SID.
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] Sync Service Instance SID.
+              # @return [String] The SID of the Sync Service that the resource is associated with
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] Sync Map SID.
+              # @return [String] Sync Map SID
               def map_sid
                 @properties['map_sid']
               end
 
               ##
-              # @return [String] Identity of the user to whom the Sync Map Permission applies.
+              # @return [String] The identity of the user to whom the Sync Document Permission applies
               def identity
                 @properties['identity']
               end
 
               ##
-              # @return [Boolean] Read access.
+              # @return [Boolean] Read access
               def read
                 @properties['read']
               end
 
               ##
-              # @return [Boolean] Write access.
+              # @return [Boolean] Write access
               def write
                 @properties['write']
               end
 
               ##
-              # @return [Boolean] Manage access.
+              # @return [Boolean] Manage access
               def manage
                 @properties['manage']
               end
 
               ##
-              # @return [String] URL of this Sync Map Permission.
+              # @return [String] The absolute URL of the Sync Map Permission resource
               def url
                 @properties['url']
               end
@@ -365,12 +364,10 @@ module Twilio
 
               ##
               # Update the SyncMapPermissionInstance
-              # @param [Boolean] read Boolean flag specifying whether the identity can read the
-              #   Sync Map.
-              # @param [Boolean] write Boolean flag specifying whether the identity can create,
-              #   update and delete Items of the Sync Map.
-              # @param [Boolean] manage Boolean flag specifying whether the identity can delete
-              #   the Sync Map.
+              # @param [Boolean] read Whether the identity can read the Sync Map and its Items.
+              # @param [Boolean] write Whether the identity can create, update and delete Items
+              #   of the Sync Map.
+              # @param [Boolean] manage Whether the identity can delete the Sync Map.
               # @return [SyncMapPermissionInstance] Updated SyncMapPermissionInstance
               def update(read: nil, write: nil, manage: nil)
                 context.update(read: read, write: write, manage: manage, )

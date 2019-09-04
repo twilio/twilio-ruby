@@ -17,8 +17,9 @@ module Twilio
             ##
             # Initialize the SyncListList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the Service Instance
-            #   that hosts this List object.
+            # @param [String] service_sid The SID of the [Sync
+            #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+            #   associated with.
             # @return [SyncListList] SyncListList
             def initialize(version, service_sid: nil)
               super(version)
@@ -31,11 +32,16 @@ module Twilio
             ##
             # Retrieve a single page of SyncListInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name Human-readable name for this list
+            # @param [String] unique_name An application-defined string that uniquely
+            #   identifies the resource. This value must be unique within its Service and it can
+            #   be up to 320 characters long. The `unique_name` value can be used as an
+            #   alternative to the `sid` in the URL path to address the resource.
             # @param [String] ttl Alias for collection_ttl. If both are provided, this value
             #   is ignored.
-            # @param [String] collection_ttl Time-to-live of this List in seconds, defaults to
-            #   no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] collection_ttl How long, in seconds, before the Sync List
+            #   expires (time-to-live) and is deleted.  Can be an integer from 0 to 31,536,000
+            #   (1 year). The default value is `0`, which means the Sync List does not expire.
+            #   The Sync List might not be deleted immediately after it expires.
             # @return [SyncListInstance] Newly created SyncListInstance
             def create(unique_name: :unset, ttl: :unset, collection_ttl: :unset)
               data = Twilio::Values.of({
@@ -179,8 +185,10 @@ module Twilio
             ##
             # Initialize the SyncListContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The SID of the [Sync
+            #   Service](https://www.twilio.com/docs/sync/api/service) with the Sync List
+            #   resource to fetch.
+            # @param [String] sid The SID of the Sync List resource to fetch.
             # @return [SyncListContext] SyncListContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -218,10 +226,12 @@ module Twilio
 
             ##
             # Update the SyncListInstance
-            # @param [String] ttl Alias for collection_ttl. If both are provided, this value
-            #   is ignored.
-            # @param [String] collection_ttl Time-to-live of this List in seconds, defaults to
-            #   no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] ttl An alias for `collection_ttl`. If both are provided, this
+            #   value is ignored.
+            # @param [String] collection_ttl How long, in seconds, before the Sync List
+            #   expires (time-to-live) and is deleted. Can be an integer from 0 to 31,536,000 (1
+            #   year). The default value is `0`, which means the Sync List does not expire. The
+            #   Sync List might not be deleted immediately after it expires.
             # @return [SyncListInstance] Updated SyncListInstance
             def update(ttl: :unset, collection_ttl: :unset)
               data = Twilio::Values.of({'Ttl' => ttl, 'CollectionTtl' => collection_ttl, })
@@ -301,9 +311,10 @@ module Twilio
             # Initialize the SyncListInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The unique SID identifier of the Service Instance
-            #   that hosts this List object.
-            # @param [String] sid The sid
+            # @param [String] service_sid The SID of the [Sync
+            #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+            #   associated with.
+            # @param [String] sid The SID of the Sync List resource to fetch.
             # @return [SyncListInstance] SyncListInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -340,67 +351,67 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique 34-character SID identifier of the List.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The unique and addressable name of this List.
+            # @return [String] An application-defined string that uniquely identifies the resource
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [String] The unique SID identifier of the Twilio Account.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The unique SID identifier of the Service Instance that hosts this List object.
+            # @return [String] The SID of the Sync Service that the resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] The absolute URL for this List.
+            # @return [String] The absolute URL of the Sync List resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] A dictionary of URL links to nested resources of this List.
+            # @return [String] The URLs of the Sync List's nested resources
             def links
               @properties['links']
             end
 
             ##
-            # @return [String] Contains the current revision of this List, represented by a string identifier.
+            # @return [String] The current revision of the Sync List, represented as a string
             def revision
               @properties['revision']
             end
 
             ##
-            # @return [Time] Contains the date this List expires and gets deleted automatically.
+            # @return [Time] The ISO 8601 date and time in GMT when the Sync List expires
             def date_expires
               @properties['date_expires']
             end
 
             ##
-            # @return [Time] The date this List was created, given in UTC ISO 8601 format.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] Specifies the date this List was last updated, given in UTC ISO 8601 format.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The identity of the List creator.
+            # @return [String] The identity of the Sync List's creator
             def created_by
               @properties['created_by']
             end
@@ -421,10 +432,12 @@ module Twilio
 
             ##
             # Update the SyncListInstance
-            # @param [String] ttl Alias for collection_ttl. If both are provided, this value
-            #   is ignored.
-            # @param [String] collection_ttl Time-to-live of this List in seconds, defaults to
-            #   no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] ttl An alias for `collection_ttl`. If both are provided, this
+            #   value is ignored.
+            # @param [String] collection_ttl How long, in seconds, before the Sync List
+            #   expires (time-to-live) and is deleted. Can be an integer from 0 to 31,536,000 (1
+            #   year). The default value is `0`, which means the Sync List does not expire. The
+            #   Sync List might not be deleted immediately after it expires.
             # @return [SyncListInstance] Updated SyncListInstance
             def update(ttl: :unset, collection_ttl: :unset)
               context.update(ttl: ttl, collection_ttl: collection_ttl, )

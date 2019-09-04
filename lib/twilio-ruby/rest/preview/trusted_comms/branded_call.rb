@@ -36,9 +36,10 @@ module Twilio
           #   (https://en.wikipedia.org/wiki/E.164).
           # @param [String] reason The business reason for this phone call that will appear
           #   in the terminating device's screen.
+          # @param [String] call_sid The call_sid
           # @return [BrandedCallInstance] Newly created BrandedCallInstance
-          def create(from: nil, to: nil, reason: nil)
-            data = Twilio::Values.of({'From' => from, 'To' => to, 'Reason' => reason, })
+          def create(from: nil, to: nil, reason: nil, call_sid: :unset)
+            data = Twilio::Values.of({'From' => from, 'To' => to, 'Reason' => reason, 'CallSid' => call_sid, })
 
             payload = @version.create(
                 'POST',
@@ -108,6 +109,7 @@ module Twilio
                 'from' => payload['from'],
                 'logo' => payload['logo'],
                 'reason' => payload['reason'],
+                'sid' => payload['sid'],
                 'status' => payload['status'],
                 'to' => payload['to'],
                 'url' => payload['url'],
@@ -161,6 +163,12 @@ module Twilio
           # @return [String] The business reason for this current phone call
           def reason
             @properties['reason']
+          end
+
+          ##
+          # @return [String] A string that uniquely identifies this current phone call.
+          def sid
+            @properties['sid']
           end
 
           ##

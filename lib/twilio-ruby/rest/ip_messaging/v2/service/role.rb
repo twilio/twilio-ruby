@@ -16,7 +16,7 @@ module Twilio
             # Initialize the RoleList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the Role resource is
             #   associated with.
             # @return [RoleList] RoleList
             def initialize(version, service_sid: nil)
@@ -38,7 +38,7 @@ module Twilio
             # @param [String] permission A permission that you grant to the new role. Only one
             #   permission can be granted per parameter. To assign more than one permission,
             #   repeat this parameter for each permission value. The values for this parameter
-            #   depend on the role's `type` and are described in the documentation.
+            #   depend on the role's `type`.
             # @return [RoleInstance] Newly created RoleInstance
             def create(friendly_name: nil, type: nil, permission: nil)
               data = Twilio::Values.of({
@@ -179,10 +179,9 @@ module Twilio
             # Initialize the RoleContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the resource
-            #   from.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the Role
-            #   resource to fetch.
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the Role
+            #   resource from.
+            # @param [String] sid The SID of the Role resource to fetch.
             # @return [RoleContext] RoleContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -218,8 +217,10 @@ module Twilio
             # Update the RoleInstance
             # @param [String] permission A permission that you grant to the role. Only one
             #   permission can be granted per parameter. To assign more than one permission,
-            #   repeat this parameter for each permission value. The values for this parameter
-            #   depend on the role's `type` and are described in the documentation.
+            #   repeat this parameter for each permission value. Note that the update action
+            #   replaces all previously assigned permissions with those defined in the update
+            #   action. To remove a permission, do not include it in the subsequent update
+            #   action. The values for this parameter depend on the role's `type`.
             # @return [RoleInstance] Updated RoleInstance
             def update(permission: nil)
               data = Twilio::Values.of({'Permission' => Twilio.serialize_list(permission) { |e| e }, })
@@ -254,10 +255,9 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the Role resource is
             #   associated with.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the Role
-            #   resource to fetch.
+            # @param [String] sid The SID of the Role resource to fetch.
             # @return [RoleInstance] RoleInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -328,13 +328,13 @@ module Twilio
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
@@ -363,8 +363,10 @@ module Twilio
             # Update the RoleInstance
             # @param [String] permission A permission that you grant to the role. Only one
             #   permission can be granted per parameter. To assign more than one permission,
-            #   repeat this parameter for each permission value. The values for this parameter
-            #   depend on the role's `type` and are described in the documentation.
+            #   repeat this parameter for each permission value. Note that the update action
+            #   replaces all previously assigned permissions with those defined in the update
+            #   action. To remove a permission, do not include it in the subsequent update
+            #   action. The values for this parameter depend on the role's `type`.
             # @return [RoleInstance] Updated RoleInstance
             def update(permission: nil)
               context.update(permission: permission, )

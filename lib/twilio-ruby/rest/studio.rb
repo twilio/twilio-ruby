@@ -29,7 +29,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this Flow.
+      # @param [String] sid The unique string that we created to identify the Flow
+      #   resource.
       # @return [Twilio::REST::Studio::V1::FlowInstance] if sid was passed.
       # @return [Twilio::REST::Studio::V1::FlowList]
       def flows(sid=:unset)

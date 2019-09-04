@@ -47,14 +47,19 @@ module Twilio
             #   Limited to 256 characters.
             # @param [Time] date_created The date that this resource was created.
             # @param [Time] date_updated The date that this resource was last updated.
+            # @param [String] attributes An optional string metadata field you can use to
+            #   store any data you wish. The string value must contain structurally valid JSON
+            #   if specified.  **Note** that if the attributes are not set "{}" will be
+            #   returned.
             # @return [ParticipantInstance] Newly created ParticipantInstance
-            def create(identity: :unset, messaging_binding_address: :unset, messaging_binding_proxy_address: :unset, date_created: :unset, date_updated: :unset)
+            def create(identity: :unset, messaging_binding_address: :unset, messaging_binding_proxy_address: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
               data = Twilio::Values.of({
                   'Identity' => identity,
                   'MessagingBinding.Address' => messaging_binding_address,
                   'MessagingBinding.ProxyAddress' => messaging_binding_proxy_address,
                   'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
+                  'Attributes' => attributes,
               })
 
               payload = @version.create(
@@ -209,11 +214,16 @@ module Twilio
             # Update the ParticipantInstance
             # @param [Time] date_created The date that this resource was created.
             # @param [Time] date_updated The date that this resource was last updated.
+            # @param [String] attributes An optional string metadata field you can use to
+            #   store any data you wish. The string value must contain structurally valid JSON
+            #   if specified.  **Note** that if the attributes are not set "{}" will be
+            #   returned.
             # @return [ParticipantInstance] Updated ParticipantInstance
-            def update(date_created: :unset, date_updated: :unset)
+            def update(date_created: :unset, date_updated: :unset, attributes: :unset)
               data = Twilio::Values.of({
                   'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
+                  'Attributes' => attributes,
               })
 
               payload = @version.update(
@@ -293,6 +303,7 @@ module Twilio
                   'conversation_sid' => payload['conversation_sid'],
                   'sid' => payload['sid'],
                   'identity' => payload['identity'],
+                  'attributes' => payload['attributes'],
                   'messaging_binding' => payload['messaging_binding'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
@@ -340,6 +351,12 @@ module Twilio
             end
 
             ##
+            # @return [String] An optional string metadata field you can use to store any data you wish.
+            def attributes
+              @properties['attributes']
+            end
+
+            ##
             # @return [Hash] Information about how this participant exchanges messages with the conversation.
             def messaging_binding
               @properties['messaging_binding']
@@ -367,9 +384,13 @@ module Twilio
             # Update the ParticipantInstance
             # @param [Time] date_created The date that this resource was created.
             # @param [Time] date_updated The date that this resource was last updated.
+            # @param [String] attributes An optional string metadata field you can use to
+            #   store any data you wish. The string value must contain structurally valid JSON
+            #   if specified.  **Note** that if the attributes are not set "{}" will be
+            #   returned.
             # @return [ParticipantInstance] Updated ParticipantInstance
-            def update(date_created: :unset, date_updated: :unset)
-              context.update(date_created: date_created, date_updated: date_updated, )
+            def update(date_created: :unset, date_updated: :unset, attributes: :unset)
+              context.update(date_created: date_created, date_updated: date_updated, attributes: attributes, )
             end
 
             ##

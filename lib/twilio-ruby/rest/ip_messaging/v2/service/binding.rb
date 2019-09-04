@@ -16,8 +16,8 @@ module Twilio
             # Initialize the BindingList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
-            #   associated with.
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the Binding resource
+            #   is associated with.
             # @return [BindingList] BindingList
             def initialize(version, service_sid: nil)
               super(version)
@@ -35,7 +35,7 @@ module Twilio
             #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push
             #   notification
             #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
-            #   for more information.
+            #   for more info.
             # @param [String] identity The
             #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
             #   resources to read. See [access
@@ -64,7 +64,7 @@ module Twilio
             #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push
             #   notification
             #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
-            #   for more information.
+            #   for more info.
             # @param [String] identity The
             #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
             #   resources to read. See [access
@@ -105,7 +105,7 @@ module Twilio
             #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push
             #   notification
             #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
-            #   for more information.
+            #   for more info.
             # @param [String] identity The
             #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
             #   resources to read. See [access
@@ -184,10 +184,9 @@ module Twilio
             # Initialize the BindingContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the resource
-            #   from.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the
-            #   Binding resource to fetch.
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the Binding
+            #   resource from.
+            # @param [String] sid The SID of the Binding resource to fetch.
             # @return [BindingContext] BindingContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -240,10 +239,9 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
-            #   associated with.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the
-            #   Binding resource to fetch.
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the Binding resource
+            #   is associated with.
+            # @param [String] sid The SID of the Binding resource to fetch.
             # @return [BindingInstance] BindingInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -293,19 +291,19 @@ module Twilio
             end
 
             ##
-            # @return [String] The SID of the Service that the resource is associated with
+            # @return [String] The SID of the Service that the Binding resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
@@ -347,7 +345,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The absolute URLs of the Users for the Binding
+            # @return [String] The absolute URLs of the Binding's User
             def links
               @properties['links']
             end

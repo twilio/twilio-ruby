@@ -75,8 +75,8 @@ module Twilio
               #   outbound call, including ringing or disconnect messages. Can be: `true` or
               #   `false` and defaults to `true`.
               # @param [String] max_participants The maximum number of participants in the
-              #   conference. Can be a positive integer from `2` to `10`. The default value is
-              #   `10`.
+              #   conference. Can be a positive integer from `2` to `250`. The default value is
+              #   `250`.
               # @param [String] conference_record Whether to record the conference the
               #   participant is joining. Can be: `true`, `false`, `record-from-start`, and
               #   `do-not-record`. The default value is `false`.

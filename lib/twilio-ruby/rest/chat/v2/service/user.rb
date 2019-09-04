@@ -16,7 +16,7 @@ module Twilio
             # Initialize the UserList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the User resource is
             #   associated with.
             # @return [UserList] UserList
             def initialize(version, service_sid: nil)
@@ -33,9 +33,9 @@ module Twilio
             # @param [String] identity The `identity` value that uniquely identifies the new
             #   resource's [User](https://www.twilio.com/docs/chat/rest/users) within the
             #   [Service](https://www.twilio.com/docs/chat/rest/services). This value is often a
-            #   username or email address. See the Identity documentation for more details.
+            #   username or email address. See the Identity documentation for more info.
             # @param [String] role_sid The SID of the
-            #   [Role](https://www.twilio.com/docs/chat/rest/roles) assigned to the new User.
+            #   [Role](https://www.twilio.com/docs/chat/rest/roles) to assign to the new User.
             # @param [String] attributes A valid JSON string that contains
             #   application-specific data.
             # @param [String] friendly_name A descriptive string that you create to describe
@@ -181,10 +181,10 @@ module Twilio
             # Initialize the UserContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the resource
-            #   from.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the User
-            #   resource to fetch.
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the User
+            #   resource from.
+            # @param [String] sid The SID of the User resource to fetch. This value can be
+            #   either the `sid` or the `identity` of the User resource to fetch.
             # @return [UserContext] UserContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -223,7 +223,7 @@ module Twilio
             ##
             # Update the UserInstance
             # @param [String] role_sid The SID of the
-            #   [Role](https://www.twilio.com/docs/chat/rest/roles) assigned to this user.
+            #   [Role](https://www.twilio.com/docs/chat/rest/roles) to assign to the User.
             # @param [String] attributes A valid JSON string that contains
             #   application-specific data.
             # @param [String] friendly_name A descriptive string that you create to describe
@@ -310,10 +310,10 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the User resource is
             #   associated with.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the User
-            #   resource to fetch.
+            # @param [String] sid The SID of the User resource to fetch. This value can be
+            #   either the `sid` or the `identity` of the User resource to fetch.
             # @return [UserInstance] UserInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -407,19 +407,19 @@ module Twilio
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The number of Channels this User is a Member of
+            # @return [String] The number of Channels the User is a Member of
             def joined_channels_count
               @properties['joined_channels_count']
             end
@@ -453,7 +453,7 @@ module Twilio
             ##
             # Update the UserInstance
             # @param [String] role_sid The SID of the
-            #   [Role](https://www.twilio.com/docs/chat/rest/roles) assigned to this user.
+            #   [Role](https://www.twilio.com/docs/chat/rest/roles) to assign to the User.
             # @param [String] attributes A valid JSON string that contains
             #   application-specific data.
             # @param [String] friendly_name A descriptive string that you create to describe

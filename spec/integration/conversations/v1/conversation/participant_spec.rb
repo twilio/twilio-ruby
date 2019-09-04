@@ -34,6 +34,7 @@ describe 'Participant' do
           "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "identity": "null",
+          "attributes": "{ \\"role\\": \\"driver\\" }",
           "messaging_binding": {
               "type": "sms",
               "address": "+15558675310",
@@ -61,11 +62,8 @@ describe 'Participant' do
           "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "identity": "IDENTITY",
-          "messaging_binding": {
-              "type": "chat",
-              "address": "null",
-              "proxy_address": "null"
-          },
+          "attributes": "{ \\"role\\": \\"driver\\" }",
+          "messaging_binding": null,
           "date_created": "2015-12-16T22:18:37Z",
           "date_updated": "2015-12-16T22:18:38Z",
           "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -104,6 +102,7 @@ describe 'Participant' do
           "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "identity": "null",
+          "attributes": "{ \\"role\\": \\"driver\\" }",
           "messaging_binding": {
               "type": "sms",
               "address": "+15558675310",
@@ -175,6 +174,7 @@ describe 'Participant' do
           "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "identity": "null",
+          "attributes": "{ \\"role\\": \\"driver\\" }",
           "messaging_binding": {
               "type": "sms",
               "address": "+15558675310",
@@ -229,6 +229,7 @@ describe 'Participant' do
                   "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "identity": "null",
+                  "attributes": "{ \\"role\\": \\"driver\\" }",
                   "messaging_binding": {
                       "type": "sms",
                       "address": "+15558675310",
@@ -243,11 +244,8 @@ describe 'Participant' do
                   "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "identity": "IDENTITY",
-                  "messaging_binding": {
-                      "type": "chat",
-                      "address": "null",
-                      "proxy_address": "null"
-                  },
+                  "attributes": "{ \\"role\\": \\"driver\\" }",
+                  "messaging_binding": null,
                   "date_created": "2016-03-24T21:05:50Z",
                   "date_updated": "2016-03-24T21:05:50Z",
                   "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"

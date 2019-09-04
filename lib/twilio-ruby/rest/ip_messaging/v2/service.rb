@@ -163,8 +163,7 @@ module Twilio
           ##
           # Initialize the ServiceContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The Twilio-provided string that uniquely identifies the
-          #   Service resource to fetch.
+          # @param [String] sid The SID of the Service resource to fetch.
           # @return [ServiceContext] ServiceContext
           def initialize(version, sid)
             super(version)
@@ -207,14 +206,14 @@ module Twilio
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource.
           # @param [String] default_service_role_sid The service role assigned to users when
-          #   they are added to the service. See the [Roles
-          #   endpoint](https://www.twilio.com/docs/chat/api/roles) for more details.
+          #   they are added to the service. See the [Role
+          #   resource](https://www.twilio.com/docs/chat/api/roles) for more info about roles.
           # @param [String] default_channel_role_sid The channel role assigned to users when
-          #   they are added to a channel. See the [Roles
-          #   endpoint](https://www.twilio.com/docs/chat/api/roles) for more details.
+          #   they are added to a channel. See the [Role
+          #   resource](https://www.twilio.com/docs/chat/api/roles) for more info about roles.
           # @param [String] default_channel_creator_role_sid The channel role assigned to a
-          #   channel creator when they join a new channel. See the [Roles
-          #   endpoint](https://www.twilio.com/docs/chat/api/roles) for more details.
+          #   channel creator when they join a new channel. See the [Role
+          #   resource](https://www.twilio.com/docs/chat/api/roles) for more info about roles.
           # @param [Boolean] read_status_enabled Whether to enable the [Message Consumption
           #   Horizon](https://www.twilio.com/docs/chat/consumption-horizon) feature. The
           #   default is `true`.
@@ -227,8 +226,7 @@ module Twilio
           # @param [String] consumption_report_interval DEPRECATED. The interval in seconds
           #   between consumption reports submission batches from client endpoints.
           # @param [Boolean] notifications_new_message_enabled Whether to send a
-          #   notification when a new message is added to a channel. Can be: `true` or `false`
-          #   and the default is `false`.
+          #   notification when a new message is added to a channel. The default is `false`.
           # @param [String] notifications_new_message_template The template to use to create
           #   the notification text displayed when a new message is added to a channel and
           #   `notifications.new_message.enabled` is `true`.
@@ -236,10 +234,9 @@ module Twilio
           #   when a new message is added to a channel and `notifications.new_message.enabled`
           #   is `true`.
           # @param [Boolean] notifications_new_message_badge_count_enabled Whether the new
-          #   message badge is enabled. Can be: `true` or `false` and the default is `false`.
+          #   message badge is enabled. The default is `false`.
           # @param [Boolean] notifications_added_to_channel_enabled Whether to send a
-          #   notification when a member is added to a channel. Can be: `true` or `false` and
-          #   the default is `false`.
+          #   notification when a member is added to a channel. The default is `false`.
           # @param [String] notifications_added_to_channel_template The template to use to
           #   create the notification text displayed when a member is added to a channel and
           #   `notifications.added_to_channel.enabled` is `true`.
@@ -247,8 +244,8 @@ module Twilio
           #   play when a member is added to a channel and
           #   `notifications.added_to_channel.enabled` is `true`.
           # @param [Boolean] notifications_removed_from_channel_enabled Whether to send a
-          #   notification to a user when they are removed from a channel. Can be: `true` or
-          #   `false` and the default is `false`.
+          #   notification to a user when they are removed from a channel. The default is
+          #   `false`.
           # @param [String] notifications_removed_from_channel_template The template to use
           #   to create the notification text displayed to a user when they are removed from a
           #   channel and `notifications.removed_from_channel.enabled` is `true`.
@@ -256,8 +253,7 @@ module Twilio
           #   to play to a user when they are removed from a channel and
           #   `notifications.removed_from_channel.enabled` is `true`.
           # @param [Boolean] notifications_invited_to_channel_enabled Whether to send a
-          #   notification when a user is invited to a channel. Can be: `true` or `false` and
-          #   the default is `false`.
+          #   notification when a user is invited to a channel. The default is `false`.
           # @param [String] notifications_invited_to_channel_template The template to use to
           #   create the notification text displayed when a user is invited to a channel and
           #   `notifications.invited_to_channel.enabled` is `true`.
@@ -274,7 +270,7 @@ module Twilio
           #   `pre_webhook_url` and `post_webhook_url` webhooks.  Can be: `POST` or `GET` and
           #   the default is `POST`. See [Webhook
           #   Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
-          # @param [String] webhook_filters The list of WebHook events that are enabled for
+          # @param [String] webhook_filters The list of webhook events that are enabled for
           #   this Service instance. See [Webhook
           #   Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
           # @param [String] limits_channel_members The maximum number of Members that can be
@@ -291,8 +287,8 @@ module Twilio
           #   the `post_webhook_url` if the request times out (after 5 seconds) or it receives
           #   a 429, 503, or 504 HTTP response. The default is 0, which means the call won't
           #   be retried.
-          # @param [Boolean] notifications_log_enabled Whether to log notifications. Can be:
-          #   `true` or `false` and the default is `false`.
+          # @param [Boolean] notifications_log_enabled Whether to log notifications. The
+          #   default is `false`.
           # @return [ServiceInstance] Updated ServiceInstance
           def update(friendly_name: :unset, default_service_role_sid: :unset, default_channel_role_sid: :unset, default_channel_creator_role_sid: :unset, read_status_enabled: :unset, reachability_enabled: :unset, typing_indicator_timeout: :unset, consumption_report_interval: :unset, notifications_new_message_enabled: :unset, notifications_new_message_template: :unset, notifications_new_message_sound: :unset, notifications_new_message_badge_count_enabled: :unset, notifications_added_to_channel_enabled: :unset, notifications_added_to_channel_template: :unset, notifications_added_to_channel_sound: :unset, notifications_removed_from_channel_enabled: :unset, notifications_removed_from_channel_template: :unset, notifications_removed_from_channel_sound: :unset, notifications_invited_to_channel_enabled: :unset, notifications_invited_to_channel_template: :unset, notifications_invited_to_channel_sound: :unset, pre_webhook_url: :unset, post_webhook_url: :unset, webhook_method: :unset, webhook_filters: :unset, limits_channel_members: :unset, limits_user_channels: :unset, media_compatibility_message: :unset, pre_webhook_retry_count: :unset, post_webhook_retry_count: :unset, notifications_log_enabled: :unset)
             data = Twilio::Values.of({
@@ -430,8 +426,7 @@ module Twilio
           # Initialize the ServiceInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The Twilio-provided string that uniquely identifies the
-          #   Service resource to fetch.
+          # @param [String] sid The SID of the Service resource to fetch.
           # @return [ServiceInstance] ServiceInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -576,7 +571,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The list of WebHook events that are enabled for this Service instance
+          # @return [String] The list of webhook events that are enabled for this Service instance
           def webhook_filters
             @properties['webhook_filters']
           end
@@ -636,14 +631,14 @@ module Twilio
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource.
           # @param [String] default_service_role_sid The service role assigned to users when
-          #   they are added to the service. See the [Roles
-          #   endpoint](https://www.twilio.com/docs/chat/api/roles) for more details.
+          #   they are added to the service. See the [Role
+          #   resource](https://www.twilio.com/docs/chat/api/roles) for more info about roles.
           # @param [String] default_channel_role_sid The channel role assigned to users when
-          #   they are added to a channel. See the [Roles
-          #   endpoint](https://www.twilio.com/docs/chat/api/roles) for more details.
+          #   they are added to a channel. See the [Role
+          #   resource](https://www.twilio.com/docs/chat/api/roles) for more info about roles.
           # @param [String] default_channel_creator_role_sid The channel role assigned to a
-          #   channel creator when they join a new channel. See the [Roles
-          #   endpoint](https://www.twilio.com/docs/chat/api/roles) for more details.
+          #   channel creator when they join a new channel. See the [Role
+          #   resource](https://www.twilio.com/docs/chat/api/roles) for more info about roles.
           # @param [Boolean] read_status_enabled Whether to enable the [Message Consumption
           #   Horizon](https://www.twilio.com/docs/chat/consumption-horizon) feature. The
           #   default is `true`.
@@ -656,8 +651,7 @@ module Twilio
           # @param [String] consumption_report_interval DEPRECATED. The interval in seconds
           #   between consumption reports submission batches from client endpoints.
           # @param [Boolean] notifications_new_message_enabled Whether to send a
-          #   notification when a new message is added to a channel. Can be: `true` or `false`
-          #   and the default is `false`.
+          #   notification when a new message is added to a channel. The default is `false`.
           # @param [String] notifications_new_message_template The template to use to create
           #   the notification text displayed when a new message is added to a channel and
           #   `notifications.new_message.enabled` is `true`.
@@ -665,10 +659,9 @@ module Twilio
           #   when a new message is added to a channel and `notifications.new_message.enabled`
           #   is `true`.
           # @param [Boolean] notifications_new_message_badge_count_enabled Whether the new
-          #   message badge is enabled. Can be: `true` or `false` and the default is `false`.
+          #   message badge is enabled. The default is `false`.
           # @param [Boolean] notifications_added_to_channel_enabled Whether to send a
-          #   notification when a member is added to a channel. Can be: `true` or `false` and
-          #   the default is `false`.
+          #   notification when a member is added to a channel. The default is `false`.
           # @param [String] notifications_added_to_channel_template The template to use to
           #   create the notification text displayed when a member is added to a channel and
           #   `notifications.added_to_channel.enabled` is `true`.
@@ -676,8 +669,8 @@ module Twilio
           #   play when a member is added to a channel and
           #   `notifications.added_to_channel.enabled` is `true`.
           # @param [Boolean] notifications_removed_from_channel_enabled Whether to send a
-          #   notification to a user when they are removed from a channel. Can be: `true` or
-          #   `false` and the default is `false`.
+          #   notification to a user when they are removed from a channel. The default is
+          #   `false`.
           # @param [String] notifications_removed_from_channel_template The template to use
           #   to create the notification text displayed to a user when they are removed from a
           #   channel and `notifications.removed_from_channel.enabled` is `true`.
@@ -685,8 +678,7 @@ module Twilio
           #   to play to a user when they are removed from a channel and
           #   `notifications.removed_from_channel.enabled` is `true`.
           # @param [Boolean] notifications_invited_to_channel_enabled Whether to send a
-          #   notification when a user is invited to a channel. Can be: `true` or `false` and
-          #   the default is `false`.
+          #   notification when a user is invited to a channel. The default is `false`.
           # @param [String] notifications_invited_to_channel_template The template to use to
           #   create the notification text displayed when a user is invited to a channel and
           #   `notifications.invited_to_channel.enabled` is `true`.
@@ -703,7 +695,7 @@ module Twilio
           #   `pre_webhook_url` and `post_webhook_url` webhooks.  Can be: `POST` or `GET` and
           #   the default is `POST`. See [Webhook
           #   Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
-          # @param [String] webhook_filters The list of WebHook events that are enabled for
+          # @param [String] webhook_filters The list of webhook events that are enabled for
           #   this Service instance. See [Webhook
           #   Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
           # @param [String] limits_channel_members The maximum number of Members that can be
@@ -720,8 +712,8 @@ module Twilio
           #   the `post_webhook_url` if the request times out (after 5 seconds) or it receives
           #   a 429, 503, or 504 HTTP response. The default is 0, which means the call won't
           #   be retried.
-          # @param [Boolean] notifications_log_enabled Whether to log notifications. Can be:
-          #   `true` or `false` and the default is `false`.
+          # @param [Boolean] notifications_log_enabled Whether to log notifications. The
+          #   default is `false`.
           # @return [ServiceInstance] Updated ServiceInstance
           def update(friendly_name: :unset, default_service_role_sid: :unset, default_channel_role_sid: :unset, default_channel_creator_role_sid: :unset, read_status_enabled: :unset, reachability_enabled: :unset, typing_indicator_timeout: :unset, consumption_report_interval: :unset, notifications_new_message_enabled: :unset, notifications_new_message_template: :unset, notifications_new_message_sound: :unset, notifications_new_message_badge_count_enabled: :unset, notifications_added_to_channel_enabled: :unset, notifications_added_to_channel_template: :unset, notifications_added_to_channel_sound: :unset, notifications_removed_from_channel_enabled: :unset, notifications_removed_from_channel_template: :unset, notifications_removed_from_channel_sound: :unset, notifications_invited_to_channel_enabled: :unset, notifications_invited_to_channel_template: :unset, notifications_invited_to_channel_sound: :unset, pre_webhook_url: :unset, post_webhook_url: :unset, webhook_method: :unset, webhook_filters: :unset, limits_channel_members: :unset, limits_user_channels: :unset, media_compatibility_message: :unset, pre_webhook_retry_count: :unset, post_webhook_retry_count: :unset, notifications_log_enabled: :unset)
             context.update(

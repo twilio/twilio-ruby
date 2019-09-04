@@ -16,8 +16,8 @@ module Twilio
               ##
               # Initialize the ExecutionStepList
               # @param [Version] version Version that contains the resource
-              # @param [String] flow_sid The unique SID identifier of the Flow.
-              # @param [String] execution_sid The unique SID identifier of the Execution.
+              # @param [String] flow_sid The SID of the Flow.
+              # @param [String] execution_sid The SID of the Step's Execution resource.
               # @return [ExecutionStepList] ExecutionStepList
               def initialize(version, flow_sid: nil, execution_sid: nil)
                 super(version)
@@ -154,9 +154,10 @@ module Twilio
               ##
               # Initialize the ExecutionStepContext
               # @param [Version] version Version that contains the resource
-              # @param [String] flow_sid The unique SID identifier of the Flow.
-              # @param [String] execution_sid The unique SID identifier of the Execution.
-              # @param [String] sid The unique SID identifier of the Step.
+              # @param [String] flow_sid The SID of the Flow with the Step to fetch.
+              # @param [String] execution_sid The SID of the Execution resource with the Step to
+              #   fetch.
+              # @param [String] sid The SID of the ExecutionStep resource to fetch.
               # @return [ExecutionStepContext] ExecutionStepContext
               def initialize(version, flow_sid, execution_sid, sid)
                 super(version)
@@ -223,9 +224,9 @@ module Twilio
               # Initialize the ExecutionStepInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] flow_sid The unique SID identifier of the Flow.
-              # @param [String] execution_sid The unique SID identifier of the Execution.
-              # @param [String] sid The unique SID identifier of the Step.
+              # @param [String] flow_sid The SID of the Flow.
+              # @param [String] execution_sid The SID of the Step's Execution resource.
+              # @param [String] sid The SID of the ExecutionStep resource to fetch.
               # @return [ExecutionStepInstance] ExecutionStepInstance
               def initialize(version, payload, flow_sid: nil, execution_sid: nil, sid: nil)
                 super(version)
@@ -272,73 +273,73 @@ module Twilio
               end
 
               ##
-              # @return [String] A string that uniquely identifies this Step.
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] Account Sid.
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] Flow Sid.
+              # @return [String] The SID of the Flow
               def flow_sid
                 @properties['flow_sid']
               end
 
               ##
-              # @return [String] Execution Sid.
+              # @return [String] The SID of the Execution
               def execution_sid
                 @properties['execution_sid']
               end
 
               ##
-              # @return [String] The event that caused the flow to transition to this Step.
+              # @return [String] The event that caused the Flow to transition to the Step
               def name
                 @properties['name']
               end
 
               ##
-              # @return [Hash] The context
+              # @return [Hash] The current state of the flow
               def context
                 @properties['context']
               end
 
               ##
-              # @return [String] The Widget that preceded the Widget for this Step.
+              # @return [String] The Widget that preceded the Widget for the Step
               def transitioned_from
                 @properties['transitioned_from']
               end
 
               ##
-              # @return [String] The Widget that will follow the Widget for this Step.
+              # @return [String] The Widget that will follow the Widget for the Step
               def transitioned_to
                 @properties['transitioned_to']
               end
 
               ##
-              # @return [Time] The date this Step was created
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date this Step was updated
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The URL of this resource.
+              # @return [String] The absolute URL of the resource
               def url
                 @properties['url']
               end
 
               ##
-              # @return [String] The links
+              # @return [String] The URLs of related resources
               def links
                 @properties['links']
               end

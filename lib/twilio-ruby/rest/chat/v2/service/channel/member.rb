@@ -17,10 +17,11 @@ module Twilio
               # Initialize the MemberList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) the Member resource is
               #   associated with.
-              # @param [String] channel_sid The unique ID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) for the member.
+              # @param [String] channel_sid The SID of the
+              #   [Channel](https://www.twilio.com/docs/chat/channels) the Member resource belongs
+              #   to.
               # @return [MemberList] MemberList
               def initialize(version, service_sid: nil, channel_sid: nil)
                 super(version)
@@ -36,7 +37,7 @@ module Twilio
               # @param [String] identity The `identity` value that uniquely identifies the new
               #   resource's [User](https://www.twilio.com/docs/chat/rest/users) within the
               #   [Service](https://www.twilio.com/docs/chat/rest/services). See [access
-              #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
+              #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more info.
               # @param [String] role_sid The SID of the
               #   [Role](https://www.twilio.com/docs/chat/rest/roles) to assign to the member. The
               #   default roles are those specified on the
@@ -46,8 +47,8 @@ module Twilio
               #   [Channel](https://www.twilio.com/docs/chat/channels) that the Member has read.
               #   This parameter should only be used when recreating a Member from a
               #   backup/separate source.
-              # @param [Time] last_consumption_timestamp The ISO 8601 timestamp string that
-              #   represents the date-time of the last
+              # @param [Time] last_consumption_timestamp The [ISO
+              #   8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp of the last
               #   [Message](https://www.twilio.com/docs/chat/rest/messages) read event for the
               #   Member within the [Channel](https://www.twilio.com/docs/chat/channels).
               # @param [Time] date_created The date, specified in [ISO
@@ -57,7 +58,7 @@ module Twilio
               #   being recreated from a backup/separate source.
               # @param [Time] date_updated The date, specified in [ISO
               #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
-              #   as the date it was last updated. The default value is `null`.  Note that this
+              #   as the date it was last updated. The default value is `null`. Note that this
               #   parameter should only be used when a Member is being recreated from a
               #   backup/separate source and where a Member was previously updated.
               # @param [String] attributes A valid JSON string that contains
@@ -94,7 +95,7 @@ module Twilio
               # memory before returning.
               # @param [String] identity The
               #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
-              #   resources to read. See [access
+              #   Member resources to read. See [access
               #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
@@ -113,7 +114,7 @@ module Twilio
               # is reached.
               # @param [String] identity The
               #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
-              #   resources to read. See [access
+              #   Member resources to read. See [access
               #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
@@ -149,7 +150,7 @@ module Twilio
               # Request is executed immediately.
               # @param [String] identity The
               #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
-              #   resources to read. See [access
+              #   Member resources to read. See [access
               #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
@@ -229,13 +230,14 @@ module Twilio
               # Initialize the MemberContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the resource
-              #   from.
-              # @param [String] channel_sid The unique ID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) the member to fetch belongs
-              #   to. Can be the Channel resource's `sid` or `unique_name` value.
-              # @param [String] sid The Twilio-provided string that uniquely identifies the
-              #   Member resource to fetch.
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the Member
+              #   resource from.
+              # @param [String] channel_sid The SID of the
+              #   [Channel](https://www.twilio.com/docs/chat/channels) the Member resource to
+              #   fetch belongs to. This value can be the Channel resource's `sid` or
+              #   `unique_name`.
+              # @param [String] sid The SID of the Member resource to fetch. This value can be
+              #   either the Member's `sid` or its `identity` value.
               # @return [MemberContext] MemberContext
               def initialize(version, service_sid, channel_sid, sid)
                 super(version)
@@ -282,20 +284,18 @@ module Twilio
               # @param [String] last_consumed_message_index The index of the last
               #   [Message](https://www.twilio.com/docs/chat/rest/messages) that the Member has
               #   read within the [Channel](https://www.twilio.com/docs/chat/channels).
-              # @param [Time] last_consumption_timestamp The ISO 8601 timestamp string that
-              #   represents the date-time of the last
+              # @param [Time] last_consumption_timestamp The [ISO
+              #   8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp of the last
               #   [Message](https://www.twilio.com/docs/chat/rest/messages) read event for the
               #   Member within the [Channel](https://www.twilio.com/docs/chat/channels).
               # @param [Time] date_created The date, specified in [ISO
               #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
-              #   as the date it was created. The default is the current time set by the Chat
-              #   service.  Note that this parameter should only be used when a Member is being
-              #   recreated from a backup/separate source.
+              #   as the date it was created. The default value is the current time set by the
+              #   Chat service.  Note that this parameter should only be used when a Member is
+              #   being recreated from a backup/separate source.
               # @param [Time] date_updated The date, specified in [ISO
               #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
-              #   as the date it was last updated. Note that this parameter should only be used
-              #   when a Member is being recreated from a backup/separate source and where a
-              #   Member was previously updated.
+              #   as the date it was last updated.
               # @param [String] attributes A valid JSON string that contains
               #   application-specific data.
               # @return [MemberInstance] Updated MemberInstance
@@ -345,12 +345,13 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) the Member resource is
               #   associated with.
-              # @param [String] channel_sid The unique ID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) for the member.
-              # @param [String] sid The Twilio-provided string that uniquely identifies the
-              #   Member resource to fetch.
+              # @param [String] channel_sid The SID of the
+              #   [Channel](https://www.twilio.com/docs/chat/channels) the Member resource belongs
+              #   to.
+              # @param [String] sid The SID of the Member resource to fetch. This value can be
+              #   either the Member's `sid` or its `identity` value.
               # @return [MemberInstance] MemberInstance
               def initialize(version, payload, service_sid: nil, channel_sid: nil, sid: nil)
                 super(version)
@@ -409,7 +410,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique ID of the Channel for the member
+              # @return [String] The SID of the Channel for the member
               def channel_sid
                 @properties['channel_sid']
               end
@@ -427,13 +428,13 @@ module Twilio
               end
 
               ##
-              # @return [Time] The RFC 2822 date and time in GMT when the resource was created
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
@@ -451,7 +452,7 @@ module Twilio
               end
 
               ##
-              # @return [Time] The ISO 8601 based timestamp string that represents the date-time of the last Message read event for the Member within the Channel
+              # @return [Time] The ISO 8601 based timestamp string that represents the datetime of the last Message read event for the Member within the Channel
               def last_consumption_timestamp
                 @properties['last_consumption_timestamp']
               end
@@ -491,20 +492,18 @@ module Twilio
               # @param [String] last_consumed_message_index The index of the last
               #   [Message](https://www.twilio.com/docs/chat/rest/messages) that the Member has
               #   read within the [Channel](https://www.twilio.com/docs/chat/channels).
-              # @param [Time] last_consumption_timestamp The ISO 8601 timestamp string that
-              #   represents the date-time of the last
+              # @param [Time] last_consumption_timestamp The [ISO
+              #   8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp of the last
               #   [Message](https://www.twilio.com/docs/chat/rest/messages) read event for the
               #   Member within the [Channel](https://www.twilio.com/docs/chat/channels).
               # @param [Time] date_created The date, specified in [ISO
               #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
-              #   as the date it was created. The default is the current time set by the Chat
-              #   service.  Note that this parameter should only be used when a Member is being
-              #   recreated from a backup/separate source.
+              #   as the date it was created. The default value is the current time set by the
+              #   Chat service.  Note that this parameter should only be used when a Member is
+              #   being recreated from a backup/separate source.
               # @param [Time] date_updated The date, specified in [ISO
               #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
-              #   as the date it was last updated. Note that this parameter should only be used
-              #   when a Member is being recreated from a backup/separate source and where a
-              #   Member was previously updated.
+              #   as the date it was last updated.
               # @param [String] attributes A valid JSON string that contains
               #   application-specific data.
               # @return [MemberInstance] Updated MemberInstance

@@ -16,8 +16,8 @@ module Twilio
             # Initialize the ChannelList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
-            #   associated with.
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the Channel resource
+            #   is associated with.
             # @return [ChannelList] ChannelList
             def initialize(version, service_sid: nil)
               super(version)
@@ -34,21 +34,21 @@ module Twilio
             #   the new resource. It can be up to 64 characters long.
             # @param [String] unique_name An application-defined string that uniquely
             #   identifies the resource. It can be used to address the resource in place of the
-            #   resource's `sid` in the URL. This value must be 64 characters or less in length
-            #   and be unique within the Service.
+            #   Channel resource's `sid` in the URL. This value must be 64 characters or less in
+            #   length and be unique within the Service.
             # @param [String] attributes A valid JSON string that contains
             #   application-specific data.
             # @param [channel.ChannelType] type The visibility of the channel. Can be:
             #   `public` or `private` and defaults to `public`.
             # @param [Time] date_created The date, specified in [ISO
             #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
-            #   as the date it was created. The default is the current time set by the Chat
-            #   service.  Note that this should only be used in cases where a Channel is being
-            #   recreated from a backup/separate source.
+            #   as the date it was created. The default value is the current time set by the
+            #   Chat service.  Note that this should only be used in cases where a Channel is
+            #   being recreated from a backup/separate source.
             # @param [Time] date_updated The date, specified in [ISO
             #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
-            #   as the date it was last updated. The default value is `null`.  Note that this
-            #   should only be used in cases where a Channel is being recreated from a
+            #   as the date it was last updated. The default value is `null`. Note that this
+            #   parameter should only be used in cases where a Channel is being recreated from a
             #   backup/separate source  and where a Message was previously updated.
             # @param [String] created_by The `identity` of the User that created the channel.
             #   Default is: `system`.
@@ -203,10 +203,10 @@ module Twilio
             # Initialize the ChannelContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the resource
-            #   from.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the
-            #   Channel resource to fetch.
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the Channel
+            #   resource from.
+            # @param [String] sid The SID of the Channel resource to fetch. This value can be
+            #   either the `sid` or the `unique_name` of the Channel resource to fetch.
             # @return [ChannelContext] ChannelContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -256,7 +256,9 @@ module Twilio
             #   application-specific data.
             # @param [Time] date_created The date, specified in [ISO
             #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
-            #   as the date it was created.
+            #   as the date it was created. The default value is the current time set by the
+            #   Chat service.  Note that this should only be used in cases where a Channel is
+            #   being recreated from a backup/separate source.
             # @param [Time] date_updated The date, specified in [ISO
             #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
             #   as the date it was last updated.
@@ -391,10 +393,10 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
-            #   associated with.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the
-            #   Channel resource to fetch.
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the Channel resource
+            #   is associated with.
+            # @param [String] sid The SID of the Channel resource to fetch. This value can be
+            #   either the `sid` or the `unique_name` of the Channel resource to fetch.
             # @return [ChannelInstance] ChannelInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -476,13 +478,13 @@ module Twilio
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
@@ -500,7 +502,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The number of Messages in the Channel
+            # @return [String] The number of Messages that have been passed in the Channel
             def messages_count
               @properties['messages_count']
             end
@@ -543,7 +545,9 @@ module Twilio
             #   application-specific data.
             # @param [Time] date_created The date, specified in [ISO
             #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
-            #   as the date it was created.
+            #   as the date it was created. The default value is the current time set by the
+            #   Chat service.  Note that this should only be used in cases where a Channel is
+            #   being recreated from a backup/separate source.
             # @param [Time] date_updated The date, specified in [ISO
             #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
             #   as the date it was last updated.

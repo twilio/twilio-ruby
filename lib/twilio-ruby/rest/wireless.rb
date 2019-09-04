@@ -29,7 +29,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
+      # @param [String] sid The unique string that we created to identify the Command
       #   resource.
       # @return [Twilio::REST::Wireless::V1::CommandInstance] if sid was passed.
       # @return [Twilio::REST::Wireless::V1::CommandList]
@@ -38,7 +38,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
+      # @param [String] sid The unique string that we created to identify the RatePlan
       #   resource.
       # @return [Twilio::REST::Wireless::V1::RatePlanInstance] if sid was passed.
       # @return [Twilio::REST::Wireless::V1::RatePlanList]
@@ -53,7 +53,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
+      # @param [String] sid The unique string that we created to identify the Sim
       #   resource.
       # @return [Twilio::REST::Wireless::V1::SimInstance] if sid was passed.
       # @return [Twilio::REST::Wireless::V1::SimList]

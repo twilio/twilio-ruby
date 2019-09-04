@@ -159,7 +159,7 @@ describe 'Verification' do
           "sid": "VEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "service_sid": "VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "to": "+14159373912",
+          "to": "+15017122661",
           "channel": "sms",
           "status": "approved",
           "valid": true,

@@ -1,6 +1,30 @@
 twilio-ruby changelog
 =====================
 
+[2019-09-04] Version 5.26.0
+----------------------------
+**Library**
+- [PR #463](https://github.com/twilio/twilio-ruby/pull/463): Reduce line length to satisfy rubocop constraints. Thanks to [@igracia](https://github.com/igracia)!
+- [PR #399](https://github.com/twilio/twilio-ruby/pull/399): breaking: Added proxy protocol to HTTP Client constructor. Thanks to [@po5i](https://github.com/po5i)! **(breaking change)**
+- [PR #462](https://github.com/twilio/twilio-ruby/pull/462): Correct 'delete' method doc to indicate 'false' when resource not deleted. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #441](https://github.com/twilio/twilio-ruby/pull/441): Link to actual documentation. Thanks to [@alexford](https://github.com/alexford)!
+
+**Api**
+-  Pass Twiml in call update request
+
+**Conversations**
+- Add attributes to Conversations resources
+
+**Flex**
+- Adding `features_enabled` and `serverless_service_sids` to Flex Configuration
+
+**Messaging**
+- Message API required params updated **(breaking change)**
+
+**Preview**
+- Added support for the optional `CallSid` to `/BrandedCalls` endpoint
+
+
 [2019-08-21] Version 5.25.4
 ----------------------------
 **Library**

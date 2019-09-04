@@ -18,10 +18,10 @@ module Twilio
               ##
               # Initialize the SyncMapItemList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique SID identifier of the Service Instance
-              #   that hosts this Map object.
-              # @param [String] map_sid The unique 34-character SID identifier of the Map
-              #   containing this Item.
+              # @param [String] service_sid The SID of the [Sync
+              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              #   associated with.
+              # @param [String] map_sid The SID of the Sync Map that contains the Map Item.
               # @return [SyncMapItemList] SyncMapItemList
               def initialize(version, service_sid: nil, map_sid: nil)
                 super(version)
@@ -34,20 +34,21 @@ module Twilio
               ##
               # Retrieve a single page of SyncMapItemInstance records from the API.
               # Request is executed immediately.
-              # @param [String] key The unique user-defined key of this Map Item. Up to 320
-              #   characters long.
-              # @param [Hash] data Contains arbitrary user-defined, schema-less data that this
-              #   Map Item stores, represented by a JSON object, up to 16KB.
-              # @param [String] ttl Alias for item_ttl. If both are provided, this value is
-              #   ignored.
-              # @param [String] item_ttl Time-to-live of this item in seconds, defaults to no
-              #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity. Upon
-              #   expiry, the map item will be cleaned up at least in a matter of hours, and often
-              #   within seconds, making this a good tool for garbage management.
-              # @param [String] collection_ttl Time-to-live of this item's parent Map in
-              #   seconds, defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0
-              #   for infinity. This parameter can only be used when the map item's data or ttl is
-              #   updated in the same request.
+              # @param [String] key The unique, user-defined key for the Map Item. Can be up to
+              #   320 characters long.
+              # @param [Hash] data A JSON string that represents an arbitrary, schema-less
+              #   object that the Map Item stores. Can be up to 16KB in length.
+              # @param [String] ttl An alias for `item_ttl`. If both parameters are provided,
+              #   this value is ignored.
+              # @param [String] item_ttl How long, in seconds, before the Map Item expires
+              #   (time-to-live) and is deleted.  Can be an integer from 0 to 31,536,000 (1 year).
+              #   The default value is `0`, which means the Map Item does not expire.  The Map
+              #   Item might not be deleted immediately after it expires.
+              # @param [String] collection_ttl How long, in seconds, before the Map Item's
+              #   parent Sync Map expires (time-to-live) and is deleted.  Can be an integer from 0
+              #   to 31,536,000 (1 year). The default value is `0`, which means the parent Sync
+              #   Map does not expire. The Sync Map might not be deleted immediately after it
+              #   expires.
               # @return [SyncMapItemInstance] Newly created SyncMapItemInstance
               def create(key: nil, data: nil, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
                 data = Twilio::Values.of({
@@ -76,14 +77,17 @@ module Twilio
               # Lists SyncMapItemInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [sync_map_item.QueryResultOrder] order A string; asc or desc. Map Items
-              #   are [ordered
+              # @param [sync_map_item.QueryResultOrder] order How to order the Map Items
+              #   returned by their `key` value. Can be: `asc` (ascending) or `desc` (descending)
+              #   and the default is ascending. Map Items are [ordered
               #   lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item
               #   key.
-              # @param [String] from The Item key offset (including the specified key). If not
-              #   present, query is performed from the start or end, depending on the Order query
-              #   parameter.
-              # @param [sync_map_item.QueryFromBoundType] bounds The bounds
+              # @param [String] from The `key` of the first Sync Map Item resource to read. See
+              #   also `bounds`.
+              # @param [sync_map_item.QueryFromBoundType] bounds Whether to include the Map Item
+              #   referenced by the `from` parameter. Can be: `inclusive` to include the Map Item
+              #   referenced by the `from` parameter or `exclusive` to start with the next Map
+              #   Item. The default value is `inclusive`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -99,14 +103,17 @@ module Twilio
               # Streams SyncMapItemInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [sync_map_item.QueryResultOrder] order A string; asc or desc. Map Items
-              #   are [ordered
+              # @param [sync_map_item.QueryResultOrder] order How to order the Map Items
+              #   returned by their `key` value. Can be: `asc` (ascending) or `desc` (descending)
+              #   and the default is ascending. Map Items are [ordered
               #   lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item
               #   key.
-              # @param [String] from The Item key offset (including the specified key). If not
-              #   present, query is performed from the start or end, depending on the Order query
-              #   parameter.
-              # @param [sync_map_item.QueryFromBoundType] bounds The bounds
+              # @param [String] from The `key` of the first Sync Map Item resource to read. See
+              #   also `bounds`.
+              # @param [sync_map_item.QueryFromBoundType] bounds Whether to include the Map Item
+              #   referenced by the `from` parameter. Can be: `inclusive` to include the Map Item
+              #   referenced by the `from` parameter or `exclusive` to start with the next Map
+              #   Item. The default value is `inclusive`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -139,14 +146,17 @@ module Twilio
               ##
               # Retrieve a single page of SyncMapItemInstance records from the API.
               # Request is executed immediately.
-              # @param [sync_map_item.QueryResultOrder] order A string; asc or desc. Map Items
-              #   are [ordered
+              # @param [sync_map_item.QueryResultOrder] order How to order the Map Items
+              #   returned by their `key` value. Can be: `asc` (ascending) or `desc` (descending)
+              #   and the default is ascending. Map Items are [ordered
               #   lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item
               #   key.
-              # @param [String] from The Item key offset (including the specified key). If not
-              #   present, query is performed from the start or end, depending on the Order query
-              #   parameter.
-              # @param [sync_map_item.QueryFromBoundType] bounds The bounds
+              # @param [String] from The `key` of the first Sync Map Item resource to read. See
+              #   also `bounds`.
+              # @param [sync_map_item.QueryFromBoundType] bounds Whether to include the Map Item
+              #   referenced by the `from` parameter. Can be: `inclusive` to include the Map Item
+              #   referenced by the `from` parameter or `exclusive` to start with the next Map
+              #   Item. The default value is `inclusive`.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -230,9 +240,12 @@ module Twilio
               ##
               # Initialize the SyncMapItemContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
-              # @param [String] map_sid The map_sid
-              # @param [String] key The key
+              # @param [String] service_sid The SID of the [Sync
+              #   Service](https://www.twilio.com/docs/sync/api/service) with the Sync Map Item
+              #   resource to fetch.
+              # @param [String] map_sid The SID of the Sync Map with the Sync Map Item resource
+              #   to fetch. Can be the Sync Map's `sid` or its `unique_name`.
+              # @param [String] key The `key` value of the Sync Map Item resource to fetch.
               # @return [SyncMapItemContext] SyncMapItemContext
               def initialize(version, service_sid, map_sid, key)
                 super(version)
@@ -272,18 +285,20 @@ module Twilio
 
               ##
               # Update the SyncMapItemInstance
-              # @param [Hash] data Contains an arbitrary JSON object to be stored in this Map
-              #   Item. Serialized to string to respect HTTP form input, up to 16KB.
-              # @param [String] ttl Alias for item_ttl. If both are provided, this value is
-              #   ignored.
-              # @param [String] item_ttl Time-to-live of this item in seconds, defaults to no
-              #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity. Upon
-              #   expiry, the map item will be cleaned up at least in a matter of hours, and often
-              #   within seconds, making this a good tool for garbage management.
-              # @param [String] collection_ttl Time-to-live of this item's parent Map in
-              #   seconds, defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0
-              #   for infinity. This parameter can only be used when the map item's data or ttl is
-              #   updated in the same request.
+              # @param [Hash] data A JSON string that represents an arbitrary, schema-less
+              #   object that the Map Item stores. Can be up to 16KB in length.
+              # @param [String] ttl An alias for `item_ttl`. If both parameters are provided,
+              #   this value is ignored.
+              # @param [String] item_ttl How long, in seconds, before the Map Item expires
+              #   (time-to-live) and is deleted.  Can be an integer from 0 to 31,536,000 (1 year).
+              #   The default value is `0`, which means the Map Item does not expire. The Map Item
+              #   might not be deleted immediately after it expires.
+              # @param [String] collection_ttl How long, in seconds, before the Map Item's
+              #   parent Sync Map expires (time-to-live) and is deleted.  Can be an integer from 0
+              #   to 31,536,000 (1 year). The default value is `0`, which means the parent Sync
+              #   Map does not expire. This parameter can only be used when the Map Item's `data`
+              #   or `ttl` is updated in the same request. The Sync Map might not be deleted
+              #   immediately after it expires.
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
               def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
                 data = Twilio::Values.of({
@@ -330,11 +345,11 @@ module Twilio
               # Initialize the SyncMapItemInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The unique SID identifier of the Service Instance
-              #   that hosts this Map object.
-              # @param [String] map_sid The unique 34-character SID identifier of the Map
-              #   containing this Item.
-              # @param [String] key The key
+              # @param [String] service_sid The SID of the [Sync
+              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              #   associated with.
+              # @param [String] map_sid The SID of the Sync Map that contains the Map Item.
+              # @param [String] key The `key` value of the Sync Map Item resource to fetch.
               # @return [SyncMapItemInstance] SyncMapItemInstance
               def initialize(version, payload, service_sid: nil, map_sid: nil, key: nil)
                 super(version)
@@ -376,67 +391,67 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique user-defined key of this Map Item.
+              # @return [String] The unique, user-defined key for the Map Item
               def key
                 @properties['key']
               end
 
               ##
-              # @return [String] The unique SID identifier of the Twilio Account.
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The unique SID identifier of the Service Instance that hosts this Map object.
+              # @return [String] The SID of the Sync Service that the resource is associated with
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] The unique 34-character SID identifier of the Map containing this Item.
+              # @return [String] The SID of the Sync Map that contains the Map Item
               def map_sid
                 @properties['map_sid']
               end
 
               ##
-              # @return [String] The absolute URL for this Map.
+              # @return [String] The absolute URL of the Map Item resource
               def url
                 @properties['url']
               end
 
               ##
-              # @return [String] Contains the current revision of this Map, represented by a string identifier.
+              # @return [String] The current revision of the Map Item, represented as a string
               def revision
                 @properties['revision']
               end
 
               ##
-              # @return [Hash] Contains arbitrary user-defined, schema-less data that this Map Item stores, represented by a JSON object, up to 16KB.
+              # @return [Hash] An arbitrary, schema-less object that the Map Item stores
               def data
                 @properties['data']
               end
 
               ##
-              # @return [Time] Contains the date this Map expires and gets deleted automatically.
+              # @return [Time] The ISO 8601 date and time in GMT when the Map Item expires
               def date_expires
                 @properties['date_expires']
               end
 
               ##
-              # @return [Time] The date this Map was created, given in UTC ISO 8601 format.
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] Specifies the date this Map was last updated, given in UTC ISO 8601 format.
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The identity of the Map creator.
+              # @return [String] The identity of the Map Item's creator
               def created_by
                 @properties['created_by']
               end
@@ -457,18 +472,20 @@ module Twilio
 
               ##
               # Update the SyncMapItemInstance
-              # @param [Hash] data Contains an arbitrary JSON object to be stored in this Map
-              #   Item. Serialized to string to respect HTTP form input, up to 16KB.
-              # @param [String] ttl Alias for item_ttl. If both are provided, this value is
-              #   ignored.
-              # @param [String] item_ttl Time-to-live of this item in seconds, defaults to no
-              #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity. Upon
-              #   expiry, the map item will be cleaned up at least in a matter of hours, and often
-              #   within seconds, making this a good tool for garbage management.
-              # @param [String] collection_ttl Time-to-live of this item's parent Map in
-              #   seconds, defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0
-              #   for infinity. This parameter can only be used when the map item's data or ttl is
-              #   updated in the same request.
+              # @param [Hash] data A JSON string that represents an arbitrary, schema-less
+              #   object that the Map Item stores. Can be up to 16KB in length.
+              # @param [String] ttl An alias for `item_ttl`. If both parameters are provided,
+              #   this value is ignored.
+              # @param [String] item_ttl How long, in seconds, before the Map Item expires
+              #   (time-to-live) and is deleted.  Can be an integer from 0 to 31,536,000 (1 year).
+              #   The default value is `0`, which means the Map Item does not expire. The Map Item
+              #   might not be deleted immediately after it expires.
+              # @param [String] collection_ttl How long, in seconds, before the Map Item's
+              #   parent Sync Map expires (time-to-live) and is deleted.  Can be an integer from 0
+              #   to 31,536,000 (1 year). The default value is `0`, which means the parent Sync
+              #   Map does not expire. This parameter can only be used when the Map Item's `data`
+              #   or `ttl` is updated in the same request. The Sync Map might not be deleted
+              #   immediately after it expires.
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
               def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
                 context.update(data: data, ttl: ttl, item_ttl: item_ttl, collection_ttl: collection_ttl, )

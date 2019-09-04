@@ -17,8 +17,8 @@ module Twilio
               # Initialize the UserChannelList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
-              #   associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) the User Channel
+              #   resource is associated with.
               # @param [String] user_sid The SID of the
               #   [User](https://www.twilio.com/docs/chat/rest/users) the User Channel belongs to.
               # @return [UserChannelList] UserChannelList
@@ -162,9 +162,11 @@ module Twilio
               #   Channel resource from.
               # @param [String] user_sid The SID of the
               #   [User](https://www.twilio.com/docs/chat/rest/users) to fetch the User Channel
-              #   resource from.
+              #   resource from. This value can be either the `sid` or the `identity` of the User
+              #   resource.
               # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) that has the User Channel
+              #   to fetch. This value can be either the `sid` or the `unique_name` of the Channel
               #   to fetch.
               # @return [UserChannelContext] UserChannelContext
               def initialize(version, service_sid, user_sid, channel_sid)
@@ -240,12 +242,13 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the resource is
-              #   associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/services) the User Channel
+              #   resource is associated with.
               # @param [String] user_sid The SID of the
               #   [User](https://www.twilio.com/docs/chat/rest/users) the User Channel belongs to.
               # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) that has the User Channel
+              #   to fetch. This value can be either the `sid` or the `unique_name` of the Channel
               #   to fetch.
               # @return [UserChannelInstance] UserChannelInstance
               def initialize(version, payload, service_sid: nil, user_sid: nil, channel_sid: nil)

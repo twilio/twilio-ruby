@@ -176,6 +176,8 @@ module Twilio
                 'plugin_service_attributes' => payload['plugin_service_attributes'],
                 'integrations' => payload['integrations'],
                 'outbound_call_flows' => payload['outbound_call_flows'],
+                'features_enabled' => payload['features_enabled'],
+                'serverless_service_sids' => payload['serverless_service_sids'],
                 'url' => payload['url'],
             }
 
@@ -385,6 +387,18 @@ module Twilio
           # @return [Hash] Outbound call flows Attributes
           def outbound_call_flows
             @properties['outbound_call_flows']
+          end
+
+          ##
+          # @return [String] List of enabled features
+          def features_enabled
+            @properties['features_enabled']
+          end
+
+          ##
+          # @return [String] List of serverless services sids
+          def serverless_service_sids
+            @properties['serverless_service_sids']
           end
 
           ##

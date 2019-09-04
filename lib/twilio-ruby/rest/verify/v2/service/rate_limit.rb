@@ -361,7 +361,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The links
+            # @return [String] The URLs of related resources
             def links
               @properties['links']
             end

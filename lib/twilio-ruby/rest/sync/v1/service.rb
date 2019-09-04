@@ -28,31 +28,30 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name Human-readable name for this service instance
-          # @param [String] webhook_url A URL that will receive event updates when objects
-          #   are manipulated.
-          # @param [Boolean] reachability_webhooks_enabled `true` or `false` - controls
-          #   whether this instance fires webhooks when client endpoints connect to Sync
-          #   Defaults to false.
-          # @param [Boolean] acl_enabled `true` or `false` - determines whether token
-          #   identities must be granted access to Sync objects via the [Permissions
-          #   API](https://www.twilio.com/docs/api/sync/rest/sync-rest-api-permissions) in
-          #   this Service.
-          # @param [Boolean] reachability_debouncing_enabled `true` or `false` - If false,
-          #   every endpoint disconnection immediately yields a reachability webhook (if
-          #   enabled). If true, then 'disconnection' webhook events will only be fired after
-          #   a configurable delay. Intervening reconnections would effectively cancel that
-          #   webhook. Defaults to false.
-          # @param [String] reachability_debouncing_window Reachability webhook delay period
-          #   in milliseconds. Determines the delay after which a Sync identity is declared
-          #   actually offline, measured from the moment the last running client disconnects.
-          #   If all endpoints remain offline throughout this delay, then reachability
-          #   webhooks will be fired (if enabled). A reconnection by any endpoint during this
-          #   window — from the same identity — means no reachability webhook would be fired.
-          #   Must be between 1000 and 30000. Defaults to 5000.
-          # @param [Boolean] webhooks_from_rest_enabled `true` or `false` - controls whether
-          #   this instance fires webhooks when Sync objects are updated through REST.
-          #   Defaults to false.
+          # @param [String] friendly_name A string that you assign to describe the resource.
+          # @param [String] webhook_url The URL we should call when Sync objects are
+          #   manipulated.
+          # @param [Boolean] reachability_webhooks_enabled Whether the service instance
+          #   should call `webhook_url` when client endpoints connect to Sync. The default is
+          #   `false`.
+          # @param [Boolean] acl_enabled Whether token identities in the Service must be
+          #   granted access to Sync objects by using the
+          #   [Permissions](https://www.twilio.com/docs/sync/api/permissions) resource.
+          # @param [Boolean] reachability_debouncing_enabled Whether every
+          #   `endpoint_disconnected` event should occur after a configurable delay. The
+          #   default is `false`, where the `endpoint_disconnected` event occurs immediately
+          #   after disconnection. When `true`, intervening reconnections can prevent the
+          #   `endpoint_disconnected` event.
+          # @param [String] reachability_debouncing_window The reachability event delay in
+          #   milliseconds if `reachability_debouncing_enabled` = `true`.  Must be between
+          #   1,000 and 30,000 and defaults to 5,000. This is the number of milliseconds after
+          #   the last running client disconnects, and a Sync identity is declared offline,
+          #   before the `webhook_url` is called if all endpoints remain offline. A
+          #   reconnection from the same identity by any endpoint during this interval
+          #   prevents the call to `webhook_url`.
+          # @param [Boolean] webhooks_from_rest_enabled Whether the Service instance should
+          #   call `webhook_url` when the REST API is used to update Sync objects. The default
+          #   is `false`.
           # @return [ServiceInstance] Newly created ServiceInstance
           def create(friendly_name: :unset, webhook_url: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset, reachability_debouncing_enabled: :unset, reachability_debouncing_window: :unset, webhooks_from_rest_enabled: :unset)
             data = Twilio::Values.of({
@@ -200,7 +199,7 @@ module Twilio
           ##
           # Initialize the ServiceContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid A unique identifier for this service instance.
+          # @param [String] sid The SID of the Service resource to fetch.
           # @return [ServiceContext] ServiceContext
           def initialize(version, sid)
             super(version)
@@ -240,31 +239,30 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] webhook_url A URL that will receive event updates when objects
-          #   are manipulated.
-          # @param [String] friendly_name Human-readable name for this service instance
-          # @param [Boolean] reachability_webhooks_enabled True or false - controls whether
-          #   this instance fires webhooks when client endpoints connect to Sync Defaults to
-          #   false.
-          # @param [Boolean] acl_enabled `true` or `false` - determines whether token
-          #   identities must be granted access to Sync objects via the [Permissions
-          #   API](https://www.twilio.com/docs/api/sync/rest/sync-rest-api-permissions) in
-          #   this Service.
-          # @param [Boolean] reachability_debouncing_enabled `true` or `false` - If false,
-          #   every endpoint disconnection immediately yields a reachability webhook (if
-          #   enabled). If true, then 'disconnection' webhook events will only be fired after
-          #   a configurable delay. Intervening reconnections would effectively cancel that
-          #   webhook. Defaults to false.
-          # @param [String] reachability_debouncing_window Reachability webhook delay period
-          #   in milliseconds. Determines the delay after which a Sync identity is declared
-          #   actually offline, measured from the moment the last running client disconnects.
-          #   If all endpoints remain offline throughout this delay, then reachability
-          #   webhooks will be fired (if enabled). A reconnection by any endpoint during this
-          #   window — from the same identity — means no reachability webhook would be fired.
-          #   Must be between 1000 and 30000. Defaults to 5000.
-          # @param [Boolean] webhooks_from_rest_enabled `true` or `false` - controls whether
-          #   this instance fires webhooks when Sync objects are updated through REST.
-          #   Defaults to false.
+          # @param [String] webhook_url The URL we should call when Sync objects are
+          #   manipulated.
+          # @param [String] friendly_name A string that you assign to describe the resource.
+          # @param [Boolean] reachability_webhooks_enabled Whether the service instance
+          #   should call `webhook_url` when client endpoints connect to Sync. The default is
+          #   `false`.
+          # @param [Boolean] acl_enabled Whether token identities in the Service must be
+          #   granted access to Sync objects by using the
+          #   [Permissions](https://www.twilio.com/docs/sync/api/permissions) resource.
+          # @param [Boolean] reachability_debouncing_enabled Whether every
+          #   `endpoint_disconnected` event should occur after a configurable delay. The
+          #   default is `false`, where the `endpoint_disconnected` event occurs immediately
+          #   after disconnection. When `true`, intervening reconnections can prevent the
+          #   `endpoint_disconnected` event.
+          # @param [String] reachability_debouncing_window The reachability event delay in
+          #   milliseconds if `reachability_debouncing_enabled` = `true`.  Must be between
+          #   1,000 and 30,000 and defaults to 5,000. This is the number of milliseconds after
+          #   the last running client disconnects, and a Sync identity is declared offline,
+          #   before the webhook is called if all endpoints remain offline. A reconnection
+          #   from the same identity by any endpoint during this interval prevents the webhook
+          #   from being called.
+          # @param [Boolean] webhooks_from_rest_enabled Whether the Service instance should
+          #   call `webhook_url` when the REST API is used to update Sync objects. The default
+          #   is `false`.
           # @return [ServiceInstance] Updated ServiceInstance
           def update(webhook_url: :unset, friendly_name: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset, reachability_debouncing_enabled: :unset, reachability_debouncing_window: :unset, webhooks_from_rest_enabled: :unset)
             data = Twilio::Values.of({
@@ -380,7 +378,7 @@ module Twilio
           # Initialize the ServiceInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid A unique identifier for this service instance.
+          # @param [String] sid The SID of the Service resource to fetch.
           # @return [ServiceInstance] ServiceInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -420,85 +418,85 @@ module Twilio
           end
 
           ##
-          # @return [String] A unique identifier for this service instance.
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The unique_name
+          # @return [String] An application-defined string that uniquely identifies the resource
           def unique_name
             @properties['unique_name']
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] Human-readable name for this service instance
+          # @return [String] The string that you assigned to describe the resource
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The absolute URL of the Service resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] A URL that will receive event updates when objects are manipulated.
+          # @return [String] The URL we call when Sync objects are manipulated
           def webhook_url
             @properties['webhook_url']
           end
 
           ##
-          # @return [Boolean] true or false - controls whether this instance fires webhooks when Sync objects are updated through REST
+          # @return [Boolean] Whether the Service instance should call webhook_url when the REST API is used to update Sync objects
           def webhooks_from_rest_enabled
             @properties['webhooks_from_rest_enabled']
           end
 
           ##
-          # @return [Boolean] true or false - controls whether this instance fires webhooks when client endpoints connect to Sync
+          # @return [Boolean] Whether the service instance calls webhook_url when client endpoints connect to Sync
           def reachability_webhooks_enabled
             @properties['reachability_webhooks_enabled']
           end
 
           ##
-          # @return [Boolean] true or false - determines whether token identities must be granted access to Sync objects via the Permissions API in this Service.
+          # @return [Boolean] Whether token identities in the Service must be granted access to Sync objects by using the Permissions resource
           def acl_enabled
             @properties['acl_enabled']
           end
 
           ##
-          # @return [Boolean] true or false - Determines whether transient disconnections (i.e. an immediate reconnect succeeds) cause reachability webhooks.
+          # @return [Boolean] Whether every endpoint_disconnected event occurs after a configurable delay
           def reachability_debouncing_enabled
             @properties['reachability_debouncing_enabled']
           end
 
           ##
-          # @return [String] Determines how long an identity must be offline before reachability webhooks fire.
+          # @return [String] The reachability event delay in milliseconds
           def reachability_debouncing_window
             @properties['reachability_debouncing_window']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] The URLs of related resources
           def links
             @properties['links']
           end
@@ -519,31 +517,30 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [String] webhook_url A URL that will receive event updates when objects
-          #   are manipulated.
-          # @param [String] friendly_name Human-readable name for this service instance
-          # @param [Boolean] reachability_webhooks_enabled True or false - controls whether
-          #   this instance fires webhooks when client endpoints connect to Sync Defaults to
-          #   false.
-          # @param [Boolean] acl_enabled `true` or `false` - determines whether token
-          #   identities must be granted access to Sync objects via the [Permissions
-          #   API](https://www.twilio.com/docs/api/sync/rest/sync-rest-api-permissions) in
-          #   this Service.
-          # @param [Boolean] reachability_debouncing_enabled `true` or `false` - If false,
-          #   every endpoint disconnection immediately yields a reachability webhook (if
-          #   enabled). If true, then 'disconnection' webhook events will only be fired after
-          #   a configurable delay. Intervening reconnections would effectively cancel that
-          #   webhook. Defaults to false.
-          # @param [String] reachability_debouncing_window Reachability webhook delay period
-          #   in milliseconds. Determines the delay after which a Sync identity is declared
-          #   actually offline, measured from the moment the last running client disconnects.
-          #   If all endpoints remain offline throughout this delay, then reachability
-          #   webhooks will be fired (if enabled). A reconnection by any endpoint during this
-          #   window — from the same identity — means no reachability webhook would be fired.
-          #   Must be between 1000 and 30000. Defaults to 5000.
-          # @param [Boolean] webhooks_from_rest_enabled `true` or `false` - controls whether
-          #   this instance fires webhooks when Sync objects are updated through REST.
-          #   Defaults to false.
+          # @param [String] webhook_url The URL we should call when Sync objects are
+          #   manipulated.
+          # @param [String] friendly_name A string that you assign to describe the resource.
+          # @param [Boolean] reachability_webhooks_enabled Whether the service instance
+          #   should call `webhook_url` when client endpoints connect to Sync. The default is
+          #   `false`.
+          # @param [Boolean] acl_enabled Whether token identities in the Service must be
+          #   granted access to Sync objects by using the
+          #   [Permissions](https://www.twilio.com/docs/sync/api/permissions) resource.
+          # @param [Boolean] reachability_debouncing_enabled Whether every
+          #   `endpoint_disconnected` event should occur after a configurable delay. The
+          #   default is `false`, where the `endpoint_disconnected` event occurs immediately
+          #   after disconnection. When `true`, intervening reconnections can prevent the
+          #   `endpoint_disconnected` event.
+          # @param [String] reachability_debouncing_window The reachability event delay in
+          #   milliseconds if `reachability_debouncing_enabled` = `true`.  Must be between
+          #   1,000 and 30,000 and defaults to 5,000. This is the number of milliseconds after
+          #   the last running client disconnects, and a Sync identity is declared offline,
+          #   before the webhook is called if all endpoints remain offline. A reconnection
+          #   from the same identity by any endpoint during this interval prevents the webhook
+          #   from being called.
+          # @param [Boolean] webhooks_from_rest_enabled Whether the Service instance should
+          #   call `webhook_url` when the REST API is used to update Sync objects. The default
+          #   is `false`.
           # @return [ServiceInstance] Updated ServiceInstance
           def update(webhook_url: :unset, friendly_name: :unset, reachability_webhooks_enabled: :unset, acl_enabled: :unset, reachability_debouncing_enabled: :unset, reachability_debouncing_window: :unset, webhooks_from_rest_enabled: :unset)
             context.update(
