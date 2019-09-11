@@ -20,7 +20,7 @@ module Twilio
         url = uri.match(/^http/) ? uri : absolute_url(uri)
 
         @client.request(
-          @host,
+          @base_url,
           @port,
           method,
           url,
