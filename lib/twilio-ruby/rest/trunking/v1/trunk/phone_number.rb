@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -15,7 +15,10 @@ module Twilio
             ##
             # Initialize the PhoneNumberList
             # @param [Version] version Version that contains the resource
-            # @param [String] trunk_sid The trunk_sid
+            # @param [String] trunk_sid The SID of the Trunk that handles calls to the phone
+            #   number. If a `trunk_sid` is present, we ignore all of the voice URLs and voice
+            #   applications and use those set on the Trunk. Setting a `trunk_sid` will
+            #   automatically delete your `voice_application_sid` and vice versa.
             # @return [PhoneNumberList] PhoneNumberList
             def initialize(version, trunk_sid: nil)
               super(version)
@@ -30,7 +33,7 @@ module Twilio
             # Request is executed immediately.
             # @param [String] phone_number_sid The SID of the [Incoming Phone
             #   Number](https://www.twilio.com/docs/api/rest/incoming-phone-numbers) that you
-            #   want to associate with this trunk.
+            #   want to associate with the trunk.
             # @return [PhoneNumberInstance] Newly created PhoneNumberInstance
             def create(phone_number_sid: nil)
               data = Twilio::Values.of({'PhoneNumberSid' => phone_number_sid, })
@@ -166,8 +169,10 @@ module Twilio
             ##
             # Initialize the PhoneNumberContext
             # @param [Version] version Version that contains the resource
-            # @param [String] trunk_sid The trunk_sid
-            # @param [String] sid The sid
+            # @param [String] trunk_sid The SID of the Trunk from which to fetch the
+            #   PhoneNumber resource.
+            # @param [String] sid The unique string that we created to identify the
+            #   PhoneNumber resource to fetch.
             # @return [PhoneNumberContext] PhoneNumberContext
             def initialize(version, trunk_sid, sid)
               super(version)
@@ -194,7 +199,7 @@ module Twilio
 
             ##
             # Deletes the PhoneNumberInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               @version.delete('delete', @uri)
             end
@@ -219,8 +224,12 @@ module Twilio
             # Initialize the PhoneNumberInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] trunk_sid The trunk_sid
-            # @param [String] sid The sid
+            # @param [String] trunk_sid The SID of the Trunk that handles calls to the phone
+            #   number. If a `trunk_sid` is present, we ignore all of the voice URLs and voice
+            #   applications and use those set on the Trunk. Setting a `trunk_sid` will
+            #   automatically delete your `voice_application_sid` and vice versa.
+            # @param [String] sid The unique string that we created to identify the
+            #   PhoneNumber resource to fetch.
             # @return [PhoneNumberInstance] PhoneNumberInstance
             def initialize(version, payload, trunk_sid: nil, sid: nil)
               super(version)
@@ -272,157 +281,157 @@ module Twilio
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [phone_number.AddressRequirement] The address_requirements
+            # @return [phone_number.AddressRequirement] Whether the phone number requires an Address registered with Twilio
             def address_requirements
               @properties['address_requirements']
             end
 
             ##
-            # @return [String] The api_version
+            # @return [String] The API version used to start a new TwiML session
             def api_version
               @properties['api_version']
             end
 
             ##
-            # @return [Boolean] The beta
+            # @return [Boolean] Whether the phone number is new to the Twilio platform
             def beta
               @properties['beta']
             end
 
             ##
-            # @return [String] The capabilities
+            # @return [String] Indicate if a phone can receive calls or messages
             def capabilities
               @properties['capabilities']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The friendly_name
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] The URLs of related resources
             def links
               @properties['links']
             end
 
             ##
-            # @return [String] The phone_number
+            # @return [String] The phone number in E.164 format
             def phone_number
               @properties['phone_number']
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The sms_application_sid
+            # @return [String] The SID of the application that handles SMS messages sent to the phone number
             def sms_application_sid
               @properties['sms_application_sid']
             end
 
             ##
-            # @return [String] The sms_fallback_method
+            # @return [String] The HTTP method used with sms_fallback_url
             def sms_fallback_method
               @properties['sms_fallback_method']
             end
 
             ##
-            # @return [String] The sms_fallback_url
+            # @return [String] The URL that we call when an error occurs while retrieving or executing the TwiML
             def sms_fallback_url
               @properties['sms_fallback_url']
             end
 
             ##
-            # @return [String] The sms_method
+            # @return [String] The HTTP method to use with sms_url
             def sms_method
               @properties['sms_method']
             end
 
             ##
-            # @return [String] The sms_url
+            # @return [String] The URL we call when the phone number receives an incoming SMS message
             def sms_url
               @properties['sms_url']
             end
 
             ##
-            # @return [String] The status_callback
+            # @return [String] The URL to send status information to your application
             def status_callback
               @properties['status_callback']
             end
 
             ##
-            # @return [String] The status_callback_method
+            # @return [String] The HTTP method we use to call status_callback
             def status_callback_method
               @properties['status_callback_method']
             end
 
             ##
-            # @return [String] The trunk_sid
+            # @return [String] The SID of the Trunk that handles calls to the phone number
             def trunk_sid
               @properties['trunk_sid']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The voice_application_sid
+            # @return [String] The SID of the application that handles calls to the phone number
             def voice_application_sid
               @properties['voice_application_sid']
             end
 
             ##
-            # @return [Boolean] The voice_caller_id_lookup
+            # @return [Boolean] Whether to lookup the caller's name
             def voice_caller_id_lookup
               @properties['voice_caller_id_lookup']
             end
 
             ##
-            # @return [String] The voice_fallback_method
+            # @return [String] The HTTP method that we use to call voice_fallback_url
             def voice_fallback_method
               @properties['voice_fallback_method']
             end
 
             ##
-            # @return [String] The voice_fallback_url
+            # @return [String] The URL we call when an error occurs in TwiML
             def voice_fallback_url
               @properties['voice_fallback_url']
             end
 
             ##
-            # @return [String] The voice_method
+            # @return [String] The HTTP method used with the voice_url
             def voice_method
               @properties['voice_method']
             end
 
             ##
-            # @return [String] The voice_url
+            # @return [String] The URL we call when the phone number receives a call
             def voice_url
               @properties['voice_url']
             end
@@ -436,7 +445,7 @@ module Twilio
 
             ##
             # Deletes the PhoneNumberInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end

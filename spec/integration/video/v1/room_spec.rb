@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -187,9 +187,9 @@ describe 'Room' do
           "meta": {
               "page": 0,
               "page_size": 50,
-              "first_page_url": "https://video.twilio.com/v1/Rooms?PageSize=50&Page=0",
+              "first_page_url": "https://video.twilio.com/v1/Rooms?Status=completed&PageSize=50&Page=0",
               "previous_page_url": null,
-              "url": "https://video.twilio.com/v1/Rooms?PageSize=50&Page=0",
+              "url": "https://video.twilio.com/v1/Rooms?Status=completed&PageSize=50&Page=0",
               "next_page_url": null,
               "key": "rooms"
           }

@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -29,7 +29,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34-character string that uniquely identifies this
+      # @param [String] sid The unique string that we created to identify the Assistant
       #   resource.
       # @return [Twilio::REST::Autopilot::V1::AssistantInstance] if sid was passed.
       # @return [Twilio::REST::Autopilot::V1::AssistantList]

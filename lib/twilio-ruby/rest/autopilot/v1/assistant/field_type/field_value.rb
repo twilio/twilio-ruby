@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -18,9 +18,11 @@ module Twilio
               ##
               # Initialize the FieldValueList
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The unique ID of the Assistant.
-              # @param [String] field_type_sid The unique ID of the Field Type associated with
-              #   this Field Value.
+              # @param [String] assistant_sid The SID of the
+              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   parent of the FieldType associated with the resource.
+              # @param [String] field_type_sid The SID of the Field Type associated with the
+              #   Field Value.
               # @return [FieldValueList] FieldValueList
               def initialize(version, assistant_sid: nil, field_type_sid: nil)
                 super(version)
@@ -34,8 +36,8 @@ module Twilio
               # Lists FieldValueInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] language An ISO language-country string that specifies the
-              #   language used for this field value. For example: en-US
+              # @param [String] language The [ISO
+              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) tag that specifies the language of the value. Currently supported tags: `en-US`
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -51,8 +53,8 @@ module Twilio
               # Streams FieldValueInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] language An ISO language-country string that specifies the
-              #   language used for this field value. For example: en-US
+              # @param [String] language The [ISO
+              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) tag that specifies the language of the value. Currently supported tags: `en-US`
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -85,8 +87,8 @@ module Twilio
               ##
               # Retrieve a single page of FieldValueInstance records from the API.
               # Request is executed immediately.
-              # @param [String] language An ISO language-country string that specifies the
-              #   language used for this field value. For example: en-US
+              # @param [String] language The [ISO
+              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) tag that specifies the language of the value. Currently supported tags: `en-US`
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -122,11 +124,10 @@ module Twilio
               ##
               # Retrieve a single page of FieldValueInstance records from the API.
               # Request is executed immediately.
-              # @param [String] language An ISO language-country string that specifies the
-              #   language used for this field value. For example: en-US
-              # @param [String] value A user-provided string that uniquely identifies this
-              #   resource as an alternative to the sid. Unique up to 64 characters long.
-              # @param [String] synonym_of A string value that indicates which word this field
+              # @param [String] language The [ISO
+              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) tag that specifies the language of the value. Currently supported tags: `en-US`
+              # @param [String] value The Field Value data.
+              # @param [String] synonym_of The string value that indicates which word the field
               #   value is a synonym of.
               # @return [FieldValueInstance] Newly created FieldValueInstance
               def create(language: nil, value: nil, synonym_of: :unset)
@@ -195,10 +196,13 @@ module Twilio
               ##
               # Initialize the FieldValueContext
               # @param [Version] version Version that contains the resource
-              # @param [String] assistant_sid The unique ID of the Assistant
-              # @param [String] field_type_sid The unique ID of the Field Type associated with
-              #   this Field Value
-              # @param [String] sid A 34 character string that uniquely identifies this resource
+              # @param [String] assistant_sid The SID of the
+              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   parent of the FieldType associated with the resource to fetch.
+              # @param [String] field_type_sid The SID of the Field Type associated with the
+              #   Field Value to fetch.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   FieldValue resource to fetch.
               # @return [FieldValueContext] FieldValueContext
               def initialize(version, assistant_sid, field_type_sid, sid)
                 super(version)
@@ -231,7 +235,7 @@ module Twilio
 
               ##
               # Deletes the FieldValueInstance
-              # @return [Boolean] true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 @version.delete('delete', @uri)
               end
@@ -258,10 +262,13 @@ module Twilio
               # Initialize the FieldValueInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] assistant_sid The unique ID of the Assistant.
-              # @param [String] field_type_sid The unique ID of the Field Type associated with
-              #   this Field Value.
-              # @param [String] sid A 34 character string that uniquely identifies this resource
+              # @param [String] assistant_sid The SID of the
+              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   parent of the FieldType associated with the resource.
+              # @param [String] field_type_sid The SID of the Field Type associated with the
+              #   Field Value.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   FieldValue resource to fetch.
               # @return [FieldValueInstance] FieldValueInstance
               def initialize(version, payload, assistant_sid: nil, field_type_sid: nil, sid: nil)
                 super(version)
@@ -306,61 +313,61 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique ID of the Account that created this Field Value.
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [Time] The date that this resource was created
+              # @return [Time] The RFC 2822 date and time in GMT when the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date that this resource was last updated
+              # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The unique ID of the Field Type associated with this Field Value.
+              # @return [String] The SID of the Field Type associated with the Field Value
               def field_type_sid
                 @properties['field_type_sid']
               end
 
               ##
-              # @return [String] An ISO language-country string of the value (currently supported: `en-US`, `nl-NL`)
+              # @return [String] The ISO language-country tag that identifies the language of the value
               def language
                 @properties['language']
               end
 
               ##
-              # @return [String] The unique ID of the Assistant.
+              # @return [String] The SID of the Assistant that is the parent of the FieldType associated with the resource
               def assistant_sid
                 @properties['assistant_sid']
               end
 
               ##
-              # @return [String] A 34 character string that uniquely identifies this resource.
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The Field Value itself.
+              # @return [String] The Field Value data
               def value
                 @properties['value']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] The absolute URL of the FieldValue resource
               def url
                 @properties['url']
               end
 
               ##
-              # @return [String] A string value that indicates which word this field value is a synonym of.
+              # @return [String] The word for which the field value is a synonym of
               def synonym_of
                 @properties['synonym_of']
               end
@@ -374,7 +381,7 @@ module Twilio
 
               ##
               # Deletes the FieldValueInstance
-              # @return [Boolean] true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete
               end

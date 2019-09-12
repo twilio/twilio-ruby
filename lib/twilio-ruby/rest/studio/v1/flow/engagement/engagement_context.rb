@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -16,8 +16,8 @@ module Twilio
               ##
               # Initialize the EngagementContextList
               # @param [Version] version Version that contains the resource
-              # @param [String] flow_sid The unique SID identifier of the Flow.
-              # @param [String] engagement_sid The unique SID identifier of the Engagement.
+              # @param [String] flow_sid The SID of the Flow.
+              # @param [String] engagement_sid The SID of the Engagement.
               # @return [EngagementContextList] EngagementContextList
               def initialize(version, flow_sid: nil, engagement_sid: nil)
                 super(version)
@@ -71,8 +71,8 @@ module Twilio
               ##
               # Initialize the EngagementContextContext
               # @param [Version] version Version that contains the resource
-              # @param [String] flow_sid The unique SID identifier of the Flow.
-              # @param [String] engagement_sid The unique SID identifier of the Engagement.
+              # @param [String] flow_sid The SID of the Flow.
+              # @param [String] engagement_sid The SID of the Engagement.
               # @return [EngagementContextContext] EngagementContextContext
               def initialize(version, flow_sid, engagement_sid)
                 super(version)
@@ -122,8 +122,8 @@ module Twilio
               # Initialize the EngagementContextInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] flow_sid The unique SID identifier of the Flow.
-              # @param [String] engagement_sid The unique SID identifier of the Engagement.
+              # @param [String] flow_sid The SID of the Flow.
+              # @param [String] engagement_sid The SID of the Engagement.
               # @return [EngagementContextInstance] EngagementContextInstance
               def initialize(version, payload, flow_sid: nil, engagement_sid: nil)
                 super(version)
@@ -158,31 +158,31 @@ module Twilio
               end
 
               ##
-              # @return [String] Account Sid.
+              # @return [String] Account SID
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [Hash] Flow state.
+              # @return [Hash] Flow state
               def context
                 @properties['context']
               end
 
               ##
-              # @return [String] Engagement Sid.
+              # @return [String] Engagement SID
               def engagement_sid
                 @properties['engagement_sid']
               end
 
               ##
-              # @return [String] Flow Sid.
+              # @return [String] Flow SID
               def flow_sid
                 @properties['flow_sid']
               end
 
               ##
-              # @return [String] The URL of this resource.
+              # @return [String] The URL of the resource
               def url
                 @properties['url']
               end

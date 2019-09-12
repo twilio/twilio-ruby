@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -17,7 +17,8 @@ module Twilio
             ##
             # Initialize the ShortCodeList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the Service.
+            # @param [String] service_sid The SID of the ShortCode resource's parent
+            #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
             # @return [ShortCodeList] ShortCodeList
             def initialize(version, service_sid: nil)
               super(version)
@@ -30,8 +31,9 @@ module Twilio
             ##
             # Retrieve a single page of ShortCodeInstance records from the API.
             # Request is executed immediately.
-            # @param [String] sid A 34 character string that uniquely identifies this Short
-            #   Code.
+            # @param [String] sid The SID of a Twilio
+            #   [ShortCode](https://www.twilio.com/docs/sms/api/short-code) resource that
+            #   represents the short code you would like to assign to your Proxy Service.
             # @return [ShortCodeInstance] Newly created ShortCodeInstance
             def create(sid: nil)
               data = Twilio::Values.of({'Sid' => sid, })
@@ -171,9 +173,11 @@ module Twilio
             ##
             # Initialize the ShortCodeContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the Service.
-            # @param [String] sid A 34 character string that uniquely identifies this Short
-            #   Code.
+            # @param [String] service_sid The SID of the parent
+            #   [Service](https://www.twilio.com/docs/proxy/api/service) to fetch the resource
+            #   from.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   ShortCode resource to fetch.
             # @return [ShortCodeContext] ShortCodeContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -185,7 +189,7 @@ module Twilio
 
             ##
             # Deletes the ShortCodeInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               @version.delete('delete', @uri)
             end
@@ -207,8 +211,10 @@ module Twilio
 
             ##
             # Update the ShortCodeInstance
-            # @param [Boolean] is_reserved Whether or not the short code should be excluded
-            #   from being assigned to a participant using proxy pool logic
+            # @param [Boolean] is_reserved Whether the short code should be reserved and not
+            #   be assigned to a participant using proxy pool logic. See [Reserved Phone
+            #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
+            #   information.
             # @return [ShortCodeInstance] Updated ShortCodeInstance
             def update(is_reserved: :unset)
               data = Twilio::Values.of({'IsReserved' => is_reserved, })
@@ -244,9 +250,10 @@ module Twilio
             # Initialize the ShortCodeInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The unique SID identifier of the Service.
-            # @param [String] sid A 34 character string that uniquely identifies this Short
-            #   Code.
+            # @param [String] service_sid The SID of the ShortCode resource's parent
+            #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   ShortCode resource to fetch.
             # @return [ShortCodeInstance] ShortCodeInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -282,68 +289,68 @@ module Twilio
             end
 
             ##
-            # @return [String] A string that uniquely identifies this Short Code.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] Account Sid.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] Service Sid.
+            # @return [String] The SID of the resource's parent Service
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [Time] The date this Short Code was added to the service
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this Short Code was updated
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] Shortcode.
+            # @return [String] The short code's number
             def short_code
               @properties['short_code']
             end
 
             ##
-            # @return [String] ISO Country Code,
+            # @return [String] The ISO Country Code
             def iso_country
               @properties['iso_country']
             end
 
             ##
-            # @return [String] A list of capabilities.
+            # @return [String] The capabilities of the short code
             def capabilities
               @properties['capabilities']
             end
 
             ##
-            # @return [String] The URL of this resource.
+            # @return [String] The absolute URL of the ShortCode resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [Boolean] Reserve for manual assignment to participants only.
+            # @return [Boolean] Whether the short code should be reserved for manual assignment to participants only
             def is_reserved
               @properties['is_reserved']
             end
 
             ##
             # Deletes the ShortCodeInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
@@ -357,8 +364,10 @@ module Twilio
 
             ##
             # Update the ShortCodeInstance
-            # @param [Boolean] is_reserved Whether or not the short code should be excluded
-            #   from being assigned to a participant using proxy pool logic
+            # @param [Boolean] is_reserved Whether the short code should be reserved and not
+            #   be assigned to a participant using proxy pool logic. See [Reserved Phone
+            #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
+            #   information.
             # @return [ShortCodeInstance] Updated ShortCodeInstance
             def update(is_reserved: :unset)
               context.update(is_reserved: is_reserved, )

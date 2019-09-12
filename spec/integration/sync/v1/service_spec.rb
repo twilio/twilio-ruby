@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -43,8 +43,11 @@ describe 'Service' do
           "unique_name": "unique_name",
           "url": "https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "webhook_url": "http://www.example.com",
+          "webhooks_from_rest_enabled": false,
           "reachability_webhooks_enabled": false,
-          "acl_enabled": false
+          "acl_enabled": false,
+          "reachability_debouncing_enabled": false,
+          "reachability_debouncing_window": 5000
       }
       ]
     ))
@@ -114,8 +117,11 @@ describe 'Service' do
           "unique_name": "unique_name",
           "url": "https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "webhook_url": "http://www.example.com",
+          "webhooks_from_rest_enabled": false,
           "reachability_webhooks_enabled": false,
-          "acl_enabled": true
+          "acl_enabled": true,
+          "reachability_debouncing_enabled": false,
+          "reachability_debouncing_window": 5000
       }
       ]
     ))
@@ -194,8 +200,11 @@ describe 'Service' do
                   "unique_name": "unique_name",
                   "url": "https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "webhook_url": "http://www.example.com",
+                  "webhooks_from_rest_enabled": false,
                   "reachability_webhooks_enabled": false,
-                  "acl_enabled": false
+                  "acl_enabled": false,
+                  "reachability_debouncing_enabled": false,
+                  "reachability_debouncing_window": 5000
               }
           ]
       }
@@ -241,8 +250,11 @@ describe 'Service' do
           "unique_name": "unique_name",
           "url": "https://sync.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "webhook_url": "http://www.example.com",
+          "webhooks_from_rest_enabled": false,
           "reachability_webhooks_enabled": false,
-          "acl_enabled": true
+          "acl_enabled": true,
+          "reachability_debouncing_enabled": false,
+          "reachability_debouncing_window": 5000
       }
       ]
     ))

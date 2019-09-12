@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -114,9 +114,15 @@ module Twilio
             # @param [String] friendly_name String representing user-friendly name for the
             #   TaskChannel
             # @param [String] unique_name String representing unique name for the TaskChannel
+            # @param [Boolean] channel_optimized_routing A boolean that if true; mean that the
+            #   channel will prioritize workers that have been idle
             # @return [TaskChannelInstance] Newly created TaskChannelInstance
-            def create(friendly_name: nil, unique_name: nil)
-              data = Twilio::Values.of({'FriendlyName' => friendly_name, 'UniqueName' => unique_name, })
+            def create(friendly_name: nil, unique_name: nil, channel_optimized_routing: :unset)
+              data = Twilio::Values.of({
+                  'FriendlyName' => friendly_name,
+                  'UniqueName' => unique_name,
+                  'ChannelOptimizedRouting' => channel_optimized_routing,
+              })
 
               payload = @version.create(
                   'POST',
@@ -167,8 +173,9 @@ module Twilio
             ##
             # Initialize the TaskChannelContext
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The workspace_sid
-            # @param [String] sid The sid
+            # @param [String] workspace_sid The unique ID of the Workspace that this
+            #   TaskChannel belongs to.
+            # @param [String] sid The unique ID for this TaskChannel.
             # @return [TaskChannelContext] TaskChannelContext
             def initialize(version, workspace_sid, sid)
               super(version)
@@ -201,9 +208,14 @@ module Twilio
             ##
             # Update the TaskChannelInstance
             # @param [String] friendly_name Toggle the FriendlyName for the TaskChannel
+            # @param [Boolean] channel_optimized_routing A boolean that if true; mean that the
+            #   channel will prioritize workers that have been idle
             # @return [TaskChannelInstance] Updated TaskChannelInstance
-            def update(friendly_name: :unset)
-              data = Twilio::Values.of({'FriendlyName' => friendly_name, })
+            def update(friendly_name: :unset, channel_optimized_routing: :unset)
+              data = Twilio::Values.of({
+                  'FriendlyName' => friendly_name,
+                  'ChannelOptimizedRouting' => channel_optimized_routing,
+              })
 
               payload = @version.update(
                   'POST',
@@ -221,7 +233,7 @@ module Twilio
 
             ##
             # Deletes the TaskChannelInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               @version.delete('delete', @uri)
             end
@@ -248,7 +260,7 @@ module Twilio
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] workspace_sid The unique ID of the Workspace that this
             #   TaskChannel belongs to.
-            # @param [String] sid The sid
+            # @param [String] sid The unique ID for this TaskChannel.
             # @return [TaskChannelInstance] TaskChannelInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
               super(version)
@@ -262,6 +274,7 @@ module Twilio
                   'sid' => payload['sid'],
                   'unique_name' => payload['unique_name'],
                   'workspace_sid' => payload['workspace_sid'],
+                  'channel_optimized_routing' => payload['channel_optimized_routing'],
                   'url' => payload['url'],
                   'links' => payload['links'],
               }
@@ -325,6 +338,12 @@ module Twilio
             end
 
             ##
+            # @return [Boolean] If true then prioritize longest idle workers
+            def channel_optimized_routing
+              @properties['channel_optimized_routing']
+            end
+
+            ##
             # @return [String] The url
             def url
               @properties['url']
@@ -346,14 +365,16 @@ module Twilio
             ##
             # Update the TaskChannelInstance
             # @param [String] friendly_name Toggle the FriendlyName for the TaskChannel
+            # @param [Boolean] channel_optimized_routing A boolean that if true; mean that the
+            #   channel will prioritize workers that have been idle
             # @return [TaskChannelInstance] Updated TaskChannelInstance
-            def update(friendly_name: :unset)
-              context.update(friendly_name: friendly_name, )
+            def update(friendly_name: :unset, channel_optimized_routing: :unset)
+              context.update(friendly_name: friendly_name, channel_optimized_routing: channel_optimized_routing, )
             end
 
             ##
             # Deletes the TaskChannelInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end

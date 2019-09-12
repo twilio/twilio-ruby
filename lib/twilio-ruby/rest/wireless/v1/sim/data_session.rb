@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -15,9 +15,9 @@ module Twilio
             ##
             # Initialize the DataSessionList
             # @param [Version] version Version that contains the resource
-            # @param [String] sim_sid The unique id of the
-            #   [SIM](https://www.twilio.com/docs/api/wireless/rest-api/sim) resource that this
-            #   Data Session is for.
+            # @param [String] sim_sid The SID of the [Sim
+            #   resource](https://www.twilio.com/docs/wireless/api/sim) that the Data Session is
+            #   for.
             # @return [DataSessionList] DataSessionList
             def initialize(version, sim_sid: nil)
               super(version)
@@ -31,8 +31,10 @@ module Twilio
             # Lists DataSessionInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [Time] end_ The end
-            # @param [Time] start The start
+            # @param [Time] end_ The date that the record ended, given as GMT in [ISO
+            #   8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
+            # @param [Time] start The date that the Data Session started, given as GMT in [ISO
+            #   8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -48,8 +50,10 @@ module Twilio
             # Streams DataSessionInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Time] end_ The end
-            # @param [Time] start The start
+            # @param [Time] end_ The date that the record ended, given as GMT in [ISO
+            #   8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
+            # @param [Time] start The date that the Data Session started, given as GMT in [ISO
+            #   8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -82,8 +86,10 @@ module Twilio
             ##
             # Retrieve a single page of DataSessionInstance records from the API.
             # Request is executed immediately.
-            # @param [Time] end_ The end
-            # @param [Time] start The start
+            # @param [Time] end_ The date that the record ended, given as GMT in [ISO
+            #   8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
+            # @param [Time] start The date that the Data Session started, given as GMT in [ISO
+            #   8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -158,9 +164,9 @@ module Twilio
             # Initialize the DataSessionInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] sim_sid The unique id of the
-            #   [SIM](https://www.twilio.com/docs/api/wireless/rest-api/sim) resource that this
-            #   Data Session is for.
+            # @param [String] sim_sid The SID of the [Sim
+            #   resource](https://www.twilio.com/docs/wireless/api/sim) that the Data Session is
+            #   for.
             # @return [DataSessionInstance] DataSessionInstance
             def initialize(version, payload, sim_sid: nil)
               super(version)
@@ -182,97 +188,104 @@ module Twilio
                   'last_updated' => Twilio.deserialize_iso8601_datetime(payload['last_updated']),
                   'start' => Twilio.deserialize_iso8601_datetime(payload['start']),
                   'end_' => Twilio.deserialize_iso8601_datetime(payload['end']),
+                  'imei' => payload['imei'],
               }
             end
 
             ##
-            # @return [String] The unique id of the Data Session resource that this Data Record is for.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The unique id of the SIM resource that this Data Session is for.
+            # @return [String] The SID of the Sim resource that the Data Session is for
             def sim_sid
               @properties['sim_sid']
             end
 
             ##
-            # @return [String] The unique id of the Account that the SIM belongs to.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The generation of wireless technology that the device was attached to the cellular tower using.
+            # @return [String] The generation of wireless technology that the device was using
             def radio_link
               @properties['radio_link']
             end
 
             ##
-            # @return [String] The 'mobile country code' is the unique id of the home country where the Data Session took place.
+            # @return [String] The 'mobile country code' is the unique ID of the home country where the Data Session took place
             def operator_mcc
               @properties['operator_mcc']
             end
 
             ##
-            # @return [String] The 'mobile network code' is the unique id specific to the mobile operator network where the Data Session took place.
+            # @return [String] The 'mobile network code' is the unique ID specific to the mobile operator network where the Data Session took place
             def operator_mnc
               @properties['operator_mnc']
             end
 
             ##
-            # @return [String] The three letter country code representing where the device's Data Session took place.
+            # @return [String] The three letter country code representing where the device's Data Session took place
             def operator_country
               @properties['operator_country']
             end
 
             ##
-            # @return [String] The friendly name of the mobile operator network that the SIM-connected device is attached to.
+            # @return [String] The friendly name of the mobile operator network that the SIM-connected device is attached to
             def operator_name
               @properties['operator_name']
             end
 
             ##
-            # @return [String] The unique id of the cellular tower that the device was attached to at the moment when the Data Session was last updated.
+            # @return [String] The unique ID of the cellular tower that the device was attached to at the moment when the Data Session was last updated
             def cell_id
               @properties['cell_id']
             end
 
             ##
-            # @return [Hash] An object representing the estimated location where the device's Data Session took place.
+            # @return [Hash] An object with the estimated location where the device's Data Session took place
             def cell_location_estimate
               @properties['cell_location_estimate']
             end
 
             ##
-            # @return [String] The number of packets uploaded by the device between the start time and when the Data Session was last updated.
+            # @return [String] The number of packets uploaded by the device between the start time and when the Data Session was last updated
             def packets_uploaded
               @properties['packets_uploaded']
             end
 
             ##
-            # @return [String] The number of packets downloaded by the device between the start time and when the Data Session was last updated.
+            # @return [String] The number of packets downloaded by the device between the start time and when the Data Session was last updated
             def packets_downloaded
               @properties['packets_downloaded']
             end
 
             ##
-            # @return [Time] The date that this resource was last updated, given as GMT in ISO 8601 format.
+            # @return [Time] The date that the resource was last updated, given as GMT in ISO 8601 format
             def last_updated
               @properties['last_updated']
             end
 
             ##
-            # @return [Time] The date that this Data Session started, given as GMT in ISO 8601 format.
+            # @return [Time] The date that the Data Session started, given as GMT in ISO 8601 format
             def start
               @properties['start']
             end
 
             ##
-            # @return [Time] The date that this record ended, given as GMT in ISO 8601 format.
+            # @return [Time] The date that the record ended, given as GMT in ISO 8601 format
             def end_
               @properties['end_']
+            end
+
+            ##
+            # @return [String] The unique ID of the device using the SIM to connect
+            def imei
+              @properties['imei']
             end
 
             ##

@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -19,7 +19,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid A 34 character string that uniquely identifies this Flow.
+        # @param [String] sid The SID of the Flow resource to fetch.
         # @return [Twilio::REST::Studio::V1::FlowContext] if sid was passed.
         # @return [Twilio::REST::Studio::V1::FlowList]
         def flows(sid=:unset)

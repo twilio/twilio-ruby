@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -26,8 +26,10 @@ module Twilio
           ##
           # Retrieve a single page of RoomInstance records from the API.
           # Request is executed immediately.
-          # @param [Boolean] enable_turn Use Twilio Network Traversal for TURN service.
-          #   Defaults to true. Only applicable to Rooms with type `peer-to-peer`.
+          # @param [Boolean] enable_turn Deprecated.  Enable [Twilio's Network Traversal
+          #   TURN service](https://www.twilio.com/stun-turn). TURN service is used when
+          #   direct peer-to-peer media connections cannot be established due to firewall
+          #   restrictions. This setting only applies to Rooms with type `peer-to-peer`.
           # @param [room.RoomType] type Type of room, either `peer-to-peer`, `group-small`
           #   or `group`. Will be `group` by default.
           # @param [String] unique_name Name of the Room.  This is unique for `in-progress`
@@ -45,7 +47,7 @@ module Twilio
           # @param [room.VideoCodec] video_codecs An array of video codecs supported when
           #   publishing a Track in the Room.  `VP8` and `H264` codecs are supported.  ***This
           #   feature is not available in `peer-to-peer` rooms***
-          # @param [String] media_region Region for the media server in Group Rooms. 
+          # @param [String] media_region Region for the media server in Group Rooms.
           #   Default region is `us1`.  See the list of [available Media
           #   Regions.](https://www.twilio.com/docs/api/video/ip-address-whitelisting#group-rooms-media-servers)***This feature is not available in `peer-to-peer` rooms.***
           # @return [RoomInstance] Newly created RoomInstance
@@ -75,7 +77,8 @@ module Twilio
           # Lists RoomInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [room.RoomStatus] status Only show Rooms with the given status.
+          # @param [room.RoomStatus] status Only show Rooms with the given status:
+          #   `in-progress` (default), or `completed`
           # @param [String] unique_name Only show Rooms with the provided Name.
           # @param [Time] date_created_after Only show Rooms that started on or after this
           #   date, given as `YYYY-MM-DD`.
@@ -103,7 +106,8 @@ module Twilio
           # Streams RoomInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [room.RoomStatus] status Only show Rooms with the given status.
+          # @param [room.RoomStatus] status Only show Rooms with the given status:
+          #   `in-progress` (default), or `completed`
           # @param [String] unique_name Only show Rooms with the provided Name.
           # @param [Time] date_created_after Only show Rooms that started on or after this
           #   date, given as `YYYY-MM-DD`.
@@ -147,7 +151,8 @@ module Twilio
           ##
           # Retrieve a single page of RoomInstance records from the API.
           # Request is executed immediately.
-          # @param [room.RoomStatus] status Only show Rooms with the given status.
+          # @param [room.RoomStatus] status Only show Rooms with the given status:
+          #   `in-progress` (default), or `completed`
           # @param [String] unique_name Only show Rooms with the provided Name.
           # @param [Time] date_created_after Only show Rooms that started on or after this
           #   date, given as `YYYY-MM-DD`.

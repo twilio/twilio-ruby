@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -112,6 +112,43 @@ describe 'Configuration' do
           "public_attributes": {
               "public": "test"
           },
+          "plugin_service_enabled": true,
+          "plugin_service_attributes": {
+              "agent-logger": "^3.10.5",
+              "typewriter": "^7.0.1"
+          },
+          "integrations": [
+              {
+                  "name": "twilio",
+                  "type": "http",
+                  "active": true,
+                  "config": "{\\"callback\\":\\"twilio.com/cb\\",\\"allowed_methods\\":[\\"GET\\",\\"POST\\"]}",
+                  "logo": "logo1",
+                  "author": "somebody1"
+              },
+              {
+                  "name": "twilio-stage",
+                  "type": "http",
+                  "active": false,
+                  "config": "{\\"callback\\":\\"twilio.com/cb\\",\\"allowed_methods\\":[\\"GET\\",\\"POST\\"]}"
+              }
+          ],
+          "outbound_call_flows": {
+              "default": {
+                  "caller_id": "+12345",
+                  "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "location": "EE",
+                  "workflow_sid": "WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+          },
+          "features_enabled": [
+              "some_feature",
+              "another_feature"
+          ],
+          "serverless_service_sids": [
+              "ZSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "ZSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
+          ],
           "url": "https://flex-api.twilio.com/v1/Configuration"
       }
       ]
@@ -225,6 +262,43 @@ describe 'Configuration' do
           "public_attributes": {
               "public": "test"
           },
+          "plugin_service_enabled": true,
+          "plugin_service_attributes": {
+              "agent-logger": "^3.10.5",
+              "typewriter": "^7.0.1"
+          },
+          "integrations": [
+              {
+                  "name": "twilio",
+                  "type": "http",
+                  "active": true,
+                  "config": "{\\"callback\\":\\"twilio.com/cb\\",\\"allowed_methods\\":[\\"GET\\",\\"POST\\"]}",
+                  "logo": "logo1",
+                  "author": "somebody1"
+              },
+              {
+                  "name": "twilio-stage",
+                  "type": "http",
+                  "active": false,
+                  "config": "{\\"callback\\":\\"twilio.com/cb\\",\\"allowed_methods\\":[\\"GET\\",\\"POST\\"]}"
+              }
+          ],
+          "outbound_call_flows": {
+              "default": {
+                  "caller_id": "+12345",
+                  "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "location": "EE",
+                  "workflow_sid": "WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+          },
+          "features_enabled": [
+              "some_feature",
+              "another_feature"
+          ],
+          "serverless_service_sids": [
+              "ZSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "ZSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
+          ],
           "url": "https://flex-api.twilio.com/v1/Configuration"
       }
       ]
@@ -338,6 +412,43 @@ describe 'Configuration' do
           "public_attributes": {
               "public": "test"
           },
+          "plugin_service_enabled": false,
+          "plugin_service_attributes": {
+              "agent-logger": "^3.10.5",
+              "typewriter": "^7.0.1"
+          },
+          "integrations": [
+              {
+                  "name": "twilio",
+                  "type": "http",
+                  "active": true,
+                  "config": "{\\"callback\\":\\"twilio.com/cb\\",\\"allowed_methods\\":[\\"GET\\",\\"POST\\"]}",
+                  "logo": "logo1",
+                  "author": "somebody1"
+              },
+              {
+                  "name": "twilio-stage",
+                  "type": "http",
+                  "active": false,
+                  "config": "{\\"callback\\":\\"twilio.com/cb\\",\\"allowed_methods\\":[\\"GET\\",\\"POST\\"]}"
+              }
+          ],
+          "outbound_call_flows": {
+              "default": {
+                  "caller_id": "+12345",
+                  "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "location": "EE",
+                  "workflow_sid": "WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+          },
+          "features_enabled": [
+              "some_feature",
+              "another_feature"
+          ],
+          "serverless_service_sids": [
+              "ZSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "ZSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
+          ],
           "url": "https://flex-api.twilio.com/v1/Configuration"
       }
       ]

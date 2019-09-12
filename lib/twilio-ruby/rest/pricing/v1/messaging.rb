@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -27,7 +27,9 @@ module Twilio
 
           ##
           # Access the countries
-          # @param [String] iso_country The iso_country
+          # @param [String] iso_country The [ISO country
+          #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the pricing
+          #   information to fetch.
           # @return [CountryList]
           # @return [CountryContext] if iso_country was passed.
           def countries(iso_country=:unset)

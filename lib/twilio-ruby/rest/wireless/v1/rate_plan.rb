@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -108,35 +108,41 @@ module Twilio
           ##
           # Retrieve a single page of RatePlanInstance records from the API.
           # Request is executed immediately.
-          # @param [String] unique_name A user-provided string that uniquely identifies this
-          #   resource as an alternative to the Sid.
-          # @param [String] friendly_name A user-provided string that identifies this
-          #   resource. Non-unique.
-          # @param [Boolean] data_enabled Defines whether SIMs are capable of using
-          #   GPRS/3G/LTE data connectivity.
-          # @param [String] data_limit Network-enforced limit specifying the total Megabytes
-          #   of data usage (download and upload combined) allowed during one month on the
-          #   home network. Metering begins on the day of activation and ends on the same day
-          #   of the following month.  Max value is 2TB.
-          # @param [String] data_metering The model by which to meter data usage, in
-          #   accordance with the two available [data metering
-          #   models](https://www.twilio.com/docs/api/wireless/rest-api/rate-plan#explanation-of-pooled-vs-individual). Valid options are `pooled` and `individual`.
-          # @param [Boolean] messaging_enabled Defines whether SIMs are capable of making
-          #   and sending and receiving SMS messages via either
-          #   [Commands](https://www.twilio.com/docs/wireless/api/commands) or Programmable
-          #   SMS APIs.
-          # @param [Boolean] voice_enabled Defines whether SIMs are capable of making and
-          #   receiving voice calls.
-          # @param [Boolean] national_roaming_enabled Defines whether SIMs can roam onto
-          #   other networks in the SIM's home country. See ['national'
-          #   roaming](https://www.twilio.com/docs/api/wireless/rest-api/rate-plan#national-roaming).
-          # @param [String] international_roaming The international_roaming
-          # @param [String] national_roaming_data_limit Network-enforced limit specifying
-          #   the total Megabytes of national roaming data usage (download and upload
-          #   combined) allowed during one month.  Max value is 2TB. If unspecified, the
-          #   default value is the lesser of `DataLimit` and 1000MB.
-          # @param [String] international_roaming_data_limit The
-          #   international_roaming_data_limit
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. It can be used in place of the resource's `sid` in the
+          #   URL to address the resource.
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the resource. It does not have to be unique.
+          # @param [Boolean] data_enabled Whether SIMs can use GPRS/3G/4G/LTE data
+          #   connectivity.
+          # @param [String] data_limit The total data usage (download and upload combined)
+          #   in Megabytes that the Network allows during one month on the home network
+          #   (T-Mobile USA). The metering period begins the day of activation and ends on the
+          #   same day in the following month. Can be up to 2TB and the default value is
+          #   `1000`.
+          # @param [String] data_metering The model used to meter data usage. Can be: `payg`
+          #   and `quota-1`, `quota-10`, and `quota-50`. Learn more about the available [data
+          #   metering
+          #   models](https://www.twilio.com/docs/wireless/api/rate-plan#payg-vs-quota-data-plans).
+          # @param [Boolean] messaging_enabled Whether SIMs can make, send, and receive SMS
+          #   using [Commands](https://www.twilio.com/docs/wireless/api/commands).
+          # @param [Boolean] voice_enabled Whether SIMs can make and receive voice calls.
+          # @param [Boolean] national_roaming_enabled Whether SIMs can roam on networks
+          #   other than the home network (T-Mobile USA) in the United States. See [national
+          #   roaming](https://www.twilio.com/docs/wireless/api/rate-plan#national-roaming).
+          # @param [String] international_roaming The list of services that SIMs capable of
+          #   using GPRS/3G/4G/LTE data connectivity can use outside of the United States. Can
+          #   be: `data`, `voice`, and `messaging`.
+          # @param [String] national_roaming_data_limit The total data usage (download and
+          #   upload combined) in Megabytes that the Network allows during one month on
+          #   non-home networks in the United States. The metering period begins the day of
+          #   activation and ends on the same day in the following month. Can be up to 2TB.
+          #   See [national
+          #   roaming](https://www.twilio.com/docs/wireless/api/rate-plan#national-roaming)
+          #   for more info.
+          # @param [String] international_roaming_data_limit The total data usage (download
+          #   and upload combined) in Megabytes that the Network allows during one month when
+          #   roaming outside the United States. Can be up to 2TB.
           # @return [RatePlanInstance] Newly created RatePlanInstance
           def create(unique_name: :unset, friendly_name: :unset, data_enabled: :unset, data_limit: :unset, data_metering: :unset, messaging_enabled: :unset, voice_enabled: :unset, national_roaming_enabled: :unset, international_roaming: :unset, national_roaming_data_limit: :unset, international_roaming_data_limit: :unset)
             data = Twilio::Values.of({
@@ -202,7 +208,7 @@ module Twilio
           ##
           # Initialize the RatePlanContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid The SID of the RatePlan resource to fetch.
           # @return [RatePlanContext] RatePlanContext
           def initialize(version, sid)
             super(version)
@@ -229,10 +235,11 @@ module Twilio
 
           ##
           # Update the RatePlanInstance
-          # @param [String] unique_name A user-provided string that uniquely identifies this
-          #   resource as an alternative to the Sid.
-          # @param [String] friendly_name A user-provided string that identifies this
-          #   resource. Non-unique.
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. It can be used in place of the resource's `sid` in the
+          #   URL to address the resource.
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the resource. It does not have to be unique.
           # @return [RatePlanInstance] Updated RatePlanInstance
           def update(unique_name: :unset, friendly_name: :unset)
             data = Twilio::Values.of({'UniqueName' => unique_name, 'FriendlyName' => friendly_name, })
@@ -248,7 +255,7 @@ module Twilio
 
           ##
           # Deletes the RatePlanInstance
-          # @return [Boolean] true if delete succeeds, true otherwise
+          # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             @version.delete('delete', @uri)
           end
@@ -273,7 +280,7 @@ module Twilio
           # Initialize the RatePlanInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid The SID of the RatePlan resource to fetch.
           # @return [RatePlanInstance] RatePlanInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -315,97 +322,97 @@ module Twilio
           end
 
           ##
-          # @return [String] A 34 character string that uniquely identifies this resource.
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] A user-provided string that uniquely identifies this resource as an alternative to the sid.
+          # @return [String] An application-defined string that uniquely identifies the resource
           def unique_name
             @properties['unique_name']
           end
 
           ##
-          # @return [String] The unique id of the Account that this Rate Plan belongs to.
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] A user-provided string that identifies this resource.
+          # @return [String] The string that you assigned to describe the resource
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [Boolean] Defines whether SIMs are capable of using GPRS/3G/4G/LTE data connectivity.
+          # @return [Boolean] Whether SIMs can use GPRS/3G/4G/LTE data connectivity
           def data_enabled
             @properties['data_enabled']
           end
 
           ##
-          # @return [String] The model by which to meter data usage, in accordance with the two available data metering models.
+          # @return [String] The model used to meter data usage
           def data_metering
             @properties['data_metering']
           end
 
           ##
-          # @return [String] Network-enforced limit specifying the total Megabytes of data usage allowed during one month on the home network.
+          # @return [String] The total data usage in Megabytes that the Network allows during one month on the home network
           def data_limit
             @properties['data_limit']
           end
 
           ##
-          # @return [Boolean] Defines whether SIMs are capable of making and sending and receiving SMS via Commands.
+          # @return [Boolean] Whether SIMs can make, send, and receive SMS using Commands
           def messaging_enabled
             @properties['messaging_enabled']
           end
 
           ##
-          # @return [Boolean] Defines whether SIMs are capable of making and receiving voice calls.
+          # @return [Boolean] Whether SIMs can make and receive voice calls
           def voice_enabled
             @properties['voice_enabled']
           end
 
           ##
-          # @return [Boolean] Defines whether SIMs can roam onto other networks in the SIM's home country.
+          # @return [Boolean] Whether SIMs can roam on networks other than the home network in the United States
           def national_roaming_enabled
             @properties['national_roaming_enabled']
           end
 
           ##
-          # @return [String] Network-enforced limit specifying the total Megabytes of national roaming data usage allowed during one month.
+          # @return [String] The total data usage in Megabytes that the Network allows during one month on non-home networks in the United States
           def national_roaming_data_limit
             @properties['national_roaming_data_limit']
           end
 
           ##
-          # @return [String] The international_roaming
+          # @return [String] The services that SIMs capable of using GPRS/3G/4G/LTE data connectivity can use outside of the United States
           def international_roaming
             @properties['international_roaming']
           end
 
           ##
-          # @return [String] The international_roaming_data_limit
+          # @return [String] The total data usage (download and upload combined) in Megabytes that the Network allows during one month when roaming outside the United States
           def international_roaming_data_limit
             @properties['international_roaming_data_limit']
           end
 
           ##
-          # @return [Time] The date that this resource was created, given as GMT in ISO 8601 format.
+          # @return [Time] The date when the resource was created, given as GMT in ISO 8601 format
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date that this resource was last updated, given as GMT in ISO 8601 format.
+          # @return [Time] The date when the resource was last updated, given as GMT in ISO 8601 format
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The URL for this resource.
+          # @return [String] The absolute URL of the resource
           def url
             @properties['url']
           end
@@ -419,10 +426,11 @@ module Twilio
 
           ##
           # Update the RatePlanInstance
-          # @param [String] unique_name A user-provided string that uniquely identifies this
-          #   resource as an alternative to the Sid.
-          # @param [String] friendly_name A user-provided string that identifies this
-          #   resource. Non-unique.
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. It can be used in place of the resource's `sid` in the
+          #   URL to address the resource.
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the resource. It does not have to be unique.
           # @return [RatePlanInstance] Updated RatePlanInstance
           def update(unique_name: :unset, friendly_name: :unset)
             context.update(unique_name: unique_name, friendly_name: friendly_name, )
@@ -430,7 +438,7 @@ module Twilio
 
           ##
           # Deletes the RatePlanInstance
-          # @return [Boolean] true if delete succeeds, true otherwise
+          # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete
           end

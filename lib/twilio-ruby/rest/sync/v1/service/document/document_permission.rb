@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -18,10 +18,11 @@ module Twilio
               ##
               # Initialize the DocumentPermissionList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique SID identifier of the Sync Service
-              #   Instance.
-              # @param [String] document_sid The unique SID identifier of the Sync Document to
-              #   which the Permission applies.
+              # @param [String] service_sid The SID of the [Sync
+              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              #   associated with.
+              # @param [String] document_sid The SID of the Sync Document to which the Document
+              #   Permission applies.
               # @return [DocumentPermissionList] DocumentPermissionList
               def initialize(version, service_sid: nil, document_sid: nil)
                 super(version)
@@ -162,12 +163,14 @@ module Twilio
               ##
               # Initialize the DocumentPermissionContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid Identifier of the Sync Service Instance. Either a
-              #   SID or 'default'.
-              # @param [String] document_sid Identifier of the Sync Document. Either a SID or a
-              #   unique name.
-              # @param [String] identity Arbitrary string identifier representing a user
-              #   associated with an FPA token, assigned by the developer.
+              # @param [String] service_sid The SID of the [Sync
+              #   Service](https://www.twilio.com/docs/sync/api/service) with the Document
+              #   Permission resource to fetch.
+              # @param [String] document_sid The SID of the Sync Document with the Document
+              #   Permission resource to fetch. Can be the Document resource's `sid` or its
+              #   `unique_name`.
+              # @param [String] identity The application-defined string that uniquely identifies
+              #   the User's Document Permission resource to fetch.
               # @return [DocumentPermissionContext] DocumentPermissionContext
               def initialize(version, service_sid, document_sid, identity)
                 super(version)
@@ -200,19 +203,16 @@ module Twilio
 
               ##
               # Deletes the DocumentPermissionInstance
-              # @return [Boolean] true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 @version.delete('delete', @uri)
               end
 
               ##
               # Update the DocumentPermissionInstance
-              # @param [Boolean] read Boolean flag specifying whether the identity can read the
-              #   Sync Document.
-              # @param [Boolean] write Boolean flag specifying whether the identity can update
-              #   the Sync Document.
-              # @param [Boolean] manage Boolean flag specifying whether the identity can delete
-              #   the Sync Document.
+              # @param [Boolean] read Whether the identity can read the Sync Document.
+              # @param [Boolean] write Whether the identity can update the Sync Document.
+              # @param [Boolean] manage Whether the identity can delete the Sync Document.
               # @return [DocumentPermissionInstance] Updated DocumentPermissionInstance
               def update(read: nil, write: nil, manage: nil)
                 data = Twilio::Values.of({'Read' => read, 'Write' => write, 'Manage' => manage, })
@@ -254,12 +254,13 @@ module Twilio
               # Initialize the DocumentPermissionInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The unique SID identifier of the Sync Service
-              #   Instance.
-              # @param [String] document_sid The unique SID identifier of the Sync Document to
-              #   which the Permission applies.
-              # @param [String] identity Arbitrary string identifier representing a user
-              #   associated with an FPA token, assigned by the developer.
+              # @param [String] service_sid The SID of the [Sync
+              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              #   associated with.
+              # @param [String] document_sid The SID of the Sync Document to which the Document
+              #   Permission applies.
+              # @param [String] identity The application-defined string that uniquely identifies
+              #   the User's Document Permission resource to fetch.
               # @return [DocumentPermissionInstance] DocumentPermissionInstance
               def initialize(version, payload, service_sid: nil, document_sid: nil, identity: nil)
                 super(version)
@@ -302,49 +303,49 @@ module Twilio
               end
 
               ##
-              # @return [String] Twilio Account SID.
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] Sync Service Instance SID.
+              # @return [String] The SID of the Sync Service that the resource is associated with
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] Sync Document SID.
+              # @return [String] The Sync Document SID
               def document_sid
                 @properties['document_sid']
               end
 
               ##
-              # @return [String] Identity of the user to whom the Sync Document Permission applies.
+              # @return [String] The identity of the user to whom the Sync Document Permission applies
               def identity
                 @properties['identity']
               end
 
               ##
-              # @return [Boolean] Read access.
+              # @return [Boolean] Read access
               def read
                 @properties['read']
               end
 
               ##
-              # @return [Boolean] Write access.
+              # @return [Boolean] Write access
               def write
                 @properties['write']
               end
 
               ##
-              # @return [Boolean] Manage access.
+              # @return [Boolean] Manage access
               def manage
                 @properties['manage']
               end
 
               ##
-              # @return [String] URL of this Sync Document Permission.
+              # @return [String] The absolute URL of the Sync Document Permission resource
               def url
                 @properties['url']
               end
@@ -358,19 +359,16 @@ module Twilio
 
               ##
               # Deletes the DocumentPermissionInstance
-              # @return [Boolean] true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete
               end
 
               ##
               # Update the DocumentPermissionInstance
-              # @param [Boolean] read Boolean flag specifying whether the identity can read the
-              #   Sync Document.
-              # @param [Boolean] write Boolean flag specifying whether the identity can update
-              #   the Sync Document.
-              # @param [Boolean] manage Boolean flag specifying whether the identity can delete
-              #   the Sync Document.
+              # @param [Boolean] read Whether the identity can read the Sync Document.
+              # @param [Boolean] write Whether the identity can update the Sync Document.
+              # @param [Boolean] manage Whether the identity can delete the Sync Document.
               # @return [DocumentPermissionInstance] Updated DocumentPermissionInstance
               def update(read: nil, write: nil, manage: nil)
                 context.update(read: read, write: write, manage: manage, )

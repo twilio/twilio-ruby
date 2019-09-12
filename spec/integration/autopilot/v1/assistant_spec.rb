@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -35,6 +35,8 @@ describe 'Assistant' do
           "friendly_name": "so so friendly",
           "latest_model_build_sid": null,
           "log_queries": true,
+          "development_stage": "in-development",
+          "needs_model_build": false,
           "sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "unique_name": "so-so-unique",
           "links": {
@@ -44,7 +46,8 @@ describe 'Assistant' do
               "queries": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries",
               "style_sheet": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/StyleSheet",
               "defaults": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Defaults",
-              "dialogues": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Dialogues"
+              "dialogues": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Dialogues",
+              "webhooks": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Webhooks"
           },
           "url": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "callback_url": "https://example.com/callback_url",
@@ -110,6 +113,8 @@ describe 'Assistant' do
                   "friendly_name": "so so friendly",
                   "latest_model_build_sid": null,
                   "log_queries": true,
+                  "development_stage": "in-development",
+                  "needs_model_build": false,
                   "sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "unique_name": "so-so-unique",
                   "links": {
@@ -119,7 +124,8 @@ describe 'Assistant' do
                       "queries": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries",
                       "style_sheet": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/StyleSheet",
                       "defaults": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Defaults",
-                      "dialogues": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Dialogues"
+                      "dialogues": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Dialogues",
+                      "webhooks": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Webhooks"
                   },
                   "url": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "callback_url": "https://example.com/callback_url",
@@ -170,6 +176,8 @@ describe 'Assistant' do
           "friendly_name": "so so friendly",
           "latest_model_build_sid": null,
           "log_queries": true,
+          "development_stage": "in-development",
+          "needs_model_build": false,
           "sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "unique_name": "so-so-unique",
           "links": {
@@ -179,7 +187,8 @@ describe 'Assistant' do
               "queries": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries",
               "style_sheet": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/StyleSheet",
               "defaults": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Defaults",
-              "dialogues": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Dialogues"
+              "dialogues": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Dialogues",
+              "webhooks": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Webhooks"
           },
           "url": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "callback_url": "https://example.com/callback_url",
@@ -219,6 +228,8 @@ describe 'Assistant' do
           "friendly_name": "so so friendly",
           "latest_model_build_sid": null,
           "log_queries": true,
+          "development_stage": "in-development",
+          "needs_model_build": false,
           "sid": "UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "unique_name": "so-so-unique",
           "links": {
@@ -228,7 +239,8 @@ describe 'Assistant' do
               "queries": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queries",
               "style_sheet": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/StyleSheet",
               "defaults": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Defaults",
-              "dialogues": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Dialogues"
+              "dialogues": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Dialogues",
+              "webhooks": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Webhooks"
           },
           "url": "https://autopilot.twilio.com/v1/Assistants/UAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "callback_url": "https://example.com/callback_url",

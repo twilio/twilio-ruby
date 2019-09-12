@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -198,8 +198,10 @@ module Twilio
             ##
             # Initialize the ParticipantContext
             # @param [Version] version Version that contains the resource
-            # @param [String] room_sid The room_sid
-            # @param [String] sid The sid
+            # @param [String] room_sid A system-generated 34-character string that uniquely
+            #   identifies a Room.
+            # @param [String] sid A system-generated 34-character string that uniquely
+            #   identifies this Participant.
             # @return [ParticipantContext] ParticipantContext
             def initialize(version, room_sid, sid)
               super(version)
@@ -211,6 +213,7 @@ module Twilio
               # Dependents
               @published_tracks = nil
               @subscribed_tracks = nil
+              @subscribe_rules = nil
             end
 
             ##
@@ -269,17 +272,39 @@ module Twilio
             ##
             # Access the subscribed_tracks
             # @return [SubscribedTrackList]
-            # @return [SubscribedTrackContext]
-            def subscribed_tracks
+            # @return [SubscribedTrackContext] if sid was passed.
+            def subscribed_tracks(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return SubscribedTrackContext.new(@version, @solution[:room_sid], @solution[:sid], sid, )
+              end
+
               unless @subscribed_tracks
                 @subscribed_tracks = SubscribedTrackList.new(
                     @version,
                     room_sid: @solution[:room_sid],
-                    subscriber_sid: @solution[:sid],
+                    participant_sid: @solution[:sid],
                 )
               end
 
               @subscribed_tracks
+            end
+
+            ##
+            # Access the subscribe_rules
+            # @return [SubscribeRulesList]
+            # @return [SubscribeRulesContext]
+            def subscribe_rules
+              unless @subscribe_rules
+                @subscribe_rules = SubscribeRulesList.new(
+                    @version,
+                    room_sid: @solution[:room_sid],
+                    participant_sid: @solution[:sid],
+                )
+              end
+
+              @subscribe_rules
             end
 
             ##
@@ -304,7 +329,8 @@ module Twilio
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] room_sid A system-generated 34-character string that uniquely
             #   identifies. this room
-            # @param [String] sid The sid
+            # @param [String] sid A system-generated 34-character string that uniquely
+            #   identifies this Participant.
             # @return [ParticipantInstance] ParticipantInstance
             def initialize(version, payload, room_sid: nil, sid: nil)
               super(version)
@@ -440,6 +466,13 @@ module Twilio
             # @return [subscribed_tracks] subscribed_tracks
             def subscribed_tracks
               context.subscribed_tracks
+            end
+
+            ##
+            # Access the subscribe_rules
+            # @return [subscribe_rules] subscribe_rules
+            def subscribe_rules
+              context.subscribe_rules
             end
 
             ##

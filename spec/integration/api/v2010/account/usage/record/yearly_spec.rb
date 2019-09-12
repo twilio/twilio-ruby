@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -47,6 +47,7 @@ describe 'Yearly' do
               {
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "api_version": "2010-04-01",
+                  "as_of": "2019-06-24T22:32:49+00:00",
                   "category": "sms-inbound-shortcode",
                   "count": "0",
                   "count_unit": "messages",

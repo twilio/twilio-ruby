@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -80,9 +80,10 @@ module Twilio
 
           ##
           # Fetch a CallSummaryInstance
+          # @param [call_summary.ProcessingState] processing_state The processing_state
           # @return [CallSummaryInstance] Fetched CallSummaryInstance
-          def fetch
-            params = Twilio::Values.of({})
+          def fetch(processing_state: :unset)
+            params = Twilio::Values.of({'ProcessingState' => processing_state, })
 
             payload = @version.fetch(
                 'GET',
@@ -127,8 +128,6 @@ module Twilio
                 'call_type' => payload['call_type'],
                 'call_state' => payload['call_state'],
                 'processing_state' => payload['processing_state'],
-                'direction' => payload['direction'],
-                'disconnected_by' => payload['disconnected_by'],
                 'start_time' => Twilio.deserialize_iso8601_datetime(payload['start_time']),
                 'end_time' => Twilio.deserialize_iso8601_datetime(payload['end_time']),
                 'duration' => payload['duration'] == nil ? payload['duration'] : payload['duration'].to_i,
@@ -137,9 +136,12 @@ module Twilio
                 'to' => payload['to'],
                 'carrier_edge' => payload['carrier_edge'],
                 'client_edge' => payload['client_edge'],
+                'sdk_edge' => payload['sdk_edge'],
                 'sip_edge' => payload['sip_edge'],
                 'tags' => payload['tags'],
                 'url' => payload['url'],
+                'attributes' => payload['attributes'],
+                'properties' => payload['properties'],
             }
 
             # Context
@@ -186,18 +188,6 @@ module Twilio
           # @return [call_summary.ProcessingState] The processing_state
           def processing_state
             @properties['processing_state']
-          end
-
-          ##
-          # @return [call_summary.Direction] The direction
-          def direction
-            @properties['direction']
-          end
-
-          ##
-          # @return [call_summary.DisconnectedBy] The disconnected_by
-          def disconnected_by
-            @properties['disconnected_by']
           end
 
           ##
@@ -249,6 +239,12 @@ module Twilio
           end
 
           ##
+          # @return [Hash] The sdk_edge
+          def sdk_edge
+            @properties['sdk_edge']
+          end
+
+          ##
           # @return [Hash] The sip_edge
           def sip_edge
             @properties['sip_edge']
@@ -267,10 +263,23 @@ module Twilio
           end
 
           ##
+          # @return [Hash] The attributes
+          def attributes
+            @properties['attributes']
+          end
+
+          ##
+          # @return [Hash] The properties
+          def properties
+            @properties['properties']
+          end
+
+          ##
           # Fetch a CallSummaryInstance
+          # @param [call_summary.ProcessingState] processing_state The processing_state
           # @return [CallSummaryInstance] Fetched CallSummaryInstance
-          def fetch
-            context.fetch
+          def fetch(processing_state: :unset)
+            context.fetch(processing_state: processing_state, )
           end
 
           ##

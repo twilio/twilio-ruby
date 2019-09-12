@@ -1,10 +1,13 @@
 # twilio-ruby
 
-[![Build Status](http://img.shields.io/travis/twilio/twilio-ruby.svg)][travis]
-[![Gem Version](http://img.shields.io/gem/v/twilio-ruby.svg)](https://rubygems.org/gems/twilio-ruby)
-[![Code Quality](http://img.shields.io/codeclimate/github/twilio/twilio-ruby.svg)][codeclimate]
+[![Build Status](https://img.shields.io/travis/twilio/twilio-ruby.svg)][travis]
+[![Gem Version](https://img.shields.io/gem/v/twilio-ruby.svg)](https://rubygems.org/gems/twilio-ruby)
 
-A module for using the Twilio REST API and generating valid [TwiML](http://www.twilio.com/docs/api/twiml/ "TwiML - Twilio Markup Language"). [Click here to read the full documentation.][documentation]
+## Documentation
+
+The documentation for the Twilio API can be found [here][apidocs].
+
+The Ruby library documentation can be found [here][libdocs] and individual releases [here][refdocs].
 
 ## Recent Update
 
@@ -21,19 +24,18 @@ Developer Preview status. Such products are explicitly documented as
 Beta/Developer Preview both in the Twilio docs and console, as well as through
 in-line code documentation here in the library.
 
-
 ## Installation
 
 To install using [Bundler][bundler] grab the latest stable version:
 
 ```ruby
-gem 'twilio-ruby', '~> 5.21.1'
+gem 'twilio-ruby', '~> 5.26.0'
 ```
 
 To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
 
 ```bash
-gem install twilio-ruby -v 5.21.1
+gem install twilio-ruby -v 5.26.0
 ```
 
 To build and install the development branch yourself from the latest source:
@@ -45,16 +47,18 @@ make install
 ```
 
 ### Migration from 4.x
+
 [Upgrade Guide][upgrade]
 
-## Documentation
-[Here][documentation]
-
 ## Docker Image
+
 The `Dockerfile` present in this repository and its respective `twilio/twilio-ruby` Docker image are currently used by Twilio for testing purposes only.
 
-## Feedback
-During the Release Candidate period of this library, please leave all feedback and issues in the [Github Issues][issues] for `twilio-ruby`.
+## Getting help
+
+If you need help installing or using the library, please check the [Twilio Support Help Center](https://support.twilio.com) first, and [file a support ticket](https://twilio.com/help/contact) if you don't find an answer to your question.
+
+If you've instead found a bug in the library or would like new features added, go ahead and open issues or pull requests against this repo!
 
 ## Getting Started
 
@@ -106,6 +110,7 @@ message_sid = 'SMxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 ```
 
 ### Customizing your HTTP Client
+
 twilio-ruby uses [Faraday][faraday] to make HTTP requests. You can tell
 Twilio::REST::Client to use any of the Faraday adapters like so:
 
@@ -143,7 +148,9 @@ capability.add_scope(incoming_scope)
 There is a slightly more detailed document in the [Capability][capability]
 section of the wiki.
 
-## Getting Started With TwiML
+### Generating TwiML
+
+To control phone calls, your application needs to output [TwiML][twiml].
 
 You can construct a TwiML response like this:
 
@@ -183,15 +190,17 @@ implementations:
 - Ruby 2.3.0
 - Ruby 2.2.0
 
+[apidocs]: https://www.twilio.com/docs/api
+[twiml]: https://www.twilio.com/docs/api/twiml
+[libdocs]: https://www.twilio.com/docs/libraries/ruby
+[refdocs]: https://twilio.github.io/twilio-ruby
 [capability]: https://github.com/twilio/twilio-ruby/wiki/JWT-Tokens
 [examples]: https://github.com/twilio/twilio-ruby/blob/master/examples
-[documentation]: http://twilio.github.io/twilio-ruby
 [wiki]: https://github.com/twilio/twilio-ruby/wiki
-[bundler]: http://bundler.io
-[rubygems]: http://rubygems.org
+[bundler]: https://bundler.io
+[rubygems]: https://rubygems.org
 [gem]: https://rubygems.org/gems/twilio
-[travis]: http://travis-ci.org/twilio/twilio-ruby
-[codeclimate]: https://codeclimate.com/github/twilio/twilio-ruby
+[travis]: https://travis-ci.org/twilio/twilio-ruby
 [upgrade]: https://github.com/twilio/twilio-ruby/wiki/Ruby-Version-5.x-Upgrade-Guide
 [issues]: https://github.com/twilio/twilio-ruby/issues
 [faraday]: https://github.com/lostisland/faraday

@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -17,8 +17,9 @@ module Twilio
             ##
             # Initialize the SyncStreamList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the Service Instance
-            #   that hosts this Message Stream.
+            # @param [String] service_sid The SID of the [Sync
+            #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+            #   associated with.
             # @return [SyncStreamList] SyncStreamList
             def initialize(version, service_sid: nil)
               super(version)
@@ -31,10 +32,14 @@ module Twilio
             ##
             # Retrieve a single page of SyncStreamInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name The unique and addressable name of this Stream.
-            #   Optional, up to 320 characters long.
-            # @param [String] ttl Time-to-live of this Stream in seconds, defaults to no
-            #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] unique_name An application-defined string that uniquely
+            #   identifies the resource. This value must be unique within its Service and it can
+            #   be up to 320 characters long. The `unique_name` value can be used as an
+            #   alternative to the `sid` in the URL path to address the resource.
+            # @param [String] ttl How long, in seconds, before the Stream expires and is
+            #   deleted (time-to-live). Can be an integer from 0 to 31,536,000 (1 year). The
+            #   default value is `0`, which means the Stream does not expire. The Stream might
+            #   not be deleted immediately after it expires.
             # @return [SyncStreamInstance] Newly created SyncStreamInstance
             def create(unique_name: :unset, ttl: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, 'Ttl' => ttl, })
@@ -174,9 +179,10 @@ module Twilio
             ##
             # Initialize the SyncStreamContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid Identifier of the Service Instance. Either a SID or
-            #   'default'.
-            # @param [String] sid Identifier of the Stream. Either a SID or a unique name.
+            # @param [String] service_sid The SID of the [Sync
+            #   Service](https://www.twilio.com/docs/sync/api/service) with the Sync Stream
+            #   resource to fetch.
+            # @param [String] sid The SID of the Stream resource to fetch.
             # @return [SyncStreamContext] SyncStreamContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -211,15 +217,17 @@ module Twilio
 
             ##
             # Deletes the SyncStreamInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               @version.delete('delete', @uri)
             end
 
             ##
             # Update the SyncStreamInstance
-            # @param [String] ttl New time-to-live of this Stream in seconds. In the range [1,
-            #   31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] ttl How long, in seconds, before the Stream expires and is
+            #   deleted (time-to-live). Can be an integer from 0 to 31,536,000 (1 year). The
+            #   default value is `0`, which means the Stream does not expire. The Sync Map might
+            #   not be deleted immediately after it expires.
             # @return [SyncStreamInstance] Updated SyncStreamInstance
             def update(ttl: :unset)
               data = Twilio::Values.of({'Ttl' => ttl, })
@@ -276,9 +284,10 @@ module Twilio
             # Initialize the SyncStreamInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The unique SID identifier of the Service Instance
-            #   that hosts this Message Stream.
-            # @param [String] sid Identifier of the Stream. Either a SID or a unique name.
+            # @param [String] service_sid The SID of the [Sync
+            #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+            #   associated with.
+            # @param [String] sid The SID of the Stream resource to fetch.
             # @return [SyncStreamInstance] SyncStreamInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -314,61 +323,61 @@ module Twilio
             end
 
             ##
-            # @return [String] Stream SID.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] Stream unique name.
+            # @return [String] An application-defined string that uniquely identifies the resource
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [String] Twilio Account SID.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] Service Instance SID.
+            # @return [String] The SID of the Sync Service that the resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] URL of this Stream.
+            # @return [String] The absolute URL of the Message Stream resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] Nested resource URLs.
+            # @return [String] The URLs of the Stream's nested resources
             def links
               @properties['links']
             end
 
             ##
-            # @return [Time] The date this Stream expires.
+            # @return [Time] The ISO 8601 date and time in GMT when the Message Stream expires
             def date_expires
               @properties['date_expires']
             end
 
             ##
-            # @return [Time] The date this Stream was created.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this Stream was updated.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] Identity of the Stream creator.
+            # @return [String] The Identity of the Stream's creator
             def created_by
               @properties['created_by']
             end
@@ -382,15 +391,17 @@ module Twilio
 
             ##
             # Deletes the SyncStreamInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
             # Update the SyncStreamInstance
-            # @param [String] ttl New time-to-live of this Stream in seconds. In the range [1,
-            #   31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] ttl How long, in seconds, before the Stream expires and is
+            #   deleted (time-to-live). Can be an integer from 0 to 31,536,000 (1 year). The
+            #   default value is `0`, which means the Stream does not expire. The Sync Map might
+            #   not be deleted immediately after it expires.
             # @return [SyncStreamInstance] Updated SyncStreamInstance
             def update(ttl: :unset)
               context.update(ttl: ttl, )

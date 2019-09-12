@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -27,12 +27,14 @@ module Twilio
           # Lists CommandInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] sim Only return Commands to or from this SIM.
-          # @param [command.Status] status Only return Commands with this status value.
+          # @param [String] sim The `sid` or `unique_name` of the [Sim
+          #   resources](https://www.twilio.com/docs/wireless/api/sim) to read.
+          # @param [command.Status] status The status of the resources to read. Can be:
+          #   `queued`, `sent`, `delivered`, `received`, or `failed`.
           # @param [command.Direction] direction Only return Commands with this direction
           #   value.
           # @param [command.Transport] transport Only return Commands with this transport
-          #   value.
+          #   value. Can be: `sms` or `ip`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -55,12 +57,14 @@ module Twilio
           # Streams CommandInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] sim Only return Commands to or from this SIM.
-          # @param [command.Status] status Only return Commands with this status value.
+          # @param [String] sim The `sid` or `unique_name` of the [Sim
+          #   resources](https://www.twilio.com/docs/wireless/api/sim) to read.
+          # @param [command.Status] status The status of the resources to read. Can be:
+          #   `queued`, `sent`, `delivered`, `received`, or `failed`.
           # @param [command.Direction] direction Only return Commands with this direction
           #   value.
           # @param [command.Transport] transport Only return Commands with this transport
-          #   value.
+          #   value. Can be: `sms` or `ip`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -99,12 +103,14 @@ module Twilio
           ##
           # Retrieve a single page of CommandInstance records from the API.
           # Request is executed immediately.
-          # @param [String] sim Only return Commands to or from this SIM.
-          # @param [command.Status] status Only return Commands with this status value.
+          # @param [String] sim The `sid` or `unique_name` of the [Sim
+          #   resources](https://www.twilio.com/docs/wireless/api/sim) to read.
+          # @param [command.Status] status The status of the resources to read. Can be:
+          #   `queued`, `sent`, `delivered`, `received`, or `failed`.
           # @param [command.Direction] direction Only return Commands with this direction
           #   value.
           # @param [command.Transport] transport Only return Commands with this transport
-          #   value.
+          #   value. Can be: `sms` or `ip`.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -143,31 +149,29 @@ module Twilio
           ##
           # Retrieve a single page of CommandInstance records from the API.
           # Request is executed immediately.
-          # @param [String] command The message body of the Command (in text mode) or a
-          #   Base64 encoded byte string in binary mode.
-          # @param [String] sim The Sid or UniqueName of the
-          #   [SIM](https://www.twilio.com/docs/api/wireless/rest-api/sim) to send the Command
-          #   to.
-          # @param [String] callback_method The HTTP method Twilio will use when making a
-          #   request to the callback URL (valid options are GET or POST). Defaults to POST.
-          # @param [String] callback_url Twilio will make a request to this URL when the
-          #   Command has finished sending (delivered or failed).
-          # @param [command.CommandMode] command_mode A string representing which mode to
-          #   send the SMS message using. May be `text` or `binary`. If omitted, the default
-          #   SMS mode is `text`.
-          # @param [String] include_sid When sending a Command to a SIM in text mode, Twilio
-          #   can automatically include the Sid of the Command in the message body, which
-          #   could be used to ensure that the device does not process the same Command more
-          #   than once. The options for inclusion are `none`, `start` and `end`. The default
-          #   behavior is `none`. When using `start` or `end`, the CommandSid will be
-          #   prepended or appended to the message body, with a space character separating the
-          #   CommandSid and the message body. The length of the CommandSid contributes toward
-          #   the 160 character limit, i.e. the SMS body must be 128 characters or less before
-          #   the Command Sid is included.
-          # @param [Boolean] delivery_receipt_requested A boolean representing whether to
-          #   request delivery receipt from the recipient. For Commands that request delivery
-          #   receipt, the Command state transitions to 'delivered' once the server has
-          #   received a delivery receipt from the device. Defaults to true.
+          # @param [String] command The message body of the Command. Can be plain text in
+          #   text mode or a Base64 encoded byte string in binary mode.
+          # @param [String] sim The `sid` or `unique_name` of the
+          #   [SIM](https://www.twilio.com/docs/wireless/api/sim) to send the Command to.
+          # @param [String] callback_method The HTTP method we use to call `callback_url`.
+          #   Can be: `POST` or `GET`, and the default is `POST`.
+          # @param [String] callback_url The URL we call using the `callback_url` when the
+          #   Command has finished sending, whether the command was delivered or it failed.
+          # @param [command.CommandMode] command_mode The mode to use when sending the SMS
+          #   message. Can be: `text` or `binary`. The default SMS mode is `text`.
+          # @param [String] include_sid Whether to include the SID of the command in the
+          #   message body. Can be: `none`, `start`, or `end`, and the default behavior is
+          #   `none`. When sending a Command to a SIM in text mode, we can automatically
+          #   include the SID of the Command in the message body, which could be used to
+          #   ensure that the device does not process the same Command more than once.  A
+          #   value of `start` will prepend the message with the Command SID, and `end` will
+          #   append it to the end, separating the Command SID from the message body with a
+          #   space. The length of the Command SID is included in the 160 character limit so
+          #   the SMS body must be 128 characters or less before the Command SID is included.
+          # @param [Boolean] delivery_receipt_requested Whether to request delivery receipt
+          #   from the recipient. For Commands that request delivery receipt, the Command
+          #   state transitions to 'delivered' once the server has received a delivery receipt
+          #   from the device. The default value is `true`.
           # @return [CommandInstance] Newly created CommandInstance
           def create(command: nil, sim: :unset, callback_method: :unset, callback_url: :unset, command_mode: :unset, include_sid: :unset, delivery_receipt_requested: :unset)
             data = Twilio::Values.of({
@@ -229,8 +233,7 @@ module Twilio
           ##
           # Initialize the CommandContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid A 34 character string that uniquely identifies this
-          #   resource.
+          # @param [String] sid The SID of the Command resource to fetch.
           # @return [CommandContext] CommandContext
           def initialize(version, sid)
             super(version)
@@ -257,7 +260,7 @@ module Twilio
 
           ##
           # Deletes the CommandInstance
-          # @return [Boolean] true if delete succeeds, true otherwise
+          # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             @version.delete('delete', @uri)
           end
@@ -282,8 +285,7 @@ module Twilio
           # Initialize the CommandInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid A 34 character string that uniquely identifies this
-          #   resource.
+          # @param [String] sid The SID of the Command resource to fetch.
           # @return [CommandInstance] CommandInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -321,73 +323,73 @@ module Twilio
           end
 
           ##
-          # @return [String] A 34 character string that uniquely identifies this resource.
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The unique id of the Account that this Command belongs to.
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The unique ID of the SIM that this Command was sent to or from.
+          # @return [String] The SID of the Sim resource that the Command was sent to or from
           def sim_sid
             @properties['sim_sid']
           end
 
           ##
-          # @return [String] The message being sent to or from the SIM.
+          # @return [String] The message being sent to or from the SIM
           def command
             @properties['command']
           end
 
           ##
-          # @return [command.CommandMode] A string representing which mode the SMS was sent or received using.
+          # @return [command.CommandMode] The mode used to send the SMS message
           def command_mode
             @properties['command_mode']
           end
 
           ##
-          # @return [command.Transport] The transport
+          # @return [command.Transport] The type of transport used
           def transport
             @properties['transport']
           end
 
           ##
-          # @return [Boolean] The delivery_receipt_requested
+          # @return [Boolean] Whether to request a delivery receipt
           def delivery_receipt_requested
             @properties['delivery_receipt_requested']
           end
 
           ##
-          # @return [command.Status] A string representing the status of the Command.
+          # @return [command.Status] The status of the Command
           def status
             @properties['status']
           end
 
           ##
-          # @return [command.Direction] The direction of the Command.
+          # @return [command.Direction] The direction of the Command
           def direction
             @properties['direction']
           end
 
           ##
-          # @return [Time] The date that this resource was created, given as GMT in ISO 8601 format.
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date that this resource was last updated, given as GMT in ISO 8601 format.
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated format
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The URL for this resource.
+          # @return [String] The absolute URL of the resource
           def url
             @properties['url']
           end
@@ -401,7 +403,7 @@ module Twilio
 
           ##
           # Deletes the CommandInstance
-          # @return [Boolean] true if delete succeeds, true otherwise
+          # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete
           end

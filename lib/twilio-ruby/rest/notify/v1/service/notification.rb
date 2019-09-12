@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -17,7 +17,9 @@ module Twilio
             ##
             # Initialize the NotificationList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/notify/api/service-resource) the resource
+            #   is associated with.
             # @return [NotificationList] NotificationList
             def initialize(version, service_sid: nil)
               super(version)
@@ -30,98 +32,91 @@ module Twilio
             ##
             # Retrieve a single page of NotificationInstance records from the API.
             # Request is executed immediately.
-            # @param [String] body (optional for all except Alexa) Indicates the notification
-            #   body text. Translates to `data.twi_body` for FCM and GCM, `aps.alert.body` for
-            #   APNS, `Body` for SMS and Facebook Messenger and `request.message.data` for
-            #   Alexa.  For SMS either this, `body`, or the `media_url` attribute of the `Sms`
-            #   parameter is required.  For Facebook Messenger either this parameter or the body
-            #   attribute in the `FacebookMessenger` parameter is required.
-            # @param [notification.Priority] priority Two priorities defined: `low` and `high`
-            #   (default). `low` optimizes the client app's battery consumption, and
-            #   notifications may be delivered with unspecified delay. This is the same as
-            #   Normal priority for FCM and GCM or priority 5 for APNS. `high` sends the
-            #   notification immediately, and can wake up a sleeping device. This is the same as
-            #   High priority for FCM and GCM or priority 10 for APNS.  This feature is not
-            #   supported by SMS and Facebook Messenger and will be ignored for deliveries via
-            #   those channels.
-            # @param [String] ttl This parameter specifies how long (in seconds) the
-            #   notification is valid. Delivery should be attempted if the device is offline.
-            #   The maximum time to live supported is 4 weeks. The value zero means that the
-            #   notification delivery is attempted immediately once but not stored for future
-            #   delivery. The default value is 4 weeks.  This feature is not supported by SMS
-            #   and Facebook Messenger and will be ignored for deliveries via those channels.
-            # @param [String] title (optional for all except Alexa) Indicates the notification
-            #   title. This field is not visible on iOS phones and tablets but it is on Apple
-            #   Watch and Android devices. Translates to `data.twi_title` for FCM and GCM,
-            #   `aps.alert.title` for APNS and `displayInfo.content[0].title`,
-            #   `displayInfo.content[].toast.primaryText` of `request.message` for Alexa. It is
-            #   not supported for SMS and Facebook Messenger and will be omitted from deliveries
-            #   via those channels.
-            # @param [String] sound Indicates a sound to be played. Translates to
-            #   `data.twi_sound` for FCM and GCM and `aps.sound` for APNS.  This parameter is
-            #   not supported by SMS and Facebook Messenger and is omitted from deliveries via
-            #   those channels.
-            # @param [String] action Specifies the actions to be displayed for the
-            #   notification. Translates to `data.twi_action` for GCM and `aps.category` for
-            #   APNS.  This parameter is not supported by SMS and Facebook Messenger and is
-            #   omitted from deliveries via those channels.
-            # @param [Hash] data This parameter specifies the custom key-value pairs of the
-            #   notification's payload. Translates to `data` dictionary in FCM and GCM payload.
-            #   FCM and GCM [reserves certain
+            # @param [String] body The notification text. For FCM and GCM, translates to
+            #   `data.twi_body`. For APNS, translates to `aps.alert.body`. For SMS, translates
+            #   to `body`. SMS requires either this `body` value, or `media_urls` attribute
+            #   defined in the `sms` parameter of the notification.
+            # @param [notification.Priority] priority The priority of the notification. Can
+            #   be: `low` or `high` and the default is `high`. A value of `low` optimizes the
+            #   client app's battery consumption; however, notifications may be delivered with
+            #   unspecified delay. For FCM and GCM, `low` priority is the same as `Normal`
+            #   priority. For APNS `low` priority is the same as `5`. A value of `high` sends
+            #   the notification immediately, and can wake up a sleeping device. For FCM and
+            #   GCM, `high` is the same as `High` priority. For APNS, `high` is a priority `10`.
+            #   SMS does not support this property.
+            # @param [String] ttl How long, in seconds, the notification is valid. Can be an
+            #   integer between 0 and 2,419,200, which is 4 weeks, the default and the maximum
+            #   supported time to live (TTL). Delivery should be attempted if the device is
+            #   offline until the TTL elapses. Zero means that the notification delivery is
+            #   attempted immediately, only once, and is not stored for future delivery. SMS
+            #   does not support this property.
+            # @param [String] title The notification title. For FCM and GCM, this translates
+            #   to the `data.twi_title` value. For APNS, this translates to the
+            #   `aps.alert.title` value. SMS does not support this property. This field is not
+            #   visible on iOS phones and tablets but appears on Apple Watch and Android
+            #   devices.
+            # @param [String] sound The name of the sound to be played for the notification.
+            #   For FCM and GCM, this Translates to `data.twi_sound`.  For APNS, this translates
+            #   to `aps.sound`.  SMS does not support this property.
+            # @param [String] action The actions to display for the notification. For APNS,
+            #   translates to the `aps.category` value. For GCM, translates to the
+            #   `data.twi_action` value. For SMS, this parameter is not supported and is omitted
+            #   from deliveries to those channels.
+            # @param [Hash] data The custom key-value pairs of the notification's payload. For
+            #   FCM and GCM, this value translates to `data` in the FCM and GCM payloads. FCM
+            #   and GCM [reserve certain
             #   keys](https://firebase.google.com/docs/cloud-messaging/http-server-ref) that
-            #   cannot be used for those channels. For APNS, attributes of `Data` will be
-            #   inserted into the APNS payload as custom properties outside of the `aps`
-            #   dictionary. For Alexa they are added to `request.message.data`. For all
-            #   channels, the `twi_` prefix is reserved for Twilio for future use. Requests
-            #   including custom data with keys starting with `twi_` will be rejected as 400 Bad
-            #   request and no delivery will be attempted.  This parameter is not supported by
-            #   SMS and Facebook Messenger and is omitted from deliveries via those channels.
-            # @param [Hash] apn APNS specific payload that overrides corresponding attributes
-            #   in a generic payload for Bindings with the apn BindingType. This value is mapped
-            #   to the Payload item, therefore the `aps` key has to be used to change standard
-            #   attributes. Adds custom key-value pairs to the root of the dictionary. Refer to
+            #   cannot be used in those channels. For APNS, attributes of `data` are inserted
+            #   into the APNS payload as custom properties outside of the `aps` dictionary. In
+            #   all channels, we reserve keys that start with `twi_` for future use. Custom keys
+            #   that start with `twi_` are not allowed and are rejected as 400 Bad request with
+            #   no delivery attempted. For SMS, this parameter is not supported and is omitted
+            #   from deliveries to those channels.
+            # @param [Hash] apn The APNS-specific payload that overrides corresponding
+            #   attributes in the generic payload for APNS Bindings. This property maps to the
+            #   APNS `Payload` item, therefore the `aps` key must be used to change standard
+            #   attributes. Adds custom key-value pairs to the root of the dictionary. See the
             #   [APNS
-            #   documentation](https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CommunicatingwithAPNs.html) for more details. The `twi_` key prefix for custom key-value pairs is reserved for Twilio for future use. Custom data with keys starting with `twi_` is not allowed.
-            # @param [Hash] gcm GCM specific payload that overrides corresponding attributes
-            #   in generic payload for Bindings with gcm BindingType.  This value is mapped to
-            #   the root json dictionary. Refer to [GCM
+            #   documentation](https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CommunicatingwithAPNs.html) for more details. We reserve keys that start with `twi_` for future use. Custom keys that start with `twi_` are not allowed.
+            # @param [Hash] gcm The GCM-specific payload that overrides corresponding
+            #   attributes in the generic payload for GCM Bindings.  This property maps to the
+            #   root JSON dictionary. See the [GCM
             #   documentation](https://developers.google.com/cloud-messaging/http-server-ref)
-            #   for more details.  Target parameters `to`, `registration_ids`, and
-            #   `notification_key` are not allowed. The `twi_` key prefix for custom key-value
-            #   pairs is reserved for Twilio for future use. Custom data with keys starting with
-            #   `twi_` is not allowed. FCM and GCM [reserves certain
-            #   keys](https://firebase.google.com/docs/cloud-messaging/http-server-ref) that
-            #   cannot be used for those channels.
-            # @param [Hash] sms SMS specific payload that overrides corresponding attributes
-            #   in generic payload for Bindings with sms BindingType.  Each attribute in this
-            #   JSON object is mapped to the corresponding form parameter of the Twilio
-            #   [Message](https://www.twilio.com/docs/api/rest/sending-messages) resource.  The
-            #   following parameters of the Message resource are supported in snake case format:
-            #   `body`, `media_urls`, `status_callback`, and `max_price`.  The `status_callback`
-            #   parameter overrides the corresponding parameter in the messaging service if
-            #   configured. The `media_urls` expects a JSON array.
-            # @param [Hash] facebook_messenger Messenger specific payload that overrides
-            #   corresponding attributes in generic payload for Bindings with facebook-messenger
-            #   BindingType.  This value is mapped to the root json dictionary of Facebook's
-            #   [Send API
-            #   request](https://developers.facebook.com/docs/messenger-platform/send-api-reference).  Overriding the `recipient` parameter is not allowed.
-            # @param [Hash] fcm FCM specific payload that overrides corresponding attributes
-            #   in generic payload for Bindings with fcm BindingType.  This value is mapped to
-            #   the root json dictionary. Refer to [FCM
-            #   documentation](https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream) for more details.  Target parameters `to`, `registration_ids`, `condition`, and `notification_key` are not allowed. The `twi_` key prefix for custom key-value pairs is reserved for Twilio for future use. Custom data with keys starting with `twi_` is not allowed. Custom data with keys starting with `twi_` is not allowed. FCM and GCM [reserves certain keys](https://firebase.google.com/docs/cloud-messaging/http-server-ref) that cannot be used for those channels.
-            # @param [String] segment The segment
-            # @param [Hash] alexa The alexa
-            # @param [String] to_binding The destination address in a JSON object (see
-            #   attributes below).  Multiple ToBinding parameters can be included but the total
-            #   size of the request entity should not exceed 1MB. This is typically sufficient
-            #   for 10,000 phone numbers. 
-            # @param [String] identity Delivery will be attempted only to Bindings with an
-            #   Identity in this list. Maximum 20 items allowed in this list.
-            # @param [String] tag Delivery will be attempted only to Bindings that have all of
-            #   the Tags in this list. Maximum 5 items allowed in this list. The implicit tag
-            #   "all" is available to notify all Bindings in a Service instance. Similarly the
-            #   implicit tags "apn", "fcm", "gcm", "sms" and "facebook-messenger" are available
-            #   to notify all Bindings of the given type.
+            #   for more details. Target parameters `to`, `registration_ids`, and
+            #   `notification_key` are not allowed. We reserve keys that start with `twi_` for
+            #   future use. Custom keys that start with `twi_` are not allowed. GCM also
+            #   [reserves certain
+            #   keys](https://firebase.google.com/docs/cloud-messaging/http-server-ref).
+            # @param [Hash] sms The SMS-specific payload that overrides corresponding
+            #   attributes in the generic payload for SMS Bindings.  Each attribute in this
+            #   value maps to the corresponding `form` parameter of the Twilio
+            #   [Message](https://www.twilio.com/docs/sms/send-messages) resource.  These
+            #   parameters of the Message resource are supported in snake case format: `body`,
+            #   `media_urls`, `status_callback`, and `max_price`.  The `status_callback`
+            #   parameter overrides the corresponding parameter in the messaging service, if
+            #   configured. The `media_urls` property expects a JSON array.
+            # @param [Hash] facebook_messenger Deprecated.
+            # @param [Hash] fcm The FCM-specific payload that overrides corresponding
+            #   attributes in the generic payload for FCM Bindings. This property maps to the
+            #   root JSON dictionary. See the [FCM
+            #   documentation](https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream) for more details. Target parameters `to`, `registration_ids`, `condition`, and `notification_key` are not allowed in this parameter. We reserve keys that start with `twi_` for future use. Custom keys that start with `twi_` are not allowed. FCM also [reserves certain keys](https://firebase.google.com/docs/cloud-messaging/http-server-ref), which cannot be used in that channel.
+            # @param [String] segment The Segment resource is deprecated. Use the `tag`
+            #   parameter, instead.
+            # @param [Hash] alexa Deprecated.
+            # @param [String] to_binding The destination address specified as a JSON string.
+            #   Multiple `to_binding` parameters can be included but the total size of the
+            #   request entity should not exceed 1MB. This is typically sufficient for 10,000
+            #   phone numbers.
+            # @param [String] identity The `identity` value that uniquely identifies the new
+            #   resource's [User](https://www.twilio.com/docs/chat/rest/users) within the
+            #   [Service](https://www.twilio.com/docs/notify/api/service-resource). Delivery
+            #   will be attempted only to Bindings with an Identity in this list. No more than
+            #   20 items are allowed in this list.
+            # @param [String] tag A tag that selects the Bindings to notify. Repeat this
+            #   parameter to specify more than one tag, up to a total of 5 tags. The implicit
+            #   tag `all` is available to notify all Bindings in a Service instance. Similarly,
+            #   the implicit tags `apn`, `fcm`, `gcm`, `sms` and `facebook-messenger` are
+            #   available to notify all Bindings in a specific channel.
             # @return [NotificationInstance] Newly created NotificationInstance
             def create(body: :unset, priority: :unset, ttl: :unset, title: :unset, sound: :unset, action: :unset, data: :unset, apn: :unset, gcm: :unset, sms: :unset, facebook_messenger: :unset, fcm: :unset, segment: :unset, alexa: :unset, to_binding: :unset, identity: :unset, tag: :unset)
               data = Twilio::Values.of({
@@ -198,7 +193,9 @@ module Twilio
             # Initialize the NotificationInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The service_sid
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/notify/api/service-resource) the resource
+            #   is associated with.
             # @return [NotificationInstance] NotificationInstance
             def initialize(version, payload, service_sid: nil)
               super(version)
@@ -229,121 +226,121 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The service_sid
+            # @return [String] The SID of the Service that the resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [String] List of Identities.
+            # @return [String] The list of identity values of the Users to notify
             def identities
               @properties['identities']
             end
 
             ##
-            # @return [String] List of Tags
+            # @return [String] The tags that select the Bindings to notify
             def tags
               @properties['tags']
             end
 
             ##
-            # @return [String] The segments
+            # @return [String] The list of Segments to notify
             def segments
               @properties['segments']
             end
 
             ##
-            # @return [notification.Priority] Two priorities defined: low and high.
+            # @return [notification.Priority] The priority of the notification
             def priority
               @properties['priority']
             end
 
             ##
-            # @return [String] This parameter specifies how long the notification is valid.
+            # @return [String] How long, in seconds, the notification is valid
             def ttl
               @properties['ttl']
             end
 
             ##
-            # @return [String] Indicates the notification title.
+            # @return [String] The notification title
             def title
               @properties['title']
             end
 
             ##
-            # @return [String] Indicates the notification body text.
+            # @return [String] The notification body text
             def body
               @properties['body']
             end
 
             ##
-            # @return [String] Indicates a sound to be played.
+            # @return [String] The name of the sound to be played for the notification
             def sound
               @properties['sound']
             end
 
             ##
-            # @return [String] Specifies the actions to be displayed for the notification.
+            # @return [String] The actions to display for the notification
             def action
               @properties['action']
             end
 
             ##
-            # @return [Hash] This parameter specifies the custom key-value pairs of the notification's payload.
+            # @return [Hash] The custom key-value pairs of the notification's payload
             def data
               @properties['data']
             end
 
             ##
-            # @return [Hash] APNS specific payload that overrides corresponding attributes in a generic payload for Bindings with the apn BindingType.
+            # @return [Hash] The APNS-specific payload that overrides corresponding attributes in a generic payload for APNS Bindings
             def apn
               @properties['apn']
             end
 
             ##
-            # @return [Hash] GCM specific payload that overrides corresponding attributes in generic payload for Bindings with gcm BindingType.
+            # @return [Hash] The GCM-specific payload that overrides corresponding attributes in generic payload for GCM Bindings
             def gcm
               @properties['gcm']
             end
 
             ##
-            # @return [Hash] FCM specific payload that overrides corresponding attributes in generic payload for Bindings with fcm BindingType.
+            # @return [Hash] The FCM-specific payload that overrides corresponding attributes in generic payload for FCM Bindings
             def fcm
               @properties['fcm']
             end
 
             ##
-            # @return [Hash] SMS specific payload that overrides corresponding attributes in generic payload for Bindings with sms BindingType.
+            # @return [Hash] The SMS-specific payload that overrides corresponding attributes in generic payload for SMS Bindings
             def sms
               @properties['sms']
             end
 
             ##
-            # @return [Hash] Messenger specific payload that overrides corresponding attributes in generic payload for Bindings with facebook-messenger BindingType.
+            # @return [Hash] Deprecated
             def facebook_messenger
               @properties['facebook_messenger']
             end
 
             ##
-            # @return [Hash] The alexa
+            # @return [Hash] Deprecated
             def alexa
               @properties['alexa']
             end

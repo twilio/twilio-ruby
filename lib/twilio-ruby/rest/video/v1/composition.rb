@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -157,8 +157,8 @@ module Twilio
           #   Composition in terms of regions. See the section [Specifying Video
           #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) below for further information.
           # @param [String] audio_sources An array of audio sources to merge. All the
-          #   specified sources must belong to the same Group Room. It can include: 
-          # 
+          #   specified sources must belong to the same Group Room. It can include:
+          #
           #   * Zero or more `RecordingTrackSid`
           #   * Zero or more `MediaTrackSid`
           #   * Zero or more `ParticipantSid`
@@ -168,8 +168,8 @@ module Twilio
           # @param [String] audio_sources_excluded An array of audio sources to exclude from
           #   the Composition. Any new Composition shall include all audio sources specified
           #   in `AudioSources` except for the ones specified in `AudioSourcesExcluded`. This
-          #   parameter may include: 
-          # 
+          #   parameter may include:
+          #
           #   * Zero or more `RecordingTrackSid`
           #   * Zero or more `MediaTrackSid`
           #   * Zero or more `ParticipantSid`
@@ -178,19 +178,19 @@ module Twilio
           # @param [String] resolution A string representing the number of pixels for rows
           #   (width) and columns (height) of the generated composed video. This string must
           #   have the format `{width}x{height}`. This parameter must comply with the
-          #   following constraints: 
-          # 
+          #   following constraints:
+          #
           #   * `width >= 16 && width <= 1280`
           #   * `height >= 16 && height <= 1280`
           #   * `width * height <= 921,600`
-          # 
-          #   Typical values are: 
-          # 
+          #
+          #   Typical values are:
+          #
           #   * HD = `1280x720`
           #   * PAL = `1024x576`
           #   * VGA = `640x480`
           #   * CIF = `320x240`
-          # 
+          #
           #   Note that the `Resolution` implicitly imposes an aspect ratio to the resulting
           #   composition. When the original video tracks get constrained by this aspect ratio
           #   they are scaled-down to fit. You can find detailed information in the
@@ -307,7 +307,7 @@ module Twilio
 
           ##
           # Deletes the CompositionInstance
-          # @return [Boolean] true if delete succeeds, true otherwise
+          # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             @version.delete('delete', @uri)
           end
@@ -495,7 +495,7 @@ module Twilio
 
           ##
           # Deletes the CompositionInstance
-          # @return [Boolean] true if delete succeeds, true otherwise
+          # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete
           end

@@ -8,8 +8,8 @@ module Twilio
       attr_accessor :adapter
       attr_reader :timeout, :last_response, :last_request
 
-      def initialize(proxy_addr = nil, proxy_port = nil, proxy_user = nil, proxy_pass = nil, ssl_ca_file = nil,
-                     timeout: nil)
+      def initialize(proxy_prot = nil, proxy_addr = nil, proxy_port = nil, proxy_user = nil, proxy_pass = nil,
+                     ssl_ca_file = nil, timeout: nil)
         @proxy_path = "#{proxy_addr}:#{proxy_port}" if proxy_addr && proxy_port
         @proxy_auth = "#{proxy_user}:#{proxy_pass}@" if proxy_pass && proxy_user
         @ssl_ca_file = ssl_ca_file
@@ -24,7 +24,7 @@ module Twilio
           f.adapter @adapter
           f.headers = request.headers
           f.basic_auth(request.auth[0], request.auth[1])
-          f.proxy = "#{@proxy_auth}#{@proxy_path}" if @proxy_path
+          f.proxy = "#{@proxy_prot}://#{@proxy_auth}#{@proxy_path}" if @proxy_prot && @proxy_path
           f.options.open_timeout = request.timeout || @timeout
           f.options.timeout = request.timeout || @timeout
         end

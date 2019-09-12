@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -17,8 +17,9 @@ module Twilio
             ##
             # Initialize the SyncMapList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the Service Instance
-            #   that hosts this Map object.
+            # @param [String] service_sid The SID of the [Sync
+            #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+            #   associated with.
             # @return [SyncMapList] SyncMapList
             def initialize(version, service_sid: nil)
               super(version)
@@ -31,11 +32,15 @@ module Twilio
             ##
             # Retrieve a single page of SyncMapInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name Human-readable name for this map
-            # @param [String] ttl Alias for collection_ttl. If both are provided, this value
-            #   is ignored.
-            # @param [String] collection_ttl Time-to-live of this Map in seconds, defaults to
-            #   no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] unique_name An application-defined string that uniquely
+            #   identifies the resource. It can be used as an alternative to the `sid` in the
+            #   URL path to address the resource.
+            # @param [String] ttl An alias for `collection_ttl`. If both parameters are
+            #   provided, this value is ignored.
+            # @param [String] collection_ttl How long, in seconds, before the Sync Map expires
+            #   (time-to-live) and is deleted. Can be an integer from 0 to 31,536,000 (1 year).
+            #   The default value is `0`, which means the Sync Map does not expire. The Sync Map
+            #   might not be deleted immediately after it expires.
             # @return [SyncMapInstance] Newly created SyncMapInstance
             def create(unique_name: :unset, ttl: :unset, collection_ttl: :unset)
               data = Twilio::Values.of({
@@ -179,8 +184,10 @@ module Twilio
             ##
             # Initialize the SyncMapContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The SID of the [Sync
+            #   Service](https://www.twilio.com/docs/sync/api/service) with the Sync Map
+            #   resource to fetch.
+            # @param [String] sid The SID of the Sync Map resource to fetch.
             # @return [SyncMapContext] SyncMapContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -211,17 +218,19 @@ module Twilio
 
             ##
             # Deletes the SyncMapInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               @version.delete('delete', @uri)
             end
 
             ##
             # Update the SyncMapInstance
-            # @param [String] ttl Alias for collection_ttl. If both are provided, this value
-            #   is ignored.
-            # @param [String] collection_ttl New time-to-live of this Map in seconds. In the
-            #   range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] ttl An alias for `collection_ttl`. If both parameters are
+            #   provided, this value is ignored.
+            # @param [String] collection_ttl How long, in seconds, before the Sync Map expires
+            #   (time-to-live) and is deleted. Can be an integer from 0 to 31,536,000 (1 year).
+            #   The default value is `0`, which means the Sync Map does not expire. The Sync Map
+            #   might not be deleted immediately after it expires.
             # @return [SyncMapInstance] Updated SyncMapInstance
             def update(ttl: :unset, collection_ttl: :unset)
               data = Twilio::Values.of({'Ttl' => ttl, 'CollectionTtl' => collection_ttl, })
@@ -301,9 +310,10 @@ module Twilio
             # Initialize the SyncMapInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The unique SID identifier of the Service Instance
-            #   that hosts this Map object.
-            # @param [String] sid The sid
+            # @param [String] service_sid The SID of the [Sync
+            #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+            #   associated with.
+            # @param [String] sid The SID of the Sync Map resource to fetch.
             # @return [SyncMapInstance] SyncMapInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -340,67 +350,67 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique 34-character SID identifier of the Map.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The unique and addressable name of this Map.
+            # @return [String] An application-defined string that uniquely identifies the resource
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [String] The unique SID identifier of the Twilio Account.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The unique SID identifier of the Service Instance that hosts this Map object.
+            # @return [String] The SID of the Sync Service that the resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] The absolute URL for this Map.
+            # @return [String] The absolute URL of the Sync Map resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] A dictionary of URL links to nested resources of this Map.
+            # @return [String] The URLs of the Sync Map's nested resources
             def links
               @properties['links']
             end
 
             ##
-            # @return [String] Contains the current revision of this Map, represented by a string identifier.
+            # @return [String] The current revision of the Sync Map, represented as a string
             def revision
               @properties['revision']
             end
 
             ##
-            # @return [Time] Contains the date this Map expires and gets deleted automatically.
+            # @return [Time] The ISO 8601 date and time in GMT when the Sync Map expires
             def date_expires
               @properties['date_expires']
             end
 
             ##
-            # @return [Time] The date this Map was created, given in UTC ISO 8601 format.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] Specifies the date this Map was last updated, given in UTC ISO 8601 format.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The identity of the Map creator.
+            # @return [String] The identity of the Sync Map's creator
             def created_by
               @properties['created_by']
             end
@@ -414,17 +424,19 @@ module Twilio
 
             ##
             # Deletes the SyncMapInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
             # Update the SyncMapInstance
-            # @param [String] ttl Alias for collection_ttl. If both are provided, this value
-            #   is ignored.
-            # @param [String] collection_ttl New time-to-live of this Map in seconds. In the
-            #   range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] ttl An alias for `collection_ttl`. If both parameters are
+            #   provided, this value is ignored.
+            # @param [String] collection_ttl How long, in seconds, before the Sync Map expires
+            #   (time-to-live) and is deleted. Can be an integer from 0 to 31,536,000 (1 year).
+            #   The default value is `0`, which means the Sync Map does not expire. The Sync Map
+            #   might not be deleted immediately after it expires.
             # @return [SyncMapInstance] Updated SyncMapInstance
             def update(ttl: :unset, collection_ttl: :unset)
               context.update(ttl: ttl, collection_ttl: collection_ttl, )

@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -14,8 +14,8 @@ module Twilio
       def initialize(twilio)
         super
 
-        @base_url = 'https://ip-messaging.twilio.com'
-        @host = 'ip-messaging.twilio.com'
+        @base_url = 'https://chat.twilio.com'
+        @host = 'chat.twilio.com'
         @port = 443
 
         # Versions
@@ -36,7 +36,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
+      # @param [String] sid The unique string that we created to identify the Credential
       #   resource.
       # @return [Twilio::REST::Chat::V2::CredentialInstance] if sid was passed.
       # @return [Twilio::REST::Chat::V2::CredentialList]
@@ -45,7 +45,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
+      # @param [String] sid The unique string that we created to identify the Service
       #   resource.
       # @return [Twilio::REST::Chat::V2::ServiceInstance] if sid was passed.
       # @return [Twilio::REST::Chat::V2::ServiceList]

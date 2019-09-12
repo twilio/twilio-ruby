@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -15,9 +15,9 @@ module Twilio
             ##
             # Initialize the BindingList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique id of the
-            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this binding
-            #   belongs to.
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the Binding resource
+            #   is associated with.
             # @return [BindingList] BindingList
             def initialize(version, service_sid: nil)
               super(version)
@@ -31,12 +31,15 @@ module Twilio
             # Lists BindingInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [binding.BindingType] binding_type The push technology used for the
-            #   returned Bindings.  Supported values are apn, gcm and fcm.  See [push
+            # @param [binding.BindingType] binding_type The push technology used by the
+            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push
             #   notification
             #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
-            #   for more information.
-            # @param [String] identity The identity
+            #   for more info.
+            # @param [String] identity The
+            #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
+            #   resources to read. See [access
+            #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -57,12 +60,15 @@ module Twilio
             # Streams BindingInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [binding.BindingType] binding_type The push technology used for the
-            #   returned Bindings.  Supported values are apn, gcm and fcm.  See [push
+            # @param [binding.BindingType] binding_type The push technology used by the
+            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push
             #   notification
             #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
-            #   for more information.
-            # @param [String] identity The identity
+            #   for more info.
+            # @param [String] identity The
+            #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
+            #   resources to read. See [access
+            #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -95,12 +101,15 @@ module Twilio
             ##
             # Retrieve a single page of BindingInstance records from the API.
             # Request is executed immediately.
-            # @param [binding.BindingType] binding_type The push technology used for the
-            #   returned Bindings.  Supported values are apn, gcm and fcm.  See [push
+            # @param [binding.BindingType] binding_type The push technology used by the
+            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push
             #   notification
             #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
-            #   for more information.
-            # @param [String] identity The identity
+            #   for more info.
+            # @param [String] identity The
+            #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
+            #   resources to read. See [access
+            #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -174,8 +183,10 @@ module Twilio
             ##
             # Initialize the BindingContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the Binding
+            #   resource from.
+            # @param [String] sid The SID of the Binding resource to fetch.
             # @return [BindingContext] BindingContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -202,7 +213,7 @@ module Twilio
 
             ##
             # Deletes the BindingInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               @version.delete('delete', @uri)
             end
@@ -227,10 +238,10 @@ module Twilio
             # Initialize the BindingInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The unique id of the
-            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this binding
-            #   belongs to.
-            # @param [String] sid The sid
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/services) the Binding resource
+            #   is associated with.
+            # @param [String] sid The SID of the Binding resource to fetch.
             # @return [BindingInstance] BindingInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -268,73 +279,73 @@ module Twilio
             end
 
             ##
-            # @return [String] A 34 character string that uniquely identifies this resource.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The unique id of the Account responsible for this binding.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The unique id of the Service this binding belongs to.
+            # @return [String] The SID of the Service that the Binding resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [Time] The date that this resource was created.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date that this resource was last updated.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The unique endpoint identifier for this Binding.
+            # @return [String] The unique endpoint identifier for the Binding
             def endpoint
               @properties['endpoint']
             end
 
             ##
-            # @return [String] A unique string identifier for the Binding for this User in this Service.
+            # @return [String] The string that identifies the resource's User
             def identity
               @properties['identity']
             end
 
             ##
-            # @return [String] The unique id of the Credential for this binding.
+            # @return [String] The SID of the Credential for the binding
             def credential_sid
               @properties['credential_sid']
             end
 
             ##
-            # @return [binding.BindingType] The push technology to use for this binding.
+            # @return [binding.BindingType] The push technology to use for the binding
             def binding_type
               @properties['binding_type']
             end
 
             ##
-            # @return [String] List of message types for this binding.
+            # @return [String] The Programmable Chat message types the binding is subscribed to
             def message_types
               @properties['message_types']
             end
 
             ##
-            # @return [String] An absolute URL for this binding.
+            # @return [String] The absolute URL of the Binding resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] Absolute URLs to access the Users for this Binding.
+            # @return [String] The absolute URLs of the Binding's User
             def links
               @properties['links']
             end
@@ -348,7 +359,7 @@ module Twilio
 
             ##
             # Deletes the BindingInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end

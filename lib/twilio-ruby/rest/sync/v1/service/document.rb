@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -17,8 +17,9 @@ module Twilio
             ##
             # Initialize the DocumentList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the Service Instance
-            #   that hosts this Document.
+            # @param [String] service_sid The SID of the [Sync
+            #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+            #   associated with.
             # @return [DocumentList] DocumentList
             def initialize(version, service_sid: nil)
               super(version)
@@ -31,10 +32,15 @@ module Twilio
             ##
             # Retrieve a single page of DocumentInstance records from the API.
             # Request is executed immediately.
-            # @param [String] unique_name Human-readable name for this document
-            # @param [Hash] data JSON data to be stored in this document
-            # @param [String] ttl Time-to-live of this Document in seconds, defaults to no
-            #   expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [String] unique_name An application-defined string that uniquely
+            #   identifies the Sync Document
+            # @param [Hash] data A JSON string that represents an arbitrary, schema-less
+            #   object that the Sync Document stores. Can be up to 16KB in length.
+            # @param [String] ttl How long, in seconds, before the Sync Document expires and
+            #   is deleted (the Sync Document's time-to-live). Can be an integer from 0 to
+            #   31,536,000 (1 year). The default value is `0`, which means the Sync Document
+            #   does not expire. The Sync Document might not be deleted immediately after it
+            #   expires.
             # @return [DocumentInstance] Newly created DocumentInstance
             def create(unique_name: :unset, data: :unset, ttl: :unset)
               data = Twilio::Values.of({
@@ -178,8 +184,10 @@ module Twilio
             ##
             # Initialize the DocumentContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The SID of the [Sync
+            #   Service](https://www.twilio.com/docs/sync/api/service) with the Document
+            #   resource to fetch.
+            # @param [String] sid The SID of the Document resource to fetch.
             # @return [DocumentContext] DocumentContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -209,17 +217,19 @@ module Twilio
 
             ##
             # Deletes the DocumentInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               @version.delete('delete', @uri)
             end
 
             ##
             # Update the DocumentInstance
-            # @param [Hash] data Contains an arbitrary JSON object to be stored in this
-            #   Document. Serialized to string to respect HTTP form input, up to 16KB.
-            # @param [String] ttl New time-to-live of this Document in seconds. In the range
-            #   [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [Hash] data A JSON string that represents an arbitrary, schema-less
+            #   object that the Sync Document stores. Can be up to 16KB in length.
+            # @param [String] ttl How long, in seconds, before the Sync Document expires and
+            #   is deleted (time-to-live). Can be an integer from 0 to 31,536,000 (1 year). The
+            #   default value is `0`, which means the Document resource does not expire. The
+            #   Document resource might not be deleted immediately after it expires.
             # @return [DocumentInstance] Updated DocumentInstance
             def update(data: :unset, ttl: :unset)
               data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), 'Ttl' => ttl, })
@@ -277,9 +287,10 @@ module Twilio
             # Initialize the DocumentInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The unique SID identifier of the Service Instance
-            #   that hosts this Document.
-            # @param [String] sid The sid
+            # @param [String] service_sid The SID of the [Sync
+            #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+            #   associated with.
+            # @param [String] sid The SID of the Document resource to fetch.
             # @return [DocumentInstance] DocumentInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -317,73 +328,73 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique 34-character SID identifier of the Document.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The unique and addressable name of this Document.
+            # @return [String] An application-defined string that uniquely identifies the resource
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [String] The unique SID identifier of the Twilio Account.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The unique SID identifier of the Service Instance that hosts this Document.
+            # @return [String] The SID of the Sync Service that the resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] The absolute URL for this Document.
+            # @return [String] The absolute URL of the Document resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] A dictionary of URL links to nested resources of this Document.
+            # @return [String] The URLs of resources related to the Sync Document
             def links
               @properties['links']
             end
 
             ##
-            # @return [String] Contains the current revision of this Document, represented by a string identifier.
+            # @return [String] The current revision of the Sync Document, represented by a string identifier
             def revision
               @properties['revision']
             end
 
             ##
-            # @return [Hash] Contains arbitrary user-defined, schema-less data that this Document stores, represented by a JSON object, up to 16KB.
+            # @return [Hash] An arbitrary, schema-less object that the Sync Document stores
             def data
               @properties['data']
             end
 
             ##
-            # @return [Time] Contains the date this Document expires and gets deleted automatically.
+            # @return [Time] The ISO 8601 date and time in GMT when the Sync Document expires
             def date_expires
               @properties['date_expires']
             end
 
             ##
-            # @return [Time] The date this Document was created, given in UTC ISO 8601 format.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] Specifies the date this Document was last updated, given in UTC ISO 8601 format.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The identity of the Document creator.
+            # @return [String] The identity of the Sync Document's creator
             def created_by
               @properties['created_by']
             end
@@ -397,17 +408,19 @@ module Twilio
 
             ##
             # Deletes the DocumentInstance
-            # @return [Boolean] true if delete succeeds, true otherwise
+            # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
             # Update the DocumentInstance
-            # @param [Hash] data Contains an arbitrary JSON object to be stored in this
-            #   Document. Serialized to string to respect HTTP form input, up to 16KB.
-            # @param [String] ttl New time-to-live of this Document in seconds. In the range
-            #   [1, 31 536 000 (1 year)], or 0 for infinity.
+            # @param [Hash] data A JSON string that represents an arbitrary, schema-less
+            #   object that the Sync Document stores. Can be up to 16KB in length.
+            # @param [String] ttl How long, in seconds, before the Sync Document expires and
+            #   is deleted (time-to-live). Can be an integer from 0 to 31,536,000 (1 year). The
+            #   default value is `0`, which means the Document resource does not expire. The
+            #   Document resource might not be deleted immediately after it expires.
             # @return [DocumentInstance] Updated DocumentInstance
             def update(data: :unset, ttl: :unset)
               context.update(data: data, ttl: ttl, )

@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -20,7 +20,8 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The sid
+        # @param [String] sid The Twilio-provided string that uniquely identifies the
+        #   Credential resource to fetch.
         # @return [Twilio::REST::Notify::V1::CredentialContext] if sid was passed.
         # @return [Twilio::REST::Notify::V1::CredentialList]
         def credentials(sid=:unset)
@@ -34,7 +35,8 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The sid
+        # @param [String] sid The Twilio-provided string that uniquely identifies the
+        #   Service resource to fetch.
         # @return [Twilio::REST::Notify::V1::ServiceContext] if sid was passed.
         # @return [Twilio::REST::Notify::V1::ServiceList]
         def services(sid=:unset)

@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -32,7 +32,7 @@ module Twilio
               # Request is executed immediately.
               # @param [String] callback_url The URL we should call using `callback_method` when
               #   the trigger fires.
-              # @param [String] trigger_value The usage value at which the trigger should fire. 
+              # @param [String] trigger_value The usage value at which the trigger should fire.
               #   For convenience, you can use an offset value such as `+30` to specify a
               #   trigger_value that is 30 units more than the current usage value. Be sure to
               #   urlencode a `+` as `%2B`.
@@ -44,7 +44,7 @@ module Twilio
               #   `callback_url`. Can be: `GET` or `POST` and the default is `POST`.
               # @param [String] friendly_name A descriptive string that you create to describe
               #   the resource. It can be up to 64 characters long.
-              # @param [trigger.Recurring] recurring The frequency of a recurring UsageTrigger. 
+              # @param [trigger.Recurring] recurring The frequency of a recurring UsageTrigger.
               #   Can be: `daily`, `monthly`, or `yearly` for recurring triggers or empty for
               #   non-recurring triggers. A trigger will only fire once during each period.
               #   Recurring times are in GMT.
@@ -293,7 +293,7 @@ module Twilio
 
               ##
               # Deletes the TriggerInstance
-              # @return [Boolean] true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 @version.delete('delete', @uri)
               end
@@ -484,7 +484,7 @@ module Twilio
 
               ##
               # Deletes the TriggerInstance
-              # @return [Boolean] true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete
               end

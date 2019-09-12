@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -17,10 +17,9 @@ module Twilio
                 ##
                 # Initialize the StepContextList
                 # @param [Version] version Version that contains the resource
-                # @param [String] flow_sid The unique SID identifier of the Flow.
-                # @param [String] engagement_sid The unique SID identifier of the Engagement.
-                # @param [String] step_sid The unique SID identifier of the Step this context is
-                #   associated with.
+                # @param [String] flow_sid The SID of the Flow.
+                # @param [String] engagement_sid The SID of the Engagement.
+                # @param [String] step_sid The SID of the Step the context is associated with.
                 # @return [StepContextList] StepContextList
                 def initialize(version, flow_sid: nil, engagement_sid: nil, step_sid: nil)
                   super(version)
@@ -75,9 +74,9 @@ module Twilio
                 ##
                 # Initialize the StepContextContext
                 # @param [Version] version Version that contains the resource
-                # @param [String] flow_sid The unique SID identifier of the Flow.
-                # @param [String] engagement_sid The unique SID identifier of the Engagement.
-                # @param [String] step_sid The unique SID identifier of the Step.
+                # @param [String] flow_sid The SID of the Flow with the Step to fetch.
+                # @param [String] engagement_sid The SID of the Engagement with the Step to fetch.
+                # @param [String] step_sid The SID of the Step to fetch
                 # @return [StepContextContext] StepContextContext
                 def initialize(version, flow_sid, engagement_sid, step_sid)
                   super(version)
@@ -128,10 +127,9 @@ module Twilio
                 # Initialize the StepContextInstance
                 # @param [Version] version Version that contains the resource
                 # @param [Hash] payload payload that contains response from Twilio
-                # @param [String] flow_sid The unique SID identifier of the Flow.
-                # @param [String] engagement_sid The unique SID identifier of the Engagement.
-                # @param [String] step_sid The unique SID identifier of the Step this context is
-                #   associated with.
+                # @param [String] flow_sid The SID of the Flow.
+                # @param [String] engagement_sid The SID of the Engagement.
+                # @param [String] step_sid The SID of the Step the context is associated with.
                 # @return [StepContextInstance] StepContextInstance
                 def initialize(version, payload, flow_sid: nil, engagement_sid: nil, step_sid: nil)
                   super(version)
@@ -168,37 +166,37 @@ module Twilio
                 end
 
                 ##
-                # @return [String] Account Sid.
+                # @return [String] The SID of the Account that created the resource
                 def account_sid
                   @properties['account_sid']
                 end
 
                 ##
-                # @return [Hash] Flow state.
+                # @return [Hash] The current state of the flow
                 def context
                   @properties['context']
                 end
 
                 ##
-                # @return [String] Engagement Sid.
+                # @return [String] The SID of the Engagement
                 def engagement_sid
                   @properties['engagement_sid']
                 end
 
                 ##
-                # @return [String] Flow Sid.
+                # @return [String] The SID of the Flow
                 def flow_sid
                   @properties['flow_sid']
                 end
 
                 ##
-                # @return [String] Step Sid.
+                # @return [String] Step SID
                 def step_sid
                   @properties['step_sid']
                 end
 
                 ##
-                # @return [String] The URL of this resource.
+                # @return [String] The absolute URL of the resource
                 def url
                   @properties['url']
                 end

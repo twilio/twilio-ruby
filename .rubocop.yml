@@ -8,6 +8,7 @@ AllCops:
     - 'lib/twilio-ruby/version.rb'
     - 'lib/twilio-ruby/twiml/**/*'
     - 'lib/twilio-ruby/util/configuration.rb'
+    - 'vendor/**/*'
 
 Metrics/LineLength:
   Max: 120
@@ -17,9 +18,6 @@ Metrics/LineLength:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
-
-Metrics/AbcSize:
-  Enabled: false
 
 Layout/IndentHeredoc:
   Enabled: false

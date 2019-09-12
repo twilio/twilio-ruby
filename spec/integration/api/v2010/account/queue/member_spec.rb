@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -31,6 +31,29 @@ describe 'Member' do
         200,
       %q[
       {
+          "queue_sid": "QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "call_sid": "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "date_enqueued": "Tue, 07 Aug 2012 22:57:41 +0000",
+          "position": 1,
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queues/QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json",
+          "wait_time": 143
+      }
+      ]
+    ))
+
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .queues('QUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .members('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives fetch_front responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "queue_sid": "QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "call_sid": "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_enqueued": "Tue, 07 Aug 2012 22:57:41 +0000",
           "position": 1,
@@ -53,10 +76,10 @@ describe 'Member' do
     expect {
       @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .queues('QUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .members('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(url: 'https://example.com', method: 'GET')
+                       .members('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(url: 'https://example.com')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Url' => 'https://example.com', 'Method' => 'GET', }
+    values = {'Url' => 'https://example.com', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -70,6 +93,29 @@ describe 'Member' do
         200,
       %q[
       {
+          "queue_sid": "QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "call_sid": "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "date_enqueued": "Thu, 06 Dec 2018 18:42:47 +0000",
+          "position": 1,
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queues/QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json",
+          "wait_time": 143
+      }
+      ]
+    ))
+
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .queues('QUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .members('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(url: 'https://example.com')
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives dequeue_front responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "queue_sid": "QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "call_sid": "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_enqueued": "Tue, 07 Aug 2012 22:57:41 +0000",
           "position": 1,
@@ -81,7 +127,7 @@ describe 'Member' do
 
     actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .queues('QUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .members('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(url: 'https://example.com', method: 'GET')
+                              .members('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(url: 'https://example.com')
 
     expect(actual).to_not eq(nil)
   end
@@ -109,25 +155,23 @@ describe 'Member' do
       %q[
       {
           "end": 0,
-          "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queues/QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members.json?Page=0&PageSize=50",
-          "last_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queues/QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members.json?Page=0&PageSize=50",
+          "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queues/QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members.json?PageSize=50&Page=0",
           "next_page_uri": null,
-          "num_pages": 1,
           "page": 0,
           "page_size": 50,
           "previous_page_uri": null,
           "queue_members": [
               {
+                  "queue_sid": "QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "call_sid": "CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                  "date_enqueued": "Tue, 07 Aug 2012 22:57:41 +0000",
+                  "date_enqueued": "Mon, 17 Dec 2018 18:36:39 +0000",
                   "position": 1,
                   "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queues/QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json",
                   "wait_time": 124
               }
           ],
           "start": 0,
-          "total": 1,
-          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queues/QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members.json"
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queues/QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members.json?PageSize=50&Page=0"
       }
       ]
     ))
@@ -146,15 +190,12 @@ describe 'Member' do
       {
           "end": 0,
           "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queues/QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members.json?Page=0&PageSize=50",
-          "last_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queues/QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members.json?Page=0&PageSize=50",
           "next_page_uri": null,
-          "num_pages": 1,
           "page": 0,
           "page_size": 50,
           "previous_page_uri": null,
           "queue_members": [],
           "start": 0,
-          "total": 1,
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Queues/QUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members.json"
       }
       ]

@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -108,8 +108,10 @@ module Twilio
           # @param [String] post_webhook_retry_count The number of retries in case of
           #   post-event webhook request failures. Maximum 3 retries are allowed, the default
           #   value is 0.
+          # @param [webhook.Target] target The routing target of the webhook. Can be
+          #   ordinary or route internally to Flex
           # @return [WebhookInstance] Updated WebhookInstance
-          def update(webhook_method: :unset, webhook_filters: :unset, pre_webhook_url: :unset, post_webhook_url: :unset, pre_webhook_retry_count: :unset, post_webhook_retry_count: :unset)
+          def update(webhook_method: :unset, webhook_filters: :unset, pre_webhook_url: :unset, post_webhook_url: :unset, pre_webhook_retry_count: :unset, post_webhook_retry_count: :unset, target: :unset)
             data = Twilio::Values.of({
                 'WebhookMethod' => webhook_method,
                 'WebhookFilters' => Twilio.serialize_list(webhook_filters) { |e| e },
@@ -117,6 +119,7 @@ module Twilio
                 'PostWebhookUrl' => post_webhook_url,
                 'PreWebhookRetryCount' => pre_webhook_retry_count,
                 'PostWebhookRetryCount' => post_webhook_retry_count,
+                'Target' => target,
             })
 
             payload = @version.update(
@@ -164,6 +167,7 @@ module Twilio
                 'post_webhook_url' => payload['post_webhook_url'],
                 'pre_webhook_retry_count' => payload['pre_webhook_retry_count'].to_i,
                 'post_webhook_retry_count' => payload['post_webhook_retry_count'].to_i,
+                'target' => payload['target'],
                 'url' => payload['url'],
             }
 
@@ -232,6 +236,12 @@ module Twilio
           end
 
           ##
+          # @return [webhook.Target] The routing target of the webhook.
+          def target
+            @properties['target']
+          end
+
+          ##
           # @return [String] An absolute URL for this webhook.
           def url
             @properties['url']
@@ -260,8 +270,10 @@ module Twilio
           # @param [String] post_webhook_retry_count The number of retries in case of
           #   post-event webhook request failures. Maximum 3 retries are allowed, the default
           #   value is 0.
+          # @param [webhook.Target] target The routing target of the webhook. Can be
+          #   ordinary or route internally to Flex
           # @return [WebhookInstance] Updated WebhookInstance
-          def update(webhook_method: :unset, webhook_filters: :unset, pre_webhook_url: :unset, post_webhook_url: :unset, pre_webhook_retry_count: :unset, post_webhook_retry_count: :unset)
+          def update(webhook_method: :unset, webhook_filters: :unset, pre_webhook_url: :unset, post_webhook_url: :unset, pre_webhook_retry_count: :unset, post_webhook_retry_count: :unset, target: :unset)
             context.update(
                 webhook_method: webhook_method,
                 webhook_filters: webhook_filters,
@@ -269,6 +281,7 @@ module Twilio
                 post_webhook_url: post_webhook_url,
                 pre_webhook_retry_count: pre_webhook_retry_count,
                 post_webhook_retry_count: post_webhook_retry_count,
+                target: target,
             )
           end
 

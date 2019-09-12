@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -16,10 +16,12 @@ module Twilio
               ##
               # Initialize the MessageList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique id of the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/v1/services) this message
-              #   belongs to.
-              # @param [String] channel_sid The channel_sid
+              # @param [String] service_sid The SID of the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) the resource is
+              #   associated with.
+              # @param [String] channel_sid The unique ID of the
+              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) the Message
+              #   resource belongs to.
               # @return [MessageList] MessageList
               def initialize(version, service_sid: nil, channel_sid: nil)
                 super(version)
@@ -32,9 +34,14 @@ module Twilio
               ##
               # Retrieve a single page of MessageInstance records from the API.
               # Request is executed immediately.
-              # @param [String] body The body
-              # @param [String] from The from
-              # @param [String] attributes The attributes
+              # @param [String] body The message to send to the channel. Can also be an empty
+              #   string or `null`, which sets the value as an empty string. You can send
+              #   structured data in the body by serializing it as a string.
+              # @param [String] from The
+              #   [identity](https://www.twilio.com/docs/api/chat/guides/identity) of the new
+              #   message's author. The default value is `system`.
+              # @param [String] attributes A valid JSON string that contains
+              #   application-specific data.
               # @return [MessageInstance] Newly created MessageInstance
               def create(body: nil, from: :unset, attributes: :unset)
                 data = Twilio::Values.of({'Body' => body, 'From' => from, 'Attributes' => attributes, })
@@ -57,7 +64,8 @@ module Twilio
               # Lists MessageInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [message.OrderType] order The order
+              # @param [message.OrderType] order The sort order of the returned messages. Can
+              #   be: `asc` (ascending) or `desc` (descending) with `asc` as the default.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -73,7 +81,8 @@ module Twilio
               # Streams MessageInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [message.OrderType] order The order
+              # @param [message.OrderType] order The sort order of the returned messages. Can
+              #   be: `asc` (ascending) or `desc` (descending) with `asc` as the default.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -106,7 +115,8 @@ module Twilio
               ##
               # Retrieve a single page of MessageInstance records from the API.
               # Request is executed immediately.
-              # @param [message.OrderType] order The order
+              # @param [message.OrderType] order The sort order of the returned messages. Can
+              #   be: `asc` (ascending) or `desc` (descending) with `asc` as the default.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -184,9 +194,14 @@ module Twilio
               ##
               # Initialize the MessageContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The service_sid
-              # @param [String] channel_sid The channel_sid
-              # @param [String] sid The sid
+              # @param [String] service_sid The SID of the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) to fetch the
+              #   resource from.
+              # @param [String] channel_sid The unique ID of the
+              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) the message to
+              #   fetch belongs to. Can be the Channel's `sid` or `unique_name`.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   Message resource to fetch.
               # @return [MessageContext] MessageContext
               def initialize(version, service_sid, channel_sid, sid)
                 super(version)
@@ -219,18 +234,18 @@ module Twilio
 
               ##
               # Deletes the MessageInstance
-              # @return [Boolean] true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 @version.delete('delete', @uri)
               end
 
               ##
               # Update the MessageInstance
-              # @param [String] body The new message body string. You can also send structured
-              #   data by serializing it into a string.
-              # @param [String] attributes The new attributes metadata field you can use to
-              #   store any data you wish.  The string value must contain structurally valid JSON
-              #   if specified.
+              # @param [String] body The message to send to the channel. Can also be an empty
+              #   string or `null`, which sets the value as an empty string. You can send
+              #   structured data in the body by serializing it as a string.
+              # @param [String] attributes A valid JSON string that contains
+              #   application-specific data.
               # @return [MessageInstance] Updated MessageInstance
               def update(body: :unset, attributes: :unset)
                 data = Twilio::Values.of({'Body' => body, 'Attributes' => attributes, })
@@ -270,11 +285,14 @@ module Twilio
               # Initialize the MessageInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The unique id of the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/v1/services) this message
-              #   belongs to.
-              # @param [String] channel_sid The channel_sid
-              # @param [String] sid The sid
+              # @param [String] service_sid The SID of the
+              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) the resource is
+              #   associated with.
+              # @param [String] channel_sid The unique ID of the
+              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) the Message
+              #   resource belongs to.
+              # @param [String] sid The Twilio-provided string that uniquely identifies the
+              #   Message resource to fetch.
               # @return [MessageInstance] MessageInstance
               def initialize(version, payload, service_sid: nil, channel_sid: nil, sid: nil)
                 super(version)
@@ -322,67 +340,67 @@ module Twilio
               end
 
               ##
-              # @return [String] A 34 character string that uniquely identifies this resource.
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The unique id of the Account responsible for this message.
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] An optional string metadata field you can use to store any data you wish.
+              # @return [String] The JSON string that stores application-specific data
               def attributes
                 @properties['attributes']
               end
 
               ##
-              # @return [String] The unique id of the Service this message belongs to.
+              # @return [String] The SID of the Service that the resource is associated with
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] The unique id of the Channel this message was sent to.
+              # @return [String] The SID of the Channel that the message was sent to
               def to
                 @properties['to']
               end
 
               ##
-              # @return [String] The channel_sid
+              # @return [String] The unique ID of the Channel the Message resource belongs to
               def channel_sid
                 @properties['channel_sid']
               end
 
               ##
-              # @return [Time] The date that this resource was created.
+              # @return [Time] The RFC 2822 date and time in GMT when the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date that this resource was last updated.
+              # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [Boolean] true if the message has been updated since it was created.
+              # @return [Boolean] Whether the message has been edited since  it was created
               def was_edited
                 @properties['was_edited']
               end
 
               ##
-              # @return [String] The identity of the message's author.
+              # @return [String] The identity of the message's author
               def from
                 @properties['from']
               end
 
               ##
-              # @return [String] The contents of the message.
+              # @return [String] The content of the message
               def body
                 @properties['body']
               end
@@ -394,7 +412,7 @@ module Twilio
               end
 
               ##
-              # @return [String] An absolute URL for this message.
+              # @return [String] The absolute URL of the Message resource
               def url
                 @properties['url']
               end
@@ -408,18 +426,18 @@ module Twilio
 
               ##
               # Deletes the MessageInstance
-              # @return [Boolean] true if delete succeeds, true otherwise
+              # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete
               end
 
               ##
               # Update the MessageInstance
-              # @param [String] body The new message body string. You can also send structured
-              #   data by serializing it into a string.
-              # @param [String] attributes The new attributes metadata field you can use to
-              #   store any data you wish.  The string value must contain structurally valid JSON
-              #   if specified.
+              # @param [String] body The message to send to the channel. Can also be an empty
+              #   string or `null`, which sets the value as an empty string. You can send
+              #   structured data in the body by serializing it as a string.
+              # @param [String] attributes A valid JSON string that contains
+              #   application-specific data.
               # @return [MessageInstance] Updated MessageInstance
               def update(body: :unset, attributes: :unset)
                 context.update(body: body, attributes: attributes, )

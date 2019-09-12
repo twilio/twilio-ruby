@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -62,7 +62,9 @@ module Twilio
           ##
           # Initialize the PhoneNumberContext
           # @param [Version] version Version that contains the resource
-          # @param [String] phone_number The phone_number
+          # @param [String] phone_number The phone number to lookup in
+          #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, which consists
+          #   of a + followed by the country code and subscriber number.
           # @return [PhoneNumberContext] PhoneNumberContext
           def initialize(version, phone_number)
             super(version)
@@ -74,23 +76,23 @@ module Twilio
 
           ##
           # Fetch a PhoneNumberInstance
-          # @param [String] country_code Optional [ISO country
-          #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the phone number. This
-          #   is used to specify the country when the number is provided in a national format.
-          # @param [String] type Indicates the type of information you would like returned
-          #   with your request. Possible values are `carrier` or `caller-name`. If not
-          #   specified, the default is null.  Carrier information costs $0.005 per phone
-          #   number looked up.  Caller Name information costs $0.01 per phone number looked
-          #   up, and is currently ONLY available in the US.  You can retrieve both types of
-          #   information by including two `Type` arguments or making two separate requests.
-          # @param [String] add_ons Indicates the particular Add-on you would like to use to
-          #   get more information. Possible values are the *Add-on Unique Names* of Add-ons
-          #   installed on your account. You can specify multiple instances of this parameter
-          #   to invoke different Add-ons. See [Add-ons
-          #   documentation](https://www.twilio.com/docs/api/addons) for information on
-          #   installing Add-ons. Add-on pricing is available in your list of Installed
-          #   Add-ons in the Console.
-          # @param [Hash] add_ons_data The add_ons_data
+          # @param [String] country_code The [ISO country
+          #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the phone number to
+          #   fetch. This is used to specify the country when the phone number is provided in
+          #   a national format.
+          # @param [String] type The type of information to return. Can be: `carrier` or
+          #   `caller-name`. The default is null.  Carrier information costs $0.005 per phone
+          #   number looked up.  Caller Name information is currently available only in the US
+          #   and costs $0.01 per phone number looked up.  To retrieve both types on
+          #   information, specify this parameter twice; once with `carrier` and once with
+          #   `caller-name` as the value.
+          # @param [String] add_ons The `unique_name` of an Add-on you would like to invoke.
+          #   Can be the `unique_name` of an Add-on that is installed on your account. You can
+          #   specify multiple instances of this parameter to invoke multiple Add-ons. For
+          #   more information about  Add-ons, see the [Add-ons
+          #   documentation](https://www.twilio.com/docs/api/addons).
+          # @param [Hash] add_ons_data Data specific to the add-on you would like to invoke.
+          #   The content and format of this value depends on the add-on.
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
           def fetch(country_code: :unset, type: :unset, add_ons: :unset, add_ons_data: :unset)
             params = Twilio::Values.of({
@@ -129,7 +131,9 @@ module Twilio
           # Initialize the PhoneNumberInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] phone_number The phone_number
+          # @param [String] phone_number The phone number to lookup in
+          #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, which consists
+          #   of a + followed by the country code and subscriber number.
           # @return [PhoneNumberInstance] PhoneNumberInstance
           def initialize(version, payload, phone_number: nil)
             super(version)
@@ -162,66 +166,66 @@ module Twilio
           end
 
           ##
-          # @return [String] String indicating the name of the owner of the phone number.
+          # @return [String] The name of the phone number's owner
           def caller_name
             @properties['caller_name']
           end
 
           ##
-          # @return [String] The ISO country code for the phone number.
+          # @return [String] The ISO country code for the phone number
           def country_code
             @properties['country_code']
           end
 
           ##
-          # @return [String] The phone number, in E.
+          # @return [String] The phone number in E.164 format
           def phone_number
             @properties['phone_number']
           end
 
           ##
-          # @return [String] The phone number, in national format.
+          # @return [String] The phone number, in national format
           def national_format
             @properties['national_format']
           end
 
           ##
-          # @return [String] The carrier
+          # @return [String] The telecom company that provides the phone number
           def carrier
             @properties['carrier']
           end
 
           ##
-          # @return [Hash] Results of any Add-ons you have specified using the AddOn parameter in the request, as a JSON dictionary.
+          # @return [Hash] A JSON string with the results of the Add-ons you specified
           def add_ons
             @properties['add_ons']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The absolute URL of the resource
           def url
             @properties['url']
           end
 
           ##
           # Fetch a PhoneNumberInstance
-          # @param [String] country_code Optional [ISO country
-          #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the phone number. This
-          #   is used to specify the country when the number is provided in a national format.
-          # @param [String] type Indicates the type of information you would like returned
-          #   with your request. Possible values are `carrier` or `caller-name`. If not
-          #   specified, the default is null.  Carrier information costs $0.005 per phone
-          #   number looked up.  Caller Name information costs $0.01 per phone number looked
-          #   up, and is currently ONLY available in the US.  You can retrieve both types of
-          #   information by including two `Type` arguments or making two separate requests.
-          # @param [String] add_ons Indicates the particular Add-on you would like to use to
-          #   get more information. Possible values are the *Add-on Unique Names* of Add-ons
-          #   installed on your account. You can specify multiple instances of this parameter
-          #   to invoke different Add-ons. See [Add-ons
-          #   documentation](https://www.twilio.com/docs/api/addons) for information on
-          #   installing Add-ons. Add-on pricing is available in your list of Installed
-          #   Add-ons in the Console.
-          # @param [Hash] add_ons_data The add_ons_data
+          # @param [String] country_code The [ISO country
+          #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the phone number to
+          #   fetch. This is used to specify the country when the phone number is provided in
+          #   a national format.
+          # @param [String] type The type of information to return. Can be: `carrier` or
+          #   `caller-name`. The default is null.  Carrier information costs $0.005 per phone
+          #   number looked up.  Caller Name information is currently available only in the US
+          #   and costs $0.01 per phone number looked up.  To retrieve both types on
+          #   information, specify this parameter twice; once with `carrier` and once with
+          #   `caller-name` as the value.
+          # @param [String] add_ons The `unique_name` of an Add-on you would like to invoke.
+          #   Can be the `unique_name` of an Add-on that is installed on your account. You can
+          #   specify multiple instances of this parameter to invoke multiple Add-ons. For
+          #   more information about  Add-ons, see the [Add-ons
+          #   documentation](https://www.twilio.com/docs/api/addons).
+          # @param [Hash] add_ons_data Data specific to the add-on you would like to invoke.
+          #   The content and format of this value depends on the add-on.
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
           def fetch(country_code: :unset, type: :unset, add_ons: :unset, add_ons_data: :unset)
             context.fetch(country_code: country_code, type: type, add_ons: add_ons, add_ons_data: add_ons_data, )

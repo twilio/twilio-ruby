@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -166,7 +166,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The SID of the longest waiting Task
+            # @return [String] The longest_task_waiting_sid
             def longest_task_waiting_sid
               @properties['longest_task_waiting_sid']
             end

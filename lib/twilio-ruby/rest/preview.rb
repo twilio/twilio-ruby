@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -27,6 +27,7 @@ module Twilio
         @sync = nil
         @understand = nil
         @wireless = nil
+        @trusted_comms = nil
       end
 
       ##
@@ -75,6 +76,12 @@ module Twilio
       # Version wireless of preview
       def wireless
         @wireless ||= Wireless.new self
+      end
+
+      ##
+      # Version trusted_comms of preview
+      def trusted_comms
+        @trusted_comms ||= TrustedComms.new self
       end
 
       ##
@@ -177,6 +184,36 @@ module Twilio
       # @return [Twilio::REST::Preview::Wireless::SimList]
       def sims(sid=:unset)
         self.wireless.sims(sid)
+      end
+
+      ##
+      # @return [Twilio::REST::Preview::TrustedComms::BrandedCallInstance]
+      def branded_calls
+        self.trusted_comms.branded_calls()
+      end
+
+      ##
+      # @return [Twilio::REST::Preview::TrustedComms::DeviceInstance]
+      def devices
+        self.trusted_comms.devices()
+      end
+
+      ##
+      # @return [Twilio::REST::Preview::TrustedComms::PhoneCallInstance]
+      def phone_calls
+        self.trusted_comms.phone_calls()
+      end
+
+      ##
+      # @return [Twilio::REST::Preview::TrustedComms::CurrentCallInstance]
+      def current_calls
+        self.trusted_comms.current_calls()
+      end
+
+      ##
+      # @return [Twilio::REST::Preview::TrustedComms::CpsInstance]
+      def cps
+        self.trusted_comms.cps()
       end
 
       ##

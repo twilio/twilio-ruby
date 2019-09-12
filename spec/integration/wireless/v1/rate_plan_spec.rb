@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 require 'spec_helper.rb'
@@ -68,9 +68,9 @@ describe 'RatePlan' do
                   "unique_name": "unique_name",
                   "data_enabled": true,
                   "data_limit": 1000,
-                  "data_metering": "pooled",
-                  "date_created": "2015-07-30T20:00:00Z",
-                  "date_updated": "2015-07-30T20:00:00Z",
+                  "data_metering": "payg",
+                  "date_created": "2019-07-30T20:00:00Z",
+                  "date_updated": "2019-07-30T20:00:00Z",
                   "friendly_name": "friendly_name",
                   "messaging_enabled": true,
                   "voice_enabled": true,
@@ -83,6 +83,8 @@ describe 'RatePlan' do
                   ],
                   "international_roaming_data_limit": 1000,
                   "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "usage_notification_method": "POST",
+                  "usage_notification_url": "https://callback.com",
                   "url": "https://wireless.twilio.com/v1/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
           ]
@@ -119,9 +121,9 @@ describe 'RatePlan' do
           "unique_name": "unique_name",
           "data_enabled": true,
           "data_limit": 1000,
-          "data_metering": "pooled",
-          "date_created": "2015-07-30T20:00:00Z",
-          "date_updated": "2015-07-30T20:00:00Z",
+          "data_metering": "payg",
+          "date_created": "2019-07-30T20:00:00Z",
+          "date_updated": "2019-07-30T20:00:00Z",
           "friendly_name": "friendly_name",
           "messaging_enabled": true,
           "voice_enabled": true,
@@ -134,6 +136,8 @@ describe 'RatePlan' do
           ],
           "international_roaming_data_limit": 1000,
           "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "usage_notification_method": "POST",
+          "usage_notification_url": "https://callback.com",
           "url": "https://wireless.twilio.com/v1/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -168,9 +172,9 @@ describe 'RatePlan' do
           "unique_name": "unique_name",
           "data_enabled": true,
           "data_limit": 1000,
-          "data_metering": "pooled",
-          "date_created": "2015-07-30T20:00:00Z",
-          "date_updated": "2015-07-30T20:00:00Z",
+          "data_metering": "payg",
+          "date_created": "2019-07-30T20:00:00Z",
+          "date_updated": "2019-07-30T20:00:00Z",
           "friendly_name": "friendly_name",
           "messaging_enabled": true,
           "voice_enabled": true,
@@ -183,6 +187,8 @@ describe 'RatePlan' do
           ],
           "international_roaming_data_limit": 1000,
           "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "usage_notification_method": "POST",
+          "usage_notification_url": "https://callback.com",
           "url": "https://wireless.twilio.com/v1/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -217,9 +223,9 @@ describe 'RatePlan' do
           "unique_name": "unique_name",
           "data_enabled": true,
           "data_limit": 1000,
-          "data_metering": "pooled",
-          "date_created": "2015-07-30T20:00:00Z",
-          "date_updated": "2015-07-30T20:00:00Z",
+          "data_metering": "payg",
+          "date_created": "2019-07-30T20:00:00Z",
+          "date_updated": "2019-07-30T20:00:00Z",
           "friendly_name": "friendly_name",
           "messaging_enabled": true,
           "voice_enabled": true,
@@ -232,6 +238,8 @@ describe 'RatePlan' do
           ],
           "international_roaming_data_limit": 1000,
           "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "usage_notification_method": "POST",
+          "usage_notification_url": "https://callback.com",
           "url": "https://wireless.twilio.com/v1/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]

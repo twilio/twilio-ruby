@@ -3,7 +3,7 @@
 # \ / _    _  _|   _  _
 #  | (_)\/(_)(_|\/| |(/_  v1.0.0
 #       /       /
-# 
+#
 # frozen_string_literal: true
 
 module Twilio
@@ -63,8 +63,10 @@ module Twilio
             ##
             # Initialize the NumberContext
             # @param [Version] version Version that contains the resource
-            # @param [String] destination_number This fetches the origin-based voice pricing
-            #   information for a phone number
+            # @param [String] destination_number The destination phone number, in
+            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, for which to
+            #   fetch the origin-based voice pricing information. E.164 format consists of a +
+            #   followed by the country code and subscriber number.
             # @return [NumberContext] NumberContext
             def initialize(version, destination_number)
               super(version)
@@ -76,7 +78,10 @@ module Twilio
 
             ##
             # Fetch a NumberInstance
-            # @param [String] origination_number The origination_number
+            # @param [String] origination_number The origination phone number, in
+            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, for which to
+            #   fetch the origin-based voice pricing information. E.164 format consists of a +
+            #   followed by the country code and subscriber number.
             # @return [NumberInstance] Fetched NumberInstance
             def fetch(origination_number: :unset)
               params = Twilio::Values.of({'OriginationNumber' => origination_number, })
@@ -110,8 +115,10 @@ module Twilio
             # Initialize the NumberInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] destination_number This fetches the origin-based voice pricing
-            #   information for a phone number
+            # @param [String] destination_number The destination phone number, in
+            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, for which to
+            #   fetch the origin-based voice pricing information. E.164 format consists of a +
+            #   followed by the country code and subscriber number.
             # @return [NumberInstance] NumberInstance
             def initialize(version, payload, destination_number: nil)
               super(version)
@@ -145,19 +152,19 @@ module Twilio
             end
 
             ##
-            # @return [String] The destination phone number, in E.164
+            # @return [String] The destination phone number, in E.164 format
             def destination_number
               @properties['destination_number']
             end
 
             ##
-            # @return [String] The origination phone number, in E.164
+            # @return [String] The origination phone number, in E.164 format
             def origination_number
               @properties['origination_number']
             end
 
             ##
-            # @return [String] Name of the country
+            # @return [String] The name of the country
             def country
               @properties['country']
             end
@@ -169,32 +176,35 @@ module Twilio
             end
 
             ##
-            # @return [String] List of OutboundCallPriceWithOrigin records
+            # @return [String] The list of OutboundCallPriceWithOrigin records
             def outbound_call_prices
               @properties['outbound_call_prices']
             end
 
             ##
-            # @return [String] List of InboundCallPrice records
+            # @return [String] The InboundCallPrice record
             def inbound_call_price
               @properties['inbound_call_price']
             end
 
             ##
-            # @return [String] The currency in which prices are measured, in ISO 4127 format (e.g. usd, eur, jpy).
+            # @return [String] The currency in which prices are measured, in ISO 4127 format (e.g. usd, eur, jpy)
             def price_unit
               @properties['price_unit']
             end
 
             ##
-            # @return [String] The URL of this resource.
+            # @return [String] The absolute URL of the resource
             def url
               @properties['url']
             end
 
             ##
             # Fetch a NumberInstance
-            # @param [String] origination_number The origination_number
+            # @param [String] origination_number The origination phone number, in
+            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, for which to
+            #   fetch the origin-based voice pricing information. E.164 format consists of a +
+            #   followed by the country code and subscriber number.
             # @return [NumberInstance] Fetched NumberInstance
             def fetch(origination_number: :unset)
               context.fetch(origination_number: origination_number, )
