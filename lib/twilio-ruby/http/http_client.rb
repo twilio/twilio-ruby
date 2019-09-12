@@ -10,6 +10,7 @@ module Twilio
 
       def initialize(proxy_prot = nil, proxy_addr = nil, proxy_port = nil, proxy_user = nil, proxy_pass = nil,
                      ssl_ca_file = nil, timeout: nil)
+        @proxy_prot = proxy_prot
         @proxy_path = "#{proxy_addr}:#{proxy_port}" if proxy_addr && proxy_port
         @proxy_auth = "#{proxy_user}:#{proxy_pass}@" if proxy_pass && proxy_user
         @ssl_ca_file = ssl_ca_file
