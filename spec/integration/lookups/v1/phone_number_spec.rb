@@ -20,7 +20,7 @@ describe 'PhoneNumber' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://lookups.twilio.com/v1/PhoneNumbers/+15017122661',
+        url: 'https://lookups.twilio.com/v1/PhoneNumbers/%2B15017122661',
     ))).to eq(true)
   end
 
