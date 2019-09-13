@@ -21,7 +21,7 @@ describe 'Number' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://pricing.twilio.com/v2/Voice/Numbers/+15017122661',
+        url: 'https://pricing.twilio.com/v2/Voice/Numbers/%2B15017122661',
     ))).to eq(true)
   end
 

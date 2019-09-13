@@ -73,7 +73,7 @@ module Twilio
 
               # Path Solution
               @solution = {destination_number: destination_number, }
-              @uri = "/Voice/Numbers/#{@solution[:destination_number]}"
+              @uri = "/Voice/Numbers/#{CGI.escape(@solution[:destination_number]).gsub("+", "%20")}"
             end
 
             ##
