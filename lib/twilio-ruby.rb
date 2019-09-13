@@ -23,8 +23,9 @@ require 'twilio-ruby/security/request_validator'
 require 'twilio-ruby/util/configuration'
 
 require 'twilio-ruby/twiml/twiml'
-require 'twilio-ruby/twiml/voice_response'
+require 'twilio-ruby/twiml/fax_response'
 require 'twilio-ruby/twiml/messaging_response'
+require 'twilio-ruby/twiml/voice_response'
 
 Dir[File.dirname(__FILE__) + '/twilio-ruby/http/**/*.rb'].each do |file|
   require file
@@ -59,5 +60,6 @@ module Twilio
   def self.configuration
     @configuration ||= Util::Configuration.new
   end
+
   private_class_method :configuration
 end
