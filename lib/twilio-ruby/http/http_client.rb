@@ -36,10 +36,8 @@ module Twilio
 
         @last_request = request
         @last_response = nil
-        response = @connection.send(request.method.downcase.to_sym,
-                                    request.url,
-                                    request.method == 'GET' ? request.params : request.data)
 
+        response = send(request)
         if response.body && !response.body.empty?
           object = response.body
         elsif response.status == 400
@@ -50,6 +48,14 @@ module Twilio
         @last_response = twilio_response
 
         twilio_response
+      end
+
+      def send(request)
+        @connection.send(request.method.downcase.to_sym,
+                         request.url,
+                         request.method == 'GET' ? request.params : request.data)
+      rescue Faraday::ClientError => e
+        raise Twilio::REST::TwilioError, e
       end
 
       def request(host, port, method, url, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
