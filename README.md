@@ -182,13 +182,11 @@ This will print the following (except for the whitespace):
 
 ## Supported Ruby Versions
 
-This library supports and is [tested against][travis] the following Ruby
-implementations:
+This library supports and is [tested against][travis] the following Ruby implementations:
 
-- Ruby 2.5.0
-- Ruby 2.4.0
-- Ruby 2.3.0
-- Ruby 2.2.0
+- Ruby 2.6.X
+- Ruby 2.5.X
+- Ruby 2.4.X
 
 [apidocs]: https://www.twilio.com/docs/api
 [twiml]: https://www.twilio.com/docs/api/twiml
