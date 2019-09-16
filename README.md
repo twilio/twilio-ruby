@@ -82,7 +82,7 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 ### Make a Call
 
 ```ruby
-@client.api.account.calls.create(
+@client.calls.create(
   from: '+14159341234',
   to: '+16105557069',
   url: 'http://example.com'
@@ -92,7 +92,7 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 ### Send an SMS
 
 ```ruby
-@client.api.account.messages.create(
+@client.messages.create(
   from: '+14159341234',
   to: '+16105557069',
   body: 'Hey there!'
@@ -102,7 +102,7 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 ### List your SMS Messages
 
 ```ruby
-@client.api.account.messages.list
+@client.messages.list(limit: 20)
 ```
 
 ### Fetch a single SMS message by Sid
@@ -110,22 +110,30 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 ```ruby
 # put the message sid you want to retrieve here:
 message_sid = 'SMxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-@client.api.account.messages(message_sid).fetch
+@client.messages(message_sid).fetch
 ```
 
 ### Customizing your HTTP Client
 
-twilio-ruby uses [Faraday][faraday] to make HTTP requests. You can tell
-Twilio::REST::Client to use any of the Faraday adapters like so:
+`twilio-ruby` uses [Faraday][faraday] to make HTTP requests. You can tell `Twilio::REST::Client` to use any of the Faraday adapters like so:
 
 ```ruby
 @client.http_client.adapter = :typhoeus
 ```
 
-## Getting Started With Client Capability Tokens
+### Handling Errors
 
-If you just need to generate a Capability Token for use with Twilio Client, you
-can do this:
+```ruby
+begin
+  messages = @client.messages.list(limit: 20)
+rescue Twilio::REST::TwilioError => e
+  puts e.message
+end
+```
+
+### Getting Started With Client Capability Tokens
+
+If you just need to generate a Capability Token for use with Twilio Client, you can do this:
 
 ```ruby
 require 'twilio-ruby'
@@ -149,8 +157,7 @@ capability.add_scope(incoming_scope)
 @token = capability.to_s
 ```
 
-There is a slightly more detailed document in the [Capability][capability]
-section of the wiki.
+There is a slightly more detailed document in the [Capability][capability] section of the wiki.
 
 ### Generating TwiML
 

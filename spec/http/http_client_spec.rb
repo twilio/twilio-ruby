@@ -96,7 +96,7 @@ describe Twilio::HTTP::Client do
     expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
     allow_any_instance_of(Faraday::Connection).to receive(:send).and_raise(Faraday::ConnectionFailed.new('BOOM'))
 
-    expect { @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b']) }.to raise_exception(Faraday::ConnectionFailed)
+    expect { @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b']) }.to raise_exception(Twilio::REST::TwilioError)
     expect(@client.last_response).to be_nil
     expect(@client.last_request).to_not be_nil
     expect(@client.last_request.host).to eq('host')
@@ -116,7 +116,7 @@ describe Twilio::HTTP::Client do
   it 'previous last_response should be cleared' do
     expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
     allow_any_instance_of(Faraday::Connection).to receive(:send).and_raise(Faraday::ConnectionFailed.new('BOOM'))
-    expect { @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b']) }.to raise_exception(Faraday::ConnectionFailed)
+    expect { @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b']) }.to raise_exception(Twilio::REST::TwilioError)
     expect(@client.last_response).to be_nil
   end
 end
