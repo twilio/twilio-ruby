@@ -5,11 +5,10 @@ bundler_args: --without development
 
 rvm:
   - ruby-head
-  - 2.5.0
-  - 2.4.0
-  - 2.3.0
-  - 2.2.0
-  - jruby-9.1.9.0
+  - 2.6
+  - 2.5
+  - 2.4
+  - jruby
 
 services:
   - docker
@@ -26,4 +25,4 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    rvm: "2.4.0"
+    rvm: "2.4"
