@@ -46,6 +46,10 @@ cd twilio-ruby
 make install
 ```
 
+## Versions
+
+`twilio-ruby` uses a modified version of [Semantic Versioning](https://semver.org) for all changes. [See this document](VERSIONS.md) for details.
+
 ### Migration from 4.x
 
 [Upgrade Guide][upgrade]
