@@ -18,7 +18,7 @@ module Twilio
                 # Initialize the PayloadList
                 # @param [Version] version Version that contains the resource
                 # @param [String] account_sid The SID of the
-                #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
                 #   Recording AddOnResult Payload resource.
                 # @param [String] reference_sid The SID of the recording to which the AddOnResult
                 #   resource that contains the payload belongs.
@@ -166,7 +166,7 @@ module Twilio
                 # Initialize the PayloadContext
                 # @param [Version] version Version that contains the resource
                 # @param [String] account_sid The SID of the
-                #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
                 #   Recording AddOnResult Payload resource to fetch.
                 # @param [String] reference_sid The SID of the recording to which the AddOnResult
                 #   resource that contains the payload to fetch belongs.
@@ -238,7 +238,7 @@ module Twilio
                 # @param [Version] version Version that contains the resource
                 # @param [Hash] payload payload that contains response from Twilio
                 # @param [String] account_sid The SID of the
-                #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
                 #   Recording AddOnResult Payload resource.
                 # @param [String] reference_sid The SID of the recording to which the AddOnResult
                 #   resource that contains the payload belongs.

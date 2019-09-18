@@ -17,10 +17,11 @@ module Twilio
               # Initialize the UserChannelList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the User Channel
-              #   resource is associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the User
+              #   Channel resource is associated with.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/users) the User Channel belongs to.
+              #   [User](https://www.twilio.com/docs/chat/rest/user-resource) the User Channel
+              #   belongs to.
               # @return [UserChannelList] UserChannelList
               def initialize(version, service_sid: nil, user_sid: nil)
                 super(version)
@@ -158,12 +159,12 @@ module Twilio
               # Initialize the UserChannelContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the User
-              #   Channel resource from.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+              #   User Channel resource from.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/users) to fetch the User Channel
-              #   resource from. This value can be either the `sid` or the `identity` of the User
-              #   resource.
+              #   [User](https://www.twilio.com/docs/chat/rest/user-resource) to fetch the User
+              #   Channel resource from. This value can be either the `sid` or the `identity` of
+              #   the User resource.
               # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) that has the User Channel
               #   to fetch. This value can be either the `sid` or the `unique_name` of the Channel
@@ -242,10 +243,11 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the User Channel
-              #   resource is associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the User
+              #   Channel resource is associated with.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/users) the User Channel belongs to.
+              #   [User](https://www.twilio.com/docs/chat/rest/user-resource) the User Channel
+              #   belongs to.
               # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) that has the User Channel
               #   to fetch. This value can be either the `sid` or the `unique_name` of the Channel

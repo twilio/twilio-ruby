@@ -207,13 +207,16 @@ module Twilio
           #   the resource.
           # @param [String] default_service_role_sid The service role assigned to users when
           #   they are added to the service. See the [Role
-          #   resource](https://www.twilio.com/docs/chat/api/roles) for more info about roles.
+          #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+          #   about roles.
           # @param [String] default_channel_role_sid The channel role assigned to users when
           #   they are added to a channel. See the [Role
-          #   resource](https://www.twilio.com/docs/chat/api/roles) for more info about roles.
+          #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+          #   about roles.
           # @param [String] default_channel_creator_role_sid The channel role assigned to a
           #   channel creator when they join a new channel. See the [Role
-          #   resource](https://www.twilio.com/docs/chat/api/roles) for more info about roles.
+          #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+          #   about roles.
           # @param [Boolean] read_status_enabled Whether to enable the [Message Consumption
           #   Horizon](https://www.twilio.com/docs/chat/consumption-horizon) feature. The
           #   default is `true`.
@@ -632,13 +635,16 @@ module Twilio
           #   the resource.
           # @param [String] default_service_role_sid The service role assigned to users when
           #   they are added to the service. See the [Role
-          #   resource](https://www.twilio.com/docs/chat/api/roles) for more info about roles.
+          #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+          #   about roles.
           # @param [String] default_channel_role_sid The channel role assigned to users when
           #   they are added to a channel. See the [Role
-          #   resource](https://www.twilio.com/docs/chat/api/roles) for more info about roles.
+          #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+          #   about roles.
           # @param [String] default_channel_creator_role_sid The channel role assigned to a
           #   channel creator when they join a new channel. See the [Role
-          #   resource](https://www.twilio.com/docs/chat/api/roles) for more info about roles.
+          #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+          #   about roles.
           # @param [Boolean] read_status_enabled Whether to enable the [Message Consumption
           #   Horizon](https://www.twilio.com/docs/chat/consumption-horizon) feature. The
           #   default is `true`.

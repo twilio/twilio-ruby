@@ -38,7 +38,7 @@ module Twilio
               # @param [String] contains The pattern on which to match phone numbers. Valid
               #   characters are `*`, `0-9`, `a-z`, and `A-Z`. The `*` character matches any
               #   single digit. For examples, see [Example
-              #   2](https://www.twilio.com/docs/api/rest/available-phone-numbers#local-get-basic-example-2) and [Example 3](https://www.twilio.com/docs/api/rest/available-phone-numbers#local-get-basic-example-3). If specified, this value must have at least two characters.
+              #   2](https://www.twilio.com/docs/phone-numbers/api/availablephonenumber-resource#local-get-basic-example-2) and [Example 3](https://www.twilio.com/docs/phone-numbers/api/availablephonenumber-resource#local-get-basic-example-3). If specified, this value must have at least two characters.
               # @param [Boolean] sms_enabled Whether the phone numbers can receive text
               #   messages. Can be: `true` or `false`.
               # @param [Boolean] mms_enabled Whether the phone numbers can receive MMS messages.
@@ -46,14 +46,14 @@ module Twilio
               # @param [Boolean] voice_enabled Whether the phone numbers can receive calls. Can
               #   be: `true` or `false`.
               # @param [Boolean] exclude_all_address_required Whether to exclude phone numbers
-              #   that require an [Address](https://www.twilio.com/docs/usage/api/addresses). Can
+              #   that require an [Address](https://www.twilio.com/docs/usage/api/address). Can
               #   be: `true` or `false` and the default is `false`.
               # @param [Boolean] exclude_local_address_required Whether to exclude phone numbers
-              #   that require a local [Address](https://www.twilio.com/docs/usage/api/addresses).
+              #   that require a local [Address](https://www.twilio.com/docs/usage/api/address).
               #   Can be: `true` or `false` and the default is `false`.
               # @param [Boolean] exclude_foreign_address_required Whether to exclude phone
               #   numbers that require a foreign
-              #   [Address](https://www.twilio.com/docs/usage/api/addresses). Can be: `true` or
+              #   [Address](https://www.twilio.com/docs/usage/api/address). Can be: `true` or
               #   `false` and the default is `false`.
               # @param [Boolean] beta Whether to read phone numbers that are new to the Twilio
               #   platform. Can be: `true` or `false` and the default is `true`.
@@ -76,9 +76,9 @@ module Twilio
               #   a phone number search within the same rate center as that number. Requires
               #   `in_lata` to be set as well. Applies to only phone numbers in the US and Canada.
               # @param [String] in_lata Limit results to a specific local access and transport
-              #   area ([LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area)).
+              #   area ([LATA](https://en.wikipedia.org/wiki/Local_access_and_transport_area)).
               #   Given a phone number, search within the same
-              #   [LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area) as that
+              #   [LATA](https://en.wikipedia.org/wiki/Local_access_and_transport_area) as that
               #   number. Applies to only phone numbers in the US and Canada.
               # @param [String] in_locality Limit results to a particular locality or city.
               #   Given a phone number, search within the same Locality as that number.
@@ -125,7 +125,7 @@ module Twilio
               # @param [String] contains The pattern on which to match phone numbers. Valid
               #   characters are `*`, `0-9`, `a-z`, and `A-Z`. The `*` character matches any
               #   single digit. For examples, see [Example
-              #   2](https://www.twilio.com/docs/api/rest/available-phone-numbers#local-get-basic-example-2) and [Example 3](https://www.twilio.com/docs/api/rest/available-phone-numbers#local-get-basic-example-3). If specified, this value must have at least two characters.
+              #   2](https://www.twilio.com/docs/phone-numbers/api/availablephonenumber-resource#local-get-basic-example-2) and [Example 3](https://www.twilio.com/docs/phone-numbers/api/availablephonenumber-resource#local-get-basic-example-3). If specified, this value must have at least two characters.
               # @param [Boolean] sms_enabled Whether the phone numbers can receive text
               #   messages. Can be: `true` or `false`.
               # @param [Boolean] mms_enabled Whether the phone numbers can receive MMS messages.
@@ -133,14 +133,14 @@ module Twilio
               # @param [Boolean] voice_enabled Whether the phone numbers can receive calls. Can
               #   be: `true` or `false`.
               # @param [Boolean] exclude_all_address_required Whether to exclude phone numbers
-              #   that require an [Address](https://www.twilio.com/docs/usage/api/addresses). Can
+              #   that require an [Address](https://www.twilio.com/docs/usage/api/address). Can
               #   be: `true` or `false` and the default is `false`.
               # @param [Boolean] exclude_local_address_required Whether to exclude phone numbers
-              #   that require a local [Address](https://www.twilio.com/docs/usage/api/addresses).
+              #   that require a local [Address](https://www.twilio.com/docs/usage/api/address).
               #   Can be: `true` or `false` and the default is `false`.
               # @param [Boolean] exclude_foreign_address_required Whether to exclude phone
               #   numbers that require a foreign
-              #   [Address](https://www.twilio.com/docs/usage/api/addresses). Can be: `true` or
+              #   [Address](https://www.twilio.com/docs/usage/api/address). Can be: `true` or
               #   `false` and the default is `false`.
               # @param [Boolean] beta Whether to read phone numbers that are new to the Twilio
               #   platform. Can be: `true` or `false` and the default is `true`.
@@ -163,9 +163,9 @@ module Twilio
               #   a phone number search within the same rate center as that number. Requires
               #   `in_lata` to be set as well. Applies to only phone numbers in the US and Canada.
               # @param [String] in_lata Limit results to a specific local access and transport
-              #   area ([LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area)).
+              #   area ([LATA](https://en.wikipedia.org/wiki/Local_access_and_transport_area)).
               #   Given a phone number, search within the same
-              #   [LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area) as that
+              #   [LATA](https://en.wikipedia.org/wiki/Local_access_and_transport_area) as that
               #   number. Applies to only phone numbers in the US and Canada.
               # @param [String] in_locality Limit results to a particular locality or city.
               #   Given a phone number, search within the same Locality as that number.
@@ -228,7 +228,7 @@ module Twilio
               # @param [String] contains The pattern on which to match phone numbers. Valid
               #   characters are `*`, `0-9`, `a-z`, and `A-Z`. The `*` character matches any
               #   single digit. For examples, see [Example
-              #   2](https://www.twilio.com/docs/api/rest/available-phone-numbers#local-get-basic-example-2) and [Example 3](https://www.twilio.com/docs/api/rest/available-phone-numbers#local-get-basic-example-3). If specified, this value must have at least two characters.
+              #   2](https://www.twilio.com/docs/phone-numbers/api/availablephonenumber-resource#local-get-basic-example-2) and [Example 3](https://www.twilio.com/docs/phone-numbers/api/availablephonenumber-resource#local-get-basic-example-3). If specified, this value must have at least two characters.
               # @param [Boolean] sms_enabled Whether the phone numbers can receive text
               #   messages. Can be: `true` or `false`.
               # @param [Boolean] mms_enabled Whether the phone numbers can receive MMS messages.
@@ -236,14 +236,14 @@ module Twilio
               # @param [Boolean] voice_enabled Whether the phone numbers can receive calls. Can
               #   be: `true` or `false`.
               # @param [Boolean] exclude_all_address_required Whether to exclude phone numbers
-              #   that require an [Address](https://www.twilio.com/docs/usage/api/addresses). Can
+              #   that require an [Address](https://www.twilio.com/docs/usage/api/address). Can
               #   be: `true` or `false` and the default is `false`.
               # @param [Boolean] exclude_local_address_required Whether to exclude phone numbers
-              #   that require a local [Address](https://www.twilio.com/docs/usage/api/addresses).
+              #   that require a local [Address](https://www.twilio.com/docs/usage/api/address).
               #   Can be: `true` or `false` and the default is `false`.
               # @param [Boolean] exclude_foreign_address_required Whether to exclude phone
               #   numbers that require a foreign
-              #   [Address](https://www.twilio.com/docs/usage/api/addresses). Can be: `true` or
+              #   [Address](https://www.twilio.com/docs/usage/api/address). Can be: `true` or
               #   `false` and the default is `false`.
               # @param [Boolean] beta Whether to read phone numbers that are new to the Twilio
               #   platform. Can be: `true` or `false` and the default is `true`.
@@ -266,9 +266,9 @@ module Twilio
               #   a phone number search within the same rate center as that number. Requires
               #   `in_lata` to be set as well. Applies to only phone numbers in the US and Canada.
               # @param [String] in_lata Limit results to a specific local access and transport
-              #   area ([LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area)).
+              #   area ([LATA](https://en.wikipedia.org/wiki/Local_access_and_transport_area)).
               #   Given a phone number, search within the same
-              #   [LATA](http://en.wikipedia.org/wiki/Local_access_and_transport_area) as that
+              #   [LATA](https://en.wikipedia.org/wiki/Local_access_and_transport_area) as that
               #   number. Applies to only phone numbers in the US and Canada.
               # @param [String] in_locality Limit results to a particular locality or city.
               #   Given a phone number, search within the same Locality as that number.

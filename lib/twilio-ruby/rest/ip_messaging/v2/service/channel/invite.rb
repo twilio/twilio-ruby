@@ -17,8 +17,8 @@ module Twilio
               # Initialize the InviteList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the Invite resource is
-              #   associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Invite
+              #   resource is associated with.
               # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) the Invite resource belongs
               #   to.
@@ -35,11 +35,12 @@ module Twilio
               # Retrieve a single page of InviteInstance records from the API.
               # Request is executed immediately.
               # @param [String] identity The `identity` value that uniquely identifies the new
-              #   resource's [User](https://www.twilio.com/docs/chat/rest/users) within the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services). See [access
-              #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more info.
+              #   resource's [User](https://www.twilio.com/docs/chat/rest/user-resource) within
+              #   the [Service](https://www.twilio.com/docs/chat/rest/service-resource). See
+              #   [access tokens](https://www.twilio.com/docs/chat/create-tokens) for more info.
               # @param [String] role_sid The SID of the
-              #   [Role](https://www.twilio.com/docs/chat/rest/roles) assigned to the new member.
+              #   [Role](https://www.twilio.com/docs/chat/rest/role-resource) assigned to the new
+              #   member.
               # @return [InviteInstance] Newly created InviteInstance
               def create(identity: nil, role_sid: :unset)
                 data = Twilio::Values.of({'Identity' => identity, 'RoleSid' => role_sid, })
@@ -63,8 +64,8 @@ module Twilio
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
               # @param [String] identity The
-              #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
-              #   resources to read. See [access
+              #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
+              #   of the resources to read. See [access
               #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
@@ -82,8 +83,8 @@ module Twilio
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
               # @param [String] identity The
-              #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
-              #   resources to read. See [access
+              #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
+              #   of the resources to read. See [access
               #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
@@ -118,8 +119,8 @@ module Twilio
               # Retrieve a single page of InviteInstance records from the API.
               # Request is executed immediately.
               # @param [String] identity The
-              #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
-              #   resources to read. See [access
+              #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
+              #   of the resources to read. See [access
               #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
@@ -199,8 +200,8 @@ module Twilio
               # Initialize the InviteContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the Invite
-              #   resource from.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+              #   Invite resource from.
               # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) the Invite resource to
               #   fetch belongs to. This value can be the Channel resource's `sid` or
@@ -264,8 +265,8 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the Invite resource is
-              #   associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Invite
+              #   resource is associated with.
               # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) the Invite resource belongs
               #   to.

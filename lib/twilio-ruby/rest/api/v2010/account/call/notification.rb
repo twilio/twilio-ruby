@@ -17,10 +17,10 @@ module Twilio
               # Initialize the NotificationList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Call
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the Call
               #   Notification resource.
               # @param [String] call_sid The SID of the
-              #   [Call](https://www.twilio.com/docs/api/voice/call) the Call Notification
+              #   [Call](https://www.twilio.com/docs/voice/api/call) the Call Notification
               #   resource is associated with.
               # @return [NotificationList] NotificationList
               def initialize(version, account_sid: nil, call_sid: nil)
@@ -194,9 +194,9 @@ module Twilio
               # Initialize the NotificationContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Call
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the Call
               #   Notification resource to fetch.
-              # @param [String] call_sid The [Call](https://www.twilio.com/docs/api/voice/call)
+              # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call)
               #   SID of the Call Notification resource to fetch.
               # @param [String] sid The Twilio-provided string that uniquely identifies the Call
               #   Notification resource to fetch.
@@ -258,10 +258,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Call
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the Call
               #   Notification resource.
               # @param [String] call_sid The SID of the
-              #   [Call](https://www.twilio.com/docs/api/voice/call) the Call Notification
+              #   [Call](https://www.twilio.com/docs/voice/api/call) the Call Notification
               #   resource is associated with.
               # @param [String] sid The Twilio-provided string that uniquely identifies the Call
               #   Notification resource to fetch.

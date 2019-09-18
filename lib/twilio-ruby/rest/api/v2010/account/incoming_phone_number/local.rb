@@ -17,7 +17,7 @@ module Twilio
               # Initialize the LocalList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
               #   IncomingPhoneNumber resource.
               # @return [LocalList] LocalList
               def initialize(version, account_sid: nil)
@@ -279,7 +279,7 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
               #   IncomingPhoneNumber resource.
               # @return [LocalInstance] LocalInstance
               def initialize(version, payload, account_sid: nil)

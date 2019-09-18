@@ -17,7 +17,7 @@ module Twilio
               # Initialize the FeedbackList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   MessageFeedback resource.
               # @param [String] message_sid The SID of the Message resource for which the
               #   feedback was provided.
@@ -35,9 +35,7 @@ module Twilio
               # Request is executed immediately.
               # @param [feedback.Outcome] outcome Whether the feedback has arrived. Can be:
               #   `unconfirmed` or `confirmed`. If `provide_feedback`=`true` in [the initial HTTP
-              #   POST](https://www.twilio.com/docs/sms/api/message#create-a-message-resource),
-              #   the initial value of this property is `unconfirmed`. After the message arrives,
-              #   update the value to `confirmed`.
+              #   POST](https://www.twilio.com/docs/sms/api/message-resource#create-a-message-resource), the initial value of this property is `unconfirmed`. After the message arrives, update the value to `confirmed`.
               # @return [FeedbackInstance] Newly created FeedbackInstance
               def create(outcome: :unset)
                 data = Twilio::Values.of({'Outcome' => outcome, })
@@ -103,7 +101,7 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   MessageFeedback resource.
               # @param [String] message_sid The SID of the Message resource for which the
               #   feedback was provided.

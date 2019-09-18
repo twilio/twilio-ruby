@@ -17,8 +17,8 @@ module Twilio
               # Initialize the MessageList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the Message resource
-              #   is associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Message
+              #   resource is associated with.
               # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) the Message resource
               #   belongs to.
@@ -216,8 +216,8 @@ module Twilio
               # Initialize the MessageContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the Message
-              #   resource from.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+              #   Message resource from.
               # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) the Message resource to
               #   fetch belongs to. This value can be the Channel resource's `sid` or
@@ -327,8 +327,8 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the Message resource
-              #   is associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Message
+              #   resource is associated with.
               # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) the Message resource
               #   belongs to.

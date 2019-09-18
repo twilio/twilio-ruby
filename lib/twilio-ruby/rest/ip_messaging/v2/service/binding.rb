@@ -16,8 +16,8 @@ module Twilio
             # Initialize the BindingList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the Binding resource
-            #   is associated with.
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Binding
+            #   resource is associated with.
             # @return [BindingList] BindingList
             def initialize(version, service_sid: nil)
               super(version)
@@ -37,8 +37,8 @@ module Twilio
             #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
             #   for more info.
             # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
-            #   resources to read. See [access
+            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
+            #   of the resources to read. See [access
             #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
@@ -66,8 +66,8 @@ module Twilio
             #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
             #   for more info.
             # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
-            #   resources to read. See [access
+            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
+            #   of the resources to read. See [access
             #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
@@ -107,8 +107,8 @@ module Twilio
             #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
             #   for more info.
             # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
-            #   resources to read. See [access
+            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
+            #   of the resources to read. See [access
             #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
@@ -184,8 +184,8 @@ module Twilio
             # Initialize the BindingContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the Binding
-            #   resource from.
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+            #   Binding resource from.
             # @param [String] sid The SID of the Binding resource to fetch.
             # @return [BindingContext] BindingContext
             def initialize(version, service_sid, sid)
@@ -239,8 +239,8 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the Binding resource
-            #   is associated with.
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Binding
+            #   resource is associated with.
             # @param [String] sid The SID of the Binding resource to fetch.
             # @return [BindingInstance] BindingInstance
             def initialize(version, payload, service_sid: nil, sid: nil)

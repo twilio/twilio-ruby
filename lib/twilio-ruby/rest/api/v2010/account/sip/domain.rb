@@ -194,7 +194,7 @@ module Twilio
               # Initialize the DomainContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   SipDomain resource to fetch.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   SipDomain resource to fetch.

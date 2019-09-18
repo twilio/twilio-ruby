@@ -16,7 +16,7 @@ module Twilio
             # Initialize the ValidationRequestList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for the
             #   Caller ID.
             # @return [ValidationRequestList] ValidationRequestList
             def initialize(version, account_sid: nil)
@@ -108,7 +108,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for the
             #   Caller ID.
             # @return [ValidationRequestInstance] ValidationRequestInstance
             def initialize(version, payload, account_sid: nil)

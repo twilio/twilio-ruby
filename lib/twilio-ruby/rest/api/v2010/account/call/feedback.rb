@@ -17,7 +17,7 @@ module Twilio
               # Initialize the FeedbackList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The unique id of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+              #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
               #   resource.
               # @param [String] call_sid The unique string that that we created to identify this
               #   Call resource.
@@ -75,7 +75,7 @@ module Twilio
               # Initialize the FeedbackContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The unique id of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+              #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
               #   resource.
               # @param [String] call_sid The call sid that uniquely identifies the call
               # @return [FeedbackContext] FeedbackContext
@@ -189,7 +189,7 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The unique id of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) responsible for this
+              #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
               #   resource.
               # @param [String] call_sid The unique string that that we created to identify this
               #   Call resource.

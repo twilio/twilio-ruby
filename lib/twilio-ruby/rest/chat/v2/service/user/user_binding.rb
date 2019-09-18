@@ -17,11 +17,11 @@ module Twilio
               # Initialize the UserBindingList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the User Binding
-              #   resource is associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the User
+              #   Binding resource is associated with.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/users) with the User Binding
-              #   resource.  See [push notification
+              #   [User](https://www.twilio.com/docs/chat/rest/user-resource) with the User
+              #   Binding resource.  See [push notification
               #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
               #   for more info.
               # @return [UserBindingList] UserBindingList
@@ -177,11 +177,11 @@ module Twilio
               # Initialize the UserBindingContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the User
-              #   Binding resource from.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+              #   User Binding resource from.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/users) with the User Binding
-              #   resource to fetch.  See [push notification
+              #   [User](https://www.twilio.com/docs/chat/rest/user-resource) with the User
+              #   Binding resource to fetch.  See [push notification
               #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
               #   for more info.
               # @param [String] sid The SID of the User Binding resource to fetch.
@@ -243,11 +243,11 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the User Binding
-              #   resource is associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the User
+              #   Binding resource is associated with.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/users) with the User Binding
-              #   resource.  See [push notification
+              #   [User](https://www.twilio.com/docs/chat/rest/user-resource) with the User
+              #   Binding resource.  See [push notification
               #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
               #   for more info.
               # @param [String] sid The SID of the User Binding resource to fetch.

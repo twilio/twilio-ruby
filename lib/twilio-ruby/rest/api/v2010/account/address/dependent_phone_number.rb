@@ -17,7 +17,7 @@ module Twilio
               # Initialize the DependentPhoneNumberList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   DependentPhoneNumber resource.
               # @param [String] address_sid The unique string that that we created to identify
               #   the Address resource.
@@ -159,7 +159,7 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   DependentPhoneNumber resource.
               # @param [String] address_sid The unique string that that we created to identify
               #   the Address resource.

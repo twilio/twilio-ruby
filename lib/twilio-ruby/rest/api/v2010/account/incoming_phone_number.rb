@@ -16,7 +16,7 @@ module Twilio
             # Initialize the IncomingPhoneNumberList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
             #   IncomingPhoneNumber resource.
             # @return [IncomingPhoneNumberList] IncomingPhoneNumberList
             def initialize(version, account_sid: nil)
@@ -331,7 +331,7 @@ module Twilio
             # Initialize the IncomingPhoneNumberContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
             #   IncomingPhoneNumber resource to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   IncomingPhoneNumber resource to fetch.
@@ -350,7 +350,7 @@ module Twilio
             ##
             # Update the IncomingPhoneNumberInstance
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
             #   IncomingPhoneNumber resource to update.  For more information, see [Exchanging
             #   Numbers Between
             #   Subaccounts](https://www.twilio.com/docs/iam/api/subaccounts#exchanging-numbers).
@@ -520,7 +520,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that created this
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
             #   IncomingPhoneNumber resource.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   IncomingPhoneNumber resource to fetch.
@@ -761,7 +761,7 @@ module Twilio
             ##
             # Update the IncomingPhoneNumberInstance
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
             #   IncomingPhoneNumber resource to update.  For more information, see [Exchanging
             #   Numbers Between
             #   Subaccounts](https://www.twilio.com/docs/iam/api/subaccounts#exchanging-numbers).

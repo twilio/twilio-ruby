@@ -17,7 +17,7 @@ module Twilio
               # Initialize the MemberList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Queue
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created this Queue
               #   resource.
               # @param [String] queue_sid The SID of the Queue the member is in.
               # @return [MemberList] MemberList
@@ -157,11 +157,11 @@ module Twilio
               # Initialize the MemberContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Member
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the Member
               #   resource(s) to fetch.
               # @param [String] queue_sid The SID of the Queue in which to find the members to
               #   fetch.
-              # @param [String] call_sid The [Call](https://www.twilio.com/docs/api/voice/call)
+              # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call)
               #   SID of the resource(s) to fetch.
               # @return [MemberContext] MemberContext
               def initialize(version, account_sid, queue_sid, call_sid)
@@ -239,10 +239,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created this Queue
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created this Queue
               #   resource.
               # @param [String] queue_sid The SID of the Queue the member is in.
-              # @param [String] call_sid The [Call](https://www.twilio.com/docs/api/voice/call)
+              # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call)
               #   SID of the resource(s) to fetch.
               # @return [MemberInstance] MemberInstance
               def initialize(version, payload, account_sid: nil, queue_sid: nil, call_sid: nil)

@@ -17,7 +17,7 @@ module Twilio
               # Initialize the TranscriptionList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   Transcription resource.
               # @param [String] recording_sid The SID of the
               #   [Recording](https://www.twilio.com/docs/voice/api/recording) from which the
@@ -159,7 +159,7 @@ module Twilio
               # Initialize the TranscriptionContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   Transcription resource to fetch.
               # @param [String] recording_sid The SID of the
               #   [Recording](https://www.twilio.com/docs/voice/api/recording) that created the
@@ -224,7 +224,7 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   Transcription resource.
               # @param [String] recording_sid The SID of the
               #   [Recording](https://www.twilio.com/docs/voice/api/recording) from which the

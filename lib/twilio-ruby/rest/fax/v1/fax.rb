@@ -161,13 +161,15 @@ module Twilio
           #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format or the
           #   recipient's SIP URI.
           # @param [String] media_url The Twilio-hosted URL of the PDF that contains the
-          #   fax. See our [security](https://www.twilio.com/docs/security) page for
+          #   fax. See our [security](https://www.twilio.com/docs/usage/security) page for
           #   information on how to ensure the request for your media comes from Twilio.
           # @param [fax.Quality] quality The [Fax Quality
-          #   value](https://www.twilio.com/docs/api/fax/rest/faxes-resource#fax-quality-values) that describes the fax quality. Can be: `standard`, `fine`, or `superfine` and defaults to `fine`.
+          #   value](https://www.twilio.com/docs/fax/api/faxes-resource#fax-quality-values)
+          #   that describes the fax quality. Can be: `standard`, `fine`, or `superfine` and
+          #   defaults to `fine`.
           # @param [String] status_callback The URL we should call using the `POST` method
           #   to send [status
-          #   information](https://www.twilio.com/docs/api/fax/rest/faxes-resource#fax-status-callback) to your application when the status of the fax changes.
+          #   information](https://www.twilio.com/docs/fax/api/faxes-resource#fax-status-callback) to your application when the status of the fax changes.
           # @param [String] from The number the fax was sent from. Can be the phone number
           #   in [E.164](https://www.twilio.com/docs/glossary/what-e164) format or the SIP
           #   `from` value. The caller ID displayed to the recipient uses this value. If this
@@ -283,7 +285,9 @@ module Twilio
           ##
           # Update the FaxInstance
           # @param [fax.UpdateStatus] status The new
-          #   [status](https://www.twilio.com/docs/api/fax/rest/faxes-resource#fax-status-values) of the resource. Can be only `canceled`. This may fail if transmission has already started.
+          #   [status](https://www.twilio.com/docs/fax/api/faxes-resource#fax-status-values)
+          #   of the resource. Can be only `canceled`. This may fail if transmission has
+          #   already started.
           # @return [FaxInstance] Updated FaxInstance
           def update(status: :unset)
             data = Twilio::Values.of({'Status' => status, })
@@ -506,7 +510,9 @@ module Twilio
           ##
           # Update the FaxInstance
           # @param [fax.UpdateStatus] status The new
-          #   [status](https://www.twilio.com/docs/api/fax/rest/faxes-resource#fax-status-values) of the resource. Can be only `canceled`. This may fail if transmission has already started.
+          #   [status](https://www.twilio.com/docs/fax/api/faxes-resource#fax-status-values)
+          #   of the resource. Can be only `canceled`. This may fail if transmission has
+          #   already started.
           # @return [FaxInstance] Updated FaxInstance
           def update(status: :unset)
             context.update(status: status, )

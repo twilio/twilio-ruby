@@ -20,7 +20,7 @@ module Twilio
                     # Initialize the AuthCallsCredentialListMappingList
                     # @param [Version] version Version that contains the resource
                     # @param [String] account_sid The SID of the
-                    #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                    #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
                     #   SipDomain resource.
                     # @param [String] domain_sid The unique string that that we created to identify
                     #   the SipDomain resource.
@@ -184,7 +184,7 @@ module Twilio
                     # Initialize the AuthCallsCredentialListMappingContext
                     # @param [Version] version Version that contains the resource
                     # @param [String] account_sid The SID of the
-                    #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                    #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
                     #   CredentialListMapping resource to fetch.
                     # @param [String] domain_sid The SID of the SIP domain that contains the resource
                     #   to fetch.
@@ -248,7 +248,7 @@ module Twilio
                     # @param [Version] version Version that contains the resource
                     # @param [Hash] payload payload that contains response from Twilio
                     # @param [String] account_sid The SID of the
-                    #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+                    #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
                     #   SipDomain resource.
                     # @param [String] domain_sid The unique string that that we created to identify
                     #   the SipDomain resource.

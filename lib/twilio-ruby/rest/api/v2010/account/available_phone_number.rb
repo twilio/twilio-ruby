@@ -149,7 +149,7 @@ module Twilio
             # Initialize the AvailablePhoneNumberCountryContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) requesting the available
+            #   [Account](https://www.twilio.com/docs/iam/api/account) requesting the available
             #   phone number Country resource.
             # @param [String] country_code The
             #   [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of

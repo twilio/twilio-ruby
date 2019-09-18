@@ -77,7 +77,7 @@ module Twilio
           ##
           # Fetch a PhoneNumberInstance
           # @param [String] country_code The [ISO country
-          #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the phone number to
+          #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the phone number to
           #   fetch. This is used to specify the country when the phone number is provided in
           #   a national format.
           # @param [String] type The type of information to return. Can be: `carrier` or
@@ -90,7 +90,7 @@ module Twilio
           #   Can be the `unique_name` of an Add-on that is installed on your account. You can
           #   specify multiple instances of this parameter to invoke multiple Add-ons. For
           #   more information about  Add-ons, see the [Add-ons
-          #   documentation](https://www.twilio.com/docs/api/addons).
+          #   documentation](https://www.twilio.com/docs/add-ons).
           # @param [Hash] add_ons_data Data specific to the add-on you would like to invoke.
           #   The content and format of this value depends on the add-on.
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
@@ -210,7 +210,7 @@ module Twilio
           ##
           # Fetch a PhoneNumberInstance
           # @param [String] country_code The [ISO country
-          #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the phone number to
+          #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the phone number to
           #   fetch. This is used to specify the country when the phone number is provided in
           #   a national format.
           # @param [String] type The type of information to return. Can be: `carrier` or
@@ -223,7 +223,7 @@ module Twilio
           #   Can be the `unique_name` of an Add-on that is installed on your account. You can
           #   specify multiple instances of this parameter to invoke multiple Add-ons. For
           #   more information about  Add-ons, see the [Add-ons
-          #   documentation](https://www.twilio.com/docs/api/addons).
+          #   documentation](https://www.twilio.com/docs/add-ons).
           # @param [Hash] add_ons_data Data specific to the add-on you would like to invoke.
           #   The content and format of this value depends on the add-on.
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance

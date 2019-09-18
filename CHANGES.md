@@ -1,6 +1,27 @@
 twilio-ruby changelog
 =====================
 
+[2019-09-18] Version 5.27.0
+----------------------------
+**Library**
+- [PR #470](https://github.com/twilio/twilio-ruby/pull/470): breaking: Catch and wrap Faraday client errors. Thanks to [@childish-sambino](https://github.com/childish-sambino)! **(breaking change)**
+- [PR #471](https://github.com/twilio/twilio-ruby/pull/471): Drop support for Ruby < 2.4 and add 2.6. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #468](https://github.com/twilio/twilio-ruby/pull/468): Add URI encoding for phone numbers. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #469](https://github.com/twilio/twilio-ruby/pull/469): Add TwiML FaxResponse require to top-level file. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #450](https://github.com/twilio/twilio-ruby/pull/450): Update encode64 to strict_encode64 in RequestValidator#build_signature_for. Thanks to [@kitallis](https://github.com/kitallis)!
+- [PR #467](https://github.com/twilio/twilio-ruby/pull/467): Add a global configuration for the HTTP client. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #466](https://github.com/twilio/twilio-ruby/pull/466): Use the 'base_url' instead of the 'host' for HTTP client URL. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Numbers**
+- Add v2 of the Identites API
+
+**Preview**
+- Changed authentication method for SDK Trusted Comms endpoints: `/CPS`, `/CurrentCall`, and `/Devices`. Please use `Authorization: Bearer <xCNAM JWT>` **(breaking change)**
+
+**Voice**
+- Add Recordings endpoints
+
+
 [2019-09-04] Version 5.26.0
 ----------------------------
 **Library**

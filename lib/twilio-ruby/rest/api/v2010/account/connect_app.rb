@@ -16,7 +16,7 @@ module Twilio
             # Initialize the ConnectAppList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
             #   ConnectApp resource.
             # @return [ConnectAppList] ConnectAppList
             def initialize(version, account_sid: nil)
@@ -150,7 +150,7 @@ module Twilio
             # Initialize the ConnectAppContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
             #   ConnectApp resource to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   ConnectApp resource to fetch.
@@ -255,7 +255,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
             #   ConnectApp resource.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   ConnectApp resource to fetch.

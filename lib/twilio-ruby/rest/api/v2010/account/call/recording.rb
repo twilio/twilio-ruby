@@ -17,10 +17,10 @@ module Twilio
               # Initialize the RecordingList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   Recording resource.
               # @param [String] call_sid The SID of the
-              #   [Call](https://www.twilio.com/docs/api/voice/call) the Recording resource is
+              #   [Call](https://www.twilio.com/docs/voice/api/call) the Recording resource is
               #   associated with.
               # @return [RecordingList] RecordingList
               def initialize(version, account_sid: nil, call_sid: nil)
@@ -229,9 +229,9 @@ module Twilio
               # Initialize the RecordingContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   Recording resource to fetch.
-              # @param [String] call_sid The [Call](https://www.twilio.com/docs/api/voice/call)
+              # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call)
               #   SID of the resource to fetch.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Recording resource to fetch.
@@ -321,10 +321,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   Recording resource.
               # @param [String] call_sid The SID of the
-              #   [Call](https://www.twilio.com/docs/api/voice/call) the Recording resource is
+              #   [Call](https://www.twilio.com/docs/voice/api/call) the Recording resource is
               #   associated with.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Recording resource to fetch.

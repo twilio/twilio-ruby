@@ -16,7 +16,7 @@ module Twilio
             # Initialize the MessageList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that sent the message
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that sent the message
             #   that created the resource.
             # @return [MessageList] MessageList
             def initialize(version, account_sid: nil)
@@ -61,8 +61,8 @@ module Twilio
             # @param [Boolean] provide_feedback Whether to confirm delivery of the message.
             #   Set this value to `true` if you are sending messages that have a trackable user
             #   action and you intend to confirm delivery of the message using the [Message
-            #   Feedback API](https://www.twilio.com/docs/sms/api/message-feedback). This
-            #   parameter is `false` by default.
+            #   Feedback API](https://www.twilio.com/docs/sms/api/message-feedback-resource).
+            #   This parameter is `false` by default.
             # @param [String] validity_period How long in seconds the message can remain in
             #   our outgoing message queue. After this period elapses, the message fails and we
             #   call your status callback. Can be between 1 and the default value of 14,400
@@ -75,7 +75,7 @@ module Twilio
             # @param [String] from A Twilio phone number in
             #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, an [alphanumeric
             #   sender
-            #   ID](https://www.twilio.com/docs/sms/send-messages#use-an-alphanumeric-sender-id), or a [Channel Endpoint address](https://www.twilio.com/docs/sms/channels#channel-addresses) that is enabled for the type of message you want to send. Phone numbers or [short codes](https://www.twilio.com/docs/sms/api/short-codes) purchased from Twilio also work here. You cannot, for example, spoof messages from a private cell phone number. If you are using `messaging_service_sid`, this parameter must be empty.
+            #   ID](https://www.twilio.com/docs/sms/send-messages#use-an-alphanumeric-sender-id), or a [Channel Endpoint address](https://www.twilio.com/docs/sms/channels#channel-addresses) that is enabled for the type of message you want to send. Phone numbers or [short codes](https://www.twilio.com/docs/sms/api/short-code) purchased from Twilio also work here. You cannot, for example, spoof messages from a private cell phone number. If you are using `messaging_service_sid`, this parameter must be empty.
             # @param [String] messaging_service_sid The SID of the [Messaging
             #   Service](https://www.twilio.com/docs/sms/services#send-a-message-with-copilot)
             #   you want to associate with the Message. Set this parameter to use the [Messaging
@@ -281,7 +281,7 @@ module Twilio
             # Initialize the MessageContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that created the Message
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the Message
             #   resource to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Message resource to fetch.
@@ -392,7 +392,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that sent the message
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that sent the message
             #   that created the resource.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Message resource to fetch.

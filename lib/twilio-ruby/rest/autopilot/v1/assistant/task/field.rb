@@ -119,7 +119,7 @@ module Twilio
               # Retrieve a single page of FieldInstance records from the API.
               # Request is executed immediately.
               # @param [String] field_type The Field Type of the new field. Can be: a [Built-in
-              #   Field Type](https://www.twilio.com/docs/assistant/api/built-in-field-types), the
+              #   Field Type](https://www.twilio.com/docs/autopilot/built-in-field-types), the
               #   `unique_name`, or the `sid` of a custom Field Type.
               # @param [String] unique_name An application-defined string that uniquely
               #   identifies the new resource. This value must be a unique string of no more than

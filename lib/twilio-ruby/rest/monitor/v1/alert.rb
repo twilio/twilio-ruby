@@ -195,7 +195,7 @@ module Twilio
           ##
           # Initialize the AlertContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this Alert.
           # @return [AlertContext] AlertContext
           def initialize(version, sid)
             super(version)
@@ -221,13 +221,6 @@ module Twilio
           end
 
           ##
-          # Deletes the AlertInstance
-          # @return [Boolean] true if delete succeeds, false otherwise
-          def delete
-            @version.delete('delete', @uri)
-          end
-
-          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -247,7 +240,7 @@ module Twilio
           # Initialize the AlertInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this Alert.
           # @return [AlertInstance] AlertInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -268,9 +261,11 @@ module Twilio
                 'resource_sid' => payload['resource_sid'],
                 'sid' => payload['sid'],
                 'url' => payload['url'],
+                'service_sid' => payload['service_sid'],
                 'request_variables' => payload['request_variables'],
                 'response_body' => payload['response_body'],
                 'response_headers' => payload['response_headers'],
+                'request_headers' => payload['request_headers'],
             }
 
             # Context
@@ -392,17 +387,22 @@ module Twilio
           end
 
           ##
+          # @return [String] The request_headers
+          def request_headers
+            @properties['request_headers']
+          end
+
+          ##
+          # @return [String] The service_sid
+          def service_sid
+            @properties['service_sid']
+          end
+
+          ##
           # Fetch a AlertInstance
           # @return [AlertInstance] Fetched AlertInstance
           def fetch
             context.fetch
-          end
-
-          ##
-          # Deletes the AlertInstance
-          # @return [Boolean] true if delete succeeds, false otherwise
-          def delete
-            context.delete
           end
 
           ##

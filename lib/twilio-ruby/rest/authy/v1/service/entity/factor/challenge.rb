@@ -36,7 +36,7 @@ module Twilio
                 # Retrieve a single page of ChallengeInstance records from the API.
                 # Request is executed immediately.
                 # @param [Time] expiration_date The future date in which this Challenge will
-                #   expire, given in ISO 8601 format (https://en.wikipedia.org/wiki/ISO_8601).
+                #   expire, given in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
                 # @param [String] details Details provided to give context about the Challenge.
                 #   Shown to the end user.
                 # @param [String] hidden_details Details provided to give context about the

@@ -44,8 +44,10 @@ describe 'Alert' do
           "resource_sid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "response_body": "response_body",
           "response_headers": "response_headers",
+          "request_headers": "request_headers",
           "sid": "NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "url": "https://monitor.twilio.com/v1/Alerts/NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://monitor.twilio.com/v1/Alerts/NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "PNe2cd757cd5257b0217a447933a0290d2"
       }
       ]
     ))
@@ -53,32 +55,6 @@ describe 'Alert' do
     actual = @client.monitor.v1.alerts('NOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
-  end
-
-  it "can delete" do
-    @holodeck.mock(Twilio::Response.new(500, ''))
-
-    expect {
-      @client.monitor.v1.alerts('NOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
-    }.to raise_exception(Twilio::REST::TwilioError)
-
-    values = {}
-    expect(
-    @holodeck.has_request?(Holodeck::Request.new(
-        method: 'delete',
-        url: 'https://monitor.twilio.com/v1/Alerts/NOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    ))).to eq(true)
-  end
-
-  it "receives delete responses" do
-    @holodeck.mock(Twilio::Response.new(
-        204,
-      nil,
-    ))
-
-    actual = @client.monitor.v1.alerts('NOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
-
-    expect(actual).to eq(true)
   end
 
   it "can read" do
@@ -140,7 +116,8 @@ describe 'Alert' do
                   "request_url": "http://www.example.com",
                   "resource_sid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "sid": "NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                  "url": "https://monitor.twilio.com/v1/Alerts/NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  "url": "https://monitor.twilio.com/v1/Alerts/NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "service_sid": "PNe2cd757cd5257b0217a447933a0290d2"
               }
           ],
           "meta": {

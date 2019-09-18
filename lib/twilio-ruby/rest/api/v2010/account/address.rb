@@ -16,7 +16,7 @@ module Twilio
             # Initialize the AddressList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that is responsible for
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that is responsible for
             #   the Address resource.
             # @return [AddressList] AddressList
             def initialize(version, account_sid: nil)
@@ -222,7 +222,7 @@ module Twilio
             # Initialize the AddressContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that is responsible for
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that is responsible for
             #   the Address resource to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Address resource to fetch.
@@ -334,7 +334,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/api/rest/account) that is responsible for
+            #   [Account](https://www.twilio.com/docs/iam/api/account) that is responsible for
             #   the Address resource.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Address resource to fetch.

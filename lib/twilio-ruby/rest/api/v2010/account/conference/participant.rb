@@ -17,7 +17,7 @@ module Twilio
               # Initialize the ParticipantList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   Participant resource.
               # @param [String] conference_sid The SID of the conference the participant is in.
               # @return [ParticipantList] ParticipantList
@@ -333,11 +333,11 @@ module Twilio
               # Initialize the ParticipantContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   Participant resource to fetch.
               # @param [String] conference_sid The SID of the conference with the participant to
               #   fetch.
-              # @param [String] call_sid The [Call](https://www.twilio.com/docs/api/voice/call)
+              # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call)
               #   SID of the resource to fetch.
               # @return [ParticipantContext] ParticipantContext
               def initialize(version, account_sid, conference_sid, call_sid)
@@ -465,10 +465,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/api/rest/account) that created the
+              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   Participant resource.
               # @param [String] conference_sid The SID of the conference the participant is in.
-              # @param [String] call_sid The [Call](https://www.twilio.com/docs/api/voice/call)
+              # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call)
               #   SID of the resource to fetch.
               # @return [ParticipantInstance] ParticipantInstance
               def initialize(version, payload, account_sid: nil, conference_sid: nil, call_sid: nil)

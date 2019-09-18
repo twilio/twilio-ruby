@@ -16,8 +16,8 @@ module Twilio
             # Initialize the ChannelList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the Channel resource
-            #   is associated with.
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Channel
+            #   resource is associated with.
             # @return [ChannelList] ChannelList
             def initialize(version, service_sid: nil)
               super(version)
@@ -203,8 +203,8 @@ module Twilio
             # Initialize the ChannelContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) to fetch the Channel
-            #   resource from.
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+            #   Channel resource from.
             # @param [String] sid The SID of the Channel resource to fetch. This value can be
             #   either the `sid` or the `unique_name` of the Channel resource to fetch.
             # @return [ChannelContext] ChannelContext
@@ -393,8 +393,8 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/services) the Channel resource
-            #   is associated with.
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Channel
+            #   resource is associated with.
             # @param [String] sid The SID of the Channel resource to fetch. This value can be
             #   either the `sid` or the `unique_name` of the Channel resource to fetch.
             # @return [ChannelInstance] ChannelInstance

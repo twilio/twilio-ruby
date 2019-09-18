@@ -20,7 +20,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The sid
+        # @param [String] sid A 34 character string that uniquely identifies this Alert.
         # @return [Twilio::REST::Monitor::V1::AlertContext] if sid was passed.
         # @return [Twilio::REST::Monitor::V1::AlertList]
         def alerts(sid=:unset)

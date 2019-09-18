@@ -17,8 +17,8 @@ module Twilio
               # Initialize the WebhookList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the Channel Webhook
-              #   resource is associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Channel
+              #   Webhook resource is associated with.
               # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) the Channel Webhook
               #   resource belongs to.
@@ -209,8 +209,8 @@ module Twilio
               # Initialize the WebhookContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) with the Channel to
-              #   fetch the Webhook resource from.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) with the
+              #   Channel to fetch the Webhook resource from.
               # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) the Channel Webhook
               #   resource to fetch belongs to. This value can be the Channel resource's `sid` or
@@ -321,8 +321,8 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/services) the Channel Webhook
-              #   resource is associated with.
+              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Channel
+              #   Webhook resource is associated with.
               # @param [String] channel_sid The SID of the
               #   [Channel](https://www.twilio.com/docs/chat/channels) the Channel Webhook
               #   resource belongs to.
