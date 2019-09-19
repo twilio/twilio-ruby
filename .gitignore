@@ -3,6 +3,7 @@
 !.rubocop_todo.yml
 !.rubocop.yml
 !.travis.yml
+!.dockerignore
 pkg/*
 doc/*
 Gemfile.lock
