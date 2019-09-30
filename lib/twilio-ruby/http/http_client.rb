@@ -54,7 +54,7 @@ module Twilio
         @connection.send(request.method.downcase.to_sym,
                          request.url,
                          request.method == 'GET' ? request.params : request.data)
-      rescue Faraday::ClientError => e
+      rescue Faraday::Error => e
         raise Twilio::REST::TwilioError, e
       end
 
