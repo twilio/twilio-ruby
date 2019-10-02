@@ -29,7 +29,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The unique SID identifier of this Service.
+      # @param [String] sid The unique string that we created to identify the Service
+      #   resource.
       # @return [Twilio::REST::Serverless::V1::ServiceInstance] if sid was passed.
       # @return [Twilio::REST::Serverless::V1::ServiceList]
       def services(sid=:unset)

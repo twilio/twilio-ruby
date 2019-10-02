@@ -1,6 +1,19 @@
 twilio-ruby changelog
 =====================
 
+[2019-10-02] Version 5.27.1
+---------------------------
+**Library**
+- [PR #473](https://github.com/twilio/twilio-ruby/pull/473): Wrap any Faraday error as a TwilioError. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #472](https://github.com/twilio/twilio-ruby/pull/472): Fix the Dockerfile to use the latest Ruby 2.4 and ignore the Gem lock file. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Conversations**
+- Add media to Conversations Message resource
+
+**Supersim**
+- Add List endpoint to Sims resource for Super Sim Pilot
+
+
 [2019-09-18] Version 5.27.0
 ----------------------------
 **Library**

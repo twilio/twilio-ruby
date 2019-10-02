@@ -81,7 +81,7 @@ module Twilio
             # @param [Hash] gcm The GCM-specific payload that overrides corresponding
             #   attributes in the generic payload for GCM Bindings.  This property maps to the
             #   root JSON dictionary. See the [GCM
-            #   documentation](https://developers.google.com/cloud-messaging/http-server-ref)
+            #   documentation](https://firebase.google.com/docs/cloud-messaging/http-server-ref)
             #   for more details. Target parameters `to`, `registration_ids`, and
             #   `notification_key` are not allowed. We reserve keys that start with `twi_` for
             #   future use. Custom keys that start with `twi_` are not allowed. GCM also
@@ -108,8 +108,8 @@ module Twilio
             #   request entity should not exceed 1MB. This is typically sufficient for 10,000
             #   phone numbers.
             # @param [String] identity The `identity` value that uniquely identifies the new
-            #   resource's [User](https://www.twilio.com/docs/chat/rest/users) within the
-            #   [Service](https://www.twilio.com/docs/notify/api/service-resource). Delivery
+            #   resource's [User](https://www.twilio.com/docs/chat/rest/user-resource) within
+            #   the [Service](https://www.twilio.com/docs/notify/api/service-resource). Delivery
             #   will be attempted only to Bindings with an Identity in this list. No more than
             #   20 items are allowed in this list.
             # @param [String] tag A tag that selects the Bindings to notify. Repeat this

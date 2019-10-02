@@ -17,7 +17,9 @@ module Twilio
             ##
             # Initialize the PhoneNumberList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The 34 character unique sid of the Service.
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the resource
+            #   is associated with.
             # @return [PhoneNumberList] PhoneNumberList
             def initialize(version, service_sid: nil)
               super(version)
@@ -30,8 +32,8 @@ module Twilio
             ##
             # Retrieve a single page of PhoneNumberInstance records from the API.
             # Request is executed immediately.
-            # @param [String] phone_number_sid Phone Number SID for the Phone Number being
-            #   added to the Service.
+            # @param [String] phone_number_sid The SID of the Phone Number being added to the
+            #   Service.
             # @return [PhoneNumberInstance] Newly created PhoneNumberInstance
             def create(phone_number_sid: nil)
               data = Twilio::Values.of({'PhoneNumberSid' => phone_number_sid, })
@@ -171,8 +173,10 @@ module Twilio
             ##
             # Initialize the PhoneNumberContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+            #   resource from.
+            # @param [String] sid The SID of the PhoneNumber resource to fetch.
             # @return [PhoneNumberContext] PhoneNumberContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -231,8 +235,10 @@ module Twilio
             # Initialize the PhoneNumberInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The 34 character unique sid of the Service.
-            # @param [String] sid The sid
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the resource
+            #   is associated with.
+            # @param [String] sid The SID of the PhoneNumber resource to fetch.
             # @return [PhoneNumberInstance] PhoneNumberInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -267,55 +273,55 @@ module Twilio
             end
 
             ##
-            # @return [String] The 34 character unique sid of the Phone Number.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The 34 character unique sid of the Account.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The 34 character unique sid of the Service.
+            # @return [String] The SID of the Service that the resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [Time] The date that this resource was created.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date that this resource was last updated.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The E.
+            # @return [String] The phone number in E.164 format
             def phone_number
               @properties['phone_number']
             end
 
             ##
-            # @return [String] The 2 character ISO Country Code of the number.
+            # @return [String] The 2-character ISO Country Code of the number
             def country_code
               @properties['country_code']
             end
 
             ##
-            # @return [String] Any array of values that indicate whether the number can receive calls or messages.
+            # @return [String] An array of values that describe whether the number can receive calls or messages
             def capabilities
               @properties['capabilities']
             end
 
             ##
-            # @return [String] The absolute URL for this resource.
+            # @return [String] The absolute URL of the PhoneNumber resource
             def url
               @properties['url']
             end

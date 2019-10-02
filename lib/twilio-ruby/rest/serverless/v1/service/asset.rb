@@ -17,8 +17,8 @@ module Twilio
             ##
             # Initialize the AssetList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the Service for this
-            #   Asset.
+            # @param [String] service_sid The SID of the Service that the Asset resource is
+            #   associated with.
             # @return [AssetList] AssetList
             def initialize(version, service_sid: nil)
               super(version)
@@ -113,8 +113,8 @@ module Twilio
             ##
             # Retrieve a single page of AssetInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name A human-readable description of this Asset, fewer
-            #   than 256 characters. Required.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the Asset resource. It can be up to 255 characters long.
             # @return [AssetInstance] Newly created AssetInstance
             def create(friendly_name: nil)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -172,9 +172,9 @@ module Twilio
             ##
             # Initialize the AssetContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The unique SID identifier of the Service for this
-            #   Asset.
-            # @param [String] sid The unique SID identifier of this Asset.
+            # @param [String] service_sid The SID of the Service to fetch the Asset resource
+            #   from.
+            # @param [String] sid The SID of the Asset resource to fetch.
             # @return [AssetContext] AssetContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -211,8 +211,8 @@ module Twilio
 
             ##
             # Update the AssetInstance
-            # @param [String] friendly_name A human-readable description of this Asset, fewer
-            #   than 256 characters. Required.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the Asset resource. It can be up to 255 characters long.
             # @return [AssetInstance] Updated AssetInstance
             def update(friendly_name: nil)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -270,9 +270,9 @@ module Twilio
             # Initialize the AssetInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The unique SID identifier of the Service for this
-            #   Asset.
-            # @param [String] sid The unique SID identifier of this Asset.
+            # @param [String] service_sid The SID of the Service that the Asset resource is
+            #   associated with.
+            # @param [String] sid The SID of the Asset resource to fetch.
             # @return [AssetInstance] AssetInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -306,49 +306,49 @@ module Twilio
             end
 
             ##
-            # @return [String] Asset Sid.
+            # @return [String] The unique string that identifies the Asset resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] Account Sid.
+            # @return [String] The SID of the Account that created the Asset resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] Service Sid.
+            # @return [String] The SID of the Service that the Asset resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] A human-readable description of this Asset.
+            # @return [String] The string that you assigned to describe the Asset resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [Time] The date that this Asset was created.
+            # @return [Time] The ISO 8601 date and time in GMT when the Asset resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date that this Asset was updated.
+            # @return [Time] The ISO 8601 date and time in GMT when the Asset resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The URL of this Asset.
+            # @return [String] The absolute URL of the Asset resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] Nested resource URLs.
+            # @return [String] The links to the nested resources of the asset
             def links
               @properties['links']
             end
@@ -369,8 +369,8 @@ module Twilio
 
             ##
             # Update the AssetInstance
-            # @param [String] friendly_name A human-readable description of this Asset, fewer
-            #   than 256 characters. Required.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the Asset resource. It can be up to 255 characters long.
             # @return [AssetInstance] Updated AssetInstance
             def update(friendly_name: nil)
               context.update(friendly_name: friendly_name, )

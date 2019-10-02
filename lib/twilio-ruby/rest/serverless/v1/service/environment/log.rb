@@ -18,10 +18,10 @@ module Twilio
               ##
               # Initialize the LogList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique SID identifier of the Service for this
-              #   Log.
-              # @param [String] environment_sid The unique SID identifier of the Environment in
-              #   which this Log occurred.
+              # @param [String] service_sid The SID of the Service that the Log resource is
+              #   associated with.
+              # @param [String] environment_sid The SID of the environment in which the log
+              #   occurred.
               # @return [LogList] LogList
               def initialize(version, service_sid: nil, environment_sid: nil)
                 super(version)
@@ -35,8 +35,8 @@ module Twilio
               # Lists LogInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] function_sid The unique SID identifier of the Function whose
-              #   invocation produced this Log.
+              # @param [String] function_sid The SID of the function whose invocation produced
+              #   the Log resources to read.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -52,8 +52,8 @@ module Twilio
               # Streams LogInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] function_sid The unique SID identifier of the Function whose
-              #   invocation produced this Log.
+              # @param [String] function_sid The SID of the function whose invocation produced
+              #   the Log resources to read.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -86,8 +86,8 @@ module Twilio
               ##
               # Retrieve a single page of LogInstance records from the API.
               # Request is executed immediately.
-              # @param [String] function_sid The unique SID identifier of the Function whose
-              #   invocation produced this Log.
+              # @param [String] function_sid The SID of the function whose invocation produced
+              #   the Log resources to read.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -169,11 +169,11 @@ module Twilio
               ##
               # Initialize the LogContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique SID identifier of the Service for this
-              #   Log.
-              # @param [String] environment_sid The unique SID identifier of the Environment in
-              #   which this Log occurred.
-              # @param [String] sid The unique SID identifier of this Log.
+              # @param [String] service_sid The SID of the Service to fetch the Log resource
+              #   from.
+              # @param [String] environment_sid The SID of the environment with the Log resource
+              #   to fetch.
+              # @param [String] sid The SID of the Log resource to fetch.
               # @return [LogContext] LogContext
               def initialize(version, service_sid, environment_sid, sid)
                 super(version)
@@ -226,11 +226,11 @@ module Twilio
               # Initialize the LogInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The unique SID identifier of the Service for this
-              #   Log.
-              # @param [String] environment_sid The unique SID identifier of the Environment in
-              #   which this Log occurred.
-              # @param [String] sid The unique SID identifier of this Log.
+              # @param [String] service_sid The SID of the Service that the Log resource is
+              #   associated with.
+              # @param [String] environment_sid The SID of the environment in which the log
+              #   occurred.
+              # @param [String] sid The SID of the Log resource to fetch.
               # @return [LogInstance] LogInstance
               def initialize(version, payload, service_sid: nil, environment_sid: nil, sid: nil)
                 super(version)
@@ -276,67 +276,67 @@ module Twilio
               end
 
               ##
-              # @return [String] Log Sid.
+              # @return [String] The unique string that identifies the Log resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] Account Sid.
+              # @return [String] The SID of the Account that created the Log resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] Service Sid.
+              # @return [String] The SID of the Service that the Log resource is associated with
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] Environment Sid.
+              # @return [String] The SID of the environment in which the log occurred
               def environment_sid
                 @properties['environment_sid']
               end
 
               ##
-              # @return [String] Deployment Sid.
+              # @return [String] The SID of the deployment that corresponds to the log
               def deployment_sid
                 @properties['deployment_sid']
               end
 
               ##
-              # @return [String] Function Sid.
+              # @return [String] The SID of the function whose invocation produced the log
               def function_sid
                 @properties['function_sid']
               end
 
               ##
-              # @return [String] The request_sid
+              # @return [String] The SID of the request associated with the log
               def request_sid
                 @properties['request_sid']
               end
 
               ##
-              # @return [log.Level] The level
+              # @return [log.Level] The log level
               def level
                 @properties['level']
               end
 
               ##
-              # @return [String] The message
+              # @return [String] The log message
               def message
                 @properties['message']
               end
 
               ##
-              # @return [Time] The date that this Log was created.
+              # @return [Time] The ISO 8601 date and time in GMT when the Log resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [String] The URL of this Log.
+              # @return [String] The absolute URL of the Log resource
               def url
                 @properties['url']
               end

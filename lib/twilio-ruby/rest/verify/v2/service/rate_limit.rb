@@ -18,8 +18,8 @@ module Twilio
             # Initialize the RateLimitList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/verify/api-beta/service-beta) the resource
-            #   is associated with.
+            #   [Service](https://www.twilio.com/docs/verify/api/service) the resource is
+            #   associated with.
             # @return [RateLimitList] RateLimitList
             def initialize(version, service_sid: nil)
               super(version)
@@ -176,8 +176,8 @@ module Twilio
             # Initialize the RateLimitContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/verify/api-beta/service-beta) the resource
-            #   is associated with.
+            #   [Service](https://www.twilio.com/docs/verify/api/service) the resource is
+            #   associated with.
             # @param [String] sid The Twilio-provided string that uniquely identifies the Rate
             #   Limit resource to fetch.
             # @return [RateLimitContext] RateLimitContext
@@ -275,8 +275,8 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/verify/api-beta/service-beta) the resource
-            #   is associated with.
+            #   [Service](https://www.twilio.com/docs/verify/api/service) the resource is
+            #   associated with.
             # @param [String] sid The Twilio-provided string that uniquely identifies the Rate
             #   Limit resource to fetch.
             # @return [RateLimitInstance] RateLimitInstance

@@ -28,17 +28,19 @@ module Twilio
           ##
           # Retrieve a single page of SessionInstance records from the API.
           # Request is executed immediately.
-          # @param [String] messaging_service_sid The unique id of the [SMS
-          #   Service](https://www.twilio.com/docs/sms/services/api) this session belongs to.
-          # @param [String] friendly_name The human-readable name of this session. Optional.
-          # @param [String] attributes An optional string metadata field you can use to
-          #   store any data you wish. The string value must contain structurally valid JSON
-          #   if specified.  **Note** that if the attributes are not set "{}" will be
-          #   returned.
-          # @param [Time] date_created The date that this resource was created.
-          # @param [Time] date_updated The date that this resource was last updated.
-          # @param [String] created_by Identity of the session's creator. If the Session was
-          #   created through the API, the value will be `system`
+          # @param [String] messaging_service_sid The SID of the [Messaging
+          #   Service](https://www.twilio.com/docs/sms/services/api) the session belongs to.
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the resource. It can be up to 64 characters long.
+          # @param [String] attributes A JSON string that stores application-specific data.
+          # @param [Time] date_created The date, specified in [ISO
+          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+          #   as the date it was created.
+          # @param [Time] date_updated The date, specified in [ISO
+          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+          #   as the date it was last updated.
+          # @param [String] created_by The Identity of the session's creator. If the Session
+          #   was created through the API, the value will be `system`
           # @return [SessionInstance] Newly created SessionInstance
           def create(messaging_service_sid: nil, friendly_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
             data = Twilio::Values.of({
@@ -185,8 +187,7 @@ module Twilio
           ##
           # Initialize the SessionContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid A 34 character string that uniquely identifies this
-          #   resource.
+          # @param [String] sid The SID of the Session resource to fetch.
           # @return [SessionContext] SessionContext
           def initialize(version, sid)
             super(version)
@@ -225,15 +226,17 @@ module Twilio
 
           ##
           # Update the SessionInstance
-          # @param [String] friendly_name The human-readable name of this session. Optional.
-          # @param [String] attributes An optional string metadata field you can use to
-          #   store any data you wish. The string value must contain structurally valid JSON
-          #   if specified.  **Note** that if the attributes are not set "{}" will be
-          #   returned.
-          # @param [Time] date_created The date that this resource was created.
-          # @param [Time] date_updated The date that this resource was last updated.
-          # @param [String] created_by Identity of the session's creator. If the Session was
-          #   created through the API, the value will be `system`
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the resource. It can be up to 64 characters long.
+          # @param [String] attributes A JSON string that stores application-specific data.
+          # @param [Time] date_created The date, specified in [ISO
+          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+          #   as the date it was created.
+          # @param [Time] date_updated The date, specified in [ISO
+          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+          #   as the date it was last updated.
+          # @param [String] created_by The Identity of the session's creator. If the Session
+          #   was created through the API, the value will be `system`
           # @return [SessionInstance] Updated SessionInstance
           def update(friendly_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
             data = Twilio::Values.of({
@@ -329,8 +332,7 @@ module Twilio
           # Initialize the SessionInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid A 34 character string that uniquely identifies this
-          #   resource.
+          # @param [String] sid The SID of the Session resource to fetch.
           # @return [SessionInstance] SessionInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -367,67 +369,67 @@ module Twilio
           end
 
           ##
-          # @return [String] A 34 character string that uniquely identifies this resource.
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The unique id of the Account responsible for this session.
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The unique id of the Chat Service this session belongs to.
+          # @return [String] The SID of the Service that the resource is associated with
           def service_sid
             @properties['service_sid']
           end
 
           ##
-          # @return [String] The unique id of the SMS Service this session belongs to.
+          # @return [String] The SID of the SMS Service the session belongs to
           def messaging_service_sid
             @properties['messaging_service_sid']
           end
 
           ##
-          # @return [String] The human-readable name of this session.
+          # @return [String] The string that you assigned to describe the resource
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [String] An optional string metadata field you can use to store any data you wish.
+          # @return [String] The JSON string that stores application-specific data
           def attributes
             @properties['attributes']
           end
 
           ##
-          # @return [String] Identity of the session's creator.
+          # @return [String] The Identity of the session's creator
           def created_by
             @properties['created_by']
           end
 
           ##
-          # @return [Time] The date that this resource was created.
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date that this resource was last updated.
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] An absolute URL for this session.
+          # @return [String] The absolute URL of the session
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] Absolute URLs to access the Participants and Messages for this Session.
+          # @return [String] The absolute URLs of the Participants, Interactions, and Messages for the Session
           def links
             @properties['links']
           end
@@ -448,15 +450,17 @@ module Twilio
 
           ##
           # Update the SessionInstance
-          # @param [String] friendly_name The human-readable name of this session. Optional.
-          # @param [String] attributes An optional string metadata field you can use to
-          #   store any data you wish. The string value must contain structurally valid JSON
-          #   if specified.  **Note** that if the attributes are not set "{}" will be
-          #   returned.
-          # @param [Time] date_created The date that this resource was created.
-          # @param [Time] date_updated The date that this resource was last updated.
-          # @param [String] created_by Identity of the session's creator. If the Session was
-          #   created through the API, the value will be `system`
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the resource. It can be up to 64 characters long.
+          # @param [String] attributes A JSON string that stores application-specific data.
+          # @param [Time] date_created The date, specified in [ISO
+          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+          #   as the date it was created.
+          # @param [Time] date_updated The date, specified in [ISO
+          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+          #   as the date it was last updated.
+          # @param [String] created_by The Identity of the session's creator. If the Session
+          #   was created through the API, the value will be `system`
           # @return [SessionInstance] Updated SessionInstance
           def update(friendly_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
             context.update(

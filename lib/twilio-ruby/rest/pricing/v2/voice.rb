@@ -29,8 +29,8 @@ module Twilio
           ##
           # Access the countries
           # @param [String] iso_country The [ISO country
-          #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the origin-based voice
-          #   pricing information to fetch.
+          #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the origin-based
+          #   voice pricing information to fetch.
           # @return [CountryList]
           # @return [CountryContext] if iso_country was passed.
           def countries(iso_country=:unset)

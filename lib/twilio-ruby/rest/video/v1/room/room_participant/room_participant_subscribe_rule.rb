@@ -18,8 +18,8 @@ module Twilio
               ##
               # Initialize the SubscribeRulesList
               # @param [Version] version Version that contains the resource
-              # @param [String] room_sid The unique Room identifier for the Subscribe Rules
-              # @param [String] participant_sid The unique Participant identifier for the
+              # @param [String] room_sid The SID of the Room resource for the Subscribe Rules
+              # @param [String] participant_sid The SID of the Participant resource for the
               #   Subscribe Rules.
               # @return [SubscribeRulesList] SubscribeRulesList
               def initialize(version, room_sid: nil, participant_sid: nil)
@@ -52,7 +52,7 @@ module Twilio
 
               ##
               # Update the SubscribeRulesInstance
-              # @param [Hash] rules A JSON-encoded array of Subscribe Rules. See the [Specifying
+              # @param [Hash] rules A JSON-encoded array of subscribe rules. See the [Specifying
               #   Subscribe
               #   Rules](https://www.twilio.com/docs/video/api/track-subscriptions#specifying-sr)
               #   section for further information.
@@ -124,8 +124,8 @@ module Twilio
               # Initialize the SubscribeRulesInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] room_sid The unique Room identifier for the Subscribe Rules
-              # @param [String] participant_sid The unique Participant identifier for the
+              # @param [String] room_sid The SID of the Room resource for the Subscribe Rules
+              # @param [String] participant_sid The SID of the Participant resource for the
               #   Subscribe Rules.
               # @return [SubscribeRulesInstance] SubscribeRulesInstance
               def initialize(version, payload, room_sid: nil, participant_sid: nil)
@@ -142,31 +142,31 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique Participant identifier for the Subscribe Rules.
+              # @return [String] The SID of the Participant resource for the Subscribe Rules
               def participant_sid
                 @properties['participant_sid']
               end
 
               ##
-              # @return [String] The unique Room identifier for the Subscribe Rules
+              # @return [String] The SID of the Room resource for the Subscribe Rules
               def room_sid
                 @properties['room_sid']
               end
 
               ##
-              # @return [String] A collection of Subscribe Rules to include or exclude matching Tracks.
+              # @return [String] A collection of Subscribe Rules that describe how to include or exclude matching tracks
               def rules
                 @properties['rules']
               end
 
               ##
-              # @return [Time] The date that this resource was created.
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date that this resource was last updated.
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
               def date_updated
                 @properties['date_updated']
               end

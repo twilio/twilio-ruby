@@ -29,8 +29,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid `HKxx…xx` A system-generated 34-character string that
-      #   uniquely identifies this Composition Hook.
+      # @param [String] sid The unique string that we created to identify the
+      #   CompositionHook resource.
       # @return [Twilio::REST::Video::V1::CompositionHookInstance] if sid was passed.
       # @return [Twilio::REST::Video::V1::CompositionHookList]
       def composition_hooks(sid=:unset)
@@ -44,8 +44,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid `RTxx…xx` A system-generated 34-character string that
-      #   uniquely identifies this Recording.
+      # @param [String] sid The unique string that we created to identify the Recording
+      #   resource.
       # @return [Twilio::REST::Video::V1::RecordingInstance] if sid was passed.
       # @return [Twilio::REST::Video::V1::RecordingList]
       def recordings(sid=:unset)
@@ -59,8 +59,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid `CJxx…xx` A system-generated 34-character string that
-      #   uniquely identifies this Composition.
+      # @param [String] sid The unique string that we created to identify the
+      #   Composition resource.
       # @return [Twilio::REST::Video::V1::CompositionInstance] if sid was passed.
       # @return [Twilio::REST::Video::V1::CompositionList]
       def compositions(sid=:unset)
@@ -68,8 +68,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A system-generated 34-character string that uniquely
-      #   identifies this resource.
+      # @param [String] sid The unique string that we created to identify the Room
+      #   resource.
       # @return [Twilio::REST::Video::V1::RoomInstance] if sid was passed.
       # @return [Twilio::REST::Video::V1::RoomList]
       def rooms(sid=:unset)

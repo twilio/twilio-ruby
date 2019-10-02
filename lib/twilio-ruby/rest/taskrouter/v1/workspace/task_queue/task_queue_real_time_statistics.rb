@@ -16,8 +16,10 @@ module Twilio
               ##
               # Initialize the TaskQueueRealTimeStatisticsList
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] task_queue_sid The task_queue_sid
+              # @param [String] workspace_sid The SID of the Workspace that contains the
+              #   TaskQueue.
+              # @param [String] task_queue_sid The SID of the TaskQueue from which these
+              #   statistics were calculated.
               # @return [TaskQueueRealTimeStatisticsList] TaskQueueRealTimeStatisticsList
               def initialize(version, workspace_sid: nil, task_queue_sid: nil)
                 super(version)
@@ -71,8 +73,10 @@ module Twilio
               ##
               # Initialize the TaskQueueRealTimeStatisticsContext
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] task_queue_sid The task_queue_sid
+              # @param [String] workspace_sid The SID of the Workspace with the TaskQueue to
+              #   fetch.
+              # @param [String] task_queue_sid The SID of the TaskQueue for which to fetch
+              #   statistics.
               # @return [TaskQueueRealTimeStatisticsContext] TaskQueueRealTimeStatisticsContext
               def initialize(version, workspace_sid, task_queue_sid)
                 super(version)
@@ -84,9 +88,9 @@ module Twilio
 
               ##
               # Fetch a TaskQueueRealTimeStatisticsInstance
-              # @param [String] task_channel Filter real-time and cumulative statistics by
-              #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
-              #   TaskChannelSid.
+              # @param [String] task_channel The TaskChannel for which to fetch statistics. Can
+              #   be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or
+              #   `default`.
               # @return [TaskQueueRealTimeStatisticsInstance] Fetched TaskQueueRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
                 params = Twilio::Values.of({'TaskChannel' => task_channel, })
@@ -125,8 +129,10 @@ module Twilio
               # Initialize the TaskQueueRealTimeStatisticsInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] task_queue_sid The task_queue_sid
+              # @param [String] workspace_sid The SID of the Workspace that contains the
+              #   TaskQueue.
+              # @param [String] task_queue_sid The SID of the TaskQueue from which these
+              #   statistics were calculated.
               # @return [TaskQueueRealTimeStatisticsInstance] TaskQueueRealTimeStatisticsInstance
               def initialize(version, payload, workspace_sid: nil, task_queue_sid: nil)
                 super(version)
@@ -168,13 +174,13 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [Hash] The current Worker status count breakdown by Activity
+              # @return [Hash] The number of current Workers by Activity
               def activity_statistics
                 @properties['activity_statistics']
               end
@@ -192,31 +198,31 @@ module Twilio
               end
 
               ##
-              # @return [String] The task_queue_sid
+              # @return [String] The SID of the TaskQueue from which these statistics were calculated
               def task_queue_sid
                 @properties['task_queue_sid']
               end
 
               ##
-              # @return [Hash] The Tasks broken down by priority
+              # @return [Hash] The number of Tasks by priority
               def tasks_by_priority
                 @properties['tasks_by_priority']
               end
 
               ##
-              # @return [Hash] The Tasks broken down by status
+              # @return [Hash] The number of Tasks by their current status
               def tasks_by_status
                 @properties['tasks_by_status']
               end
 
               ##
-              # @return [String] The total number of Workers available for Tasks in this TaskQueue
+              # @return [String] The total number of Workers available for Tasks in the TaskQueue
               def total_available_workers
                 @properties['total_available_workers']
               end
 
               ##
-              # @return [String] The total number of Workers eligible for Tasks in this TaskQueue, irrespective of Activity state.
+              # @return [String] The total number of Workers eligible for Tasks in the TaskQueue, independent of their Activity state
               def total_eligible_workers
                 @properties['total_eligible_workers']
               end
@@ -228,22 +234,22 @@ module Twilio
               end
 
               ##
-              # @return [String] The workspace_sid
+              # @return [String] The SID of the Workspace that contains the TaskQueue
               def workspace_sid
                 @properties['workspace_sid']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] The absolute URL of the TaskQueue statistics resource
               def url
                 @properties['url']
               end
 
               ##
               # Fetch a TaskQueueRealTimeStatisticsInstance
-              # @param [String] task_channel Filter real-time and cumulative statistics by
-              #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
-              #   TaskChannelSid.
+              # @param [String] task_channel The TaskChannel for which to fetch statistics. Can
+              #   be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or
+              #   `default`.
               # @return [TaskQueueRealTimeStatisticsInstance] Fetched TaskQueueRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
                 context.fetch(task_channel: task_channel, )

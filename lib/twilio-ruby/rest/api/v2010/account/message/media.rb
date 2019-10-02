@@ -34,9 +34,9 @@ module Twilio
               # Lists MediaInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [Time] date_created_before The `YYYY-MM-DD` value of the resources to read
-              # @param [Time] date_created The `YYYY-MM-DD` value of the resources to read
-              # @param [Time] date_created_after The `YYYY-MM-DD` value of the resources to read
+              # @param [Time] date_created_before Only include media that was created on this date
+              # @param [Time] date_created Only include media that was created on this date
+              # @param [Time] date_created_after Only include media that was created on this date
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -58,9 +58,9 @@ module Twilio
               # Streams MediaInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [Time] date_created_before The `YYYY-MM-DD` value of the resources to read
-              # @param [Time] date_created The `YYYY-MM-DD` value of the resources to read
-              # @param [Time] date_created_after The `YYYY-MM-DD` value of the resources to read
+              # @param [Time] date_created_before Only include media that was created on this date
+              # @param [Time] date_created Only include media that was created on this date
+              # @param [Time] date_created_after Only include media that was created on this date
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -98,9 +98,9 @@ module Twilio
               ##
               # Retrieve a single page of MediaInstance records from the API.
               # Request is executed immediately.
-              # @param [Time] date_created_before The `YYYY-MM-DD` value of the resources to read
-              # @param [Time] date_created The `YYYY-MM-DD` value of the resources to read
-              # @param [Time] date_created_after The `YYYY-MM-DD` value of the resources to read
+              # @param [Time] date_created_before Only include media that was created on this date
+              # @param [Time] date_created Only include media that was created on this date
+              # @param [Time] date_created_after Only include media that was created on this date
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50

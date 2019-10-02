@@ -39,8 +39,9 @@ module Twilio
             # @param [String] ttl How long, in seconds, before the Sync Document expires and
             #   is deleted (the Sync Document's time-to-live). Can be an integer from 0 to
             #   31,536,000 (1 year). The default value is `0`, which means the Sync Document
-            #   does not expire. The Sync Document might not be deleted immediately after it
-            #   expires.
+            #   does not expire. The Sync Document will be deleted automatically after it
+            #   expires, but there can be a delay between the expiration time and the
+            #   resources's deletion.
             # @return [DocumentInstance] Newly created DocumentInstance
             def create(unique_name: :unset, data: :unset, ttl: :unset)
               data = Twilio::Values.of({
@@ -229,7 +230,8 @@ module Twilio
             # @param [String] ttl How long, in seconds, before the Sync Document expires and
             #   is deleted (time-to-live). Can be an integer from 0 to 31,536,000 (1 year). The
             #   default value is `0`, which means the Document resource does not expire. The
-            #   Document resource might not be deleted immediately after it expires.
+            #   Document resource will be deleted automatically after it expires, but there can
+            #   be a delay between the expiration time and the resources's deletion.
             # @return [DocumentInstance] Updated DocumentInstance
             def update(data: :unset, ttl: :unset)
               data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), 'Ttl' => ttl, })
@@ -420,7 +422,8 @@ module Twilio
             # @param [String] ttl How long, in seconds, before the Sync Document expires and
             #   is deleted (time-to-live). Can be an integer from 0 to 31,536,000 (1 year). The
             #   default value is `0`, which means the Document resource does not expire. The
-            #   Document resource might not be deleted immediately after it expires.
+            #   Document resource will be deleted automatically after it expires, but there can
+            #   be a delay between the expiration time and the resources's deletion.
             # @return [DocumentInstance] Updated DocumentInstance
             def update(data: :unset, ttl: :unset)
               context.update(data: data, ttl: ttl, )

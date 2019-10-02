@@ -27,18 +27,14 @@ module Twilio
           # Lists AlertInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] log_level Only show alerts for this log-level.  One of 'error',
-          #   'warning', 'notice', or 'debug'.
-          # @param [Date] start_date Only show Alerts on or after this date.  Useful in
-          #   combination with `EndDate` to define a date-range of Alerts.  Input is a [UTC
-          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
-          #   is ignored by the filter. Queries for Alerts older than 30 days are not
-          #   supported.
-          # @param [Date] end_date Only show Alerts on or before this date.  Useful in
-          #   combination with `StartDate` to define a date-range of Alerts.  Input is a [UTC
-          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
-          #   is ignored by the filter. Queries for Alerts older than 30 days are not
-          #   supported.
+          # @param [String] log_level Only show alerts for this log-level.  Can be: `error`,
+          #   `warning`, `notice`, or `debug`.
+          # @param [Date] start_date Only include alerts that occurred on or after this
+          #   date. Specify the date in GMT and format as `YYYY-MM-DD`. Queries for alerts
+          #   older than 30 days are not supported.
+          # @param [Date] end_date Only include alerts that occurred on or before this date.
+          #   Specify the date in GMT and format as `YYYY-MM-DD`. Queries for alerts older
+          #   than 30 days are not supported.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -60,18 +56,14 @@ module Twilio
           # Streams AlertInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] log_level Only show alerts for this log-level.  One of 'error',
-          #   'warning', 'notice', or 'debug'.
-          # @param [Date] start_date Only show Alerts on or after this date.  Useful in
-          #   combination with `EndDate` to define a date-range of Alerts.  Input is a [UTC
-          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
-          #   is ignored by the filter. Queries for Alerts older than 30 days are not
-          #   supported.
-          # @param [Date] end_date Only show Alerts on or before this date.  Useful in
-          #   combination with `StartDate` to define a date-range of Alerts.  Input is a [UTC
-          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
-          #   is ignored by the filter. Queries for Alerts older than 30 days are not
-          #   supported.
+          # @param [String] log_level Only show alerts for this log-level.  Can be: `error`,
+          #   `warning`, `notice`, or `debug`.
+          # @param [Date] start_date Only include alerts that occurred on or after this
+          #   date. Specify the date in GMT and format as `YYYY-MM-DD`. Queries for alerts
+          #   older than 30 days are not supported.
+          # @param [Date] end_date Only include alerts that occurred on or before this date.
+          #   Specify the date in GMT and format as `YYYY-MM-DD`. Queries for alerts older
+          #   than 30 days are not supported.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -109,18 +101,14 @@ module Twilio
           ##
           # Retrieve a single page of AlertInstance records from the API.
           # Request is executed immediately.
-          # @param [String] log_level Only show alerts for this log-level.  One of 'error',
-          #   'warning', 'notice', or 'debug'.
-          # @param [Date] start_date Only show Alerts on or after this date.  Useful in
-          #   combination with `EndDate` to define a date-range of Alerts.  Input is a [UTC
-          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
-          #   is ignored by the filter. Queries for Alerts older than 30 days are not
-          #   supported.
-          # @param [Date] end_date Only show Alerts on or before this date.  Useful in
-          #   combination with `StartDate` to define a date-range of Alerts.  Input is a [UTC
-          #   ISO 8601 Timestamp](http://en.wikipedia.org/wiki/ISO_8601#UTC), but time of day
-          #   is ignored by the filter. Queries for Alerts older than 30 days are not
-          #   supported.
+          # @param [String] log_level Only show alerts for this log-level.  Can be: `error`,
+          #   `warning`, `notice`, or `debug`.
+          # @param [Date] start_date Only include alerts that occurred on or after this
+          #   date. Specify the date in GMT and format as `YYYY-MM-DD`. Queries for alerts
+          #   older than 30 days are not supported.
+          # @param [Date] end_date Only include alerts that occurred on or before this date.
+          #   Specify the date in GMT and format as `YYYY-MM-DD`. Queries for alerts older
+          #   than 30 days are not supported.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -195,7 +183,7 @@ module Twilio
           ##
           # Initialize the AlertContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid A 34 character string that uniquely identifies this Alert.
+          # @param [String] sid The SID of the Alert resource to fetch.
           # @return [AlertContext] AlertContext
           def initialize(version, sid)
             super(version)
@@ -240,7 +228,7 @@ module Twilio
           # Initialize the AlertInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid A 34 character string that uniquely identifies this Alert.
+          # @param [String] sid The SID of the Alert resource to fetch.
           # @return [AlertInstance] AlertInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -285,115 +273,115 @@ module Twilio
           end
 
           ##
-          # @return [String] The unique id of the Account responsible for this alert.
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The text of the alert.
+          # @return [String] The text of the alert
           def alert_text
             @properties['alert_text']
           end
 
           ##
-          # @return [String] The version of the Twilio API in use when this alert was generated.
+          # @return [String] The API version used when the alert was generated
           def api_version
             @properties['api_version']
           end
 
           ##
-          # @return [Time] The date that this resource was created, given in ISO 8601 format.
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date the alert was actually generated, given in ISO 8601 format.
+          # @return [Time] The date and time when the alert was generated specified in ISO 8601 format
           def date_generated
             @properties['date_generated']
           end
 
           ##
-          # @return [Time] The most recent date that this resource was updated, given in ISO 8601 format.
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] A unique error code for the error condition.
+          # @return [String] The error code for the condition that generated the alert
           def error_code
             @properties['error_code']
           end
 
           ##
-          # @return [String] A string representing the log level.
+          # @return [String] The log level
           def log_level
             @properties['log_level']
           end
 
           ##
-          # @return [String] A URL for more information about the error condition.
+          # @return [String] The URL of the page in our Error Dictionary with more information about the error condition
           def more_info
             @properties['more_info']
           end
 
           ##
-          # @return [String] If the Alert was generated by a request Twilio made to your server, this will be the request method used when Twilio made the request to your server.
+          # @return [String] The method used by the request that generated the alert
           def request_method
             @properties['request_method']
           end
 
           ##
-          # @return [String] If the Alert was generated by a request Twilio made to your server, this will be the URL on your server that generated the alert.
+          # @return [String] The URL of the request that generated the alert
           def request_url
             @properties['request_url']
           end
 
           ##
-          # @return [String] The request_variables
+          # @return [String] The variables passed in the request that generated the alert
           def request_variables
             @properties['request_variables']
           end
 
           ##
-          # @return [String] The unique ID of the resource for which the Alert was generated.
+          # @return [String] The SID of the resource for which the alert was generated
           def resource_sid
             @properties['resource_sid']
           end
 
           ##
-          # @return [String] The response_body
+          # @return [String] The response body of the request that generated the alert
           def response_body
             @properties['response_body']
           end
 
           ##
-          # @return [String] The response_headers
+          # @return [String] The response headers of the request that generated the alert
           def response_headers
             @properties['response_headers']
           end
 
           ##
-          # @return [String] A 34 character string that uniquely identifies this Alert.
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The absolute URL for this resource.
+          # @return [String] The absolute URL of the Alert resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The request_headers
+          # @return [String] The request headers of the request that generated the alert
           def request_headers
             @properties['request_headers']
           end
 
           ##
-          # @return [String] The service_sid
+          # @return [String] The SID of the service or resource that generated the alert
           def service_sid
             @properties['service_sid']
           end

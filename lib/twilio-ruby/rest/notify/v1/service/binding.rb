@@ -33,8 +33,8 @@ module Twilio
             # Retrieve a single page of BindingInstance records from the API.
             # Request is executed immediately.
             # @param [String] identity The `identity` value that uniquely identifies the new
-            #   resource's [User](https://www.twilio.com/docs/chat/rest/users) within the
-            #   [Service](https://www.twilio.com/docs/notify/api/service-resource). Up to 20
+            #   resource's [User](https://www.twilio.com/docs/chat/rest/user-resource) within
+            #   the [Service](https://www.twilio.com/docs/notify/api/service-resource). Up to 20
             #   Bindings can be created for the same Identity in a given Service.
             # @param [binding.BindingType] binding_type The transport technology to use for
             #   the Binding. Can be: `apn`, `fcm`, `gcm`, `sms`, or `facebook-messenger`.
@@ -87,8 +87,8 @@ module Twilio
             # @param [Date] end_date Only include usage that occurred on or before this date.
             #   Specify the date in GMT and format as `YYYY-MM-DD`.
             # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
-            #   resources to read.
+            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
+            #   of the resources to read.
             # @param [String] tag Only list Bindings that have all of the specified Tags. The
             #   following implicit tags are available: `all`, `apn`, `fcm`, `gcm`, `sms`,
             #   `facebook-messenger`. Up to 5 tags are allowed.
@@ -119,8 +119,8 @@ module Twilio
             # @param [Date] end_date Only include usage that occurred on or before this date.
             #   Specify the date in GMT and format as `YYYY-MM-DD`.
             # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
-            #   resources to read.
+            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
+            #   of the resources to read.
             # @param [String] tag Only list Bindings that have all of the specified Tags. The
             #   following implicit tags are available: `all`, `apn`, `fcm`, `gcm`, `sms`,
             #   `facebook-messenger`. Up to 5 tags are allowed.
@@ -167,8 +167,8 @@ module Twilio
             # @param [Date] end_date Only include usage that occurred on or before this date.
             #   Specify the date in GMT and format as `YYYY-MM-DD`.
             # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/users)'s `identity` value of the
-            #   resources to read.
+            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
+            #   of the resources to read.
             # @param [String] tag Only list Bindings that have all of the specified Tags. The
             #   following implicit tags are available: `all`, `apn`, `fcm`, `gcm`, `sms`,
             #   `facebook-messenger`. Up to 5 tags are allowed.

@@ -29,8 +29,7 @@ module Twilio
             # Retrieve a single page of IpAccessControlListInstance records from the API.
             # Request is executed immediately.
             # @param [String] ip_access_control_list_sid The SID of the [IP Access Control
-            #   List](https://www.twilio.com/docs/api/rest/ip-access-control-list) that you want
-            #   to associate with the trunk.
+            #   List](https://www.twilio.com/docs/voice/sip/api/sip-ipaccesscontrollist-resource) that you want to associate with the trunk.
             # @return [IpAccessControlListInstance] Newly created IpAccessControlListInstance
             def create(ip_access_control_list_sid: nil)
               data = Twilio::Values.of({'IpAccessControlListSid' => ip_access_control_list_sid, })

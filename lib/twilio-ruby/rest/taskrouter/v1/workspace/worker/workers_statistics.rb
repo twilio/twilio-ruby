@@ -16,8 +16,7 @@ module Twilio
               ##
               # Initialize the WorkersStatisticsList
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The ID of the Workflow this worker is associated
-              #   with
+              # @param [String] workspace_sid The SID of the Workspace that contains the Worker.
               # @return [WorkersStatisticsList] WorkersStatisticsList
               def initialize(version, workspace_sid: nil)
                 super(version)
@@ -66,7 +65,7 @@ module Twilio
               ##
               # Initialize the WorkersStatisticsContext
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The workspace_sid
+              # @param [String] workspace_sid The SID of the Workspace with the Worker to fetch.
               # @return [WorkersStatisticsContext] WorkersStatisticsContext
               def initialize(version, workspace_sid)
                 super(version)
@@ -78,22 +77,23 @@ module Twilio
 
               ##
               # Fetch a WorkersStatisticsInstance
-              # @param [String] minutes Filter cumulative statistics by up to 'x' minutes in the
-              #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
-              #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
-              # @param [Time] start_date Filter cumulative statistics by a start date. This is
-              #   helpful for defining a range of statistics to capture. Input is a string of the
-              #   format: yyyy-MM-dd'T'HH:mm:ss'Z'.
-              # @param [Time] end_date Filter cumulative statistics by a end date. This is
-              #   helpful for defining a range of statistics to capture. Input is a string of the
-              #   format: yyyy-MM-dd'T'HH:mm:ss'Z'.
-              # @param [String] task_queue_sid Filter the real-time and cumulative statistics
-              #   based on Workers tied to a particular queue
-              # @param [String] task_queue_name Filter the real-time and cumulative statistics
-              #   based on Workers tied to a particular queue
-              # @param [String] friendly_name The friendly_name
-              # @param [String] task_channel Filter cumulative statistics by TaskChannel. Takes
-              #   in a Unique Name ("voice", "sms", "default", etc.) or a TaskChannelSid.
+              # @param [String] minutes Only calculate statistics since this many minutes in the
+              #   past. The default 15 minutes. This is helpful for displaying statistics for the
+              #   last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.
+              # @param [Time] start_date Only calculate statistics from this date and time and
+              #   later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+              # @param [Time] end_date Only calculate statistics from this date and time and
+              #   earlier, specified in GMT as an [ISO
+              #   8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+              # @param [String] task_queue_sid The SID of the TaskQueue for which to fetch
+              #   Worker statistics.
+              # @param [String] task_queue_name The `friendly_name` of the TaskQueue for which
+              #   to fetch Worker statistics.
+              # @param [String] friendly_name Only include Workers with `friendly_name` values
+              #   that match this parameter.
+              # @param [String] task_channel Only calculate statistics on this TaskChannel. Can
+              #   be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or
+              #   `default`.
               # @return [WorkersStatisticsInstance] Fetched WorkersStatisticsInstance
               def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_queue_sid: :unset, task_queue_name: :unset, friendly_name: :unset, task_channel: :unset)
                 params = Twilio::Values.of({
@@ -135,8 +135,7 @@ module Twilio
               # Initialize the WorkersStatisticsInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] workspace_sid The ID of the Workflow this worker is associated
-              #   with
+              # @param [String] workspace_sid The SID of the Workspace that contains the Worker.
               # @return [WorkersStatisticsInstance] WorkersStatisticsInstance
               def initialize(version, payload, workspace_sid: nil)
                 super(version)
@@ -167,53 +166,54 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The realtime
+              # @return [Hash] An object that contains the real-time statistics for the Worker
               def realtime
                 @properties['realtime']
               end
 
               ##
-              # @return [Hash] The cumulative
+              # @return [Hash] An object that contains the cumulative statistics for the Worker
               def cumulative
                 @properties['cumulative']
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The workspace_sid
+              # @return [String] The SID of the Workspace that contains the Worker
               def workspace_sid
                 @properties['workspace_sid']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] The absolute URL of the Worker statistics resource
               def url
                 @properties['url']
               end
 
               ##
               # Fetch a WorkersStatisticsInstance
-              # @param [String] minutes Filter cumulative statistics by up to 'x' minutes in the
-              #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
-              #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
-              # @param [Time] start_date Filter cumulative statistics by a start date. This is
-              #   helpful for defining a range of statistics to capture. Input is a string of the
-              #   format: yyyy-MM-dd'T'HH:mm:ss'Z'.
-              # @param [Time] end_date Filter cumulative statistics by a end date. This is
-              #   helpful for defining a range of statistics to capture. Input is a string of the
-              #   format: yyyy-MM-dd'T'HH:mm:ss'Z'.
-              # @param [String] task_queue_sid Filter the real-time and cumulative statistics
-              #   based on Workers tied to a particular queue
-              # @param [String] task_queue_name Filter the real-time and cumulative statistics
-              #   based on Workers tied to a particular queue
-              # @param [String] friendly_name The friendly_name
-              # @param [String] task_channel Filter cumulative statistics by TaskChannel. Takes
-              #   in a Unique Name ("voice", "sms", "default", etc.) or a TaskChannelSid.
+              # @param [String] minutes Only calculate statistics since this many minutes in the
+              #   past. The default 15 minutes. This is helpful for displaying statistics for the
+              #   last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.
+              # @param [Time] start_date Only calculate statistics from this date and time and
+              #   later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+              # @param [Time] end_date Only calculate statistics from this date and time and
+              #   earlier, specified in GMT as an [ISO
+              #   8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+              # @param [String] task_queue_sid The SID of the TaskQueue for which to fetch
+              #   Worker statistics.
+              # @param [String] task_queue_name The `friendly_name` of the TaskQueue for which
+              #   to fetch Worker statistics.
+              # @param [String] friendly_name Only include Workers with `friendly_name` values
+              #   that match this parameter.
+              # @param [String] task_channel Only calculate statistics on this TaskChannel. Can
+              #   be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or
+              #   `default`.
               # @return [WorkersStatisticsInstance] Fetched WorkersStatisticsInstance
               def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_queue_sid: :unset, task_queue_name: :unset, friendly_name: :unset, task_channel: :unset)
                 context.fetch(

@@ -22,7 +22,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The unique ID of the FlexFlow
+        # @param [String] sid The SID of the FlexFlow resource to fetch.
         # @return [Twilio::REST::Flex_api::V1::FlexFlowContext] if sid was passed.
         # @return [Twilio::REST::Flex_api::V1::FlexFlowList]
         def flex_flow(sid=:unset)
@@ -36,7 +36,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The unique SID identifier of the Flex Chat Channel
+        # @param [String] sid The SID of the Flex chat channel resource to fetch.
         # @return [Twilio::REST::Flex_api::V1::ChannelContext] if sid was passed.
         # @return [Twilio::REST::Flex_api::V1::ChannelList]
         def channel(sid=:unset)
@@ -50,7 +50,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The unique SID identifier of the Flex Chat Channel
+        # @param [String] sid The SID of the WebChannel resource to fetch.
         # @return [Twilio::REST::Flex_api::V1::WebChannelContext] if sid was passed.
         # @return [Twilio::REST::Flex_api::V1::WebChannelList]
         def web_channel(sid=:unset)

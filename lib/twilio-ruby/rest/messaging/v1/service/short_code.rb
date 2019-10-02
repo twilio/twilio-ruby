@@ -18,8 +18,8 @@ module Twilio
             # Initialize the ShortCodeList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this resource is
-            #   associated with.
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the resource
+            #   is associated with.
             # @return [ShortCodeList] ShortCodeList
             def initialize(version, service_sid: nil)
               super(version)
@@ -32,8 +32,8 @@ module Twilio
             ##
             # Retrieve a single page of ShortCodeInstance records from the API.
             # Request is executed immediately.
-            # @param [String] short_code_sid SID of the ShortCode resource being added to the
-            #   Service.
+            # @param [String] short_code_sid The SID of the ShortCode resource being added to
+            #   the Service.
             # @return [ShortCodeInstance] Newly created ShortCodeInstance
             def create(short_code_sid: nil)
               data = Twilio::Values.of({'ShortCodeSid' => short_code_sid, })
@@ -174,10 +174,9 @@ module Twilio
             # Initialize the ShortCodeContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) to fetch the
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
             #   resource from.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the
-            #   ShortCode resource to fetch
+            # @param [String] sid The SID of the ShortCode resource to fetch.
             # @return [ShortCodeContext] ShortCodeContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -232,10 +231,9 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) this resource is
-            #   associated with.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the
-            #   ShortCode resource to fetch
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the resource
+            #   is associated with.
+            # @param [String] sid The SID of the ShortCode resource to fetch.
             # @return [ShortCodeInstance] ShortCodeInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -270,55 +268,55 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique string that identifies this resource
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The SID of the Account that created this resource
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The SID of the Service that this resource is associated with
+            # @return [String] The SID of the Service that the resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT that this resource was created
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT that this resource was last updated
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The E.164 format of the short code.
+            # @return [String] The E.164 format of the short code
             def short_code
               @properties['short_code']
             end
 
             ##
-            # @return [String] The 2-character ISO Country Code of the number.
+            # @return [String] The 2-character ISO Country Code of the number
             def country_code
               @properties['country_code']
             end
 
             ##
-            # @return [Hash] Any array of values that indicate whether the number can receive calls or messages.
+            # @return [Hash] An array of values that describe whether the number can receive calls or messages
             def capabilities
               @properties['capabilities']
             end
 
             ##
-            # @return [String] The absolute URL of this ShortCode resource
+            # @return [String] The absolute URL of the ShortCode resource
             def url
               @properties['url']
             end

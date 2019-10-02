@@ -108,12 +108,12 @@ module Twilio
           ##
           # Retrieve a single page of WebChannelInstance records from the API.
           # Request is executed immediately.
-          # @param [String] flex_flow_sid The unique ID of the FlexFlow
-          # @param [String] identity Chat identity
-          # @param [String] customer_friendly_name Customer friendly name (chat participant)
-          # @param [String] chat_friendly_name Chat channel friendly name
-          # @param [String] chat_unique_name Chat channel unique name
-          # @param [String] pre_engagement_data Pre-engagement data
+          # @param [String] flex_flow_sid The SID of the FlexFlow.
+          # @param [String] identity The chat identity.
+          # @param [String] customer_friendly_name The chat participant's friendly name.
+          # @param [String] chat_friendly_name The chat channel's friendly name.
+          # @param [String] chat_unique_name The chat channel's unique name.
+          # @param [String] pre_engagement_data The pre-engagement data.
           # @return [WebChannelInstance] Newly created WebChannelInstance
           def create(flex_flow_sid: nil, identity: nil, customer_friendly_name: nil, chat_friendly_name: nil, chat_unique_name: :unset, pre_engagement_data: :unset)
             data = Twilio::Values.of({
@@ -174,7 +174,7 @@ module Twilio
           ##
           # Initialize the WebChannelContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The unique SID identifier of the Flex Chat Channel
+          # @param [String] sid The SID of the WebChannel resource to fetch.
           # @return [WebChannelContext] WebChannelContext
           def initialize(version, sid)
             super(version)
@@ -201,9 +201,9 @@ module Twilio
 
           ##
           # Update the WebChannelInstance
-          # @param [web_channel.ChatStatus] chat_status Chat status, can only used to make
-          #   chat 'inactive'
-          # @param [String] post_engagement_data Post-engagement data
+          # @param [web_channel.ChatStatus] chat_status The chat status. Can only be
+          #   `inactive`.
+          # @param [String] post_engagement_data The post-engagement data.
           # @return [WebChannelInstance] Updated WebChannelInstance
           def update(chat_status: :unset, post_engagement_data: :unset)
             data = Twilio::Values.of({
@@ -247,7 +247,7 @@ module Twilio
           # Initialize the WebChannelInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The unique SID identifier of the Flex Chat Channel
+          # @param [String] sid The SID of the WebChannel resource to fetch.
           # @return [WebChannelInstance] WebChannelInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -279,37 +279,37 @@ module Twilio
           end
 
           ##
-          # @return [String] The ID of the account that owns this Workflow
+          # @return [String] The SID of the Account that created the resource and owns this Workflow
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The unique ID of the FlexFlow
+          # @return [String] The SID of the FlexFlow
           def flex_flow_sid
             @properties['flex_flow_sid']
           end
 
           ##
-          # @return [String] Flex Chat Channel Sid
+          # @return [String] The unique string that identifies the WebChannel resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The absolute URL of the WebChannel resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [Time] The time the Flex Chat Channel was created, given as GMT in ISO 8601 format.
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The time the Flex Chat Channel was last updated, given as GMT in ISO 8601 format.
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
           end
@@ -323,9 +323,9 @@ module Twilio
 
           ##
           # Update the WebChannelInstance
-          # @param [web_channel.ChatStatus] chat_status Chat status, can only used to make
-          #   chat 'inactive'
-          # @param [String] post_engagement_data Post-engagement data
+          # @param [web_channel.ChatStatus] chat_status The chat status. Can only be
+          #   `inactive`.
+          # @param [String] post_engagement_data The post-engagement data.
           # @return [WebChannelInstance] Updated WebChannelInstance
           def update(chat_status: :unset, post_engagement_data: :unset)
             context.update(chat_status: chat_status, post_engagement_data: post_engagement_data, )

@@ -41,14 +41,16 @@ module Twilio
             # @param [String] attributes A string metadata field you can use to store any data
             #   you wish. The string value must contain structurally valid JSON if specified.
             #   **Note** that if the attributes are not set "{}" will be returned.
+            # @param [String] media_sid The Media Sid to be attached to the new Message.
             # @return [MessageInstance] Newly created MessageInstance
-            def create(author: :unset, body: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
+            def create(author: :unset, body: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, media_sid: :unset)
               data = Twilio::Values.of({
                   'Author' => author,
                   'Body' => body,
                   'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                   'Attributes' => attributes,
+                  'MediaSid' => media_sid,
               })
 
               payload = @version.create(
@@ -300,6 +302,7 @@ module Twilio
                   'index' => payload['index'].to_i,
                   'author' => payload['author'],
                   'body' => payload['body'],
+                  'media' => payload['media'],
                   'attributes' => payload['attributes'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
@@ -356,6 +359,12 @@ module Twilio
             # @return [String] The content of the message.
             def body
               @properties['body']
+            end
+
+            ##
+            # @return [Hash] An array of objects that describe the Message's media if attached, otherwise, null.
+            def media
+              @properties['media']
             end
 
             ##

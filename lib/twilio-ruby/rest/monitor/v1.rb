@@ -20,7 +20,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid A 34 character string that uniquely identifies this Alert.
+        # @param [String] sid The SID of the Alert resource to fetch.
         # @return [Twilio::REST::Monitor::V1::AlertContext] if sid was passed.
         # @return [Twilio::REST::Monitor::V1::AlertList]
         def alerts(sid=:unset)
@@ -34,7 +34,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid A 34 character string that uniquely identifies this event.
+        # @param [String] sid The SID of the Event resource to fetch.
         # @return [Twilio::REST::Monitor::V1::EventContext] if sid was passed.
         # @return [Twilio::REST::Monitor::V1::EventList]
         def events(sid=:unset)

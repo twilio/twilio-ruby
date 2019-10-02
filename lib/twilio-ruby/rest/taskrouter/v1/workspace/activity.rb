@@ -15,8 +15,8 @@ module Twilio
             ##
             # Initialize the ActivityList
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The unique ID of the Workspace that this Activity
-            #   belongs to.
+            # @param [String] workspace_sid The SID of the Workspace that contains the
+            #   Activity.
             # @return [ActivityList] ActivityList
             def initialize(version, workspace_sid: nil)
               super(version)
@@ -30,10 +30,12 @@ module Twilio
             # Lists ActivityInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] friendly_name Filter by an Activity's friendly name
-            # @param [String] available Filter by activities that are available or
-            #   unavailable. (Note: This can be 'true', '1'' or 'yes' to indicate a true value.
-            #   All other values will represent false)
+            # @param [String] friendly_name The `friendly_name` of the Activity resources to
+            #   read.
+            # @param [String] available Whether return only Activity resources that are
+            #   available or unavailable. A value of `true` returns only available activities.
+            #   Values of '1' or `yes` also indicate `true`. All other values represent `false`
+            #   and return activities that are unavailable.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -54,10 +56,12 @@ module Twilio
             # Streams ActivityInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] friendly_name Filter by an Activity's friendly name
-            # @param [String] available Filter by activities that are available or
-            #   unavailable. (Note: This can be 'true', '1'' or 'yes' to indicate a true value.
-            #   All other values will represent false)
+            # @param [String] friendly_name The `friendly_name` of the Activity resources to
+            #   read.
+            # @param [String] available Whether return only Activity resources that are
+            #   available or unavailable. A value of `true` returns only available activities.
+            #   Values of '1' or `yes` also indicate `true`. All other values represent `false`
+            #   and return activities that are unavailable.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -90,10 +94,12 @@ module Twilio
             ##
             # Retrieve a single page of ActivityInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name Filter by an Activity's friendly name
-            # @param [String] available Filter by activities that are available or
-            #   unavailable. (Note: This can be 'true', '1'' or 'yes' to indicate a true value.
-            #   All other values will represent false)
+            # @param [String] friendly_name The `friendly_name` of the Activity resources to
+            #   read.
+            # @param [String] available Whether return only Activity resources that are
+            #   available or unavailable. A value of `true` returns only available activities.
+            #   Values of '1' or `yes` also indicate `true`. All other values represent `false`
+            #   and return activities that are unavailable.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -130,15 +136,14 @@ module Twilio
             ##
             # Retrieve a single page of ActivityInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name A human-readable name for the Activity, such as
-            #   'On Call', 'Break', 'Email', etc. Must be unique in this Workspace. These names
-            #   will be used to calculate and expose statistics about workers, and give you
-            #   visibility into the state of each of your workers.
-            # @param [Boolean] available Boolean value indicating whether the worker should be
-            #   eligible to receive a Task when they occupy this Activity. For example, a call
-            #   center might have an activity named 'On Call' with an availability set to
-            #   'false'. Note: This can be 'true', '1' or 'yes' to indicate a true value. All
-            #   other values will represent false. Defaults to false.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the Activity resource. It can be up to 64 characters long. These names are used
+            #   to calculate and expose statistics about Workers, and provide visibility into
+            #   the state of each Worker. Examples of friendly names include: `on-call`,
+            #   `break`, and `email`.
+            # @param [Boolean] available Whether the Worker should be eligible to receive a
+            #   Task when it occupies the Activity. A value of `true`, `1`, or `yes` specifies
+            #   the Activity is available. All other values specify that it is not.
             # @return [ActivityInstance] Newly created ActivityInstance
             def create(friendly_name: nil, available: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, 'Available' => available, })
@@ -192,8 +197,9 @@ module Twilio
             ##
             # Initialize the ActivityContext
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The workspace_sid
-            # @param [String] sid The sid
+            # @param [String] workspace_sid The SID of the Workspace with the Activity
+            #   resources to fetch.
+            # @param [String] sid The SID of the Activity resource to fetch.
             # @return [ActivityContext] ActivityContext
             def initialize(version, workspace_sid, sid)
               super(version)
@@ -225,10 +231,11 @@ module Twilio
 
             ##
             # Update the ActivityInstance
-            # @param [String] friendly_name A human-readable name for the Activity, such as
-            #   'on-call', 'break', 'email', etc. These names will be used to calculate and
-            #   expose statistics about workers, and give you visibility into the state of each
-            #   of your workers.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the Activity resource. It can be up to 64 characters long. These names are used
+            #   to calculate and expose statistics about Workers, and provide visibility into
+            #   the state of each Worker. Examples of friendly names include: `on-call`,
+            #   `break`, and `email`.
             # @return [ActivityInstance] Updated ActivityInstance
             def update(friendly_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -274,9 +281,9 @@ module Twilio
             # Initialize the ActivityInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] workspace_sid The unique ID of the Workspace that this Activity
-            #   belongs to.
-            # @param [String] sid The sid
+            # @param [String] workspace_sid The SID of the Workspace that contains the
+            #   Activity.
+            # @param [String] sid The SID of the Activity resource to fetch.
             # @return [ActivityInstance] ActivityInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
               super(version)
@@ -310,49 +317,49 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique ID of the Account that owns this Activity.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [Boolean] Filter by activities that are available or unavailable.
+            # @return [Boolean] Whether the Worker should be eligible to receive a Task when it occupies the Activity
             def available
               @properties['available']
             end
 
             ##
-            # @return [Time] The date this Activity was created.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this Activity was updated.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] Filter by an Activity's friendly name
+            # @return [String] The string that you assigned to describe the Activity resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] The unique ID for this Activity.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The unique ID of the Workspace that this Activity belongs to.
+            # @return [String] The SID of the Workspace that contains the Activity
             def workspace_sid
               @properties['workspace_sid']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the Activity resource
             def url
               @properties['url']
             end
@@ -366,10 +373,11 @@ module Twilio
 
             ##
             # Update the ActivityInstance
-            # @param [String] friendly_name A human-readable name for the Activity, such as
-            #   'on-call', 'break', 'email', etc. These names will be used to calculate and
-            #   expose statistics about workers, and give you visibility into the state of each
-            #   of your workers.
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the Activity resource. It can be up to 64 characters long. These names are used
+            #   to calculate and expose statistics about Workers, and provide visibility into
+            #   the state of each Worker. Examples of friendly names include: `on-call`,
+            #   `break`, and `email`.
             # @return [ActivityInstance] Updated ActivityInstance
             def update(friendly_name: :unset)
               context.update(friendly_name: friendly_name, )

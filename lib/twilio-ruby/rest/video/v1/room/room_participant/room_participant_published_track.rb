@@ -16,9 +16,10 @@ module Twilio
               ##
               # Initialize the PublishedTrackList
               # @param [Version] version Version that contains the resource
-              # @param [String] room_sid Unique Room identifier where this Track is published.
-              # @param [String] participant_sid Unique Participant identifier that publishes
-              #   this Track.
+              # @param [String] room_sid The SID of the Room resource where the track is
+              #   published.
+              # @param [String] participant_sid The SID of the Participant resource with the
+              #   published track.
               # @return [PublishedTrackList] PublishedTrackList
               def initialize(version, room_sid: nil, participant_sid: nil)
                 super(version)
@@ -155,11 +156,12 @@ module Twilio
               ##
               # Initialize the PublishedTrackContext
               # @param [Version] version Version that contains the resource
-              # @param [String] room_sid Unique Room identifier where this Track is published.
-              # @param [String] participant_sid Unique Participant identifier that publishes
-              #   this Track.
-              # @param [String] sid A 34 character string that uniquely identifies this
-              #   resource.
+              # @param [String] room_sid The SID of the Room resource where the Track resource
+              #   to fetch is published.
+              # @param [String] participant_sid The SID of the Participant resource with the
+              #   published track to fetch.
+              # @param [String] sid The SID of the RoomParticipantPublishedTrack resource to
+              #   fetch.
               # @return [PublishedTrackContext] PublishedTrackContext
               def initialize(version, room_sid, participant_sid, sid)
                 super(version)
@@ -210,11 +212,12 @@ module Twilio
               # Initialize the PublishedTrackInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] room_sid Unique Room identifier where this Track is published.
-              # @param [String] participant_sid Unique Participant identifier that publishes
-              #   this Track.
-              # @param [String] sid A 34 character string that uniquely identifies this
-              #   resource.
+              # @param [String] room_sid The SID of the Room resource where the track is
+              #   published.
+              # @param [String] participant_sid The SID of the Participant resource with the
+              #   published track.
+              # @param [String] sid The SID of the RoomParticipantPublishedTrack resource to
+              #   fetch.
               # @return [PublishedTrackInstance] PublishedTrackInstance
               def initialize(version, payload, room_sid: nil, participant_sid: nil, sid: nil)
                 super(version)
@@ -258,55 +261,55 @@ module Twilio
               end
 
               ##
-              # @return [String] A 34 character string that uniquely identifies this resource.
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] Unique Participant identifier that publishes this Track.
+              # @return [String] The SID of the Participant resource with the published track
               def participant_sid
                 @properties['participant_sid']
               end
 
               ##
-              # @return [String] Unique Room identifier where this Track is published.
+              # @return [String] The SID of the Room resource where the track is published
               def room_sid
                 @properties['room_sid']
               end
 
               ##
-              # @return [String] Track name. Limited to 128 characters.
+              # @return [String] The track name
               def name
                 @properties['name']
               end
 
               ##
-              # @return [Time] The date that this resource was created.
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date that this resource was last updated.
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [Boolean] Specifies whether the Track is enabled or not.
+              # @return [Boolean] Whether the track is enabled
               def enabled
                 @properties['enabled']
               end
 
               ##
-              # @return [published_track.Kind] Specifies whether Track represents `audio`, `video` or `data`
+              # @return [published_track.Kind] The track type
               def kind
                 @properties['kind']
               end
 
               ##
-              # @return [String] The absolute URL for this resource.
+              # @return [String] The absolute URL of the resource
               def url
                 @properties['url']
               end

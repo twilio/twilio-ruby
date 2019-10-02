@@ -17,8 +17,9 @@ module Twilio
             ##
             # Initialize the AlphaSenderList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The 34 character unique sid of the Messaging
-            #   Service.
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the resource
+            #   is associated with.
             # @return [AlphaSenderList] AlphaSenderList
             def initialize(version, service_sid: nil)
               super(version)
@@ -31,9 +32,9 @@ module Twilio
             ##
             # Retrieve a single page of AlphaSenderInstance records from the API.
             # Request is executed immediately.
-            # @param [String] alpha_sender An Alphanumeric Sender ID string, up to 11
-            #   characters. Valid characters are A-Z, a-z, 0-9, space and dash ( - ). An
-            #   Alphanumeric Sender ID string cannot be comprised of only numbers.
+            # @param [String] alpha_sender The Alphanumeric Sender ID string. Can be up to 11
+            #   characters long. Valid characters are A-Z, a-z, 0-9, space, and hyphen `-`. This
+            #   value cannot contain only numbers.
             # @return [AlphaSenderInstance] Newly created AlphaSenderInstance
             def create(alpha_sender: nil)
               data = Twilio::Values.of({'AlphaSender' => alpha_sender, })
@@ -173,8 +174,10 @@ module Twilio
             ##
             # Initialize the AlphaSenderContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The service_sid
-            # @param [String] sid The sid
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+            #   resource from.
+            # @param [String] sid The SID of the AlphaSender resource to fetch.
             # @return [AlphaSenderContext] AlphaSenderContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -233,9 +236,10 @@ module Twilio
             # Initialize the AlphaSenderInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The 34 character unique sid of the Messaging
-            #   Service.
-            # @param [String] sid The sid
+            # @param [String] service_sid The SID of the
+            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the resource
+            #   is associated with.
+            # @param [String] sid The SID of the AlphaSender resource to fetch.
             # @return [AlphaSenderInstance] AlphaSenderInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -269,49 +273,49 @@ module Twilio
             end
 
             ##
-            # @return [String] The 34 character unique sid of the Alpha Sender ID.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The 34 character unique sid of the Account.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The 34 character unique sid of the Messaging Service.
+            # @return [String] The SID of the Service that the resource is associated with
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [Time] The date that this resource was created.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date that this resource was last updated.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] An Alphanumeric Sender ID string, up to 11 characters.
+            # @return [String] The Alphanumeric Sender ID string
             def alpha_sender
               @properties['alpha_sender']
             end
 
             ##
-            # @return [Hash] An array of values that indicate whether the number can receive calls or messages.
+            # @return [Hash] An array of values that describe whether the number can receive calls or messages
             def capabilities
               @properties['capabilities']
             end
 
             ##
-            # @return [String] The absolute URL for this resource.
+            # @return [String] The absolute URL of the AlphaSender resource
             def url
               @properties['url']
             end

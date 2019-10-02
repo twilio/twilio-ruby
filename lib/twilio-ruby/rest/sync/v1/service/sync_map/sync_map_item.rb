@@ -43,12 +43,14 @@ module Twilio
               # @param [String] item_ttl How long, in seconds, before the Map Item expires
               #   (time-to-live) and is deleted.  Can be an integer from 0 to 31,536,000 (1 year).
               #   The default value is `0`, which means the Map Item does not expire.  The Map
-              #   Item might not be deleted immediately after it expires.
+              #   Item will be deleted automatically after it expires, but there can be a delay
+              #   between the expiration time and the resources's deletion.
               # @param [String] collection_ttl How long, in seconds, before the Map Item's
               #   parent Sync Map expires (time-to-live) and is deleted.  Can be an integer from 0
               #   to 31,536,000 (1 year). The default value is `0`, which means the parent Sync
-              #   Map does not expire. The Sync Map might not be deleted immediately after it
-              #   expires.
+              #   Map does not expire. The Sync Map will be deleted automatically after it
+              #   expires, but there can be a delay between the expiration time and the
+              #   resources's deletion.
               # @return [SyncMapItemInstance] Newly created SyncMapItemInstance
               def create(key: nil, data: nil, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
                 data = Twilio::Values.of({
@@ -292,13 +294,15 @@ module Twilio
               # @param [String] item_ttl How long, in seconds, before the Map Item expires
               #   (time-to-live) and is deleted.  Can be an integer from 0 to 31,536,000 (1 year).
               #   The default value is `0`, which means the Map Item does not expire. The Map Item
-              #   might not be deleted immediately after it expires.
+              #   will be deleted automatically after it expires, but there can be a delay between
+              #   the expiration time and the resources's deletion.
               # @param [String] collection_ttl How long, in seconds, before the Map Item's
               #   parent Sync Map expires (time-to-live) and is deleted.  Can be an integer from 0
               #   to 31,536,000 (1 year). The default value is `0`, which means the parent Sync
               #   Map does not expire. This parameter can only be used when the Map Item's `data`
-              #   or `ttl` is updated in the same request. The Sync Map might not be deleted
-              #   immediately after it expires.
+              #   or `ttl` is updated in the same request. The Sync Map will be deleted
+              #   automatically after it expires, but there can be a delay between the expiration
+              #   time and the resources's deletion.
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
               def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
                 data = Twilio::Values.of({
@@ -479,13 +483,15 @@ module Twilio
               # @param [String] item_ttl How long, in seconds, before the Map Item expires
               #   (time-to-live) and is deleted.  Can be an integer from 0 to 31,536,000 (1 year).
               #   The default value is `0`, which means the Map Item does not expire. The Map Item
-              #   might not be deleted immediately after it expires.
+              #   will be deleted automatically after it expires, but there can be a delay between
+              #   the expiration time and the resources's deletion.
               # @param [String] collection_ttl How long, in seconds, before the Map Item's
               #   parent Sync Map expires (time-to-live) and is deleted.  Can be an integer from 0
               #   to 31,536,000 (1 year). The default value is `0`, which means the parent Sync
               #   Map does not expire. This parameter can only be used when the Map Item's `data`
-              #   or `ttl` is updated in the same request. The Sync Map might not be deleted
-              #   immediately after it expires.
+              #   or `ttl` is updated in the same request. The Sync Map will be deleted
+              #   automatically after it expires, but there can be a delay between the expiration
+              #   time and the resources's deletion.
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
               def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
                 context.update(data: data, ttl: ttl, item_ttl: item_ttl, collection_ttl: collection_ttl, )

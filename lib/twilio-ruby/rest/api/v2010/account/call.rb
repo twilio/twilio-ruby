@@ -187,12 +187,12 @@ module Twilio
             # @param [call.Status] status The status of the calls to include. Can be:
             #   `queued`, `ringing`, `in-progress`, `canceled`, `completed`, `failed`, `busy`,
             #   or `no-answer`.
-            # @param [Time] start_time_before Only include calls that started on or after this date
-            # @param [Time] start_time Only include calls that started on or after this date
-            # @param [Time] start_time_after Only include calls that started on or after this date
-            # @param [Time] end_time_before Only include usage that occurred on or before this date
-            # @param [Time] end_time Only include usage that occurred on or before this date
-            # @param [Time] end_time_after Only include usage that occurred on or before this date
+            # @param [Time] start_time_before Only include calls that started on this date
+            # @param [Time] start_time Only include calls that started on this date
+            # @param [Time] start_time_after Only include calls that started on this date
+            # @param [Time] end_time_before Only include calls that ended on this date
+            # @param [Time] end_time Only include calls that ended on this date
+            # @param [Time] end_time_after Only include calls that ended on this date
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -230,12 +230,12 @@ module Twilio
             # @param [call.Status] status The status of the calls to include. Can be:
             #   `queued`, `ringing`, `in-progress`, `canceled`, `completed`, `failed`, `busy`,
             #   or `no-answer`.
-            # @param [Time] start_time_before Only include calls that started on or after this date
-            # @param [Time] start_time Only include calls that started on or after this date
-            # @param [Time] start_time_after Only include calls that started on or after this date
-            # @param [Time] end_time_before Only include usage that occurred on or before this date
-            # @param [Time] end_time Only include usage that occurred on or before this date
-            # @param [Time] end_time_after Only include usage that occurred on or before this date
+            # @param [Time] start_time_before Only include calls that started on this date
+            # @param [Time] start_time Only include calls that started on this date
+            # @param [Time] start_time_after Only include calls that started on this date
+            # @param [Time] end_time_before Only include calls that ended on this date
+            # @param [Time] end_time Only include calls that ended on this date
+            # @param [Time] end_time_after Only include calls that ended on this date
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -289,12 +289,12 @@ module Twilio
             # @param [call.Status] status The status of the calls to include. Can be:
             #   `queued`, `ringing`, `in-progress`, `canceled`, `completed`, `failed`, `busy`,
             #   or `no-answer`.
-            # @param [Time] start_time_before Only include calls that started on or after this date
-            # @param [Time] start_time Only include calls that started on or after this date
-            # @param [Time] start_time_after Only include calls that started on or after this date
-            # @param [Time] end_time_before Only include usage that occurred on or before this date
-            # @param [Time] end_time Only include usage that occurred on or before this date
-            # @param [Time] end_time_after Only include usage that occurred on or before this date
+            # @param [Time] start_time_before Only include calls that started on this date
+            # @param [Time] start_time Only include calls that started on this date
+            # @param [Time] start_time_after Only include calls that started on this date
+            # @param [Time] end_time_before Only include calls that ended on this date
+            # @param [Time] end_time Only include calls that ended on this date
+            # @param [Time] end_time_after Only include calls that ended on this date
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50

@@ -15,7 +15,8 @@ module Twilio
             ##
             # Initialize the TaskQueueList
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The ID of the Workspace that owns this TaskQueue
+            # @param [String] workspace_sid The SID of the Workspace that contains the
+            #   TaskQueue.
             # @return [TaskQueueList] TaskQueueList
             def initialize(version, workspace_sid: nil)
               super(version)
@@ -32,12 +33,13 @@ module Twilio
             # Lists TaskQueueInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] friendly_name Filter by a human readable description of a
-            #   TaskQueue (for example "Customer Support" or "2014 Election Campaign")
-            # @param [String] evaluate_worker_attributes Provide a Worker attributes
-            #   expression, and this will return the list of TaskQueues that would distribute
-            #   tasks to a worker with these attributes.
-            # @param [String] worker_sid The worker_sid
+            # @param [String] friendly_name The `friendly_name` of the TaskQueue resources to
+            #   read.
+            # @param [String] evaluate_worker_attributes The attributes of the Workers to
+            #   read. Returns the TaskQueues with Workers that match the attributes specified in
+            #   this parameter.
+            # @param [String] worker_sid The SID of the Worker with the TaskQueue resources to
+            #   read.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -59,12 +61,13 @@ module Twilio
             # Streams TaskQueueInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] friendly_name Filter by a human readable description of a
-            #   TaskQueue (for example "Customer Support" or "2014 Election Campaign")
-            # @param [String] evaluate_worker_attributes Provide a Worker attributes
-            #   expression, and this will return the list of TaskQueues that would distribute
-            #   tasks to a worker with these attributes.
-            # @param [String] worker_sid The worker_sid
+            # @param [String] friendly_name The `friendly_name` of the TaskQueue resources to
+            #   read.
+            # @param [String] evaluate_worker_attributes The attributes of the Workers to
+            #   read. Returns the TaskQueues with Workers that match the attributes specified in
+            #   this parameter.
+            # @param [String] worker_sid The SID of the Worker with the TaskQueue resources to
+            #   read.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -102,12 +105,13 @@ module Twilio
             ##
             # Retrieve a single page of TaskQueueInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name Filter by a human readable description of a
-            #   TaskQueue (for example "Customer Support" or "2014 Election Campaign")
-            # @param [String] evaluate_worker_attributes Provide a Worker attributes
-            #   expression, and this will return the list of TaskQueues that would distribute
-            #   tasks to a worker with these attributes.
-            # @param [String] worker_sid The worker_sid
+            # @param [String] friendly_name The `friendly_name` of the TaskQueue resources to
+            #   read.
+            # @param [String] evaluate_worker_attributes The attributes of the Workers to
+            #   read. Returns the TaskQueues with Workers that match the attributes specified in
+            #   this parameter.
+            # @param [String] worker_sid The SID of the Worker with the TaskQueue resources to
+            #   read.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -145,25 +149,26 @@ module Twilio
             ##
             # Retrieve a single page of TaskQueueInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name Human readable description of this TaskQueue (for
-            #   example "Support – Tier 1", "Sales" or "Escalation")
-            # @param [String] target_workers A string describing the Worker selection criteria
-            #   for any Tasks that enter this TaskQueue. For example `'"language" == "spanish"'`
-            #   If no TargetWorkers parameter is provided, Tasks will wait in this TaskQueue
-            #   until they are either deleted or moved to another TaskQueue. Additional examples
-            #   on how to describing Worker selection criteria below. Defaults to 1==1.
-            # @param [String] max_reserved_workers The maximum amount of workers to create
-            #   reservations for the assignment of a task while in this queue. Defaults to 1,
-            #   with a Maximum of 50.
-            # @param [task_queue.TaskOrder] task_order TaskOrder will determine which order
-            #   the Tasks will be assigned to Workers. Set this parameter to LIFO to assign most
-            #   recently created Task first or FIFO to assign the oldest Task. Default is FIFO.
-            #   [Click here](https://www.twilio.com/docs/api/taskrouter/last-first-out-lifo) to
-            #   learn more.
-            # @param [String] reservation_activity_sid ActivitySID to assign workers once a
-            #   task is reserved for them
-            # @param [String] assignment_activity_sid ActivitySID to assign workers once a
-            #   task is assigned for them
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the TaskQueue. For example `Support-Tier 1`, `Sales`, or `Escalation`.
+            # @param [String] target_workers A string that describes the Worker selection
+            #   criteria for any Tasks that enter the TaskQueue. For example, `'"language" ==
+            #   "spanish"'`. The default value is `1==1`. If this value is empty, Tasks will
+            #   wait in the TaskQueue until they are deleted or moved to another TaskQueue. For
+            #   more information about Worker selection, see [Describing Worker selection
+            #   criteria](https://www.twilio.com/docs/taskrouter/api/taskqueues#target-workers).
+            # @param [String] max_reserved_workers The maximum number of Workers to reserve
+            #   for the assignment of a Task in the queue. Can be an integer between 1 and 50,
+            #   inclusive and defaults to 1.
+            # @param [task_queue.TaskOrder] task_order How Tasks will be assigned to Workers.
+            #   Set this parameter to `LIFO` to assign most recently created Task first or FIFO
+            #   to assign the oldest Task first. Default is `FIFO`. [Click
+            #   here](https://www.twilio.com/docs/taskrouter/queue-ordering-last-first-out-lifo)
+            #   to learn more.
+            # @param [String] reservation_activity_sid The SID of the Activity to assign
+            #   Workers when a task is reserved for them.
+            # @param [String] assignment_activity_sid The SID of the Activity to assign
+            #   Workers when a task is assigned to them.
             # @return [TaskQueueInstance] Newly created TaskQueueInstance
             def create(friendly_name: nil, target_workers: :unset, max_reserved_workers: :unset, task_order: :unset, reservation_activity_sid: :unset, assignment_activity_sid: :unset)
               data = Twilio::Values.of({
@@ -232,8 +237,9 @@ module Twilio
             ##
             # Initialize the TaskQueueContext
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The workspace_sid
-            # @param [String] sid The sid
+            # @param [String] workspace_sid The SID of the Workspace with the TaskQueue to
+            #   fetch.
+            # @param [String] sid The SID of the TaskQueue resource to fetch.
             # @return [TaskQueueContext] TaskQueueContext
             def initialize(version, workspace_sid, sid)
               super(version)
@@ -270,24 +276,24 @@ module Twilio
 
             ##
             # Update the TaskQueueInstance
-            # @param [String] friendly_name Human readable description of this TaskQueue (for
-            #   example "Support – Tier 1", "Sales" or "Escalation")
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the TaskQueue. For example `Support-Tier 1`, `Sales`, or `Escalation`.
             # @param [String] target_workers A string describing the Worker selection criteria
-            #   for any Tasks that enter this TaskQueue. For example '"language" == "spanish"'
-            #   If no TargetWorkers parameter is provided, Tasks will wait in this queue until
-            #   they are either deleted or moved to another queue. Additional examples on how to
+            #   for any Tasks that enter the TaskQueue. For example '"language" == "spanish"' If
+            #   no TargetWorkers parameter is provided, Tasks will wait in the queue until they
+            #   are either deleted or moved to another queue. Additional examples on how to
             #   describing Worker selection criteria below.
-            # @param [String] reservation_activity_sid ActivitySID that will be assigned to
-            #   Workers when they are reserved for a task from this TaskQueue.
-            # @param [String] assignment_activity_sid ActivitySID that will be assigned to
-            #   Workers when they are assigned a task from this TaskQueue.
-            # @param [String] max_reserved_workers The maximum amount of workers to create
-            #   reservations for the assignment of a task while in this queue. Maximum of 50.
-            # @param [task_queue.TaskOrder] task_order TaskOrder will determine which order
-            #   the Tasks will be assigned to Workers. Set this parameter to LIFO to assign most
-            #   recently created Task first or FIFO to assign the oldest Task. Default is FIFO.
-            #   [Click here](https://www.twilio.com/docs/api/taskrouter/last-first-out-lifo) to
-            #   learn more.
+            # @param [String] reservation_activity_sid The SID of the Activity to assign
+            #   Workers when a task is reserved for them.
+            # @param [String] assignment_activity_sid The SID of the Activity to assign
+            #   Workers when a task is assigned for them.
+            # @param [String] max_reserved_workers The maximum number of Workers to create
+            #   reservations for the assignment of a task while in the queue. Maximum of 50.
+            # @param [task_queue.TaskOrder] task_order How Tasks will be assigned to Workers.
+            #   Can be: `FIFO` or `LIFO` and the default is `FIFO`. Use `FIFO` to assign the
+            #   oldest task first and `LIFO` to assign the most recent task first. For more
+            #   information, see [Queue
+            #   Ordering](https://www.twilio.com/docs/taskrouter/queue-ordering-last-first-out-lifo).
             # @return [TaskQueueInstance] Updated TaskQueueInstance
             def update(friendly_name: :unset, target_workers: :unset, reservation_activity_sid: :unset, assignment_activity_sid: :unset, max_reserved_workers: :unset, task_order: :unset)
               data = Twilio::Values.of({
@@ -364,8 +370,9 @@ module Twilio
             # Initialize the TaskQueueInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] workspace_sid The ID of the Workspace that owns this TaskQueue
-            # @param [String] sid The sid
+            # @param [String] workspace_sid The SID of the Workspace that contains the
+            #   TaskQueue.
+            # @param [String] sid The SID of the TaskQueue resource to fetch.
             # @return [TaskQueueInstance] TaskQueueInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
               super(version)
@@ -406,91 +413,91 @@ module Twilio
             end
 
             ##
-            # @return [String] The ID of the Account that owns this TaskQueue
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] ActivitySID to assign workers once a task is assigned for them
+            # @return [String] The SID of the Activity to assign Workers when a task is assigned for them
             def assignment_activity_sid
               @properties['assignment_activity_sid']
             end
 
             ##
-            # @return [String] The assignment_activity_name
+            # @return [String] The name of the Activity to assign Workers when a task is assigned for them
             def assignment_activity_name
               @properties['assignment_activity_name']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] Filter by a human readable description of a TaskQueue
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] The maximum amount of workers to create reservations for the assignment of a task while in this queue.
+            # @return [String] The maximum number of Workers to reserve
             def max_reserved_workers
               @properties['max_reserved_workers']
             end
 
             ##
-            # @return [String] ActivitySID to assign workers once a task is reserved for them
+            # @return [String] The SID of the Activity to assign Workers once a task is reserved for them
             def reservation_activity_sid
               @properties['reservation_activity_sid']
             end
 
             ##
-            # @return [String] The reservation_activity_name
+            # @return [String] The name of the Activity to assign Workers once a task is reserved for them
             def reservation_activity_name
               @properties['reservation_activity_name']
             end
 
             ##
-            # @return [String] The unique ID of the TaskQueue
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] A string describing the Worker selection criteria for any Tasks that enter this TaskQueue.
+            # @return [String] A string describing the Worker selection criteria for any Tasks that enter the TaskQueue
             def target_workers
               @properties['target_workers']
             end
 
             ##
-            # @return [task_queue.TaskOrder] TaskOrder will determine which order the Tasks will be assigned to Workers.
+            # @return [task_queue.TaskOrder] How Tasks will be assigned to Workers
             def task_order
               @properties['task_order']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the TaskQueue resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The ID of the Workspace that owns this TaskQueue
+            # @return [String] The SID of the Workspace that contains the TaskQueue
             def workspace_sid
               @properties['workspace_sid']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] The URLs of related resources
             def links
               @properties['links']
             end
@@ -504,24 +511,24 @@ module Twilio
 
             ##
             # Update the TaskQueueInstance
-            # @param [String] friendly_name Human readable description of this TaskQueue (for
-            #   example "Support – Tier 1", "Sales" or "Escalation")
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the TaskQueue. For example `Support-Tier 1`, `Sales`, or `Escalation`.
             # @param [String] target_workers A string describing the Worker selection criteria
-            #   for any Tasks that enter this TaskQueue. For example '"language" == "spanish"'
-            #   If no TargetWorkers parameter is provided, Tasks will wait in this queue until
-            #   they are either deleted or moved to another queue. Additional examples on how to
+            #   for any Tasks that enter the TaskQueue. For example '"language" == "spanish"' If
+            #   no TargetWorkers parameter is provided, Tasks will wait in the queue until they
+            #   are either deleted or moved to another queue. Additional examples on how to
             #   describing Worker selection criteria below.
-            # @param [String] reservation_activity_sid ActivitySID that will be assigned to
-            #   Workers when they are reserved for a task from this TaskQueue.
-            # @param [String] assignment_activity_sid ActivitySID that will be assigned to
-            #   Workers when they are assigned a task from this TaskQueue.
-            # @param [String] max_reserved_workers The maximum amount of workers to create
-            #   reservations for the assignment of a task while in this queue. Maximum of 50.
-            # @param [task_queue.TaskOrder] task_order TaskOrder will determine which order
-            #   the Tasks will be assigned to Workers. Set this parameter to LIFO to assign most
-            #   recently created Task first or FIFO to assign the oldest Task. Default is FIFO.
-            #   [Click here](https://www.twilio.com/docs/api/taskrouter/last-first-out-lifo) to
-            #   learn more.
+            # @param [String] reservation_activity_sid The SID of the Activity to assign
+            #   Workers when a task is reserved for them.
+            # @param [String] assignment_activity_sid The SID of the Activity to assign
+            #   Workers when a task is assigned for them.
+            # @param [String] max_reserved_workers The maximum number of Workers to create
+            #   reservations for the assignment of a task while in the queue. Maximum of 50.
+            # @param [task_queue.TaskOrder] task_order How Tasks will be assigned to Workers.
+            #   Can be: `FIFO` or `LIFO` and the default is `FIFO`. Use `FIFO` to assign the
+            #   oldest task first and `LIFO` to assign the most recent task first. For more
+            #   information, see [Queue
+            #   Ordering](https://www.twilio.com/docs/taskrouter/queue-ordering-last-first-out-lifo).
             # @return [TaskQueueInstance] Updated TaskQueueInstance
             def update(friendly_name: :unset, target_workers: :unset, reservation_activity_sid: :unset, assignment_activity_sid: :unset, max_reserved_workers: :unset, task_order: :unset)
               context.update(

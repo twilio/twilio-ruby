@@ -17,9 +17,7 @@ module Twilio
             ##
             # Initialize the ParticipantList
             # @param [Version] version Version that contains the resource
-            # @param [String] session_sid The unique id of the
-            #   [Session](https://www.twilio.com/docs/sessions/api/session) for this
-            #   participant.
+            # @param [String] session_sid The SID of the Session for the participant.
             # @return [ParticipantList] ParticipantList
             def initialize(version, session_sid: nil)
               super(version)
@@ -32,28 +30,28 @@ module Twilio
             ##
             # Retrieve a single page of ParticipantInstance records from the API.
             # Request is executed immediately.
-            # @param [String] attributes An optional string metadata field you can use to
-            #   store any data you wish. The string value must contain structurally valid JSON
-            #   if specified.  **Note** that if the attributes are not set "{}" will be
-            #   returned.
-            # @param [String] twilio_address The address of the Twilio phone number (or
-            #   WhatsApp number, or Messenger Page ID) that the participant is in contact with.
-            #   This field, together with user_address, is only null when the participant is
+            # @param [String] attributes A JSON string that stores application-specific data.
+            # @param [String] twilio_address The address of the Twilio phone number, WhatsApp
+            #   number, or Messenger Page ID that the participant is in contact with. This
+            #   field, together with user_address, is only null when the participant is
             #   interacting from a Chat endpoint (see the 'identity' field).
-            # @param [Time] date_created The date that this resource was created. This is most
-            #   often useful when bulk-importing messages from another system, as the provided
-            #   value will be trusted and displayed on SDK clients.
-            # @param [Time] date_updated The date that this resource was last updated. This is
-            #   most often provided when bulk-importing messages from another system, as the
-            #   provided value will be trusted and displayed on SDK clients.
-            # @param [String] identity A unique string identifier for the session participant
-            #   as [Chat User](https://www.twilio.com/docs/api/chat/rest/users). This parameter
-            #   is non-null if (and only if) the participant is using the Programmable Chat SDK
-            #   to communicate.
-            # @param [String] user_address The address of the participant's device, e.g. a
+            # @param [Time] date_created The date, specified in [ISO
+            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            #   as the date it was created. This is used when importing messages from another
+            #   system, as the provided value will be trusted and displayed on SDK clients.
+            # @param [Time] date_updated The date, specified in [ISO
+            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            #   as the date it was last updated. This is used when importing messages from
+            #   another system, as the provided value will be trusted and displayed on SDK
+            #   clients.
+            # @param [String] identity The application-defined string that uniquely identifies
+            #   the [Chat User](https://www.twilio.com/docs/chat/rest/user-resource) as the
+            #   session participant. This parameter is null unless the participant is using the
+            #   Programmable Chat SDK to communicate.
+            # @param [String] user_address The address of the participant's device. Can be a
             #   phone number or Messenger ID. Together with the Twilio Address, this determines
-            #   a participant uniquely. This field (with twilio_address) is only null when the
-            #   participant is interacting from a Chat endpoint (see the 'identity' field).
+            #   a participant uniquely. This field (with twilio_address) is null when the
+            #   participant is interacting from a Chat endpoint (see the `identity` field).
             # @return [ParticipantInstance] Newly created ParticipantInstance
             def create(attributes: :unset, twilio_address: :unset, date_created: :unset, date_updated: :unset, identity: :unset, user_address: :unset)
               data = Twilio::Values.of({
@@ -200,11 +198,9 @@ module Twilio
             ##
             # Initialize the ParticipantContext
             # @param [Version] version Version that contains the resource
-            # @param [String] session_sid The unique id of the
-            #   [Session](https://www.twilio.com/docs/sessions/api/session) for this
-            #   participant.
-            # @param [String] sid A 34 character string that uniquely identifies this
-            #   resource.
+            # @param [String] session_sid The SID of the Session with the participant to
+            #   fetch.
+            # @param [String] sid The SID of the SessionParticipant resource to fetch.
             # @return [ParticipantContext] ParticipantContext
             def initialize(version, session_sid, sid)
               super(version)
@@ -216,14 +212,14 @@ module Twilio
 
             ##
             # Update the ParticipantInstance
-            # @param [String] attributes An optional string metadata field you can use to
-            #   store any data you wish. The string value must contain structurally valid JSON
-            #   if specified.  **Note** that if the attributes are not set "{}" will be
-            #   returned.
-            # @param [Time] date_created The date that this resource was created. This is
-            #   useful when bulk-importing messages from another system, as the provided value
-            #   will be trusted and displayed on SDK clients.
-            # @param [Time] date_updated The date that this resource was last updated.
+            # @param [String] attributes A JSON string that stores application-specific data.
+            # @param [Time] date_created The date, specified in [ISO
+            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            #   as the date it was created. This is used when importing messages from another
+            #   system, as the provided value will be trusted and displayed on SDK clients.
+            # @param [Time] date_updated The date, specified in [ISO
+            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            #   as the date it was last updated.
             # @return [ParticipantInstance] Updated ParticipantInstance
             def update(attributes: :unset, date_created: :unset, date_updated: :unset)
               data = Twilio::Values.of({
@@ -295,11 +291,8 @@ module Twilio
             # Initialize the ParticipantInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] session_sid The unique id of the
-            #   [Session](https://www.twilio.com/docs/sessions/api/session) for this
-            #   participant.
-            # @param [String] sid A 34 character string that uniquely identifies this
-            #   resource.
+            # @param [String] session_sid The SID of the Session for the participant.
+            # @param [String] sid The SID of the SessionParticipant resource to fetch.
             # @return [ParticipantInstance] ParticipantInstance
             def initialize(version, payload, session_sid: nil, sid: nil)
               super(version)
@@ -338,93 +331,93 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique id of the Account responsible for this session.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The unique id of the Chat Service this session belongs to.
+            # @return [String] The SID of the Service the session belongs to
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] The unique id of the SMS Service this session belongs to.
+            # @return [String] The SID of the SMS Service the session belongs to
             def messaging_service_sid
               @properties['messaging_service_sid']
             end
 
             ##
-            # @return [String] The unique id of the Session for this participant.
+            # @return [String] The SID of the Session for the participant
             def session_sid
               @properties['session_sid']
             end
 
             ##
-            # @return [String] A 34 character string that uniquely identifies this resource.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] A unique string identifier for the session participant as Chat User.
+            # @return [String] The string that identifies the resource's User
             def identity
               @properties['identity']
             end
 
             ##
-            # @return [String] The address of the Twilio phone number that the participant is in contact with.
+            # @return [String] The address of the Twilio phone number that the participant is in contact with
             def twilio_address
               @properties['twilio_address']
             end
 
             ##
-            # @return [String] The address of the participant's device.
+            # @return [String] The address of the participant's device
             def user_address
               @properties['user_address']
             end
 
             ##
-            # @return [String] An optional string metadata field you can use to store any data you wish.
+            # @return [String] The JSON string that stores application-specific data
             def attributes
               @properties['attributes']
             end
 
             ##
-            # @return [participant.ParticipantType] The type of twilio product, participant is a user of.
+            # @return [participant.ParticipantType] The type of messaging used by the participant
             def type
               @properties['type']
             end
 
             ##
-            # @return [Time] The date that this resource was created.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date that this resource was last updated.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] An absolute URL for this participant.
+            # @return [String] The absolute URL of the participant
             def url
               @properties['url']
             end
 
             ##
             # Update the ParticipantInstance
-            # @param [String] attributes An optional string metadata field you can use to
-            #   store any data you wish. The string value must contain structurally valid JSON
-            #   if specified.  **Note** that if the attributes are not set "{}" will be
-            #   returned.
-            # @param [Time] date_created The date that this resource was created. This is
-            #   useful when bulk-importing messages from another system, as the provided value
-            #   will be trusted and displayed on SDK clients.
-            # @param [Time] date_updated The date that this resource was last updated.
+            # @param [String] attributes A JSON string that stores application-specific data.
+            # @param [Time] date_created The date, specified in [ISO
+            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            #   as the date it was created. This is used when importing messages from another
+            #   system, as the provided value will be trusted and displayed on SDK clients.
+            # @param [Time] date_updated The date, specified in [ISO
+            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            #   as the date it was last updated.
             # @return [ParticipantInstance] Updated ParticipantInstance
             def update(attributes: :unset, date_created: :unset, date_updated: :unset)
               context.update(attributes: attributes, date_created: date_created, date_updated: date_updated, )

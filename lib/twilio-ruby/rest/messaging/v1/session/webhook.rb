@@ -17,8 +17,7 @@ module Twilio
             ##
             # Initialize the WebhookList
             # @param [Version] version Version that contains the resource
-            # @param [String] session_sid The unique id of the
-            #   [Session](https://www.twilio.com/docs/sessions/api/session) for this webhook.
+            # @param [String] session_sid The SID of the Session for the webhook.
             # @return [WebhookList] WebhookList
             def initialize(version, session_sid: nil)
               super(version)
@@ -113,25 +112,25 @@ module Twilio
             ##
             # Retrieve a single page of WebhookInstance records from the API.
             # Request is executed immediately.
-            # @param [webhook.Target] target The target of this webhook.
-            # @param [String] configuration_url The absolute url the webhook request should be
+            # @param [webhook.Target] target The target of the webhook.
+            # @param [String] configuration_url The absolute URL the webhook request should be
             #   sent to.
-            # @param [webhook.Method] configuration_method The HTTP method to be used when
-            #   sending a webhook request.
-            # @param [String] configuration_filters The list of events, firing webhook event
-            #   for this Session.
+            # @param [webhook.Method] configuration_method The HTTP method we should use when
+            #   sending a webhook request to `url`. Can be `POST` or `GET`.
+            # @param [String] configuration_filters The list of events that trigger a webhook
+            #   event for the Session.
             # @param [String] configuration_triggers The list of keywords, firing webhook
-            #   event for this Session.
-            # @param [String] configuration_flow_sid The studio flow sid, where the webhook
-            #   should be sent to.
-            # @param [String] configuration_retry_count The number of retries in case of
-            #   webhook request failures. Maximum 3 retries are allowed, the default value is 0.
-            # @param [String] configuration_replay_after The message index for which and it's
-            #   successors the webhook will be replayed. Not set by default
-            # @param [Boolean] configuration_buffer_messages The flag whether buffering should
-            #   be applied to messages. Not set by default
-            # @param [String] configuration_buffer_window The period of buffering messages.
-            #   Default is 3000 ms.
+            #   event for the Session.
+            # @param [String] configuration_flow_sid The SID of the studio flow where the
+            #   webhook should be sent to.
+            # @param [String] configuration_retry_count The number of times to call the
+            #   webhook request if the first attempt fails. Can be up to 3 and the default is 0.
+            # @param [String] configuration_replay_after The message index for which and its
+            #   successors the webhook will be replayed. Not set by default.
+            # @param [Boolean] configuration_buffer_messages Whether buffering should be
+            #   applied to messages. Not set by default.
+            # @param [String] configuration_buffer_window The period to buffer messages in
+            #   milliseconds. Default is 3,000 ms.
             # @return [WebhookInstance] Newly created WebhookInstance
             def create(target: nil, configuration_url: :unset, configuration_method: :unset, configuration_filters: :unset, configuration_triggers: :unset, configuration_flow_sid: :unset, configuration_retry_count: :unset, configuration_replay_after: :unset, configuration_buffer_messages: :unset, configuration_buffer_window: :unset)
               data = Twilio::Values.of({
@@ -200,10 +199,9 @@ module Twilio
             ##
             # Initialize the WebhookContext
             # @param [Version] version Version that contains the resource
-            # @param [String] session_sid The unique id of the
-            #   [Session](https://www.twilio.com/docs/sessions/api/session) for this webhook.
-            # @param [String] sid A 34 character string that uniquely identifies this
-            #   resource.
+            # @param [String] session_sid The SID of the Session with the Webhook resource to
+            #   fetch.
+            # @param [String] sid The SID of the resource to fetch.
             # @return [WebhookContext] WebhookContext
             def initialize(version, session_sid, sid)
               super(version)
@@ -230,22 +228,22 @@ module Twilio
 
             ##
             # Update the WebhookInstance
-            # @param [String] configuration_url The absolute url the webhook request should be
+            # @param [String] configuration_url The absolute URL the webhook request should be
             #   sent to.
-            # @param [webhook.Method] configuration_method The HTTP method to be used when
-            #   sending a webhook request.
-            # @param [String] configuration_filters The list of events, firing webhook event
-            #   for this Session.
-            # @param [String] configuration_triggers The list of keywords, firing webhook
-            #   event for this Session.
-            # @param [String] configuration_flow_sid The studio flow sid, where the webhook
-            #   should be sent to.
-            # @param [String] configuration_retry_count The number of retries in case of
-            #   webhook request failures. Maximum 3 retries are allowed, the default value is 0.
-            # @param [Boolean] configuration_buffer_messages The flag whether buffering should
-            #   be applied to messages. Not set by default
-            # @param [String] configuration_buffer_window The period of buffering messages.
-            #   Default is 3000 ms.
+            # @param [webhook.Method] configuration_method The HTTP method we should use when
+            #   sending a webhook request to `url`. Can be `POST` or `GET`.
+            # @param [String] configuration_filters The list of events that trigger a webhook
+            #   event for the Session.
+            # @param [String] configuration_triggers The list of keywords that trigger a
+            #   webhook event for the Session.
+            # @param [String] configuration_flow_sid The SID of the studio flow where the
+            #   webhook should be sent to.
+            # @param [String] configuration_retry_count The number of times to try the webhook
+            #   request if the first attempt fails. Can be up to 3 and the default is 0.
+            # @param [Boolean] configuration_buffer_messages Whether buffering should be
+            #   applied to messages. Not set by default.
+            # @param [String] configuration_buffer_window The period to buffer messages in
+            #   milliseconds. Default is 3,000 ms.
             # @return [WebhookInstance] Updated WebhookInstance
             def update(configuration_url: :unset, configuration_method: :unset, configuration_filters: :unset, configuration_triggers: :unset, configuration_flow_sid: :unset, configuration_retry_count: :unset, configuration_buffer_messages: :unset, configuration_buffer_window: :unset)
               data = Twilio::Values.of({
@@ -297,10 +295,8 @@ module Twilio
             # Initialize the WebhookInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] session_sid The unique id of the
-            #   [Session](https://www.twilio.com/docs/sessions/api/session) for this webhook.
-            # @param [String] sid A 34 character string that uniquely identifies this
-            #   resource.
+            # @param [String] session_sid The SID of the Session for the webhook.
+            # @param [String] sid The SID of the resource to fetch.
             # @return [WebhookInstance] WebhookInstance
             def initialize(version, payload, session_sid: nil, sid: nil)
               super(version)
@@ -334,49 +330,49 @@ module Twilio
             end
 
             ##
-            # @return [String] A 34 character string that uniquely identifies this resource.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The unique id of the Account responsible for this session.
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The unique id of the Session for this webhook.
+            # @return [String] The SID of the Session for the webhook
             def session_sid
               @properties['session_sid']
             end
 
             ##
-            # @return [String] The target of this webhook.
+            # @return [String] The target of the webhook
             def target
               @properties['target']
             end
 
             ##
-            # @return [String] An absolute URL for this webhook.
+            # @return [String] The absolute URL of the webhook
             def url
               @properties['url']
             end
 
             ##
-            # @return [Hash] The configuration of this webhook.
+            # @return [Hash] The configuration of the webhook
             def configuration
               @properties['configuration']
             end
 
             ##
-            # @return [Time] The date that this resource was created.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date that this resource was last updated.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
@@ -390,22 +386,22 @@ module Twilio
 
             ##
             # Update the WebhookInstance
-            # @param [String] configuration_url The absolute url the webhook request should be
+            # @param [String] configuration_url The absolute URL the webhook request should be
             #   sent to.
-            # @param [webhook.Method] configuration_method The HTTP method to be used when
-            #   sending a webhook request.
-            # @param [String] configuration_filters The list of events, firing webhook event
-            #   for this Session.
-            # @param [String] configuration_triggers The list of keywords, firing webhook
-            #   event for this Session.
-            # @param [String] configuration_flow_sid The studio flow sid, where the webhook
-            #   should be sent to.
-            # @param [String] configuration_retry_count The number of retries in case of
-            #   webhook request failures. Maximum 3 retries are allowed, the default value is 0.
-            # @param [Boolean] configuration_buffer_messages The flag whether buffering should
-            #   be applied to messages. Not set by default
-            # @param [String] configuration_buffer_window The period of buffering messages.
-            #   Default is 3000 ms.
+            # @param [webhook.Method] configuration_method The HTTP method we should use when
+            #   sending a webhook request to `url`. Can be `POST` or `GET`.
+            # @param [String] configuration_filters The list of events that trigger a webhook
+            #   event for the Session.
+            # @param [String] configuration_triggers The list of keywords that trigger a
+            #   webhook event for the Session.
+            # @param [String] configuration_flow_sid The SID of the studio flow where the
+            #   webhook should be sent to.
+            # @param [String] configuration_retry_count The number of times to try the webhook
+            #   request if the first attempt fails. Can be up to 3 and the default is 0.
+            # @param [Boolean] configuration_buffer_messages Whether buffering should be
+            #   applied to messages. Not set by default.
+            # @param [String] configuration_buffer_window The period to buffer messages in
+            #   milliseconds. Default is 3,000 ms.
             # @return [WebhookInstance] Updated WebhookInstance
             def update(configuration_url: :unset, configuration_method: :unset, configuration_filters: :unset, configuration_triggers: :unset, configuration_flow_sid: :unset, configuration_retry_count: :unset, configuration_buffer_messages: :unset, configuration_buffer_window: :unset)
               context.update(

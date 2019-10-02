@@ -24,8 +24,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The Composition Hook Sid that uniquely identifies the
-        #   Composition Hook to fetch.
+        # @param [String] sid The SID of the CompositionHook resource to fetch.
         # @return [Twilio::REST::Video::V1::CompositionHookContext] if sid was passed.
         # @return [Twilio::REST::Video::V1::CompositionHookList]
         def composition_hooks(sid=:unset)
@@ -45,8 +44,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The Recording Sid that uniquely identifies the Recording to
-        #   fetch.
+        # @param [String] sid The SID of the Recording resource to fetch.
         # @return [Twilio::REST::Video::V1::RecordingContext] if sid was passed.
         # @return [Twilio::REST::Video::V1::RecordingList]
         def recordings(sid=:unset)
@@ -66,8 +64,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The Composition Sid that uniquely identifies the Composition
-        #   to fetch.
+        # @param [String] sid The SID of the Composition resource to fetch.
         # @return [Twilio::REST::Video::V1::CompositionContext] if sid was passed.
         # @return [Twilio::REST::Video::V1::CompositionList]
         def compositions(sid=:unset)
@@ -81,7 +78,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The Room Sid or name that uniquely identifies this resource.
+        # @param [String] sid The SID of the Room resource to fetch.
         # @return [Twilio::REST::Video::V1::RoomContext] if sid was passed.
         # @return [Twilio::REST::Video::V1::RoomList]
         def rooms(sid=:unset)

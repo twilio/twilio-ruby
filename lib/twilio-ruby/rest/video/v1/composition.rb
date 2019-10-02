@@ -29,14 +29,14 @@ module Twilio
           # Lists CompositionInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [composition.Status] status Only show Compositions with the given status.
-          # @param [Time] date_created_after Only show Compositions created on or after this
-          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
-          #   `YYYY-MM-DDThh:mm:ssZ`.
-          # @param [Time] date_created_before Only show Compositions created before this
-          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
-          #   `YYYY-MM-DDThh:mm:ssZ`.
-          # @param [String] room_sid Only show Compositions with the given Room SID.
+          # @param [composition.Status] status Read only Composition resources with this
+          #   status. Can be: `enqueued`, `processing`, `completed`, `deleted`, or `failed`.
+          # @param [Time] date_created_after Read only Composition resources created on or
+          #   after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with
+          #   time zone.
+          # @param [Time] date_created_before Read only Composition resources created before
+          #   this ISO 8601 date-time with time zone.
+          # @param [String] room_sid Read only Composition resources with this Room SID.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -59,14 +59,14 @@ module Twilio
           # Streams CompositionInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [composition.Status] status Only show Compositions with the given status.
-          # @param [Time] date_created_after Only show Compositions created on or after this
-          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
-          #   `YYYY-MM-DDThh:mm:ssZ`.
-          # @param [Time] date_created_before Only show Compositions created before this
-          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
-          #   `YYYY-MM-DDThh:mm:ssZ`.
-          # @param [String] room_sid Only show Compositions with the given Room SID.
+          # @param [composition.Status] status Read only Composition resources with this
+          #   status. Can be: `enqueued`, `processing`, `completed`, `deleted`, or `failed`.
+          # @param [Time] date_created_after Read only Composition resources created on or
+          #   after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with
+          #   time zone.
+          # @param [Time] date_created_before Read only Composition resources created before
+          #   this ISO 8601 date-time with time zone.
+          # @param [String] room_sid Read only Composition resources with this Room SID.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -105,14 +105,14 @@ module Twilio
           ##
           # Retrieve a single page of CompositionInstance records from the API.
           # Request is executed immediately.
-          # @param [composition.Status] status Only show Compositions with the given status.
-          # @param [Time] date_created_after Only show Compositions created on or after this
-          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
-          #   `YYYY-MM-DDThh:mm:ssZ`.
-          # @param [Time] date_created_before Only show Compositions created before this
-          #   ISO8601 date-time with timezone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or
-          #   `YYYY-MM-DDThh:mm:ssZ`.
-          # @param [String] room_sid Only show Compositions with the given Room SID.
+          # @param [composition.Status] status Read only Composition resources with this
+          #   status. Can be: `enqueued`, `processing`, `completed`, `deleted`, or `failed`.
+          # @param [Time] date_created_after Read only Composition resources created on or
+          #   after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with
+          #   time zone.
+          # @param [Time] date_created_before Read only Composition resources created before
+          #   this ISO 8601 date-time with time zone.
+          # @param [String] room_sid Read only Composition resources with this Room SID.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -151,38 +151,31 @@ module Twilio
           ##
           # Retrieve a single page of CompositionInstance records from the API.
           # Request is executed immediately.
-          # @param [String] room_sid Group Room SID owning the media tracks to be used as
-          #   Composition sources.
-          # @param [Hash] video_layout A JSON object defining the video layout of the
-          #   Composition in terms of regions. See the section [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) below for further information.
-          # @param [String] audio_sources An array of audio sources to merge. All the
-          #   specified sources must belong to the same Group Room. It can include:
+          # @param [String] room_sid The SID of the Group Room with the media tracks to be
+          #   used as composition sources.
+          # @param [Hash] video_layout An object that describes the video layout of the
+          #   composition in terms of regions. See [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+          # @param [String] audio_sources An array of track names from the same group room
+          #   to merge into the new composition. Can include zero or more track names. The new
+          #   composition includes all audio sources specified in `audio_sources` except for
+          #   those specified in `audio_sources_excluded`. The track names in this parameter
+          #   can include an asterisk as a wild card character, which will match zero or more
+          #   characters in a track name. For example, `student*` includes `student` as well
+          #   as `studentTeam`.
+          # @param [String] audio_sources_excluded An array of track names to exclude. The
+          #   new composition includes all audio sources specified in `audio_sources` except
+          #   for those specified in `audio_sources_excluded`. The track names in this
+          #   parameter can include an asterisk as a wild card character, which will match
+          #   zero or more characters in a track name. For example, `student*` excludes
+          #   `student` as well as `studentTeam`. This parameter can also be empty.
+          # @param [String] resolution A string that describes the columns (width) and rows
+          #   (height) of the generated composed video in pixels. Defaults to `640x480`.
+          #   The string's format is `{width}x{height}` where:
           #
-          #   * Zero or more `RecordingTrackSid`
-          #   * Zero or more `MediaTrackSid`
-          #   * Zero or more `ParticipantSid`
-          #   * Zero or more Track names. These can be specified using wildcards (e.g.
-          #   `student*`). The use of `[*]` has semantics "all if any" meaning zero or more
-          #   (i.e. all) depending on whether the target room had audio tracks.
-          # @param [String] audio_sources_excluded An array of audio sources to exclude from
-          #   the Composition. Any new Composition shall include all audio sources specified
-          #   in `AudioSources` except for the ones specified in `AudioSourcesExcluded`. This
-          #   parameter may include:
-          #
-          #   * Zero or more `RecordingTrackSid`
-          #   * Zero or more `MediaTrackSid`
-          #   * Zero or more `ParticipantSid`
-          #   * Zero or more Track names. These can be specified using wildcards (e.g.
-          #   `student*`)
-          # @param [String] resolution A string representing the number of pixels for rows
-          #   (width) and columns (height) of the generated composed video. This string must
-          #   have the format `{width}x{height}`. This parameter must comply with the
-          #   following constraints:
-          #
-          #   * `width >= 16 && width <= 1280`
-          #   * `height >= 16 && height <= 1280`
-          #   * `width * height <= 921,600`
+          #   * 16 <= `{width}` <= 1280
+          #   * 16 <= `{height}` <= 1280
+          #   * `{width}` * `{height}` <= 921,600
           #
           #   Typical values are:
           #
@@ -191,27 +184,27 @@ module Twilio
           #   * VGA = `640x480`
           #   * CIF = `320x240`
           #
-          #   Note that the `Resolution` implicitly imposes an aspect ratio to the resulting
-          #   composition. When the original video tracks get constrained by this aspect ratio
-          #   they are scaled-down to fit. You can find detailed information in the
-          #   [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) section. Defaults to `640x480`.
-          # @param [composition.Format] format Container format of the Composition media
-          #   file. Can be any of the following: `mp4`, `webm`. The use of `mp4` or `webm`
-          #   makes mandatory the specification of `AudioSources` and/or one `VideoLayout`
-          #   element containing a valid `video_sources` list, otherwise an error is fired.
-          #   Defaults to `webm`.
-          # @param [String] status_callback A URL that Twilio sends asynchronous webhook
-          #   requests to on every composition event. If not provided, status callback events
-          #   will not be dispatched.
-          # @param [String] status_callback_method HTTP method Twilio should use when
-          #   requesting the above URL. Defaults to `POST`.
-          # @param [Boolean] trim When activated, clips all the Composition intervals where
-          #   there is no active media. This results in shorter compositions in cases when the
-          #   Room was created but no Participant joined for some time, or if all the
-          #   Participants left the room and joined at a later stage, as those gaps will be
-          #   removed. You can find further information in the [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) section. Defaults to `true`.
+          #   Note that the `resolution` imposes an aspect ratio to the resulting composition.
+          #   When the original video tracks are constrained by the aspect ratio, they are
+          #   scaled to fit. See [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+          # @param [composition.Format] format The container format of the composition's
+          #   media files. Can be: `mp4` or `webm` and the default is `webm`. If you specify
+          #   `mp4` or `webm`, you must also specify one or more `audio_sources` and/or a
+          #   `video_layout` element that contains a valid `video_sources` list, otherwise an
+          #   error occurs.
+          # @param [String] status_callback The URL we should call using the
+          #   `status_callback_method` to send status information to your application on every
+          #   composition event. If not provided, status callback events will not be
+          #   dispatched.
+          # @param [String] status_callback_method The HTTP method we should use to call
+          #   `status_callback`. Can be: `POST` or `GET` and the default is `POST`.
+          # @param [Boolean] trim Whether to clip the intervals where there is no active
+          #   media in the composition. The default is `true`. Compositions with `trim`
+          #   enabled are shorter when the Room is created and no Participant joins for a
+          #   while as well as if all the Participants leave the room and join later, because
+          #   those gaps will be removed. See [Specifying Video
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
           # @return [CompositionInstance] Newly created CompositionInstance
           def create(room_sid: nil, video_layout: :unset, audio_sources: :unset, audio_sources_excluded: :unset, resolution: :unset, format: :unset, status_callback: :unset, status_callback_method: :unset, trim: :unset)
             data = Twilio::Values.of({
@@ -279,8 +272,7 @@ module Twilio
           ##
           # Initialize the CompositionContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The Composition Sid that uniquely identifies the Composition
-          #   to fetch.
+          # @param [String] sid The SID of the Composition resource to fetch.
           # @return [CompositionContext] CompositionContext
           def initialize(version, sid)
             super(version)
@@ -334,8 +326,7 @@ module Twilio
           # Initialize the CompositionInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The Composition Sid that uniquely identifies the Composition
-          #   to fetch.
+          # @param [String] sid The SID of the Composition resource to fetch.
           # @return [CompositionInstance] CompositionInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -379,109 +370,109 @@ module Twilio
           end
 
           ##
-          # @return [String] Twilio Account SID.
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [composition.Status] The status of the Composition.
+          # @return [composition.Status] The status of the composition
           def status
             @properties['status']
           end
 
           ##
-          # @return [Time] Date when the Composition Resource was created.
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [String] Date when the media processing task finished.
+          # @return [String] Date when the media processing task finished
           def date_completed
             @properties['date_completed']
           end
 
           ##
-          # @return [String] Date when the Composition Resource generated media was deleted.
+          # @return [String] The ISO 8601 date and time in GMT when the composition generated media was deleted
           def date_deleted
             @properties['date_deleted']
           end
 
           ##
-          # @return [String] A 34-character string that uniquely identifies this Composition.
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] A 34-character string that uniquely identifies the source of this Composition.
+          # @return [String] The SID of the Group Room that generated the audio and video tracks used in the composition
           def room_sid
             @properties['room_sid']
           end
 
           ##
-          # @return [String] A list of audio sources related to this Composition.
+          # @return [String] The array of track names to include in the composition
           def audio_sources
             @properties['audio_sources']
           end
 
           ##
-          # @return [String] A list of audio sources excluded related to this Composition.
+          # @return [String] The array of track names to exclude from the composition
           def audio_sources_excluded
             @properties['audio_sources_excluded']
           end
 
           ##
-          # @return [Hash] The JSON video layout description.
+          # @return [Hash] An object that describes the video layout of the composition
           def video_layout
             @properties['video_layout']
           end
 
           ##
-          # @return [String] Pixel resolution of the composed video.
+          # @return [String] The dimensions of the video image in pixels expressed as columns (width) and rows (height)
           def resolution
             @properties['resolution']
           end
 
           ##
-          # @return [Boolean] Boolean flag for clipping intervals that have no media.
+          # @return [Boolean] Whether to remove intervals with no media
           def trim
             @properties['trim']
           end
 
           ##
-          # @return [composition.Format] The file format for this Composition.
+          # @return [composition.Format] The container format of the composition's media files as specified in the POST request that created the Composition resource
           def format
             @properties['format']
           end
 
           ##
-          # @return [String] The bitrate
+          # @return [String] The average bit rate of the composition's media
           def bitrate
             @properties['bitrate']
           end
 
           ##
-          # @return [String] Size of the Composed media file expressed in bytes.
+          # @return [String] The size of the composed media file in bytes
           def size
             @properties['size']
           end
 
           ##
-          # @return [String] Duration of the Composed media in seconds.
+          # @return [String] The duration of the composition's media file in seconds
           def duration
             @properties['duration']
           end
 
           ##
-          # @return [String] The absolute URL for this resource.
+          # @return [String] The absolute URL of the resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] JSON object with the URL where the media file can be fetched.
+          # @return [String] The URL of the media file associated with the composition
           def links
             @properties['links']
           end

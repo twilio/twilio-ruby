@@ -110,13 +110,14 @@ module Twilio
           ##
           # Retrieve a single page of ServiceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] unique_name A unique, addressable name of this Service which
-          #   forms part of the domain name, fewer than 256 characters. Required.
-          # @param [String] friendly_name A human-readable description of this Service,
-          #   fewer than 256 characters. Required
-          # @param [Boolean] include_credentials A boolean value that indicates whether to
-          #   inject Account credentials into a Function invocation context. Optional, default
-          #   `false`.
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the Service resource. It can be used as an alternative to the `sid`
+          #   in the URL path to address the Service resource. This value must be 244
+          #   characters or less in length and be unique.
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the Service resource. It can be up to 255 characters long.
+          # @param [Boolean] include_credentials Whether to inject Account credentials into
+          #   a function invocation context. The default value is `false`.
           # @return [ServiceInstance] Newly created ServiceInstance
           def create(unique_name: nil, friendly_name: nil, include_credentials: :unset)
             data = Twilio::Values.of({
@@ -178,8 +179,7 @@ module Twilio
           ##
           # Initialize the ServiceContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid Identifier of the Serverless Service Instance. Either a SID
-          #   or UniqueName.
+          # @param [String] sid The `sid` or `unique_name` of the Service resource to fetch.
           # @return [ServiceContext] ServiceContext
           def initialize(version, sid)
             super(version)
@@ -219,10 +219,10 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [Boolean] include_credentials A boolean value that indicates whether to
-          #   inject Account credentials into a Function invocation context. Optional.
-          # @param [String] friendly_name A human-readable description of this Service,
-          #   fewer than 256 characters. Optional
+          # @param [Boolean] include_credentials Whether to inject Account credentials into
+          #   a function invocation context.
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the Service resource. It can be up to 255 characters long.
           # @return [ServiceInstance] Updated ServiceInstance
           def update(include_credentials: :unset, friendly_name: :unset)
             data = Twilio::Values.of({
@@ -333,8 +333,7 @@ module Twilio
           # Initialize the ServiceInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid Identifier of the Serverless Service Instance. Either a SID
-          #   or UniqueName.
+          # @param [String] sid The `sid` or `unique_name` of the Service resource to fetch.
           # @return [ServiceInstance] ServiceInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -369,55 +368,55 @@ module Twilio
           end
 
           ##
-          # @return [String] Service Sid.
+          # @return [String] The unique string that identifies the Service resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] Account Sid.
+          # @return [String] The SID of the Account that created the Service resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] A human-readable description of this Service.
+          # @return [String] The string that you assigned to describe the Service resource
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [String] A unique, URL-friendly name of this Service.
+          # @return [String] An application-defined string that uniquely identifies the Service resource
           def unique_name
             @properties['unique_name']
           end
 
           ##
-          # @return [Boolean] Whether to inject Account credentials into a Function invocation context.
+          # @return [Boolean] Whether to inject Account credentials into a function invocation context
           def include_credentials
             @properties['include_credentials']
           end
 
           ##
-          # @return [Time] The date that this Service was created.
+          # @return [Time] The ISO 8601 date and time in GMT when the Service resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date that this Service was updated.
+          # @return [Time] The ISO 8601 date and time in GMT when the Service resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The URL of this Service.
+          # @return [String] The absolute URL of the Service resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] Nested resource URLs.
+          # @return [String] The URLs of the Service's nested resources
           def links
             @properties['links']
           end
@@ -438,10 +437,10 @@ module Twilio
 
           ##
           # Update the ServiceInstance
-          # @param [Boolean] include_credentials A boolean value that indicates whether to
-          #   inject Account credentials into a Function invocation context. Optional.
-          # @param [String] friendly_name A human-readable description of this Service,
-          #   fewer than 256 characters. Optional
+          # @param [Boolean] include_credentials Whether to inject Account credentials into
+          #   a function invocation context.
+          # @param [String] friendly_name A descriptive string that you create to describe
+          #   the Service resource. It can be up to 255 characters long.
           # @return [ServiceInstance] Updated ServiceInstance
           def update(include_credentials: :unset, friendly_name: :unset)
             context.update(include_credentials: include_credentials, friendly_name: friendly_name, )

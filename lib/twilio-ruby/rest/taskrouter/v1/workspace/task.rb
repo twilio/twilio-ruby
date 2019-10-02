@@ -15,7 +15,7 @@ module Twilio
             ##
             # Initialize the TaskList
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The ID of the Workspace that holds this Task
+            # @param [String] workspace_sid The SID of the Workspace that contains the Task.
             # @return [TaskList] TaskList
             def initialize(version, workspace_sid: nil)
               super(version)
@@ -29,29 +29,33 @@ module Twilio
             # Lists TaskInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] priority Retrieve the list of all Tasks in the workspace with
-            #   the specified priority.
-            # @param [String] assignment_status Returns the list of all Tasks in the workspace
-            #   with the specified AssignmentStatus. Allowed AssignmentStatus values are
-            #   pending, reserved, assigned, canceled, and completed.
-            # @param [String] workflow_sid Returns the list of Tasks that are being controlled
-            #   by the Workflow with the specified Sid value.
-            # @param [String] workflow_name Returns the list of Tasks that are being
-            #   controlled by the Workflow with the specified FriendlyName value.
-            # @param [String] task_queue_sid Returns the list of Tasks that are currently
-            #   waiting in the TaskQueue identified by the Sid specified.
-            # @param [String] task_queue_name Returns the list of Tasks that are currently
-            #   waiting in the TaskQueue identified by the FriendlyName specified.
-            # @param [String] evaluate_task_attributes Provide a task attributes expression,
-            #   and this will return tasks which match the attributes.
-            # @param [String] ordering Use this parameter to control the order of the Tasks
-            #   returned. The value should be passed in `Attribute:Order` format, where
-            #   Attribute can be either `Priority` or `DateCreated` and Order can be either
-            #   `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered by Priority
-            #   in descending order. To sort the Tasks by Priority and DateCreated pass
-            #   `Priority:desc,DateCreated:asc`. By Default Tasks are returned sorted by
-            #   DateCreated in ascending order.
-            # @param [Boolean] has_addons The has_addons
+            # @param [String] priority The priority value of the Tasks to read. Returns the
+            #   list of all Tasks in the Workspace with the specified priority.
+            # @param [String] assignment_status The `assignment_status` of the Tasks to read.
+            #   Can be: `pending`, `reserved`, `assigned`, `canceled`, and `completed`. Returns
+            #   all Tasks in the Workspace with the specified `assignment_status`.
+            # @param [String] workflow_sid The SID of the Workflow with the Tasks to read.
+            #   Returns the Tasks controlled by the Workflow identified by this SID.
+            # @param [String] workflow_name The friendly name of the Workflow with the Tasks
+            #   to read. Returns the Tasks controlled by the Workflow identified by this
+            #   friendly name.
+            # @param [String] task_queue_sid The SID of the TaskQueue with the Tasks to read.
+            #   Returns the Tasks waiting in the TaskQueue identified by this SID.
+            # @param [String] task_queue_name The `friendly_name` of the TaskQueue with the
+            #   Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this
+            #   friendly name.
+            # @param [String] evaluate_task_attributes The attributes of the Tasks to read.
+            #   Returns the Tasks that match the attributes specified in this parameter.
+            # @param [String] ordering How to order the returned Task resources. y default,
+            #   Tasks are sorted by ascending DateCreated. This value is specified as:
+            #   `Attribute:Order`, where `Attribute` can be either `Priority` or `DateCreated`
+            #   and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns
+            #   Tasks ordered in descending order of their Priority. Multiple sort orders can be
+            #   specified in a comma-separated list such as `Priority:desc,DateCreated:asc`,
+            #   which returns the Tasks in descending Priority order and ascending DateCreated
+            #   Order.
+            # @param [Boolean] has_addons Whether to read Tasks with addons. If `true`,
+            #   returns only Tasks with addons. If `false`, returns only Tasks without addons.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -79,29 +83,33 @@ module Twilio
             # Streams TaskInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] priority Retrieve the list of all Tasks in the workspace with
-            #   the specified priority.
-            # @param [String] assignment_status Returns the list of all Tasks in the workspace
-            #   with the specified AssignmentStatus. Allowed AssignmentStatus values are
-            #   pending, reserved, assigned, canceled, and completed.
-            # @param [String] workflow_sid Returns the list of Tasks that are being controlled
-            #   by the Workflow with the specified Sid value.
-            # @param [String] workflow_name Returns the list of Tasks that are being
-            #   controlled by the Workflow with the specified FriendlyName value.
-            # @param [String] task_queue_sid Returns the list of Tasks that are currently
-            #   waiting in the TaskQueue identified by the Sid specified.
-            # @param [String] task_queue_name Returns the list of Tasks that are currently
-            #   waiting in the TaskQueue identified by the FriendlyName specified.
-            # @param [String] evaluate_task_attributes Provide a task attributes expression,
-            #   and this will return tasks which match the attributes.
-            # @param [String] ordering Use this parameter to control the order of the Tasks
-            #   returned. The value should be passed in `Attribute:Order` format, where
-            #   Attribute can be either `Priority` or `DateCreated` and Order can be either
-            #   `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered by Priority
-            #   in descending order. To sort the Tasks by Priority and DateCreated pass
-            #   `Priority:desc,DateCreated:asc`. By Default Tasks are returned sorted by
-            #   DateCreated in ascending order.
-            # @param [Boolean] has_addons The has_addons
+            # @param [String] priority The priority value of the Tasks to read. Returns the
+            #   list of all Tasks in the Workspace with the specified priority.
+            # @param [String] assignment_status The `assignment_status` of the Tasks to read.
+            #   Can be: `pending`, `reserved`, `assigned`, `canceled`, and `completed`. Returns
+            #   all Tasks in the Workspace with the specified `assignment_status`.
+            # @param [String] workflow_sid The SID of the Workflow with the Tasks to read.
+            #   Returns the Tasks controlled by the Workflow identified by this SID.
+            # @param [String] workflow_name The friendly name of the Workflow with the Tasks
+            #   to read. Returns the Tasks controlled by the Workflow identified by this
+            #   friendly name.
+            # @param [String] task_queue_sid The SID of the TaskQueue with the Tasks to read.
+            #   Returns the Tasks waiting in the TaskQueue identified by this SID.
+            # @param [String] task_queue_name The `friendly_name` of the TaskQueue with the
+            #   Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this
+            #   friendly name.
+            # @param [String] evaluate_task_attributes The attributes of the Tasks to read.
+            #   Returns the Tasks that match the attributes specified in this parameter.
+            # @param [String] ordering How to order the returned Task resources. y default,
+            #   Tasks are sorted by ascending DateCreated. This value is specified as:
+            #   `Attribute:Order`, where `Attribute` can be either `Priority` or `DateCreated`
+            #   and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns
+            #   Tasks ordered in descending order of their Priority. Multiple sort orders can be
+            #   specified in a comma-separated list such as `Priority:desc,DateCreated:asc`,
+            #   which returns the Tasks in descending Priority order and ascending DateCreated
+            #   Order.
+            # @param [Boolean] has_addons Whether to read Tasks with addons. If `true`,
+            #   returns only Tasks with addons. If `false`, returns only Tasks without addons.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -145,29 +153,33 @@ module Twilio
             ##
             # Retrieve a single page of TaskInstance records from the API.
             # Request is executed immediately.
-            # @param [String] priority Retrieve the list of all Tasks in the workspace with
-            #   the specified priority.
-            # @param [String] assignment_status Returns the list of all Tasks in the workspace
-            #   with the specified AssignmentStatus. Allowed AssignmentStatus values are
-            #   pending, reserved, assigned, canceled, and completed.
-            # @param [String] workflow_sid Returns the list of Tasks that are being controlled
-            #   by the Workflow with the specified Sid value.
-            # @param [String] workflow_name Returns the list of Tasks that are being
-            #   controlled by the Workflow with the specified FriendlyName value.
-            # @param [String] task_queue_sid Returns the list of Tasks that are currently
-            #   waiting in the TaskQueue identified by the Sid specified.
-            # @param [String] task_queue_name Returns the list of Tasks that are currently
-            #   waiting in the TaskQueue identified by the FriendlyName specified.
-            # @param [String] evaluate_task_attributes Provide a task attributes expression,
-            #   and this will return tasks which match the attributes.
-            # @param [String] ordering Use this parameter to control the order of the Tasks
-            #   returned. The value should be passed in `Attribute:Order` format, where
-            #   Attribute can be either `Priority` or `DateCreated` and Order can be either
-            #   `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered by Priority
-            #   in descending order. To sort the Tasks by Priority and DateCreated pass
-            #   `Priority:desc,DateCreated:asc`. By Default Tasks are returned sorted by
-            #   DateCreated in ascending order.
-            # @param [Boolean] has_addons The has_addons
+            # @param [String] priority The priority value of the Tasks to read. Returns the
+            #   list of all Tasks in the Workspace with the specified priority.
+            # @param [String] assignment_status The `assignment_status` of the Tasks to read.
+            #   Can be: `pending`, `reserved`, `assigned`, `canceled`, and `completed`. Returns
+            #   all Tasks in the Workspace with the specified `assignment_status`.
+            # @param [String] workflow_sid The SID of the Workflow with the Tasks to read.
+            #   Returns the Tasks controlled by the Workflow identified by this SID.
+            # @param [String] workflow_name The friendly name of the Workflow with the Tasks
+            #   to read. Returns the Tasks controlled by the Workflow identified by this
+            #   friendly name.
+            # @param [String] task_queue_sid The SID of the TaskQueue with the Tasks to read.
+            #   Returns the Tasks waiting in the TaskQueue identified by this SID.
+            # @param [String] task_queue_name The `friendly_name` of the TaskQueue with the
+            #   Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this
+            #   friendly name.
+            # @param [String] evaluate_task_attributes The attributes of the Tasks to read.
+            #   Returns the Tasks that match the attributes specified in this parameter.
+            # @param [String] ordering How to order the returned Task resources. y default,
+            #   Tasks are sorted by ascending DateCreated. This value is specified as:
+            #   `Attribute:Order`, where `Attribute` can be either `Priority` or `DateCreated`
+            #   and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns
+            #   Tasks ordered in descending order of their Priority. Multiple sort orders can be
+            #   specified in a comma-separated list such as `Priority:desc,DateCreated:asc`,
+            #   which returns the Tasks in descending Priority order and ascending DateCreated
+            #   Order.
+            # @param [Boolean] has_addons Whether to read Tasks with addons. If `true`,
+            #   returns only Tasks with addons. If `false`, returns only Tasks without addons.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -211,24 +223,24 @@ module Twilio
             ##
             # Retrieve a single page of TaskInstance records from the API.
             # Request is executed immediately.
-            # @param [String] timeout The amount of time in seconds the task is allowed to
-            #   live up to a maximum of 2 weeks. Defaults to 24 hours. On timeout,
-            #   `task.canceled` event will fire with description "Task TTL Exceeded".
-            # @param [String] priority Override priority for the Task. When supplied, the Task
-            #   will take on the given priority unless it matches a Workflow Target with a
-            #   Priority set. When not supplied, the Task will take on the priority of the
-            #   matching Workflow Target.
-            # @param [String] task_channel When MultiTasking is enabled specify the type of
-            #   the task by passing either TaskChannel Unique Name or Task Channel Sid. Default
-            #   value is "default"
-            # @param [String] workflow_sid The WorkflowSid for the Workflow that you would
-            #   like to handle routing for this Task. If there is only one Workflow defined for
-            #   the Workspace that you are posting a task to, then this is an optional
-            #   parameter, and that single workflow will be used.
-            # @param [String] attributes Url-encoded JSON string describing the attributes of
-            #   this task. This data will be passed back to the Workflow's AssignmentCallbackURL
-            #   when the Task is assigned to a Worker. An example task: `{ "task_type": "call",
-            #   "twilio_call_sid": "CAxxx", "customer_ticket_number": "12345" }`
+            # @param [String] timeout The amount of time in seconds the new task is allowed to
+            #   live. Can be up to a maximum of 2 weeks (1,209,600 seconds). The default value
+            #   is 24 hours (86,400 seconds). On timeout, the `task.canceled` event will fire
+            #   with description `Task TTL Exceeded`.
+            # @param [String] priority The priority to assign the new task and override the
+            #   default. When supplied, the new Task will have this priority unless it matches a
+            #   Workflow Target with a Priority set. When not supplied, the new Task will have
+            #   the priority of the matching Workflow Target.
+            # @param [String] task_channel When MultiTasking is enabled, specify the
+            #   TaskChannel by passing either its `unique_name` or `sid`. Default value is
+            #   `default`.
+            # @param [String] workflow_sid The SID of the Workflow that you would like to
+            #   handle routing for the new Task. If there is only one Workflow defined for the
+            #   Workspace that you are posting the new task to, this parameter is optional.
+            # @param [String] attributes A URL-encoded JSON string with the attributes of the
+            #   new task. This value is passed to the Workflow's `assignment_callback_url` when
+            #   the Task is assigned to a Worker. For example: `{ "task_type": "call",
+            #   "twilio_call_sid": "CAxxx", "customer_ticket_number": "12345" }`.
             # @return [TaskInstance] Newly created TaskInstance
             def create(timeout: :unset, priority: :unset, task_channel: :unset, workflow_sid: :unset, attributes: :unset)
               data = Twilio::Values.of({
@@ -288,8 +300,8 @@ module Twilio
             ##
             # Initialize the TaskContext
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The workspace_sid
-            # @param [String] sid The sid
+            # @param [String] workspace_sid The SID of the Workspace with the Task to fetch.
+            # @param [String] sid The SID of the Task resource to fetch.
             # @return [TaskContext] TaskContext
             def initialize(version, workspace_sid, sid)
               super(version)
@@ -319,19 +331,21 @@ module Twilio
 
             ##
             # Update the TaskInstance
-            # @param [String] attributes The user-defined JSON data describing the custom
-            #   attributes of this task.
-            # @param [task.Status] assignment_status A 'pending' or 'reserved' Task may be
-            #   canceled by posting AssignmentStatus='canceled'. Post
-            #   AssignmentStatus='wrapping' to move Task to 'wrapup' state and
-            #   AssignmentStatus='completed' to move a Task to 'completed' state.
-            # @param [String] reason This is only required if the Task is canceled or
-            #   completed. This logs the reason the task was either canceled or completed and
-            #   queues the task for deletion after 5 minutes.
-            # @param [String] priority Override priority for the Task. When supplied, the Task
-            #   will take on the given priority unless it matches a Workflow Target with a
+            # @param [String] attributes The JSON string that describes the custom attributes
+            #   of the task.
+            # @param [task.Status] assignment_status The new status of the task. Can be:
+            #   `canceled`, to cancel a Task that is currently `pending` or `reserved`;
+            #   `wrapping`, to move the Task to wrapup state; or `completed`, to move a Task to
+            #   the completed state.
+            # @param [String] reason The reason that the Task was canceled or completed. This
+            #   parameter is required only if the Task is canceled or completed. Setting this
+            #   value queues the task for deletion and logs the reason.
+            # @param [String] priority The Task's new priority value. When supplied, the Task
+            #   takes on the specified priority unless it matches a Workflow Target with a
             #   Priority set.
-            # @param [String] task_channel The task_channel
+            # @param [String] task_channel When MultiTasking is enabled, specify the
+            #   TaskChannel with the task to update. Can be the TaskChannel's SID or its
+            #   `unique_name`, such as `voice`, `sms`, or `default`.
             # @return [TaskInstance] Updated TaskInstance
             def update(attributes: :unset, assignment_status: :unset, reason: :unset, priority: :unset, task_channel: :unset)
               data = Twilio::Values.of({
@@ -400,8 +414,8 @@ module Twilio
             # Initialize the TaskInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] workspace_sid The ID of the Workspace that holds this Task
-            # @param [String] sid The sid
+            # @param [String] workspace_sid The SID of the Workspace that contains the Task.
+            # @param [String] sid The SID of the Task resource to fetch.
             # @return [TaskInstance] TaskInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
               super(version)
@@ -447,121 +461,121 @@ module Twilio
             end
 
             ##
-            # @return [String] The ID of the account that owns this Task
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The number of seconds since this task was created.
+            # @return [String] The number of seconds since the task was created
             def age
               @properties['age']
             end
 
             ##
-            # @return [task.Status] Returns the list of all Tasks in the workspace with the specified AssignmentStatus.
+            # @return [task.Status] The current status of the Task's assignment
             def assignment_status
               @properties['assignment_status']
             end
 
             ##
-            # @return [String] The user-defined JSON string describing the custom attributes of this work.
+            # @return [String] The JSON string with custom attributes of the work
             def attributes
               @properties['attributes']
             end
 
             ##
-            # @return [String] The addon data for all installed addons is returned with this attribute
+            # @return [String] An object that contains the addon data for all installed addons
             def addons
               @properties['addons']
             end
 
             ##
-            # @return [Time] Date this task was created, given as ISO 8601 format.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] Date this task was updated, given as ISO 8601 format.
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] Retrieve the list of all Tasks in the workspace with the specified priority.
+            # @return [String] Retrieve the list of all Tasks in the Workspace with the specified priority
             def priority
               @properties['priority']
             end
 
             ##
-            # @return [String] The reason the task was canceled  or completed
+            # @return [String] The reason the task was canceled or completed
             def reason
               @properties['reason']
             end
 
             ##
-            # @return [String] The unique ID of the Task
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] Returns the list of Tasks that are currently waiting in the TaskQueue identified by the Sid specified.
+            # @return [String] The SID of the TaskQueue
             def task_queue_sid
               @properties['task_queue_sid']
             end
 
             ##
-            # @return [String] The task_queue_friendly_name
+            # @return [String] The friendly name of the TaskQueue
             def task_queue_friendly_name
               @properties['task_queue_friendly_name']
             end
 
             ##
-            # @return [String] The ID of the Task Channel
+            # @return [String] The SID of the TaskChannel
             def task_channel_sid
               @properties['task_channel_sid']
             end
 
             ##
-            # @return [String] The unique name of the Task Channel
+            # @return [String] The unique name of the TaskChannel
             def task_channel_unique_name
               @properties['task_channel_unique_name']
             end
 
             ##
-            # @return [String] The amount of time in seconds the task is allowed to live
+            # @return [String] The amount of time in seconds that the task is allowed to live
             def timeout
               @properties['timeout']
             end
 
             ##
-            # @return [String] Returns the list of Tasks that are being controlled by the Workflow with the specified Sid value.
+            # @return [String] The SID of the Workflow that is controlling the Task
             def workflow_sid
               @properties['workflow_sid']
             end
 
             ##
-            # @return [String] The workflow_friendly_name
+            # @return [String] The friendly name of the Workflow that is controlling the Task
             def workflow_friendly_name
               @properties['workflow_friendly_name']
             end
 
             ##
-            # @return [String] The ID of the Workspace that holds this Task
+            # @return [String] The SID of the Workspace that contains the Task
             def workspace_sid
               @properties['workspace_sid']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the Task resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] The URLs of related resources
             def links
               @properties['links']
             end
@@ -575,19 +589,21 @@ module Twilio
 
             ##
             # Update the TaskInstance
-            # @param [String] attributes The user-defined JSON data describing the custom
-            #   attributes of this task.
-            # @param [task.Status] assignment_status A 'pending' or 'reserved' Task may be
-            #   canceled by posting AssignmentStatus='canceled'. Post
-            #   AssignmentStatus='wrapping' to move Task to 'wrapup' state and
-            #   AssignmentStatus='completed' to move a Task to 'completed' state.
-            # @param [String] reason This is only required if the Task is canceled or
-            #   completed. This logs the reason the task was either canceled or completed and
-            #   queues the task for deletion after 5 minutes.
-            # @param [String] priority Override priority for the Task. When supplied, the Task
-            #   will take on the given priority unless it matches a Workflow Target with a
+            # @param [String] attributes The JSON string that describes the custom attributes
+            #   of the task.
+            # @param [task.Status] assignment_status The new status of the task. Can be:
+            #   `canceled`, to cancel a Task that is currently `pending` or `reserved`;
+            #   `wrapping`, to move the Task to wrapup state; or `completed`, to move a Task to
+            #   the completed state.
+            # @param [String] reason The reason that the Task was canceled or completed. This
+            #   parameter is required only if the Task is canceled or completed. Setting this
+            #   value queues the task for deletion and logs the reason.
+            # @param [String] priority The Task's new priority value. When supplied, the Task
+            #   takes on the specified priority unless it matches a Workflow Target with a
             #   Priority set.
-            # @param [String] task_channel The task_channel
+            # @param [String] task_channel When MultiTasking is enabled, specify the
+            #   TaskChannel with the task to update. Can be the TaskChannel's SID or its
+            #   `unique_name`, such as `voice`, `sms`, or `default`.
             # @return [TaskInstance] Updated TaskInstance
             def update(attributes: :unset, assignment_status: :unset, reason: :unset, priority: :unset, task_channel: :unset)
               context.update(

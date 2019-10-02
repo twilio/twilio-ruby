@@ -31,9 +31,9 @@ module Twilio
             # Lists RecordingInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [Time] date_created_before The `YYYY-MM-DD` value of the resources to read
-            # @param [Time] date_created The `YYYY-MM-DD` value of the resources to read
-            # @param [Time] date_created_after The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_created_before Only include recordings that were created on this date
+            # @param [Time] date_created Only include recordings that were created on this date
+            # @param [Time] date_created_after Only include recordings that were created on this date
             # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call)
             #   SID of the resources to read.
             # @param [String] conference_sid The Conference SID that identifies the conference
@@ -61,9 +61,9 @@ module Twilio
             # Streams RecordingInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Time] date_created_before The `YYYY-MM-DD` value of the resources to read
-            # @param [Time] date_created The `YYYY-MM-DD` value of the resources to read
-            # @param [Time] date_created_after The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_created_before Only include recordings that were created on this date
+            # @param [Time] date_created Only include recordings that were created on this date
+            # @param [Time] date_created_after Only include recordings that were created on this date
             # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call)
             #   SID of the resources to read.
             # @param [String] conference_sid The Conference SID that identifies the conference
@@ -107,9 +107,9 @@ module Twilio
             ##
             # Retrieve a single page of RecordingInstance records from the API.
             # Request is executed immediately.
-            # @param [Time] date_created_before The `YYYY-MM-DD` value of the resources to read
-            # @param [Time] date_created The `YYYY-MM-DD` value of the resources to read
-            # @param [Time] date_created_after The `YYYY-MM-DD` value of the resources to read
+            # @param [Time] date_created_before Only include recordings that were created on this date
+            # @param [Time] date_created Only include recordings that were created on this date
+            # @param [Time] date_created_after Only include recordings that were created on this date
             # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call)
             #   SID of the resources to read.
             # @param [String] conference_sid The Conference SID that identifies the conference

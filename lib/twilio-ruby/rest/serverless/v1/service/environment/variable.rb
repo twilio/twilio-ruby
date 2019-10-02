@@ -18,10 +18,10 @@ module Twilio
               ##
               # Initialize the VariableList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique SID identifier of the Service for this
-              #   Variable.
-              # @param [String] environment_sid The unique SID identifier of the Environment in
-              #   which this Variable exists.
+              # @param [String] service_sid The SID of the Service that the Variable resource is
+              #   associated with.
+              # @param [String] environment_sid The SID of the environment in which the variable
+              #   exists.
               # @return [VariableList] VariableList
               def initialize(version, service_sid: nil, environment_sid: nil)
                 super(version)
@@ -116,10 +116,10 @@ module Twilio
               ##
               # Retrieve a single page of VariableInstance records from the API.
               # Request is executed immediately.
-              # @param [String] key A string by which this Variable can be referenced, fewer
-              #   than 128 characters. Required.
-              # @param [String] value A string that contains the actual value of this Variable,
-              #   less than 450 bytes. Required.
+              # @param [String] key A string by which the Variable resource can be referenced.
+              #   Must be less than 128 characters long.
+              # @param [String] value A string that contains the actual value of the variable.
+              #   Must have less than 450 bytes.
               # @return [VariableInstance] Newly created VariableInstance
               def create(key: nil, value: nil)
                 data = Twilio::Values.of({'Key' => key, 'Value' => value, })
@@ -187,11 +187,11 @@ module Twilio
               ##
               # Initialize the VariableContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique SID identifier of the Service for this
-              #   Variable.
-              # @param [String] environment_sid The unique SID identifier of the Environment in
-              #   which this Variable exists.
-              # @param [String] sid The unique SID identifier of this Variable.
+              # @param [String] service_sid The SID of the Service to fetch the Variable
+              #   resource from.
+              # @param [String] environment_sid The SID of the environment with the Variable
+              #   resource to fetch.
+              # @param [String] sid The SID of the Variable resource to fetch.
               # @return [VariableContext] VariableContext
               def initialize(version, service_sid, environment_sid, sid)
                 super(version)
@@ -224,10 +224,10 @@ module Twilio
 
               ##
               # Update the VariableInstance
-              # @param [String] key A string by which this Variable can be referenced, fewer
-              #   than 128 characters. Optional.
-              # @param [String] value A string that contains the actual value of this Variable,
-              #   less than 450 bytes. Optional.
+              # @param [String] key A string by which the Variable resource can be referenced.
+              #   Must be less than 128 characters long.
+              # @param [String] value A string that contains the actual value of the variable.
+              #   Must have less than 450 bytes.
               # @return [VariableInstance] Updated VariableInstance
               def update(key: :unset, value: :unset)
                 data = Twilio::Values.of({'Key' => key, 'Value' => value, })
@@ -276,11 +276,11 @@ module Twilio
               # Initialize the VariableInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The unique SID identifier of the Service for this
-              #   Variable.
-              # @param [String] environment_sid The unique SID identifier of the Environment in
-              #   which this Variable exists.
-              # @param [String] sid The unique SID identifier of this Variable.
+              # @param [String] service_sid The SID of the Service that the Variable resource is
+              #   associated with.
+              # @param [String] environment_sid The SID of the environment in which the variable
+              #   exists.
+              # @param [String] sid The SID of the Variable resource to fetch.
               # @return [VariableInstance] VariableInstance
               def initialize(version, payload, service_sid: nil, environment_sid: nil, sid: nil)
                 super(version)
@@ -324,55 +324,55 @@ module Twilio
               end
 
               ##
-              # @return [String] Variable Sid.
+              # @return [String] The unique string that identifies the Variable resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] Account Sid.
+              # @return [String] The SID of the Account that created the Variable resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] Service Sid.
+              # @return [String] The SID of the Service that the Variable resource is associated with
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] Environment Sid.
+              # @return [String] The SID of the environment in which the variable exists
               def environment_sid
                 @properties['environment_sid']
               end
 
               ##
-              # @return [String] A string by which this Variable can be referenced.
+              # @return [String] A string by which the Variable resource can be referenced
               def key
                 @properties['key']
               end
 
               ##
-              # @return [String] A string that contains the actual value of this Variable.
+              # @return [String] A string that contains the actual value of the variable
               def value
                 @properties['value']
               end
 
               ##
-              # @return [Time] The date that this Variable was created.
+              # @return [Time] The ISO 8601 date and time in GMT when the Variable resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date that this Variable was updated.
+              # @return [Time] The ISO 8601 date and time in GMT when the Variable resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [String] The URL of this Variable.
+              # @return [String] The absolute URL of the Variable resource
               def url
                 @properties['url']
               end
@@ -386,10 +386,10 @@ module Twilio
 
               ##
               # Update the VariableInstance
-              # @param [String] key A string by which this Variable can be referenced, fewer
-              #   than 128 characters. Optional.
-              # @param [String] value A string that contains the actual value of this Variable,
-              #   less than 450 bytes. Optional.
+              # @param [String] key A string by which the Variable resource can be referenced.
+              #   Must be less than 128 characters long.
+              # @param [String] value A string that contains the actual value of the variable.
+              #   Must have less than 450 bytes.
               # @return [VariableInstance] Updated VariableInstance
               def update(key: :unset, value: :unset)
                 context.update(key: key, value: value, )

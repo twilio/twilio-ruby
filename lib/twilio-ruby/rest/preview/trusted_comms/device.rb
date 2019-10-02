@@ -29,7 +29,7 @@ module Twilio
           # Retrieve a single page of DeviceInstance records from the API.
           # Request is executed immediately.
           # @param [String] phone_number The end user Phone Number linked to the device,
-          #   given in E.164 format (https://en.wikipedia.org/wiki/E.164). The SDK or partner
+          #   given in [E.164 format](https://en.wikipedia.org/wiki/E.164). The SDK or partner
           #   app is responsible of verifying this phone number veracity.
           # @param [String] push_token The Push Token for this Phone Number, linked to the
           #   correct SDK's application, certificate and keys.

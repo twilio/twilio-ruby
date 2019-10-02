@@ -38,7 +38,7 @@ module Twilio
             # @param [String] model_build The SID or unique name of the [Model
             #   Build](https://www.twilio.com/docs/autopilot/api/model-build) to be queried.
             # @param [String] status The status of the resources to read. Can be:
-            #   `pending_review`, `reviewed`, or `discarded`
+            #   `pending-review`, `reviewed`, or `discarded`
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -65,7 +65,7 @@ module Twilio
             # @param [String] model_build The SID or unique name of the [Model
             #   Build](https://www.twilio.com/docs/autopilot/api/model-build) to be queried.
             # @param [String] status The status of the resources to read. Can be:
-            #   `pending_review`, `reviewed`, or `discarded`
+            #   `pending-review`, `reviewed`, or `discarded`
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -108,7 +108,7 @@ module Twilio
             # @param [String] model_build The SID or unique name of the [Model
             #   Build](https://www.twilio.com/docs/autopilot/api/model-build) to be queried.
             # @param [String] status The status of the resources to read. Can be:
-            #   `pending_review`, `reviewed`, or `discarded`
+            #   `pending-review`, `reviewed`, or `discarded`
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -252,7 +252,7 @@ module Twilio
             # @param [String] sample_sid The SID of an optional reference to the
             #   [Sample](https://www.twilio.com/docs/autopilot/api/task-sample) created from the
             #   query.
-            # @param [String] status The new status of the resource. Can be: `pending_review`,
+            # @param [String] status The new status of the resource. Can be: `pending-review`,
             #   `reviewed`, or `discarded`
             # @return [QueryInstance] Updated QueryInstance
             def update(sample_sid: :unset, status: :unset)
@@ -428,7 +428,7 @@ module Twilio
             # @param [String] sample_sid The SID of an optional reference to the
             #   [Sample](https://www.twilio.com/docs/autopilot/api/task-sample) created from the
             #   query.
-            # @param [String] status The new status of the resource. Can be: `pending_review`,
+            # @param [String] status The new status of the resource. Can be: `pending-review`,
             #   `reviewed`, or `discarded`
             # @return [QueryInstance] Updated QueryInstance
             def update(sample_sid: :unset, status: :unset)

@@ -94,22 +94,19 @@ module Twilio
 
           ##
           # Update the WebhookInstance
-          # @param [String] webhook_method The HTTP method to be used when sending a webhook
+          # @param [String] webhook_method The HTTP method to use when sending a webhook
           #   request.
           # @param [String] webhook_filters The list of webhook event triggers that are
-          #   enabled for this Service.
-          # @param [String] pre_webhook_url The absolute url the pre-event webhook request
-          #   should be sent to.
-          # @param [String] post_webhook_url The absolute url the post-event webhook request
-          #   should be sent to.
-          # @param [String] pre_webhook_retry_count The number of retries in case of
-          #   pre-event webhook request failures. Maximum 3 retries are allowed, the default
-          #   value is 0.
-          # @param [String] post_webhook_retry_count The number of retries in case of
-          #   post-event webhook request failures. Maximum 3 retries are allowed, the default
-          #   value is 0.
+          #   enabled for the Service.
+          # @param [String] pre_webhook_url The absolute URL of the pre-event webhook.
+          # @param [String] post_webhook_url The absolute URL of the post-event webhook.
+          # @param [String] pre_webhook_retry_count The number of times to try the pre-event
+          #   webhook request if the first attempt fails. Can be up to 3 and the default is 0.
+          # @param [String] post_webhook_retry_count The number of times to try the
+          #   post-event webhook request if the first attempt fails. Can be up to 3 and the
+          #   default is 0.
           # @param [webhook.Target] target The routing target of the webhook. Can be
-          #   ordinary or route internally to Flex
+          #   ordinary or routed internally to Flex
           # @return [WebhookInstance] Updated WebhookInstance
           def update(webhook_method: :unset, webhook_filters: :unset, pre_webhook_url: :unset, post_webhook_url: :unset, pre_webhook_retry_count: :unset, post_webhook_retry_count: :unset, target: :unset)
             data = Twilio::Values.of({
@@ -188,61 +185,61 @@ module Twilio
           end
 
           ##
-          # @return [String] The unique id of the Account responsible for this session.
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The unique id of the Chat Service this session belongs to.
+          # @return [String] The SID of the Chat Service that the resource is associated with
           def service_sid
             @properties['service_sid']
           end
 
           ##
-          # @return [String] The HTTP method to be used when sending a webhook request.
+          # @return [String] The HTTP method to use when sending a webhook request
           def webhook_method
             @properties['webhook_method']
           end
 
           ##
-          # @return [String] The list of webhook event triggers that are enabled for this Service.
+          # @return [String] The list of webhook event triggers that are enabled for the Service
           def webhook_filters
             @properties['webhook_filters']
           end
 
           ##
-          # @return [String] The absolute url the pre-event webhook request should be sent to.
+          # @return [String] The absolute URL of the pre-event webhook
           def pre_webhook_url
             @properties['pre_webhook_url']
           end
 
           ##
-          # @return [String] The absolute url the post-event webhook request should be sent to.
+          # @return [String] The absolute URL of the post-event webhook
           def post_webhook_url
             @properties['post_webhook_url']
           end
 
           ##
-          # @return [String] The number of retries in case of pre-event webhook request failures.
+          # @return [String] The number of times to try the pre-event webhook request if the first attempt fails
           def pre_webhook_retry_count
             @properties['pre_webhook_retry_count']
           end
 
           ##
-          # @return [String] The number of retries in case of post-event webhook request failures.
+          # @return [String] The number of times to try the post-event webhook request if the first attempt fails
           def post_webhook_retry_count
             @properties['post_webhook_retry_count']
           end
 
           ##
-          # @return [webhook.Target] The routing target of the webhook.
+          # @return [webhook.Target] The routing target of the webhook
           def target
             @properties['target']
           end
 
           ##
-          # @return [String] An absolute URL for this webhook.
+          # @return [String] The absolute URL of the webhook
           def url
             @properties['url']
           end
@@ -256,22 +253,19 @@ module Twilio
 
           ##
           # Update the WebhookInstance
-          # @param [String] webhook_method The HTTP method to be used when sending a webhook
+          # @param [String] webhook_method The HTTP method to use when sending a webhook
           #   request.
           # @param [String] webhook_filters The list of webhook event triggers that are
-          #   enabled for this Service.
-          # @param [String] pre_webhook_url The absolute url the pre-event webhook request
-          #   should be sent to.
-          # @param [String] post_webhook_url The absolute url the post-event webhook request
-          #   should be sent to.
-          # @param [String] pre_webhook_retry_count The number of retries in case of
-          #   pre-event webhook request failures. Maximum 3 retries are allowed, the default
-          #   value is 0.
-          # @param [String] post_webhook_retry_count The number of retries in case of
-          #   post-event webhook request failures. Maximum 3 retries are allowed, the default
-          #   value is 0.
+          #   enabled for the Service.
+          # @param [String] pre_webhook_url The absolute URL of the pre-event webhook.
+          # @param [String] post_webhook_url The absolute URL of the post-event webhook.
+          # @param [String] pre_webhook_retry_count The number of times to try the pre-event
+          #   webhook request if the first attempt fails. Can be up to 3 and the default is 0.
+          # @param [String] post_webhook_retry_count The number of times to try the
+          #   post-event webhook request if the first attempt fails. Can be up to 3 and the
+          #   default is 0.
           # @param [webhook.Target] target The routing target of the webhook. Can be
-          #   ordinary or route internally to Flex
+          #   ordinary or routed internally to Flex
           # @return [WebhookInstance] Updated WebhookInstance
           def update(webhook_method: :unset, webhook_filters: :unset, pre_webhook_url: :unset, post_webhook_url: :unset, pre_webhook_retry_count: :unset, post_webhook_retry_count: :unset, target: :unset)
             context.update(

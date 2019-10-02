@@ -16,7 +16,8 @@ module Twilio
               ##
               # Initialize the WorkersCumulativeStatisticsList
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The workspace_sid
+              # @param [String] workspace_sid The SID of the Workspace that contains the
+              #   Workers.
               # @return [WorkersCumulativeStatisticsList] WorkersCumulativeStatisticsList
               def initialize(version, workspace_sid: nil)
                 super(version)
@@ -65,7 +66,8 @@ module Twilio
               ##
               # Initialize the WorkersCumulativeStatisticsContext
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The workspace_sid
+              # @param [String] workspace_sid The SID of the Workspace with the resource to
+              #   fetch.
               # @return [WorkersCumulativeStatisticsContext] WorkersCumulativeStatisticsContext
               def initialize(version, workspace_sid)
                 super(version)
@@ -77,17 +79,16 @@ module Twilio
 
               ##
               # Fetch a WorkersCumulativeStatisticsInstance
-              # @param [Time] end_date Filter cumulative statistics by a end date. This is
-              #   helpful for defining a range of statistics to capture. Input is a string of the
-              #   format: yyyy-MM-dd'T'HH:mm:ss'Z'.
-              # @param [String] minutes Filter cumulative statistics by up to 'x' minutes in the
-              #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
-              #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
-              # @param [Time] start_date Filter cumulative statistics by a start date. This is
-              #   helpful for defining a range of statistics to capture. Input is a string of the
-              #   format: yyyy-MM-dd'T'HH:mm:ss'Z'.
-              # @param [String] task_channel Filter cumulative statistics by TaskChannel. Takes
-              #   in a Unique Name ("voice", "sms", "default", etc.) or a TaskChannelSid.
+              # @param [Time] end_date Only calculate statistics from this date and time and
+              #   earlier, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+              # @param [String] minutes Only calculate statistics since this many minutes in the
+              #   past. The default 15 minutes. This is helpful for displaying statistics for the
+              #   last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.
+              # @param [Time] start_date Only calculate statistics from this date and time and
+              #   later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+              # @param [String] task_channel Only calculate cumulative statistics on this
+              #   TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`,
+              #   `sms`, or `default`.
               # @return [WorkersCumulativeStatisticsInstance] Fetched WorkersCumulativeStatisticsInstance
               def fetch(end_date: :unset, minutes: :unset, start_date: :unset, task_channel: :unset)
                 params = Twilio::Values.of({
@@ -126,7 +127,8 @@ module Twilio
               # Initialize the WorkersCumulativeStatisticsInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] workspace_sid The workspace_sid
+              # @param [String] workspace_sid The SID of the Workspace that contains the
+              #   Workers.
               # @return [WorkersCumulativeStatisticsInstance] WorkersCumulativeStatisticsInstance
               def initialize(version, payload, workspace_sid: nil)
                 super(version)
@@ -164,25 +166,25 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [Time] The start_time
+              # @return [Time] The beginning of the interval during which these statistics were calculated
               def start_time
                 @properties['start_time']
               end
 
               ##
-              # @return [Time] The end_time
+              # @return [Time] The end of the interval during which these statistics were calculated
               def end_time
                 @properties['end_time']
               end
 
               ##
-              # @return [Hash] The minimum, average, maximum and total time Workers spent in each Activity
+              # @return [Hash] The minimum, average, maximum, and total time that Workers spent in each Activity
               def activity_durations
                 @properties['activity_durations']
               end
@@ -224,30 +226,29 @@ module Twilio
               end
 
               ##
-              # @return [String] The workspace_sid
+              # @return [String] The SID of the Workspace that contains the Workers
               def workspace_sid
                 @properties['workspace_sid']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] The absolute URL of the Workers statistics resource
               def url
                 @properties['url']
               end
 
               ##
               # Fetch a WorkersCumulativeStatisticsInstance
-              # @param [Time] end_date Filter cumulative statistics by a end date. This is
-              #   helpful for defining a range of statistics to capture. Input is a string of the
-              #   format: yyyy-MM-dd'T'HH:mm:ss'Z'.
-              # @param [String] minutes Filter cumulative statistics by up to 'x' minutes in the
-              #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
-              #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
-              # @param [Time] start_date Filter cumulative statistics by a start date. This is
-              #   helpful for defining a range of statistics to capture. Input is a string of the
-              #   format: yyyy-MM-dd'T'HH:mm:ss'Z'.
-              # @param [String] task_channel Filter cumulative statistics by TaskChannel. Takes
-              #   in a Unique Name ("voice", "sms", "default", etc.) or a TaskChannelSid.
+              # @param [Time] end_date Only calculate statistics from this date and time and
+              #   earlier, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+              # @param [String] minutes Only calculate statistics since this many minutes in the
+              #   past. The default 15 minutes. This is helpful for displaying statistics for the
+              #   last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.
+              # @param [Time] start_date Only calculate statistics from this date and time and
+              #   later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+              # @param [String] task_channel Only calculate cumulative statistics on this
+              #   TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`,
+              #   `sms`, or `default`.
               # @return [WorkersCumulativeStatisticsInstance] Fetched WorkersCumulativeStatisticsInstance
               def fetch(end_date: :unset, minutes: :unset, start_date: :unset, task_channel: :unset)
                 context.fetch(

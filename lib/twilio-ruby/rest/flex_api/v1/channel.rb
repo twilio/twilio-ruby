@@ -108,19 +108,19 @@ module Twilio
           ##
           # Retrieve a single page of ChannelInstance records from the API.
           # Request is executed immediately.
-          # @param [String] flex_flow_sid The unique ID of the FlexFlow
-          # @param [String] identity Chat User identity
-          # @param [String] chat_user_friendly_name Customer friendly name (chat
-          #   participant)
-          # @param [String] chat_friendly_name Chat channel friendly name
-          # @param [String] target Target Contact Identity, for example phone number for SMS
-          # @param [String] chat_unique_name Chat channel unique name
-          # @param [String] pre_engagement_data Pre-engagement data
-          # @param [String] task_sid The unique SID identifier of the Taskrouter task
-          # @param [String] task_attributes Task attributes to be added for the TaskRouter
-          #   Task
-          # @param [Boolean] long_lived Boolean flag determining whether channel is created
-          #   as long lived or not
+          # @param [String] flex_flow_sid The SID of the FlexFlow.
+          # @param [String] identity The `identity` value that uniquely identifies the new
+          #   resource's chat User.
+          # @param [String] chat_user_friendly_name The chat participant's friendly name.
+          # @param [String] chat_friendly_name The chat channel's friendly name.
+          # @param [String] target The Target Contact Identity, for example the phone number
+          #   of an SMS.
+          # @param [String] chat_unique_name The chat channel's unique name.
+          # @param [String] pre_engagement_data The pre-engagement data.
+          # @param [String] task_sid The SID of the TaskRouter task.
+          # @param [String] task_attributes The task attributes to be added for the
+          #   TaskRouter Task.
+          # @param [Boolean] long_lived Whether to create the channel as long-lived.
           # @return [ChannelInstance] Newly created ChannelInstance
           def create(flex_flow_sid: nil, identity: nil, chat_user_friendly_name: nil, chat_friendly_name: nil, target: :unset, chat_unique_name: :unset, pre_engagement_data: :unset, task_sid: :unset, task_attributes: :unset, long_lived: :unset)
             data = Twilio::Values.of({
@@ -185,7 +185,7 @@ module Twilio
           ##
           # Initialize the ChannelContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The unique SID identifier of the Flex Chat Channel
+          # @param [String] sid The SID of the Flex chat channel resource to fetch.
           # @return [ChannelContext] ChannelContext
           def initialize(version, sid)
             super(version)
@@ -237,7 +237,7 @@ module Twilio
           # Initialize the ChannelInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The unique SID identifier of the Flex Chat Channel
+          # @param [String] sid The SID of the Flex chat channel resource to fetch.
           # @return [ChannelInstance] ChannelInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -271,49 +271,49 @@ module Twilio
           end
 
           ##
-          # @return [String] The ID of the account that owns this Workflow
+          # @return [String] The SID of the Account that created the resource and owns this Workflow
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The unique ID of the FlexFlow
+          # @return [String] The SID of the FlexFlow
           def flex_flow_sid
             @properties['flex_flow_sid']
           end
 
           ##
-          # @return [String] Flex Chat Channel Sid
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] Chat User Sid.
+          # @return [String] The SID of the chat user
           def user_sid
             @properties['user_sid']
           end
 
           ##
-          # @return [String] TaskRouter Task Sid.
+          # @return [String] The SID of the TaskRouter task
           def task_sid
             @properties['task_sid']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The absolute URL of the Flex chat channel resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [Time] The time the Flex Chat Channel was created, given as GMT in ISO 8601 format.
+          # @return [Time] The ISO 8601 date and time in GMT when the Flex chat channel was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The time the Flex Chat Channel was last updated, given as GMT in ISO 8601 format.
+          # @return [Time] The ISO 8601 date and time in GMT when the Flex chat channel was last updated
           def date_updated
             @properties['date_updated']
           end

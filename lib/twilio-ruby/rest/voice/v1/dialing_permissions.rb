@@ -32,7 +32,7 @@ module Twilio
           ##
           # Access the countries
           # @param [String] iso_code The [ISO country
-          #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+          #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
           # @return [CountryList]
           # @return [CountryContext] if iso_code was passed.
           def countries(iso_code=:unset)

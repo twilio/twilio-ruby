@@ -32,7 +32,7 @@ module Twilio
             # Retrieve a single page of ParticipantInstance records from the API.
             # Request is executed immediately.
             # @param [String] identity A unique string identifier for the conversation
-            #   participant as [Chat User](https://www.twilio.com/docs/api/chat/rest/users).
+            #   participant as [Chat User](https://www.twilio.com/docs/chat/rest/user-resource).
             #   This parameter is non-null if (and only if) the participant is using the
             #   Programmable Chat SDK to communicate. Limited to 256 characters.
             # @param [String] messaging_binding_address The address of the participant's

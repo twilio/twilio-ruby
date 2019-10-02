@@ -19,8 +19,8 @@ module Twilio
               # Initialize the BucketList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/verify/api-beta/service-beta) the resource
-              #   is associated with.
+              #   [Service](https://www.twilio.com/docs/verify/api/service) the resource is
+              #   associated with.
               # @param [String] rate_limit_sid The Twilio-provided string that uniquely
               #   identifies the Rate Limit resource.
               # @return [BucketList] BucketList
@@ -188,8 +188,8 @@ module Twilio
               # Initialize the BucketContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/verify/api-beta/service-beta) the resource
-              #   is associated with.
+              #   [Service](https://www.twilio.com/docs/verify/api/service) the resource is
+              #   associated with.
               # @param [String] rate_limit_sid The Twilio-provided string that uniquely
               #   identifies the Rate Limit resource.
               # @param [String] sid A 34 character string that uniquely identifies this Bucket.
@@ -277,8 +277,8 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/verify/api-beta/service-beta) the resource
-              #   is associated with.
+              #   [Service](https://www.twilio.com/docs/verify/api/service) the resource is
+              #   associated with.
               # @param [String] rate_limit_sid The Twilio-provided string that uniquely
               #   identifies the Rate Limit resource.
               # @param [String] sid A 34 character string that uniquely identifies this Bucket.

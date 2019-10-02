@@ -41,12 +41,14 @@ module Twilio
               # @param [String] item_ttl How long, in seconds, before the List Item expires
               #   (time-to-live) and is deleted.  Can be an integer from 0 to 31,536,000 (1 year).
               #   The default value is `0`, which means the List Item does not expire. The List
-              #   Item might not be deleted immediately after it expires.
+              #   Item will be deleted automatically after it expires, but there can be a delay
+              #   between the expiration time and the resources's deletion.
               # @param [String] collection_ttl How long, in seconds, before the List Item's
               #   parent Sync List expires (time-to-live) and is deleted.  Can be an integer from
               #   0 to 31,536,000 (1 year). The default value is `0`, which means the parent Sync
-              #   List does not expire. The Sync List might not be deleted immediately after it
-              #   expires.
+              #   List does not expire. The Sync List will be deleted automatically after it
+              #   expires, but there can be a delay between the expiration time and the
+              #   resources's deletion.
               # @return [SyncListItemInstance] Newly created SyncListItemInstance
               def create(data: nil, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
                 data = Twilio::Values.of({
@@ -283,12 +285,14 @@ module Twilio
               # @param [String] item_ttl How long, in seconds, before the List Item expires
               #   (time-to-live) and is deleted.  Can be an integer from 0 to 31,536,000 (1 year).
               #   The default value is `0`, which means the List Item does not expire. The List
-              #   Item might not be deleted immediately after it expires.
+              #   Item will be deleted automatically after it expires, but there can be a delay
+              #   between the expiration time and the resources's deletion.
               # @param [String] collection_ttl How long, in seconds, before the List Item's
               #   parent Sync List expires (time-to-live) and is deleted.  Can be an integer from
               #   0 to 31,536,000 (1 year). The default value is `0`, which means the parent Sync
-              #   List does not expire. The Sync List might not be deleted immediately after it
-              #   expires.
+              #   List does not expire. The Sync List will be deleted automatically after it
+              #   expires, but there can be a delay between the expiration time and the
+              #   resources's deletion.
               # @return [SyncListItemInstance] Updated SyncListItemInstance
               def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
                 data = Twilio::Values.of({
@@ -473,12 +477,14 @@ module Twilio
               # @param [String] item_ttl How long, in seconds, before the List Item expires
               #   (time-to-live) and is deleted.  Can be an integer from 0 to 31,536,000 (1 year).
               #   The default value is `0`, which means the List Item does not expire. The List
-              #   Item might not be deleted immediately after it expires.
+              #   Item will be deleted automatically after it expires, but there can be a delay
+              #   between the expiration time and the resources's deletion.
               # @param [String] collection_ttl How long, in seconds, before the List Item's
               #   parent Sync List expires (time-to-live) and is deleted.  Can be an integer from
               #   0 to 31,536,000 (1 year). The default value is `0`, which means the parent Sync
-              #   List does not expire. The Sync List might not be deleted immediately after it
-              #   expires.
+              #   List does not expire. The Sync List will be deleted automatically after it
+              #   expires, but there can be a delay between the expiration time and the
+              #   resources's deletion.
               # @return [SyncListItemInstance] Updated SyncListItemInstance
               def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
                 context.update(data: data, ttl: ttl, item_ttl: item_ttl, collection_ttl: collection_ttl, )

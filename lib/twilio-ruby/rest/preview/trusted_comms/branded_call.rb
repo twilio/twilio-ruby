@@ -28,15 +28,15 @@ module Twilio
           ##
           # Retrieve a single page of BrandedCallInstance records from the API.
           # Request is executed immediately.
-          # @param [String] from The phone number to use as the caller id, given in E.164
-          #   format (https://en.wikipedia.org/wiki/E.164). It must be a Twilio number that
+          # @param [String] from The phone number to use as the caller id, given in [E.164
+          #   format](https://en.wikipedia.org/wiki/E.164). It must be a Twilio number that
           #   has been set up as a Branded Number in the Business Profile section for your
           #   account.
-          # @param [String] to The terminating Phone Number, given in E.164 format
-          #   (https://en.wikipedia.org/wiki/E.164).
+          # @param [String] to The terminating Phone Number, given in [E.164
+          #   format](https://en.wikipedia.org/wiki/E.164).
           # @param [String] reason The business reason for this phone call that will appear
-          #   in the terminating device's screen.
-          # @param [String] call_sid The call_sid
+          #   in the terminating device's screen. Max 50 characters.
+          # @param [String] call_sid The Call sid this Branded Call should link to.
           # @return [BrandedCallInstance] Newly created BrandedCallInstance
           def create(from: nil, to: nil, reason: nil, call_sid: :unset)
             data = Twilio::Values.of({'From' => from, 'To' => to, 'Reason' => reason, 'CallSid' => call_sid, })

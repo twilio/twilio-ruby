@@ -16,8 +16,10 @@ module Twilio
               ##
               # Initialize the WorkflowRealTimeStatisticsList
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] workflow_sid The workflow_sid
+              # @param [String] workspace_sid The SID of the Workspace that contains the
+              #   Workflow.
+              # @param [String] workflow_sid Returns the list of Tasks that are being controlled
+              #   by the Workflow with the specified SID value.
               # @return [WorkflowRealTimeStatisticsList] WorkflowRealTimeStatisticsList
               def initialize(version, workspace_sid: nil, workflow_sid: nil)
                 super(version)
@@ -71,8 +73,10 @@ module Twilio
               ##
               # Initialize the WorkflowRealTimeStatisticsContext
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] workflow_sid The workflow_sid
+              # @param [String] workspace_sid The SID of the Workspace with the Workflow to
+              #   fetch.
+              # @param [String] workflow_sid Returns the list of Tasks that are being controlled
+              #   by the Workflow with the specified SID value.
               # @return [WorkflowRealTimeStatisticsContext] WorkflowRealTimeStatisticsContext
               def initialize(version, workspace_sid, workflow_sid)
                 super(version)
@@ -84,9 +88,9 @@ module Twilio
 
               ##
               # Fetch a WorkflowRealTimeStatisticsInstance
-              # @param [String] task_channel Filter real-time and cumulative statistics by
-              #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
-              #   TaskChannelSid.
+              # @param [String] task_channel Only calculate real-time statistics on this
+              #   TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`,
+              #   `sms`, or `default`.
               # @return [WorkflowRealTimeStatisticsInstance] Fetched WorkflowRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
                 params = Twilio::Values.of({'TaskChannel' => task_channel, })
@@ -125,8 +129,10 @@ module Twilio
               # Initialize the WorkflowRealTimeStatisticsInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] workflow_sid The workflow_sid
+              # @param [String] workspace_sid The SID of the Workspace that contains the
+              #   Workflow.
+              # @param [String] workflow_sid Returns the list of Tasks that are being controlled
+              #   by the Workflow with the specified SID value.
               # @return [WorkflowRealTimeStatisticsInstance] WorkflowRealTimeStatisticsInstance
               def initialize(version, payload, workspace_sid: nil, workflow_sid: nil)
                 super(version)
@@ -165,7 +171,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
@@ -183,13 +189,13 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The tasks_by_priority
+              # @return [Hash] The number of Tasks by priority
               def tasks_by_priority
                 @properties['tasks_by_priority']
               end
 
               ##
-              # @return [Hash] The Tasks broken down by status
+              # @return [Hash] The number of Tasks by their current status
               def tasks_by_status
                 @properties['tasks_by_status']
               end
@@ -201,28 +207,28 @@ module Twilio
               end
 
               ##
-              # @return [String] The workflow_sid
+              # @return [String] Returns the list of Tasks that are being controlled by the Workflow with the specified SID value
               def workflow_sid
                 @properties['workflow_sid']
               end
 
               ##
-              # @return [String] The workspace_sid
+              # @return [String] The SID of the Workspace that contains the Workflow.
               def workspace_sid
                 @properties['workspace_sid']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] The absolute URL of the Workflow statistics resource
               def url
                 @properties['url']
               end
 
               ##
               # Fetch a WorkflowRealTimeStatisticsInstance
-              # @param [String] task_channel Filter real-time and cumulative statistics by
-              #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
-              #   TaskChannelSid.
+              # @param [String] task_channel Only calculate real-time statistics on this
+              #   TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`,
+              #   `sms`, or `default`.
               # @return [WorkflowRealTimeStatisticsInstance] Fetched WorkflowRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
                 context.fetch(task_channel: task_channel, )

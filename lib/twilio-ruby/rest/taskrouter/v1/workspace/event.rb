@@ -15,7 +15,7 @@ module Twilio
             ##
             # Initialize the EventList
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The workspace_sid
+            # @param [String] workspace_sid The SID of the Workspace that contains the Event.
             # @return [EventList] EventList
             def initialize(version, workspace_sid: nil)
               super(version)
@@ -29,26 +29,29 @@ module Twilio
             # Lists EventInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [Time] end_date Filter events by an end date. This is helpful for
-            #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
-            # @param [String] event_type Filter events by those of a certain event type
-            # @param [String] minutes Filter events by up to 'x' minutes in the past. This is
-            #   helpful for events for the last 15 minutes, 240 minutes (4 hours), and 480
-            #   minutes (8 hours) to see trends. Defaults to 15 minutes.
-            # @param [String] reservation_sid Filter events by those pertaining to a
-            #   particular reservation
-            # @param [Time] start_date Filter events by a start date. This is helpful for
-            #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
-            # @param [String] task_queue_sid Filter events by those pertaining to a particular
-            #   queue
-            # @param [String] task_sid Filter events by those pertaining to a particular task
-            # @param [String] worker_sid Filter events by those pertaining to a particular
-            #   worker
-            # @param [String] workflow_sid Filter events by those pertaining to a particular
-            #   workflow
-            # @param [String] task_channel Filter events by those pertaining to a particular
-            #   task channel
-            # @param [String] sid Filter events by those pertaining to a particular event
+            # @param [Time] end_date Only include Events that occurred on or before this date,
+            #   specified in GMT as an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            #   date-time.
+            # @param [String] event_type The type of Events to read. Returns only Events of
+            #   the type specified.
+            # @param [String] minutes The period of events to read in minutes. Returns only
+            #   Events that occurred since this many minutes in the past. The default is `15`
+            #   minutes.
+            # @param [String] reservation_sid The SID of the Reservation with the Events to
+            #   read. Returns only Events that pertain to the specified Reservation.
+            # @param [Time] start_date Only include Events from on or after this date and
+            #   time, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+            # @param [String] task_queue_sid The SID of the TaskQueue with the Events to read.
+            #   Returns only the Events that pertain to the specified TaskQueue.
+            # @param [String] task_sid The SID of the Task with the Events to read. Returns
+            #   only the Events that pertain to the specified Task.
+            # @param [String] worker_sid The SID of the Worker with the Events to read.
+            #   Returns only the Events that pertain to the specified Worker.
+            # @param [String] workflow_sid The SID of the Workflow with the Events to read.
+            #   Returns only the Events that pertain to the specified Workflow.
+            # @param [String] task_channel The TaskChannel with the Events to read. Returns
+            #   only the Events that pertain to the specified TaskChannel.
+            # @param [String] sid The SID of the Event resource to read.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -78,26 +81,29 @@ module Twilio
             # Streams EventInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Time] end_date Filter events by an end date. This is helpful for
-            #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
-            # @param [String] event_type Filter events by those of a certain event type
-            # @param [String] minutes Filter events by up to 'x' minutes in the past. This is
-            #   helpful for events for the last 15 minutes, 240 minutes (4 hours), and 480
-            #   minutes (8 hours) to see trends. Defaults to 15 minutes.
-            # @param [String] reservation_sid Filter events by those pertaining to a
-            #   particular reservation
-            # @param [Time] start_date Filter events by a start date. This is helpful for
-            #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
-            # @param [String] task_queue_sid Filter events by those pertaining to a particular
-            #   queue
-            # @param [String] task_sid Filter events by those pertaining to a particular task
-            # @param [String] worker_sid Filter events by those pertaining to a particular
-            #   worker
-            # @param [String] workflow_sid Filter events by those pertaining to a particular
-            #   workflow
-            # @param [String] task_channel Filter events by those pertaining to a particular
-            #   task channel
-            # @param [String] sid Filter events by those pertaining to a particular event
+            # @param [Time] end_date Only include Events that occurred on or before this date,
+            #   specified in GMT as an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            #   date-time.
+            # @param [String] event_type The type of Events to read. Returns only Events of
+            #   the type specified.
+            # @param [String] minutes The period of events to read in minutes. Returns only
+            #   Events that occurred since this many minutes in the past. The default is `15`
+            #   minutes.
+            # @param [String] reservation_sid The SID of the Reservation with the Events to
+            #   read. Returns only Events that pertain to the specified Reservation.
+            # @param [Time] start_date Only include Events from on or after this date and
+            #   time, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+            # @param [String] task_queue_sid The SID of the TaskQueue with the Events to read.
+            #   Returns only the Events that pertain to the specified TaskQueue.
+            # @param [String] task_sid The SID of the Task with the Events to read. Returns
+            #   only the Events that pertain to the specified Task.
+            # @param [String] worker_sid The SID of the Worker with the Events to read.
+            #   Returns only the Events that pertain to the specified Worker.
+            # @param [String] workflow_sid The SID of the Workflow with the Events to read.
+            #   Returns only the Events that pertain to the specified Workflow.
+            # @param [String] task_channel The TaskChannel with the Events to read. Returns
+            #   only the Events that pertain to the specified TaskChannel.
+            # @param [String] sid The SID of the Event resource to read.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -143,26 +149,29 @@ module Twilio
             ##
             # Retrieve a single page of EventInstance records from the API.
             # Request is executed immediately.
-            # @param [Time] end_date Filter events by an end date. This is helpful for
-            #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
-            # @param [String] event_type Filter events by those of a certain event type
-            # @param [String] minutes Filter events by up to 'x' minutes in the past. This is
-            #   helpful for events for the last 15 minutes, 240 minutes (4 hours), and 480
-            #   minutes (8 hours) to see trends. Defaults to 15 minutes.
-            # @param [String] reservation_sid Filter events by those pertaining to a
-            #   particular reservation
-            # @param [Time] start_date Filter events by a start date. This is helpful for
-            #   defining a range of events to capture. Input is a GMT ISO 8601 Timestamp.
-            # @param [String] task_queue_sid Filter events by those pertaining to a particular
-            #   queue
-            # @param [String] task_sid Filter events by those pertaining to a particular task
-            # @param [String] worker_sid Filter events by those pertaining to a particular
-            #   worker
-            # @param [String] workflow_sid Filter events by those pertaining to a particular
-            #   workflow
-            # @param [String] task_channel Filter events by those pertaining to a particular
-            #   task channel
-            # @param [String] sid Filter events by those pertaining to a particular event
+            # @param [Time] end_date Only include Events that occurred on or before this date,
+            #   specified in GMT as an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            #   date-time.
+            # @param [String] event_type The type of Events to read. Returns only Events of
+            #   the type specified.
+            # @param [String] minutes The period of events to read in minutes. Returns only
+            #   Events that occurred since this many minutes in the past. The default is `15`
+            #   minutes.
+            # @param [String] reservation_sid The SID of the Reservation with the Events to
+            #   read. Returns only Events that pertain to the specified Reservation.
+            # @param [Time] start_date Only include Events from on or after this date and
+            #   time, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+            # @param [String] task_queue_sid The SID of the TaskQueue with the Events to read.
+            #   Returns only the Events that pertain to the specified TaskQueue.
+            # @param [String] task_sid The SID of the Task with the Events to read. Returns
+            #   only the Events that pertain to the specified Task.
+            # @param [String] worker_sid The SID of the Worker with the Events to read.
+            #   Returns only the Events that pertain to the specified Worker.
+            # @param [String] workflow_sid The SID of the Workflow with the Events to read.
+            #   Returns only the Events that pertain to the specified Workflow.
+            # @param [String] task_channel The TaskChannel with the Events to read. Returns
+            #   only the Events that pertain to the specified TaskChannel.
+            # @param [String] sid The SID of the Event resource to read.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -245,8 +254,8 @@ module Twilio
             ##
             # Initialize the EventContext
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The workspace_sid
-            # @param [String] sid The sid
+            # @param [String] workspace_sid The SID of the Workspace with the Event to fetch.
+            # @param [String] sid The SID of the Event resource to fetch.
             # @return [EventContext] EventContext
             def initialize(version, workspace_sid, sid)
               super(version)
@@ -291,8 +300,8 @@ module Twilio
             # Initialize the EventInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] workspace_sid The workspace_sid
-            # @param [String] sid The sid
+            # @param [String] workspace_sid The SID of the Workspace that contains the Event.
+            # @param [String] sid The SID of the Event resource to fetch.
             # @return [EventInstance] EventInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
               super(version)
@@ -335,25 +344,25 @@ module Twilio
             end
 
             ##
-            # @return [String] The account owning this event
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The actor_sid
+            # @return [String] The SID of the resource that triggered the event
             def actor_sid
               @properties['actor_sid']
             end
 
             ##
-            # @return [String] The actor_type
+            # @return [String] The type of resource that triggered the event
             def actor_type
               @properties['actor_type']
             end
 
             ##
-            # @return [String] The actor_url
+            # @return [String] The absolute URL of the resource that triggered the event
             def actor_url
               @properties['actor_url']
             end
@@ -365,73 +374,73 @@ module Twilio
             end
 
             ##
-            # @return [Hash] Data about this specific event.
+            # @return [Hash] Data about the event
             def event_data
               @properties['event_data']
             end
 
             ##
-            # @return [Time] The time this event was sent
+            # @return [Time] The time the event was sent
             def event_date
               @properties['event_date']
             end
 
             ##
-            # @return [String] The time this event was sent in ms
+            # @return [String] The time the event was sent in milliseconds
             def event_date_ms
               @properties['event_date_ms']
             end
 
             ##
-            # @return [String] An identifier for this event
+            # @return [String] The identifier for the event
             def event_type
               @properties['event_type']
             end
 
             ##
-            # @return [String] The sid of the object this event is most relevant to
+            # @return [String] The SID of the object the event is most relevant to
             def resource_sid
               @properties['resource_sid']
             end
 
             ##
-            # @return [String] The type of object this event is most relevant to
+            # @return [String] The type of object the event is most relevant to
             def resource_type
               @properties['resource_type']
             end
 
             ##
-            # @return [String] The resource_url
+            # @return [String] The URL of the resource the event is most relevant to
             def resource_url
               @properties['resource_url']
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The source
+            # @return [String] Where the Event originated
             def source
               @properties['source']
             end
 
             ##
-            # @return [String] The source_ip_address
+            # @return [String] The IP from which the Event originated
             def source_ip_address
               @properties['source_ip_address']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the Event resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The workspace_sid
+            # @return [String] The SID of the Workspace that contains the Event
             def workspace_sid
               @properties['workspace_sid']
             end

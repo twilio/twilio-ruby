@@ -19,7 +19,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The sid
+        # @param [String] sid The SID of the Workspace resource to fetch.
         # @return [Twilio::REST::Taskrouter::V1::WorkspaceContext] if sid was passed.
         # @return [Twilio::REST::Taskrouter::V1::WorkspaceList]
         def workspaces(sid=:unset)

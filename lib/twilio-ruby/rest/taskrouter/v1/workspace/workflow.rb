@@ -15,8 +15,8 @@ module Twilio
             ##
             # Initialize the WorkflowList
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The ID of the Workspace that contains this
-            #   Workflow
+            # @param [String] workspace_sid The SID of the Workspace that contains the
+            #   Workflow.
             # @return [WorkflowList] WorkflowList
             def initialize(version, workspace_sid: nil)
               super(version)
@@ -30,8 +30,8 @@ module Twilio
             # Lists WorkflowInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] friendly_name Human readable description of this Workflow (for
-            #   example "Customer Support" or "2014 Election Campaign")
+            # @param [String] friendly_name The `friendly_name` of the Workflow resources to
+            #   read.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -47,8 +47,8 @@ module Twilio
             # Streams WorkflowInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] friendly_name Human readable description of this Workflow (for
-            #   example "Customer Support" or "2014 Election Campaign")
+            # @param [String] friendly_name The `friendly_name` of the Workflow resources to
+            #   read.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -81,8 +81,8 @@ module Twilio
             ##
             # Retrieve a single page of WorkflowInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name Human readable description of this Workflow (for
-            #   example "Customer Support" or "2014 Election Campaign")
+            # @param [String] friendly_name The `friendly_name` of the Workflow resources to
+            #   read.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -118,22 +118,22 @@ module Twilio
             ##
             # Retrieve a single page of WorkflowInstance records from the API.
             # Request is executed immediately.
-            # @param [String] friendly_name A string representing a human readable name for
-            #   this Workflow. Examples include 'Inbound Call Workflow' or '2014 Outbound
-            #   Campaign'.
-            # @param [String] configuration JSON document configuring the rules for this
-            #   Workflow. See [Configuring
-            #   Workflows](https://www.twilio.com/docs/api/taskrouter/workflow-configuration)
-            #   for more information.
-            # @param [String] assignment_callback_url A valid URL for the application that
-            #   will process task assignment events. See [Handling Task Assignment
-            #   Callback](https://www.twilio.com/docs/api/taskrouter/handling-assignment-callbacks) for more details.
-            # @param [String] fallback_assignment_callback_url If the request to the
-            #   AssignmentCallbackUrl fails, the assignment callback will be made to this URL.
-            # @param [String] task_reservation_timeout An integer value controlling how long
-            #   in seconds TaskRouter will wait for a confirmation response from your
-            #   application after assigning a Task to a worker. See Task Assignment Callback for
-            #   more information. Defaults to 120 seconds. Maximum value is 86400 (24 hours)
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the Workflow resource. For example, `Inbound Call Workflow` or `2014 Outbound
+            #   Campaign`.
+            # @param [String] configuration A JSON string that contains the rules to apply to
+            #   the Workflow. See [Configuring
+            #   Workflows](https://www.twilio.com/docs/taskrouter/workflow-configuration) for
+            #   more information.
+            # @param [String] assignment_callback_url The URL from your application that will
+            #   process task assignment events. See [Handling Task Assignment
+            #   Callback](https://www.twilio.com/docs/taskrouter/handle-assignment-callbacks)
+            #   for more details.
+            # @param [String] fallback_assignment_callback_url The URL that we should call
+            #   when a call to the `assignment_callback_url` fails.
+            # @param [String] task_reservation_timeout How long TaskRouter will wait for a
+            #   confirmation response from your application after it assigns a Task to a Worker.
+            #   Can be up to `86,400` (24 hours) and the default is `120`.
             # @return [WorkflowInstance] Newly created WorkflowInstance
             def create(friendly_name: nil, configuration: nil, assignment_callback_url: :unset, fallback_assignment_callback_url: :unset, task_reservation_timeout: :unset)
               data = Twilio::Values.of({
@@ -193,8 +193,9 @@ module Twilio
             ##
             # Initialize the WorkflowContext
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The workspace_sid
-            # @param [String] sid The sid
+            # @param [String] workspace_sid The SID of the Workspace with the Workflow to
+            #   fetch.
+            # @param [String] sid The SID of the Workflow resource to fetch.
             # @return [WorkflowContext] WorkflowContext
             def initialize(version, workspace_sid, sid)
               super(version)
@@ -231,21 +232,22 @@ module Twilio
 
             ##
             # Update the WorkflowInstance
-            # @param [String] friendly_name A string representing a human readable name for
-            #   this Workflow. Examples include 'Customer Support' or 'Sales Team'.
-            # @param [String] assignment_callback_url A valid URL for the application that
-            #   will process task assignment events. See [Handling Task Assignment
-            #   Callback](https://www.twilio.com/docs/api/taskrouter/handling-assignment-callbacks) for more details.
-            # @param [String] fallback_assignment_callback_url If the request to the
-            #   AssignmentCallbackUrl fails, the assignment callback will be made to this URL.
-            # @param [String] configuration JSON document configuring the rules for this
-            #   Workflow. See [Configuring
-            #   Workflows](https://www.twilio.com/docs/api/taskrouter/workflow-configuration)
-            #   for more information.
-            # @param [String] task_reservation_timeout An integer value controlling how long
-            #   in seconds TaskRouter will wait for a confirmation response from your
-            #   application after assigning a Task to a worker. Defaults to 120 seconds. Maximum
-            #   value is 86400 (24 hours)
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the Workflow resource. For example, `Inbound Call Workflow` or `2014 Outbound
+            #   Campaign`.
+            # @param [String] assignment_callback_url The URL from your application that will
+            #   process task assignment events. See [Handling Task Assignment
+            #   Callback](https://www.twilio.com/docs/taskrouter/handle-assignment-callbacks)
+            #   for more details.
+            # @param [String] fallback_assignment_callback_url The URL that we should call
+            #   when a call to the `assignment_callback_url` fails.
+            # @param [String] configuration A JSON string that contains the rules to apply to
+            #   the Workflow. See [Configuring
+            #   Workflows](https://www.twilio.com/docs/taskrouter/workflow-configuration) for
+            #   more information.
+            # @param [String] task_reservation_timeout How long TaskRouter will wait for a
+            #   confirmation response from your application after it assigns a Task to a Worker.
+            #   Can be up to `86,400` (24 hours) and the default is `120`.
             # @return [WorkflowInstance] Updated WorkflowInstance
             def update(friendly_name: :unset, assignment_callback_url: :unset, fallback_assignment_callback_url: :unset, configuration: :unset, task_reservation_timeout: :unset)
               data = Twilio::Values.of({
@@ -321,9 +323,9 @@ module Twilio
             # Initialize the WorkflowInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] workspace_sid The ID of the Workspace that contains this
-            #   Workflow
-            # @param [String] sid The sid
+            # @param [String] workspace_sid The SID of the Workspace that contains the
+            #   Workflow.
+            # @param [String] sid The SID of the Workflow resource to fetch.
             # @return [WorkflowInstance] WorkflowInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
               super(version)
@@ -362,79 +364,79 @@ module Twilio
             end
 
             ##
-            # @return [String] The ID of the account that owns this Workflow
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The URL that will be called whenever a task managed by this Workflow is assigned to a Worker.
+            # @return [String] The URL that we call when a task managed by the Workflow is assigned to a Worker
             def assignment_callback_url
               @properties['assignment_callback_url']
             end
 
             ##
-            # @return [String] JSON document configuring the rules for this Workflow.
+            # @return [String] A JSON string that contains the Workflow's configuration
             def configuration
               @properties['configuration']
             end
 
             ##
-            # @return [Time] The date this workflow was created.
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this workflow was last updated.
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The document_content_type
+            # @return [String] The MIME type of the document
             def document_content_type
               @properties['document_content_type']
             end
 
             ##
-            # @return [String] If the request to the AssignmentCallbackUrl fails, the assignment callback will be made to this URL.
+            # @return [String] The URL that we call when a call to the `assignment_callback_url` fails
             def fallback_assignment_callback_url
               @properties['fallback_assignment_callback_url']
             end
 
             ##
-            # @return [String] Human readable description of this Workflow
+            # @return [String] The string that you assigned to describe the Workflow resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] The unique ID of the Workflow
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] Determines how long TaskRouter will wait for a confirmation response from your application after assigning a Task to a worker.
+            # @return [String] How long TaskRouter will wait for a confirmation response from your application after it assigns a Task to a Worker
             def task_reservation_timeout
               @properties['task_reservation_timeout']
             end
 
             ##
-            # @return [String] The ID of the Workspace that contains this Workflow
+            # @return [String] The SID of the Workspace that contains the Workflow
             def workspace_sid
               @properties['workspace_sid']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the Workflow resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] The URLs of related resources
             def links
               @properties['links']
             end
@@ -448,21 +450,22 @@ module Twilio
 
             ##
             # Update the WorkflowInstance
-            # @param [String] friendly_name A string representing a human readable name for
-            #   this Workflow. Examples include 'Customer Support' or 'Sales Team'.
-            # @param [String] assignment_callback_url A valid URL for the application that
-            #   will process task assignment events. See [Handling Task Assignment
-            #   Callback](https://www.twilio.com/docs/api/taskrouter/handling-assignment-callbacks) for more details.
-            # @param [String] fallback_assignment_callback_url If the request to the
-            #   AssignmentCallbackUrl fails, the assignment callback will be made to this URL.
-            # @param [String] configuration JSON document configuring the rules for this
-            #   Workflow. See [Configuring
-            #   Workflows](https://www.twilio.com/docs/api/taskrouter/workflow-configuration)
-            #   for more information.
-            # @param [String] task_reservation_timeout An integer value controlling how long
-            #   in seconds TaskRouter will wait for a confirmation response from your
-            #   application after assigning a Task to a worker. Defaults to 120 seconds. Maximum
-            #   value is 86400 (24 hours)
+            # @param [String] friendly_name A descriptive string that you create to describe
+            #   the Workflow resource. For example, `Inbound Call Workflow` or `2014 Outbound
+            #   Campaign`.
+            # @param [String] assignment_callback_url The URL from your application that will
+            #   process task assignment events. See [Handling Task Assignment
+            #   Callback](https://www.twilio.com/docs/taskrouter/handle-assignment-callbacks)
+            #   for more details.
+            # @param [String] fallback_assignment_callback_url The URL that we should call
+            #   when a call to the `assignment_callback_url` fails.
+            # @param [String] configuration A JSON string that contains the rules to apply to
+            #   the Workflow. See [Configuring
+            #   Workflows](https://www.twilio.com/docs/taskrouter/workflow-configuration) for
+            #   more information.
+            # @param [String] task_reservation_timeout How long TaskRouter will wait for a
+            #   confirmation response from your application after it assigns a Task to a Worker.
+            #   Can be up to `86,400` (24 hours) and the default is `120`.
             # @return [WorkflowInstance] Updated WorkflowInstance
             def update(friendly_name: :unset, assignment_callback_url: :unset, fallback_assignment_callback_url: :unset, configuration: :unset, task_reservation_timeout: :unset)
               context.update(

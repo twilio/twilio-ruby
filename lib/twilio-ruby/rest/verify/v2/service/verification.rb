@@ -32,7 +32,8 @@ module Twilio
             ##
             # Retrieve a single page of VerificationInstance records from the API.
             # Request is executed immediately.
-            # @param [String] to The phone number to verify.
+            # @param [String] to The phone number to verify. Phone numbers must be in [E.164
+            #   format](https://www.twilio.com/docs/glossary/what-e164).
             # @param [String] channel The verification method to use. Can be: `sms` or `call`.
             # @param [String] custom_message The text of a custom message to use for the
             #   verification.

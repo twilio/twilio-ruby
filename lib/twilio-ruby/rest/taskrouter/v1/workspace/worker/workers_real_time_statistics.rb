@@ -16,7 +16,8 @@ module Twilio
               ##
               # Initialize the WorkersRealTimeStatisticsList
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The workspace_sid
+              # @param [String] workspace_sid The SID of the Workspace that contains the
+              #   Workers.
               # @return [WorkersRealTimeStatisticsList] WorkersRealTimeStatisticsList
               def initialize(version, workspace_sid: nil)
                 super(version)
@@ -65,7 +66,8 @@ module Twilio
               ##
               # Initialize the WorkersRealTimeStatisticsContext
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The workspace_sid
+              # @param [String] workspace_sid The SID of the Workspace with the resource to
+              #   fetch.
               # @return [WorkersRealTimeStatisticsContext] WorkersRealTimeStatisticsContext
               def initialize(version, workspace_sid)
                 super(version)
@@ -77,8 +79,9 @@ module Twilio
 
               ##
               # Fetch a WorkersRealTimeStatisticsInstance
-              # @param [String] task_channel Filter cumulative statistics by TaskChannel. Takes
-              #   in a Unique Name ("voice", "sms", "default", etc.) or a TaskChannelSid.
+              # @param [String] task_channel Only calculate real-time statistics on this
+              #   TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`,
+              #   `sms`, or `default`.
               # @return [WorkersRealTimeStatisticsInstance] Fetched WorkersRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
                 params = Twilio::Values.of({'TaskChannel' => task_channel, })
@@ -112,7 +115,8 @@ module Twilio
               # Initialize the WorkersRealTimeStatisticsInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] workspace_sid The workspace_sid
+              # @param [String] workspace_sid The SID of the Workspace that contains the
+              #   Workers.
               # @return [WorkersRealTimeStatisticsInstance] WorkersRealTimeStatisticsInstance
               def initialize(version, payload, workspace_sid: nil)
                 super(version)
@@ -143,13 +147,13 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [Hash] The current Worker status count breakdown by Activity
+              # @return [Hash] The number of current Workers by Activity
               def activity_statistics
                 @properties['activity_statistics']
               end
@@ -161,21 +165,22 @@ module Twilio
               end
 
               ##
-              # @return [String] The workspace_sid
+              # @return [String] The SID of the Workspace that contains the Workers
               def workspace_sid
                 @properties['workspace_sid']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] The absolute URL of the Workers statistics resource
               def url
                 @properties['url']
               end
 
               ##
               # Fetch a WorkersRealTimeStatisticsInstance
-              # @param [String] task_channel Filter cumulative statistics by TaskChannel. Takes
-              #   in a Unique Name ("voice", "sms", "default", etc.) or a TaskChannelSid.
+              # @param [String] task_channel Only calculate real-time statistics on this
+              #   TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`,
+              #   `sms`, or `default`.
               # @return [WorkersRealTimeStatisticsInstance] Fetched WorkersRealTimeStatisticsInstance
               def fetch(task_channel: :unset)
                 context.fetch(task_channel: task_channel, )

@@ -15,7 +15,8 @@ module Twilio
             ##
             # Initialize the RoomRecordingList
             # @param [Version] version Version that contains the resource
-            # @param [String] room_sid The room_sid
+            # @param [String] room_sid The SID of the Room resource the recording is
+            #   associated with.
             # @return [RoomRecordingList] RoomRecordingList
             def initialize(version, room_sid: nil)
               super(version)
@@ -29,10 +30,13 @@ module Twilio
             # Lists RoomRecordingInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [room_recording.Status] status The status
-            # @param [String] source_sid The source_sid
-            # @param [Time] date_created_after The date_created_after
-            # @param [Time] date_created_before The date_created_before
+            # @param [room_recording.Status] status Read only the recordings with this status.
+            #   Can be: `processing`, `completed`, or `deleted`.
+            # @param [String] source_sid Read only the recordings that have this `source_sid`.
+            # @param [Time] date_created_after Read only recordings that started on or after
+            #   this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
+            # @param [Time] date_created_before Read only Recordings that started before this
+            #   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -55,10 +59,13 @@ module Twilio
             # Streams RoomRecordingInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [room_recording.Status] status The status
-            # @param [String] source_sid The source_sid
-            # @param [Time] date_created_after The date_created_after
-            # @param [Time] date_created_before The date_created_before
+            # @param [room_recording.Status] status Read only the recordings with this status.
+            #   Can be: `processing`, `completed`, or `deleted`.
+            # @param [String] source_sid Read only the recordings that have this `source_sid`.
+            # @param [Time] date_created_after Read only recordings that started on or after
+            #   this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
+            # @param [Time] date_created_before Read only Recordings that started before this
+            #   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -97,10 +104,13 @@ module Twilio
             ##
             # Retrieve a single page of RoomRecordingInstance records from the API.
             # Request is executed immediately.
-            # @param [room_recording.Status] status The status
-            # @param [String] source_sid The source_sid
-            # @param [Time] date_created_after The date_created_after
-            # @param [Time] date_created_before The date_created_before
+            # @param [room_recording.Status] status Read only the recordings with this status.
+            #   Can be: `processing`, `completed`, or `deleted`.
+            # @param [String] source_sid Read only the recordings that have this `source_sid`.
+            # @param [Time] date_created_after Read only recordings that started on or after
+            #   this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
+            # @param [Time] date_created_before Read only Recordings that started before this
+            #   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -176,8 +186,9 @@ module Twilio
             ##
             # Initialize the RoomRecordingContext
             # @param [Version] version Version that contains the resource
-            # @param [String] room_sid The room_sid
-            # @param [String] sid The sid
+            # @param [String] room_sid The SID of the Room resource with the recording to
+            #   fetch.
+            # @param [String] sid The SID of the RoomRecording resource to fetch.
             # @return [RoomRecordingContext] RoomRecordingContext
             def initialize(version, room_sid, sid)
               super(version)
@@ -229,8 +240,9 @@ module Twilio
             # Initialize the RoomRecordingInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] room_sid The room_sid
-            # @param [String] sid The sid
+            # @param [String] room_sid The SID of the Room resource the recording is
+            #   associated with.
+            # @param [String] sid The SID of the RoomRecording resource to fetch.
             # @return [RoomRecordingInstance] RoomRecordingInstance
             def initialize(version, payload, room_sid: nil, sid: nil)
               super(version)
@@ -272,97 +284,97 @@ module Twilio
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [room_recording.Status] The status
+            # @return [room_recording.Status] The status of the recording
             def status
               @properties['status']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The source_sid
+            # @return [String] The SID of the recording source
             def source_sid
               @properties['source_sid']
             end
 
             ##
-            # @return [String] The size
+            # @return [String] The size of the recorded track in bytes
             def size
               @properties['size']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [room_recording.Type] The type
+            # @return [room_recording.Type] The recording's media type
             def type
               @properties['type']
             end
 
             ##
-            # @return [String] The duration
+            # @return [String] The duration of the recording in seconds
             def duration
               @properties['duration']
             end
 
             ##
-            # @return [room_recording.Format] The container_format
+            # @return [room_recording.Format] The file format for the recording
             def container_format
               @properties['container_format']
             end
 
             ##
-            # @return [room_recording.Codec] The codec
+            # @return [room_recording.Codec] The codec used for the recording
             def codec
               @properties['codec']
             end
 
             ##
-            # @return [Hash] The grouping_sids
+            # @return [Hash] A list of SIDs related to the Recording
             def grouping_sids
               @properties['grouping_sids']
             end
 
             ##
-            # @return [String] The track_name
+            # @return [String] The name that was given to the source track of the recording
             def track_name
               @properties['track_name']
             end
 
             ##
-            # @return [String] The offset
+            # @return [String] The number of milliseconds between a point in time that is common to all rooms in a group and when the source room of the recording started
             def offset
               @properties['offset']
             end
 
             ##
-            # @return [String] The room_sid
+            # @return [String] The SID of the Room resource the recording is associated with
             def room_sid
               @properties['room_sid']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] The URLs of related resources
             def links
               @properties['links']
             end

@@ -32,7 +32,7 @@ module Twilio
             # memory before returning.
             # @param [String] iso_code Filter to retrieve the country permissions by
             #   specifying the [ISO country
-            #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+            #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
             # @param [String] continent Filter to retrieve the country permissions by
             #   specifying the continent
             # @param [String] country_code Filter the results by specified [country
@@ -72,7 +72,7 @@ module Twilio
             # is reached.
             # @param [String] iso_code Filter to retrieve the country permissions by
             #   specifying the [ISO country
-            #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+            #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
             # @param [String] continent Filter to retrieve the country permissions by
             #   specifying the continent
             # @param [String] country_code Filter the results by specified [country
@@ -128,7 +128,7 @@ module Twilio
             # Request is executed immediately.
             # @param [String] iso_code Filter to retrieve the country permissions by
             #   specifying the [ISO country
-            #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+            #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
             # @param [String] continent Filter to retrieve the country permissions by
             #   specifying the continent
             # @param [String] country_code Filter the results by specified [country
@@ -224,7 +224,7 @@ module Twilio
             # Initialize the CountryContext
             # @param [Version] version Version that contains the resource
             # @param [String] iso_code The [ISO country
-            #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+            #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
             # @return [CountryContext] CountryContext
             def initialize(version, iso_code)
               super(version)
@@ -287,7 +287,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] iso_code The [ISO country
-            #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+            #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
             # @return [CountryInstance] CountryInstance
             def initialize(version, payload, iso_code: nil)
               super(version)

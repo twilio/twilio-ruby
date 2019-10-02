@@ -18,10 +18,10 @@ module Twilio
               ##
               # Initialize the FunctionVersionList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique SID identifier of the Service for this
-              #   Function Version.
-              # @param [String] function_sid The unique SID identifier of the Function that is
-              #   the parent for this Function Version.
+              # @param [String] service_sid The SID of the Service that the FunctionVersion
+              #   resource is associated with.
+              # @param [String] function_sid The SID of the function that is the parent of the
+              #   function version.
               # @return [FunctionVersionList] FunctionVersionList
               def initialize(version, service_sid: nil, function_sid: nil)
                 super(version)
@@ -162,11 +162,11 @@ module Twilio
               ##
               # Initialize the FunctionVersionContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The unique SID identifier of the Service for this
-              #   Function Version.
-              # @param [String] function_sid The unique SID identifier of the Function that is
-              #   the parent for this Function Version.
-              # @param [String] sid The unique SID identifier of this Function Version.
+              # @param [String] service_sid The SID of the Service to fetch the FunctionVersion
+              #   resource from.
+              # @param [String] function_sid The SID of the function that is the parent of the
+              #   FunctionVersion resource to fetch.
+              # @param [String] sid The SID of the FunctionVersion resource to fetch.
               # @return [FunctionVersionContext] FunctionVersionContext
               def initialize(version, service_sid, function_sid, sid)
                 super(version)
@@ -219,11 +219,11 @@ module Twilio
               # Initialize the FunctionVersionInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The unique SID identifier of the Service for this
-              #   Function Version.
-              # @param [String] function_sid The unique SID identifier of the Function that is
-              #   the parent for this Function Version.
-              # @param [String] sid The unique SID identifier of this Function Version.
+              # @param [String] service_sid The SID of the Service that the FunctionVersion
+              #   resource is associated with.
+              # @param [String] function_sid The SID of the function that is the parent of the
+              #   function version.
+              # @param [String] sid The SID of the FunctionVersion resource to fetch.
               # @return [FunctionVersionInstance] FunctionVersionInstance
               def initialize(version, payload, service_sid: nil, function_sid: nil, sid: nil)
                 super(version)
@@ -266,49 +266,49 @@ module Twilio
               end
 
               ##
-              # @return [String] Function Version Sid.
+              # @return [String] The unique string that identifies the FunctionVersion resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] Account Sid.
+              # @return [String] The SID of the Account that created the FunctionVersion resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] Service Sid.
+              # @return [String] The SID of the Service that the FunctionVersion resource is associated with
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] Function Sid.
+              # @return [String] The SID of the function that is the parent of the function version
               def function_sid
                 @properties['function_sid']
               end
 
               ##
-              # @return [String] The URL-friendly string by which this Function Version can be referenced.
+              # @return [String] The URL-friendly string by which the function version can be referenced
               def path
                 @properties['path']
               end
 
               ##
-              # @return [function_version.Visibility] The access control which determines how the Function Version can be accessed.
+              # @return [function_version.Visibility] The access control that determines how the function version can be accessed
               def visibility
                 @properties['visibility']
               end
 
               ##
-              # @return [Time] The date that this Function Version was created.
+              # @return [Time] The ISO 8601 date and time in GMT when the FunctionVersion resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [String] The URL of this Function Version.
+              # @return [String] The absolute URL of the FunctionVersion resource
               def url
                 @properties['url']
               end

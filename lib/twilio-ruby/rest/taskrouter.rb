@@ -29,7 +29,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The unique ID of the Workspace
+      # @param [String] sid The unique string that we created to identify the Workspace
+      #   resource.
       # @return [Twilio::REST::Taskrouter::V1::WorkspaceInstance] if sid was passed.
       # @return [Twilio::REST::Taskrouter::V1::WorkspaceList]
       def workspaces(sid=:unset)

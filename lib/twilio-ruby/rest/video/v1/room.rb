@@ -26,30 +26,38 @@ module Twilio
           ##
           # Retrieve a single page of RoomInstance records from the API.
           # Request is executed immediately.
-          # @param [Boolean] enable_turn Deprecated.  Enable [Twilio's Network Traversal
-          #   TURN service](https://www.twilio.com/stun-turn). TURN service is used when
-          #   direct peer-to-peer media connections cannot be established due to firewall
-          #   restrictions. This setting only applies to Rooms with type `peer-to-peer`.
-          # @param [room.RoomType] type Type of room, either `peer-to-peer`, `group-small`
-          #   or `group`. Will be `group` by default.
-          # @param [String] unique_name Name of the Room.  This is unique for `in-progress`
-          #   rooms. If not provided, Room name will be set to the Room Sid.
-          # @param [String] status_callback A URL that Twilio sends asynchronous webhook
-          #   requests to on every room event. If not provided, status callback events will
-          #   not be dispatched.
-          # @param [String] status_callback_method HTTP method Twilio should use when
-          #   requesting the above URL. Defaults to `POST`.
-          # @param [String] max_participants Maximum number of Participants in the Room.
-          #   Peer-to-peer rooms can have a maximum of 10 Participants. Small Group rooms can
-          #   have a max of 4 Participants. Group rooms can have a max of 50 Participants
-          # @param [Boolean] record_participants_on_connect Start Participant recording when
-          #   connected. ***This feature is not available in `peer-to-peer` rooms.***
-          # @param [room.VideoCodec] video_codecs An array of video codecs supported when
-          #   publishing a Track in the Room.  `VP8` and `H264` codecs are supported.  ***This
-          #   feature is not available in `peer-to-peer` rooms***
-          # @param [String] media_region Region for the media server in Group Rooms.
-          #   Default region is `us1`.  See the list of [available Media
-          #   Regions.](https://www.twilio.com/docs/api/video/ip-address-whitelisting#group-rooms-media-servers)***This feature is not available in `peer-to-peer` rooms.***
+          # @param [Boolean] enable_turn Deprecated. Whether to enable [Twilio's Network
+          #   Traversal TURN service](https://www.twilio.com/stun-turn). TURN service is used
+          #   when direct peer-to-peer media connections cannot be established due to firewall
+          #   restrictions. This setting only applies to rooms with type `peer-to-peer`.
+          # @param [room.RoomType] type The type of room. Can be: `peer-to-peer`,
+          #   `group-small`, or `group`. The default value is `group`.
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. It can be used as a `room_sid` in place of the
+          #   resource's `sid` in the URL to address the resource. This value is unique for
+          #   `in-progress` rooms. SDK clients can use this name to connect to the room. REST
+          #   API clients can use this name in place of the Room SID to interact with the room
+          #   as long as the room is `in-progress`.
+          # @param [String] status_callback The URL we should call using the
+          #   `status_callback_method` to send status information to your application on every
+          #   room event. See [Status
+          #   Callbacks](https://www.twilio.com/docs/video/api/status-callbacks) for more
+          #   info.
+          # @param [String] status_callback_method The HTTP method we should use to call
+          #   `status_callback`. Can be `POST` or `GET`.
+          # @param [String] max_participants The maximum number of concurrent Participants
+          #   allowed in the room. Peer-to-peer rooms can have up to 10 Participants. Small
+          #   Group rooms can have up to 4 Participants. Group rooms can have up to 50
+          #   Participants.
+          # @param [Boolean] record_participants_on_connect Whether to start recording when
+          #   Participants connect. ***This feature is not available in `peer-to-peer`
+          #   rooms.***
+          # @param [room.VideoCodec] video_codecs An array of the video codecs that are
+          #   supported when publishing a track in the room.  Can be: `VP8` and `H264`.
+          #   ***This feature is not available in `peer-to-peer` rooms***
+          # @param [String] media_region The region for the media server in Group Rooms.
+          #   Can be: one of the [available Media
+          #   Regions](https://www.twilio.com/docs/video/ip-address-whitelisting#group-rooms-media-servers). ***This feature is not available in `peer-to-peer` rooms.***
           # @return [RoomInstance] Newly created RoomInstance
           def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset)
             data = Twilio::Values.of({
@@ -77,12 +85,12 @@ module Twilio
           # Lists RoomInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [room.RoomStatus] status Only show Rooms with the given status:
-          #   `in-progress` (default), or `completed`
-          # @param [String] unique_name Only show Rooms with the provided Name.
-          # @param [Time] date_created_after Only show Rooms that started on or after this
+          # @param [room.RoomStatus] status Read only the rooms with this status. Can be:
+          #   `in-progress` (default) or `completed`
+          # @param [String] unique_name Read only rooms with the this `unique_name`.
+          # @param [Time] date_created_after Read only rooms that started on or after this
           #   date, given as `YYYY-MM-DD`.
-          # @param [Time] date_created_before Only show Rooms that started before this date,
+          # @param [Time] date_created_before Read only rooms that started before this date,
           #   given as `YYYY-MM-DD`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
@@ -106,12 +114,12 @@ module Twilio
           # Streams RoomInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [room.RoomStatus] status Only show Rooms with the given status:
-          #   `in-progress` (default), or `completed`
-          # @param [String] unique_name Only show Rooms with the provided Name.
-          # @param [Time] date_created_after Only show Rooms that started on or after this
+          # @param [room.RoomStatus] status Read only the rooms with this status. Can be:
+          #   `in-progress` (default) or `completed`
+          # @param [String] unique_name Read only rooms with the this `unique_name`.
+          # @param [Time] date_created_after Read only rooms that started on or after this
           #   date, given as `YYYY-MM-DD`.
-          # @param [Time] date_created_before Only show Rooms that started before this date,
+          # @param [Time] date_created_before Read only rooms that started before this date,
           #   given as `YYYY-MM-DD`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
@@ -151,12 +159,12 @@ module Twilio
           ##
           # Retrieve a single page of RoomInstance records from the API.
           # Request is executed immediately.
-          # @param [room.RoomStatus] status Only show Rooms with the given status:
-          #   `in-progress` (default), or `completed`
-          # @param [String] unique_name Only show Rooms with the provided Name.
-          # @param [Time] date_created_after Only show Rooms that started on or after this
+          # @param [room.RoomStatus] status Read only the rooms with this status. Can be:
+          #   `in-progress` (default) or `completed`
+          # @param [String] unique_name Read only rooms with the this `unique_name`.
+          # @param [Time] date_created_after Read only rooms that started on or after this
           #   date, given as `YYYY-MM-DD`.
-          # @param [Time] date_created_before Only show Rooms that started before this date,
+          # @param [Time] date_created_before Read only rooms that started before this date,
           #   given as `YYYY-MM-DD`.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
@@ -233,7 +241,7 @@ module Twilio
           ##
           # Initialize the RoomContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The Room Sid or name that uniquely identifies this resource.
+          # @param [String] sid The SID of the Room resource to fetch.
           # @return [RoomContext] RoomContext
           def initialize(version, sid)
             super(version)
@@ -264,7 +272,8 @@ module Twilio
 
           ##
           # Update the RoomInstance
-          # @param [room.RoomStatus] status Set to `completed` to end the Room.
+          # @param [room.RoomStatus] status The new status of the resource. Set to
+          #   `completed` to end the room.
           # @return [RoomInstance] Updated RoomInstance
           def update(status: nil)
             data = Twilio::Values.of({'Status' => status, })
@@ -334,7 +343,7 @@ module Twilio
           # Initialize the RoomInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The Room Sid or name that uniquely identifies this resource.
+          # @param [String] sid The SID of the Room resource to fetch.
           # @return [RoomInstance] RoomInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -378,109 +387,109 @@ module Twilio
           end
 
           ##
-          # @return [String] A system-generated 34-character string that uniquely identifies this resource.
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [room.RoomStatus] A string representing the status of the Room.
+          # @return [room.RoomStatus] The status of the room
           def status
             @properties['status']
           end
 
           ##
-          # @return [Time] The date that this resource was created, given as a UTC ISO 8601 Timestamp.
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date that this resource was last updated, given as a UTC ISO 8601 Timestamp.
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The unique ID of the Account associated with this Room.
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [Boolean] Enable Twilio's Network Traversal TURN service.
+          # @return [Boolean] Enable Twilio's Network Traversal TURN service
           def enable_turn
             @properties['enable_turn']
           end
 
           ##
-          # @return [String] A developer-supplied Name of the Room.
+          # @return [String] An application-defined string that uniquely identifies the resource
           def unique_name
             @properties['unique_name']
           end
 
           ##
-          # @return [String] A URL that Twilio sends asynchronous webhook requests to on every Room event.
+          # @return [String] The URL to send status information to your application
           def status_callback
             @properties['status_callback']
           end
 
           ##
-          # @return [String] HTTP method Twilio should use when requesting the above URL.
+          # @return [String] The HTTP method we use to call status_callback
           def status_callback_method
             @properties['status_callback_method']
           end
 
           ##
-          # @return [Time] The end time of the Room, given as a UTC ISO 8601 Timestamp.
+          # @return [Time] The UTC end time of the room in UTC ISO 8601 format
           def end_time
             @properties['end_time']
           end
 
           ##
-          # @return [String] The duration of the Room in seconds.
+          # @return [String] The duration of the room in seconds
           def duration
             @properties['duration']
           end
 
           ##
-          # @return [room.RoomType] Type of Room, either peer-to-peer, group-small or group.
+          # @return [room.RoomType] The type of room
           def type
             @properties['type']
           end
 
           ##
-          # @return [String] Maximum number of concurrent Participants allowed in the Room.
+          # @return [String] The maximum number of concurrent Participants allowed in the room
           def max_participants
             @properties['max_participants']
           end
 
           ##
-          # @return [Boolean] Start recording when Participants connect.
+          # @return [Boolean] Whether to start recording when Participants connect
           def record_participants_on_connect
             @properties['record_participants_on_connect']
           end
 
           ##
-          # @return [room.VideoCodec] The video_codecs
+          # @return [room.VideoCodec] An array of the video codecs that are supported when publishing a track in the room
           def video_codecs
             @properties['video_codecs']
           end
 
           ##
-          # @return [String] Region for the media server in Group Rooms.
+          # @return [String] The region for the media server in Group Rooms
           def media_region
             @properties['media_region']
           end
 
           ##
-          # @return [String] The absolute URL for this resource.
+          # @return [String] The absolute URL of the resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] The URLs of related resources
           def links
             @properties['links']
           end
@@ -494,7 +503,8 @@ module Twilio
 
           ##
           # Update the RoomInstance
-          # @param [room.RoomStatus] status Set to `completed` to end the Room.
+          # @param [room.RoomStatus] status The new status of the resource. Set to
+          #   `completed` to end the room.
           # @return [RoomInstance] Updated RoomInstance
           def update(status: nil)
             context.update(status: status, )

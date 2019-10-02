@@ -29,7 +29,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
+      # @param [String] sid The unique string that we created to identify the Session
       #   resource.
       # @return [Twilio::REST::Messaging::V1::SessionInstance] if sid was passed.
       # @return [Twilio::REST::Messaging::V1::SessionList]
@@ -38,7 +38,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid Unique 34 character ID of the Service.
+      # @param [String] sid The unique string that we created to identify the Service
+      #   resource.
       # @return [Twilio::REST::Messaging::V1::ServiceInstance] if sid was passed.
       # @return [Twilio::REST::Messaging::V1::ServiceList]
       def services(sid=:unset)

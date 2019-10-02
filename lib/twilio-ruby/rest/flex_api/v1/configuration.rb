@@ -73,7 +73,8 @@ module Twilio
 
           ##
           # Fetch a ConfigurationInstance
-          # @param [String] ui_version Pinned UI version
+          # @param [String] ui_version The Pinned UI version of the Configuration resource
+          #   to fetch.
           # @return [ConfigurationInstance] Fetched ConfigurationInstance
           def fetch(ui_version: :unset)
             params = Twilio::Values.of({'UiVersion' => ui_version, })
@@ -198,218 +199,219 @@ module Twilio
           end
 
           ##
-          # @return [String] The unique id of the Account responsible for this configuration
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [Time] The time the Configuration was created, given as GMT in ISO 8601 format
+          # @return [Time] The ISO 8601 date and time in GMT when the Configuration resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The time the Configuration was last updated, given as GMT in ISO 8601 format
+          # @return [Time] The ISO 8601 date and time in GMT when the Configuration resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [Hash] Attiributes
+          # @return [Hash] An object that contains application-specific data
           def attributes
             @properties['attributes']
           end
 
           ##
-          # @return [configuration.Status] Status of the Flex onboarding
+          # @return [configuration.Status] The status of the Flex onboarding
           def status
             @properties['status']
           end
 
           ##
-          # @return [String] The unique ID of the TaskRouter Workspace
+          # @return [String] The SID of the TaskRouter Workspace
           def taskrouter_workspace_sid
             @properties['taskrouter_workspace_sid']
           end
 
           ##
-          # @return [String] The unique ID of the TaskRouter Target Workflow
+          # @return [String] The SID of the TaskRouter target Workflow
           def taskrouter_target_workflow_sid
             @properties['taskrouter_target_workflow_sid']
           end
 
           ##
-          # @return [String] The unique ID of the TaskRouter Target TaskQueue
+          # @return [String] The SID of the TaskRouter Target TaskQueue
           def taskrouter_target_taskqueue_sid
             @properties['taskrouter_target_taskqueue_sid']
           end
 
           ##
-          # @return [Hash] Array of TaskRouter TaskQueues
+          # @return [Hash] The list of TaskRouter TaskQueues
           def taskrouter_taskqueues
             @properties['taskrouter_taskqueues']
           end
 
           ##
-          # @return [Hash] Skill description for TaskRouter workers
+          # @return [Hash] The Skill description for TaskRouter workers
           def taskrouter_skills
             @properties['taskrouter_skills']
           end
 
           ##
-          # @return [Hash] TaskRouter default channel capacities and availability for workers
+          # @return [Hash] The TaskRouter default channel capacities and availability for workers
           def taskrouter_worker_channels
             @properties['taskrouter_worker_channels']
           end
 
           ##
-          # @return [Hash] The taskrouter_worker_attributes
+          # @return [Hash] The TaskRouter Worker attributes
           def taskrouter_worker_attributes
             @properties['taskrouter_worker_attributes']
           end
 
           ##
-          # @return [String] The unique ID of the offline activity
+          # @return [String] The TaskRouter SID of the offline activity
           def taskrouter_offline_activity_sid
             @properties['taskrouter_offline_activity_sid']
           end
 
           ##
-          # @return [String] Flex resources hosting URL for the main UI
+          # @return [String] The URL where the Flex instance is hosted
           def runtime_domain
             @properties['runtime_domain']
           end
 
           ##
-          # @return [String] Unique 34 character ID of the Messaging Service
+          # @return [String] The SID of the Messaging service instance
           def messaging_service_instance_sid
             @properties['messaging_service_instance_sid']
           end
 
           ##
-          # @return [String] The unique id of the Chat Service this user belongs to
+          # @return [String] The SID of the chat service this user belongs to
           def chat_service_instance_sid
             @properties['chat_service_instance_sid']
           end
 
           ##
-          # @return [String] Main language of the Flex UI
+          # @return [String] The primary language of the Flex UI
           def ui_language
             @properties['ui_language']
           end
 
           ##
-          # @return [Hash] UI Attributes
+          # @return [Hash] The object that describes Flex UI characteristics and settings
           def ui_attributes
             @properties['ui_attributes']
           end
 
           ##
-          # @return [String] Pinned UI version
+          # @return [String] The Pinned UI version
           def ui_version
             @properties['ui_version']
           end
 
           ##
-          # @return [String] Flex Service version
+          # @return [String] The Flex Service version
           def service_version
             @properties['service_version']
           end
 
           ##
-          # @return [Boolean] Call recording enabled
+          # @return [Boolean] Whether call recording is enabled
           def call_recording_enabled
             @properties['call_recording_enabled']
           end
 
           ##
-          # @return [String] Call recording webhook url
+          # @return [String] The call recording webhook URL
           def call_recording_webhook_url
             @properties['call_recording_webhook_url']
           end
 
           ##
-          # @return [Boolean] Flag indicating whether CRM is present for Flex
+          # @return [Boolean] Whether CRM is present for Flex
           def crm_enabled
             @properties['crm_enabled']
           end
 
           ##
-          # @return [String] CRM Type
+          # @return [String] The CRM Type
           def crm_type
             @properties['crm_type']
           end
 
           ##
-          # @return [String] CRM Callback URL
+          # @return [String] The CRM Callback URL
           def crm_callback_url
             @properties['crm_callback_url']
           end
 
           ##
-          # @return [String] CRM Fallback URL
+          # @return [String] The CRM Fallback URL
           def crm_fallback_url
             @properties['crm_fallback_url']
           end
 
           ##
-          # @return [Hash] CRM Attributes
+          # @return [Hash] An object that contains the CRM attributes
           def crm_attributes
             @properties['crm_attributes']
           end
 
           ##
-          # @return [Hash] Public Attributes
+          # @return [Hash] The list of public attributes
           def public_attributes
             @properties['public_attributes']
           end
 
           ##
-          # @return [Boolean] Is plugin service Enabled
+          # @return [Boolean] Whether the plugin service enabled
           def plugin_service_enabled
             @properties['plugin_service_enabled']
           end
 
           ##
-          # @return [Hash] Plugin service Attributes
+          # @return [Hash] The plugin service attributes
           def plugin_service_attributes
             @properties['plugin_service_attributes']
           end
 
           ##
-          # @return [Hash] Integration parameters
+          # @return [Hash] A list of objects that contain the configurations for the Integrations supported in this configuration
           def integrations
             @properties['integrations']
           end
 
           ##
-          # @return [Hash] Outbound call flows Attributes
+          # @return [Hash] The list of outbound call flows
           def outbound_call_flows
             @properties['outbound_call_flows']
           end
 
           ##
-          # @return [String] List of enabled features
+          # @return [String] The list of enabled features
           def features_enabled
             @properties['features_enabled']
           end
 
           ##
-          # @return [String] List of serverless services sids
+          # @return [String] The list of serverless service SIDs
           def serverless_service_sids
             @properties['serverless_service_sids']
           end
 
           ##
-          # @return [String] The URL for this resource
+          # @return [String] The absolute URL of the Configuration resource
           def url
             @properties['url']
           end
 
           ##
           # Fetch a ConfigurationInstance
-          # @param [String] ui_version Pinned UI version
+          # @param [String] ui_version The Pinned UI version of the Configuration resource
+          #   to fetch.
           # @return [ConfigurationInstance] Fetched ConfigurationInstance
           def fetch(ui_version: :unset)
             context.fetch(ui_version: ui_version, )

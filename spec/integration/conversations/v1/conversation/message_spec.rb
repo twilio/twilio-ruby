@@ -34,6 +34,40 @@ describe 'Message' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "body": "Hello",
+          "media": null,
+          "author": "message author",
+          "attributes": "{ \\"importance\\": \\"high\\" }",
+          "date_created": "2015-12-16T22:18:37Z",
+          "date_updated": "2015-12-16T22:18:38Z",
+          "index": 0,
+          "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+
+    actual = @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                     .messages.create()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives create_with_media responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "sid": "IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "body": null,
+          "media": [
+              {
+                  "sid": "MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "size": 42056,
+                  "content_type": "image/jpeg",
+                  "filename": "car.jpg"
+              }
+          ],
           "author": "message author",
           "attributes": "{ \\"importance\\": \\"high\\" }",
           "date_created": "2015-12-16T22:18:37Z",
@@ -75,6 +109,7 @@ describe 'Message' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "body": "Hello",
+          "media": null,
           "author": "message author",
           "attributes": "{ \\"importance\\": \\"high\\" }",
           "date_created": "2015-12-16T22:18:37Z",
@@ -144,6 +179,7 @@ describe 'Message' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "body": "Welcome!",
+          "media": null,
           "author": "system",
           "attributes": "{ \\"importance\\": \\"high\\" }",
           "date_created": "2016-03-24T20:37:57Z",
@@ -196,6 +232,7 @@ describe 'Message' do
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "body": "I like pie.",
+                  "media": null,
                   "author": "pie_preferrer",
                   "attributes": "{ \\"importance\\": \\"high\\" }",
                   "date_created": "2016-03-24T20:37:57Z",
@@ -208,6 +245,27 @@ describe 'Message' do
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "body": "Cake is my favorite!",
+                  "media": null,
+                  "author": "cake_lover",
+                  "attributes": "{ \\"importance\\": \\"high\\" }",
+                  "date_created": "2016-03-24T20:38:21Z",
+                  "date_updated": "2016-03-24T20:38:21Z",
+                  "index": 0,
+                  "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              {
+                  "sid": "IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "body": null,
+                  "media": [
+                      {
+                          "sid": "MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                          "size": 42056,
+                          "content_type": "image/jpeg",
+                          "filename": "car.jpg"
+                      }
+                  ],
                   "author": "cake_lover",
                   "attributes": "{ \\"importance\\": \\"high\\" }",
                   "date_created": "2016-03-24T20:38:21Z",

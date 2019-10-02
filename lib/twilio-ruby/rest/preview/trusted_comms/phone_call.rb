@@ -28,86 +28,86 @@ module Twilio
           ##
           # Retrieve a single page of PhoneCallInstance records from the API.
           # Request is executed immediately.
-          # @param [String] from The phone number to use as the caller id, given in E.164
-          #   format (https://en.wikipedia.org/wiki/E.164). It must be a Twilio number that
+          # @param [String] from The phone number to use as the caller id, given in [E.164
+          #   format](https://en.wikipedia.org/wiki/E.164). It must be a Twilio number that
           #   has been set up as a Branded Number in the Business Profile section for your
           #   account.
-          # @param [String] to The terminating Phone Number, given in E.164 format
-          #   (https://en.wikipedia.org/wiki/E.164).
+          # @param [String] to The terminating Phone Number, given in [E.164
+          #   format](https://en.wikipedia.org/wiki/E.164).
           # @param [String] reason The business reason for this phone call that will appear
-          #   in the terminating device's screen.
+          #   in the terminating device's screen. Max 50 characters.
           # @param [String] application_sid Refers to the parameter with the same name when
-          #   initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] caller_id Refers to the parameter with the same name when
-          #   initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] fallback_method Refers to the parameter with the same name when
-          #   initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] fallback_url Refers to the parameter with the same name when
-          #   initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] machine_detection Refers to the parameter with the same name
-          #   when initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   when [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] machine_detection_silence_timeout Refers to the parameter with
-          #   the same name when initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   the same name when [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] machine_detection_speech_end_threshold Refers to the parameter
-          #   with the same name when initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   with the same name when [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] machine_detection_speech_threshold Refers to the parameter with
-          #   the same name when initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   the same name when [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] machine_detection_timeout Refers to the parameter with the same
-          #   name when initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   name when [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] method Refers to the parameter with the same name when
-          #   initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [Boolean] record Refers to the parameter with the same name when
-          #   initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] recording_channels Refers to the parameter with the same name
-          #   when initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   when [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] recording_status_callback Refers to the parameter with the same
-          #   name when initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   name when [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] recording_status_callback_event Refers to the parameter with the
-          #   same name when initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   same name when [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] recording_status_callback_method Refers to the parameter with
-          #   the same name when initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   the same name when [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] send_digits Refers to the parameter with the same name when
-          #   initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] sip_auth_password Refers to the parameter with the same name
-          #   when initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   when [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] sip_auth_username Refers to the parameter with the same name
-          #   when initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   when [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] status_callback Refers to the parameter with the same name when
-          #   initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] status_callback_event Refers to the parameter with the same name
-          #   when initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   when [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] status_callback_method Refers to the parameter with the same
-          #   name when initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   name when [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @param [String] timeout Refers to the parameter with the same name when
-          #   initiating a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
-          # @param [String] trim Refers to the parameter with the same name when initiating
-          #   a call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
-          # @param [String] url Refers to the parameter with the same name when initiating a
-          #   call via Voice API
-          #   (https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          #   [initiating a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          # @param [String] trim Refers to the parameter with the same name when [initiating
+          #   a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
+          # @param [String] url Refers to the parameter with the same name when [initiating
+          #   a call via Voice
+          #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
           # @return [PhoneCallInstance] Newly created PhoneCallInstance
           def create(from: nil, to: nil, reason: :unset, application_sid: :unset, caller_id: :unset, fallback_method: :unset, fallback_url: :unset, machine_detection: :unset, machine_detection_silence_timeout: :unset, machine_detection_speech_end_threshold: :unset, machine_detection_speech_threshold: :unset, machine_detection_timeout: :unset, method: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_event: :unset, recording_status_callback_method: :unset, send_digits: :unset, sip_auth_password: :unset, sip_auth_username: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, timeout: :unset, trim: :unset, url: :unset)
             data = Twilio::Values.of({

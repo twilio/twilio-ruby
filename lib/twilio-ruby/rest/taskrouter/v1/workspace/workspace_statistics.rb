@@ -15,7 +15,7 @@ module Twilio
             ##
             # Initialize the WorkspaceStatisticsList
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The workspace_sid
+            # @param [String] workspace_sid The SID of the Workspace.
             # @return [WorkspaceStatisticsList] WorkspaceStatisticsList
             def initialize(version, workspace_sid: nil)
               super(version)
@@ -64,7 +64,7 @@ module Twilio
             ##
             # Initialize the WorkspaceStatisticsContext
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The workspace_sid
+            # @param [String] workspace_sid The SID of the Workspace to fetch.
             # @return [WorkspaceStatisticsContext] WorkspaceStatisticsContext
             def initialize(version, workspace_sid)
               super(version)
@@ -76,23 +76,24 @@ module Twilio
 
             ##
             # Fetch a WorkspaceStatisticsInstance
-            # @param [String] minutes Filter cumulative statistics by up to 'x' minutes in the
-            #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
-            #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
-            # @param [Time] start_date Filter cumulative statistics by a start date. This is
-            #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
-            #   Timestamp
-            # @param [Time] end_date Filter cumulative statistics by an end date. This is
-            #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
-            #   Timestamp
-            # @param [String] task_channel Filter real-time and cumulative statistics by
-            #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
-            #   TaskChannelSid.
-            # @param [String] split_by_wait_time A comma separated values for viewing splits
-            #   of tasks canceled and accepted above the given threshold in seconds. Ex: "5,30"
-            #   would show splits of tasks that were canceled or accepted before or after 5
-            #   seconds and respectively, 30 seconds. This is great for showing short abandoned
-            #   tasks or tasks that failed to meet your SLA.
+            # @param [String] minutes Only calculate statistics since this many minutes in the
+            #   past. The default 15 minutes. This is helpful for displaying statistics for the
+            #   last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.
+            # @param [Time] start_date Only calculate statistics from this date and time and
+            #   later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+            # @param [Time] end_date Only calculate statistics from this date and time and
+            #   earlier, specified in GMT as an [ISO
+            #   8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+            # @param [String] task_channel Only calculate statistics on this TaskChannel. Can
+            #   be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or
+            #   `default`.
+            # @param [String] split_by_wait_time A comma separated list of values that
+            #   describes the thresholds, in seconds, to calculate statistics on. For each
+            #   threshold specified, the number of Tasks canceled and reservations accepted
+            #   above and below the specified thresholds in seconds are computed. For example,
+            #   `5,30` would show splits of Tasks that were canceled or accepted before and
+            #   after 5 seconds and before and after 30 seconds. This can be used to show short
+            #   abandoned Tasks or Tasks that failed to meet an SLA.
             # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
             def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_channel: :unset, split_by_wait_time: :unset)
               params = Twilio::Values.of({
@@ -132,7 +133,7 @@ module Twilio
             # Initialize the WorkspaceStatisticsInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] workspace_sid The workspace_sid
+            # @param [String] workspace_sid The SID of the Workspace.
             # @return [WorkspaceStatisticsInstance] WorkspaceStatisticsInstance
             def initialize(version, payload, workspace_sid: nil)
               super(version)
@@ -163,54 +164,55 @@ module Twilio
             end
 
             ##
-            # @return [Hash] The realtime
+            # @return [Hash] n object that contains the real-time statistics for the Workspace
             def realtime
               @properties['realtime']
             end
 
             ##
-            # @return [Hash] The cumulative
+            # @return [Hash] An object that contains the cumulative statistics for the Workspace
             def cumulative
               @properties['cumulative']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The workspace_sid
+            # @return [String] The SID of the Workspace
             def workspace_sid
               @properties['workspace_sid']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the Workspace statistics resource
             def url
               @properties['url']
             end
 
             ##
             # Fetch a WorkspaceStatisticsInstance
-            # @param [String] minutes Filter cumulative statistics by up to 'x' minutes in the
-            #   past. This is helpful for statistics for the last 15 minutes, 240 minutes (4
-            #   hours), and 480 minutes (8 hours) to see trends. Defaults to 15 minutes.
-            # @param [Time] start_date Filter cumulative statistics by a start date. This is
-            #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
-            #   Timestamp
-            # @param [Time] end_date Filter cumulative statistics by an end date. This is
-            #   helpful for defining a range of statistics to capture. Input is a GMT ISO 8601
-            #   Timestamp
-            # @param [String] task_channel Filter real-time and cumulative statistics by
-            #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
-            #   TaskChannelSid.
-            # @param [String] split_by_wait_time A comma separated values for viewing splits
-            #   of tasks canceled and accepted above the given threshold in seconds. Ex: "5,30"
-            #   would show splits of tasks that were canceled or accepted before or after 5
-            #   seconds and respectively, 30 seconds. This is great for showing short abandoned
-            #   tasks or tasks that failed to meet your SLA.
+            # @param [String] minutes Only calculate statistics since this many minutes in the
+            #   past. The default 15 minutes. This is helpful for displaying statistics for the
+            #   last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.
+            # @param [Time] start_date Only calculate statistics from this date and time and
+            #   later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+            # @param [Time] end_date Only calculate statistics from this date and time and
+            #   earlier, specified in GMT as an [ISO
+            #   8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+            # @param [String] task_channel Only calculate statistics on this TaskChannel. Can
+            #   be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or
+            #   `default`.
+            # @param [String] split_by_wait_time A comma separated list of values that
+            #   describes the thresholds, in seconds, to calculate statistics on. For each
+            #   threshold specified, the number of Tasks canceled and reservations accepted
+            #   above and below the specified thresholds in seconds are computed. For example,
+            #   `5,30` would show splits of Tasks that were canceled or accepted before and
+            #   after 5 seconds and before and after 30 seconds. This can be used to show short
+            #   abandoned Tasks or Tasks that failed to meet an SLA.
             # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
             def fetch(minutes: :unset, start_date: :unset, end_date: :unset, task_channel: :unset, split_by_wait_time: :unset)
               context.fetch(

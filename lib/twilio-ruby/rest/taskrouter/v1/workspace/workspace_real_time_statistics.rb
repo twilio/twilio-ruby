@@ -15,7 +15,7 @@ module Twilio
             ##
             # Initialize the WorkspaceRealTimeStatisticsList
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The workspace_sid
+            # @param [String] workspace_sid The SID of the Workspace.
             # @return [WorkspaceRealTimeStatisticsList] WorkspaceRealTimeStatisticsList
             def initialize(version, workspace_sid: nil)
               super(version)
@@ -64,7 +64,7 @@ module Twilio
             ##
             # Initialize the WorkspaceRealTimeStatisticsContext
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The workspace_sid
+            # @param [String] workspace_sid The SID of the Workspace to fetch.
             # @return [WorkspaceRealTimeStatisticsContext] WorkspaceRealTimeStatisticsContext
             def initialize(version, workspace_sid)
               super(version)
@@ -76,9 +76,9 @@ module Twilio
 
             ##
             # Fetch a WorkspaceRealTimeStatisticsInstance
-            # @param [String] task_channel Filter real-time and cumulative statistics by
-            #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
-            #   TaskChannelSid.
+            # @param [String] task_channel Only calculate real-time statistics on this
+            #   TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`,
+            #   `sms`, or `default`.
             # @return [WorkspaceRealTimeStatisticsInstance] Fetched WorkspaceRealTimeStatisticsInstance
             def fetch(task_channel: :unset)
               params = Twilio::Values.of({'TaskChannel' => task_channel, })
@@ -112,7 +112,7 @@ module Twilio
             # Initialize the WorkspaceRealTimeStatisticsInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] workspace_sid The workspace_sid
+            # @param [String] workspace_sid The SID of the Workspace.
             # @return [WorkspaceRealTimeStatisticsInstance] WorkspaceRealTimeStatisticsInstance
             def initialize(version, payload, workspace_sid: nil)
               super(version)
@@ -148,13 +148,13 @@ module Twilio
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [Hash] A breakdown of Workers by Activity
+            # @return [Hash] The number of current Workers by Activity
             def activity_statistics
               @properties['activity_statistics']
             end
@@ -166,19 +166,19 @@ module Twilio
             end
 
             ##
-            # @return [String] The longest_task_waiting_sid
+            # @return [String] The SID of the longest waiting Task
             def longest_task_waiting_sid
               @properties['longest_task_waiting_sid']
             end
 
             ##
-            # @return [Hash] The tasks_by_priority
+            # @return [Hash] The number of Tasks by priority
             def tasks_by_priority
               @properties['tasks_by_priority']
             end
 
             ##
-            # @return [Hash] The Tasks broken down by status
+            # @return [Hash] The number of Tasks by their current status
             def tasks_by_status
               @properties['tasks_by_status']
             end
@@ -190,28 +190,28 @@ module Twilio
             end
 
             ##
-            # @return [String] The total number of Workers in the workspace
+            # @return [String] The total number of Workers in the Workspace
             def total_workers
               @properties['total_workers']
             end
 
             ##
-            # @return [String] The workspace_sid
+            # @return [String] The SID of the Workspace
             def workspace_sid
               @properties['workspace_sid']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the Workspace statistics resource
             def url
               @properties['url']
             end
 
             ##
             # Fetch a WorkspaceRealTimeStatisticsInstance
-            # @param [String] task_channel Filter real-time and cumulative statistics by
-            #   TaskChannel. Takes in a Unique Name ("voice", "sms", "default", etc.) or a
-            #   TaskChannelSid.
+            # @param [String] task_channel Only calculate real-time statistics on this
+            #   TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`,
+            #   `sms`, or `default`.
             # @return [WorkspaceRealTimeStatisticsInstance] Fetched WorkspaceRealTimeStatisticsInstance
             def fetch(task_channel: :unset)
               context.fetch(task_channel: task_channel, )
