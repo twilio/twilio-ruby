@@ -441,7 +441,7 @@ module Twilio
                 'friendly_name' => payload['friendly_name'],
                 'enabled' => payload['enabled'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
-                'date_updated' => payload['date_updated'],
+                'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'sid' => payload['sid'],
                 'audio_sources' => payload['audio_sources'],
                 'audio_sources_excluded' => payload['audio_sources_excluded'],
@@ -495,7 +495,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The ISO 8601 date and time in GMT when the resource was last updated
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
           end
