@@ -336,8 +336,8 @@ module Twilio
                 'account_sid' => payload['account_sid'],
                 'status' => payload['status'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
-                'date_completed' => payload['date_completed'],
-                'date_deleted' => payload['date_deleted'],
+                'date_completed' => Twilio.deserialize_iso8601_datetime(payload['date_completed']),
+                'date_deleted' => Twilio.deserialize_iso8601_datetime(payload['date_deleted']),
                 'sid' => payload['sid'],
                 'room_sid' => payload['room_sid'],
                 'audio_sources' => payload['audio_sources'],
@@ -388,13 +388,13 @@ module Twilio
           end
 
           ##
-          # @return [String] Date when the media processing task finished
+          # @return [Time] Date when the media processing task finished
           def date_completed
             @properties['date_completed']
           end
 
           ##
-          # @return [String] The ISO 8601 date and time in GMT when the composition generated media was deleted
+          # @return [Time] The ISO 8601 date and time in GMT when the composition generated media was deleted
           def date_deleted
             @properties['date_deleted']
           end
