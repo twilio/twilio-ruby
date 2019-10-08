@@ -585,7 +585,7 @@ module Twilio
                   'group_sid' => payload['group_sid'],
                   'parent_call_sid' => payload['parent_call_sid'],
                   'phone_number_sid' => payload['phone_number_sid'],
-                  'price' => payload['price'].to_f,
+                  'price' => payload['price'] == nil ? payload['price'] : payload['price'].to_f,
                   'price_unit' => payload['price_unit'],
                   'sid' => payload['sid'],
                   'start_time' => Twilio.deserialize_rfc2822(payload['start_time']),
