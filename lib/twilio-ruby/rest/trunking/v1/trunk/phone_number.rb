@@ -304,7 +304,7 @@ module Twilio
             end
 
             ##
-            # @return [String] Indicate if a phone can receive calls or messages
+            # @return [Hash] Indicate if a phone can receive calls or messages
             def capabilities
               @properties['capabilities']
             end

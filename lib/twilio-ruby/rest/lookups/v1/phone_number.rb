@@ -166,7 +166,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The name of the phone number's owner
+          # @return [Hash] The name of the phone number's owner
           def caller_name
             @properties['caller_name']
           end
@@ -190,7 +190,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The telecom company that provides the phone number
+          # @return [Hash] The telecom company that provides the phone number
           def carrier
             @properties['carrier']
           end
