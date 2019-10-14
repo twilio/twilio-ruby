@@ -204,9 +204,9 @@ module Twilio
               @properties = {
                   'country' => payload['country'],
                   'iso_country' => payload['iso_country'],
-                  'url' => payload['url'],
                   'phone_number_prices' => payload['phone_number_prices'],
                   'price_unit' => payload['price_unit'],
+                  'url' => payload['url'],
               }
 
               # Context

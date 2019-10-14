@@ -246,14 +246,14 @@ module Twilio
                 'more_info' => payload['more_info'],
                 'request_method' => payload['request_method'],
                 'request_url' => payload['request_url'],
-                'resource_sid' => payload['resource_sid'],
-                'sid' => payload['sid'],
-                'url' => payload['url'],
-                'service_sid' => payload['service_sid'],
                 'request_variables' => payload['request_variables'],
+                'resource_sid' => payload['resource_sid'],
                 'response_body' => payload['response_body'],
                 'response_headers' => payload['response_headers'],
+                'sid' => payload['sid'],
+                'url' => payload['url'],
                 'request_headers' => payload['request_headers'],
+                'service_sid' => payload['service_sid'],
             }
 
             # Context
