@@ -283,11 +283,11 @@ module Twilio
                     'more_info' => payload['more_info'],
                     'request_method' => payload['request_method'],
                     'request_url' => payload['request_url'],
-                    'sid' => payload['sid'],
-                    'uri' => payload['uri'],
                     'request_variables' => payload['request_variables'],
                     'response_body' => payload['response_body'],
                     'response_headers' => payload['response_headers'],
+                    'sid' => payload['sid'],
+                    'uri' => payload['uri'],
                 }
 
                 # Context
