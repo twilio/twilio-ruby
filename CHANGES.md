@@ -1,6 +1,32 @@
 twilio-ruby changelog
 =====================
 
+[2019-10-16] Version 5.28.0
+---------------------------
+**Library**
+- [PR #476](https://github.com/twilio/twilio-ruby/pull/476): Update a few property types in the lookups and trunking responses. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #477](https://github.com/twilio/twilio-ruby/pull/477): Update instance property ordering. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #475](https://github.com/twilio/twilio-ruby/pull/475): Update the call price to be optional for deserializing. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #474](https://github.com/twilio/twilio-ruby/pull/474): breaking: Correct video composition date types. Thanks to [@childish-sambino](https://github.com/childish-sambino)! **(breaking change)**
+
+**Api**
+- Add new property `attempt` to sms_messages
+- Fixed a typo in the documentation for Feedback outcome enum **(breaking change)**
+- Update the call price to be optional for deserializing **(breaking change)**
+
+**Flex**
+- Added `JanitorEnabled` attribute to Flex Flow
+- Change `features_enabled` Flex Configuration key to private **(breaking change)**
+
+**Supersim**
+- Add Fetch endpoint to Fleets resource for Super Sim Pilot
+- Allow assigning a Sim to a Fleet for Super Sim Pilot
+- Add Create endpoint to Fleets resource for Super Sim Pilot
+
+**Twiml**
+- Update `<Conference>` rename "whisper" attribute to "coach" **(breaking change)**
+
+
 [2019-10-02] Version 5.27.1
 ---------------------------
 **Library**

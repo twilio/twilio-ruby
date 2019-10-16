@@ -357,7 +357,7 @@ module Twilio
             end
 
             ##
-            # @return [Hash] The natural language analysis results that include the Task recognized, the confidence score, and a list of identified Fields
+            # @return [Hash] The natural language analysis results that include the Task recognized and a list of identified Fields
             def results
               @properties['results']
             end

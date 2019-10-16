@@ -54,6 +54,7 @@ describe 'FlexFlow' do
                       "flow_sid": "FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
                   },
                   "long_lived": true,
+                  "janitor_enabled": true,
                   "url": "https://flex-api.twilio.com/v1/FlexFlows/FOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
           ]
@@ -124,6 +125,7 @@ describe 'FlexFlow' do
               "flow_sid": "FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
           },
           "long_lived": true,
+          "janitor_enabled": true,
           "url": "https://flex-api.twilio.com/v1/FlexFlows/FOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -173,6 +175,7 @@ describe 'FlexFlow' do
               "flow_sid": "FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
           },
           "long_lived": true,
+          "janitor_enabled": true,
           "url": "https://flex-api.twilio.com/v1/FlexFlows/FOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -217,6 +220,7 @@ describe 'FlexFlow' do
               "flow_sid": "FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
           },
           "long_lived": true,
+          "janitor_enabled": true,
           "url": "https://flex-api.twilio.com/v1/FlexFlows/FOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]

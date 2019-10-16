@@ -372,7 +372,7 @@ module Twilio
               ##
               # Update the ParticipantInstance
               # @param [Boolean] muted Whether the participant should be muted. Can be `true` or
-              #   `false. `true` will mute the participant, and `false` will un-mute them.
+              #   `false`. `true` will mute the participant, and `false` will un-mute them.
               #   Anything value other than `true` or `false` is interpreted as `false`.
               # @param [Boolean] hold Whether the participant should be on hold. Can be: `true`
               #   or `false`. `true` puts the participant on hold, and `false` lets them rejoin
@@ -604,7 +604,7 @@ module Twilio
               ##
               # Update the ParticipantInstance
               # @param [Boolean] muted Whether the participant should be muted. Can be `true` or
-              #   `false. `true` will mute the participant, and `false` will un-mute them.
+              #   `false`. `true` will mute the participant, and `false` will un-mute them.
               #   Anything value other than `true` or `false` is interpreted as `false`.
               # @param [Boolean] hold Whether the participant should be on hold. Can be: `true`
               #   or `false`. `true` puts the participant on hold, and `false` lets them rejoin

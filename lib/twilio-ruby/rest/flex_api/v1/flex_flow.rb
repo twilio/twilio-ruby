@@ -142,8 +142,10 @@ module Twilio
           #   the first message arrives when `integration_type` is `task`. If `false`, the
           #   task is created with the channel.
           # @param [Boolean] long_lived Whether new channels are long-lived.
+          # @param [Boolean] janitor_enabled Boolean flag for enabling or disabling the
+          #   Janitor
           # @return [FlexFlowInstance] Newly created FlexFlowInstance
-          def create(friendly_name: nil, chat_service_sid: nil, channel_type: nil, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset)
+          def create(friendly_name: nil, chat_service_sid: nil, channel_type: nil, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'ChatServiceSid' => chat_service_sid,
@@ -160,6 +162,7 @@ module Twilio
                 'Integration.Priority' => integration_priority,
                 'Integration.CreationOnMessage' => integration_creation_on_message,
                 'LongLived' => long_lived,
+                'JanitorEnabled' => janitor_enabled,
             })
 
             payload = @version.create(
@@ -265,8 +268,10 @@ module Twilio
           #   the first message arrives when `integration_type` is `task`. If `false`, the
           #   task is created with the channel.
           # @param [Boolean] long_lived Whether new channels created are long-lived.
+          # @param [Boolean] janitor_enabled Boolean flag for enabling or disabling the
+          #   Janitor
           # @return [FlexFlowInstance] Updated FlexFlowInstance
-          def update(friendly_name: :unset, chat_service_sid: :unset, channel_type: :unset, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset)
+          def update(friendly_name: :unset, chat_service_sid: :unset, channel_type: :unset, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'ChatServiceSid' => chat_service_sid,
@@ -283,6 +288,7 @@ module Twilio
                 'Integration.Priority' => integration_priority,
                 'Integration.CreationOnMessage' => integration_creation_on_message,
                 'LongLived' => long_lived,
+                'JanitorEnabled' => janitor_enabled,
             })
 
             payload = @version.update(
@@ -340,6 +346,7 @@ module Twilio
                 'integration_type' => payload['integration_type'],
                 'integration' => payload['integration'],
                 'long_lived' => payload['long_lived'],
+                'janitor_enabled' => payload['janitor_enabled'],
                 'url' => payload['url'],
             }
 
@@ -432,6 +439,12 @@ module Twilio
           end
 
           ##
+          # @return [Boolean] Boolean flag for enabling or disabling the Janitor
+          def janitor_enabled
+            @properties['janitor_enabled']
+          end
+
+          ##
           # @return [String] The absolute URL of the FlexFlow resource
           def url
             @properties['url']
@@ -473,8 +486,10 @@ module Twilio
           #   the first message arrives when `integration_type` is `task`. If `false`, the
           #   task is created with the channel.
           # @param [Boolean] long_lived Whether new channels created are long-lived.
+          # @param [Boolean] janitor_enabled Boolean flag for enabling or disabling the
+          #   Janitor
           # @return [FlexFlowInstance] Updated FlexFlowInstance
-          def update(friendly_name: :unset, chat_service_sid: :unset, channel_type: :unset, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset)
+          def update(friendly_name: :unset, chat_service_sid: :unset, channel_type: :unset, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset)
             context.update(
                 friendly_name: friendly_name,
                 chat_service_sid: chat_service_sid,
@@ -491,6 +506,7 @@ module Twilio
                 integration_priority: integration_priority,
                 integration_creation_on_message: integration_creation_on_message,
                 long_lived: long_lived,
+                janitor_enabled: janitor_enabled,
             )
           end
 

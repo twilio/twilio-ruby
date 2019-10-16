@@ -913,7 +913,7 @@ module Twilio
       # max_participants:: Maximum number of participants
       # record:: Record the conference
       # region:: Conference region
-      # whisper:: Call whisper
+      # coach:: Call coach
       # trim:: Trim the conference recording
       # status_callback_event:: Events to call status callback URL
       # status_callback:: Status callback URL
@@ -923,8 +923,8 @@ module Twilio
       # recording_status_callback_event:: Recording status callback events
       # event_callback_url:: Event callback URL
       # keyword_args:: additional attributes
-      def conference(name, muted: nil, beep: nil, start_conference_on_enter: nil, end_conference_on_exit: nil, wait_url: nil, wait_method: nil, max_participants: nil, record: nil, region: nil, whisper: nil, trim: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, recording_status_callback: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, event_callback_url: nil, **keyword_args)
-        append(Conference.new(name, muted: muted, beep: beep, start_conference_on_enter: start_conference_on_enter, end_conference_on_exit: end_conference_on_exit, wait_url: wait_url, wait_method: wait_method, max_participants: max_participants, record: record, region: region, whisper: whisper, trim: trim, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, event_callback_url: event_callback_url, **keyword_args))
+      def conference(name, muted: nil, beep: nil, start_conference_on_enter: nil, end_conference_on_exit: nil, wait_url: nil, wait_method: nil, max_participants: nil, record: nil, region: nil, coach: nil, trim: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, recording_status_callback: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, event_callback_url: nil, **keyword_args)
+        append(Conference.new(name, muted: muted, beep: beep, start_conference_on_enter: start_conference_on_enter, end_conference_on_exit: end_conference_on_exit, wait_url: wait_url, wait_method: wait_method, max_participants: max_participants, record: record, region: region, coach: coach, trim: trim, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, event_callback_url: event_callback_url, **keyword_args))
       end
 
       ##
