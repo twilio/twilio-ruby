@@ -10,3 +10,4 @@ Gemfile.lock
 *.gem
 bin
 docs/_build
+*.bak
