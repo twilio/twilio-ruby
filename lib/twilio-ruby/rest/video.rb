@@ -30,6 +30,15 @@ module Twilio
 
       ##
       # @param [String] sid The unique string that we created to identify the
+      #   Composition resource.
+      # @return [Twilio::REST::Video::V1::CompositionInstance] if sid was passed.
+      # @return [Twilio::REST::Video::V1::CompositionList]
+      def compositions(sid=:unset)
+        self.v1.compositions(sid)
+      end
+
+      ##
+      # @param [String] sid The unique string that we created to identify the
       #   CompositionHook resource.
       # @return [Twilio::REST::Video::V1::CompositionHookInstance] if sid was passed.
       # @return [Twilio::REST::Video::V1::CompositionHookList]
@@ -56,15 +65,6 @@ module Twilio
       # @return [Twilio::REST::Video::V1::RecordingSettingsInstance]
       def recording_settings
         self.v1.recording_settings()
-      end
-
-      ##
-      # @param [String] sid The unique string that we created to identify the
-      #   Composition resource.
-      # @return [Twilio::REST::Video::V1::CompositionInstance] if sid was passed.
-      # @return [Twilio::REST::Video::V1::CompositionList]
-      def compositions(sid=:unset)
-        self.v1.compositions(sid)
       end
 
       ##

@@ -16,16 +16,28 @@ module Twilio
           super
           @version = 'TrustedComms'
           @branded_calls = nil
+          @cps = nil
+          @current_calls = nil
           @devices = nil
           @phone_calls = nil
-          @current_calls = nil
-          @cps = nil
         end
 
         ##
         # @return [Twilio::REST::Preview::TrustedComms::BrandedCallContext]
         def branded_calls
           @branded_calls ||= BrandedCallList.new self
+        end
+
+        ##
+        # @return [Twilio::REST::Preview::TrustedComms::CpsContext]
+        def cps
+          @cps ||= CpsContext.new self
+        end
+
+        ##
+        # @return [Twilio::REST::Preview::TrustedComms::CurrentCallContext]
+        def current_calls
+          @current_calls ||= CurrentCallContext.new self
         end
 
         ##
@@ -38,18 +50,6 @@ module Twilio
         # @return [Twilio::REST::Preview::TrustedComms::PhoneCallContext]
         def phone_calls
           @phone_calls ||= PhoneCallList.new self
-        end
-
-        ##
-        # @return [Twilio::REST::Preview::TrustedComms::CurrentCallContext]
-        def current_calls
-          @current_calls ||= CurrentCallContext.new self
-        end
-
-        ##
-        # @return [Twilio::REST::Preview::TrustedComms::CpsContext]
-        def cps
-          @cps ||= CpsContext.new self
         end
 
         ##

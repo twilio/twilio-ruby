@@ -29,21 +29,21 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The unique string that we created to identify the Session
-      #   resource.
-      # @return [Twilio::REST::Messaging::V1::SessionInstance] if sid was passed.
-      # @return [Twilio::REST::Messaging::V1::SessionList]
-      def sessions(sid=:unset)
-        self.v1.sessions(sid)
-      end
-
-      ##
       # @param [String] sid The unique string that we created to identify the Service
       #   resource.
       # @return [Twilio::REST::Messaging::V1::ServiceInstance] if sid was passed.
       # @return [Twilio::REST::Messaging::V1::ServiceList]
       def services(sid=:unset)
         self.v1.services(sid)
+      end
+
+      ##
+      # @param [String] sid The unique string that we created to identify the Session
+      #   resource.
+      # @return [Twilio::REST::Messaging::V1::SessionInstance] if sid was passed.
+      # @return [Twilio::REST::Messaging::V1::SessionList]
+      def sessions(sid=:unset)
+        self.v1.sessions(sid)
       end
 
       ##

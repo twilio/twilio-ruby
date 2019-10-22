@@ -15,10 +15,16 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @usage_records = nil
           @commands = nil
           @rate_plans = nil
-          @usage_records = nil
           @sims = nil
+        end
+
+        ##
+        # @return [Twilio::REST::Wireless::V1::UsageRecordContext]
+        def usage_records
+          @usage_records ||= UsageRecordList.new self
         end
 
         ##
@@ -47,12 +53,6 @@ module Twilio
           else
             RatePlanContext.new(self, sid)
           end
-        end
-
-        ##
-        # @return [Twilio::REST::Wireless::V1::UsageRecordContext]
-        def usage_records
-          @usage_records ||= UsageRecordList.new self
         end
 
         ##

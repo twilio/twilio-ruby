@@ -15,24 +15,10 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
-          @flex_flow = nil
           @channel = nil
-          @web_channel = nil
           @configuration = nil
-        end
-
-        ##
-        # @param [String] sid The SID of the FlexFlow resource to fetch.
-        # @return [Twilio::REST::Flex_api::V1::FlexFlowContext] if sid was passed.
-        # @return [Twilio::REST::Flex_api::V1::FlexFlowList]
-        def flex_flow(sid=:unset)
-          if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @flex_flow ||= FlexFlowList.new self
-          else
-            FlexFlowContext.new(self, sid)
-          end
+          @flex_flow = nil
+          @web_channel = nil
         end
 
         ##
@@ -50,6 +36,26 @@ module Twilio
         end
 
         ##
+        # @return [Twilio::REST::Flex_api::V1::ConfigurationContext]
+        def configuration
+          @configuration ||= ConfigurationContext.new self
+        end
+
+        ##
+        # @param [String] sid The SID of the FlexFlow resource to fetch.
+        # @return [Twilio::REST::Flex_api::V1::FlexFlowContext] if sid was passed.
+        # @return [Twilio::REST::Flex_api::V1::FlexFlowList]
+        def flex_flow(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @flex_flow ||= FlexFlowList.new self
+          else
+            FlexFlowContext.new(self, sid)
+          end
+        end
+
+        ##
         # @param [String] sid The SID of the WebChannel resource to fetch.
         # @return [Twilio::REST::Flex_api::V1::WebChannelContext] if sid was passed.
         # @return [Twilio::REST::Flex_api::V1::WebChannelList]
@@ -61,12 +67,6 @@ module Twilio
           else
             WebChannelContext.new(self, sid)
           end
-        end
-
-        ##
-        # @return [Twilio::REST::Flex_api::V1::ConfigurationContext]
-        def configuration
-          @configuration ||= ConfigurationContext.new self
         end
 
         ##
