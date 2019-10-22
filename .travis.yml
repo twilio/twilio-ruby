@@ -20,9 +20,15 @@ matrix:
   fast_finish: true
 
 deploy:
-  provider: script
-  script: make docker-build && make docker-push
-  skip_cleanup: true
-  on:
-    tags: true
-    rvm: "2.4"
+  - provider: script
+    script: make docker-build && make docker-push
+    skip_cleanup: true
+    on:
+      tags: true
+      rvm: "2.4"
+  - provider: rubygems
+    password:
+      secure: $RUBYGEMS_APIKEY
+    on:
+      tags: true
+      rvm: "2.4"
