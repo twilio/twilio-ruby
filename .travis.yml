@@ -27,8 +27,7 @@ deploy:
       tags: true
       rvm: "2.4"
   - provider: rubygems
-    password:
-      secure: $RUBYGEMS_APIKEY
+    api_key: $RUBYGEMS_APIKEY
     on:
       tags: true
       rvm: "2.4"
