@@ -103,5 +103,23 @@ describe Twilio::Security::RequestValidator do
       signature = '0ZXoZLH/DfblKGATFgpif+LLRf4=' # hash of http url with port 80
       expect(validator.validate(http_url, params, signature)).to eq(true)
     end
+
+    it 'should validate urls with credentials' do
+      url_with_creds = 'https://user:pass@mycompany.com/myapp.php?foo=1&bar=2'
+      signature = 'CukzLTc1tT5dXEDIHm/tKBanW10=' # expected hash of the url
+      expect(validator.validate(url_with_creds, params, signature)).to eq(true)
+    end
+
+    it 'should validate urls with just username' do
+      url_with_creds = 'https://user@mycompany.com/myapp.php?foo=1&bar=2'
+      signature = '2YRLlVAflCqxaNicjMpJcSTgzSs=' # expected hash of the url
+      expect(validator.validate(url_with_creds, params, signature)).to eq(true)
+    end
+
+    it 'should validate urls with credentials by adding port' do
+      url_with_creds = 'https://user:pass@mycompany.com/myapp.php?foo=1&bar=2'
+      signature = 'ZQFR1PTIZXF2MXB8ZnKCvnnA+rI=' # expected hash of the url with port 443
+      expect(validator.validate(url_with_creds, params, signature)).to eq(true)
+    end
   end
 end
