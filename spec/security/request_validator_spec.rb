@@ -80,5 +80,46 @@ describe Twilio::Security::RequestValidator do
     it 'should fail validation with body but no signature' do
       expect(validator.validate(url, body, default_signature)).to eq(false)
     end
+
+    it 'should validate https urls with ports by stripping them' do
+      url_with_port = url.sub('.com', '.com:1234')
+      expect(validator.validate(url_with_port, params, default_signature)).to eq(true)
+    end
+
+    it 'should validate http urls with ports' do
+      http_url_with_port = url.sub('.com', '.com:1234')
+      http_url_with_port = http_url_with_port.sub('https', 'http')
+      signature = 'Zmvh+3yNM1Phv2jhDCwEM3q5ebU=' # hash of http url with port 1234
+      expect(validator.validate(http_url_with_port, params, signature)).to eq(true)
+    end
+
+    it 'should validate https urls without ports by adding standard port 443' do
+      signature = 'kvajT1Ptam85bY51eRf/AJRuM3w=' # hash of https url with port 443
+      expect(validator.validate(url, params, signature)).to eq(true)
+    end
+
+    it 'should validate http urls without ports by adding standard port 80' do
+      http_url = url.sub('https', 'http')
+      signature = '0ZXoZLH/DfblKGATFgpif+LLRf4=' # hash of http url with port 80
+      expect(validator.validate(http_url, params, signature)).to eq(true)
+    end
+
+    it 'should validate urls with credentials' do
+      url_with_creds = 'https://user:pass@mycompany.com/myapp.php?foo=1&bar=2'
+      signature = 'CukzLTc1tT5dXEDIHm/tKBanW10=' # expected hash of the url
+      expect(validator.validate(url_with_creds, params, signature)).to eq(true)
+    end
+
+    it 'should validate urls with just username' do
+      url_with_creds = 'https://user@mycompany.com/myapp.php?foo=1&bar=2'
+      signature = '2YRLlVAflCqxaNicjMpJcSTgzSs=' # expected hash of the url
+      expect(validator.validate(url_with_creds, params, signature)).to eq(true)
+    end
+
+    it 'should validate urls with credentials by adding port' do
+      url_with_creds = 'https://user:pass@mycompany.com/myapp.php?foo=1&bar=2'
+      signature = 'ZQFR1PTIZXF2MXB8ZnKCvnnA+rI=' # expected hash of the url with port 443
+      expect(validator.validate(url_with_creds, params, signature)).to eq(true)
+    end
   end
 end

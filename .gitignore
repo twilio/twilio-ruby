@@ -11,3 +11,4 @@ Gemfile.lock
 bin
 docs/_build
 *.bak
+*.iml

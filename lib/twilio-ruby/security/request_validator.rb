@@ -25,16 +25,25 @@ module Twilio
       #
       # @return [Boolean] whether or not the computed signature matches the signature parameter
       def validate(url, params, signature)
+        parsed_url = URI(url)
+        url_with_port = add_port(parsed_url)
+        url_without_port = remove_port(parsed_url)
+
+        valid_body = true # default succeed, since body not always provided
         params_hash = body_or_hash(params)
-        if params_hash.is_a? Enumerable
-          expected = build_signature_for(url, params_hash)
-          secure_compare(expected, signature)
-        else
-          expected_signature = build_signature_for(url, {})
-          body_hash = URI.decode_www_form(URI(url).query).to_h['bodySHA256']
-          expected_hash = build_hash_for(params)
-          secure_compare(expected_signature, signature) && secure_compare(expected_hash, body_hash)
+        unless params_hash.is_a? Enumerable
+          body_hash = URI.decode_www_form(parsed_url.query).to_h['bodySHA256']
+          params_hash = build_hash_for(params)
+          valid_body = !(params_hash.nil? || body_hash.nil?) && secure_compare(params_hash, body_hash)
+          params_hash = {}
         end
+
+        # Check signature of the url with and without port numbers
+        # since signature generation on the back end is inconsistent
+        valid_signature_with_port = secure_compare(build_signature_for(url_with_port, params_hash), signature)
+        valid_signature_without_port = secure_compare(build_signature_for(url_without_port, params_hash), signature)
+
+        valid_body && (valid_signature_with_port || valid_signature_without_port)
       end
 
       ##
@@ -91,6 +100,50 @@ module Twilio
         else
           params_or_body
         end
+      end
+
+      ##
+      # Adds the standard port to the url if it doesn't already have one
+      #
+      # @param [URI] parsed_url The parsed request url
+      #
+      # @return [String] The URL with a port number
+      def add_port(parsed_url)
+        if parsed_url.port.nil? || parsed_url.port == parsed_url.default_port
+          build_url_with_port_for(parsed_url)
+        else
+          parsed_url.to_s
+        end
+      end
+
+      ##
+      # Removes the port from the url
+      #
+      # @param [URI] parsed_url The parsed request url
+      #
+      # @return [String] The URL without a port number
+      def remove_port(parsed_url)
+        parsed_url.port = nil
+        parsed_url.to_s
+      end
+
+      ##
+      # Builds the url from its component pieces, with the standard port
+      #
+      # @param [URI] parsed_url The parsed request url
+      #
+      # @return [String] The URL with the standard port number
+      def build_url_with_port_for(parsed_url)
+        url = ''
+
+        url += parsed_url.scheme ? "#{parsed_url.scheme}://" : ''
+        url += parsed_url.userinfo ? "#{parsed_url.userinfo}@" : ''
+        url += parsed_url.host ? "#{parsed_url.host}:#{parsed_url.port}" : ''
+        url += parsed_url.path
+        url += parsed_url.query ? "?#{parsed_url.query}" : ''
+        url += parsed_url.fragment ? "##{parsed_url.fragment}" : ''
+
+        url
       end
     end
   end
