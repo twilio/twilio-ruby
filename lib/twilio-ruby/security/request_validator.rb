@@ -138,7 +138,7 @@ module Twilio
 
         url += parsed_url.scheme ? "#{parsed_url.scheme}://" : ''
         url += parsed_url.userinfo ? "#{parsed_url.userinfo}@" : ''
-        url += parsed_url.host ? "#{parsed_url.host}:#{parsed_url.default_port}" : ''
+        url += parsed_url.host ? "#{parsed_url.host}:#{parsed_url.port}" : ''
         url += parsed_url.path
         url += parsed_url.query ? "?#{parsed_url.query}" : ''
         url += parsed_url.fragment ? "##{parsed_url.fragment}" : ''
