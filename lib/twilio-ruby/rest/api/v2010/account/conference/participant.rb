@@ -337,8 +337,9 @@ module Twilio
               #   Participant resource to fetch.
               # @param [String] conference_sid The SID of the conference with the participant to
               #   fetch.
-              # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call)
-              #   SID of the resource to fetch.
+              # @param [String] call_sid The
+              #   [Call](https://www.twilio.com/docs/voice/api/call-resource) SID of the resource
+              #   to fetch.
               # @return [ParticipantContext] ParticipantContext
               def initialize(version, account_sid, conference_sid, call_sid)
                 super(version)
@@ -468,8 +469,9 @@ module Twilio
               #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
               #   Participant resource.
               # @param [String] conference_sid The SID of the conference the participant is in.
-              # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call)
-              #   SID of the resource to fetch.
+              # @param [String] call_sid The
+              #   [Call](https://www.twilio.com/docs/voice/api/call-resource) SID of the resource
+              #   to fetch.
               # @return [ParticipantInstance] ParticipantInstance
               def initialize(version, payload, account_sid: nil, conference_sid: nil, call_sid: nil)
                 super(version)

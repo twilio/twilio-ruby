@@ -16,8 +16,9 @@ module Twilio
               ##
               # Initialize the ReservationList
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] worker_sid The worker_sid
+              # @param [String] workspace_sid The SID of the Workspace that this worker is
+              #   contained within.
+              # @param [String] worker_sid The SID of the reserved Worker resource.
               # @return [ReservationList] ReservationList
               def initialize(version, workspace_sid: nil, worker_sid: nil)
                 super(version)
@@ -31,8 +32,9 @@ module Twilio
               # Lists ReservationInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [reservation.Status] reservation_status Filter by a worker's reservation
-              #   status (pending, accepted, rejected, timeout, canceled, rescinded)
+              # @param [reservation.Status] reservation_status Returns the list of reservations
+              #   for a worker with a specified ReservationStatus. Can be: `pending`, `accepted`,
+              #   `rejected`, `timeout`, `canceled`, or `rescinded`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -48,8 +50,9 @@ module Twilio
               # Streams ReservationInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [reservation.Status] reservation_status Filter by a worker's reservation
-              #   status (pending, accepted, rejected, timeout, canceled, rescinded)
+              # @param [reservation.Status] reservation_status Returns the list of reservations
+              #   for a worker with a specified ReservationStatus. Can be: `pending`, `accepted`,
+              #   `rejected`, `timeout`, `canceled`, or `rescinded`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -82,8 +85,9 @@ module Twilio
               ##
               # Retrieve a single page of ReservationInstance records from the API.
               # Request is executed immediately.
-              # @param [reservation.Status] reservation_status Filter by a worker's reservation
-              #   status (pending, accepted, rejected, timeout, canceled, rescinded)
+              # @param [reservation.Status] reservation_status Returns the list of reservations
+              #   for a worker with a specified ReservationStatus. Can be: `pending`, `accepted`,
+              #   `rejected`, `timeout`, `canceled`, or `rescinded`.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -161,9 +165,11 @@ module Twilio
               ##
               # Initialize the ReservationContext
               # @param [Version] version Version that contains the resource
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] worker_sid The worker_sid
-              # @param [String] sid The sid
+              # @param [String] workspace_sid The SID of the Workspace with the
+              #   WorkerReservation resource to fetch.
+              # @param [String] worker_sid The SID of the reserved Worker resource with the
+              #   WorkerReservation resource to fetch.
+              # @param [String] sid The SID of the WorkerReservation resource to fetch.
               # @return [ReservationContext] ReservationContext
               def initialize(version, workspace_sid, worker_sid, sid)
                 super(version)
@@ -196,63 +202,132 @@ module Twilio
 
               ##
               # Update the ReservationInstance
-              # @param [reservation.Status] reservation_status Yes
-              # @param [String] worker_activity_sid No
-              # @param [String] instruction Yes
-              # @param [String] dequeue_post_work_activity_sid No
-              # @param [String] dequeue_from Yes
-              # @param [String] dequeue_record The dequeue_record
-              # @param [String] dequeue_timeout The dequeue_timeout
-              # @param [String] dequeue_to The dequeue_to
-              # @param [String] dequeue_status_callback_url The dequeue_status_callback_url
-              # @param [String] call_from Yes
-              # @param [String] call_record The call_record
-              # @param [String] call_timeout The call_timeout
-              # @param [String] call_to The call_to
-              # @param [String] call_url Yes
-              # @param [String] call_status_callback_url No
-              # @param [Boolean] call_accept No
-              # @param [String] redirect_call_sid The redirect_call_sid
-              # @param [Boolean] redirect_accept The redirect_accept
-              # @param [String] redirect_url The redirect_url
-              # @param [String] to The to
-              # @param [String] from The from
-              # @param [String] status_callback The status_callback
-              # @param [String] status_callback_method The status_callback_method
-              # @param [reservation.CallStatus] status_callback_event The status_callback_event
-              # @param [String] timeout The timeout
-              # @param [Boolean] record The record
-              # @param [Boolean] muted The muted
-              # @param [String] beep The beep
-              # @param [Boolean] start_conference_on_enter The start_conference_on_enter
-              # @param [Boolean] end_conference_on_exit The end_conference_on_exit
-              # @param [String] wait_url The wait_url
-              # @param [String] wait_method The wait_method
-              # @param [Boolean] early_media The early_media
-              # @param [String] max_participants The max_participants
-              # @param [String] conference_status_callback The conference_status_callback
-              # @param [String] conference_status_callback_method The
-              #   conference_status_callback_method
+              # @param [reservation.Status] reservation_status The new status of the
+              #   reservation. Can be: `pending`, `accepted`, `rejected`, `timeout`, `canceled`,
+              #   or `rescinded`.
+              # @param [String] worker_activity_sid The new worker activity SID if rejecting a
+              #   reservation.
+              # @param [String] instruction The assignment instruction for the reservation.
+              # @param [String] dequeue_post_work_activity_sid The SID of the Activity resource
+              #   to start after executing a Dequeue instruction.
+              # @param [String] dequeue_from The caller ID of the call to the worker when
+              #   executing a Dequeue instruction.
+              # @param [String] dequeue_record Whether to record both legs of a call when
+              #   executing a Dequeue instruction or which leg to record.
+              # @param [String] dequeue_timeout The timeout for call when executing a Dequeue
+              #   instruction.
+              # @param [String] dequeue_to The contact URI of the worker when executing a
+              #   Dequeue instruction. Can be the URI of the Twilio Client, the SIP URI for
+              #   Programmable SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164)
+              #   formatted phone number, depending on the destination.
+              # @param [String] dequeue_status_callback_url The callback URL for completed call
+              #   event when executing a Dequeue instruction.
+              # @param [String] call_from The Caller ID of the outbound call when executing a
+              #   Call instruction.
+              # @param [String] call_record Whether to record both legs of a call when executing
+              #   a Call instruction.
+              # @param [String] call_timeout The timeout for a call when executing a Call
+              #   instruction.
+              # @param [String] call_to The contact URI of the worker when executing a Call
+              #   instruction. Can be the URI of the Twilio Client, the SIP URI for Programmable
+              #   SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164) formatted
+              #   phone number, depending on the destination.
+              # @param [String] call_url TwiML URI executed on answering the worker's leg as a
+              #   result of the Call instruction.
+              # @param [String] call_status_callback_url The URL to call for the completed call
+              #   event when executing a Call instruction.
+              # @param [Boolean] call_accept Whether to accept a reservation when executing a
+              #   Call instruction.
+              # @param [String] redirect_call_sid The Call SID of the call parked in the queue
+              #   when executing a Redirect instruction.
+              # @param [Boolean] redirect_accept Whether the reservation should be accepted when
+              #   executing a Redirect instruction.
+              # @param [String] redirect_url TwiML URI to redirect the call to when executing
+              #   the Redirect instruction.
+              # @param [String] to The Contact URI of the worker when executing a Conference
+              #   instruction. Can be the URI of the Twilio Client, the SIP URI for Programmable
+              #   SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164) formatted
+              #   phone number, depending on the destination.
+              # @param [String] from The caller ID of the call to the worker when executing a
+              #   Conference instruction.
+              # @param [String] status_callback The URL we should call using the
+              #   `status_callback_method` to send status information to your application.
+              # @param [String] status_callback_method The HTTP method we should use to call
+              #   `status_callback`. Can be: `POST` or `GET` and the default is `POST`.
+              # @param [reservation.CallStatus] status_callback_event The call progress events
+              #   that we will send to `status_callback`. Can be: `initiated`, `ringing`,
+              #   `answered`, or `completed`.
+              # @param [String] timeout The timeout for a call when executing a Conference
+              #   instruction.
+              # @param [Boolean] record Whether to record the participant and their conferences,
+              #   including the time between conferences. Can be `true` or `false` and the default
+              #   is `false`.
+              # @param [Boolean] muted Whether the agent is muted in the conference. Defaults to
+              #   `false`.
+              # @param [String] beep Whether to play a notification beep when the participant
+              #   joins or when to play a beep. Can be: `true`, `false`, `onEnter`, or `onExit`.
+              #   The default value is `true`.
+              # @param [Boolean] start_conference_on_enter Whether to start the conference when
+              #   the participant joins, if it has not already started. Can be: `true` or `false`
+              #   and the default is `true`. If `false` and the conference has not started, the
+              #   participant is muted and hears background music until another participant starts
+              #   the conference.
+              # @param [Boolean] end_conference_on_exit Whether to end the conference when the
+              #   agent leaves.
+              # @param [String] wait_url The URL we should call using the `wait_method` for the
+              #   music to play while participants are waiting for the conference to start. The
+              #   default value is the URL of our standard hold music. [Learn more about hold
+              #   music](https://www.twilio.com/labs/twimlets/holdmusic).
+              # @param [String] wait_method The HTTP method we should use to call `wait_url`.
+              #   Can be `GET` or `POST` and the default is `POST`. When using a static audio
+              #   file, this should be `GET` so that we can cache the file.
+              # @param [Boolean] early_media Whether to allow an agent to hear the state of the
+              #   outbound call, including ringing or disconnect messages. The default is `true`.
+              # @param [String] max_participants The maximum number of participants allowed in
+              #   the conference. Can be a positive integer from `2` to `250`. The default value
+              #   is `250`.
+              # @param [String] conference_status_callback The URL we should call using the
+              #   `conference_status_callback_method` when the conference events in
+              #   `conference_status_callback_event` occur. Only the value set by the first
+              #   participant to join the conference is used. Subsequent
+              #   `conference_status_callback` values are ignored.
+              # @param [String] conference_status_callback_method The HTTP method we should use
+              #   to call `conference_status_callback`. Can be: `GET` or `POST` and defaults to
+              #   `POST`.
               # @param [reservation.ConferenceEvent] conference_status_callback_event The
-              #   conference_status_callback_event
-              # @param [String] conference_record The conference_record
-              # @param [String] conference_trim The conference_trim
-              # @param [String] recording_channels The recording_channels
-              # @param [String] recording_status_callback The recording_status_callback
-              # @param [String] recording_status_callback_method The
-              #   recording_status_callback_method
-              # @param [String] conference_recording_status_callback The
-              #   conference_recording_status_callback
-              # @param [String] conference_recording_status_callback_method The
-              #   conference_recording_status_callback_method
-              # @param [String] region The region
-              # @param [String] sip_auth_username The sip_auth_username
-              # @param [String] sip_auth_password The sip_auth_password
-              # @param [String] dequeue_status_callback_event The dequeue_status_callback_event
-              # @param [String] post_work_activity_sid The post_work_activity_sid
-              # @param [Boolean] end_conference_on_customer_exit The
-              #   end_conference_on_customer_exit
-              # @param [Boolean] beep_on_customer_entrance The beep_on_customer_entrance
+              #   conference status events that we will send to `conference_status_callback`. Can
+              #   be: `start`, `end`, `join`, `leave`, `mute`, `hold`, `speaker`.
+              # @param [String] conference_record Whether to record the conference the
+              #   participant is joining or when to record the conference. Can be: `true`,
+              #   `false`, `record-from-start`, and `do-not-record`. The default value is `false`.
+              # @param [String] conference_trim Whether to trim leading and trailing silence
+              #   from your recorded conference audio files. Can be: `trim-silence` or
+              #   `do-not-trim` and defaults to `trim-silence`.
+              # @param [String] recording_channels The recording channels for the final
+              #   recording. Can be: `mono` or `dual` and the default is `mono`.
+              # @param [String] recording_status_callback The URL that we should call using the
+              #   `recording_status_callback_method` when the recording status changes.
+              # @param [String] recording_status_callback_method The HTTP method we should use
+              #   when we call `recording_status_callback`. Can be: `GET` or `POST` and defaults
+              #   to `POST`.
+              # @param [String] conference_recording_status_callback The URL we should call
+              #   using the `conference_recording_status_callback_method` when the conference
+              #   recording is available.
+              # @param [String] conference_recording_status_callback_method The HTTP method we
+              #   should use to call `conference_recording_status_callback`. Can be: `GET` or
+              #   `POST` and defaults to `POST`.
+              # @param [String] region The
+              #   [region](https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls) where we should mix the recorded audio. Can be:`us1`, `ie1`, `de1`, `sg1`, `br1`, `au1`, or `jp1`.
+              # @param [String] sip_auth_username The SIP username used for authentication.
+              # @param [String] sip_auth_password The SIP password for authentication.
+              # @param [String] dequeue_status_callback_event The call progress events sent via
+              #   webhooks as a result of a Dequeue instruction.
+              # @param [String] post_work_activity_sid The new worker activity SID after
+              #   executing a Conference instruction.
+              # @param [Boolean] end_conference_on_customer_exit Whether to end the conference
+              #   when the customer leaves.
+              # @param [Boolean] beep_on_customer_entrance Whether to play a notification beep
+              #   when the customer joins.
               # @return [ReservationInstance] Updated ReservationInstance
               def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset, to: :unset, from: :unset, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, conference_record: :unset, conference_trim: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, region: :unset, sip_auth_username: :unset, sip_auth_password: :unset, dequeue_status_callback_event: :unset, post_work_activity_sid: :unset, end_conference_on_customer_exit: :unset, beep_on_customer_entrance: :unset)
                 data = Twilio::Values.of({
@@ -344,9 +419,10 @@ module Twilio
               # Initialize the ReservationInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] workspace_sid The workspace_sid
-              # @param [String] worker_sid The worker_sid
-              # @param [String] sid The sid
+              # @param [String] workspace_sid The SID of the Workspace that this worker is
+              #   contained within.
+              # @param [String] worker_sid The SID of the reserved Worker resource.
+              # @param [String] sid The SID of the WorkerReservation resource to fetch.
               # @return [ReservationInstance] ReservationInstance
               def initialize(version, payload, workspace_sid: nil, worker_sid: nil, sid: nil)
                 super(version)
@@ -392,67 +468,67 @@ module Twilio
               end
 
               ##
-              # @return [String] The account_sid
+              # @return [String] The SID of the Account that created the resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [Time] The date_created
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The date_updated
+              # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
               def date_updated
                 @properties['date_updated']
               end
 
               ##
-              # @return [reservation.Status] Filter by a worker's reservation status
+              # @return [reservation.Status] The current status of the reservation
               def reservation_status
                 @properties['reservation_status']
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The task_sid
+              # @return [String] The SID of the reserved Task resource
               def task_sid
                 @properties['task_sid']
               end
 
               ##
-              # @return [String] The worker_name
+              # @return [String] The friendly_name of the Worker that is reserved
               def worker_name
                 @properties['worker_name']
               end
 
               ##
-              # @return [String] The worker_sid
+              # @return [String] The SID of the reserved Worker resource
               def worker_sid
                 @properties['worker_sid']
               end
 
               ##
-              # @return [String] The workspace_sid
+              # @return [String] The SID of the Workspace that this worker is contained within.
               def workspace_sid
                 @properties['workspace_sid']
               end
 
               ##
-              # @return [String] The url
+              # @return [String] The absolute URL of the WorkerReservation resource
               def url
                 @properties['url']
               end
 
               ##
-              # @return [String] The links
+              # @return [String] The URLs of related resources
               def links
                 @properties['links']
               end
@@ -466,63 +542,132 @@ module Twilio
 
               ##
               # Update the ReservationInstance
-              # @param [reservation.Status] reservation_status Yes
-              # @param [String] worker_activity_sid No
-              # @param [String] instruction Yes
-              # @param [String] dequeue_post_work_activity_sid No
-              # @param [String] dequeue_from Yes
-              # @param [String] dequeue_record The dequeue_record
-              # @param [String] dequeue_timeout The dequeue_timeout
-              # @param [String] dequeue_to The dequeue_to
-              # @param [String] dequeue_status_callback_url The dequeue_status_callback_url
-              # @param [String] call_from Yes
-              # @param [String] call_record The call_record
-              # @param [String] call_timeout The call_timeout
-              # @param [String] call_to The call_to
-              # @param [String] call_url Yes
-              # @param [String] call_status_callback_url No
-              # @param [Boolean] call_accept No
-              # @param [String] redirect_call_sid The redirect_call_sid
-              # @param [Boolean] redirect_accept The redirect_accept
-              # @param [String] redirect_url The redirect_url
-              # @param [String] to The to
-              # @param [String] from The from
-              # @param [String] status_callback The status_callback
-              # @param [String] status_callback_method The status_callback_method
-              # @param [reservation.CallStatus] status_callback_event The status_callback_event
-              # @param [String] timeout The timeout
-              # @param [Boolean] record The record
-              # @param [Boolean] muted The muted
-              # @param [String] beep The beep
-              # @param [Boolean] start_conference_on_enter The start_conference_on_enter
-              # @param [Boolean] end_conference_on_exit The end_conference_on_exit
-              # @param [String] wait_url The wait_url
-              # @param [String] wait_method The wait_method
-              # @param [Boolean] early_media The early_media
-              # @param [String] max_participants The max_participants
-              # @param [String] conference_status_callback The conference_status_callback
-              # @param [String] conference_status_callback_method The
-              #   conference_status_callback_method
+              # @param [reservation.Status] reservation_status The new status of the
+              #   reservation. Can be: `pending`, `accepted`, `rejected`, `timeout`, `canceled`,
+              #   or `rescinded`.
+              # @param [String] worker_activity_sid The new worker activity SID if rejecting a
+              #   reservation.
+              # @param [String] instruction The assignment instruction for the reservation.
+              # @param [String] dequeue_post_work_activity_sid The SID of the Activity resource
+              #   to start after executing a Dequeue instruction.
+              # @param [String] dequeue_from The caller ID of the call to the worker when
+              #   executing a Dequeue instruction.
+              # @param [String] dequeue_record Whether to record both legs of a call when
+              #   executing a Dequeue instruction or which leg to record.
+              # @param [String] dequeue_timeout The timeout for call when executing a Dequeue
+              #   instruction.
+              # @param [String] dequeue_to The contact URI of the worker when executing a
+              #   Dequeue instruction. Can be the URI of the Twilio Client, the SIP URI for
+              #   Programmable SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164)
+              #   formatted phone number, depending on the destination.
+              # @param [String] dequeue_status_callback_url The callback URL for completed call
+              #   event when executing a Dequeue instruction.
+              # @param [String] call_from The Caller ID of the outbound call when executing a
+              #   Call instruction.
+              # @param [String] call_record Whether to record both legs of a call when executing
+              #   a Call instruction.
+              # @param [String] call_timeout The timeout for a call when executing a Call
+              #   instruction.
+              # @param [String] call_to The contact URI of the worker when executing a Call
+              #   instruction. Can be the URI of the Twilio Client, the SIP URI for Programmable
+              #   SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164) formatted
+              #   phone number, depending on the destination.
+              # @param [String] call_url TwiML URI executed on answering the worker's leg as a
+              #   result of the Call instruction.
+              # @param [String] call_status_callback_url The URL to call for the completed call
+              #   event when executing a Call instruction.
+              # @param [Boolean] call_accept Whether to accept a reservation when executing a
+              #   Call instruction.
+              # @param [String] redirect_call_sid The Call SID of the call parked in the queue
+              #   when executing a Redirect instruction.
+              # @param [Boolean] redirect_accept Whether the reservation should be accepted when
+              #   executing a Redirect instruction.
+              # @param [String] redirect_url TwiML URI to redirect the call to when executing
+              #   the Redirect instruction.
+              # @param [String] to The Contact URI of the worker when executing a Conference
+              #   instruction. Can be the URI of the Twilio Client, the SIP URI for Programmable
+              #   SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164) formatted
+              #   phone number, depending on the destination.
+              # @param [String] from The caller ID of the call to the worker when executing a
+              #   Conference instruction.
+              # @param [String] status_callback The URL we should call using the
+              #   `status_callback_method` to send status information to your application.
+              # @param [String] status_callback_method The HTTP method we should use to call
+              #   `status_callback`. Can be: `POST` or `GET` and the default is `POST`.
+              # @param [reservation.CallStatus] status_callback_event The call progress events
+              #   that we will send to `status_callback`. Can be: `initiated`, `ringing`,
+              #   `answered`, or `completed`.
+              # @param [String] timeout The timeout for a call when executing a Conference
+              #   instruction.
+              # @param [Boolean] record Whether to record the participant and their conferences,
+              #   including the time between conferences. Can be `true` or `false` and the default
+              #   is `false`.
+              # @param [Boolean] muted Whether the agent is muted in the conference. Defaults to
+              #   `false`.
+              # @param [String] beep Whether to play a notification beep when the participant
+              #   joins or when to play a beep. Can be: `true`, `false`, `onEnter`, or `onExit`.
+              #   The default value is `true`.
+              # @param [Boolean] start_conference_on_enter Whether to start the conference when
+              #   the participant joins, if it has not already started. Can be: `true` or `false`
+              #   and the default is `true`. If `false` and the conference has not started, the
+              #   participant is muted and hears background music until another participant starts
+              #   the conference.
+              # @param [Boolean] end_conference_on_exit Whether to end the conference when the
+              #   agent leaves.
+              # @param [String] wait_url The URL we should call using the `wait_method` for the
+              #   music to play while participants are waiting for the conference to start. The
+              #   default value is the URL of our standard hold music. [Learn more about hold
+              #   music](https://www.twilio.com/labs/twimlets/holdmusic).
+              # @param [String] wait_method The HTTP method we should use to call `wait_url`.
+              #   Can be `GET` or `POST` and the default is `POST`. When using a static audio
+              #   file, this should be `GET` so that we can cache the file.
+              # @param [Boolean] early_media Whether to allow an agent to hear the state of the
+              #   outbound call, including ringing or disconnect messages. The default is `true`.
+              # @param [String] max_participants The maximum number of participants allowed in
+              #   the conference. Can be a positive integer from `2` to `250`. The default value
+              #   is `250`.
+              # @param [String] conference_status_callback The URL we should call using the
+              #   `conference_status_callback_method` when the conference events in
+              #   `conference_status_callback_event` occur. Only the value set by the first
+              #   participant to join the conference is used. Subsequent
+              #   `conference_status_callback` values are ignored.
+              # @param [String] conference_status_callback_method The HTTP method we should use
+              #   to call `conference_status_callback`. Can be: `GET` or `POST` and defaults to
+              #   `POST`.
               # @param [reservation.ConferenceEvent] conference_status_callback_event The
-              #   conference_status_callback_event
-              # @param [String] conference_record The conference_record
-              # @param [String] conference_trim The conference_trim
-              # @param [String] recording_channels The recording_channels
-              # @param [String] recording_status_callback The recording_status_callback
-              # @param [String] recording_status_callback_method The
-              #   recording_status_callback_method
-              # @param [String] conference_recording_status_callback The
-              #   conference_recording_status_callback
-              # @param [String] conference_recording_status_callback_method The
-              #   conference_recording_status_callback_method
-              # @param [String] region The region
-              # @param [String] sip_auth_username The sip_auth_username
-              # @param [String] sip_auth_password The sip_auth_password
-              # @param [String] dequeue_status_callback_event The dequeue_status_callback_event
-              # @param [String] post_work_activity_sid The post_work_activity_sid
-              # @param [Boolean] end_conference_on_customer_exit The
-              #   end_conference_on_customer_exit
-              # @param [Boolean] beep_on_customer_entrance The beep_on_customer_entrance
+              #   conference status events that we will send to `conference_status_callback`. Can
+              #   be: `start`, `end`, `join`, `leave`, `mute`, `hold`, `speaker`.
+              # @param [String] conference_record Whether to record the conference the
+              #   participant is joining or when to record the conference. Can be: `true`,
+              #   `false`, `record-from-start`, and `do-not-record`. The default value is `false`.
+              # @param [String] conference_trim Whether to trim leading and trailing silence
+              #   from your recorded conference audio files. Can be: `trim-silence` or
+              #   `do-not-trim` and defaults to `trim-silence`.
+              # @param [String] recording_channels The recording channels for the final
+              #   recording. Can be: `mono` or `dual` and the default is `mono`.
+              # @param [String] recording_status_callback The URL that we should call using the
+              #   `recording_status_callback_method` when the recording status changes.
+              # @param [String] recording_status_callback_method The HTTP method we should use
+              #   when we call `recording_status_callback`. Can be: `GET` or `POST` and defaults
+              #   to `POST`.
+              # @param [String] conference_recording_status_callback The URL we should call
+              #   using the `conference_recording_status_callback_method` when the conference
+              #   recording is available.
+              # @param [String] conference_recording_status_callback_method The HTTP method we
+              #   should use to call `conference_recording_status_callback`. Can be: `GET` or
+              #   `POST` and defaults to `POST`.
+              # @param [String] region The
+              #   [region](https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls) where we should mix the recorded audio. Can be:`us1`, `ie1`, `de1`, `sg1`, `br1`, `au1`, or `jp1`.
+              # @param [String] sip_auth_username The SIP username used for authentication.
+              # @param [String] sip_auth_password The SIP password for authentication.
+              # @param [String] dequeue_status_callback_event The call progress events sent via
+              #   webhooks as a result of a Dequeue instruction.
+              # @param [String] post_work_activity_sid The new worker activity SID after
+              #   executing a Conference instruction.
+              # @param [Boolean] end_conference_on_customer_exit Whether to end the conference
+              #   when the customer leaves.
+              # @param [Boolean] beep_on_customer_entrance Whether to play a notification beep
+              #   when the customer joins.
               # @return [ReservationInstance] Updated ReservationInstance
               def update(reservation_status: :unset, worker_activity_sid: :unset, instruction: :unset, dequeue_post_work_activity_sid: :unset, dequeue_from: :unset, dequeue_record: :unset, dequeue_timeout: :unset, dequeue_to: :unset, dequeue_status_callback_url: :unset, call_from: :unset, call_record: :unset, call_timeout: :unset, call_to: :unset, call_url: :unset, call_status_callback_url: :unset, call_accept: :unset, redirect_call_sid: :unset, redirect_accept: :unset, redirect_url: :unset, to: :unset, from: :unset, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, conference_record: :unset, conference_trim: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, region: :unset, sip_auth_username: :unset, sip_auth_password: :unset, dequeue_status_callback_event: :unset, post_work_activity_sid: :unset, end_conference_on_customer_exit: :unset, beep_on_customer_entrance: :unset)
                 context.update(

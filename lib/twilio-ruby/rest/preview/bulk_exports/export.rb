@@ -22,6 +22,24 @@ module Twilio
 
             # Path Solution
             @solution = {}
+
+            # Components
+            @jobs = nil
+          end
+
+          ##
+          # Access the jobs
+          # @param [String] job_sid The job_sid
+          # @return [JobList]
+          # @return [JobContext] if job_sid was passed.
+          def jobs(job_sid=:unset)
+            raise ArgumentError, 'job_sid cannot be nil' if job_sid.nil?
+
+            if job_sid != :unset
+              return JobContext.new(@version, job_sid, )
+            end
+
+              @jobs ||= JobList.new(@version, )
           end
 
           ##
@@ -79,6 +97,7 @@ module Twilio
 
             # Dependents
             @days = nil
+            @export_custom_jobs = nil
           end
 
           ##
@@ -106,6 +125,18 @@ module Twilio
             end
 
             @days
+          end
+
+          ##
+          # Access the export_custom_jobs
+          # @return [ExportCustomJobList]
+          # @return [ExportCustomJobContext]
+          def export_custom_jobs
+            unless @export_custom_jobs
+              @export_custom_jobs = ExportCustomJobList.new(@version, resource_type: @solution[:resource_type], )
+            end
+
+            @export_custom_jobs
           end
 
           ##
@@ -188,6 +219,13 @@ module Twilio
           # @return [days] days
           def days
             context.days
+          end
+
+          ##
+          # Access the export_custom_jobs
+          # @return [export_custom_jobs] export_custom_jobs
+          def export_custom_jobs
+            context.export_custom_jobs
           end
 
           ##

@@ -16,8 +16,8 @@ module Twilio
             # Initialize the UsageRecordList
             # @param [Version] version Version that contains the resource
             # @param [String] sim_sid The SID of the [Sim
-            #   resource](https://www.twilio.com/docs/wireless/api/sim) that this Usage Record
-            #   is for.
+            #   resource](https://www.twilio.com/docs/wireless/api/sim-resource) that this Usage
+            #   Record is for.
             # @return [UsageRecordList] UsageRecordList
             def initialize(version, sim_sid: nil)
               super(version)
@@ -33,11 +33,13 @@ module Twilio
             # memory before returning.
             # @param [Time] end_ Only include usage that occurred on or before this date,
             #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+            #   The default is the current time.
             # @param [Time] start Only include usage that has occurred on or after this date,
             #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+            #   The default is on month before the `end` parameter value.
             # @param [usage_record.Granularity] granularity How to summarize the usage by
-            #   time. Can be: `daily`, `hourly`, or `all`. A value of `all` returns one Usage
-            #   Record that describes the usage for the entire period.
+            #   time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of
+            #   `all` returns one Usage Record that describes the usage for the entire period.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -61,11 +63,13 @@ module Twilio
             # is reached.
             # @param [Time] end_ Only include usage that occurred on or before this date,
             #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+            #   The default is the current time.
             # @param [Time] start Only include usage that has occurred on or after this date,
             #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+            #   The default is on month before the `end` parameter value.
             # @param [usage_record.Granularity] granularity How to summarize the usage by
-            #   time. Can be: `daily`, `hourly`, or `all`. A value of `all` returns one Usage
-            #   Record that describes the usage for the entire period.
+            #   time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of
+            #   `all` returns one Usage Record that describes the usage for the entire period.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -100,11 +104,13 @@ module Twilio
             # Request is executed immediately.
             # @param [Time] end_ Only include usage that occurred on or before this date,
             #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+            #   The default is the current time.
             # @param [Time] start Only include usage that has occurred on or after this date,
             #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+            #   The default is on month before the `end` parameter value.
             # @param [usage_record.Granularity] granularity How to summarize the usage by
-            #   time. Can be: `daily`, `hourly`, or `all`. A value of `all` returns one Usage
-            #   Record that describes the usage for the entire period.
+            #   time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of
+            #   `all` returns one Usage Record that describes the usage for the entire period.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -181,8 +187,8 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] sim_sid The SID of the [Sim
-            #   resource](https://www.twilio.com/docs/wireless/api/sim) that this Usage Record
-            #   is for.
+            #   resource](https://www.twilio.com/docs/wireless/api/sim-resource) that this Usage
+            #   Record is for.
             # @return [UsageRecordInstance] UsageRecordInstance
             def initialize(version, payload, sim_sid: nil)
               super(version)

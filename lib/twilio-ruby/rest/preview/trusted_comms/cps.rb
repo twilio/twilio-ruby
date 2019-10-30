@@ -120,8 +120,8 @@ module Twilio
 
             # Marshaled Properties
             @properties = {
-                'phone_number' => payload['phone_number'],
                 'cps_url' => payload['cps_url'],
+                'phone_number' => payload['phone_number'],
                 'url' => payload['url'],
             }
 
@@ -142,15 +142,15 @@ module Twilio
           end
 
           ##
-          # @return [String] Phone number passed.
-          def phone_number
-            @properties['phone_number']
-          end
-
-          ##
           # @return [String] CPS URL of the phone number.
           def cps_url
             @properties['cps_url']
+          end
+
+          ##
+          # @return [String] Phone number passed.
+          def phone_number
+            @properties['phone_number']
           end
 
           ##

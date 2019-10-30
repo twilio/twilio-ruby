@@ -44,8 +44,8 @@ describe 'Message' do
           "messaging_service_sid": "MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "num_media": "0",
           "num_segments": "1",
-          "price": "-0.00750",
-          "price_unit": "USD",
+          "price": null,
+          "price_unit": null,
           "sid": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "status": "sent",
           "subresource_uris": {
@@ -81,8 +81,8 @@ describe 'Message' do
           "messaging_service_sid": null,
           "num_media": "0",
           "num_segments": "1",
-          "price": "-0.00750",
-          "price_unit": "USD",
+          "price": null,
+          "price_unit": null,
           "sid": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "status": "sent",
           "subresource_uris": {

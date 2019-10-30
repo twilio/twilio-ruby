@@ -28,7 +28,7 @@ module Twilio
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [String] sim The `sid` or `unique_name` of the [Sim
-          #   resources](https://www.twilio.com/docs/wireless/api/sim) to read.
+          #   resources](https://www.twilio.com/docs/wireless/api/sim-resource) to read.
           # @param [command.Status] status The status of the resources to read. Can be:
           #   `queued`, `sent`, `delivered`, `received`, or `failed`.
           # @param [command.Direction] direction Only return Commands with this direction
@@ -58,7 +58,7 @@ module Twilio
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [String] sim The `sid` or `unique_name` of the [Sim
-          #   resources](https://www.twilio.com/docs/wireless/api/sim) to read.
+          #   resources](https://www.twilio.com/docs/wireless/api/sim-resource) to read.
           # @param [command.Status] status The status of the resources to read. Can be:
           #   `queued`, `sent`, `delivered`, `received`, or `failed`.
           # @param [command.Direction] direction Only return Commands with this direction
@@ -104,7 +104,7 @@ module Twilio
           # Retrieve a single page of CommandInstance records from the API.
           # Request is executed immediately.
           # @param [String] sim The `sid` or `unique_name` of the [Sim
-          #   resources](https://www.twilio.com/docs/wireless/api/sim) to read.
+          #   resources](https://www.twilio.com/docs/wireless/api/sim-resource) to read.
           # @param [command.Status] status The status of the resources to read. Can be:
           #   `queued`, `sent`, `delivered`, `received`, or `failed`.
           # @param [command.Direction] direction Only return Commands with this direction
@@ -152,7 +152,8 @@ module Twilio
           # @param [String] command The message body of the Command. Can be plain text in
           #   text mode or a Base64 encoded byte string in binary mode.
           # @param [String] sim The `sid` or `unique_name` of the
-          #   [SIM](https://www.twilio.com/docs/wireless/api/sim) to send the Command to.
+          #   [SIM](https://www.twilio.com/docs/wireless/api/sim-resource) to send the Command
+          #   to.
           # @param [String] callback_method The HTTP method we use to call `callback_url`.
           #   Can be: `POST` or `GET`, and the default is `POST`.
           # @param [String] callback_url The URL we call using the `callback_url` when the

@@ -29,8 +29,8 @@ describe 'Cps' do
         200,
       %q[
       {
-          "phone_number": "+1500123",
           "cps_url": "https://preview.twilio.com/TrustedComms/CurrentCall",
+          "phone_number": "+1500123",
           "url": "https://preview.twilio.com/TrustedComms/CPS"
       }
       ]

@@ -57,34 +57,6 @@ describe 'Notification' do
     expect(actual).to_not eq(nil)
   end
 
-  it "can delete" do
-    @holodeck.mock(Twilio::Response.new(500, ''))
-
-    expect {
-      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .notifications('NOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
-    }.to raise_exception(Twilio::REST::TwilioError)
-
-    values = {}
-    expect(
-    @holodeck.has_request?(Holodeck::Request.new(
-        method: 'delete',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Notifications/NOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
-    ))).to eq(true)
-  end
-
-  it "receives delete responses" do
-    @holodeck.mock(Twilio::Response.new(
-        204,
-      nil,
-    ))
-
-    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .notifications('NOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
-
-    expect(actual).to eq(true)
-  end
-
   it "can read" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

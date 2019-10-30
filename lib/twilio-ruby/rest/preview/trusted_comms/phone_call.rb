@@ -29,11 +29,11 @@ module Twilio
           # Retrieve a single page of PhoneCallInstance records from the API.
           # Request is executed immediately.
           # @param [String] from The phone number to use as the caller id, given in [E.164
-          #   format](https://en.wikipedia.org/wiki/E.164). It must be a Twilio number that
-          #   has been set up as a Branded Number in the Business Profile section for your
-          #   account.
+          #   format](https://www.twilio.com/docs/glossary/what-e164). It must be a Twilio
+          #   number that has been set up as a Branded Number in the Business Profile section
+          #   for your account.
           # @param [String] to The terminating Phone Number, given in [E.164
-          #   format](https://en.wikipedia.org/wiki/E.164).
+          #   format](https://www.twilio.com/docs/glossary/what-e164).
           # @param [String] reason The business reason for this phone call that will appear
           #   in the terminating device's screen. Max 50 characters.
           # @param [String] application_sid Refers to the parameter with the same name when
@@ -200,20 +200,25 @@ module Twilio
 
             # Marshaled Properties
             @properties = {
-                'sid' => payload['sid'],
                 'account_sid' => payload['account_sid'],
-                'from' => payload['from'],
-                'to' => payload['to'],
-                'reason' => payload['reason'],
+                'bg_color' => payload['bg_color'],
+                'brand_sid' => payload['brand_sid'],
+                'branded_channel_sid' => payload['branded_channel_sid'],
+                'business_sid' => payload['business_sid'],
+                'call_sid' => payload['call_sid'],
+                'caller' => payload['caller'],
                 'created_at' => Twilio.deserialize_iso8601_datetime(payload['created_at']),
+                'font_color' => payload['font_color'],
+                'from' => payload['from'],
+                'logo' => payload['logo'],
+                'phone_number_sid' => payload['phone_number_sid'],
+                'reason' => payload['reason'],
+                'sid' => payload['sid'],
+                'status' => payload['status'],
+                'to' => payload['to'],
                 'url' => payload['url'],
+                'use_case' => payload['use_case'],
             }
-          end
-
-          ##
-          # @return [String] A string that uniquely identifies this Current Call.
-          def sid
-            @properties['sid']
           end
 
           ##
@@ -223,21 +228,39 @@ module Twilio
           end
 
           ##
-          # @return [String] The originating Phone Number
-          def from
-            @properties['from']
+          # @return [String] Background color of the current phone call
+          def bg_color
+            @properties['bg_color']
           end
 
           ##
-          # @return [String] The terminating Phone Number
-          def to
-            @properties['to']
+          # @return [String] Brand Sid.
+          def brand_sid
+            @properties['brand_sid']
           end
 
           ##
-          # @return [String] The business reason for this phone call
-          def reason
-            @properties['reason']
+          # @return [String] Branded Channel Sid.
+          def branded_channel_sid
+            @properties['branded_channel_sid']
+          end
+
+          ##
+          # @return [String] Business Sid.
+          def business_sid
+            @properties['business_sid']
+          end
+
+          ##
+          # @return [String] A string that uniquely identifies this phone call.
+          def call_sid
+            @properties['call_sid']
+          end
+
+          ##
+          # @return [String] Caller name of the current phone call
+          def caller
+            @properties['caller']
           end
 
           ##
@@ -247,9 +270,63 @@ module Twilio
           end
 
           ##
+          # @return [String] Font color of the current phone call
+          def font_color
+            @properties['font_color']
+          end
+
+          ##
+          # @return [String] The originating Phone Number
+          def from
+            @properties['from']
+          end
+
+          ##
+          # @return [String] Logo URL of the caller
+          def logo
+            @properties['logo']
+          end
+
+          ##
+          # @return [String] Phone Number Sid.
+          def phone_number_sid
+            @properties['phone_number_sid']
+          end
+
+          ##
+          # @return [String] The business reason for this phone call
+          def reason
+            @properties['reason']
+          end
+
+          ##
+          # @return [String] A string that uniquely identifies this current branded phone call.
+          def sid
+            @properties['sid']
+          end
+
+          ##
+          # @return [String] The status of the current phone call
+          def status
+            @properties['status']
+          end
+
+          ##
+          # @return [String] The terminating Phone Number
+          def to
+            @properties['to']
+          end
+
+          ##
           # @return [String] The URL of this resource.
           def url
             @properties['url']
+          end
+
+          ##
+          # @return [String] The use case for the current phone call
+          def use_case
+            @properties['use_case']
           end
 
           ##

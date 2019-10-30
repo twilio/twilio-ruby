@@ -34,8 +34,9 @@ module Twilio
             # @param [Time] date_created_before Only include recordings that were created on this date
             # @param [Time] date_created Only include recordings that were created on this date
             # @param [Time] date_created_after Only include recordings that were created on this date
-            # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call)
-            #   SID of the resources to read.
+            # @param [String] call_sid The
+            #   [Call](https://www.twilio.com/docs/voice/api/call-resource) SID of the resources
+            #   to read.
             # @param [String] conference_sid The Conference SID that identifies the conference
             #   associated with the recording to read.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -64,8 +65,9 @@ module Twilio
             # @param [Time] date_created_before Only include recordings that were created on this date
             # @param [Time] date_created Only include recordings that were created on this date
             # @param [Time] date_created_after Only include recordings that were created on this date
-            # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call)
-            #   SID of the resources to read.
+            # @param [String] call_sid The
+            #   [Call](https://www.twilio.com/docs/voice/api/call-resource) SID of the resources
+            #   to read.
             # @param [String] conference_sid The Conference SID that identifies the conference
             #   associated with the recording to read.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -110,8 +112,9 @@ module Twilio
             # @param [Time] date_created_before Only include recordings that were created on this date
             # @param [Time] date_created Only include recordings that were created on this date
             # @param [Time] date_created_after Only include recordings that were created on this date
-            # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call)
-            #   SID of the resources to read.
+            # @param [String] call_sid The
+            #   [Call](https://www.twilio.com/docs/voice/api/call-resource) SID of the resources
+            #   to read.
             # @param [String] conference_sid The Conference SID that identifies the conference
             #   associated with the recording to read.
             # @param [String] page_token PageToken provided by the API

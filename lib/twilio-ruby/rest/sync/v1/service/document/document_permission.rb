@@ -210,9 +210,12 @@ module Twilio
 
               ##
               # Update the DocumentPermissionInstance
-              # @param [Boolean] read Whether the identity can read the Sync Document.
+              # @param [Boolean] read Whether the identity can read the Sync Document. Default
+              #   value is `false`.
               # @param [Boolean] write Whether the identity can update the Sync Document.
+              #   Default value is `false`.
               # @param [Boolean] manage Whether the identity can delete the Sync Document.
+              #   Default value is `false`.
               # @return [DocumentPermissionInstance] Updated DocumentPermissionInstance
               def update(read: nil, write: nil, manage: nil)
                 data = Twilio::Values.of({'Read' => read, 'Write' => write, 'Manage' => manage, })
@@ -366,9 +369,12 @@ module Twilio
 
               ##
               # Update the DocumentPermissionInstance
-              # @param [Boolean] read Whether the identity can read the Sync Document.
+              # @param [Boolean] read Whether the identity can read the Sync Document. Default
+              #   value is `false`.
               # @param [Boolean] write Whether the identity can update the Sync Document.
+              #   Default value is `false`.
               # @param [Boolean] manage Whether the identity can delete the Sync Document.
+              #   Default value is `false`.
               # @return [DocumentPermissionInstance] Updated DocumentPermissionInstance
               def update(read: nil, write: nil, manage: nil)
                 context.update(read: read, write: write, manage: manage, )

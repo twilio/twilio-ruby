@@ -224,7 +224,8 @@ module Twilio
             # Initialize the CountryContext
             # @param [Version] version Version that contains the resource
             # @param [String] iso_code The [ISO country
-            #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+            #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the
+            #   DialingPermissions Country resource to fetch
             # @return [CountryContext] CountryContext
             def initialize(version, iso_code)
               super(version)
@@ -287,7 +288,8 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] iso_code The [ISO country
-            #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+            #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the
+            #   DialingPermissions Country resource to fetch
             # @return [CountryInstance] CountryInstance
             def initialize(version, payload, iso_code: nil)
               super(version)
@@ -328,13 +330,13 @@ module Twilio
             end
 
             ##
-            # @return [String] Name of the country
+            # @return [String] The name of the country
             def name
               @properties['name']
             end
 
             ##
-            # @return [String] Name of the continent
+            # @return [String] The name of the continent in which the country is located
             def continent
               @properties['continent']
             end
@@ -346,19 +348,19 @@ module Twilio
             end
 
             ##
-            # @return [Boolean] `true`, if dialing to low-risk numbers is enabled, else `false`
+            # @return [Boolean] Whether dialing to low-risk numbers is enabled
             def low_risk_numbers_enabled
               @properties['low_risk_numbers_enabled']
             end
 
             ##
-            # @return [Boolean] `true`, if dialing to high-risk special services numbers is enabled, else `false`
+            # @return [Boolean] Whether dialing to high-risk special services numbers is enabled
             def high_risk_special_numbers_enabled
               @properties['high_risk_special_numbers_enabled']
             end
 
             ##
-            # @return [Boolean] `true`, if dialing to high-risk toll fraud numbers is enabled, else `false`
+            # @return [Boolean] Whether dialing to high-risk toll fraud numbers is enabled, else `false`
             def high_risk_tollfraud_numbers_enabled
               @properties['high_risk_tollfraud_numbers_enabled']
             end

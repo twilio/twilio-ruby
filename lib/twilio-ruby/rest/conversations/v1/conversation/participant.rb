@@ -39,20 +39,22 @@ module Twilio
             #   device, e.g. a phone number or Messenger ID. Together with the Proxy address,
             #   this determines a participant uniquely. This field (with proxy_address) is only
             #   null when the participant is interacting from a Chat endpoint (see the
-            #   'identity' field). Limited to 256 characters.
+            #   'identity' field).
             # @param [String] messaging_binding_proxy_address The address of the Twilio phone
             #   number (or WhatsApp number, or Messenger Page ID) that the participant is in
             #   contact with. This field, together with participant address, is only null when
             #   the participant is interacting from a Chat endpoint (see the 'identity' field).
-            #   Limited to 256 characters.
             # @param [Time] date_created The date that this resource was created.
             # @param [Time] date_updated The date that this resource was last updated.
             # @param [String] attributes An optional string metadata field you can use to
             #   store any data you wish. The string value must contain structurally valid JSON
             #   if specified.  **Note** that if the attributes are not set "{}" will be
             #   returned.
+            # @param [String] messaging_binding_projected_address The address of the Twilio
+            #   phone number that is used in Group MMS. Communication mask for the Chat
+            #   participant with Identity.
             # @return [ParticipantInstance] Newly created ParticipantInstance
-            def create(identity: :unset, messaging_binding_address: :unset, messaging_binding_proxy_address: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
+            def create(identity: :unset, messaging_binding_address: :unset, messaging_binding_proxy_address: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_binding_projected_address: :unset)
               data = Twilio::Values.of({
                   'Identity' => identity,
                   'MessagingBinding.Address' => messaging_binding_address,
@@ -60,6 +62,7 @@ module Twilio
                   'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                   'Attributes' => attributes,
+                  'MessagingBinding.ProjectedAddress' => messaging_binding_projected_address,
               })
 
               payload = @version.create(

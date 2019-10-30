@@ -56,7 +56,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The SID of the Sim resource to fetch.
+        # @param [String] sid The SID or the `unique_name` of the Sim resource to fetch.
         # @return [Twilio::REST::Wireless::V1::SimContext] if sid was passed.
         # @return [Twilio::REST::Wireless::V1::SimList]
         def sims(sid=:unset)

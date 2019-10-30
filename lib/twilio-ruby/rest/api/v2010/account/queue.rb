@@ -171,7 +171,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
             #   [Account](https://www.twilio.com/docs/iam/api/account) that created the Queue
-            #   resource(s) to fetch.
+            #   resource to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Queue resource to fetch
             # @return [QueueContext] QueueContext

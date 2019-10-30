@@ -209,9 +209,11 @@ module Twilio
               ##
               # Update the SyncMapPermissionInstance
               # @param [Boolean] read Whether the identity can read the Sync Map and its Items.
-              # @param [Boolean] write Whether the identity can create, update and delete Items
-              #   of the Sync Map.
-              # @param [Boolean] manage Whether the identity can delete the Sync Map.
+              #   Default value is `false`.
+              # @param [Boolean] write Whether the identity can create, update, and delete Items
+              #   in the Sync Map. Default value is `false`.
+              # @param [Boolean] manage Whether the identity can delete the Sync Map. Default
+              #   value is `false`.
               # @return [SyncMapPermissionInstance] Updated SyncMapPermissionInstance
               def update(read: nil, write: nil, manage: nil)
                 data = Twilio::Values.of({'Read' => read, 'Write' => write, 'Manage' => manage, })
@@ -365,9 +367,11 @@ module Twilio
               ##
               # Update the SyncMapPermissionInstance
               # @param [Boolean] read Whether the identity can read the Sync Map and its Items.
-              # @param [Boolean] write Whether the identity can create, update and delete Items
-              #   of the Sync Map.
-              # @param [Boolean] manage Whether the identity can delete the Sync Map.
+              #   Default value is `false`.
+              # @param [Boolean] write Whether the identity can create, update, and delete Items
+              #   in the Sync Map. Default value is `false`.
+              # @param [Boolean] manage Whether the identity can delete the Sync Map. Default
+              #   value is `false`.
               # @return [SyncMapPermissionInstance] Updated SyncMapPermissionInstance
               def update(read: nil, write: nil, manage: nil)
                 context.update(read: read, write: write, manage: manage, )

@@ -29,8 +29,8 @@ module Twilio
           # Retrieve a single page of DeviceInstance records from the API.
           # Request is executed immediately.
           # @param [String] phone_number The end user Phone Number linked to the device,
-          #   given in [E.164 format](https://en.wikipedia.org/wiki/E.164). The SDK or partner
-          #   app is responsible of verifying this phone number veracity.
+          #   given in [E.164 format](https://www.twilio.com/docs/glossary/what-e164). The SDK
+          #   or partner app is responsible of verifying this phone number veracity.
           # @param [String] push_token The Push Token for this Phone Number, linked to the
           #   correct SDK's application, certificate and keys.
           # @return [DeviceInstance] Newly created DeviceInstance
@@ -97,17 +97,17 @@ module Twilio
 
             # Marshaled Properties
             @properties = {
-                'sid' => payload['sid'],
-                'phone_number' => payload['phone_number'],
                 'binding_sid' => payload['binding_sid'],
+                'phone_number' => payload['phone_number'],
+                'sid' => payload['sid'],
                 'url' => payload['url'],
             }
           end
 
           ##
-          # @return [String] A string that uniquely identifies this Device.
-          def sid
-            @properties['sid']
+          # @return [String] Binding Sid.
+          def binding_sid
+            @properties['binding_sid']
           end
 
           ##
@@ -117,9 +117,9 @@ module Twilio
           end
 
           ##
-          # @return [String] Binding Sid.
-          def binding_sid
-            @properties['binding_sid']
+          # @return [String] A string that uniquely identifies this Device.
+          def sid
+            @properties['sid']
           end
 
           ##

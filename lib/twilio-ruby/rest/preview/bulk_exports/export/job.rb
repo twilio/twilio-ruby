@@ -8,16 +8,16 @@
 
 module Twilio
   module REST
-    class Voice < Domain
-      class V1 < Version
-        class DialingPermissionsList < ListResource
+    class Preview < Domain
+      class BulkExports < Version
+        class ExportList < ListResource
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class SettingsList < ListResource
+          class JobList < ListResource
             ##
-            # Initialize the SettingsList
+            # Initialize the JobList
             # @param [Version] version Version that contains the resource
-            # @return [SettingsList] SettingsList
+            # @return [JobList] JobList
             def initialize(version)
               super(version)
 
@@ -28,19 +28,19 @@ module Twilio
             ##
             # Provide a user friendly representation
             def to_s
-              '#<Twilio.Voice.V1.SettingsList>'
+              '#<Twilio.Preview.BulkExports.JobList>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class SettingsPage < Page
+          class JobPage < Page
             ##
-            # Initialize the SettingsPage
+            # Initialize the JobPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @return [SettingsPage] SettingsPage
+            # @return [JobPage] JobPage
             def initialize(version, response, solution)
               super(version, response)
 
@@ -49,38 +49,39 @@ module Twilio
             end
 
             ##
-            # Build an instance of SettingsInstance
+            # Build an instance of JobInstance
             # @param [Hash] payload Payload response from the API
-            # @return [SettingsInstance] SettingsInstance
+            # @return [JobInstance] JobInstance
             def get_instance(payload)
-              SettingsInstance.new(@version, payload, )
+              JobInstance.new(@version, payload, )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '<Twilio.Voice.V1.SettingsPage>'
+              '<Twilio.Preview.BulkExports.JobPage>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class SettingsContext < InstanceContext
+          class JobContext < InstanceContext
             ##
-            # Initialize the SettingsContext
+            # Initialize the JobContext
             # @param [Version] version Version that contains the resource
-            # @return [SettingsContext] SettingsContext
-            def initialize(version)
+            # @param [String] job_sid The job_sid
+            # @return [JobContext] JobContext
+            def initialize(version, job_sid)
               super(version)
 
               # Path Solution
-              @solution = {}
-              @uri = "/Settings"
+              @solution = {job_sid: job_sid, }
+              @uri = "/Exports/Jobs/#{@solution[:job_sid]}"
             end
 
             ##
-            # Fetch a SettingsInstance
-            # @return [SettingsInstance] Fetched SettingsInstance
+            # Fetch a JobInstance
+            # @return [JobInstance] Fetched JobInstance
             def fetch
               params = Twilio::Values.of({})
 
@@ -90,114 +91,138 @@ module Twilio
                   params,
               )
 
-              SettingsInstance.new(@version, payload, )
+              JobInstance.new(@version, payload, job_sid: @solution[:job_sid], )
             end
 
             ##
-            # Update the SettingsInstance
-            # @param [Boolean] dialing_permissions_inheritance `true` for the sub-account to
-            #   inherit voice dialing permissions from the Master Project; otherwise `false`.
-            # @return [SettingsInstance] Updated SettingsInstance
-            def update(dialing_permissions_inheritance: :unset)
-              data = Twilio::Values.of({'DialingPermissionsInheritance' => dialing_permissions_inheritance, })
-
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
-
-              SettingsInstance.new(@version, payload, )
+            # Deletes the JobInstance
+            # @return [Boolean] true if delete succeeds, false otherwise
+            def delete
+              @version.delete('delete', @uri)
             end
 
             ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Voice.V1.SettingsContext #{context}>"
+              "#<Twilio.Preview.BulkExports.JobContext #{context}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Voice.V1.SettingsContext #{context}>"
+              "#<Twilio.Preview.BulkExports.JobContext #{context}>"
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class SettingsInstance < InstanceResource
+          class JobInstance < InstanceResource
             ##
-            # Initialize the SettingsInstance
+            # Initialize the JobInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @return [SettingsInstance] SettingsInstance
-            def initialize(version, payload)
+            # @param [String] job_sid The job_sid
+            # @return [JobInstance] JobInstance
+            def initialize(version, payload, job_sid: nil)
               super(version)
 
               # Marshaled Properties
               @properties = {
-                  'dialing_permissions_inheritance' => payload['dialing_permissions_inheritance'],
+                  'resource_type' => payload['resource_type'],
+                  'friendly_name' => payload['friendly_name'],
+                  'details' => payload['details'],
+                  'start_day' => payload['start_day'],
+                  'end_day' => payload['end_day'],
+                  'job_sid' => payload['job_sid'],
                   'url' => payload['url'],
               }
 
               # Context
               @instance_context = nil
-              @params = {}
+              @params = {'job_sid' => job_sid || @properties['job_sid'], }
             end
 
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return [SettingsContext] SettingsContext for this SettingsInstance
+            # @return [JobContext] JobContext for this JobInstance
             def context
               unless @instance_context
-                @instance_context = SettingsContext.new(@version, )
+                @instance_context = JobContext.new(@version, @params['job_sid'], )
               end
               @instance_context
             end
 
             ##
-            # @return [Boolean] `true` if the sub-account will inherit voice dialing permissions from the Master Project; otherwise `false`
-            def dialing_permissions_inheritance
-              @properties['dialing_permissions_inheritance']
+            # @return [String] The type of communication – Messages, Calls
+            def resource_type
+              @properties['resource_type']
             end
 
             ##
-            # @return [String] The absolute URL of this resource
+            # @return [String] The friendly name specified when creating the job
+            def friendly_name
+              @properties['friendly_name']
+            end
+
+            ##
+            # @return [Hash] This is a list of the completed, pending, or errored dates within the export time range, with one entry for each status with more than one day in that status
+            def details
+              @properties['details']
+            end
+
+            ##
+            # @return [String] The start time for the export specified when creating the job
+            def start_day
+              @properties['start_day']
+            end
+
+            ##
+            # @return [String] The end time for the export specified when creating the job
+            def end_day
+              @properties['end_day']
+            end
+
+            ##
+            # @return [String] The job_sid returned when the export was created
+            def job_sid
+              @properties['job_sid']
+            end
+
+            ##
+            # @return [String] The url
             def url
               @properties['url']
             end
 
             ##
-            # Fetch a SettingsInstance
-            # @return [SettingsInstance] Fetched SettingsInstance
+            # Fetch a JobInstance
+            # @return [JobInstance] Fetched JobInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Update the SettingsInstance
-            # @param [Boolean] dialing_permissions_inheritance `true` for the sub-account to
-            #   inherit voice dialing permissions from the Master Project; otherwise `false`.
-            # @return [SettingsInstance] Updated SettingsInstance
-            def update(dialing_permissions_inheritance: :unset)
-              context.update(dialing_permissions_inheritance: dialing_permissions_inheritance, )
+            # Deletes the JobInstance
+            # @return [Boolean] true if delete succeeds, false otherwise
+            def delete
+              context.delete
             end
 
             ##
             # Provide a user friendly representation
             def to_s
               values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Voice.V1.SettingsInstance #{values}>"
+              "<Twilio.Preview.BulkExports.JobInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
               values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Voice.V1.SettingsInstance #{values}>"
+              "<Twilio.Preview.BulkExports.JobInstance #{values}>"
             end
           end
         end

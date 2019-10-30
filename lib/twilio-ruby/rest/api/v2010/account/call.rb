@@ -58,7 +58,7 @@ module Twilio
             #   `completed`. If no event is specified, we send the `completed` status. If you
             #   want to receive multiple events, specify each one in a separate
             #   `status_callback_event` parameter. See the code sample for [monitoring call
-            #   progress](https://www.twilio.com/docs/voice/api/call?code-sample=code-create-a-call-and-specify-a-statuscallbackevent). If an `application_sid` is present, this parameter is ignored.
+            #   progress](https://www.twilio.com/docs/voice/api/call-resource?code-sample=code-create-a-call-resource-and-specify-a-statuscallbackevent&code-sdk-version=json). If an `application_sid` is present, this parameter is ignored.
             # @param [String] status_callback_method The HTTP method we should use when
             #   calling the `status_callback` URL. Can be: `GET` or `POST` and the default is
             #   `POST`. If an `application_sid` parameter is present, this parameter is ignored.
@@ -78,9 +78,9 @@ module Twilio
             #   seconds could result in an actual timeout closer to 15 seconds. You can set this
             #   to a short time, such as `15` seconds, to hang up before reaching an answering
             #   machine or voicemail.
-            # @param [Boolean] record Set this parameter to `true` to record the phone call.
-            #   The `recording_url` will be sent to the `status_callback` URL. The default is
-            #   `false`.
+            # @param [Boolean] record Whether to record the call. Can be `true` to record the
+            #   phone call, or `false` to not. The default is `false`. The `recording_url` is
+            #   sent to the `status_callback` URL.
             # @param [String] recording_channels The number of channels in the final
             #   recording. Can be: `mono` or `dual`. The default is `mono`. `mono` records both
             #   legs of the call in a single channel of the recording file. `dual` records each
@@ -96,12 +96,12 @@ module Twilio
             #   making a SIP call.
             # @param [String] sip_auth_password The password required to authenticate the user
             #   account specified in `sip_auth_username`.
-            # @param [String] machine_detection Detect if a human, answering machine, or fax
-            #   has picked up the call. Can be: `Enable` or `DetectMessageEnd`. Use `Enable` if
-            #   you would like us to return `AnsweredBy` as soon as the called party is
-            #   identified. Use `DetectMessageEnd`, if you would like to leave a message on an
-            #   answering machine. If `send_digits` is provided, this parameter is ignored. For
-            #   more information, see [Answering Machine
+            # @param [String] machine_detection Whether to detect if a human, answering
+            #   machine, or fax has picked up the call. Can be: `Enable` or `DetectMessageEnd`.
+            #   Use `Enable` if you would like us to return `AnsweredBy` as soon as the called
+            #   party is identified. Use `DetectMessageEnd`, if you would like to leave a
+            #   message on an answering machine. If `send_digits` is provided, this parameter is
+            #   ignored. For more information, see [Answering Machine
             #   Detection](https://www.twilio.com/docs/voice/answering-machine-detection).
             # @param [String] machine_detection_timeout The number of seconds that we should
             #   attempt to detect an answering machine before timing out and sending a voice
@@ -178,8 +178,8 @@ module Twilio
             # Lists CallInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] to Only show calls to this phone number, SIP address, Client
-            #   identifier or SIM SID.
+            # @param [String] to Only show calls made to this phone number, SIP address,
+            #   Client identifier or SIM SID.
             # @param [String] from Only include calls from this phone number, SIP address,
             #   Client identifier or SIM SID.
             # @param [String] parent_call_sid Only include calls spawned by calls with this
@@ -221,8 +221,8 @@ module Twilio
             # Streams CallInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] to Only show calls to this phone number, SIP address, Client
-            #   identifier or SIM SID.
+            # @param [String] to Only show calls made to this phone number, SIP address,
+            #   Client identifier or SIM SID.
             # @param [String] from Only include calls from this phone number, SIP address,
             #   Client identifier or SIM SID.
             # @param [String] parent_call_sid Only include calls spawned by calls with this
@@ -280,8 +280,8 @@ module Twilio
             ##
             # Retrieve a single page of CallInstance records from the API.
             # Request is executed immediately.
-            # @param [String] to Only show calls to this phone number, SIP address, Client
-            #   identifier or SIM SID.
+            # @param [String] to Only show calls made to this phone number, SIP address,
+            #   Client identifier or SIM SID.
             # @param [String] from Only include calls from this phone number, SIP address,
             #   Client identifier or SIM SID.
             # @param [String] parent_call_sid Only include calls spawned by calls with this
@@ -395,8 +395,7 @@ module Twilio
             # @param [String] account_sid The SID of the
             #   [Account](https://www.twilio.com/docs/iam/api/account) that created the Call
             #   resource(s) to fetch.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the Call
-            #   resource to fetch
+            # @param [String] sid The SID of the Call resource to fetch.
             # @return [CallContext] CallContext
             def initialize(version, account_sid, sid)
               super(version)
@@ -561,8 +560,7 @@ module Twilio
             # @param [String] account_sid The SID of the
             #   [Account](https://www.twilio.com/docs/iam/api/account) that created this Call
             #   resource.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the Call
-            #   resource to fetch
+            # @param [String] sid The SID of the Call resource to fetch.
             # @return [CallInstance] CallInstance
             def initialize(version, payload, account_sid: nil, sid: nil)
               super(version)

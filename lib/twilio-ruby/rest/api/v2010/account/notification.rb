@@ -219,13 +219,6 @@ module Twilio
             end
 
             ##
-            # Deletes the NotificationInstance
-            # @return [Boolean] true if delete succeeds, false otherwise
-            def delete
-              @version.delete('delete', @uri)
-            end
-
-            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -398,13 +391,6 @@ module Twilio
             # @return [NotificationInstance] Fetched NotificationInstance
             def fetch
               context.fetch
-            end
-
-            ##
-            # Deletes the NotificationInstance
-            # @return [Boolean] true if delete succeeds, false otherwise
-            def delete
-              context.delete
             end
 
             ##

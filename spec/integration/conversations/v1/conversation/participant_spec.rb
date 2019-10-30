@@ -77,6 +77,33 @@ describe 'Participant' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives create_gmms responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "identity": "IDENTITY",
+          "attributes": "{ \\"role\\": \\"driver\\" }",
+          "messaging_binding": {
+              "type": "sms",
+              "projected_address": "+15017122661"
+          },
+          "date_created": "2015-12-16T22:18:37Z",
+          "date_updated": "2015-12-16T22:18:38Z",
+          "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+
+    actual = @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                     .participants.create()
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can update" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
