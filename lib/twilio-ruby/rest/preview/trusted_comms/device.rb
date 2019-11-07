@@ -98,7 +98,7 @@ module Twilio
             # Marshaled Properties
             @properties = {
                 'binding_sid' => payload['binding_sid'],
-                'phone_number' => payload['phone_number'],
+                'phone_number' => payload['phone_number'].to_json,
                 'sid' => payload['sid'],
                 'url' => payload['url'],
             }

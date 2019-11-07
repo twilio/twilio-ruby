@@ -337,7 +337,7 @@ module Twilio
                   'room_sid' => payload['room_sid'],
                   'account_sid' => payload['account_sid'],
                   'status' => payload['status'],
-                  'identity' => payload['identity'],
+                  'identity' => payload['identity'].to_json,
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'start_time' => Twilio.deserialize_iso8601_datetime(payload['start_time']),

@@ -104,7 +104,11 @@ module Twilio
             super(version)
 
             # Marshaled Properties
-            @properties = {'name' => payload['name'], 'url' => payload['url'], 'links' => payload['links'], }
+            @properties = {
+                'name' => payload['name'].to_json,
+                'url' => payload['url'],
+                'links' => payload['links'],
+            }
           end
 
           ##

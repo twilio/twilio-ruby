@@ -303,12 +303,12 @@ module Twilio
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                     'task_sid' => payload['task_sid'],
-                    'language' => payload['language'],
+                    'language' => payload['language'].to_json,
                     'assistant_sid' => payload['assistant_sid'],
                     'sid' => payload['sid'],
-                    'tagged_text' => payload['tagged_text'],
+                    'tagged_text' => payload['tagged_text'].to_json,
                     'url' => payload['url'],
-                    'source_channel' => payload['source_channel'],
+                    'source_channel' => payload['source_channel'].to_json,
                 }
 
                 # Context

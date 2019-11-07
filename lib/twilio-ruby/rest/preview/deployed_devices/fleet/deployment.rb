@@ -263,7 +263,7 @@ module Twilio
               @properties = {
                   'sid' => payload['sid'],
                   'url' => payload['url'],
-                  'friendly_name' => payload['friendly_name'],
+                  'friendly_name' => payload['friendly_name'].to_json,
                   'fleet_sid' => payload['fleet_sid'],
                   'account_sid' => payload['account_sid'],
                   'sync_service_sid' => payload['sync_service_sid'],

@@ -121,7 +121,7 @@ module Twilio
             # Marshaled Properties
             @properties = {
                 'cps_url' => payload['cps_url'],
-                'phone_number' => payload['phone_number'],
+                'phone_number' => payload['phone_number'].to_json,
                 'url' => payload['url'],
             }
 

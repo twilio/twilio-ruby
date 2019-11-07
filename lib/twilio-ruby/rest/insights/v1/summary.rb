@@ -138,7 +138,7 @@ module Twilio
                 'client_edge' => payload['client_edge'],
                 'sdk_edge' => payload['sdk_edge'],
                 'sip_edge' => payload['sip_edge'],
-                'tags' => payload['tags'],
+                'tags' => payload['tags'].to_json,
                 'url' => payload['url'],
                 'attributes' => payload['attributes'],
                 'properties' => payload['properties'],

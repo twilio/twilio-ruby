@@ -334,8 +334,8 @@ module Twilio
             @properties = {
                 'sid' => payload['sid'],
                 'url' => payload['url'],
-                'unique_name' => payload['unique_name'],
-                'friendly_name' => payload['friendly_name'],
+                'unique_name' => payload['unique_name'].to_json,
+                'friendly_name' => payload['friendly_name'].to_json,
                 'account_sid' => payload['account_sid'],
                 'default_deployment_sid' => payload['default_deployment_sid'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),

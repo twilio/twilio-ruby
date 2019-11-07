@@ -273,7 +273,7 @@ module Twilio
                     'account_sid' => payload['account_sid'],
                     'service_sid' => payload['service_sid'],
                     'document_sid' => payload['document_sid'],
-                    'identity' => payload['identity'],
+                    'identity' => payload['identity'].to_json,
                     'read' => payload['read'],
                     'write' => payload['write'],
                     'manage' => payload['manage'],

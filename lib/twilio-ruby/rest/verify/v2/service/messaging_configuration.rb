@@ -281,7 +281,7 @@ module Twilio
               @properties = {
                   'account_sid' => payload['account_sid'],
                   'service_sid' => payload['service_sid'],
-                  'country' => payload['country'],
+                  'country' => payload['country'].to_json,
                   'messaging_service_sid' => payload['messaging_service_sid'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),

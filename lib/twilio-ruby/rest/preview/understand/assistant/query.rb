@@ -303,15 +303,15 @@ module Twilio
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'results' => payload['results'],
-                  'language' => payload['language'],
+                  'language' => payload['language'].to_json,
                   'model_build_sid' => payload['model_build_sid'],
-                  'query' => payload['query'],
+                  'query' => payload['query'].to_json,
                   'sample_sid' => payload['sample_sid'],
                   'assistant_sid' => payload['assistant_sid'],
                   'sid' => payload['sid'],
-                  'status' => payload['status'],
+                  'status' => payload['status'].to_json,
                   'url' => payload['url'],
-                  'source_channel' => payload['source_channel'],
+                  'source_channel' => payload['source_channel'].to_json,
               }
 
               # Context

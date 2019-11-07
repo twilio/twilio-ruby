@@ -303,7 +303,7 @@ module Twilio
                   'sid' => payload['sid'],
                   'account_sid' => payload['account_sid'],
                   'conversation_sid' => payload['conversation_sid'],
-                  'target' => payload['target'],
+                  'target' => payload['target'].to_json,
                   'url' => payload['url'],
                   'configuration' => payload['configuration'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),

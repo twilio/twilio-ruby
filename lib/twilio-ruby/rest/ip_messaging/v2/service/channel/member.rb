@@ -362,14 +362,14 @@ module Twilio
                     'account_sid' => payload['account_sid'],
                     'channel_sid' => payload['channel_sid'],
                     'service_sid' => payload['service_sid'],
-                    'identity' => payload['identity'],
+                    'identity' => payload['identity'].to_json,
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                     'role_sid' => payload['role_sid'],
                     'last_consumed_message_index' => payload['last_consumed_message_index'] == nil ? payload['last_consumed_message_index'] : payload['last_consumed_message_index'].to_i,
                     'last_consumption_timestamp' => Twilio.deserialize_iso8601_datetime(payload['last_consumption_timestamp']),
                     'url' => payload['url'],
-                    'attributes' => payload['attributes'],
+                    'attributes' => payload['attributes'].to_json,
                 }
 
                 # Context

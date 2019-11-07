@@ -403,25 +403,25 @@ module Twilio
               # Marshaled Properties
               @properties = {
                   'account_sid' => payload['account_sid'],
-                  'api_version' => payload['api_version'],
-                  'body' => payload['body'],
+                  'api_version' => payload['api_version'].to_json,
+                  'body' => payload['body'].to_json,
                   'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                   'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                   'date_sent' => Twilio.deserialize_rfc2822(payload['date_sent']),
                   'direction' => payload['direction'],
                   'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
-                  'error_message' => payload['error_message'],
+                  'error_message' => payload['error_message'].to_json,
                   'from' => payload['from'],
                   'messaging_service_sid' => payload['messaging_service_sid'],
-                  'num_media' => payload['num_media'],
-                  'num_segments' => payload['num_segments'],
-                  'price' => payload['price'],
+                  'num_media' => payload['num_media'].to_json,
+                  'num_segments' => payload['num_segments'].to_json,
+                  'price' => payload['price'].to_json,
                   'price_unit' => payload['price_unit'],
                   'sid' => payload['sid'],
                   'status' => payload['status'],
                   'subresource_uris' => payload['subresource_uris'],
-                  'to' => payload['to'],
-                  'uri' => payload['uri'],
+                  'to' => payload['to'].to_json,
+                  'uri' => payload['uri'].to_json,
               }
 
               # Context

@@ -336,13 +336,13 @@ module Twilio
                 # Marshaled Properties
                 @properties = {
                     'account_sid' => payload['account_sid'],
-                    'api_version' => payload['api_version'],
+                    'api_version' => payload['api_version'].to_json,
                     'call_sid' => payload['call_sid'],
                     'conference_sid' => payload['conference_sid'],
                     'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                     'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                     'start_time' => Twilio.deserialize_rfc2822(payload['start_time']),
-                    'duration' => payload['duration'],
+                    'duration' => payload['duration'].to_json,
                     'sid' => payload['sid'],
                     'price' => payload['price'].to_f,
                     'uri' => payload['uri'],

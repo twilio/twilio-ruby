@@ -151,8 +151,7 @@ module Twilio
           ##
           # Initialize the AvailableAddOnContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The Available Add-on Sid that uniquely identifies this
-          #   resource
+          # @param [String] sid The SID of the AvailableAddOn resource to fetch.
           # @return [AvailableAddOnContext] AvailableAddOnContext
           def initialize(version, sid)
             super(version)
@@ -220,8 +219,7 @@ module Twilio
           # Initialize the AvailableAddOnInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The Available Add-on Sid that uniquely identifies this
-          #   resource
+          # @param [String] sid The SID of the AvailableAddOn resource to fetch.
           # @return [AvailableAddOnInstance] AvailableAddOnInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -229,9 +227,9 @@ module Twilio
             # Marshaled Properties
             @properties = {
                 'sid' => payload['sid'],
-                'friendly_name' => payload['friendly_name'],
-                'description' => payload['description'],
-                'pricing_type' => payload['pricing_type'],
+                'friendly_name' => payload['friendly_name'].to_json,
+                'description' => payload['description'].to_json,
+                'pricing_type' => payload['pricing_type'].to_json,
                 'configuration_schema' => payload['configuration_schema'],
                 'url' => payload['url'],
                 'links' => payload['links'],
@@ -254,43 +252,43 @@ module Twilio
           end
 
           ##
-          # @return [String] A string that uniquely identifies this Add-on
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] A description of this Add-on
+          # @return [String] The string that you assigned to describe the resource
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [String] A short description of the Add-on functionality
+          # @return [String] A short description of the Add-on's functionality
           def description
             @properties['description']
           end
 
           ##
-          # @return [String] The way customers are charged for using this Add-on
+          # @return [String] How customers are charged for using this Add-on
           def pricing_type
             @properties['pricing_type']
           end
 
           ##
-          # @return [Hash] The JSON Schema describing the Add-on's configuration
+          # @return [Hash] The JSON object with the configuration that must be provided when installing a given Add-on
           def configuration_schema
             @properties['configuration_schema']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The absolute URL of the resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] The URLs of related resources
           def links
             @properties['links']
           end

@@ -168,7 +168,7 @@ module Twilio
 
             # Marshaled Properties
             @properties = {
-                'resource_type' => payload['resource_type'],
+                'resource_type' => payload['resource_type'].to_json,
                 'url' => payload['url'],
                 'links' => payload['links'],
             }

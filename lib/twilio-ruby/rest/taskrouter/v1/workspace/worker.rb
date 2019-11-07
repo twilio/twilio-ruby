@@ -444,14 +444,14 @@ module Twilio
               # Marshaled Properties
               @properties = {
                   'account_sid' => payload['account_sid'],
-                  'activity_name' => payload['activity_name'],
+                  'activity_name' => payload['activity_name'].to_json,
                   'activity_sid' => payload['activity_sid'],
-                  'attributes' => payload['attributes'],
+                  'attributes' => payload['attributes'].to_json,
                   'available' => payload['available'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_status_changed' => Twilio.deserialize_iso8601_datetime(payload['date_status_changed']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                  'friendly_name' => payload['friendly_name'],
+                  'friendly_name' => payload['friendly_name'].to_json,
                   'sid' => payload['sid'],
                   'workspace_sid' => payload['workspace_sid'],
                   'url' => payload['url'],

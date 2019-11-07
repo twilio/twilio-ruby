@@ -162,9 +162,9 @@ module Twilio
               # Marshaled Properties
               @properties = {
                   'redirect_to' => payload['redirect_to'],
-                  'day' => payload['day'],
+                  'day' => payload['day'].to_json,
                   'size' => payload['size'].to_i,
-                  'resource_type' => payload['resource_type'],
+                  'resource_type' => payload['resource_type'].to_json,
               }
             end
 

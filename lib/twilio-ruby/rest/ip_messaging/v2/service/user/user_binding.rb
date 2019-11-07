@@ -262,12 +262,12 @@ module Twilio
                     'service_sid' => payload['service_sid'],
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                    'endpoint' => payload['endpoint'],
-                    'identity' => payload['identity'],
+                    'endpoint' => payload['endpoint'].to_json,
+                    'identity' => payload['identity'].to_json,
                     'user_sid' => payload['user_sid'],
                     'credential_sid' => payload['credential_sid'],
                     'binding_type' => payload['binding_type'],
-                    'message_types' => payload['message_types'],
+                    'message_types' => payload['message_types'].to_json,
                     'url' => payload['url'],
                 }
 

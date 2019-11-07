@@ -234,7 +234,7 @@ module Twilio
                     'account_sid' => payload['account_sid'],
                     'service_sid' => payload['service_sid'],
                     'function_sid' => payload['function_sid'],
-                    'path' => payload['path'],
+                    'path' => payload['path'].to_json,
                     'visibility' => payload['visibility'],
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'url' => payload['url'],

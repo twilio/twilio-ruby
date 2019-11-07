@@ -431,17 +431,17 @@ module Twilio
                 'account_sid' => payload['account_sid'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                'friendly_name' => payload['friendly_name'],
+                'friendly_name' => payload['friendly_name'].to_json,
                 'latest_model_build_sid' => payload['latest_model_build_sid'],
                 'links' => payload['links'],
                 'log_queries' => payload['log_queries'],
-                'development_stage' => payload['development_stage'],
+                'development_stage' => payload['development_stage'].to_json,
                 'needs_model_build' => payload['needs_model_build'],
                 'sid' => payload['sid'],
-                'unique_name' => payload['unique_name'],
+                'unique_name' => payload['unique_name'].to_json,
                 'url' => payload['url'],
                 'callback_url' => payload['callback_url'],
-                'callback_events' => payload['callback_events'],
+                'callback_events' => payload['callback_events'].to_json,
             }
 
             # Context

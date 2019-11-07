@@ -297,9 +297,9 @@ module Twilio
               # Marshaled Properties
               @properties = {
                   'iso_code' => payload['iso_code'],
-                  'name' => payload['name'],
-                  'continent' => payload['continent'],
-                  'country_codes' => payload['country_codes'],
+                  'name' => payload['name'].to_json,
+                  'continent' => payload['continent'].to_json,
+                  'country_codes' => payload['country_codes'].to_json,
                   'low_risk_numbers_enabled' => payload['low_risk_numbers_enabled'],
                   'high_risk_special_numbers_enabled' => payload['high_risk_special_numbers_enabled'],
                   'high_risk_tollfraud_numbers_enabled' => payload['high_risk_tollfraud_numbers_enabled'],

@@ -276,11 +276,11 @@ module Twilio
                     'account_sid' => payload['account_sid'],
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                    'field_type' => payload['field_type'],
+                    'field_type' => payload['field_type'].to_json,
                     'task_sid' => payload['task_sid'],
                     'assistant_sid' => payload['assistant_sid'],
                     'sid' => payload['sid'],
-                    'unique_name' => payload['unique_name'],
+                    'unique_name' => payload['unique_name'].to_json,
                     'url' => payload['url'],
                 }
 

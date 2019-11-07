@@ -435,7 +435,7 @@ module Twilio
                     'reservation_status' => payload['reservation_status'],
                     'sid' => payload['sid'],
                     'task_sid' => payload['task_sid'],
-                    'worker_name' => payload['worker_name'],
+                    'worker_name' => payload['worker_name'].to_json,
                     'worker_sid' => payload['worker_sid'],
                     'workspace_sid' => payload['workspace_sid'],
                     'url' => payload['url'],

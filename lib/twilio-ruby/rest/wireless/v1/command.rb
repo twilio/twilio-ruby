@@ -296,7 +296,7 @@ module Twilio
                 'sid' => payload['sid'],
                 'account_sid' => payload['account_sid'],
                 'sim_sid' => payload['sim_sid'],
-                'command' => payload['command'],
+                'command' => payload['command'].to_json,
                 'command_mode' => payload['command_mode'],
                 'transport' => payload['transport'],
                 'delivery_receipt_requested' => payload['delivery_receipt_requested'],

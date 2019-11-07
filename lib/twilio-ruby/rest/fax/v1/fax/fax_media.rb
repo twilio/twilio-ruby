@@ -223,7 +223,7 @@ module Twilio
                   'sid' => payload['sid'],
                   'account_sid' => payload['account_sid'],
                   'fax_sid' => payload['fax_sid'],
-                  'content_type' => payload['content_type'],
+                  'content_type' => payload['content_type'].to_json,
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],

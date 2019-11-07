@@ -157,7 +157,7 @@ module Twilio
             # Marshaled Properties
             @properties = {
                 'account_sid' => payload['account_sid'],
-                'friendly_name' => payload['friendly_name'],
+                'friendly_name' => payload['friendly_name'].to_json,
                 'aws_credentials_sid' => payload['aws_credentials_sid'],
                 'aws_s3_url' => payload['aws_s3_url'],
                 'aws_storage_enabled' => payload['aws_storage_enabled'],

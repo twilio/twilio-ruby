@@ -294,7 +294,7 @@ module Twilio
                   'available' => payload['available'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                  'friendly_name' => payload['friendly_name'],
+                  'friendly_name' => payload['friendly_name'].to_json,
                   'sid' => payload['sid'],
                   'workspace_sid' => payload['workspace_sid'],
                   'url' => payload['url'],

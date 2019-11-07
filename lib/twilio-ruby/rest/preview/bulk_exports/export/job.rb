@@ -130,11 +130,11 @@ module Twilio
 
               # Marshaled Properties
               @properties = {
-                  'resource_type' => payload['resource_type'],
-                  'friendly_name' => payload['friendly_name'],
+                  'resource_type' => payload['resource_type'].to_json,
+                  'friendly_name' => payload['friendly_name'].to_json,
                   'details' => payload['details'],
-                  'start_day' => payload['start_day'],
-                  'end_day' => payload['end_day'],
+                  'start_day' => payload['start_day'].to_json,
+                  'end_day' => payload['end_day'].to_json,
                   'job_sid' => payload['job_sid'],
                   'url' => payload['url'],
               }

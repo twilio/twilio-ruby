@@ -270,10 +270,10 @@ module Twilio
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                     'field_type_sid' => payload['field_type_sid'],
-                    'language' => payload['language'],
+                    'language' => payload['language'].to_json,
                     'assistant_sid' => payload['assistant_sid'],
                     'sid' => payload['sid'],
-                    'value' => payload['value'],
+                    'value' => payload['value'].to_json,
                     'url' => payload['url'],
                     'synonym_of' => payload['synonym_of'],
                 }

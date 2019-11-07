@@ -336,7 +336,7 @@ module Twilio
               # Marshaled Properties
               @properties = {
                   'country_code' => payload['country_code'],
-                  'country' => payload['country'],
+                  'country' => payload['country'].to_json,
                   'uri' => payload['uri'],
                   'beta' => payload['beta'],
                   'subresource_uris' => payload['subresource_uris'],

@@ -127,7 +127,7 @@ module Twilio
               # Marshaled Properties
               @properties = {
                   'sim_sid' => payload['sim_sid'],
-                  'sim_unique_name' => payload['sim_unique_name'],
+                  'sim_unique_name' => payload['sim_unique_name'].to_json,
                   'account_sid' => payload['account_sid'],
                   'period' => payload['period'],
                   'commands_usage' => payload['commands_usage'],

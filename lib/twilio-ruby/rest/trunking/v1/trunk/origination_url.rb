@@ -294,7 +294,7 @@ module Twilio
                   'weight' => payload['weight'].to_i,
                   'enabled' => payload['enabled'],
                   'sip_url' => payload['sip_url'],
-                  'friendly_name' => payload['friendly_name'],
+                  'friendly_name' => payload['friendly_name'].to_json,
                   'priority' => payload['priority'].to_i,
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),

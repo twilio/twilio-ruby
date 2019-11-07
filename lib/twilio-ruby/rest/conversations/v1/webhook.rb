@@ -155,9 +155,9 @@ module Twilio
             @properties = {
                 'account_sid' => payload['account_sid'],
                 'method' => payload['method'],
-                'filters' => payload['filters'],
-                'pre_webhook_url' => payload['pre_webhook_url'],
-                'post_webhook_url' => payload['post_webhook_url'],
+                'filters' => payload['filters'].to_json,
+                'pre_webhook_url' => payload['pre_webhook_url'].to_json,
+                'post_webhook_url' => payload['post_webhook_url'].to_json,
                 'target' => payload['target'],
                 'url' => payload['url'],
             }

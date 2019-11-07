@@ -89,8 +89,8 @@ module Twilio
               # Marshaled Properties
               @properties = {
                   'account_sid' => payload['account_sid'],
-                  'balance' => payload['balance'],
-                  'currency' => payload['currency'],
+                  'balance' => payload['balance'].to_json,
+                  'currency' => payload['currency'].to_json,
               }
             end
 

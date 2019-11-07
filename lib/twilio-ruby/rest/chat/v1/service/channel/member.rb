@@ -317,7 +317,7 @@ module Twilio
                     'account_sid' => payload['account_sid'],
                     'channel_sid' => payload['channel_sid'],
                     'service_sid' => payload['service_sid'],
-                    'identity' => payload['identity'],
+                    'identity' => payload['identity'].to_json,
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                     'role_sid' => payload['role_sid'],

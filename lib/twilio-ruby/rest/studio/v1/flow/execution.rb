@@ -307,7 +307,7 @@ module Twilio
                   'account_sid' => payload['account_sid'],
                   'flow_sid' => payload['flow_sid'],
                   'contact_sid' => payload['contact_sid'],
-                  'contact_channel_address' => payload['contact_channel_address'],
+                  'contact_channel_address' => payload['contact_channel_address'].to_json,
                   'context' => payload['context'],
                   'status' => payload['status'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),

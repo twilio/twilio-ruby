@@ -146,8 +146,8 @@ module Twilio
             @properties = {
                 'enabled' => payload['enabled'],
                 'webhook_url' => payload['webhook_url'],
-                'webhook_method' => payload['webhook_method'],
-                'resource_type' => payload['resource_type'],
+                'webhook_method' => payload['webhook_method'].to_json,
+                'resource_type' => payload['resource_type'].to_json,
                 'url' => payload['url'],
             }
 

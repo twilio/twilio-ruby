@@ -141,9 +141,9 @@ module Twilio
             # Marshaled Properties
             @properties = {
                 'caller_name' => payload['caller_name'],
-                'country_code' => payload['country_code'],
+                'country_code' => payload['country_code'].to_json,
                 'phone_number' => payload['phone_number'],
-                'national_format' => payload['national_format'],
+                'national_format' => payload['national_format'].to_json,
                 'carrier' => payload['carrier'],
                 'add_ons' => payload['add_ons'],
                 'url' => payload['url'],

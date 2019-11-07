@@ -287,7 +287,7 @@ module Twilio
                 @properties = {
                     'sid' => payload['sid'],
                     'account_sid' => payload['account_sid'],
-                    'friendly_name' => payload['friendly_name'],
+                    'friendly_name' => payload['friendly_name'].to_json,
                     'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                     'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                     'subresource_uris' => payload['subresource_uris'],

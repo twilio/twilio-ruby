@@ -99,9 +99,9 @@ module Twilio
                   'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                   'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                   'ice_servers' => payload['ice_servers'],
-                  'password' => payload['password'],
-                  'ttl' => payload['ttl'],
-                  'username' => payload['username'],
+                  'password' => payload['password'].to_json,
+                  'ttl' => payload['ttl'].to_json,
+                  'username' => payload['username'].to_json,
               }
             end
 

@@ -238,17 +238,17 @@ module Twilio
                 # Marshaled Properties
                 @properties = {
                     'account_sid' => payload['account_sid'],
-                    'api_version' => payload['api_version'],
+                    'api_version' => payload['api_version'].to_json,
                     'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                     'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-                    'duration' => payload['duration'],
+                    'duration' => payload['duration'].to_json,
                     'price' => payload['price'].to_f,
                     'price_unit' => payload['price_unit'],
                     'recording_sid' => payload['recording_sid'],
                     'sid' => payload['sid'],
                     'status' => payload['status'],
-                    'transcription_text' => payload['transcription_text'],
-                    'type' => payload['type'],
+                    'transcription_text' => payload['transcription_text'].to_json,
+                    'type' => payload['type'].to_json,
                     'uri' => payload['uri'],
                 }
 

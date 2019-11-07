@@ -355,12 +355,12 @@ module Twilio
                     'service_sid' => payload['service_sid'],
                     'list_sid' => payload['list_sid'],
                     'url' => payload['url'],
-                    'revision' => payload['revision'],
+                    'revision' => payload['revision'].to_json,
                     'data' => payload['data'],
                     'date_expires' => Twilio.deserialize_iso8601_datetime(payload['date_expires']),
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                    'created_by' => payload['created_by'],
+                    'created_by' => payload['created_by'].to_json,
                 }
 
                 # Context

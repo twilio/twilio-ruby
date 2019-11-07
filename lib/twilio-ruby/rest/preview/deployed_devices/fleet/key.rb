@@ -268,11 +268,11 @@ module Twilio
               @properties = {
                   'sid' => payload['sid'],
                   'url' => payload['url'],
-                  'friendly_name' => payload['friendly_name'],
+                  'friendly_name' => payload['friendly_name'].to_json,
                   'fleet_sid' => payload['fleet_sid'],
                   'account_sid' => payload['account_sid'],
                   'device_sid' => payload['device_sid'],
-                  'secret' => payload['secret'],
+                  'secret' => payload['secret'].to_json,
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
               }

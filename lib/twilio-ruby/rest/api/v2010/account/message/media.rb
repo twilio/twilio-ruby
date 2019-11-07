@@ -258,7 +258,7 @@ module Twilio
                 # Marshaled Properties
                 @properties = {
                     'account_sid' => payload['account_sid'],
-                    'content_type' => payload['content_type'],
+                    'content_type' => payload['content_type'].to_json,
                     'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                     'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                     'parent_sid' => payload['parent_sid'],

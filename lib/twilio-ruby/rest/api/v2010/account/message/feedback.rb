@@ -116,7 +116,7 @@ module Twilio
                     'outcome' => payload['outcome'],
                     'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                     'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-                    'uri' => payload['uri'],
+                    'uri' => payload['uri'].to_json,
                 }
               end
 

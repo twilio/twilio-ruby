@@ -226,7 +226,7 @@ module Twilio
                     'participant_sid' => payload['participant_sid'],
                     'publisher_sid' => payload['publisher_sid'],
                     'room_sid' => payload['room_sid'],
-                    'name' => payload['name'],
+                    'name' => payload['name'].to_json,
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                     'enabled' => payload['enabled'],

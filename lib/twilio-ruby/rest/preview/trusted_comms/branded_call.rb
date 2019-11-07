@@ -102,23 +102,23 @@ module Twilio
             # Marshaled Properties
             @properties = {
                 'account_sid' => payload['account_sid'],
-                'bg_color' => payload['bg_color'],
+                'bg_color' => payload['bg_color'].to_json,
                 'brand_sid' => payload['brand_sid'],
                 'branded_channel_sid' => payload['branded_channel_sid'],
                 'business_sid' => payload['business_sid'],
                 'call_sid' => payload['call_sid'],
-                'caller' => payload['caller'],
+                'caller' => payload['caller'].to_json,
                 'created_at' => Twilio.deserialize_iso8601_datetime(payload['created_at']),
-                'font_color' => payload['font_color'],
-                'from' => payload['from'],
-                'logo' => payload['logo'],
+                'font_color' => payload['font_color'].to_json,
+                'from' => payload['from'].to_json,
+                'logo' => payload['logo'].to_json,
                 'phone_number_sid' => payload['phone_number_sid'],
-                'reason' => payload['reason'],
+                'reason' => payload['reason'].to_json,
                 'sid' => payload['sid'],
-                'status' => payload['status'],
-                'to' => payload['to'],
+                'status' => payload['status'].to_json,
+                'to' => payload['to'].to_json,
                 'url' => payload['url'],
-                'use_case' => payload['use_case'],
+                'use_case' => payload['use_case'].to_json,
             }
           end
 

@@ -245,8 +245,8 @@ module Twilio
                   'service_sid' => payload['service_sid'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                  'short_code' => payload['short_code'],
-                  'country_code' => payload['country_code'],
+                  'short_code' => payload['short_code'].to_json,
+                  'country_code' => payload['country_code'].to_json,
                   'capabilities' => payload['capabilities'],
                   'url' => payload['url'],
               }

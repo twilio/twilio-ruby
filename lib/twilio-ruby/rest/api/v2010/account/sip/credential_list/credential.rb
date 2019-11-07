@@ -284,7 +284,7 @@ module Twilio
                       'sid' => payload['sid'],
                       'account_sid' => payload['account_sid'],
                       'credential_list_sid' => payload['credential_list_sid'],
-                      'username' => payload['username'],
+                      'username' => payload['username'].to_json,
                       'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                       'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                       'uri' => payload['uri'],

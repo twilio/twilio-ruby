@@ -329,21 +329,21 @@ module Twilio
                 # Marshaled Properties
                 @properties = {
                     'account_sid' => payload['account_sid'],
-                    'api_version' => payload['api_version'],
+                    'api_version' => payload['api_version'].to_json,
                     'callback_method' => payload['callback_method'],
                     'callback_url' => payload['callback_url'],
-                    'current_value' => payload['current_value'],
+                    'current_value' => payload['current_value'].to_json,
                     'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                     'date_fired' => Twilio.deserialize_rfc2822(payload['date_fired']),
                     'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-                    'friendly_name' => payload['friendly_name'],
+                    'friendly_name' => payload['friendly_name'].to_json,
                     'recurring' => payload['recurring'],
                     'sid' => payload['sid'],
                     'trigger_by' => payload['trigger_by'],
-                    'trigger_value' => payload['trigger_value'],
+                    'trigger_value' => payload['trigger_value'].to_json,
                     'uri' => payload['uri'],
                     'usage_category' => payload['usage_category'],
-                    'usage_record_uri' => payload['usage_record_uri'],
+                    'usage_record_uri' => payload['usage_record_uri'].to_json,
                 }
 
                 # Context

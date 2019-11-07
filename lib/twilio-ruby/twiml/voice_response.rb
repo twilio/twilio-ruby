@@ -273,6 +273,48 @@ module Twilio
         yield(stop) if block_given?
         append(stop)
       end
+
+      ##
+      # Create a new <Refer> element
+      # action:: Action URL
+      # method:: Action URL method
+      # keyword_args:: additional attributes
+      def refer(action: nil, method: nil, **keyword_args)
+        refer = Refer.new(action: action, method: method, **keyword_args)
+
+        yield(refer) if block_given?
+        append(refer)
+      end
+    end
+
+    ##
+    # <Refer> TwiML Verb
+    class Refer < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Refer'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Sip> element
+      # sip_url:: SIP URL
+      # keyword_args:: additional attributes
+      def sip(sip_url, **keyword_args)
+        append(ReferSip.new(sip_url, **keyword_args))
+      end
+    end
+
+    ##
+    # <Sip> TwiML Noun used in <Refer>
+    class ReferSip < TwiML
+      def initialize(sip_url, **keyword_args)
+        super(**keyword_args)
+        @name = 'Sip'
+        @value = sip_url
+        yield(self) if block_given?
+      end
     end
 
     ##

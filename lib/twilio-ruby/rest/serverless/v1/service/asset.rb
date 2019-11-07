@@ -282,7 +282,7 @@ module Twilio
                   'sid' => payload['sid'],
                   'account_sid' => payload['account_sid'],
                   'service_sid' => payload['service_sid'],
-                  'friendly_name' => payload['friendly_name'],
+                  'friendly_name' => payload['friendly_name'].to_json,
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],

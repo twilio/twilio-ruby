@@ -298,20 +298,20 @@ module Twilio
                 # Marshaled Properties
                 @properties = {
                     'account_sid' => payload['account_sid'],
-                    'api_version' => payload['api_version'],
-                    'as_of' => payload['as_of'],
+                    'api_version' => payload['api_version'].to_json,
+                    'as_of' => payload['as_of'].to_json,
                     'category' => payload['category'],
-                    'count' => payload['count'],
-                    'count_unit' => payload['count_unit'],
-                    'description' => payload['description'],
+                    'count' => payload['count'].to_json,
+                    'count_unit' => payload['count_unit'].to_json,
+                    'description' => payload['description'].to_json,
                     'end_date' => Twilio.deserialize_iso8601_date(payload['end_date']),
                     'price' => payload['price'].to_f,
                     'price_unit' => payload['price_unit'],
                     'start_date' => Twilio.deserialize_iso8601_date(payload['start_date']),
                     'subresource_uris' => payload['subresource_uris'],
                     'uri' => payload['uri'],
-                    'usage' => payload['usage'],
-                    'usage_unit' => payload['usage_unit'],
+                    'usage' => payload['usage'].to_json,
+                    'usage_unit' => payload['usage_unit'].to_json,
                 }
               end
 

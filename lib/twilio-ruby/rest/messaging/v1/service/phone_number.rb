@@ -251,8 +251,8 @@ module Twilio
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'phone_number' => payload['phone_number'],
-                  'country_code' => payload['country_code'],
-                  'capabilities' => payload['capabilities'],
+                  'country_code' => payload['country_code'].to_json,
+                  'capabilities' => payload['capabilities'].to_json,
                   'url' => payload['url'],
               }
 

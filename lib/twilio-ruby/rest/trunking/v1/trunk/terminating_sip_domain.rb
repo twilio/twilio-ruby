@@ -240,12 +240,12 @@ module Twilio
               # Marshaled Properties
               @properties = {
                   'account_sid' => payload['account_sid'],
-                  'api_version' => payload['api_version'],
-                  'auth_type' => payload['auth_type'],
+                  'api_version' => payload['api_version'].to_json,
+                  'auth_type' => payload['auth_type'].to_json,
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                  'domain_name' => payload['domain_name'],
-                  'friendly_name' => payload['friendly_name'],
+                  'domain_name' => payload['domain_name'].to_json,
+                  'friendly_name' => payload['friendly_name'].to_json,
                   'sid' => payload['sid'],
                   'url' => payload['url'],
                   'voice_fallback_method' => payload['voice_fallback_method'],

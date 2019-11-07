@@ -305,8 +305,8 @@ module Twilio
                   @properties = {
                       'sid' => payload['sid'],
                       'account_sid' => payload['account_sid'],
-                      'friendly_name' => payload['friendly_name'],
-                      'ip_address' => payload['ip_address'],
+                      'friendly_name' => payload['friendly_name'].to_json,
+                      'ip_address' => payload['ip_address'].to_json,
                       'cidr_prefix_length' => payload['cidr_prefix_length'].to_i,
                       'ip_access_control_list_sid' => payload['ip_access_control_list_sid'],
                       'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),

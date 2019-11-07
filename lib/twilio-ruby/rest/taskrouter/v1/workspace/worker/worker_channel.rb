@@ -259,7 +259,7 @@ module Twilio
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                     'sid' => payload['sid'],
                     'task_channel_sid' => payload['task_channel_sid'],
-                    'task_channel_unique_name' => payload['task_channel_unique_name'],
+                    'task_channel_unique_name' => payload['task_channel_unique_name'].to_json,
                     'worker_sid' => payload['worker_sid'],
                     'workspace_sid' => payload['workspace_sid'],
                     'url' => payload['url'],

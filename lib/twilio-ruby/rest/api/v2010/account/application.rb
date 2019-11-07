@@ -361,10 +361,10 @@ module Twilio
               # Marshaled Properties
               @properties = {
                   'account_sid' => payload['account_sid'],
-                  'api_version' => payload['api_version'],
+                  'api_version' => payload['api_version'].to_json,
                   'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                   'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-                  'friendly_name' => payload['friendly_name'],
+                  'friendly_name' => payload['friendly_name'].to_json,
                   'message_status_callback' => payload['message_status_callback'],
                   'sid' => payload['sid'],
                   'sms_fallback_method' => payload['sms_fallback_method'],

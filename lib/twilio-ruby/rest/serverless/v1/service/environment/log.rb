@@ -245,7 +245,7 @@ module Twilio
                     'function_sid' => payload['function_sid'],
                     'request_sid' => payload['request_sid'],
                     'level' => payload['level'],
-                    'message' => payload['message'],
+                    'message' => payload['message'].to_json,
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'url' => payload['url'],
                 }

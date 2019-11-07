@@ -257,9 +257,9 @@ module Twilio
                       'account_sid' => payload['account_sid'],
                       'resource_sid' => payload['resource_sid'],
                       'assigned_add_on_sid' => payload['assigned_add_on_sid'],
-                      'friendly_name' => payload['friendly_name'],
-                      'product_name' => payload['product_name'],
-                      'unique_name' => payload['unique_name'],
+                      'friendly_name' => payload['friendly_name'].to_json,
+                      'product_name' => payload['product_name'].to_json,
+                      'unique_name' => payload['unique_name'].to_json,
                       'uri' => payload['uri'],
                       'enabled' => payload['enabled'],
                   }

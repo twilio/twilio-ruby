@@ -285,7 +285,7 @@ module Twilio
                   'current_size' => payload['current_size'].to_i,
                   'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                   'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-                  'friendly_name' => payload['friendly_name'],
+                  'friendly_name' => payload['friendly_name'].to_json,
                   'max_size' => payload['max_size'].to_i,
                   'sid' => payload['sid'],
                   'uri' => payload['uri'],

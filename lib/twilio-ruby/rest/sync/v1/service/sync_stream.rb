@@ -297,7 +297,7 @@ module Twilio
               # Marshaled Properties
               @properties = {
                   'sid' => payload['sid'],
-                  'unique_name' => payload['unique_name'],
+                  'unique_name' => payload['unique_name'].to_json,
                   'account_sid' => payload['account_sid'],
                   'service_sid' => payload['service_sid'],
                   'url' => payload['url'],
@@ -305,7 +305,7 @@ module Twilio
                   'date_expires' => Twilio.deserialize_iso8601_datetime(payload['date_expires']),
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                  'created_by' => payload['created_by'],
+                  'created_by' => payload['created_by'].to_json,
               }
 
               # Context

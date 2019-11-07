@@ -299,10 +299,10 @@ module Twilio
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'assistant_sid' => payload['assistant_sid'],
                   'sid' => payload['sid'],
-                  'unique_name' => payload['unique_name'],
-                  'events' => payload['events'],
+                  'unique_name' => payload['unique_name'].to_json,
+                  'events' => payload['events'].to_json,
                   'webhook_url' => payload['webhook_url'],
-                  'webhook_method' => payload['webhook_method'],
+                  'webhook_method' => payload['webhook_method'].to_json,
               }
 
               # Context

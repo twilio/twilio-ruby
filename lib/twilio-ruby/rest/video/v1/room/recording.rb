@@ -261,7 +261,7 @@ module Twilio
                   'container_format' => payload['container_format'],
                   'codec' => payload['codec'],
                   'grouping_sids' => payload['grouping_sids'],
-                  'track_name' => payload['track_name'],
+                  'track_name' => payload['track_name'].to_json,
                   'offset' => payload['offset'].to_i,
                   'room_sid' => payload['room_sid'],
                   'links' => payload['links'],

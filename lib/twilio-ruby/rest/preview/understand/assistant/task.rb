@@ -344,11 +344,11 @@ module Twilio
                   'account_sid' => payload['account_sid'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                  'friendly_name' => payload['friendly_name'],
+                  'friendly_name' => payload['friendly_name'].to_json,
                   'links' => payload['links'],
                   'assistant_sid' => payload['assistant_sid'],
                   'sid' => payload['sid'],
-                  'unique_name' => payload['unique_name'],
+                  'unique_name' => payload['unique_name'].to_json,
                   'actions_url' => payload['actions_url'],
                   'url' => payload['url'],
               }

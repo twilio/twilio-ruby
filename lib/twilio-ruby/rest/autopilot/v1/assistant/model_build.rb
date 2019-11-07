@@ -281,7 +281,7 @@ module Twilio
                   'assistant_sid' => payload['assistant_sid'],
                   'sid' => payload['sid'],
                   'status' => payload['status'],
-                  'unique_name' => payload['unique_name'],
+                  'unique_name' => payload['unique_name'].to_json,
                   'url' => payload['url'],
                   'build_duration' => payload['build_duration'] == nil ? payload['build_duration'] : payload['build_duration'].to_i,
                   'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,

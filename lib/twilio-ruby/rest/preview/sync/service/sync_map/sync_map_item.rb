@@ -288,16 +288,16 @@ module Twilio
 
                 # Marshaled Properties
                 @properties = {
-                    'key' => payload['key'],
+                    'key' => payload['key'].to_json,
                     'account_sid' => payload['account_sid'],
                     'service_sid' => payload['service_sid'],
                     'map_sid' => payload['map_sid'],
                     'url' => payload['url'],
-                    'revision' => payload['revision'],
+                    'revision' => payload['revision'].to_json,
                     'data' => payload['data'],
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                    'created_by' => payload['created_by'],
+                    'created_by' => payload['created_by'].to_json,
                 }
 
                 # Context

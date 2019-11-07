@@ -202,7 +202,7 @@ module Twilio
 
               # Marshaled Properties
               @properties = {
-                  'country' => payload['country'],
+                  'country' => payload['country'].to_json,
                   'iso_country' => payload['iso_country'],
                   'phone_number_prices' => payload['phone_number_prices'],
                   'price_unit' => payload['price_unit'],

@@ -120,20 +120,20 @@ module Twilio
 
             # Marshaled Properties
             @properties = {
-                'bg_color' => payload['bg_color'],
-                'caller' => payload['caller'],
+                'bg_color' => payload['bg_color'].to_json,
+                'caller' => payload['caller'].to_json,
                 'created_at' => Twilio.deserialize_iso8601_datetime(payload['created_at']),
-                'font_color' => payload['font_color'],
-                'from' => payload['from'],
-                'logo' => payload['logo'],
-                'manager' => payload['manager'],
-                'reason' => payload['reason'],
-                'shield_img' => payload['shield_img'],
+                'font_color' => payload['font_color'].to_json,
+                'from' => payload['from'].to_json,
+                'logo' => payload['logo'].to_json,
+                'manager' => payload['manager'].to_json,
+                'reason' => payload['reason'].to_json,
+                'shield_img' => payload['shield_img'].to_json,
                 'sid' => payload['sid'],
-                'status' => payload['status'],
-                'to' => payload['to'],
+                'status' => payload['status'].to_json,
+                'to' => payload['to'].to_json,
                 'url' => payload['url'],
-                'use_case' => payload['use_case'],
+                'use_case' => payload['use_case'].to_json,
             }
 
             # Context

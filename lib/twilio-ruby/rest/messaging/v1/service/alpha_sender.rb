@@ -251,7 +251,7 @@ module Twilio
                   'service_sid' => payload['service_sid'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                  'alpha_sender' => payload['alpha_sender'],
+                  'alpha_sender' => payload['alpha_sender'].to_json,
                   'capabilities' => payload['capabilities'],
                   'url' => payload['url'],
               }

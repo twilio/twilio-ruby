@@ -163,7 +163,7 @@ module Twilio
                 super(version)
 
                 # Marshaled Properties
-                @properties = {'prefix' => payload['prefix'], }
+                @properties = {'prefix' => payload['prefix'].to_json, }
               end
 
               ##

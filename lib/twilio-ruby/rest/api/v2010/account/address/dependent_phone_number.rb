@@ -188,7 +188,7 @@ module Twilio
                     'capabilities' => payload['capabilities'],
                     'status_callback' => payload['status_callback'],
                     'status_callback_method' => payload['status_callback_method'],
-                    'api_version' => payload['api_version'],
+                    'api_version' => payload['api_version'].to_json,
                     'sms_application_sid' => payload['sms_application_sid'],
                     'voice_application_sid' => payload['voice_application_sid'],
                     'trunk_sid' => payload['trunk_sid'],

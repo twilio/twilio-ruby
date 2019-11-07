@@ -337,7 +337,7 @@ module Twilio
                     'account_sid' => payload['account_sid'],
                     'service_sid' => payload['service_sid'],
                     'channel_sid' => payload['channel_sid'],
-                    'type' => payload['type'],
+                    'type' => payload['type'].to_json,
                     'url' => payload['url'],
                     'configuration' => payload['configuration'],
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),

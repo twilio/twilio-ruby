@@ -367,12 +367,12 @@ module Twilio
             # Marshaled Properties
             @properties = {
                 'sid' => payload['sid'],
-                'unique_name' => payload['unique_name'],
+                'unique_name' => payload['unique_name'].to_json,
                 'account_sid' => payload['account_sid'],
                 'rate_plan_sid' => payload['rate_plan_sid'],
-                'friendly_name' => payload['friendly_name'],
-                'iccid' => payload['iccid'],
-                'e_id' => payload['e_id'],
+                'friendly_name' => payload['friendly_name'].to_json,
+                'iccid' => payload['iccid'].to_json,
+                'e_id' => payload['e_id'].to_json,
                 'status' => payload['status'],
                 'reset_status' => payload['reset_status'],
                 'commands_callback_url' => payload['commands_callback_url'],
@@ -389,7 +389,7 @@ module Twilio
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
                 'links' => payload['links'],
-                'ip_address' => payload['ip_address'],
+                'ip_address' => payload['ip_address'].to_json,
             }
 
             # Context

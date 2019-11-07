@@ -105,7 +105,7 @@ module Twilio
                   'account_sid' => payload['account_sid'],
                   'to' => payload['to'],
                   'channel' => payload['channel'],
-                  'status' => payload['status'],
+                  'status' => payload['status'].to_json,
                   'valid' => payload['valid'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),

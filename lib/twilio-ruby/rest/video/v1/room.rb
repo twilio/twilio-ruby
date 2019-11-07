@@ -356,7 +356,7 @@ module Twilio
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'account_sid' => payload['account_sid'],
                 'enable_turn' => payload['enable_turn'],
-                'unique_name' => payload['unique_name'],
+                'unique_name' => payload['unique_name'].to_json,
                 'status_callback' => payload['status_callback'],
                 'status_callback_method' => payload['status_callback_method'],
                 'end_time' => Twilio.deserialize_iso8601_datetime(payload['end_time']),
@@ -365,7 +365,7 @@ module Twilio
                 'max_participants' => payload['max_participants'].to_i,
                 'record_participants_on_connect' => payload['record_participants_on_connect'],
                 'video_codecs' => payload['video_codecs'],
-                'media_region' => payload['media_region'],
+                'media_region' => payload['media_region'].to_json,
                 'url' => payload['url'],
                 'links' => payload['links'],
             }

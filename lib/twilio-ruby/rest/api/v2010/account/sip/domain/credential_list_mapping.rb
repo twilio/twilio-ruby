@@ -259,7 +259,7 @@ module Twilio
                       'account_sid' => payload['account_sid'],
                       'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                       'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-                      'friendly_name' => payload['friendly_name'],
+                      'friendly_name' => payload['friendly_name'].to_json,
                       'sid' => payload['sid'],
                       'uri' => payload['uri'],
                       'subresource_uris' => payload['subresource_uris'],

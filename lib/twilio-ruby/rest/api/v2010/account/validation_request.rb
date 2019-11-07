@@ -118,7 +118,7 @@ module Twilio
               @properties = {
                   'account_sid' => payload['account_sid'],
                   'phone_number' => payload['phone_number'],
-                  'friendly_name' => payload['friendly_name'],
+                  'friendly_name' => payload['friendly_name'].to_json,
                   'validation_code' => payload['validation_code'].to_i,
                   'call_sid' => payload['call_sid'],
               }

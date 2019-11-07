@@ -213,13 +213,13 @@ module Twilio
 
               # Marshaled Properties
               @properties = {
-                  'friendly_name' => payload['friendly_name'],
-                  'resource_type' => payload['resource_type'],
-                  'start_day' => payload['start_day'],
-                  'end_day' => payload['end_day'],
-                  'webhook_url' => payload['webhook_url'],
-                  'webhook_method' => payload['webhook_method'],
-                  'email' => payload['email'],
+                  'friendly_name' => payload['friendly_name'].to_json,
+                  'resource_type' => payload['resource_type'].to_json,
+                  'start_day' => payload['start_day'].to_json,
+                  'end_day' => payload['end_day'].to_json,
+                  'webhook_url' => payload['webhook_url'].to_json,
+                  'webhook_method' => payload['webhook_method'].to_json,
+                  'email' => payload['email'].to_json,
                   'job_sid' => payload['job_sid'],
                   'details' => payload['details'],
               }

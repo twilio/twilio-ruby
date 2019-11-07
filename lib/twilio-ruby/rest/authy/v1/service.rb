@@ -269,7 +269,7 @@ module Twilio
             # Marshaled Properties
             @properties = {
                 'sid' => payload['sid'],
-                'friendly_name' => payload['friendly_name'],
+                'friendly_name' => payload['friendly_name'].to_json,
                 'account_sid' => payload['account_sid'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),

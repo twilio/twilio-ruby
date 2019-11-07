@@ -213,9 +213,9 @@ module Twilio
               # Marshaled Properties
               @properties = {
                   'account_sid' => payload['account_sid'],
-                  'connect_app_company_name' => payload['connect_app_company_name'],
-                  'connect_app_description' => payload['connect_app_description'],
-                  'connect_app_friendly_name' => payload['connect_app_friendly_name'],
+                  'connect_app_company_name' => payload['connect_app_company_name'].to_json,
+                  'connect_app_description' => payload['connect_app_description'].to_json,
+                  'connect_app_friendly_name' => payload['connect_app_friendly_name'].to_json,
                   'connect_app_homepage_url' => payload['connect_app_homepage_url'],
                   'connect_app_sid' => payload['connect_app_sid'],
                   'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
