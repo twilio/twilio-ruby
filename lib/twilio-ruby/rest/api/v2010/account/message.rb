@@ -72,6 +72,7 @@ module Twilio
             # @param [Boolean] force_delivery Reserved
             # @param [Boolean] smart_encoded Whether to detect Unicode characters that have a
             #   similar GSM-7 character and replace them. Can be: `true` or `false`.
+            # @param [String] persistent_action Rich actions for Channels Messages.
             # @param [String] from A Twilio phone number in
             #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, an [alphanumeric
             #   sender
@@ -88,14 +89,14 @@ module Twilio
             #   1,600 characters in length.
             # @param [String] media_url The URL of the media to send with the message. The
             #   media can be of type `gif`, `png`, and `jpeg` and will be formatted correctly on
-            #   the recipient's device. [Other
-            #   types](https://www.twilio.com/docs/sms/accepted-mime-types) of media are also
-            #   accepted. The media size limit is 5MB. To send more than one image in the
-            #   message body, provide multiple `media_url` parameters in the POST request. You
-            #   can include up to 10 `media_url` parameters per message. You can send images in
-            #   an SMS message in only the US and Canada.
+            #   the recipient's device. The media size limit is 5MB for supported file types
+            #   (JPEG, PNG, GIF) and 500KB for [other
+            #   types](https://www.twilio.com/docs/sms/accepted-mime-types) of accepted media.
+            #   To send more than one image in the message body, provide multiple `media_url`
+            #   parameters in the POST request. You can include up to 10 `media_url` parameters
+            #   per message. You can send images in an SMS message in only the US and Canada.
             # @return [MessageInstance] Newly created MessageInstance
-            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, force_delivery: :unset, smart_encoded: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
+            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, force_delivery: :unset, smart_encoded: :unset, persistent_action: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -109,6 +110,7 @@ module Twilio
                   'ValidityPeriod' => validity_period,
                   'ForceDelivery' => force_delivery,
                   'SmartEncoded' => smart_encoded,
+                  'PersistentAction' => Twilio.serialize_list(persistent_action) { |e| e },
               })
 
               payload = @version.create(

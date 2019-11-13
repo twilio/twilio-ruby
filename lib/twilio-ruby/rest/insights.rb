@@ -29,11 +29,11 @@ module Twilio
       end
 
       ##
-      # @param [String] call_sid The call_sid
-      # @return [Twilio::REST::Insights::V1::CallSummaryInstance] if call_sid was passed.
-      # @return [Twilio::REST::Insights::V1::CallSummaryList]
-      def summary(call_sid=:unset)
-        self.v1.summary(call_sid)
+      # @param [String] sid The sid
+      # @return [Twilio::REST::Insights::V1::CallInstance] if sid was passed.
+      # @return [Twilio::REST::Insights::V1::CallList]
+      def calls(sid=:unset)
+        self.v1.calls(sid)
       end
 
       ##

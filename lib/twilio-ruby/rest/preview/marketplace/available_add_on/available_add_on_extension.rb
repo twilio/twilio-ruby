@@ -17,7 +17,8 @@ module Twilio
             ##
             # Initialize the AvailableAddOnExtensionList
             # @param [Version] version Version that contains the resource
-            # @param [String] available_add_on_sid The available_add_on_sid
+            # @param [String] available_add_on_sid The SID of the AvailableAddOn resource to
+            #   which this extension applies.
             # @return [AvailableAddOnExtensionList] AvailableAddOnExtensionList
             def initialize(version, available_add_on_sid: nil)
               super(version)
@@ -157,8 +158,9 @@ module Twilio
             ##
             # Initialize the AvailableAddOnExtensionContext
             # @param [Version] version Version that contains the resource
-            # @param [String] available_add_on_sid The available_add_on_sid
-            # @param [String] sid The Extension Sid that uniquely identifies this resource
+            # @param [String] available_add_on_sid The SID of the AvailableAddOn resource with
+            #   the extension to fetch.
+            # @param [String] sid The SID of the AvailableAddOn Extension resource to fetch.
             # @return [AvailableAddOnExtensionContext] AvailableAddOnExtensionContext
             def initialize(version, available_add_on_sid, sid)
               super(version)
@@ -210,8 +212,9 @@ module Twilio
             # Initialize the AvailableAddOnExtensionInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] available_add_on_sid The available_add_on_sid
-            # @param [String] sid The Extension Sid that uniquely identifies this resource
+            # @param [String] available_add_on_sid The SID of the AvailableAddOn resource to
+            #   which this extension applies.
+            # @param [String] sid The SID of the AvailableAddOn Extension resource to fetch.
             # @return [AvailableAddOnExtensionInstance] AvailableAddOnExtensionInstance
             def initialize(version, payload, available_add_on_sid: nil, sid: nil)
               super(version)
@@ -247,37 +250,37 @@ module Twilio
             end
 
             ##
-            # @return [String] A string that uniquely identifies this Extension
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The available_add_on_sid
+            # @return [String] The SID of the AvailableAddOn resource to which this extension applies
             def available_add_on_sid
               @properties['available_add_on_sid']
             end
 
             ##
-            # @return [String] A human-readable description of this Extension
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] A human-readable description of the Extension's Product
+            # @return [String] The name of the Extension's Product
             def product_name
               @properties['product_name']
             end
 
             ##
-            # @return [String] The string that uniquely identifies this Extension
+            # @return [String] An application-defined string that uniquely identifies the resource
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the resource
             def url
               @properties['url']
             end

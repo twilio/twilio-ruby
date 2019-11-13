@@ -35,7 +35,8 @@ module Twilio
               # @param [String] from The `from` phone number that will dial the new conference
               #   participant. Can be a phone number or a client id.
               # @param [String] to The phone number, client id, or sip address to invite to the
-              #   conference.
+              #   conference. [Custom
+              #   parameters](https://www.twilio.com/docs/voice/api/conference-participant-resource#custom-parameters) may also be specified.
               # @param [String] status_callback The URL we should call using the
               #   `status_callback_method` to send status information to your application.
               # @param [String] status_callback_method The HTTP method we should use to call

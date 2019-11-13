@@ -28,14 +28,13 @@ module Twilio
           ##
           # Retrieve a single page of InstalledAddOnInstance records from the API.
           # Request is executed immediately.
-          # @param [String] available_add_on_sid A 34 character string that uniquely
-          #   identifies the Add-on to be installed.
-          # @param [Boolean] accept_terms_of_service A boolean that reflects your decision
-          #   whether to accept the Terms of Service
-          # @param [Hash] configuration The JSON object representing the configuration of
-          #   the new Add-on installation.
-          # @param [String] unique_name The human-readable string that uniquely identifies
-          #   this Add-on installation for an Account.
+          # @param [String] available_add_on_sid The SID of the AvaliableAddOn to install.
+          # @param [Boolean] accept_terms_of_service Whether the Terms of Service were
+          #   accepted.
+          # @param [Hash] configuration The JSON object that represents the configuration of
+          #   the new Add-on being installed.
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. This value must be unique within the Account.
           # @return [InstalledAddOnInstance] Newly created InstalledAddOnInstance
           def create(available_add_on_sid: nil, accept_terms_of_service: nil, configuration: :unset, unique_name: :unset)
             data = Twilio::Values.of({
@@ -180,8 +179,7 @@ module Twilio
           ##
           # Initialize the InstalledAddOnContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The Installed Add-on Sid that uniquely identifies this
-          #   resource
+          # @param [String] sid The SID of the InstalledAddOn resource to fetch.
           # @return [InstalledAddOnContext] InstalledAddOnContext
           def initialize(version, sid)
             super(version)
@@ -219,10 +217,10 @@ module Twilio
           ##
           # Update the InstalledAddOnInstance
           # @param [Hash] configuration Valid JSON object that conform to the configuration
-          #   schema exposed by the associated Available Add-on resource. This is only
-          #   required by Add-ons that need to be configured
-          # @param [String] unique_name The human-readable string that uniquely identifies
-          #   this Add-on installation for an Account.
+          #   schema exposed by the associated AvailableAddOn resource. This is only required
+          #   by Add-ons that need to be configured
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. This value must be unique within the Account.
           # @return [InstalledAddOnInstance] Updated InstalledAddOnInstance
           def update(configuration: :unset, unique_name: :unset)
             data = Twilio::Values.of({
@@ -279,8 +277,7 @@ module Twilio
           # Initialize the InstalledAddOnInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The Installed Add-on Sid that uniquely identifies this
-          #   resource
+          # @param [String] sid The SID of the InstalledAddOn resource to fetch.
           # @return [InstalledAddOnInstance] InstalledAddOnInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -316,61 +313,61 @@ module Twilio
           end
 
           ##
-          # @return [String] A string that uniquely identifies this Add-on installation
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The Account id that has installed this Add-on
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] A description of this Add-on installation
+          # @return [String] The string that you assigned to describe the resource
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [String] A short description of the Add-on functionality
+          # @return [String] A short description of the Add-on's functionality
           def description
             @properties['description']
           end
 
           ##
-          # @return [Hash] The JSON object representing the current configuration
+          # @return [Hash] The JSON object that represents the current configuration of installed Add-on
           def configuration
             @properties['configuration']
           end
 
           ##
-          # @return [String] The string that uniquely identifies this Add-on installation
+          # @return [String] An application-defined string that uniquely identifies the resource
           def unique_name
             @properties['unique_name']
           end
 
           ##
-          # @return [Time] The date this Add-on installation was created
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date this Add-on installation was last updated
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The absolute URL of the resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] A dictionary of URLs for related resource.
+          # @return [String] The URLs of related resources
           def links
             @properties['links']
           end
@@ -392,10 +389,10 @@ module Twilio
           ##
           # Update the InstalledAddOnInstance
           # @param [Hash] configuration Valid JSON object that conform to the configuration
-          #   schema exposed by the associated Available Add-on resource. This is only
-          #   required by Add-ons that need to be configured
-          # @param [String] unique_name The human-readable string that uniquely identifies
-          #   this Add-on installation for an Account.
+          #   schema exposed by the associated AvailableAddOn resource. This is only required
+          #   by Add-ons that need to be configured
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. This value must be unique within the Account.
           # @return [InstalledAddOnInstance] Updated InstalledAddOnInstance
           def update(configuration: :unset, unique_name: :unset)
             context.update(configuration: configuration, unique_name: unique_name, )

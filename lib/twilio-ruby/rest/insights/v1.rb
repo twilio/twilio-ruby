@@ -15,20 +15,20 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
-          @summary = nil
+          @calls = nil
         end
 
         ##
-        # @param [String] call_sid The call_sid
-        # @return [Twilio::REST::Insights::V1::CallSummaryContext] if call_sid was passed.
-        # @return [Twilio::REST::Insights::V1::CallSummaryList]
-        def summary(call_sid=:unset)
-          if call_sid.nil?
-            raise ArgumentError, 'call_sid cannot be nil'
-          elsif call_sid == :unset
-            @summary ||= CallSummaryList.new self
+        # @param [String] sid The sid
+        # @return [Twilio::REST::Insights::V1::CallContext] if sid was passed.
+        # @return [Twilio::REST::Insights::V1::CallList]
+        def calls(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @calls ||= CallList.new self
           else
-            CallSummaryContext.new(self, call_sid)
+            CallContext.new(self, sid)
           end
         end
 

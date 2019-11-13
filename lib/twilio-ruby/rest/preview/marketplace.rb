@@ -20,8 +20,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The Available Add-on Sid that uniquely identifies this
-        #   resource
+        # @param [String] sid The SID of the AvailableAddOn resource to fetch.
         # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnContext] if sid was passed.
         # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnList]
         def available_add_ons(sid=:unset)
@@ -35,8 +34,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The Installed Add-on Sid that uniquely identifies this
-        #   resource
+        # @param [String] sid The SID of the InstalledAddOn resource to fetch.
         # @return [Twilio::REST::Preview::Marketplace::InstalledAddOnContext] if sid was passed.
         # @return [Twilio::REST::Preview::Marketplace::InstalledAddOnList]
         def installed_add_ons(sid=:unset)

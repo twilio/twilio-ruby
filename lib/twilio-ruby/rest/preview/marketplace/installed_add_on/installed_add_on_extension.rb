@@ -17,7 +17,8 @@ module Twilio
             ##
             # Initialize the InstalledAddOnExtensionList
             # @param [Version] version Version that contains the resource
-            # @param [String] installed_add_on_sid The installed_add_on_sid
+            # @param [String] installed_add_on_sid The SID of the InstalledAddOn resource to
+            #   which this extension applies.
             # @return [InstalledAddOnExtensionList] InstalledAddOnExtensionList
             def initialize(version, installed_add_on_sid: nil)
               super(version)
@@ -157,8 +158,9 @@ module Twilio
             ##
             # Initialize the InstalledAddOnExtensionContext
             # @param [Version] version Version that contains the resource
-            # @param [String] installed_add_on_sid The installed_add_on_sid
-            # @param [String] sid The Extension Sid that uniquely identifies this resource
+            # @param [String] installed_add_on_sid The SID of the InstalledAddOn resource with
+            #   the extension to fetch.
+            # @param [String] sid The SID of the InstalledAddOn Extension resource to fetch.
             # @return [InstalledAddOnExtensionContext] InstalledAddOnExtensionContext
             def initialize(version, installed_add_on_sid, sid)
               super(version)
@@ -190,7 +192,7 @@ module Twilio
 
             ##
             # Update the InstalledAddOnExtensionInstance
-            # @param [Boolean] enabled A Boolean indicating if the Extension will be invoked.
+            # @param [Boolean] enabled Whether the Extension should be invoked.
             # @return [InstalledAddOnExtensionInstance] Updated InstalledAddOnExtensionInstance
             def update(enabled: nil)
               data = Twilio::Values.of({'Enabled' => enabled, })
@@ -231,8 +233,9 @@ module Twilio
             # Initialize the InstalledAddOnExtensionInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] installed_add_on_sid The installed_add_on_sid
-            # @param [String] sid The Extension Sid that uniquely identifies this resource
+            # @param [String] installed_add_on_sid The SID of the InstalledAddOn resource to
+            #   which this extension applies.
+            # @param [String] sid The SID of the InstalledAddOn Extension resource to fetch.
             # @return [InstalledAddOnExtensionInstance] InstalledAddOnExtensionInstance
             def initialize(version, payload, installed_add_on_sid: nil, sid: nil)
               super(version)
@@ -269,43 +272,43 @@ module Twilio
             end
 
             ##
-            # @return [String] A string that uniquely identifies this Extension
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The installed_add_on_sid
+            # @return [String] The SID of the InstalledAddOn resource to which this extension applies
             def installed_add_on_sid
               @properties['installed_add_on_sid']
             end
 
             ##
-            # @return [String] A human-readable description of this Extension
+            # @return [String] The string that you assigned to describe the resource
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] A human-readable description of the Extension's Product
+            # @return [String] The name of the Extension's Product
             def product_name
               @properties['product_name']
             end
 
             ##
-            # @return [String] The string that uniquely identifies this Extension
+            # @return [String] An application-defined string that uniquely identifies the resource
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [Boolean] A Boolean indicating if the Extension will be invoked
+            # @return [Boolean] Whether the Extension will be invoked
             def enabled
               @properties['enabled']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the resource
             def url
               @properties['url']
             end
@@ -319,7 +322,7 @@ module Twilio
 
             ##
             # Update the InstalledAddOnExtensionInstance
-            # @param [Boolean] enabled A Boolean indicating if the Extension will be invoked.
+            # @param [Boolean] enabled Whether the Extension should be invoked.
             # @return [InstalledAddOnExtensionInstance] Updated InstalledAddOnExtensionInstance
             def update(enabled: nil)
               context.update(enabled: enabled, )

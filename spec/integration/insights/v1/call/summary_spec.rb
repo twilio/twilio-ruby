@@ -13,7 +13,8 @@ describe 'CallSummary' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.insights.v1.summary('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+      @client.insights.v1.calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                         .summary().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
@@ -54,7 +55,8 @@ describe 'CallSummary' do
       ]
     ))
 
-    actual = @client.insights.v1.summary('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+    actual = @client.insights.v1.calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .summary().fetch()
 
     expect(actual).to_not eq(nil)
   end

@@ -119,7 +119,7 @@ module Twilio
           #   the FlexFlow resource.
           # @param [String] chat_service_sid The SID of the chat service.
           # @param [flex_flow.ChannelType] channel_type The channel type. Can be: `web`,
-          #   `facebook`, or `sms`.
+          #   `facebook`, `sms`, `whatsapp`, `line` or `custom`.
           # @param [String] contact_identity The channel contact's Identity.
           # @param [Boolean] enabled Whether the new FlexFlow is enabled.
           # @param [flex_flow.IntegrationType] integration_type The integration type. Can
@@ -144,8 +144,11 @@ module Twilio
           # @param [Boolean] long_lived Whether new channels are long-lived.
           # @param [Boolean] janitor_enabled Boolean flag for enabling or disabling the
           #   Janitor
+          # @param [String] integration_retry_count The number of times to retry the webhook
+          #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
+          #   the default is 0.
           # @return [FlexFlowInstance] Newly created FlexFlowInstance
-          def create(friendly_name: nil, chat_service_sid: nil, channel_type: nil, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset)
+          def create(friendly_name: nil, chat_service_sid: nil, channel_type: nil, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset, integration_retry_count: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'ChatServiceSid' => chat_service_sid,
@@ -163,6 +166,7 @@ module Twilio
                 'Integration.CreationOnMessage' => integration_creation_on_message,
                 'LongLived' => long_lived,
                 'JanitorEnabled' => janitor_enabled,
+                'Integration.RetryCount' => integration_retry_count,
             })
 
             payload = @version.create(
@@ -245,7 +249,7 @@ module Twilio
           #   the FlexFlow resource.
           # @param [String] chat_service_sid The SID of the chat service.
           # @param [flex_flow.ChannelType] channel_type The channel type. Can be: `web`,
-          #   `facebook`, or `sms`.
+          #   `facebook`, `sms`, `whatsapp`, `line` or `custom`.
           # @param [String] contact_identity The channel contact's Identity.
           # @param [Boolean] enabled Whether the FlexFlow is enabled.
           # @param [flex_flow.IntegrationType] integration_type The integration type. Can
@@ -270,8 +274,11 @@ module Twilio
           # @param [Boolean] long_lived Whether new channels created are long-lived.
           # @param [Boolean] janitor_enabled Boolean flag for enabling or disabling the
           #   Janitor
+          # @param [String] integration_retry_count The number of times to retry the webhook
+          #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
+          #   the default is 0.
           # @return [FlexFlowInstance] Updated FlexFlowInstance
-          def update(friendly_name: :unset, chat_service_sid: :unset, channel_type: :unset, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset)
+          def update(friendly_name: :unset, chat_service_sid: :unset, channel_type: :unset, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset, integration_retry_count: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'ChatServiceSid' => chat_service_sid,
@@ -289,6 +296,7 @@ module Twilio
                 'Integration.CreationOnMessage' => integration_creation_on_message,
                 'LongLived' => long_lived,
                 'JanitorEnabled' => janitor_enabled,
+                'Integration.RetryCount' => integration_retry_count,
             })
 
             payload = @version.update(
@@ -463,7 +471,7 @@ module Twilio
           #   the FlexFlow resource.
           # @param [String] chat_service_sid The SID of the chat service.
           # @param [flex_flow.ChannelType] channel_type The channel type. Can be: `web`,
-          #   `facebook`, or `sms`.
+          #   `facebook`, `sms`, `whatsapp`, `line` or `custom`.
           # @param [String] contact_identity The channel contact's Identity.
           # @param [Boolean] enabled Whether the FlexFlow is enabled.
           # @param [flex_flow.IntegrationType] integration_type The integration type. Can
@@ -488,8 +496,11 @@ module Twilio
           # @param [Boolean] long_lived Whether new channels created are long-lived.
           # @param [Boolean] janitor_enabled Boolean flag for enabling or disabling the
           #   Janitor
+          # @param [String] integration_retry_count The number of times to retry the webhook
+          #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
+          #   the default is 0.
           # @return [FlexFlowInstance] Updated FlexFlowInstance
-          def update(friendly_name: :unset, chat_service_sid: :unset, channel_type: :unset, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset)
+          def update(friendly_name: :unset, chat_service_sid: :unset, channel_type: :unset, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset, integration_retry_count: :unset)
             context.update(
                 friendly_name: friendly_name,
                 chat_service_sid: chat_service_sid,
@@ -507,6 +518,7 @@ module Twilio
                 integration_creation_on_message: integration_creation_on_message,
                 long_lived: long_lived,
                 janitor_enabled: janitor_enabled,
+                integration_retry_count: integration_retry_count,
             )
           end
 

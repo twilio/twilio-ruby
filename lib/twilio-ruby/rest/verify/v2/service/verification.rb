@@ -32,9 +32,10 @@ module Twilio
             ##
             # Retrieve a single page of VerificationInstance records from the API.
             # Request is executed immediately.
-            # @param [String] to The phone number to verify. Phone numbers must be in [E.164
-            #   format](https://www.twilio.com/docs/glossary/what-e164).
-            # @param [String] channel The verification method to use. Can be: `sms` or `call`.
+            # @param [String] to The phone number or email to verify. Phone numbers must be in
+            #   [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+            # @param [String] channel The verification method to use. Can be: `email`, `sms`
+            #   or `call`.
             # @param [String] custom_message The text of a custom message to use for the
             #   verification.
             # @param [String] send_digits The digits to send after a phone call is answered,
@@ -55,8 +56,10 @@ module Twilio
             #   Limits. Keys should be the unique_name configured while creating you Rate Limit
             #   along with the associated values for each particular request. You may include
             #   multiple Rate Limit values in each request.
+            # @param [Hash] channel_configuration Channel specific configuration in json
+            #   format: For email must include 'from' and 'from_name'.
             # @return [VerificationInstance] Newly created VerificationInstance
-            def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset)
+            def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset, channel_configuration: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'Channel' => channel,
@@ -67,6 +70,7 @@ module Twilio
                   'Amount' => amount,
                   'Payee' => payee,
                   'RateLimits' => Twilio.serialize_object(rate_limits),
+                  'ChannelConfiguration' => Twilio.serialize_object(channel_configuration),
               })
 
               payload = @version.create(
@@ -261,7 +265,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The phone number being verified
+            # @return [String] The phone number or email being verified
             def to
               @properties['to']
             end
