@@ -17,6 +17,8 @@ install: make install
 script: make test
 
 matrix:
+  allow_failures:
+    - rvm: ruby-head
   fast_finish: true
 
 deploy:
