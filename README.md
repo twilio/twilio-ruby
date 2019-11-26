@@ -10,20 +10,21 @@ The documentation for the Twilio API can be found [here][apidocs].
 
 The Ruby library documentation can be found [here][libdocs] and individual releases [here][refdocs].
 
-## Recent Update
+## Versions
 
-As of release 5.1.0, Beta and Developer Preview products are now exposed via
-the main `twilio-ruby` artifact. Releases of the `alpha` branch have been
-discontinued.
+`twilio-ruby` uses a modified version of [Semantic Versioning](https://semver.org) for all changes. [See this document](VERSIONS.md) for details.
 
-If you were using the `alpha` release line, you should be able to switch back
-to the normal release line without issue.
+### Supported Ruby Versions
 
-If you were using the normal release line, you should now see several new
-product lines that were historically hidden from you due to their Beta or
-Developer Preview status. Such products are explicitly documented as
-Beta/Developer Preview both in the Twilio docs and console, as well as through
-in-line code documentation here in the library.
+This library supports the following Ruby implementations:
+
+* Ruby 2.4
+* Ruby 2.5
+* Ruby 2.6
+
+### Migrating from 4.x
+
+[Upgrade Guide][upgrade]
 
 ## Installation
 
@@ -46,24 +47,6 @@ git clone git@github.com:twilio/twilio-ruby.git
 cd twilio-ruby
 make install
 ```
-
-## Versions
-
-`twilio-ruby` uses a modified version of [Semantic Versioning](https://semver.org) for all changes. [See this document](VERSIONS.md) for details.
-
-### Migration from 4.x
-
-[Upgrade Guide][upgrade]
-
-## Docker Image
-
-The `Dockerfile` present in this repository and its respective `twilio/twilio-ruby` Docker image are currently used by Twilio for testing purposes only.
-
-## Getting help
-
-If you need help installing or using the library, please check the [Twilio Support Help Center](https://support.twilio.com) first, and [file a support ticket](https://twilio.com/help/contact) if you don't find an answer to your question.
-
-If you've instead found a bug in the library or would like new features added, go ahead and open issues or pull requests against this repo!
 
 ## Getting Started
 
@@ -192,13 +175,15 @@ This will print the following (except for the whitespace):
 </Response>
 ```
 
-## Supported Ruby Versions
+## Docker Image
 
-This library supports and is [tested against][travis] the following Ruby implementations:
+The `Dockerfile` present in this repository and its respective `twilio/twilio-ruby` Docker image are currently used by Twilio for testing purposes only.
 
-- Ruby 2.6.X
-- Ruby 2.5.X
-- Ruby 2.4.X
+## Getting help
+
+If you need help installing or using the library, please check the [Twilio Support Help Center](https://support.twilio.com) first, and [file a support ticket](https://twilio.com/help/contact) if you don't find an answer to your question.
+
+If you've instead found a bug in the library or would like new features added, go ahead and open issues or pull requests against this repo!
 
 [apidocs]: https://www.twilio.com/docs/api
 [twiml]: https://www.twilio.com/docs/api/twiml
