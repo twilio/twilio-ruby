@@ -113,8 +113,8 @@ module Twilio
             ##
             # Retrieve a single page of BuildInstance records from the API.
             # Request is executed immediately.
-            # @param [String] asset_versions The list of AssetVersion resource SIDs to include
-            #   in the build.
+            # @param [String] asset_versions The list of Asset Version resource SIDs to
+            #   include in the build.
             # @param [String] function_versions The list of the Variable resource SIDs to
             #   include in the build.
             # @param [String] dependencies A list of objects that describe the Dependencies
@@ -299,13 +299,13 @@ module Twilio
             end
 
             ##
-            # @return [Hash] The list of AssetVersion resource SIDs that are included in the build
+            # @return [Hash] The list of Asset Version resource SIDs that are included in the build
             def asset_versions
               @properties['asset_versions']
             end
 
             ##
-            # @return [Hash] List of the Variable resource SIDs
+            # @return [Hash] The list of Function Version resource SIDs that are included in the build
             def function_versions
               @properties['function_versions']
             end

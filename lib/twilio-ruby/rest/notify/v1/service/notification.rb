@@ -107,6 +107,7 @@ module Twilio
             #   Multiple `to_binding` parameters can be included but the total size of the
             #   request entity should not exceed 1MB. This is typically sufficient for 10,000
             #   phone numbers.
+            # @param [String] delivery_callback_url URL to send webhooks.
             # @param [String] identity The `identity` value that uniquely identifies the new
             #   resource's [User](https://www.twilio.com/docs/chat/rest/user-resource) within
             #   the [Service](https://www.twilio.com/docs/notify/api/service-resource). Delivery
@@ -118,7 +119,7 @@ module Twilio
             #   the implicit tags `apn`, `fcm`, `gcm`, `sms` and `facebook-messenger` are
             #   available to notify all Bindings in a specific channel.
             # @return [NotificationInstance] Newly created NotificationInstance
-            def create(body: :unset, priority: :unset, ttl: :unset, title: :unset, sound: :unset, action: :unset, data: :unset, apn: :unset, gcm: :unset, sms: :unset, facebook_messenger: :unset, fcm: :unset, segment: :unset, alexa: :unset, to_binding: :unset, identity: :unset, tag: :unset)
+            def create(body: :unset, priority: :unset, ttl: :unset, title: :unset, sound: :unset, action: :unset, data: :unset, apn: :unset, gcm: :unset, sms: :unset, facebook_messenger: :unset, fcm: :unset, segment: :unset, alexa: :unset, to_binding: :unset, delivery_callback_url: :unset, identity: :unset, tag: :unset)
               data = Twilio::Values.of({
                   'Identity' => Twilio.serialize_list(identity) { |e| e },
                   'Tag' => Twilio.serialize_list(tag) { |e| e },
@@ -137,6 +138,7 @@ module Twilio
                   'Segment' => Twilio.serialize_list(segment) { |e| e },
                   'Alexa' => Twilio.serialize_object(alexa),
                   'ToBinding' => Twilio.serialize_list(to_binding) { |e| e },
+                  'DeliveryCallbackUrl' => delivery_callback_url,
               })
 
               payload = @version.create(

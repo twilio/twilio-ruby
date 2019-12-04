@@ -1,6 +1,29 @@
 twilio-ruby changelog
 =====================
 
+[2019-12-04] Version 5.30.0
+---------------------------
+**Library**
+- [PR #485](https://github.com/twilio/twilio-ruby/pull/485): docs: add supported language versions to README. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #445](https://github.com/twilio/twilio-ruby/pull/445): fix: handle building the HTTP client proxy URI without authentication. Thanks to [@laka3000](https://github.com/laka3000)!
+
+**Api**
+- Add optional `twiml` parameter for call create
+
+**Chat**
+- Added `delete` method in UserChannel resource
+
+**Conversations**
+- Allow Messaging Service update
+
+**Taskrouter**
+- Support ReEvaluateTasks parameter on Workflow update
+
+**Twiml**
+- Remove unsupported `mixed_track` value from `<Stream>` **(breaking change)**
+- Add missing fax `<Receive>` optional attributes
+
+
 [2019-11-13] Version 5.29.1
 ---------------------------
 **Api**

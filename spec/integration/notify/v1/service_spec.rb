@@ -46,6 +46,8 @@ describe 'Service' do
           "default_alexa_notification_protocol_version": "3",
           "log_enabled": true,
           "type": "S",
+          "delivery_callback_url": "Hello",
+          "delivery_callback_enabled": true,
           "url": "https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "bindings": "https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings",
@@ -125,6 +127,8 @@ describe 'Service' do
           "default_alexa_notification_protocol_version": "3",
           "log_enabled": true,
           "type": "S",
+          "delivery_callback_url": "Hello",
+          "delivery_callback_enabled": true,
           "url": "https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "bindings": "https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings",
@@ -189,6 +193,8 @@ describe 'Service' do
                   "default_alexa_notification_protocol_version": "3",
                   "log_enabled": true,
                   "type": "S",
+                  "delivery_callback_url": "Hello",
+                  "delivery_callback_enabled": true,
                   "url": "https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "links": {
                       "bindings": "https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings",
@@ -268,6 +274,8 @@ describe 'Service' do
           "facebook_messenger_page_id": "4",
           "log_enabled": true,
           "type": "S",
+          "delivery_callback_url": "Hello",
+          "delivery_callback_enabled": true,
           "url": "https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "bindings": "https://notify.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Bindings",

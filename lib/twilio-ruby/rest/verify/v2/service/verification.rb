@@ -34,8 +34,8 @@ module Twilio
             # Request is executed immediately.
             # @param [String] to The phone number or email to verify. Phone numbers must be in
             #   [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
-            # @param [String] channel The verification method to use. Can be: `email`, `sms`
-            #   or `call`.
+            # @param [String] channel The verification method to use. Can be:
+            #   `email`([*])[#email-channel-availability], `sms` or `call`.
             # @param [String] custom_message The text of a custom message to use for the
             #   verification.
             # @param [String] send_digits The digits to send after a phone call is answered,
@@ -271,7 +271,7 @@ module Twilio
             end
 
             ##
-            # @return [verification.Channel] The verification method to use
+            # @return [verification.Channel] The verification method used.
             def channel
               @properties['channel']
             end

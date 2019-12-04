@@ -18,7 +18,7 @@ module Twilio
               ##
               # Initialize the FunctionVersionList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the Service that the FunctionVersion
+              # @param [String] service_sid The SID of the Service that the Function Version
               #   resource is associated with.
               # @param [String] function_sid The SID of the function that is the parent of the
               #   function version.
@@ -162,11 +162,11 @@ module Twilio
               ##
               # Initialize the FunctionVersionContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the Service to fetch the FunctionVersion
+              # @param [String] service_sid The SID of the Service to fetch the Function Version
               #   resource from.
               # @param [String] function_sid The SID of the function that is the parent of the
-              #   FunctionVersion resource to fetch.
-              # @param [String] sid The SID of the FunctionVersion resource to fetch.
+              #   Function Version resource to fetch.
+              # @param [String] sid The SID of the Function Version resource to fetch.
               # @return [FunctionVersionContext] FunctionVersionContext
               def initialize(version, service_sid, function_sid, sid)
                 super(version)
@@ -219,11 +219,11 @@ module Twilio
               # Initialize the FunctionVersionInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The SID of the Service that the FunctionVersion
+              # @param [String] service_sid The SID of the Service that the Function Version
               #   resource is associated with.
               # @param [String] function_sid The SID of the function that is the parent of the
               #   function version.
-              # @param [String] sid The SID of the FunctionVersion resource to fetch.
+              # @param [String] sid The SID of the Function Version resource to fetch.
               # @return [FunctionVersionInstance] FunctionVersionInstance
               def initialize(version, payload, service_sid: nil, function_sid: nil, sid: nil)
                 super(version)
@@ -266,19 +266,19 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique string that identifies the FunctionVersion resource
+              # @return [String] The unique string that identifies the Function Version resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The SID of the Account that created the FunctionVersion resource
+              # @return [String] The SID of the Account that created the Function Version resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The SID of the Service that the FunctionVersion resource is associated with
+              # @return [String] The SID of the Service that the Function Version resource is associated with
               def service_sid
                 @properties['service_sid']
               end
@@ -302,13 +302,13 @@ module Twilio
               end
 
               ##
-              # @return [Time] The ISO 8601 date and time in GMT when the FunctionVersion resource was created
+              # @return [Time] The ISO 8601 date and time in GMT when the Function Version resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [String] The absolute URL of the FunctionVersion resource
+              # @return [String] The absolute URL of the Function Version resource
               def url
                 @properties['url']
               end

@@ -290,8 +290,11 @@ module Twilio
           #   `false` and the default is `true`.
           # @param [String] alexa_skill_id Deprecated.
           # @param [String] default_alexa_notification_protocol_version Deprecated.
+          # @param [String] delivery_callback_url URL to send delivery status callback.
+          # @param [Boolean] delivery_callback_enabled Callback configuration that enables
+          #   delivery callbacks, default false
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset, alexa_skill_id: :unset, default_alexa_notification_protocol_version: :unset)
+          def update(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset, alexa_skill_id: :unset, default_alexa_notification_protocol_version: :unset, delivery_callback_url: :unset, delivery_callback_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'ApnCredentialSid' => apn_credential_sid,
@@ -305,6 +308,8 @@ module Twilio
                 'LogEnabled' => log_enabled,
                 'AlexaSkillId' => alexa_skill_id,
                 'DefaultAlexaNotificationProtocolVersion' => default_alexa_notification_protocol_version,
+                'DeliveryCallbackUrl' => delivery_callback_url,
+                'DeliveryCallbackEnabled' => delivery_callback_enabled,
             })
 
             payload = @version.update(
@@ -568,8 +573,11 @@ module Twilio
           #   `false` and the default is `true`.
           # @param [String] alexa_skill_id Deprecated.
           # @param [String] default_alexa_notification_protocol_version Deprecated.
+          # @param [String] delivery_callback_url URL to send delivery status callback.
+          # @param [Boolean] delivery_callback_enabled Callback configuration that enables
+          #   delivery callbacks, default false
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset, alexa_skill_id: :unset, default_alexa_notification_protocol_version: :unset)
+          def update(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset, alexa_skill_id: :unset, default_alexa_notification_protocol_version: :unset, delivery_callback_url: :unset, delivery_callback_enabled: :unset)
             context.update(
                 friendly_name: friendly_name,
                 apn_credential_sid: apn_credential_sid,
@@ -583,6 +591,8 @@ module Twilio
                 log_enabled: log_enabled,
                 alexa_skill_id: alexa_skill_id,
                 default_alexa_notification_protocol_version: default_alexa_notification_protocol_version,
+                delivery_callback_url: delivery_callback_url,
+                delivery_callback_enabled: delivery_callback_enabled,
             )
           end
 

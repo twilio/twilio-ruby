@@ -22,9 +22,12 @@ module Twilio
       # Create a new <Receive> element
       # action:: Receive action URL
       # method:: Receive action URL method
+      # media_type:: The media type used to store media in the fax media store
+      # page_size:: What size to interpret received pages as
+      # store_media:: Whether or not to store received media in the fax media store
       # keyword_args:: additional attributes
-      def receive(action: nil, method: nil, **keyword_args)
-        append(Receive.new(action: action, method: method, **keyword_args))
+      def receive(action: nil, method: nil, media_type: nil, page_size: nil, store_media: nil, **keyword_args)
+        append(Receive.new(action: action, method: method, media_type: media_type, page_size: page_size, store_media: store_media, **keyword_args))
       end
     end
 

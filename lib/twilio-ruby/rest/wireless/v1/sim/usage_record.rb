@@ -36,7 +36,7 @@ module Twilio
             #   The default is the current time.
             # @param [Time] start Only include usage that has occurred on or after this date,
             #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
-            #   The default is on month before the `end` parameter value.
+            #   The default is one month before the `end` parameter value.
             # @param [usage_record.Granularity] granularity How to summarize the usage by
             #   time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of
             #   `all` returns one Usage Record that describes the usage for the entire period.
@@ -66,7 +66,7 @@ module Twilio
             #   The default is the current time.
             # @param [Time] start Only include usage that has occurred on or after this date,
             #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
-            #   The default is on month before the `end` parameter value.
+            #   The default is one month before the `end` parameter value.
             # @param [usage_record.Granularity] granularity How to summarize the usage by
             #   time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of
             #   `all` returns one Usage Record that describes the usage for the entire period.
@@ -107,7 +107,7 @@ module Twilio
             #   The default is the current time.
             # @param [Time] start Only include usage that has occurred on or after this date,
             #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
-            #   The default is on month before the `end` parameter value.
+            #   The default is one month before the `end` parameter value.
             # @param [usage_record.Granularity] granularity How to summarize the usage by
             #   time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of
             #   `all` returns one Usage Record that describes the usage for the entire period.

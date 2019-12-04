@@ -18,7 +18,7 @@ module Twilio
               ##
               # Initialize the AssetVersionList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the Service that the AssetVersion
+              # @param [String] service_sid The SID of the Service that the Asset Version
               #   resource is associated with.
               # @param [String] asset_sid The SID of the Asset resource that is the parent of
               #   the asset version.
@@ -162,11 +162,11 @@ module Twilio
               ##
               # Initialize the AssetVersionContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the Service to fetch the AssetVersion
+              # @param [String] service_sid The SID of the Service to fetch the Asset Version
               #   resource from.
               # @param [String] asset_sid The SID of the Asset resource that is the parent of
-              #   the AssetVersion resource to fetch.
-              # @param [String] sid The SID of the AssetVersion resource to fetch.
+              #   the Asset Version resource to fetch.
+              # @param [String] sid The SID of the Asset Version resource to fetch.
               # @return [AssetVersionContext] AssetVersionContext
               def initialize(version, service_sid, asset_sid, sid)
                 super(version)
@@ -219,11 +219,11 @@ module Twilio
               # Initialize the AssetVersionInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The SID of the Service that the AssetVersion
+              # @param [String] service_sid The SID of the Service that the Asset Version
               #   resource is associated with.
               # @param [String] asset_sid The SID of the Asset resource that is the parent of
               #   the asset version.
-              # @param [String] sid The SID of the AssetVersion resource to fetch.
+              # @param [String] sid The SID of the Asset Version resource to fetch.
               # @return [AssetVersionInstance] AssetVersionInstance
               def initialize(version, payload, service_sid: nil, asset_sid: nil, sid: nil)
                 super(version)
@@ -266,19 +266,19 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique string that identifies the AssetVersion resource
+              # @return [String] The unique string that identifies the Asset Version resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The SID of the Account that created the AssetVersion resource
+              # @return [String] The SID of the Account that created the Asset Version resource
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The SID of the Service that the AssetVersion resource is associated with
+              # @return [String] The SID of the Service that the Asset Version resource is associated with
               def service_sid
                 @properties['service_sid']
               end
@@ -302,13 +302,13 @@ module Twilio
               end
 
               ##
-              # @return [Time] The ISO 8601 date and time in GMT when the AssetVersion resource was created
+              # @return [Time] The ISO 8601 date and time in GMT when the Asset Version resource was created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [String] The absolute URL of the AssetVersion resource
+              # @return [String] The absolute URL of the Asset Version resource
               def url
                 @properties['url']
               end

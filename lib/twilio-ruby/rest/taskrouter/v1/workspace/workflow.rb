@@ -248,14 +248,18 @@ module Twilio
             # @param [String] task_reservation_timeout How long TaskRouter will wait for a
             #   confirmation response from your application after it assigns a Task to a Worker.
             #   Can be up to `86,400` (24 hours) and the default is `120`.
+            # @param [String] re_evaluate_tasks Whether or not to re-evaluate Tasks. The
+            #   default is `false`, which means Tasks in the Workflow will not be processed
+            #   through the assignment loop again.
             # @return [WorkflowInstance] Updated WorkflowInstance
-            def update(friendly_name: :unset, assignment_callback_url: :unset, fallback_assignment_callback_url: :unset, configuration: :unset, task_reservation_timeout: :unset)
+            def update(friendly_name: :unset, assignment_callback_url: :unset, fallback_assignment_callback_url: :unset, configuration: :unset, task_reservation_timeout: :unset, re_evaluate_tasks: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'AssignmentCallbackUrl' => assignment_callback_url,
                   'FallbackAssignmentCallbackUrl' => fallback_assignment_callback_url,
                   'Configuration' => configuration,
                   'TaskReservationTimeout' => task_reservation_timeout,
+                  'ReEvaluateTasks' => re_evaluate_tasks,
               })
 
               payload = @version.update(
@@ -466,14 +470,18 @@ module Twilio
             # @param [String] task_reservation_timeout How long TaskRouter will wait for a
             #   confirmation response from your application after it assigns a Task to a Worker.
             #   Can be up to `86,400` (24 hours) and the default is `120`.
+            # @param [String] re_evaluate_tasks Whether or not to re-evaluate Tasks. The
+            #   default is `false`, which means Tasks in the Workflow will not be processed
+            #   through the assignment loop again.
             # @return [WorkflowInstance] Updated WorkflowInstance
-            def update(friendly_name: :unset, assignment_callback_url: :unset, fallback_assignment_callback_url: :unset, configuration: :unset, task_reservation_timeout: :unset)
+            def update(friendly_name: :unset, assignment_callback_url: :unset, fallback_assignment_callback_url: :unset, configuration: :unset, task_reservation_timeout: :unset, re_evaluate_tasks: :unset)
               context.update(
                   friendly_name: friendly_name,
                   assignment_callback_url: assignment_callback_url,
                   fallback_assignment_callback_url: fallback_assignment_callback_url,
                   configuration: configuration,
                   task_reservation_timeout: task_reservation_timeout,
+                  re_evaluate_tasks: re_evaluate_tasks,
               )
             end
 

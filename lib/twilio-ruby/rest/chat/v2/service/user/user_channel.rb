@@ -200,6 +200,13 @@ module Twilio
               end
 
               ##
+              # Deletes the UserChannelInstance
+              # @return [Boolean] true if delete succeeds, false otherwise
+              def delete
+                @version.delete('delete', @uri)
+              end
+
+              ##
               # Update the UserChannelInstance
               # @param [user_channel.NotificationLevel] notification_level The push notification
               #   level to assign to the User Channel. Can be: `default` or `muted`.
@@ -367,6 +374,13 @@ module Twilio
               # @return [UserChannelInstance] Fetched UserChannelInstance
               def fetch
                 context.fetch
+              end
+
+              ##
+              # Deletes the UserChannelInstance
+              # @return [Boolean] true if delete succeeds, false otherwise
+              def delete
+                context.delete
               end
 
               ##

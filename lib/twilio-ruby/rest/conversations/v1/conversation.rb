@@ -210,13 +210,17 @@ module Twilio
           #   store any data you wish. The string value must contain structurally valid JSON
           #   if specified.  **Note** that if the attributes are not set "{}" will be
           #   returned.
+          # @param [String] messaging_service_sid The unique id of the [SMS
+          #   Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs
+          #   to.
           # @return [ConversationInstance] Updated ConversationInstance
-          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
+          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                 'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                 'Attributes' => attributes,
+                'MessagingServiceSid' => messaging_service_sid,
             })
 
             payload = @version.update(
@@ -432,13 +436,17 @@ module Twilio
           #   store any data you wish. The string value must contain structurally valid JSON
           #   if specified.  **Note** that if the attributes are not set "{}" will be
           #   returned.
+          # @param [String] messaging_service_sid The unique id of the [SMS
+          #   Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs
+          #   to.
           # @return [ConversationInstance] Updated ConversationInstance
-          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
+          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset)
             context.update(
                 friendly_name: friendly_name,
                 date_created: date_created,
                 date_updated: date_updated,
                 attributes: attributes,
+                messaging_service_sid: messaging_service_sid,
             )
           end
 
