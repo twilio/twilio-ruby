@@ -172,8 +172,6 @@ module Twilio
                   'group' => payload['group'],
                   'level' => payload['level'],
                   'name' => payload['name'],
-                  'client' => payload['client'],
-                  'gateway' => payload['gateway'],
                   'carrier_edge' => payload['carrier_edge'],
                   'sip_edge' => payload['sip_edge'],
                   'sdk_edge' => payload['sdk_edge'],
@@ -221,18 +219,6 @@ module Twilio
             # @return [String] The name
             def name
               @properties['name']
-            end
-
-            ##
-            # @return [Hash] The client
-            def client
-              @properties['client']
-            end
-
-            ##
-            # @return [Hash] The gateway
-            def gateway
-              @properties['gateway']
             end
 
             ##

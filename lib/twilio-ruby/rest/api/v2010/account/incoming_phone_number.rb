@@ -221,6 +221,8 @@ module Twilio
             # @param [incoming_phone_number.VoiceReceiveMode] voice_receive_mode The
             #   configuration parameter for the new phone number to receive incoming voice calls
             #   or faxes. Can be: `fax` or `voice` and defaults to `voice`.
+            # @param [String] bundle_sid The SID of the Bundle resource that you associate
+            #   with the phone number. Some regions require a Bundle to meet local Regulations.
             # @param [String] phone_number The phone number to purchase specified in
             #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format.  E.164 phone
             #   numbers consist of a + followed by the country code and subscriber number
@@ -230,7 +232,7 @@ module Twilio
             #   available phone number within this area code for you. **You must provide an
             #   `area_code` or a `phone_number`.** (US and Canada only).
             # @return [IncomingPhoneNumberInstance] Newly created IncomingPhoneNumberInstance
-            def create(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, identity_sid: :unset, address_sid: :unset, voice_receive_mode: :unset, phone_number: :unset, area_code: :unset)
+            def create(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, identity_sid: :unset, address_sid: :unset, voice_receive_mode: :unset, bundle_sid: :unset, phone_number: :unset, area_code: :unset)
               data = Twilio::Values.of({
                   'PhoneNumber' => phone_number,
                   'AreaCode' => area_code,
@@ -255,6 +257,7 @@ module Twilio
                   'IdentitySid' => identity_sid,
                   'AddressSid' => address_sid,
                   'VoiceReceiveMode' => voice_receive_mode,
+                  'BundleSid' => bundle_sid,
               })
 
               payload = @version.create(
@@ -409,8 +412,10 @@ module Twilio
             #   regulations.
             # @param [String] address_sid The SID of the Address resource we should associate
             #   with the phone number. Some regions require addresses to meet local regulations.
+            # @param [String] bundle_sid The SID of the Bundle resource that you associate
+            #   with the phone number. Some regions require a Bundle to meet local Regulations.
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
-            def update(account_sid: :unset, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset, identity_sid: :unset, address_sid: :unset)
+            def update(account_sid: :unset, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset, identity_sid: :unset, address_sid: :unset, bundle_sid: :unset)
               data = Twilio::Values.of({
                   'AccountSid' => account_sid,
                   'ApiVersion' => api_version,
@@ -434,6 +439,7 @@ module Twilio
                   'VoiceReceiveMode' => voice_receive_mode,
                   'IdentitySid' => identity_sid,
                   'AddressSid' => address_sid,
+                  'BundleSid' => bundle_sid,
               })
 
               payload = @version.update(
@@ -560,6 +566,7 @@ module Twilio
                   'voice_url' => payload['voice_url'],
                   'emergency_status' => payload['emergency_status'],
                   'emergency_address_sid' => payload['emergency_address_sid'],
+                  'bundle_sid' => payload['bundle_sid'],
               }
 
               # Context
@@ -759,6 +766,12 @@ module Twilio
             end
 
             ##
+            # @return [String] The SID of the Bundle resource associated with number
+            def bundle_sid
+              @properties['bundle_sid']
+            end
+
+            ##
             # Update the IncomingPhoneNumberInstance
             # @param [String] account_sid The SID of the
             #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
@@ -820,8 +833,10 @@ module Twilio
             #   regulations.
             # @param [String] address_sid The SID of the Address resource we should associate
             #   with the phone number. Some regions require addresses to meet local regulations.
+            # @param [String] bundle_sid The SID of the Bundle resource that you associate
+            #   with the phone number. Some regions require a Bundle to meet local Regulations.
             # @return [IncomingPhoneNumberInstance] Updated IncomingPhoneNumberInstance
-            def update(account_sid: :unset, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset, identity_sid: :unset, address_sid: :unset)
+            def update(account_sid: :unset, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset, identity_sid: :unset, address_sid: :unset, bundle_sid: :unset)
               context.update(
                   account_sid: account_sid,
                   api_version: api_version,
@@ -845,6 +860,7 @@ module Twilio
                   voice_receive_mode: voice_receive_mode,
                   identity_sid: identity_sid,
                   address_sid: address_sid,
+                  bundle_sid: bundle_sid,
               )
             end
 

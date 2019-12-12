@@ -210,9 +210,20 @@ module Twilio
               # Update the UserChannelInstance
               # @param [user_channel.NotificationLevel] notification_level The push notification
               #   level to assign to the User Channel. Can be: `default` or `muted`.
+              # @param [String] last_consumed_message_index The index of the last
+              #   [Message](https://www.twilio.com/docs/chat/rest/message-resource) in the
+              #   [Channel](https://www.twilio.com/docs/chat/channels) that the Member has read.
+              # @param [Time] last_consumption_timestamp The [ISO
+              #   8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp of the last
+              #   [Message](https://www.twilio.com/docs/chat/rest/message-resource) read event for
+              #   the Member within the [Channel](https://www.twilio.com/docs/chat/channels).
               # @return [UserChannelInstance] Updated UserChannelInstance
-              def update(notification_level: nil)
-                data = Twilio::Values.of({'NotificationLevel' => notification_level, })
+              def update(notification_level: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset)
+                data = Twilio::Values.of({
+                    'NotificationLevel' => notification_level,
+                    'LastConsumedMessageIndex' => last_consumed_message_index,
+                    'LastConsumptionTimestamp' => Twilio.serialize_iso8601_datetime(last_consumption_timestamp),
+                })
 
                 payload = @version.update(
                     'POST',
@@ -387,9 +398,20 @@ module Twilio
               # Update the UserChannelInstance
               # @param [user_channel.NotificationLevel] notification_level The push notification
               #   level to assign to the User Channel. Can be: `default` or `muted`.
+              # @param [String] last_consumed_message_index The index of the last
+              #   [Message](https://www.twilio.com/docs/chat/rest/message-resource) in the
+              #   [Channel](https://www.twilio.com/docs/chat/channels) that the Member has read.
+              # @param [Time] last_consumption_timestamp The [ISO
+              #   8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp of the last
+              #   [Message](https://www.twilio.com/docs/chat/rest/message-resource) read event for
+              #   the Member within the [Channel](https://www.twilio.com/docs/chat/channels).
               # @return [UserChannelInstance] Updated UserChannelInstance
-              def update(notification_level: nil)
-                context.update(notification_level: notification_level, )
+              def update(notification_level: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset)
+                context.update(
+                    notification_level: notification_level,
+                    last_consumed_message_index: last_consumed_message_index,
+                    last_consumption_timestamp: last_consumption_timestamp,
+                )
               end
 
               ##

@@ -178,19 +178,18 @@ describe 'UserChannel' do
     expect {
       @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                             .user_channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(notification_level: 'default')
+                             .user_channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'NotificationLevel' => 'default', }
+    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        data: values,
     ))).to eq(true)
   end
 
-  it "receives update responses" do
+  it "receives update_notification_level responses" do
     @holodeck.mock(Twilio::Response.new(
         200,
       %q[
@@ -215,7 +214,37 @@ describe 'UserChannel' do
 
     actual = @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                     .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                    .user_channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(notification_level: 'default')
+                                    .user_channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives update_last_consumed_message_index responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "channel_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "user_sid": "USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "member_sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "status": "joined",
+          "last_consumed_message_index": 10,
+          "unread_messages_count": 5,
+          "notification_level": "muted",
+          "url": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Users/USaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "channel": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "member": "https://chat.twilio.com/v2/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Members/MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                    .user_channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end

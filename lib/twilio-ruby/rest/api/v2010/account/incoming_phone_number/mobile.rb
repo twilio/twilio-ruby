@@ -204,8 +204,23 @@ module Twilio
               # @param [String] address_sid The SID of the Address resource we should associate
               #   with the new phone number. Some regions require addresses to meet local
               #   regulations.
+              # @param [mobile.EmergencyStatus] emergency_status The configuration status
+              #   parameter that determines whether the new phone number is enabled for emergency
+              #   calling.
+              # @param [String] emergency_address_sid The SID of the emergency address
+              #   configuration to use for emergency calling from the new phone number.
+              # @param [String] trunk_sid The SID of the Trunk we should use to handle calls to
+              #   the new phone number. If a `trunk_sid` is present, we ignore all of the voice
+              #   urls and voice applications and use only those set on the Trunk. Setting a
+              #   `trunk_sid` will automatically delete your `voice_application_sid` and vice
+              #   versa.
+              # @param [mobile.VoiceReceiveMode] voice_receive_mode The configuration parameter
+              #   for the new phone number to receive incoming voice calls or faxes. Can be: `fax`
+              #   or `voice` and defaults to `voice`.
+              # @param [String] bundle_sid The SID of the Bundle resource that you associate
+              #   with the phone number. Some regions require a Bundle to meet local Regulations.
               # @return [MobileInstance] Newly created MobileInstance
-              def create(phone_number: nil, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, identity_sid: :unset, address_sid: :unset)
+              def create(phone_number: nil, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, identity_sid: :unset, address_sid: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset, bundle_sid: :unset)
                 data = Twilio::Values.of({
                     'PhoneNumber' => phone_number,
                     'ApiVersion' => api_version,
@@ -225,6 +240,11 @@ module Twilio
                     'VoiceUrl' => voice_url,
                     'IdentitySid' => identity_sid,
                     'AddressSid' => address_sid,
+                    'EmergencyStatus' => emergency_status,
+                    'EmergencyAddressSid' => emergency_address_sid,
+                    'TrunkSid' => trunk_sid,
+                    'VoiceReceiveMode' => voice_receive_mode,
+                    'BundleSid' => bundle_sid,
                 })
 
                 payload = @version.create(
@@ -314,6 +334,9 @@ module Twilio
                     'voice_fallback_url' => payload['voice_fallback_url'],
                     'voice_method' => payload['voice_method'],
                     'voice_url' => payload['voice_url'],
+                    'emergency_status' => payload['emergency_status'],
+                    'emergency_address_sid' => payload['emergency_address_sid'],
+                    'bundle_sid' => payload['bundle_sid'],
                 }
               end
 
@@ -483,6 +506,24 @@ module Twilio
               # @return [String] The URL we call when the phone number receives a call
               def voice_url
                 @properties['voice_url']
+              end
+
+              ##
+              # @return [mobile.EmergencyStatus] Whether the phone number is enabled for emergency calling
+              def emergency_status
+                @properties['emergency_status']
+              end
+
+              ##
+              # @return [String] The emergency address configuration to use for emergency calling
+              def emergency_address_sid
+                @properties['emergency_address_sid']
+              end
+
+              ##
+              # @return [String] The SID of the Bundle resource associated with number
+              def bundle_sid
+                @properties['bundle_sid']
               end
 
               ##

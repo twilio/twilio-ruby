@@ -304,6 +304,7 @@ module Twilio
                   'body' => payload['body'],
                   'media' => payload['media'],
                   'attributes' => payload['attributes'],
+                  'participant_sid' => payload['participant_sid'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
@@ -371,6 +372,12 @@ module Twilio
             # @return [String] A string metadata field you can use to store any data you wish.
             def attributes
               @properties['attributes']
+            end
+
+            ##
+            # @return [String] The unique id of messages's author participant.
+            def participant_sid
+              @properties['participant_sid']
             end
 
             ##

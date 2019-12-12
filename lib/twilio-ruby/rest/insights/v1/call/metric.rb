@@ -174,8 +174,6 @@ module Twilio
                   'account_sid' => payload['account_sid'],
                   'edge' => payload['edge'],
                   'direction' => payload['direction'],
-                  'gateway' => payload['gateway'],
-                  'client' => payload['client'],
                   'carrier_edge' => payload['carrier_edge'],
                   'sip_edge' => payload['sip_edge'],
                   'sdk_edge' => payload['sdk_edge'],
@@ -211,18 +209,6 @@ module Twilio
             # @return [metric.StreamDirection] The direction
             def direction
               @properties['direction']
-            end
-
-            ##
-            # @return [Hash] The gateway
-            def gateway
-              @properties['gateway']
-            end
-
-            ##
-            # @return [Hash] The client
-            def client
-              @properties['client']
             end
 
             ##
