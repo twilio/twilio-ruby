@@ -1,7 +1,7 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.0
+  TargetRubyVersion: 2.6
   Exclude:
     - 'lib/twilio-ruby/rest/**/*'
     - 'spec/integration/**/*'
@@ -19,7 +19,7 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
-Layout/IndentHeredoc:
+Layout/HeredocIndentation:
   Enabled: false
 
 Metrics/ClassLength:
