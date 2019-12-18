@@ -85,6 +85,7 @@ describe 'RatePlan' do
                   "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "usage_notification_method": "POST",
                   "usage_notification_url": "https://callback.com",
+                  "data_limit_strategy": "block",
                   "url": "https://wireless.twilio.com/v1/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
           ]
@@ -138,6 +139,7 @@ describe 'RatePlan' do
           "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "usage_notification_method": "POST",
           "usage_notification_url": "https://callback.com",
+          "data_limit_strategy": "block",
           "url": "https://wireless.twilio.com/v1/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
@@ -172,6 +174,7 @@ describe 'RatePlan' do
           "unique_name": "unique_name",
           "data_enabled": true,
           "data_limit": 1000,
+          "data_limit_strategy": "block",
           "data_metering": "payg",
           "date_created": "2019-07-30T20:00:00Z",
           "date_updated": "2019-07-30T20:00:00Z",
@@ -240,6 +243,7 @@ describe 'RatePlan' do
           "sid": "WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "usage_notification_method": "POST",
           "usage_notification_url": "https://callback.com",
+          "data_limit_strategy": "block",
           "url": "https://wireless.twilio.com/v1/RatePlans/WPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]

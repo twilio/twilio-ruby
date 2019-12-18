@@ -11,8 +11,6 @@ module Twilio
     class Verify < Domain
       class V2 < Version
         class ServiceContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class RateLimitList < ListResource
             ##
             # Initialize the RateLimitList
@@ -138,8 +136,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class RateLimitPage < Page
             ##
             # Initialize the RateLimitPage
@@ -169,8 +165,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class RateLimitContext < InstanceContext
             ##
             # Initialize the RateLimitContext
@@ -267,8 +261,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class RateLimitInstance < InstanceResource
             ##
             # Initialize the RateLimitInstance

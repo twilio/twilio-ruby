@@ -194,6 +194,15 @@ module Twilio
       end
 
       ##
+      # @param [String] sid A 34 character string that uniquely identifies this
+      #   Business.
+      # @return [Twilio::REST::Preview::TrustedComms::BusinessInstance] if sid was passed.
+      # @return [Twilio::REST::Preview::TrustedComms::BusinessList]
+      def businesses(sid=:unset)
+        self.trusted_comms.businesses(sid)
+      end
+
+      ##
       # @return [Twilio::REST::Preview::TrustedComms::CpsInstance]
       def cps
         self.trusted_comms.cps()

@@ -11,8 +11,6 @@ module Twilio
     class Verify < Domain
       class V2 < Version
         class ServiceContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class VerificationCheckList < ListResource
             ##
             # Initialize the VerificationCheckList
@@ -33,11 +31,14 @@ module Twilio
             # Retrieve a single page of VerificationCheckInstance records from the API.
             # Request is executed immediately.
             # @param [String] code The 4-10 character string being verified.
-            # @param [String] to The phone number to verify. Either this parameter or the
-            #   `verification_sid` must be specified. Phone numbers must be in [E.164
-            #   format](https://www.twilio.com/docs/glossary/what-e164).
+            # @param [String] to The phone number or
+            #   [email](https://www.twilio.com/docs/verify/tutorials/email) to verify. Either
+            #   this parameter or the `verification_sid` must be specified. Phone numbers must
+            #   be in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
             # @param [String] verification_sid A SID that uniquely identifies the Verification
-            #   Check. Either this parameter or the `to` phone number must be specified.
+            #   Check. Either this parameter or the `to` phone
+            #   number/[email](https://www.twilio.com/docs/verify/tutorials/email) must be
+            #   specified.
             # @param [String] amount The amount of the associated PSD2 compliant transaction.
             #   Requires the PSD2 Service flag enabled.
             # @param [String] payee The payee of the associated PSD2 compliant transaction.
@@ -68,8 +69,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class VerificationCheckPage < Page
             ##
             # Initialize the VerificationCheckPage
@@ -99,8 +98,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class VerificationCheckInstance < InstanceResource
             ##
             # Initialize the VerificationCheckInstance
@@ -148,7 +145,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The phone number being verified
+            # @return [String] The phone number or email being verified
             def to
               @properties['to']
             end

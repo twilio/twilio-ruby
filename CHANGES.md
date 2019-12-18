@@ -1,6 +1,24 @@
 twilio-ruby changelog
 =====================
 
+[2019-12-18] Version 5.31.1
+---------------------------
+**Library - Chore**
+- [PR #488](https://github.com/twilio/twilio-ruby/pull/488): upgrade rubocop to 0.77.0. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Preview**
+- Add `/Insights/SuccessRate` endpoint for Businesses Branded Calls (Verified by Twilio)
+
+**Studio**
+- StudioV2 API in beta
+
+**Verify**
+- Add `MailerSid` property to Verify Service resource.
+
+**Wireless**
+- Added `data_limit_strategy` to Rate Plan resource.
+
+
 [2019-12-12] Version 5.31.0
 ---------------------------
 **Api**

@@ -16,6 +16,7 @@ module Twilio
           super
           @version = 'TrustedComms'
           @branded_calls = nil
+          @businesses = nil
           @cps = nil
           @current_calls = nil
           @devices = nil
@@ -26,6 +27,21 @@ module Twilio
         # @return [Twilio::REST::Preview::TrustedComms::BrandedCallContext]
         def branded_calls
           @branded_calls ||= BrandedCallList.new self
+        end
+
+        ##
+        # @param [String] sid A 34 character string that uniquely identifies this
+        #   Business.
+        # @return [Twilio::REST::Preview::TrustedComms::BusinessContext] if sid was passed.
+        # @return [Twilio::REST::Preview::TrustedComms::BusinessList]
+        def businesses(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @businesses ||= BusinessList.new self
+          else
+            BusinessContext.new(self, sid)
+          end
         end
 
         ##

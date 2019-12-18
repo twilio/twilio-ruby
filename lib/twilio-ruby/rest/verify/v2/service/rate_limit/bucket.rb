@@ -12,8 +12,6 @@ module Twilio
       class V2 < Version
         class ServiceContext < InstanceContext
           class RateLimitContext < InstanceContext
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class BucketList < ListResource
               ##
               # Initialize the BucketList
@@ -145,8 +143,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class BucketPage < Page
               ##
               # Initialize the BucketPage
@@ -181,8 +177,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class BucketContext < InstanceContext
               ##
               # Initialize the BucketContext
@@ -269,8 +263,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class BucketInstance < InstanceResource
               ##
               # Initialize the BucketInstance

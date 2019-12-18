@@ -11,8 +11,6 @@ module Twilio
     class Verify < Domain
       class V2 < Version
         class ServiceContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class MessagingConfigurationList < ListResource
             ##
             # Initialize the MessagingConfigurationList
@@ -141,8 +139,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class MessagingConfigurationPage < Page
             ##
             # Initialize the MessagingConfigurationPage
@@ -172,8 +168,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class MessagingConfigurationContext < InstanceContext
             ##
             # Initialize the MessagingConfigurationContext
@@ -259,8 +253,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class MessagingConfigurationInstance < InstanceResource
             ##
             # Initialize the MessagingConfigurationInstance

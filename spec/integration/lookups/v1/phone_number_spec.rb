@@ -29,37 +29,14 @@ describe 'PhoneNumber' do
         200,
       %q[
       {
-          "caller_name": {
-              "caller_name": "Delicious Cheese Cake",
-              "caller_type": "CONSUMER",
-              "error_code": null
-          },
-          "carrier": {
-              "error_code": null,
-              "mobile_country_code": "310",
-              "mobile_network_code": "456",
-              "name": "verizon",
-              "type": "mobile"
-          },
-          "fraud": {
-              "error_code": null,
-              "mobile_country_code": "310",
-              "mobile_network_code": "456",
-              "advanced_line_type": "voip",
-              "caller_name": "Delicious Cheese Cake",
-              "is_ported": false,
-              "last_ported_date": "2018-05-01 04:05:11"
-          },
+          "caller_name": null,
+          "carrier": null,
+          "fraud": null,
+          "add_ons": null,
           "country_code": "US",
           "national_format": "(510) 867-5310",
           "phone_number": "+15108675310",
-          "add_ons": {
-              "status": "successful",
-              "message": null,
-              "code": null,
-              "results": {}
-          },
-          "url": "https://lookups.twilio.com/v1/PhoneNumbers/phone_number"
+          "url": "https://lookups.twilio.com/v1/PhoneNumbers/+15108675310"
       }
       ]
     ))
@@ -87,7 +64,35 @@ describe 'PhoneNumber' do
           "phone_number": "+15108675310",
           "fraud": null,
           "add_ons": null,
-          "url": "https://lookups.twilio.com/v1/PhoneNumbers/phone_number"
+          "url": "https://lookups.twilio.com/v1/PhoneNumbers/+15108675310?Type=carrier"
+      }
+      ]
+    ))
+
+    actual = @client.lookups.v1.phone_numbers('+15017122661').fetch()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives fetch_carrier_international responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "caller_name": null,
+          "carrier": {
+              "error_code": null,
+              "mobile_country_code": null,
+              "mobile_network_code": null,
+              "name": "Vodafone Business Solutions",
+              "type": "landline"
+          },
+          "country_code": "GB",
+          "national_format": "020 7765 1182",
+          "phone_number": "+4402077651182",
+          "fraud": null,
+          "add_ons": null,
+          "url": "https://lookups.twilio.com/v1/PhoneNumbers/+4402077651182?Type=carrier"
       }
       ]
     ))
@@ -113,7 +118,7 @@ describe 'PhoneNumber' do
           "national_format": "(510) 867-5310",
           "phone_number": "+15108675310",
           "add_ons": null,
-          "url": "https://lookups.twilio.com/v1/PhoneNumbers/phone_number"
+          "url": "https://lookups.twilio.com/v1/PhoneNumbers/+15108675310?Type=caller-name"
       }
       ]
     ))
@@ -150,7 +155,7 @@ describe 'PhoneNumber' do
               "code": null,
               "results": {}
           },
-          "url": "https://lookups.twilio.com/v1/PhoneNumbers/+15108675310"
+          "url": "https://lookups.twilio.com/v1/PhoneNumbers/+15108675310?Type=carrier&Type=caller-name"
       }
       ]
     ))
@@ -225,7 +230,7 @@ describe 'PhoneNumber' do
                   }
               }
           },
-          "url": "https://lookups.twilio.com/v1/PhoneNumbers/+12127363100?Type=carrier"
+          "url": "https://lookups.twilio.com/v1/PhoneNumbers/+12127363100?Type=caller-name"
       }
       ]
     ))
