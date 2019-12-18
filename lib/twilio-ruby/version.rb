@@ -1,3 +1,3 @@
 module Twilio
-    VERSION = '5.31.0'
+    VERSION = '5.31.1'
 end
