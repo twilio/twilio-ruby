@@ -31,6 +31,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency('rubysl') if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
 
   spec.add_development_dependency 'bundler', '>= 1.5', '< 3.0'
-  spec.add_development_dependency 'rubocop', '~> 0.77.0'
+  spec.add_development_dependency 'rubocop', '~> 0.79.0'
   spec.add_development_dependency 'yard', '~> 0.9.9'
 end

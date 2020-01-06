@@ -27,19 +27,19 @@ require 'twilio-ruby/twiml/fax_response'
 require 'twilio-ruby/twiml/messaging_response'
 require 'twilio-ruby/twiml/voice_response'
 
-Dir[File.dirname(__FILE__) + '/twilio-ruby/http/**/*.rb'].each do |file|
+Dir[File.dirname(__FILE__) + '/twilio-ruby/http/**/*.rb'].sort.each do |file|
   require file
 end
-Dir[File.dirname(__FILE__) + '/twilio-ruby/framework/**/*.rb'].each do |file|
+Dir[File.dirname(__FILE__) + '/twilio-ruby/framework/**/*.rb'].sort.each do |file|
   require file
 end
-Dir[File.dirname(__FILE__) + '/twilio-ruby/rest/*.rb'].each do |file|
+Dir[File.dirname(__FILE__) + '/twilio-ruby/rest/*.rb'].sort.each do |file|
   require file
 end
-Dir[File.dirname(__FILE__) + '/twilio-ruby/rest/**/*.rb'].each do |file|
+Dir[File.dirname(__FILE__) + '/twilio-ruby/rest/**/*.rb'].sort.each do |file|
   require file
 end
-Dir[File.dirname(__FILE__) + '/twilio-ruby/compatibility/**/*.rb'].each do |file|
+Dir[File.dirname(__FILE__) + '/twilio-ruby/compatibility/**/*.rb'].sort.each do |file|
   require file
 end
 
