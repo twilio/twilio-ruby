@@ -10,7 +10,7 @@ AllCops:
     - 'lib/twilio-ruby/util/configuration.rb'
     - 'vendor/**/*'
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
   Exclude:
     - 'spec/**/*'
