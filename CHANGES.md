@@ -1,6 +1,22 @@
 twilio-ruby changelog
 =====================
 
+[2020-01-08] Version 5.31.2
+---------------------------
+**Library - Chore**
+- [PR #491](https://github.com/twilio/twilio-ruby/pull/491): upgrade rubocop to 0.79.0. Thanks to [@juampi](https://github.com/juampi)!
+- [PR #489](https://github.com/twilio/twilio-ruby/pull/489): upgrade faraday to 1.0.0. Thanks to [@juampi](https://github.com/juampi)!
+
+**Numbers**
+- Add Regulatory Compliance CRUD APIs
+
+**Studio**
+- Add parameter validation for Studio v2 Flows API
+
+**Twiml**
+- Add support for `speech_model` to `Gather` verb
+
+
 [2019-12-18] Version 5.31.1
 ---------------------------
 **Library - Chore**

@@ -39,6 +39,7 @@ module Twilio
         @messaging = nil
         @monitor = nil
         @notify = nil
+        @numbers = nil
         @preview = nil
         @pricing = nil
         @proxy = nil
@@ -183,6 +184,12 @@ module Twilio
       # Access the Notify Twilio Domain
       def notify
         @notify ||= Notify.new self
+      end
+
+      ##
+      # Access the Numbers Twilio Domain
+      def numbers
+        @numbers ||= Numbers.new self
       end
 
       ##

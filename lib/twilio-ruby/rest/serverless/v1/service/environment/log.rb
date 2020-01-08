@@ -37,6 +37,10 @@ module Twilio
               # memory before returning.
               # @param [String] function_sid The SID of the function whose invocation produced
               #   the Log resources to read.
+              # @param [Time] start_date The date/time (in GMT, ISO 8601) after which the Log
+              #   resources must have been created. Defaults to 1 day prior to current date/time.
+              # @param [Time] end_date The date/time (in GMT, ISO 8601) before which the Log
+              #   resources must have been created. Defaults to current date/time.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -44,8 +48,14 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(function_sid: :unset, limit: nil, page_size: nil)
-                self.stream(function_sid: function_sid, limit: limit, page_size: page_size).entries
+              def list(function_sid: :unset, start_date: :unset, end_date: :unset, limit: nil, page_size: nil)
+                self.stream(
+                    function_sid: function_sid,
+                    start_date: start_date,
+                    end_date: end_date,
+                    limit: limit,
+                    page_size: page_size
+                ).entries
               end
 
               ##
@@ -54,6 +64,10 @@ module Twilio
               # is reached.
               # @param [String] function_sid The SID of the function whose invocation produced
               #   the Log resources to read.
+              # @param [Time] start_date The date/time (in GMT, ISO 8601) after which the Log
+              #   resources must have been created. Defaults to 1 day prior to current date/time.
+              # @param [Time] end_date The date/time (in GMT, ISO 8601) before which the Log
+              #   resources must have been created. Defaults to current date/time.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -61,10 +75,15 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(function_sid: :unset, limit: nil, page_size: nil)
+              def stream(function_sid: :unset, start_date: :unset, end_date: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(function_sid: function_sid, page_size: limits[:page_size], )
+                page = self.page(
+                    function_sid: function_sid,
+                    start_date: start_date,
+                    end_date: end_date,
+                    page_size: limits[:page_size],
+                )
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -88,13 +107,19 @@ module Twilio
               # Request is executed immediately.
               # @param [String] function_sid The SID of the function whose invocation produced
               #   the Log resources to read.
+              # @param [Time] start_date The date/time (in GMT, ISO 8601) after which the Log
+              #   resources must have been created. Defaults to 1 day prior to current date/time.
+              # @param [Time] end_date The date/time (in GMT, ISO 8601) before which the Log
+              #   resources must have been created. Defaults to current date/time.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of LogInstance
-              def page(function_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              def page(function_sid: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'FunctionSid' => function_sid,
+                    'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
+                    'EndDate' => Twilio.serialize_iso8601_datetime(end_date),
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
