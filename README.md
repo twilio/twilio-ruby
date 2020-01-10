@@ -21,6 +21,7 @@ This library supports the following Ruby implementations:
 * Ruby 2.4
 * Ruby 2.5
 * Ruby 2.6
+* Ruby 2.7
 
 ### Migrating from 4.x
 
